@@ -99,4 +99,4 @@ Il file `CNAME` contiene `link.josephdigitalstrategist.com`. Per funzionare rich
 
 ## Dati fiscali e ambito professionale
 
-I riferimenti Partita IVA 13492740017 e REA 1366940 indicati nel dialogo appartengono a un agente abilitato, **non a Joseph**. Per evitare attribuzioni inesatte non compaiono nel footer personale. Il marketing/lead generation non autorizza attività riservate agli agenti immobiliari: il rapporto di collaborazione, i compensi e le attività svolte devono essere verificati con un consulente specializzato.
+I riferimenti amministrativi comunicati dall’utente appartengono a un professionista immobiliare abilitato, **non a Joseph**. Per evitare attribuzioni inesatte non compaiono nel footer personale, finché non è identificata l’esatta intestazione del professionista. Il marketing/lead generation non autorizza attività riservate agli agenti immobiliari: il rapporto di collaborazione, i compensi e le attività svolte devono essere verificati con un consulente specializzato.
