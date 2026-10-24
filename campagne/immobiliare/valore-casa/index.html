@@ -134,6 +134,58 @@ button{cursor:pointer}
 @media(max-width:690px){.flyer-top{min-height:390px}.identity{padding:27px 10px 0 19px;width:65%}.identity-title{font-size:58px}.identity-sub{font-size:22px}.identity-services{font-size:10px}.licensed{max-width:230px;padding:8px 10px;gap:7px}.licensed .houseIcon{font-size:24px}.licensed span{font-size:9px}.portrait{top:70px;right:-18px;width:53%;border-width:5px}.quote{top:283px;right:13px;font-size:17px;max-width:150px}.titleArea{padding:10px 17px 13px}.titleArea h1{font-size:clamp(44px,9vw,64px)}.titleFlex{grid-template-columns:1fr}.agentpricing{width:fit-content;margin-top:9px;font-size:15px;padding:12px 17px}.concept{padding:13px 17px;align-items:center}.conceptIllustration{flex-basis:126px}.conceptNotice{font-size:11px}.dual{grid-template-columns:1fr;padding:15px 14px 25px}.footerWave{padding-inline:18px}.footerBottom{align-items:start}.formLayout{grid-template-columns:1fr}.infoGrid{grid-template-columns:1fr}.formSection{padding:53px 0}.deepSection{padding:52px 0}}
 @media(max-width:460px){.wrap{width:calc(100% - 18px)}.topbarInner{justify-content:center;text-align:center}.topbar nav{display:none}.flyer-top{min-height:355px}.identity-title{font-size:48px}.identity-sub{font-size:18px}.identity-services{font-size:9px;letter-spacing:.10em}.portrait{width:54%;top:70px;right:-15px}.quote{top:267px;font-size:13px}.licensed{max-width:205px}.titleArea h1{font-size:clamp(39px,10vw,50px)}.titleLine{font-size:18px}.headingDecor{font-size:42px}.contactRow{grid-template-columns:1fr;gap:14px}.contactRow a strong{font-size:25px}.footerBottom{flex-direction:column}.footerBottom .tagline{text-align:left}.formCard{padding:20px}.formFields{grid-template-columns:1fr}.field.wide{grid-column:auto}.serviceItem strong{font-size:14px}.conceptIllustration{flex-basis:99px}.roundIcon{flex-basis:62px;width:62px;height:62px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
+
+/* Layout correction: true full-bleed flyer on desktop; portrait and quote never overlap. */
+.wrap.flyerFullBleed{width:100%;max-width:none;margin:0;padding:0}
+.flyerFullBleed .flyer{width:100%;max-width:none;border-radius:0;box-shadow:none}
+.flyerFullBleed .flyer-top{display:grid;grid-template-columns:minmax(0,1.13fr) minmax(0,.9fr) minmax(180px,.32fr);column-gap:14px;align-items:start;min-height:570px;padding:45px clamp(25px,4vw,65px) 50px;background:linear-gradient(90deg,#004b91ee 0%,#006fbbd2 48%,#128bcb94 100%),url("../../assets/valle-susa-illustrata.svg") center 53%/cover no-repeat;isolation:isolate}
+.flyerFullBleed .flyer-top:after{height:72px;z-index:1;background:linear-gradient(to top,white,rgba(255,255,255,.82) 42%,transparent)}
+.flyerFullBleed .identity{position:relative;grid-column:1;width:100%;min-width:0;z-index:3;padding:20px 0 0 0;text-shadow:0 3px 18px #002c62a0}
+.flyerFullBleed .identity-title{font-size:clamp(53px,6vw,93px)}
+.flyerFullBleed .identity-sub{font-size:clamp(20px,2.6vw,34px)}
+.flyerFullBleed .identity-services{font-size:clamp(11px,1.3vw,16px)}
+.flyerFullBleed .portrait{position:relative;grid-column:2;top:auto;right:auto;justify-self:center;align-self:start;z-index:3;width:min(100%,475px);max-width:100%;height:auto;aspect-ratio:1;object-fit:cover;object-position:center 16%;border:8px solid white;border-radius:46% 46% 48% 48%;box-shadow:0 14px 35px #002c5c6b}
+.flyerFullBleed .quote{position:relative;grid-column:3;right:auto;top:auto;z-index:3;align-self:center;text-align:right;justify-self:end;max-width:220px;margin:0;color:white;font-size:clamp(17px,1.55vw,24px);line-height:1.24;text-shadow:0 2px 8px #003868}
+.flyerFullBleed .titleArea{padding:22px clamp(28px,5vw,78px) 23px}
+.flyerFullBleed .titleArea h1{font-size:clamp(53px,7.5vw,105px);max-width:none}
+.flyerFullBleed .titleFlex{grid-template-columns:minmax(0,1.15fr) minmax(270px,.5fr);gap:22px}
+.flyerFullBleed .concept{padding:16px clamp(28px,5vw,78px) 22px}
+.flyerFullBleed .dual{padding:24px clamp(28px,5vw,78px) 36px;grid-template-columns:minmax(0,1fr) minmax(0,.86fr);gap:24px}
+.flyerFullBleed .footerWave{padding:30px clamp(28px,5vw,78px) 26px}
+@media(max-width:1030px){
+.flyerFullBleed .flyer-top{grid-template-columns:minmax(0,1.08fr) minmax(0,.87fr);min-height:0;row-gap:12px;padding:25px clamp(16px,3vw,35px) 44px}
+.flyerFullBleed .identity{grid-column:1;padding-top:16px}
+.flyerFullBleed .portrait{grid-column:2;max-width:440px}
+.flyerFullBleed .quote{grid-column:1 / -1;justify-self:end;align-self:start;max-width:none;text-align:right;padding-right:8px;line-height:1.25;font-size:21px;margin-top:4px}
+.flyerFullBleed .titleArea h1{font-size:clamp(46px,7.7vw,78px)}
+.flyerFullBleed .titleFlex{grid-template-columns:1fr}
+.flyerFullBleed .agentpricing{justify-self:start}
+}
+@media(max-width:680px){
+.flyerFullBleed .flyer-top{grid-template-columns:minmax(0,1fr) minmax(0,.87fr);gap:6px;min-height:0;padding:15px 15px 35px}
+.flyerFullBleed .identity{padding:12px 0 0 0;width:100%}
+.flyerFullBleed .identity-title{font-size:clamp(39px,8vw,58px)}
+.flyerFullBleed .identity-sub{font-size:clamp(13px,3.25vw,21px)}
+.flyerFullBleed .identity-services{font-size:clamp(8px,1.7vw,11px);letter-spacing:.09em}
+.flyerFullBleed .licensed{max-width:240px;padding:8px;gap:7px}
+.flyerFullBleed .licensed span{font-size:9px}
+.flyerFullBleed .portrait{width:100%;min-width:0;max-width:none;top:auto;right:auto;border-width:5px;aspect-ratio:1;object-position:center 20%}
+.flyerFullBleed .quote{position:relative;grid-column:1 / -1;top:auto;right:auto;color:white;font-size:clamp(15px,3.5vw,19px);line-height:1.15;margin:0}
+.flyerFullBleed .titleArea{padding:19px 19px 23px}
+.flyerFullBleed .titleArea h1{font-size:clamp(42px,9.6vw,66px);max-width:100%}
+.flyerFullBleed .titleFlex{grid-template-columns:1fr}
+.flyerFullBleed .concept{padding:13px 17px 18px}
+.flyerFullBleed .dual{grid-template-columns:1fr;gap:18px;padding:16px 14px 29px}
+.flyerFullBleed .footerWave{padding:25px 17px}
+}
+@media(max-width:390px){
+.flyerFullBleed .identity-title{font-size:36px}
+.flyerFullBleed .identity-sub{font-size:12px}
+.flyerFullBleed .licensed .houseIcon{font-size:19px}
+.flyerFullBleed .licensed span{font-size:8px}
+.flyerFullBleed .identity-services{font-size:7.4px}
+.flyerFullBleed .titleArea h1{font-size:38px}
+}
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Come faccio a sapere quanto vale la mia casa?","acceptedAnswer":{"@type":"Answer","text":"Per orientarsi occorre considerare microzona, tipologia, superficie, stato di manutenzione, pertinenze e dati di compravendite comparabili. Le quotazioni OMI sono indicatori generali e non sostituiscono una valutazione professionale."}},{"@type":"Question","name":"OMI indica il prezzo effettivo della mia casa?","acceptedAnswer":{"@type":"Answer","text":"No, le quotazioni OMI sono intervalli per zona e tipologia. Non equivalgono alla stima puntuale di un singolo immobile."}},{"@type":"Question","name":"Posso ricevere informazioni su WhatsApp?","acceptedAnswer":{"@type":"Answer","text":"Sì. Compilando il modulo si apre WhatsApp con un messaggio precompilato, che puoi controllare prima di inviarlo."}}]}</script>
 </head>
@@ -141,7 +193,7 @@ button{cursor:pointer}
 <a class="skip" href="#contenuto">Vai al contenuto</a>
 <div class="topbar"><div class="wrap topbarInner"><span>JOSEPH DIGITAL STRATEGIST · MARKETING TERRITORIALE</span><nav aria-label="Navigazione superiore"><a href="../../immobiliare/">Altre guide</a><a href="../../../agenzie-partner/">Agenzie partner</a><a href="#modulo-whatsapp">Modulo WhatsApp</a></nav></div></div>
 <main id="contenuto">
-<div class="wrap">
+<div class="wrap flyerFullBleed">
 <article class="flyer" aria-label="Landing page che riproduce la struttura grafica del volantino Quanto vale la mia casa">
 <section class="flyer-top">
 <div class="identity">
