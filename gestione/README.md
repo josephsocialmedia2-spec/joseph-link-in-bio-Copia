@@ -23,6 +23,12 @@ Questo è un **sito pubblico statico** su GitHub Pages, non un'applicazione ammi
 - WhatsApp: 371 370 8294 → https://wa.me/393713708294
 - Telefono: 352 202 4365 → tel:+393522024365
 
+## Totali verificati il 24 ottobre 2026
+
+- 46 pagine web navigabili, inclusa la Regia Digitale.
+- 21 landing immobiliari, 18 landing per attività locali, 7 pagine di servizio.
+- 47 file HTML complessivi nel repository: uno è un modello tecnico interno, non una pagina pubblica.
+
 ## Inventario di riferimento
 
-[Registro di tutte le landing](../campagne/CONTROLLO_LANDING.md) · [Piano social](../campagne/PIANO_SOCIAL.md)
+[Inventario corrente (46 pagine)](../campagne/INVENTARIO.md) · [Audit storico delle prime pagine](../campagne/CONTROLLO_LANDING.md) · [Piano social](../campagne/PIANO_SOCIAL.md)
