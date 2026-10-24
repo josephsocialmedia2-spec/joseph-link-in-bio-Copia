@@ -1,0 +1,52 @@
+name: Joseph GDPR Guard (preflight tecnico)
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '**/*.html'
+      - 'scripts/gdpr_guard.py'
+      - '.github/workflows/gdpr-guard.yml'
+  push:
+    branches: [main]
+  schedule:
+    - cron: '15 5 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gdpr-static-preflight:
+    name: gdpr-static-preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - name: Checkout completo per confronto dei commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Configura Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Audit statico dei file HTML
+        shell: bash
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            python scripts/gdpr_guard.py --changed-only
+          else
+            python scripts/gdpr_guard.py
+          fi
+      - name: Audit statico dei sei repository
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python scripts/gdpr_account_audit.py
+      - name: Conserva gli esiti
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gdpr-preflight-${{ github.run_number }}
+          path: gdpr-reports/
+          if-no-files-found: warn
+          retention-days: 30
