@@ -10,7 +10,7 @@
 | Landing dedicate | **30** |
 | Immobiliare | **12** |
 | Attività commerciali | **18** |
-| Pagina principale e portale | **2** |
+| Pagina principale, portale e informativa/censimento | **3** |
 | Pagine raggiungibili via HTTP effettivamente verificate | **0 verificate** (non equivale a offline) |
 | Stato delle pagine dal browser | **33 DA VERIFICARE** |
 | Landing con email ufficiale nel sorgente | **30/30** |
@@ -32,6 +32,12 @@
 | HOME | Pagina principale | [Apri](https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/) | [HTML](https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/blob/main/index.html) | [Directory](https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/tree/main) | `main` | DA VERIFICARE |
 | HUB | Campagne e servizi \| Real Media Pro | [Apri](https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/) | [HTML](https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/blob/main/campagne/index.html) | [Directory](https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/tree/main/campagne) | `main` | DA VERIFICARE |
 
+
+## Pagina di servizio — Privacy e censimento
+
+| ID | Titolo | Pagina pubblica | Codice su GitHub | Cartella | Ramo | Stato |
+|---|---|---|---|---|---|---|
+| PRIVACY | Privacy e censimento immobiliare | [Apri](https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/privacy-censimento/) | [HTML](https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/blob/main/privacy-censimento/index.html) | [Directory](https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/tree/main/privacy-censimento) | `main` | DA VERIFICARE |
 
 ## A. Immobiliare — 12 landing
 
@@ -333,11 +339,19 @@
 - Percorso: `campagne/immobiliare/informazioni-prima-di-vendere/index.html` · Branch: `main`
 - Stato HTTP: **DA VERIFICARE**
 
+### PRIVACY — Privacy e censimento immobiliare
+
+- URL pubblico: https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/privacy-censimento/
+- File GitHub: https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/blob/main/privacy-censimento/index.html
+- Directory: https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/tree/main/privacy-censimento
+- Percorso: `privacy-censimento/index.html` · Branch: `main`
+- Stato HTTP: **DA VERIFICARE**
+
 ## Verifica recapiti e risorse
 
 - Contatti obbligatori: `agenziarealmediapro@gmail.com`; WhatsApp `https://wa.me/393713708294` (`371 370 8294`); telefono `tel:+393522024365` (`352 202 4365`).
 - **30/30 landing specialistiche:** riferimenti a tutti i contatti presenti e corretti nel sorgente; codici `IMM01–IMM12` e `COM01–COM18` presenti nei rispettivi link WhatsApp.
-- **Portale campagne:** contatti corretti nel sorgente.
+- **Portale campagne e pagina privacy/censimento:** contatti corretti nel sorgente.
 - **Homepage `index.html`: criticità.** Usa `Agenzia.realmediapro@gmail.com` anziché la grafia richiesta `agenziarealmediapro@gmail.com`. Manca il telefono `352 202 4365` e un link `tel:+393522024365`; un collegamento telefonico usa il numero WhatsApp.
 - Foglio CSS condiviso: [`campagne/assets/styles.css`](https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/blob/main/campagne/assets/styles.css) presente, richiamato dalle 30 landing come `../../assets/styles.css`.
 - File di gestione: [inventario](https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/blob/main/campagne/INVENTARIO.md) · [piano social](https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/blob/main/campagne/PIANO_SOCIAL.md).
@@ -347,9 +361,10 @@
 
 | Priorità | Oggetto | Esito | Intervento consigliato |
 |---|---|---|---|
-| **Alta** | Verifica pubblica | Non è stato possibile verificare le risposte HTTP o la resa visuale delle 32 pagine. | Test con browser desktop e smartphone, verifica risposta HTTP 200 e caricamento CSS/immagini. |
+| **Alta** | Verifica pubblica | Non è stato possibile verificare le risposte HTTP o la resa visuale delle 33 pagine. | Test con browser desktop e smartphone, verifica risposta HTTP 200 e caricamento CSS/immagini. |
 | **Alta** | Homepage | Email riportata con grafia diversa da quella ufficiale; assente numero di chiamata dedicato. | Uniformare i recapiti in una successiva attività di correzione. |
 | **Media** | Interazioni | I pulsanti sono nel codice, ma non sono stati cliccati su dispositivi reali. | Verificare apertura WhatsApp, app telefono, client email e collegamenti esterni. |
+| **Media** | `privacy-censimento/index.html` | La pagina dichiara nel sorgente di essere una versione preliminare, con `noindex,nofollow`, e contiene un'identità editoriale precedente. La conformità legale non è stata verificata. | Far revisionare testo e titolarità dell'informativa prima di pubblicarla in campagne di raccolta dati. |
 | **Media** | Esperienza mobile | Non eseguito collaudo visuale o interattivo in viewport mobile. | Test cross-device e navigazione su ogni campagna. |
 
 **Nota:** le 30 landing sono **cartelle** pubblicate dal medesimo branch `main`, non 30 branch GitHub separati. Questo audit aggiunge soltanto il presente registro, senza modificare file HTML, contenuti commerciali o CSS.
