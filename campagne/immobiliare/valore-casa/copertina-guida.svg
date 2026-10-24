@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="595" height="842" viewBox="0 0 595 842" role="img" aria-labelledby="ttl desc">
+<title id="ttl">Quanto vale la mia casa? Guida gratuita 2026 di Joseph Digital Strategist</title>
+<desc id="desc">Copertina blu cobalto con montagne della Valle di Susa e illustrazione di casa moderna</desc>
+<defs>
+<linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#0975df"/><stop offset=".55" stop-color="#064b9b"/><stop offset="1" stop-color="#052351"/></linearGradient>
+<linearGradient id="ice" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#dff8ff"/><stop offset="1" stop-color="#74caff"/></linearGradient>
+<linearGradient id="water" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#55c5ff"/><stop offset="1" stop-color="#084d99"/></linearGradient>
+<filter id="shadow"><feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#001b44" flood-opacity=".38"/></filter>
+</defs>
+<path fill="url(#bg)" d="M0 0h595v842H0z"/>
+<circle cx="519" cy="199" r="140" fill="#50c8ff" opacity=".12"/><circle cx="519" cy="199" r="192" fill="none" stroke="#e8faff" opacity=".25" stroke-width="2"/><circle cx="519" cy="199" r="234" fill="none" stroke="#e8faff" opacity=".13" stroke-width="2"/>
+<path fill="#4ab0f6" opacity=".36" d="M0 426 70 366 117 391 193 326 271 397 364 299 449 369 522 310 595 386v160H0Z"/>
+<path fill="url(#ice)" d="m0 500 76-105 43 58 80-127 71 104 94-132 86 126 72-114 73 110v142H0z"/>
+<path fill="#0c61b4" opacity=".94" d="m0 561 100-64 95 45 76-65 131 74 99-66 94 68v103H0z"/>
+<path fill="url(#water)" d="M0 618c104-29 173-4 275-22s194-9 320 13v233H0z"/>
+<g font-family="Arial,Helvetica,sans-serif" fill="#fff">
+<text x="41" y="70" font-weight="900" font-size="52" letter-spacing="-2">Joseph</text>
+<text x="44" y="100" font-weight="700" font-size="18" letter-spacing="1.8">DIGITAL STRATEGIST</text>
+<path stroke="#78d6ff" stroke-width="2" d="M44 128h507"/>
+<text x="43" y="169" font-size="13" font-weight="700" letter-spacing="3">GUIDA GRATUITA 2026</text>
+<text x="40" y="243" font-weight="900" font-size="57" letter-spacing="-2">QUANTO VALE</text>
+<text x="40" y="301" font-weight="900" font-size="57" letter-spacing="-2">LA MIA CASA?</text>
+<rect x="43" y="329" width="118" height="6" rx="3" fill="#79d7ff"/>
+<text x="44" y="374" font-size="19" font-weight="700">Il valore giusto non si indovina.</text>
+<text x="44" y="403" font-size="18">Si costruisce con dati, confronti di</text>
+<text x="44" y="429" font-size="18">mercato e una strategia consapevole.</text>
+</g>
+<g filter="url(#shadow)">
+<path d="M57 581 295 472l243 109" fill="#083a7c" stroke="#fff" stroke-width="7" stroke-linejoin="round"/>
+<path d="M74 575h444v151H74z" fill="#f4fbff"/>
+<path d="M98 615h93v111H98z" fill="#0c559e"/><path d="M219 615h84v111h-84z" fill="#bde8ff"/><path d="M331 615h158v111H331z" fill="#1175b9"/>
+<path d="M144 616v111m131-111v111m135-111v111" stroke="#9edafa" stroke-width="6"/>
+<path d="M98 667h93m140 0h158" stroke="#9edafa" stroke-width="6"/>
+<path d="M74 727h444" stroke="#073f78" stroke-width="7"/>
+</g>
+<g fill="#f0f9ff" font-family="Arial,Helvetica,sans-serif"><text x="43" y="782" font-size="12" font-weight="700" letter-spacing="2">AVIGLIANA E VALLE DI SUSA</text><text x="43" y="810" font-size="13">Marketing territoriale • Analisi del mercato locale</text></g>
+</svg>
