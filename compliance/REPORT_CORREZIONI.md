@@ -30,3 +30,12 @@
 - Pianificare audit completo dei 94 HTML di applicativi secondari per rischio, partendo da `launcher-dashboard`.
 
 **Non considerare un workflow riuscito come attestazione GDPR.**
+
+## Scansione automatica integrale dell'account (verificata)
+Workflow: https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/actions/runs/40089972116
+- 6 repository, **128/128 HTML** letti senza errori (34+88+1+2+1+2).
+- 127 file senza hyperlink privacy riconoscibile nei pattern HTML; non significa 127 violazioni (applicativi, test e pagine non necessariamente pubbliche).
+- 66 file contenenti tag input; 26 file con riferimenti a storage browser.
+- 0 corrispondenze a tracker noti ricercati, 0 corrispondenze a pattern di segreti; controlli limitati al sorgente e ai pattern previsti.
+- CSV dettagliato e JSON aggregato salvati come artifact GitHub Actions; periodo di conservazione artifact configurato 30 giorni.
+**Ancora da svolgere:** valutazione dei flussi e processi reali, test runtime, identificazione titolari/fornitori e validazione legale; l'audit tecnico statico dei 128 non equivale ad approvazione GDPR.
