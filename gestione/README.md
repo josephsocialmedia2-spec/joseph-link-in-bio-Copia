@@ -33,9 +33,9 @@ Questo è un **sito pubblico statico** su GitHub Pages, non un'applicazione ammi
 
 ## Totali verificati il 24 ottobre 2026
 
-- 46 pagine web navigabili, inclusa la Regia Digitale.
-- 21 landing immobiliari, 18 landing per attività locali, 7 pagine di servizio.
-- 47 file HTML complessivi nel repository: uno è un modello tecnico interno, non una pagina pubblica.
+- 47 pagine web navigabili, inclusa la Regia Digitale.
+- 21 landing immobiliari, 18 landing per attività locali, 8 pagine di servizio.
+- 48 file HTML complessivi nel repository: uno è un modello tecnico interno, non una pagina pubblica.
 
 ## Inventario di riferimento
 

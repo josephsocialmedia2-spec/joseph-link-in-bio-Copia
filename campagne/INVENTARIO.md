@@ -2,7 +2,7 @@
 
 Aggiornato al 24 ottobre 2026. Il volantino A5 Joseph Digital Strategist costituisce il riferimento di brand identity per tutte le pagine immobiliari. Le immagini delle case sono illustrazioni artificiali dichiarate, non annunci di immobili reali.
 
-**21 landing immobiliari** (20 temi distinti + un approfondimento sui video); **18 landing attività locali**; **7 pagine di servizio (inclusa la Regia Digitale)** per un totale di **46 pagine web censite**.
+**21 landing immobiliari** (20 temi distinti + un approfondimento sui video); **18 landing attività locali**; **8 pagine di servizio (inclusa la Regia Digitale)** per un totale di **47 pagine web censite**.
 
 | ID | Settore | Angolo | URL | Email | WhatsApp | Telefono |
 |---|---|---|---|---|---|---|
@@ -46,18 +46,19 @@ Aggiornato al 24 ottobre 2026. Il volantino A5 Joseph Digital Strategist costitu
 | COM17 | attivita | Video brevi per attività locali | https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/attivita/video-brevi/ | agenziarealmediapro@gmail.com | 371 370 8294 | 352 202 4365 |
 | COM18 | attivita | Richieste commerciali via WhatsApp | https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/attivita/richieste-whatsapp/ | agenziarealmediapro@gmail.com | 371 370 8294 | 352 202 4365 |
 
-## Pagine di servizio e gestione (7)
+## Pagine di servizio e gestione (8)
 
 | Pagina | Percorso |
 |---|---|
 | Homepage | [Apri](https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/) |
 | Regia Digitale | [Apri](https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/) |
+| 23 strategie per le agenzie | [Apri](https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/strategie-immobiliari/) |
 | Agenzie partner | [Apri](https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/agenzie-partner/) |
 | Portale campagne | [Apri](https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/) |
 | Indice immobiliare | [Apri](https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/immobiliare/) |
 | Materiali promozionali | [Apri](https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/immobiliare/materiali-promozionali/) |
 | Privacy / censimento (bozza) | [Apri](https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/privacy-censimento/) |
 
-**Conteggio verificato sul branch `main`:** 47 file `.html` nel repository, di cui 46 corrispondono a pagine web navigabili. `campagne/assets/rmp-module-template.html` è un modello HTML tecnico e non è conteggiato come pagina pubblica. Il registro `campagne/CONTROLLO_LANDING.md` è un audit storico di una versione precedente del sito.
+**Conteggio verificato sul branch `main`:** 48 file `.html` nel repository, di cui 47 corrispondono a pagine web navigabili. `campagne/assets/rmp-module-template.html` è un modello HTML tecnico e non è conteggiato come pagina pubblica. Il registro `campagne/CONTROLLO_LANDING.md` è un audit storico di una versione precedente del sito.
 
 Il documento privacy/censimento resta preliminare e non costituisce informativa validata. L'instradamento dei contatti dei proprietari deve essere configurato solo dopo verifica della disciplina applicabile. Le landing non ospitano form né conservano dati personali.
