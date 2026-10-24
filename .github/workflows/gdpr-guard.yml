@@ -38,7 +38,11 @@ jobs:
           else
             python scripts/gdpr_guard.py
           fi
-      - name: Audit statico dei sei repository\n        env:\n          GITHUB_TOKEN: ${{ github.token }}\n        run: python scripts/gdpr_account_audit.py\n      - name: Conserva gli esiti
+      - name: Audit statico dei sei repository
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python scripts/gdpr_account_audit.py
+      - name: Conserva gli esiti
         if: always()
         uses: actions/upload-artifact@v4
         with:
