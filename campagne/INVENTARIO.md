@@ -2,7 +2,7 @@
 
 Aggiornato al 24 ottobre 2026. Il volantino A5 Joseph Digital Strategist costituisce il riferimento di brand identity per tutte le pagine immobiliari. Le immagini delle case sono illustrazioni artificiali dichiarate, non annunci di immobili reali.
 
-**21 landing immobiliari** (20 temi distinti + un approfondimento sui video); **18 landing attività locali**; **5 pagine di servizio** per un totale di **44 pagine HTML censite**.
+**21 landing immobiliari** (20 temi distinti + un approfondimento sui video); **18 landing attività locali**; **6 pagine di servizio** per un totale di **45 pagine HTML censite**.
 
 | ID | Settore | Angolo | URL | Email | WhatsApp | Telefono |
 |---|---|---|---|---|---|---|
