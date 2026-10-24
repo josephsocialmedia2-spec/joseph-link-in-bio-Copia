@@ -74,6 +74,8 @@ function renderDetail(){
  byId("request").value=st.request||"";
  Array.from(byId("detail").querySelectorAll("input[data-check]")).forEach(function(x){x.addEventListener("change",function(){var next=Array.from(byId("detail").querySelectorAll("input[data-check]:checked")).map(function(a){return Number(a.dataset.check)});putState(r.id,{checks:next})})});
  byId("taskStatus").addEventListener("change",function(e){putState(r.id,{status:e.target.value});renderList()});
+ byId("notes").addEventListener("blur",function(e){putState(r.id,{notes:e.target.value})});
+ byId("request").addEventListener("blur",function(e){putState(r.id,{request:e.target.value})});
  byId("save").addEventListener("click",function(){saveFields();toast("Note salvate in questo browser.")});
  byId("openIssue").addEventListener("click",function(){saveFields();var text=buildPrompt(r),link=GH+"/issues/new?title="+encodeURIComponent("Miglioramento "+r.id+": "+r.title)+"&body="+encodeURIComponent(text);window.open(link,"_blank","noopener,noreferrer")});
  byId("copyPrompt").addEventListener("click",function(){saveFields();copyText(buildPrompt(r))});
@@ -85,8 +87,9 @@ async function copyText(s){try{await navigator.clipboard.writeText(s);toast("Tes
 function select(id){if(byId("notes")&&record(selected))saveFields();selected=id;renderList();renderDetail();if(window.innerWidth<1090)byId("detail").scrollIntoView({behavior:"smooth",block:"start"})}
 function download(name,mime,content){var url=URL.createObjectURL(new Blob([content],{type:mime}));var a=document.createElement("a");a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url)},500)}
 function exportNotes(){if(byId("notes"))saveFields();download("realmediapro-note-landing.json","application/json",JSON.stringify({date:new Date().toISOString(),repository:REPO,notes:store},null,2));toast("Backup delle note esportato.")}
-function exportCsv(){var q=function(s){return '"'+String(s).replace(/"/g,'""')+'"'};var lines=[["ID","Titolo","Settore","Stato revisione","URL pubblico","File Github","Ramo","Note"].map(q).join(";")];records.forEach(function(r){lines.push([r.id,r.title,r.sector,state(r.id).status,pageUrl(r),sourceUrl(r),"main",state(r.id).notes||""].map(q).join(";"))});download("registro-landing-realmediapro.csv","text/csv;charset=utf-8","\ufeff"+lines.join("\r\n"));toast("Registro CSV esportato.")}
+function exportCsv(){if(byId("notes"))saveFields();var q=function(s){return '"'+String(s).replace(/"/g,'""')+'"'};var lines=[["ID","Titolo","Settore","Stato revisione","URL pubblico","File Github","Ramo","Note"].map(q).join(";")];records.forEach(function(r){lines.push([r.id,r.title,r.sector,state(r.id).status,pageUrl(r),sourceUrl(r),"main",state(r.id).notes||""].map(q).join(";"))});download("registro-landing-realmediapro.csv","text/csv;charset=utf-8","\ufeff"+lines.join("\r\n"));toast("Registro CSV esportato.")}
 async function checkAll(){
+ if(byId("notes"))saveFields();
  var btn=byId("checkAll");btn.disabled=true;btn.textContent="Verifica in corso…";var ok=0,errors=0;
  for(var i=0;i<records.length;i+=5){
   await Promise.all(records.slice(i,i+5).map(async function(r){try{var res=await fetch(pageUrl(r),{method:"GET",cache:"no-store"});var response=res.status;if(res.ok){var type=res.headers.get("content-type")||"";var t=await res.text();http[r.id]={code:type.includes("html")&&/<title[\s>]/i.test(t)?"ok":"other",status:response}}else http[r.id]={code:response===404?"404":"other",status:response};}catch(e){http[r.id]={code:"error",status:"Impossibile verificare"}}}));
@@ -96,6 +99,7 @@ async function checkAll(){
  btn.disabled=false;btn.textContent="Verifica URL HTTP";toast("Controllo HTTP: "+ok+" risposte valide, "+errors+" errori o non verificate. Non è un test grafico.");
 }
 async function syncFromGithub(){
+ if(byId("notes"))saveFields();
  var btn=byId("sync");btn.disabled=true;btn.textContent="Sincronizzazione…";
  try{
   var res=await fetch("https://api.github.com/repos/"+REPO+"/git/trees/main?recursive=1",{headers:{"Accept":"application/vnd.github+json"}});if(!res.ok)throw Error("Risposta GitHub API "+res.status);
