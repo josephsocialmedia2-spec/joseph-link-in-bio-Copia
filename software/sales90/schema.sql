@@ -127,7 +127,6 @@ create or replace function public.s90_claim_due_reminders(batch_size integer def
 returns setof public.s90_reminders language plpgsql
 security definer set search_path=pg_catalog,public as $$
 begin
- if current_user <> 'service_role' then raise exception 'service role required'; end if;
  return query
  with candidates as (
   select id from public.s90_reminders
