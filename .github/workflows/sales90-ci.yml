@@ -1,0 +1,27 @@
+name: Sales90 quality checks
+on:
+  pull_request:
+    paths:
+      - "software/sales90/**"
+      - ".github/workflows/sales90-ci.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Run Sales90 tests
+        working-directory: software/sales90
+        run: npm test
+      - name: Check no config with credentials was committed
+        run: |
+          test ! -f software/sales90/config.js
+          test ! -f software/sales90/.env
