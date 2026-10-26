@@ -77,3 +77,6 @@ python -m social_engine cleanup --campaign IMM01
 ```
 
 **Attenzione:** i download URL dei release asset pubblici sono accessibili a terzi. Usare soltanto materiali approvati per pubblicazione. Il programma non può verificare automaticamente che Later abbia effettivamente acquisito i media; in assenza di ricevute l'eliminazione è bloccata. Non inserire dati personali riservati nei media.
+## CI reale sui CSV
+
+Il workflow GitHub Actions esegue i 7 test automatici, legge anche i CSV originali delle 39 campagne / 117 post e produce un archivio temporaneo di consegna `joseph-later-handoff-117` (durata tre giorni).
