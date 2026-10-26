@@ -84,6 +84,6 @@ def remove_staged(root: Path, campaign: str, client: GitHubReleaseStaging):
     for name, info in list(state['files'].items()):
         client.remove(info['asset_id']);deleted+=1
         del state['files'][name];atomic_json(staged,state)
-    client.remove_release(state['release_id'])
+    # Keep empty release as a durable tombstone so autopilot never regenerates this campaign.
     state['cleaned_at']=utc_now();atomic_json(staged,state)
-    return {'deleted':deleted,'release_removed':True}
+    return {'deleted':deleted,'release_removed':False,'release_retained_as_tombstone':True}
