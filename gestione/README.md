@@ -2,6 +2,16 @@
 
 Dashboard: https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/
 
+## Catalogo clienti per WhatsApp Business
+
+Catalogo clienti: https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/scopri/
+
+- La pagina è pensata per essere aperta da smartphone nel messaggio automatico di benvenuto WhatsApp Business e contiene **46 destinazioni pubbliche**: 21 guide immobiliari, 18 percorsi per imprese e 7 approfondimenti.
+- Il catalogo è registrato come voce **SCOPRI** della Cabina di Regia (48 voci complessive); include il pulsante FATTO con data e i campi social.
+- **REGIA**, la pagina interna del Piano Editoriale e la bozza PRIVACY non sono elencate nel catalogo clienti. Il modello HTML tecnico non è una pagina promozionale.
+- Il Piano Editoriale mantiene **47 schede di contenuto**: il catalogo `SCOPRI` è un indice di navigazione, non un argomento aggiuntivo da pubblicare quotidianamente.
+- Il messaggio di benvenuto da copiare in WhatsApp Business è nel file [scopri/README.md](../scopri/README.md); questa dashboard non modifica automaticamente l'account WhatsApp.
+
 ## Piano editoriale (47 schede, 23 ore)
 
 Calendario: https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/piano-editoriale/
@@ -50,10 +60,10 @@ Questo è un **sito pubblico statico** su GitHub Pages, non un'applicazione ammi
 
 ## Totali verificati il 24 ottobre 2026
 
-- 47 pagine web navigabili, inclusa la Regia Digitale.
-- 21 landing immobiliari, 18 landing per attività locali, 8 pagine di servizio.
-- 48 file HTML complessivi nel repository: uno è un modello tecnico interno, non una pagina pubblica.
+- 48 pagine gestite nella Cabina di Regia, incluso il nuovo catalogo clienti.
+- 21 landing immobiliari, 18 landing per attività locali, 9 pagine di servizio.
+- 51 file HTML nel repository: 48 registrati, una guida aggiuntiva, un calendario editoriale interno e un modello tecnico.
 
 ## Inventario di riferimento
 
-[Inventario corrente (46 pagine)](../campagne/INVENTARIO.md) · [Audit storico delle prime pagine](../campagne/CONTROLLO_LANDING.md) · [Piano social](../campagne/PIANO_SOCIAL.md)
+[Inventario corrente (48 pagine)](../campagne/INVENTARIO.md) · [Audit storico delle prime pagine](../campagne/CONTROLLO_LANDING.md) · [Piano social](../campagne/PIANO_SOCIAL.md)
