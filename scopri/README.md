@@ -1,6 +1,10 @@
 # Catalogo per clienti — Real Media Pro
 
-URL da inserire nel messaggio di benvenuto WhatsApp Business:
+URL breve da inserire nel messaggio di benvenuto WhatsApp Business (fornito dal titolare; reindirizzamento da verificare manualmente):
+
+https://tinyurl.com/yeywfu6z
+
+Destinazione originale del catalogo (da mantenere come URL ufficiale):
 
 https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/scopri/
 
@@ -15,7 +19,7 @@ Benvenuto! Sono Joseph, Digital Strategist di Real Media Pro.
 Hai una casa da vendere, un'attività da promuovere o lavori in un'agenzia immobiliare?
 
 Ho raccolto qui tutte le guide e i servizi, divisi per argomento:
-https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/scopri/
+https://tinyurl.com/yeywfu6z
 
 Apri la sezione che ti interessa e scrivimi quale guida hai consultato: ti aiuterò a trovare le informazioni giuste.
 
