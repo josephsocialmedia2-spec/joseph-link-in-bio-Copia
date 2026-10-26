@@ -2,6 +2,23 @@
 
 Dashboard: https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/
 
+## Piano editoriale (47 schede, 23 ore)
+
+Calendario: https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/piano-editoriale/
+
+Il piano deriva dalla lettura delle 47 pagine registrate nella Cabina di Regia e usa [pagine.json](piano-editoriale/pagine.json) come fonte delle domande, risposte, errori comuni e azioni operative.
+
+- **47 uscite quotidiane** nel calendario completo, distribuite fra 00:00 e 22:59 nel fuso Europe/Rome. Gli orari ruotano giornalmente.
+- **329 uscite in sette giorni**, con sette angoli comunicativi: domanda, errore, verifiche, vero/falso, azione, scenario ipotetico e FAQ.
+- Filtri per **39 landing commerciali**, 21 immobiliari, 18 attività locali e 8 pagine di servizio.
+- **REGIA** è interna e **PRIVACY** è una bozza: il piano segnala entrambe come non adatte alla pubblicazione senza valutazione preventiva.
+- Ogni riga mostra orario, pagina, canale proposto, materiale creativo richiesto, stato e testo per il post. Lo stato si conserva solo nel browser; esporta il backup degli stati.
+- Esporta CSV per il giorno o per sette giorni, con contenuti completi, destinazioni UTM e formati suggeriti. Il CSV non pubblica nulla.
+- I collegamenti social sono letti dal file pubblico `gestione/social-links.json` e anche dalle impostazioni locali della Cabina di Regia nello stesso browser.
+- **Nessuna pubblicazione automatica è attivata.** L'eventuale importazione in un sistema esterno richiede revisione dei testi, produzioni grafiche e autorizzazioni ai profili.
+
+Il pianificatore è uno **strumento tecnico interno** e non viene incluso fra le 47 pagine editoriali da promuovere.
+
 ## FATTO con data e collegamenti social
 
 - Ogni pagina mostra il pulsante **✓ FATTO** con la data reale del completamento (formato italiano, fuso Europe/Rome). Premilo una seconda volta per annullare FATTO dopo conferma.

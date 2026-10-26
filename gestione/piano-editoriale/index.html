@@ -3,7 +3,7 @@
 var ROOT="https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/";
 var networks=["Facebook","Instagram","TikTok","YouTube"];
 var labels=["Domanda del giorno","Errore da evitare","Tre verifiche","Vero o falso?","Azione pratica","Esempio ipotetico","FAQ della settimana"];
-var data=[],social={},states={},date="",cache=[],key="rmp-piano47-v1";
+var data=[],social={},localSocial={},states={},date="",cache=[],key="rmp-piano47-v1";
 function el(id){return document.getElementById(id)}
 function esc(v){return String(v==null?"":v).replace(/[&<>"']/g,function(x){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[x]})}
 function today(){
@@ -17,7 +17,11 @@ function mod(n,m){return ((n%m)+m)%m}
 function weekday(d){return mod(new Date(d+"T12:00:00Z").getUTCDay()+6,7)}
 function platformKey(p){return p.toLowerCase()}
 function urlFor(r){return ROOT+r.path.replace(/index\.html$/,"")}
-function socialUrl(r,p){return (social[r.id]||{})[platformKey(p)]||""}
+function socialUrl(r,p){
+ var code=platformKey(p),local=(localSocial[r.id]||{}).social||{},raw=Object.prototype.hasOwnProperty.call(local,code)?local[code]:(social[r.id]||{})[code]||"";
+ if(!raw)return "";
+ try{var u=new URL(raw),expected={facebook:"facebook.com",instagram:"instagram.com",youtube:"youtube.com",tiktok:"tiktok.com"}[code],host=u.hostname.toLowerCase();if(u.protocol!=="https:"||!expected||(host!==expected&&!host.endsWith("."+expected)))return "";return u.href}catch(e){return ""}
+}
 function planned(scope){return data.filter(function(r){return scope==="39"?r.sector!=="Servizio":scope==="21"?r.sector==="Immobiliare":scope==="18"?r.sector==="Attività locali":scope==="8"?r.sector==="Servizio":true})}
 function time(minutes){return String(Math.floor(minutes/60)).padStart(2,"0")+":"+String(minutes%60).padStart(2,"0")}
 function schedule(d,scope){
@@ -93,7 +97,7 @@ function init(){
 }
 async function boot(){
  try{
-  date=today();try{states=JSON.parse(localStorage.getItem(key)||"{}")||{}}catch(e){states={}}
+  date=today();try{states=JSON.parse(localStorage.getItem(key)||"{}")||{}}catch(e){states={}}try{localSocial=JSON.parse(localStorage.getItem("rmp-workbench-v2")||"{}")||{}}catch(e){localSocial={}}
   init();
   var fetched=await Promise.all([fetch("./pagine.json",{cache:"no-store"}),fetch("../social-links.json",{cache:"no-store"})]);
   if(!fetched[0].ok)throw Error("Impossibile leggere le 47 schede: "+fetched[0].status);
