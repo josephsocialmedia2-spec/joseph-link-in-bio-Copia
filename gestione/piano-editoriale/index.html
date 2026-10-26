@@ -27,7 +27,7 @@ function time(minutes){return String(Math.floor(minutes/60)).padStart(2,"0")+":"
 function schedule(d,scope){
  var list=planned(scope),size=list.length,offset=dayNumber(d)-dayNumber("2026-10-26"),angle=weekday(d);if(!size)return [];
  return list.map(function(r,i){
-  var minute=Math.floor(mod(i+offset*11,size)*1380/size),network=networks[mod(i+offset,4)],link=new URL(urlFor(r));
+  var minute=Math.floor(mod(i*17+offset*11,size)*1380/size),network=networks[mod(i+offset,4)],link=new URL(urlFor(r));
   link.searchParams.set("utm_source",network.toLowerCase());link.searchParams.set("utm_medium","organic_social");
   link.searchParams.set("utm_campaign",r.id.toLowerCase());link.searchParams.set("utm_content",d+"-tema"+(angle+1));
   return {r:r,d:d,minute:minute,hour:time(minute),network:network,angle:angle,link:link.href}
