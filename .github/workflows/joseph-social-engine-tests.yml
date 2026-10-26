@@ -5,7 +5,7 @@ on:
     paths:
       - 'campagne/social-engine/**'
 jobs:
-  test:
+  test-and-plan:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -14,3 +14,17 @@ jobs:
           python-version: '3.13'
       - run: python -m pip install -r campagne/social-engine/requirements.txt
       - run: PYTHONPATH=campagne/social-engine python -m unittest discover -s campagne/social-engine/tests -v
+      - name: Validate actual 117 post CSVs and export handoff
+        run: >-
+          PYTHONPATH=campagne/social-engine python -m social_engine
+          --root campagne/social-engine/runtime-ci plan
+          --input campagne/assets/rmp-piano-social-63-post.csv
+          campagne/assets/piano-social-attivita-54-post-2026.csv
+          --start 2026-11-01T08:00:00+01:00 --hours 6
+      - uses: actions/upload-artifact@v4
+        with:
+          name: joseph-later-handoff-117
+          path: |
+            campagne/social-engine/runtime-ci/later_handoff.csv
+            campagne/social-engine/runtime-ci/queue.json
+          retention-days: 3
