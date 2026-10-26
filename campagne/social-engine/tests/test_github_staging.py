@@ -33,6 +33,6 @@ class StagingTests(unittest.TestCase):
             out=remove_staged(root,'COM01',github)
             self.assertEqual(out['deleted'],7)
             self.assertEqual(len(github.removed),7)
-            self.assertTrue(github.released)
+            self.assertFalse(github.released)
 
 if __name__=='__main__':unittest.main()
