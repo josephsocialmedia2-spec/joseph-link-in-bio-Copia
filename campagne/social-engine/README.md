@@ -80,3 +80,7 @@ python -m social_engine cleanup --campaign IMM01
 ## CI reale sui CSV
 
 Il workflow GitHub Actions esegue i 7 test automatici, legge anche i CSV originali delle 39 campagne / 117 post e produce un archivio temporaneo di consegna `joseph-later-handoff-117` (durata tre giorni).
+
+## Autopilota controllato
+
+Il workflow `.github/workflows/joseph-social-autopilot.yml` esegue un controllo ogni sei ore (UTC). Solo se `OPENAI_API_KEY` è configurato nel repository, genera tramite GPT Image una campagna con sette grafiche, le salva temporaneamente su GitHub Releases e si arresta quando due campagne sono in attesa di consegna a Later. Le release senza asset restano come indicatori per non rigenerare campagne già completate. L'assenza di un'API pubblica di pubblicazione Later significa che il caricamento e la programmazione effettivi in Later non sono automatizzati da questo software. La cancellazione dei media richiede evidenze di consegna verificabili.
