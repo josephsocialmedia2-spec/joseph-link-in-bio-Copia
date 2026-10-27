@@ -3,9 +3,49 @@ from __future__ import annotations
 import json
 import os
 import re
+from pathlib import Path
 from .branding import validate_copy, BrandViolation
 
 PLATFORMS = ("facebook", "instagram", "linkedin")
+CONVERSION_CONFIG = Path(__file__).resolve().parents[3] / "branding" / "conversion-cta.json"
+
+
+def load_conversion_cta() -> dict:
+    """Require an actual published form and free-guide URL, never invent a URL."""
+    if not CONVERSION_CONFIG.is_file():
+        raise BrandViolation("Missing required branding/conversion-cta.json")
+    policy = json.loads(CONVERSION_CONFIG.read_text(encoding="utf-8"))
+    for key in ("form_url", "guide_url"):
+        if not policy.get(key, "").startswith("https://josephsocialmedia2-spec.github.io/"):
+            raise BrandViolation(f"Unverified mandatory CTA URL: {key}")
+    if not policy.get("consent", {}).get("optional") or policy["consent"].get("default_checked") is not False:
+        raise BrandViolation("Marketing consent must be optional and never preselected")
+    return policy
+
+
+def attach_mandatory_cta(caption: str, policy: dict | None = None) -> str:
+    """Append complete conversion links even to Instagram, where URLs are non-clickable."""
+    p = policy or load_conversion_cta()
+    required = []
+    if p["form_url"] not in caption:
+        required.append("📝 Compila il modulo e scegli, se vuoi, il consenso facoltativo alle comunicazioni:")
+        required.append(p["form_url"])
+    elif "consens" not in caption.lower():
+        required.append("Il consenso a ricevere comunicazioni è facoltativo.")
+    if p["guide_url"] not in caption:
+        required.append("📘 Scarica la guida gratuita «Quanto vale la mia casa?»:")
+        required.append(p["guide_url"])
+    return caption.strip() + ("\n\n" + "\n".join(required) if required else "")
+
+
+def validate_mandatory_cta(caption: str, policy: dict | None = None) -> None:
+    p = policy or load_conversion_cta()
+    if p["form_url"] not in caption or p["guide_url"] not in caption:
+        raise BrandViolation("Caption REJECTED: compulsory form and free-guide links missing")
+    if "consens" not in caption.lower() or "facoltativ" not in caption.lower():
+        raise BrandViolation("Caption REJECTED: optional marketing-consent notice missing")
+    validate_copy(caption)
+
 
 
 def _json(text: str) -> dict:
@@ -44,11 +84,11 @@ Avoid prices/statistics not contained in the approved facts; do not invent quota
 properties, customer reviews, guarantees or third-party phone numbers.
 Do not repeat these recent captions: {previous}
 Write clear compelling first lines. Facebook 80-120 words, Instagram 55-100 words
-with 3-5 relevant hashtags and 'link in bio' instead of a clickable caption URL,
+with 3-5 relevant hashtags and BOTH compulsory FULL text URLs in the caption even if non-clickable,
 LinkedIn 100-140 words with an informative professional angle.
 For Facebook and LinkedIn include the landing. If a verified source was provided,
 attribute it naturally with its date, and provide the URL when useful.
-Return ONLY JSON of exactly this shape:
+MANDATORY CTA for EVERY social caption: include full link to the form, optional separate consent to marketing communications, AND direct free-guide download link, for Facebook, Instagram and LinkedIn.\nForm URL: {load_conversion_cta()['form_url']}\nGuide PDF URL: {load_conversion_cta()['guide_url']}\nNever represent marketing consent as mandatory for download or inquiries.\nReturn ONLY JSON of exactly this shape:
 {{"facebook":"caption", "instagram":"caption", "linkedin":"caption"}}
 """
     response = client.responses.create(model=os.getenv("OPENAI_CAPTION_MODEL", "gpt-4.1-mini"),
@@ -65,4 +105,6 @@ Return ONLY JSON of exactly this shape:
             raise BrandViolation(f"Landing URL missing in {platform}")
         if source_url and source_date and source_date[:4] not in cap and source_date not in cap:
             raise BrandViolation(f"Source period missing in {platform}")
+        data[platform] = attach_mandatory_cta(cap)
+        validate_mandatory_cta(data[platform])
     return data
