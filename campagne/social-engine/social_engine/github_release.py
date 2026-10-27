@@ -6,6 +6,7 @@ from pathlib import Path
 from urllib.request import Request, urlopen
 from urllib.parse import quote
 from urllib.error import HTTPError
+from PIL import Image
 from .core import load_json, atomic_json, sha256, utc_now
 
 
@@ -39,7 +40,8 @@ class GitHubReleaseStaging:
 
     def upload(self, release: dict, path: Path):
         link=release['upload_url'].split('{')[0]+'?name='+quote(path.name)
-        return self.request('POST',link,path.read_bytes(),'image/png')
+        content_type='image/jpeg' if path.suffix.lower() in {'.jpg','.jpeg'} else ('text/plain' if path.suffix=='.txt' else ('application/json' if path.suffix=='.json' else 'image/png'))
+        return self.request('POST',link,path.read_bytes(),content_type)
 
     def remove(self, asset_id: int):
         self.request('DELETE',f'https://api.github.com/repos/{self.repo}/releases/assets/{asset_id}')
@@ -58,9 +60,18 @@ def stage_to_github(root: Path, campaign: str, client: GitHubReleaseStaging):
     state=load_json(staged) if staged.exists() else {'campaign':campaign,'files':{},'staged_at':utc_now()}
     release=client.create_or_get_release(campaign)
     state['release_id']=release['id'];state['release_html_url']=release.get('html_url','')
-    for file in sorted(folder.glob('*.png')):
+    # Public JPEG previews are required by Instagram media_url publishing.
+    # Keep original audited PNGs and separately upload JPEG conversion + captions + manifest.
+    extra=[]
+    for png in sorted(folder.glob('*.png')):
+        with Image.open(png) as img:
+            img.convert('RGB').save(png.with_suffix('.jpg'),'JPEG',quality=94,subsampling=0)
+        extra.append(png.with_suffix('.jpg'))
+    export_files = sorted(folder.glob('*.png')) + extra + sorted(folder.glob('caption_*.txt')) + [folder/'manifest.json']
+    for file in export_files:
+        if not file.exists(): raise FileNotFoundError(file)
         checksum=sha256(file)
-        if file.stem not in manifest['assets'] or checksum!=manifest['assets'][file.stem]['sha256']:
+        if file.suffix=='.png' and (file.stem not in manifest['assets'] or checksum!=manifest['assets'][file.stem]['sha256']):
             raise ValueError('Unverified media or unexpected PNG in outbox')
         if file.name in state['files']:
             if state['files'][file.name]['sha256']!=checksum:
