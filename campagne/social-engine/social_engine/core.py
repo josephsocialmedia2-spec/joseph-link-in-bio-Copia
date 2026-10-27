@@ -154,7 +154,7 @@ class OpenAIOnlyGenerator:
             inputs.append(stack.enter_context(self.master_image.open('rb')))  # mandatory official brand master
             if previous and previous.exists():
                 inputs.append(stack.enter_context(previous.open('rb')))
-                prompt += '\nMaintain layout, palette, typographic hierarchy and face identity from the previous successfully brand-audited image, while preserving Joseph's true identity from the portrait reference and REAL MEDIA PRO master branding.'
+                prompt += '\nMaintain layout, palette, typographic hierarchy and face identity from the previous successfully brand-audited image, while preserving the verified Joseph face and true identity from the portrait reference and REAL MEDIA PRO master branding.'
             result = self.client.images.edit(model=self.model, image=inputs,
                 prompt=prompt, size='1024x1536', quality='high', output_format='png')
         data = result.data[0].b64_json
