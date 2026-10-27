@@ -1,0 +1,17 @@
+# REAL MEDIA PRO - file privati. Non caricare mai PII, database o prove su GitHub!
+**/*.sqlite3
+**/*.sqlite3-*
+**/*.db
+**/*.db-*
+privacy-censimento/privato/
+privacy-censimento/private/
+privacy-censimento/consensi-live/
+privacy-censimento/*-registro-reale.csv
+privacy-censimento/*-consensi-reali.csv
+privacy-censimento/*-clienti.csv
+**/whatsapp-export-*
+**/prova-consenso-*
+*.pem
+.env
+.env.*
+# Il template VUOTO privacy-censimento/registro-consensi-template.csv è consentito.
