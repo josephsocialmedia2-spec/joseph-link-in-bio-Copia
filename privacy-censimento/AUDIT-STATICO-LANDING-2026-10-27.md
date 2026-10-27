@@ -36,3 +36,11 @@ Non è stata eseguita un'analisi runtime nel browser, non sono state esaminate t
 Joseph Malafronte è stato identificato dall'interessato come **titolare persona fisica** per le attività di marketing e le richieste di contatto gestite direttamente sotto i marchi REAL MEDIA PRO e Joseph Digital Strategist. La privacy pubblica e entrambi i moduli immobiliari sono stati aggiornati; la preferenza marketing resta disattivata.
 
 **Ancora da definire:** recapito postale/indirizzo professionale pubblicabile, ruoli di terzi, fornitori, conservazione e consulenza per finalizzare l'informativa. L'identificazione del titolare non equivale a conformità GDPR generale.
+
+## Aggiornamento di accessibilità dell'informativa — 27 ottobre 2026
+Sono stati modificati i footer di **21 pagine** che non avevano un collegamento diretto all'informativa: **18 landing attività commerciali** e **3 pagine immobiliari/strategiche**. In tutte è stato aggiunto il link a `privacy-censimento/`, con l'indicazione trasparente «in completamento».
+
+Il controllo precedente segnalava tale assenza; la criticità del **collegamento diretto nel codice** è stata risolta per le 42 pagine del campione originale. Resta da effettuare la verifica visuale della posizione e della fruibilità su dispositivi mobili, l'analisi degli script collegati e la verifica di conformità e finalità per singola pagina. L'aggiunta di un link non rende da sola conforme al GDPR un trattamento.
+
+## Registro offline e politiche
+Sono stati creati `registro_privato.py`, `REGISTRO-USO-WINDOWS.md`, `TRATTAMENTI-FORNITORI-E-CONSERVAZIONE.md` e `.gitignore`. Il registro non usa API a pagamento e blocca le registrazioni promozionali finché la privacy non è validata. Non è ancora stato installato o utilizzato nel computer del titolare; le durate proposte non costituiscono cancellazioni effettuate.
