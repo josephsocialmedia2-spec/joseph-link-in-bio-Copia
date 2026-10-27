@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "brand": "REAL MEDIA PRO",
+  "professional": "Joseph Digital Strategist",
+  "territory": "Avigliana e Valle di Susa",
+  "archive": {
+    "path": "branding/REAL_MEDIA_PRO_BRAND_IDENTITY_GITHUB.zip",
+    "sha256": "f9697dba33fb64f5fbfd08768aa408e23f10c055aea6ad293027ce7827410357",
+    "original_images": 38,
+    "unique_images": 28,
+    "master": "immagini/22-real-media-pro-strategie-digitali-alpine.webp",
+    "secondary_master": "immagini/26-valuta-la-tua-casa-con-metodo.webp",
+    "status": "REQUIRES_BINARY_UPLOAD"
+  },
+  "colors": {
+    "navy": "#082C58",
+    "night": "#061A36",
+    "cobalt": "#1587E3",
+    "sky": "#59B9F6",
+    "white": "#FFFFFF",
+    "soft_white": "#F4FAFF",
+    "ink": "#102F54",
+    "whatsapp_cta": "#00BA66"
+  },
+  "typography": {
+    "headings": "Inter, Arial, sans-serif",
+    "body": "Inter, Arial, sans-serif"
+  },
+  "styles": [
+    "light_editorial",
+    "dark_blue_tech"
+  ],
+  "formats": {
+    "feed": "1080x1350",
+    "square": "1080x1080",
+    "story": "1080x1920"
+  },
+  "rules": {
+    "dominant_headline_max_words": 12,
+    "secondary_max_words": 17,
+    "content_blocks_max": 3,
+    "carousel_slides": 5,
+    "mandatory_logo": "REAL MEDIA PRO",
+    "mandatory_signature": "Joseph Digital Strategist",
+    "logo_mountains_reference": true,
+    "exact_joseph_photo_reference": "assets/joseph-malafronte.webp",
+    "source_required_for_market_claims": true,
+    "keep_geography_precise": true,
+    "no_fictitious_properties_or_reviews": true,
+    "ban_unverified_statistics": true,
+    "ban_mediation_claims_for_joseph": true,
+    "ban_unapproved_immobiliare_la_sacra_logo": true,
+    "ban_third_party_phone_numbers": true
+  },
+  "contact": {
+    "whatsapp_display": "371 370 8294",
+    "whatsapp": "https://wa.me/393713708294",
+    "telephone_display": "352 202 4365",
+    "telephone": "tel:+393522024365"
+  },
+  "commercial_partner": "Immobiliare La Sacra (professionisti abilitati; mediazione distinta dal marketing)",
+  "required_quality_gates": [
+    "verified_brand_archive",
+    "authenticated_source_for_current_claims",
+    "image_dimensions_and_file_integrity",
+    "automated_vision_review",
+    "human_first_batch_approval",
+    "approved_external_publisher",
+    "verified_delivery_receipt"
+  ]
+}
