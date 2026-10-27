@@ -31,3 +31,8 @@ Non è stata eseguita un'analisi runtime nel browser, non sono state esaminate t
 6. Testare gli invii e il funzionamento mobile di ogni modulo in ambiente pubblico senza dati di persone reali.
 
 **Conclusione:** revisione statica parziale, NON audit GDPR completo o certificazione di conformità.
+
+## Aggiornamento titolare · 27 ottobre 2026
+Joseph Malafronte è stato identificato dall'interessato come **titolare persona fisica** per le attività di marketing e le richieste di contatto gestite direttamente sotto i marchi REAL MEDIA PRO e Joseph Digital Strategist. La privacy pubblica e entrambi i moduli immobiliari sono stati aggiornati; la preferenza marketing resta disattivata.
+
+**Ancora da definire:** recapito postale/indirizzo professionale pubblicabile, ruoli di terzi, fornitori, conservazione e consulenza per finalizzare l'informativa. L'identificazione del titolare non equivale a conformità GDPR generale.
