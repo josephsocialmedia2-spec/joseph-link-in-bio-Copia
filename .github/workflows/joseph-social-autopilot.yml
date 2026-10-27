@@ -17,7 +17,7 @@ jobs:
         with:
           python-version: '3.13'
       - run: python -m pip install -r campagne/social-engine/requirements.txt
-      - name: Generate with OpenAI only and stage at most 2 awaiting Later
+      - name: Generate with OpenAI brand gate, captions and stage max 2
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           GITHUB_TOKEN: ${{ github.token }}
@@ -29,3 +29,17 @@ jobs:
           --portrait assets/joseph-malafronte.webp
           --repo josephsocialmedia2-spec/joseph-link-in-bio-Copia
           --start 2026-11-01T08:00:00+01:00 --max-pending 2
+
+      - name: Publish brand-approved media through official social APIs (explicit opt-in)
+        env:
+          SOCIAL_LIVE_PUBLISH: ${{ vars.SOCIAL_LIVE_PUBLISH }}
+          GITHUB_TOKEN: ${{ github.token }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          FB_PAGE_ACCESS_TOKEN: ${{ secrets.FB_PAGE_ACCESS_TOKEN }}
+          IG_ACCOUNT_ID: ${{ secrets.IG_ACCOUNT_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          LINKEDIN_OWNER_URN: ${{ secrets.LINKEDIN_OWNER_URN }}
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+        run: >-
+          PYTHONPATH=campagne/social-engine python -m social_engine.publisher
+          --repo josephsocialmedia2-spec/joseph-link-in-bio-Copia
