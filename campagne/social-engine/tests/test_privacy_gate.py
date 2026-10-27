@@ -35,6 +35,9 @@ class PrivacyGateTests(unittest.TestCase):
             self.assertIn("persona fisica", page)
         self.assertIn("REAL MEDIA PRO", privacy)
         self.assertIn("recapito postale", privacy.lower())
+        self.assertIn("Via Umberto I, 96", privacy)
+        self.assertIn("10057", privacy)
+        self.assertIn("Sant’Ambrogio di Torino", privacy)
 
     def test_privacy_notice_does_not_claim_full_validation(self):
         text = PRIVACY.read_text(encoding="utf-8").lower()
