@@ -4,6 +4,10 @@ on:
   push:
     paths:
       - 'campagne/social-engine/**'
+      - 'privacy-censimento/**'
+      - 'branding/conversion-cta.json'
+      - 'campagne/immobiliare/valore-casa/index.html'
+      - 'campagne/immobiliare/vendere-seconda-casa/index.html'
 jobs:
   test-and-plan:
     runs-on: ubuntu-latest
