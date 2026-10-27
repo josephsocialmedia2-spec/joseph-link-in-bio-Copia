@@ -1,0 +1,34 @@
+{
+  "project": "REAL MEDIA PRO",
+  "status": "BLOCKED_PENDING_VERIFIED_BACKUP_AND_SOCIAL_AUTH",
+  "timezone": "Europe/Rome",
+  "daily_times": [
+    "10:00",
+    "16:00",
+    "20:00"
+  ],
+  "platforms": [
+    "facebook",
+    "instagram",
+    "linkedin"
+  ],
+  "links": {
+    "agentpricing": "https://www.agentpricing.com/j.malafronte",
+    "whatsapp": "https://wa.me/393713708294"
+  },
+  "caption_source": "campagne/immobiliare/social-quotidiano/caption-master.md",
+  "media_source": "VID-20261027-WA0006.mp4",
+  "storage_policy": "no_supabase_video_upload",
+  "deployment_policy": "no_automatic_activation_before_dry_run_and_approval",
+  "limits": {
+    "plan": "free",
+    "alert_percent": 70,
+    "block_percent": 80
+  },
+  "safety": {
+    "isolate_from_existing_services": true,
+    "no_paid_upgrades": true,
+    "no_deletion_without_verified_backup": true,
+    "require_idempotency": true
+  }
+}
