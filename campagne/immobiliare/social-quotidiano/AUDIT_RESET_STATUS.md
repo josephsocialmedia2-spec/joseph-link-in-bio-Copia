@@ -1,25 +1,55 @@
-# REAL MEDIA PRO — stato ricostruzione (2026-10-27)
+# REAL MEDIA PRO — audit operativo 27 ottobre 2026
 
-## Audit verificato
-- Supabase Free project: nqnmlsmeiynxbdojeyjt.
-- Database stimato da pg_database_size: 372108435 byte; 187 tabelle public.
-- Storage: 177 oggetti; dimensione dai metadati circa 1542567148 byte (non equivale necessariamente al consumo fatturabile).
-- 31 Edge Functions attive.
-- Esempi di dati da proteggere: leads (~5020), properties (~2048), tasks (~2351), interactions (~2630), approval_queue (~1120).
-- Repository storico open-social-scheduler: README non trovato (404); non è prova definitiva dell'inesistenza.
-- Video locale VID-20261027-WA0006.mp4: H.264/AAC, 480x854, 17.57 secondi, 3540857 byte.
+## Stato della missione
+Audit parziale: VERIFICATO. Backup integrale e ripristino: BLOCCATO.
+Reset, ricostruzione in produzione, pubblicazione e attivazione: NON ESEGUITO.
 
-## Stato
-- Inventario parziale: VERIFICATO.
-- Backup integrale di database + Storage + Edge Functions + test di ripristino: BLOCCATO (non disponibile con gli strumenti correnti).
-- Reset distruttivo: NON ESEGUITO; vietato fino a backup verificato e conferma finale sulle conseguenze.
-- Collegamenti OAuth e pubblicazione reale: NON VERIFICATI.
-- Scheduler di produzione: NON ATTIVO.
+## Misure rilevate tramite connettore Supabase
+- Progetto nqnmlsmeiynxbdojeyjt: ACTIVE_HEALTHY; PostgreSQL 17.6.1.166.
+- Organizzazione: piano free verificato.
+- Database: 372198547 byte al momento della lettura.
+- Tabelle public: 185 (il precedente riferimento a 187 non è confermato).
+- Policy RLS complessive: 464.
+- Utenti Auth: 4.
+- Migrazioni registrate: 176.
+- Storage: 11 bucket, 177 oggetti; 1542567148 byte secondo i metadati, non misura del consumo fatturato.
+- Edge Functions: 31, tutte restituite ACTIVE.
+- Cron: 12 job attivi; quattro hanno frequenza 10 seconds.
+- cron.job_run_details occupa 249184256 byte, indici inclusi.
+- Conteggi esatti: leads 5020; properties 2048; tasks 2351; interactions 2629; approval_queue 1120.
+- Catalogo tabelle letto per gli schemi non di catalogo; reltuples è una stima, non conteggio esatto per tutte le tabelle.
+- Estensioni installate: http 1.6, pg_cron 1.6.4, pg_net 0.20.4, pg_stat_statements 1.11, pg_trgm 1.6, pgcrypto 1.3, plpgsql 1.0, supabase_vault 0.3.1, uuid-ossp 1.1, vector 0.8.2.
 
-## Specifica
-- Europe/Rome: 10:00, 16:00, 20:00 ogni giorno; tre piattaforme.
-- AgentPricing: https://www.agentpricing.com/j.malafronte
-- WhatsApp: https://wa.me/393713708294
-- Prima di attivare: verificare quote effettive e autorizzazioni; dry-run, prova reale autorizzata, quindi attivazione.
+## Dipendenze e impatto
+Esistono risorse CRM, campagne, contenuti, email, territorio, casefamiglia, empatia e marta.
+L'elenco completo delle applicazioni esterne dipendenti NON è verificato.
+Un reset potrebbe interrompere acquisizione contatti, CRM, accesso ai media, campagne e automazioni esistenti.
+Nessun job è stato disattivato e nessuna risorsa Supabase modificata.
 
-Il file locale `REAL_MEDIA_PRO_STAGING_DRY_RUN.zip` contiene uno script offline di generazione di nove bozze al giorno; non pubblica e non accede a Supabase.
+## GitHub
+caption-master.md e automation-config.json: letti e verificati.
+open-social-scheduler: get_repo restituisce 404; può essere assente o non accessibile al connettore.
+Configurazione richiesta confermata: Europe/Rome, 10:00 / 16:00 / 20:00, Facebook / Instagram / LinkedIn.
+
+## Blocco backup
+La dashboard nel browser disponibile richiede il login.
+I comandi supabase, pg_dump, docker e gh non risultano presenti nel PATH del runtime.
+Non è stata stabilita una connessione PostgreSQL diretta autenticata né un canale di download completo dello Storage privato.
+Il connettore SQL consente l'inventario ma l'inventario non costituisce backup.
+Non è stato creato BACKUP_SUPABASE_PRE_RESET_REAL_MEDIA_PRO.zip.
+Non è stata effettuata una prova di ripristino.
+Non sono stati esportati valori di secrets o credenziali.
+Il prossimo passaggio è autenticare la dashboard, poi verificare una via di esportazione e ripristino completa; il login da solo non garantisce il backup.
+
+## Attività ancora da eseguire
+- Inventario completo con conteggi esatti per ogni tabella, definizioni, trigger, indici, policy, webhook, secrets (solo nomi) e dipendenze esterne.
+- Backup database, Storage, sorgenti Edge Functions, Auth esportabile e configurazioni; checksum e prova isolata.
+- Conferma esplicita prima del reset, inclusione separata degli utenti Auth.
+- Nuova infrastruttura, dashboard protetta e integrazioni OAuth.
+- Video: dati presenti nel precedente audit, NON ricontrollati in questa esecuzione.
+- Quote residue: NON VERIFICATE. Nessun upgrade o acquisto eseguito.
+- Test automatici e dry run della nuova infrastruttura: NON ESEGUITO.
+- Facebook / Instagram / LinkedIn: autorizzazioni API NON VERIFICATE.
+- Prova reale e attivazione finale: NON ESEGUITO; richiedono le autorizzazioni previste dall'utente.
+
+La documentazione ufficiale consultata per il backup è https://supabase.com/docs/guides/platform/migrating-within-supabase/backup-restore .
