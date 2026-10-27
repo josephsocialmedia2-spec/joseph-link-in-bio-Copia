@@ -54,7 +54,7 @@ Aggiornato al 24 ottobre 2026. Il volantino A5 Joseph Digital Strategist costitu
 | Catalogo clienti (WhatsApp) | [Apri](https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/scopri/) |
 | Regia Digitale | [Apri](https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/) |
 | 23 strategie per le agenzie | [Apri](https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/strategie-immobiliari/) |
-| Agenzie partner | [Apri](https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/agenzie-partner/) |
+| Immobiliare La Sacra · Partner commerciale | [Apri](https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/agenzie-partner/) |
 | Portale campagne | [Apri](https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/) |
 | Indice immobiliare | [Apri](https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/immobiliare/) |
 | Materiali promozionali | [Apri](https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/immobiliare/materiali-promozionali/) |
