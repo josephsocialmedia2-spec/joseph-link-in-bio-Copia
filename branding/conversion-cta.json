@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "policy": "MANDATORY_FOR_EVERY_SOCIAL_CAPTION",
+  "platforms": [
+    "facebook",
+    "instagram",
+    "linkedin"
+  ],
+  "form_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/immobiliare/valore-casa/#modulo-whatsapp",
+  "guide_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/immobiliare/valore-casa/Guida_Quanto_Vale_La_Mia_Casa_Joseph_Digital_Strategist.pdf",
+  "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/immobiliare/valore-casa/",
+  "privacy_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/privacy-censimento/",
+  "cta_form": "Compila il modulo per richiedere informazioni e scegli liberamente se ricevere comunicazioni.",
+  "cta_guide": "Scarica gratuitamente la guida «Quanto vale la mia casa?» (PDF).",
+  "consent": {
+    "optional": true,
+    "default_checked": false,
+    "separate_from_request": true,
+    "not_a_condition_of_download": true,
+    "no_promotional_processing_until_privacy_final": true,
+    "evidence": "Solo messaggio WhatsApp effettivamente inviato; niente registrazione su GitHub Pages",
+    "privacy_notice_status": "PRELIMINARY_NOT_VALIDATED"
+  },
+  "validation": {
+    "requires_form_url": true,
+    "requires_guide_url": true,
+    "requires_consent_wording": true,
+    "applies_to_instagram_full_url_even_if_not_clickable": true
+  },
+  "status": "CALL_TO_ACTION_ENABLED__MARKETING_CONSENT_PROCESSING_PENDING_PRIVACY_REVIEW"
+}
