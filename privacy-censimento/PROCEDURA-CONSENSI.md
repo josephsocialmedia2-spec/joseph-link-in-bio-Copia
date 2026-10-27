@@ -1,5 +1,5 @@
 # REAL MEDIA PRO — Procedura operativa privacy per landing e contatti
-**Versione di lavoro:** 27 ottobre 2026. **Stato:** bozza di implementazione, revisione e adozione necessarie prima del marketing diretto.
+**Versione di lavoro:** 27 ottobre 2026. **Stato:** bozza di implementazione, revisione e adozione necessarie prima del marketing diretto. **Titolare confermato dall'interessato:** Joseph Malafronte, persona fisica, per le attività di trattamento gestite direttamente sotto il nome commerciale REAL MEDIA PRO / Joseph Digital Strategist.
 **Riferimento normativo:** GDPR UE 2016/679 artt. 5, 6, 7, 12–14, 15–22, 28, 30, 32; Codice privacy italiano art. 130; indicazioni Garante/EDPB.
 
 ## 1. Funzioni correnti e limiti reali
@@ -16,7 +16,8 @@
 5. Documenta separatamente eventuali opposizioni e richieste di cancellazione in un registro protetto; sospendi subito il marketing eventualmente in corso al ricevimento della revoca.
 
 ## 3. Prima di riattivare il consenso marketing (gate bloccanti)
-- [ ] **Soggetto titolare:** nome/ragione sociale, forma giuridica se applicabile, sede/indirizzo di contatto, email e telefono corretti; eventuali contitolari/responsabili individuati.
+- [x] **Identità del titolare delle attività dirette:** Joseph Malafronte, persona fisica; REAL MEDIA PRO / Joseph Digital Strategist è il nome commerciale, non un ulteriore titolare per tali attività. Email: agenziarealmediapro@gmail.com; WhatsApp: 371 370 8294; telefono: 352 202 4365.
+- [ ] **Recapito postale/indirizzo professionale e ruoli di terzi:** confermare un indirizzo pubblicabile e, caso per caso, i ruoli di eventuali agenzie/clienti, contitolari e responsabili; non inventare indirizzi né attribuire automaticamente a Joseph i trattamenti di Immobiliare La Sacra.
 - [ ] **Finalità e basi giuridiche:** richieste in ingresso, valutazione/mediazione effettuata da abilitati, marketing WhatsApp, email, eventuale profilazione e censimento nominativo valutati separatamente.
 - [ ] **Informativa art. 13:** destinatari/categorie, eventuali trasferimenti extra SEE e relative garanzie, conservazione effettiva dei dati, conseguenze del mancato conferimento, diritti e reclamo, fonte se dati non raccolti direttamente, eventuali decisioni automatizzate quando presenti.
 - [ ] **Registro trattamenti e fornitori:** hosting GitHub Pages, WhatsApp/Meta, eventuale email, cloud, CRM, strumenti advertising, Agenzia e fornitori, dati trasferiti, ruoli e accordi.
@@ -43,7 +44,7 @@ Formulazione veritiera: “Compila il modulo per richiedere informazioni. Il con
 
 ## 6. Stato e responsabilità
 - **Completato nel codice:** separazione richiesta/promozioni; download senza form; checkbox marketing disabilitata; link e messaggio esplicito; QA delle caption.
-- **Non completabile senza dati del responsabile del progetto:** identificazione legale definitiva, ruoli e accordi con fornitori, tempi di conservazione realmente attuati, scelta di un archivio privato per la prova e revoca, revisione dell'informativa.
+- **Identità individuata:** Joseph Malafronte, persona fisica, indicato come titolare delle attività dirette. **Da completare:** recapito postale di contatto, ruoli e accordi con terze parti/fornitori, tempi di conservazione realmente attuati, scelta di un archivio privato per la prova e revoca e revisione dell'informativa.
 - **Non dimostrato:** conformità GDPR globale delle altre landing e campagne, trattamento di elenchi e contatti pregressi, invii marketing già eseguiti.
 
 ## 7. Fonti istituzionali
