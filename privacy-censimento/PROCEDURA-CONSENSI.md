@@ -29,6 +29,17 @@
 - [ ] **Test end-to-end:** richiesta form senza consenso; download gratuito senza registrazione; messaggio WhatsApp non spedito finché l'utente non lo invia; opt-in facoltativo specifico; prova registrata in archivio privato; revoca; mobile/accessibilità.
 - [ ] **Revisione privacy qualificata:** l'identità del titolare, le basi giuridiche e la correttezza del processo marketing devono essere validate prima di abilitare il flag `marketing_enabled`.
 
+## 3-bis. Strumenti tecnici predisposti (NON equivale ad adozione operativa)
+- [x] Inventario tecnico di GitHub Pages, WhatsApp e altri servizi: `privacy-censimento/TRATTAMENTI-FORNITORI-E-CONSERVAZIONE.md`.
+- [x] Politica interna **proposta**: riesame dopo 12 mesi per richieste chiuse senza incarico; non è un termine universale imposto dal GDPR, va approvato e attuato su chat, email, file e backup.
+- [x] Programma locale senza API `privacy-censimento/registro_privato.py` per richieste e opposizioni, con blocco dell'opt-in marketing finché il gate privacy non è validato.
+- [x] Istruzioni Windows `privacy-censimento/REGISTRO-USO-WINDOWS.md`, template CSV vuoto e `.gitignore` anti-caricamento accidentale di database reali.
+- [x] Test automatici senza dati reali per registro, banner privacy, modulo e scelta di consenso.
+- [x] Promemoria mensile in ChatGPT «Controllo privacy REAL MEDIA PRO», primo lunedì del mese; verifica documentale, non cancellazione automatica.
+- [ ] **Non ancora attivato sul computer del titolare:** archivio privato (SQLite / altro CRM) protetto, workflow effettivo di conservazione/cancellazione con backup, verifica credenziali e permessi, responsabilità operative e test reali.
+- [ ] **Non ancora completati:** contratti e ruoli dei provider, tipo WhatsApp effettivo, verifica dei trasferimenti, conservazione concreta e validazione legale dell'informativa.
+- [ ] **Non ancora permesso:** promozione verso contatti e iscrizione marketing tramite checkbox (resta `disabled`).
+
 ## 4. Schema registro privato
 Template privo di dati personali: `privacy-censimento/registro-consensi-template.csv`. Copiarlo **fuori dal repository pubblico**, in uno spazio privato protetto con autorizzazioni e backup adeguati, prima di inserire qualsiasi dato reale.
 
