@@ -46,7 +46,7 @@ Codice: `campagne/social-engine/social_engine/publisher.py`.
 - `IG_ACCOUNT_ID`, `IG_ACCESS_TOKEN`: profilo Instagram professionale collegato e permessi.
 - `LINKEDIN_OWNER_URN`, `LINKEDIN_ACCESS_TOKEN`: membro/persona o pagina autorizzata, con permesso `w_member_social` o `w_organization_social` secondo il caso.
 
-**Repository variable:** `SOCIAL_LIVE_PUBLISH=true` SOLO dopo il collaudo, altrimenti lascia disattivata. Il workflow gira ogni sei ore e il publisher non pubblica senza questa variabile.
+**Repository variables:** `BRAND_FIRST_BATCH_APPROVED=true` soltanto dopo aver esaminato il primo lotto visivo; `SOCIAL_LIVE_PUBLISH=true` SOLO dopo il collaudo dei 3 account, altrimenti lascia disattivata. Il workflow gira ogni sei ore e il publisher non pubblica senza questa variabile.
 
 ## Workflow del motore
 `.github/workflows/joseph-social-autopilot.yml`
