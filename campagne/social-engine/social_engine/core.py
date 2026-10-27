@@ -12,6 +12,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 from typing import Protocol
+from .branding import verify_brand_archive, extract_master_image, visual_review, BrandViolation, validate_copy
 
 TZ = ZoneInfo('Europe/Rome')
 SUPPORTED = {'facebook', 'instagram', 'linkedin'}
@@ -120,7 +121,7 @@ def prompt_for(item: dict, kind: str, slide: int | None = None) -> str:
         'Grafica statica: una headline + sottotitolo + CTA.' if kind == 'static' else 'Cover Story: headline breve, composizione verticale, CTA visibile.')
     return f'''Create ONE premium Italian social media image for Joseph Digital Strategist. Campaign {item['code']} — {title}.
 Use attached Joseph portrait as EXACT face identity reference; keep same identifiable face, no invented new identity. Scene: Joseph actually working (presenting a strategy, reviewing web analytics, filming marketing content). AI illustration must not imply a real witnessed event or customer testimonial.
-Use coherent pre-approved brand: deep navy #061A36, cobalt #005CA8, light cyan #69D9FF, white; restrained yellow CTA. Confident, editorial, contemporary, photorealistic work scene with uncluttered typography, not a generic template. Professional look. Respect accurate spelling in Italian.
+Use strictly approved REAL MEDIA PRO visual identity from branding/brand.json and the supplied brand MASTER image: navy #082C58 and #061A36, cobalt #1587E3, sky #59B9F6, pure white, subdued green only for WhatsApp CTA. Logo with blue geometric alpine mountains. Use clean, airy premium editorial composition, never copy overloaded flyer layouts. Confident, editorial, contemporary, photorealistic work scene with uncluttered typography, not a generic template. Professional look. Respect accurate spelling in Italian.
 {style_for(item['code'])}
 Source message: {copy}
 Visual narrative for {kind} {slide or ''}: {detail}
@@ -142,15 +143,18 @@ class OpenAIOnlyGenerator:
         from openai import OpenAI
         self.client = OpenAI()
         self.model = model
+        self.brand = verify_brand_archive()
+        self.master_image = extract_master_image(Path(os.getenv("RUNNER_TEMP", "/tmp")) / "rmp_brand_reference", self.brand)
 
     def generate(self, prompt: str, output: Path, reference: Path, previous: Path | None = None) -> None:
         if not reference.exists(): raise FileNotFoundError(f'Portrait reference missing: {reference}')
         from contextlib import ExitStack
         with ExitStack() as stack:
             inputs=[stack.enter_context(reference.open('rb'))]
+            inputs.append(stack.enter_context(self.master_image.open('rb')))  # mandatory official brand master
             if previous and previous.exists():
                 inputs.append(stack.enter_context(previous.open('rb')))
-                prompt += '\nMaintain visual continuity from the previous approved campaign image supplied as the second reference, while preserving Joseph identity from the first reference.'
+                prompt += '\nMaintain layout, palette, typographic hierarchy and face identity from the previous successfully brand-audited image, while preserving Joseph's true identity from the portrait reference and REAL MEDIA PRO master branding.'
             result = self.client.images.edit(model=self.model, image=inputs,
                 prompt=prompt, size='1024x1536', quality='high', output_format='png')
         data = result.data[0].b64_json
@@ -193,11 +197,37 @@ def generate_campaign(root: Path, campaign: str, reference: Path, generator: Gen
         prompt=prompt_for(items[0], kind, number)
         (folder/(key+'.prompt.txt')).write_text(prompt,encoding='utf8')
         generator.generate(prompt,output,reference,previous)
+        # The actual production generator is subject to a separate independent multimodal
+        # brand critic. Every slide uses the last ACCEPTED slide autoregressively.
+        if isinstance(generator, OpenAIOnlyGenerator):
+            audit=None
+            for attempt in range(3):
+                audit=visual_review(generator.client, output, generator.master_image, reference)
+                if audit['pass']:
+                    break
+                if attempt == 2:
+                    output.unlink(missing_ok=True)
+                    raise BrandViolation('Brand identity QA failed: '+str(audit['issues']))
+                repair='Recreate this visual correcting ALL brand audit failures: '+audit['repair_prompt']+'; '+', '.join(audit['issues'])
+                generator.generate(prompt+'\\n'+repair,output,reference,previous)
+            manifest.setdefault('quality',{})[key]=audit
         manifest['assets'][key]=validate_image(output)
         previous=output
         atomic_json(manifestfile,manifest)
-    for item in items:
-        (folder/('caption_'+item['channel']+'.txt')).write_text(item['copy'], encoding='utf8')
+    if isinstance(generator, OpenAIOnlyGenerator) and len(manifest['assets']) == 7:
+        from .caption_engine import create_social_captions
+        # Existing draft copy is an editorial seed, not permission to fabricate or infer market data.
+        # If any dated/statistical claims are present, the caption engine requires verified sources.
+        captions=create_social_captions(generator.client, items[0]['title'], items[0]['copy'],
+                                        items[0]['landing'], items[0].get('source_url'),
+                                        items[0].get('source_date'))
+        for channel,caption in captions.items():
+            (folder/('caption_'+channel+'.txt')).write_text(caption, encoding='utf8')
+        manifest['caption_status']='generated_not_published'
+        manifest['caption_sources']={'url':items[0].get('source_url'), 'date':items[0].get('source_date')}
+    elif not isinstance(generator, OpenAIOnlyGenerator):
+        for item in items:
+            (folder/('caption_'+item['channel']+'.txt')).write_text(item['copy'], encoding='utf8')
     if len(manifest['assets'])==7:
         manifest['status']='ready_for_later_import'
     atomic_json(manifestfile,manifest)
