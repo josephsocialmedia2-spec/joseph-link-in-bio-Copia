@@ -24,29 +24,41 @@ def load_conversion_cta() -> dict:
 
 
 def attach_mandatory_cta(caption: str, policy: dict | None = None) -> str:
-    """Append complete conversion links even to Instagram, where URLs are non-clickable."""
+    """Append honest conversion links without representing disabled marketing opt-in as live."""
     p = policy or load_conversion_cta()
-    required = []
+    missing = []
     if p["form_url"] not in caption:
-        required.append("📝 Compila il modulo e scegli, se vuoi, il consenso facoltativo alle comunicazioni:")
-        required.append(p["form_url"])
-    elif "consens" not in caption.lower():
-        required.append("Il consenso a ricevere comunicazioni è facoltativo.")
+        missing.extend(["📝 Compila il modulo per chiedere informazioni sul tuo immobile:", p["form_url"]])
     if p["guide_url"] not in caption:
-        required.append("📘 Scarica la guida gratuita «Quanto vale la mia casa?»:")
-        required.append(p["guide_url"])
-    return caption.strip() + ("\n\n" + "\n".join(required) if required else "")
+        missing.extend(["📘 Scarica subito la guida gratuita «Quanto vale la mia casa?»:", p["guide_url"]])
+    if p["consent"].get("enabled") is False:
+        disclaimer = ("Il consenso facoltativo alle comunicazioni promozionali non è "
+                      "ancora attivabile: l'iscrizione resta sospesa. "
+                      "Modulo e guida sono disponibili senza aderire al marketing.")
+    else:
+        disclaimer = ("Il consenso facoltativo alle comunicazioni promozionali è separato "
+                      "dalla richiesta e non serve per scaricare la guida.")
+    if disclaimer not in caption:
+        missing.append(disclaimer)
+    return caption.strip() + ("\n\n" + "\n".join(missing) if missing else "")
 
 
 def validate_mandatory_cta(caption: str, policy: dict | None = None) -> None:
     p = policy or load_conversion_cta()
     if p["form_url"] not in caption or p["guide_url"] not in caption:
-        raise BrandViolation("Caption REJECTED: compulsory form and free-guide links missing")
+        raise BrandViolation("Caption REJECTED: compulsory form and guide PDF URLs missing")
     if "consens" not in caption.lower() or "facoltativ" not in caption.lower():
-        raise BrandViolation("Caption REJECTED: optional marketing-consent notice missing")
+        raise BrandViolation("Caption REJECTED: optional consent notice missing")
+    if p["consent"].get("enabled") is False:
+        if "non è ancora attivabile" not in caption.lower() or "iscrizione resta sospesa" not in caption.lower():
+            raise BrandViolation("Caption REJECTED: privacy gate must say promotional opt-in is unavailable")
+        risky_claims = (
+            r"spunta(?:re)? la casella", r"seleziona (?:la )?casella del consenso",
+            r"scegli di ricevere comunicazioni", r"acconsenti (?:a |alle )?comunicazioni",
+        )
+        if any(re.search(pat, caption, flags=re.I) for pat in risky_claims):
+            raise BrandViolation("Caption REJECTED: implies currently active marketing signup")
     validate_copy(caption)
-
-
 
 def _json(text: str) -> dict:
     m = re.search(r"\{[\s\S]*\}", text)
@@ -88,7 +100,7 @@ with 3-5 relevant hashtags and BOTH compulsory FULL text URLs in the caption eve
 LinkedIn 100-140 words with an informative professional angle.
 For Facebook and LinkedIn include the landing. If a verified source was provided,
 attribute it naturally with its date, and provide the URL when useful.
-MANDATORY CTA for EVERY social caption: include full link to the form, optional separate consent to marketing communications, AND direct free-guide download link, for Facebook, Instagram and LinkedIn.\nForm URL: {load_conversion_cta()['form_url']}\nGuide PDF URL: {load_conversion_cta()['guide_url']}\nNever represent marketing consent as mandatory for download or inquiries.\nReturn ONLY JSON of exactly this shape:
+MANDATORY CTA for EVERY social caption: include full link to the form, explain that optional marketing consent is currently DISABLED until privacy compliance is reviewed (no opt-in can be given today), AND direct free-guide PDF download link, for Facebook, Instagram and LinkedIn. NEVER tell visitors to tick the disabled marketing checkbox.\nForm URL: {load_conversion_cta()['form_url']}\nGuide PDF URL: {load_conversion_cta()['guide_url']}\nNever represent marketing consent as mandatory for download or inquiries.\nReturn ONLY JSON of exactly this shape:
 {{"facebook":"caption", "instagram":"caption", "linkedin":"caption"}}
 """
     response = client.responses.create(model=os.getenv("OPENAI_CAPTION_MODEL", "gpt-4.1-mini"),
