@@ -10,7 +10,7 @@
       "sector": "Servizio",
       "path": "index.html",
       "question": "Perché una strategia territoriale aiuta la vendita?",
-      "answer": "Una campagna coordinata collega il messaggio al territorio e ai servizi delle agenzie partner.",
+      "answer": "Una campagna coordinata collega il messaggio al territorio e ai servizi del partner commerciale Immobiliare La Sacra.",
       "mistake": "Limitarsi a pubblicare l'annuncio.",
       "action": "Collega pagina, pubblico e richiesta di informazioni.",
       "technical": false
@@ -28,13 +28,13 @@
     },
     {
       "id": "PARTNER",
-      "title": "Programma Agenzie Partner",
+      "title": "Immobiliare La Sacra · Partner commerciale",
       "sector": "Servizio",
       "path": "agenzie-partner/index.html",
-      "question": "Come funziona il partner unico per Comune?",
-      "answer": "L'accordo di marketing territoriale prevede una sola agenzia partner attiva per Comune.",
-      "mistake": "Confondere l'esclusiva commerciale del programma con quella degli immobili.",
-      "action": "Verifica la disponibilità del Comune e le condizioni.",
+      "question": "Qual è il partner commerciale immobiliare di REAL MEDIA PRO?",
+      "answer": "Immobiliare La Sacra è il partner commerciale: i suoi agenti abilitati gestiscono mediazione, valutazioni e trattative. Joseph Digital Strategist cura marketing e contatto promozionale.",
+      "mistake": "Confondere il marketing di Joseph con la mediazione affidata ai professionisti abilitati.",
+      "action": "Contatta Joseph su WhatsApp 371 370 8294 per informazioni sul percorso promozionale.",
       "technical": false
     },
     {
