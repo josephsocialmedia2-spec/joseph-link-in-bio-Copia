@@ -53,3 +53,15 @@ Il prossimo passaggio è autenticare la dashboard, poi verificare una via di esp
 - Prova reale e attivazione finale: NON ESEGUITO; richiedono le autorizzazioni previste dall'utente.
 
 La documentazione ufficiale consultata per il backup è https://supabase.com/docs/guides/platform/migrating-within-supabase/backup-restore .
+
+
+## Avanzamento esportazione senza browser
+- COMPLETATO: recuperati i file sorgenti restituiti per tutte le 31 Edge Functions.
+- COMPLETATO: esportati cataloghi con 244 tabelle non di catalogo, 3415 colonne, 939 vincoli, 719 indici, 464 policy, 74 trigger, 186 funzioni/procedure applicative e 176 migrazioni.
+- COMPLETATO: conteggi esatti per 244 tabelle, effettuati su database attivo senza snapshot comune.
+- COMPLETATO: manifest 11 bucket/177 oggetti; non contiene i byte dei file Storage.
+- VERIFICATO: archivio parziale di 45 file, 603796 byte, CRC e SHA-256 verificati dopo rilettura.
+- SHA-256 ZIP: 1e666cc23e8a6a6df2ec2522770740a706b0ce78632f9968ebfb4a525f5ca337.
+- Nome: ESPORTAZIONE_PARZIALE_SUPABASE_20261027.zip. Archivio conservato separatamente dal repository, non pubblicato su GitHub Pages.
+- BLOCCATO: dump dati completo e download Storage privato, in assenza di un canale autenticato utilizzabile da client PostgreSQL/Storage.
+- NON ESEGUITO: prova di ripristino, reset e ricostruzione di produzione. L'integrità dello ZIP non equivale a ripristinabilità del progetto.
