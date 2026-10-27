@@ -10,16 +10,26 @@
   "guide_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/immobiliare/valore-casa/Guida_Quanto_Vale_La_Mia_Casa_Joseph_Digital_Strategist.pdf",
   "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/immobiliare/valore-casa/",
   "privacy_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/privacy-censimento/",
-  "cta_form": "Compila il modulo per richiedere informazioni e scegli liberamente se ricevere comunicazioni.",
-  "cta_guide": "Scarica gratuitamente la guida «Quanto vale la mia casa?» (PDF).",
+  "cta_form": "Compila il modulo per richiedere informazioni. Il consenso facoltativo alle comunicazioni promozionali è temporaneamente non attivo.",
+  "cta_guide": "Scarica subito gratuitamente la guida «Quanto vale la mia casa?» anche senza registrazione o consenso marketing.",
   "consent": {
     "optional": true,
     "default_checked": false,
     "separate_from_request": true,
     "not_a_condition_of_download": true,
     "no_promotional_processing_until_privacy_final": true,
-    "evidence": "Solo messaggio WhatsApp effettivamente inviato; niente registrazione su GitHub Pages",
-    "privacy_notice_status": "PRELIMINARY_NOT_VALIDATED"
+    "evidence": "Nessun consenso promozionale viene raccolto ora; WhatsApp è usato unicamente per richiesta spontanea dell'interessato",
+    "privacy_notice_status": "PRELIMINARY_NOT_VALIDATED",
+    "enabled": false,
+    "status": "DISABLED_PENDING_PRIVACY_APPROVAL",
+    "activation_requirements": [
+      "final_article_13_notice",
+      "controller_identity_and_contact",
+      "recipient_processor_review",
+      "defined_retention_and_deletion",
+      "consent_proof_and_withdrawal_register",
+      "manual_approval"
+    ]
   },
   "validation": {
     "requires_form_url": true,
@@ -27,5 +37,5 @@
     "requires_consent_wording": true,
     "applies_to_instagram_full_url_even_if_not_clickable": true
   },
-  "status": "CALL_TO_ACTION_ENABLED__MARKETING_CONSENT_PROCESSING_PENDING_PRIVACY_REVIEW"
+  "status": "REQUEST_AND_GUIDE_AVAILABLE__PROMOTIONAL_OPTIN_DISABLED_PENDING_PRIVACY_REVIEW"
 }
