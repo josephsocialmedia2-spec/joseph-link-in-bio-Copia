@@ -54,6 +54,8 @@ def _li_request(url, token, data=None, method=None, raw=False):
 def _need_env():
     names = ("FB_PAGE_ID", "FB_PAGE_ACCESS_TOKEN", "IG_ACCOUNT_ID", "IG_ACCESS_TOKEN",
              "LINKEDIN_OWNER_URN", "LINKEDIN_ACCESS_TOKEN", "GITHUB_TOKEN")
+    if os.getenv("BRAND_FIRST_BATCH_APPROVED", "").strip().lower() != "true":
+        raise BrandViolation("Live publishing blocked: first batch must be approved (BRAND_FIRST_BATCH_APPROVED)")
     missing = [name for name in names if not os.getenv(name)]
     if missing:
         raise BrandViolation("Publishing blocked: missing required GitHub Secrets " + ", ".join(missing))
