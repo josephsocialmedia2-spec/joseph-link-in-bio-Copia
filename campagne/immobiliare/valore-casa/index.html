@@ -330,10 +330,10 @@ button{cursor:pointer}
 <div class="field wide"><label for="note">Una caratteristica importante (facoltativa)</label><textarea id="note" name="note" maxlength="400" placeholder="Es. casa su due livelli, giardino, vicinanza alla stazione... Non inserire dati personali di altre persone."></textarea></div>
 <div class="field wide" style="background:#edf7ff;border:1px solid #79b9ed;border-radius:12px;padding:14px;margin-top:8px">
 <label for="marketingConsent" style="display:flex;align-items:flex-start;gap:12px;cursor:pointer">
-<input id="marketingConsent" name="marketingConsent" type="checkbox" style="flex:0 0 auto;width:22px;height:22px;margin-top:2px" value="si">
-<span><strong>Consenso facoltativo alle comunicazioni</strong><small style="display:block;font-weight:400;margin-top:6px">Selezionando la casella, desidero ricevere da Joseph Digital Strategist / REAL MEDIA PRO comunicazioni informative e promozionali sul marketing e sulla preparazione alla vendita immobiliare, via WhatsApp. Posso cambiare idea in qualsiasi momento scrivendo a <a href="mailto:agenziarealmediapro@gmail.com">agenziarealmediapro@gmail.com</a>.</small></span>
+<input id="marketingConsent" name="marketingConsent" type="checkbox" style="flex:0 0 auto;width:22px;height:22px;margin-top:2px" value="si" disabled aria-disabled="true">
+<span><strong>Comunicazioni promozionali: iscrizione temporaneamente non attiva</strong><small style="display:block;font-weight:400;margin-top:6px">La scelta facoltativa di ricevere aggiornamenti e offerte via WhatsApp sarà disponibile dopo il completamento dell'informativa privacy e del sistema di registrazione, verifica e revoca del consenso. Questa casella è disattivata: non stiamo raccogliendo consensi promozionali.</small></span>
 </label>
-<small style="display:block;margin-top:9px">La casella non è preselezionata e NON è necessaria per inviare la richiesta o scaricare la guida gratuita. La preferenza scelta sarà inserita esclusivamente nel messaggio WhatsApp che deciderai se inviare. <a href="../../../privacy-censimento/" target="_blank" rel="noopener noreferrer">Informazioni privacy (documento preliminare in revisione)</a>. Non verranno avviate comunicazioni promozionali sulla base di questa scelta finché l'informativa e le procedure di gestione del consenso non saranno completate e validate.</small>
+<small style="display:block;margin-top:9px">Puoi compilare il modulo e <a href="#guida-gratuita">scaricare subito la guida gratuita</a> senza accettare comunicazioni promozionali. Nessuna iscrizione automatica. Consulta le <a href="../../../privacy-censimento/#richieste-web" target="_blank" rel="noopener noreferrer">informazioni su richieste e WhatsApp (documento in completamento)</a>. L'invio del messaggio resta una tua scelta.</small>
 </div>
 </div>
 <button type="submit" class="formButton">✆ PREPARA IL MESSAGGIO WHATSAPP ↗</button>
@@ -372,7 +372,7 @@ var lines=[
 "Incarico in corso: "+(field("incarico")||"non indicato")
 ];
 if(field("note"))lines.push("Note: "+field("note"));
-lines.push("Preferenza comunicazioni promozionali via WhatsApp (facoltativa): "+(document.getElementById("marketingConsent").checked?"SÌ, desidero riceverle":"NO, non ho espresso consenso"));
+lines.push("Comunicazioni promozionali: nessun consenso raccolto; iscrizione temporaneamente non attiva.");
 lines.push("","Vorrei ricevere informazioni per capire il valore orientativo e il percorso di vendita. Grazie.");
 return lines.join("\n");
 }
