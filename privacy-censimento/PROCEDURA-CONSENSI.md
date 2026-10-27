@@ -17,7 +17,8 @@
 
 ## 3. Prima di riattivare il consenso marketing (gate bloccanti)
 - [x] **Identità del titolare delle attività dirette:** Joseph Malafronte, persona fisica; REAL MEDIA PRO / Joseph Digital Strategist è il nome commerciale, non un ulteriore titolare per tali attività. Email: agenziarealmediapro@gmail.com; WhatsApp: 371 370 8294; telefono: 352 202 4365.
-- [ ] **Recapito postale/indirizzo professionale e ruoli di terzi:** confermare un indirizzo pubblicabile e, caso per caso, i ruoli di eventuali agenzie/clienti, contitolari e responsabili; non inventare indirizzi né attribuire automaticamente a Joseph i trattamenti di Immobiliare La Sacra.
+- [x] **Recapito postale di corrispondenza privacy:** Via Umberto I, 96 — 10057 Sant'Ambrogio di Torino (TO), Italia. La via e il CAP sono stati riscontrati sul territorio; la destinazione a recapito di corrispondenza è dichiarata dal titolare, non è attestazione di sede aperta al pubblico.
+- [ ] **Ruoli di terzi:** verificare caso per caso i ruoli di agenzie/clienti, contitolari e responsabili; non attribuire automaticamente a Joseph i trattamenti di Immobiliare La Sacra.
 - [ ] **Finalità e basi giuridiche:** richieste in ingresso, valutazione/mediazione effettuata da abilitati, marketing WhatsApp, email, eventuale profilazione e censimento nominativo valutati separatamente.
 - [ ] **Informativa art. 13:** destinatari/categorie, eventuali trasferimenti extra SEE e relative garanzie, conservazione effettiva dei dati, conseguenze del mancato conferimento, diritti e reclamo, fonte se dati non raccolti direttamente, eventuali decisioni automatizzate quando presenti.
 - [ ] **Registro trattamenti e fornitori:** hosting GitHub Pages, WhatsApp/Meta, eventuale email, cloud, CRM, strumenti advertising, Agenzia e fornitori, dati trasferiti, ruoli e accordi.
@@ -44,7 +45,7 @@ Formulazione veritiera: “Compila il modulo per richiedere informazioni. Il con
 
 ## 6. Stato e responsabilità
 - **Completato nel codice:** separazione richiesta/promozioni; download senza form; checkbox marketing disabilitata; link e messaggio esplicito; QA delle caption.
-- **Identità individuata:** Joseph Malafronte, persona fisica, indicato come titolare delle attività dirette. **Da completare:** recapito postale di contatto, ruoli e accordi con terze parti/fornitori, tempi di conservazione realmente attuati, scelta di un archivio privato per la prova e revoca e revisione dell'informativa.
+- **Identità individuata:** Joseph Malafronte, persona fisica, indicato come titolare delle attività dirette. **Recapito postale dichiarato:** Via Umberto I, 96 — 10057 Sant'Ambrogio di Torino (TO). **Da completare:** ruoli e accordi con terze parti/fornitori, tempi di conservazione realmente attuati, scelta di un archivio privato per la prova e revoca e revisione dell'informativa.
 - **Non dimostrato:** conformità GDPR globale delle altre landing e campagne, trattamento di elenchi e contatti pregressi, invii marketing già eseguiti.
 
 ## 7. Fonti istituzionali
