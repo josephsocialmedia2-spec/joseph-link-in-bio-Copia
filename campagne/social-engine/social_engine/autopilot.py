@@ -15,7 +15,16 @@ def select_next(queue: list[dict], releases: list[dict], max_pending: int = 2):
         if not tag.startswith('joseph-staging-'):continue
         code=tag[len('joseph-staging-'):].upper()
         staged[code] = release
-    pending=sum(1 for value in staged.values() if value.get('assets'))
+    def is_unfinished(value):
+        if not value.get('assets'):
+            return False
+        try:
+            record = __import__('json').loads(value.get('body') or '{}')
+        except (TypeError, ValueError):
+            record = {}
+        receipts = record.get('receipts', {})
+        return not all(ch in receipts and receipts[ch].get('post_id') for ch in ('facebook', 'instagram', 'linkedin'))
+    pending=sum(1 for value in staged.values() if is_unfinished(value))
     if pending>=max_pending: return None, f'Paused: {pending} pending campaigns not yet imported into Later'
     codes=list(dict.fromkeys(p['code'] for p in queue))
     for code in codes:
