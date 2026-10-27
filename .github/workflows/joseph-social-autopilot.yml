@@ -33,6 +33,7 @@ jobs:
       - name: Publish brand-approved media through official social APIs (explicit opt-in)
         env:
           SOCIAL_LIVE_PUBLISH: ${{ vars.SOCIAL_LIVE_PUBLISH }}
+          BRAND_FIRST_BATCH_APPROVED: ${{ vars.BRAND_FIRST_BATCH_APPROVED }}
           GITHUB_TOKEN: ${{ github.token }}
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
           FB_PAGE_ACCESS_TOKEN: ${{ secrets.FB_PAGE_ACCESS_TOKEN }}
