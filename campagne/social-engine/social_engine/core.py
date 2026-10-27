@@ -125,7 +125,7 @@ Use strictly approved REAL MEDIA PRO visual identity from branding/brand.json an
 {style_for(item['code'])}
 Source message: {copy}
 Visual narrative for {kind} {slide or ''}: {detail}
-Display mark 'JOSEPH DIGITAL STRATEGIST'; subline 'IL METODO REMARKETING'. Max 22 words of large text. Text must remain legible on phone, with safe margins. Do not include a printed web URL (CTA link is in post caption). No fake badges, sales guarantees, real-estate mediation promises, fabricated numbers, screenshots of invented dashboards, third-party logos, or watermark. Avoid overly busy decorative vectors.
+Display authentic blue alpine mountains REAL MEDIA PRO logo as in the approved master; underneath display 'Joseph Digital Strategist'. Mention 'Il Metodo Remarketing' only when relevant. Do not invent a logo or use a generic monogram. Max 22 words of large text. Text must remain legible on phone, with safe margins. Do not include a printed web URL (CTA link is in post caption). No fake badges, sales guarantees, real-estate mediation promises, fabricated numbers, screenshots of invented dashboards, third-party logos, or watermark. Avoid overly busy decorative vectors.
 Generate portrait composition 2:3 allowing center crop to 4:5 for feed. Produce real pixels, no SVG substitutes.'''
 
 
