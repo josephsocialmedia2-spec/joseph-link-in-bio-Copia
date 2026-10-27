@@ -328,6 +328,13 @@ button{cursor:pointer}
 <div class="field"><label for="tempi">Quando vorresti vendere?</label><select id="tempi" name="tempi"><option>Voglio solo capire il valore</option><option>Entro 3 mesi</option><option>Entro 6 mesi</option><option>Entro 12 mesi</option><option>Non ho ancora deciso</option></select></div>
 <div class="field wide"><label for="incarico">Hai già affidato un incarico a un'agenzia?</label><select id="incarico" name="incarico"><option value="Non indicato">Preferisco non indicarlo</option><option>No</option><option>Sì, incarico attualmente in corso</option><option>Incarico scaduto o cessato</option></select></div>
 <div class="field wide"><label for="note">Una caratteristica importante (facoltativa)</label><textarea id="note" name="note" maxlength="400" placeholder="Es. casa su due livelli, giardino, vicinanza alla stazione... Non inserire dati personali di altre persone."></textarea></div>
+<div class="field wide" style="background:#edf7ff;border:1px solid #79b9ed;border-radius:12px;padding:14px;margin-top:8px">
+<label for="marketingConsent" style="display:flex;align-items:flex-start;gap:12px;cursor:pointer">
+<input id="marketingConsent" name="marketingConsent" type="checkbox" style="flex:0 0 auto;width:22px;height:22px;margin-top:2px" value="si">
+<span><strong>Consenso facoltativo alle comunicazioni</strong><small style="display:block;font-weight:400;margin-top:6px">Selezionando la casella, desidero ricevere da Joseph Digital Strategist / REAL MEDIA PRO comunicazioni informative e promozionali sul marketing e sulla preparazione alla vendita immobiliare, via WhatsApp. Posso cambiare idea in qualsiasi momento scrivendo a <a href="mailto:agenziarealmediapro@gmail.com">agenziarealmediapro@gmail.com</a>.</small></span>
+</label>
+<small style="display:block;margin-top:9px">La casella non è preselezionata e NON è necessaria per inviare la richiesta o scaricare la guida gratuita. La preferenza scelta sarà inserita esclusivamente nel messaggio WhatsApp che deciderai se inviare. <a href="../../../privacy-censimento/" target="_blank" rel="noopener noreferrer">Informazioni privacy (documento preliminare in revisione)</a>. Non verranno avviate comunicazioni promozionali sulla base di questa scelta finché l'informativa e le procedure di gestione del consenso non saranno completate e validate.</small>
+</div>
 </div>
 <button type="submit" class="formButton">✆ PREPARA IL MESSAGGIO WHATSAPP ↗</button>
 <div class="preview"><span class="title">Anteprima del messaggio</span><pre id="messagePreview" aria-live="polite">Compila i campi per visualizzare il messaggio WhatsApp.</pre></div>
@@ -365,6 +372,7 @@ var lines=[
 "Incarico in corso: "+(field("incarico")||"non indicato")
 ];
 if(field("note"))lines.push("Note: "+field("note"));
+lines.push("Preferenza comunicazioni promozionali via WhatsApp (facoltativa): "+(document.getElementById("marketingConsent").checked?"SÌ, desidero riceverle":"NO, non ho espresso consenso"));
 lines.push("","Vorrei ricevere informazioni per capire il valore orientativo e il percorso di vendita. Grazie.");
 return lines.join("\n");
 }
