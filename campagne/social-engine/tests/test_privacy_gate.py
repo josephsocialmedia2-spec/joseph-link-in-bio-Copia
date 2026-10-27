@@ -26,6 +26,16 @@ class PrivacyGateTests(unittest.TestCase):
         self.assertIn('download="Guida_Quanto_Vale_La_Mia_Casa_Joseph_Digital_Strategist.pdf"', text)
         self.assertTrue(GUIDE.is_file())
 
+    def test_named_controller_visible_in_notice_and_lead_pages(self):
+        privacy = PRIVACY.read_text(encoding="utf-8")
+        home = LEAD.read_text(encoding="utf-8")
+        second = (ROOT / "campagne" / "immobiliare" / "vendere-seconda-casa" / "index.html").read_text(encoding="utf-8")
+        for page in (privacy, home, second):
+            self.assertIn("Joseph Malafronte", page)
+            self.assertIn("persona fisica", page)
+        self.assertIn("REAL MEDIA PRO", privacy)
+        self.assertIn("recapito postale", privacy.lower())
+
     def test_privacy_notice_does_not_claim_full_validation(self):
         text = PRIVACY.read_text(encoding="utf-8").lower()
         self.assertIn("informativa in completamento", text)
