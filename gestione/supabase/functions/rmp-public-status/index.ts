@@ -14,13 +14,16 @@ const json = (data, status=200) => new Response(JSON.stringify(data), {status, h
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, {status: 204, headers});
   if (req.method !== "GET") return json({error:"method_not_allowed"},405);
-  const secret=Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  // Preferisci le nuove chiavi server-side Supabase; fallback alle chiavi legacy.
+  let secret = "";
+  try { secret = JSON.parse(Deno.env.get("SUPABASE_SECRET_KEYS") || "{}").default || ""; } catch { /* fallback */ }
+  if (!secret) secret = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
   const url=Deno.env.get("SUPABASE_URL");
   if (!secret || !url || !url.startsWith("https://" + PROJECT + ".supabase.co"))
     return json({error:"backend_not_configured"},503);
   try {
     const res=await fetch(url + "/rest/v1/rmp_publication_jobs?select=platform,track_slug,status&limit=1000", {
-      method:"GET", headers:{"apikey":secret,"Authorization":"Bearer "+secret,"Accept":"application/json"},
+      method:"GET", headers:{ "apikey":secret, ...(secret.startsWith("sb_secret_") ? {} : {"Authorization":"Bearer "+secret}), "Accept":"application/json"},
       signal:AbortSignal.timeout(8000)
     });
     if (!res.ok) return json({error:"database_unavailable"},503);
