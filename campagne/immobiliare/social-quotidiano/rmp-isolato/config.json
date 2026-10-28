@@ -1,0 +1,35 @@
+{
+  "brand": "Joseph Digital Strategist — REAL MEDIA PRO",
+  "mode": "SAFE_STAGING_NO_LIVE",
+  "timezone": "Europe/Rome",
+  "daily_times": [
+    "10:00",
+    "16:00",
+    "20:00"
+  ],
+  "platforms": [
+    "facebook",
+    "instagram",
+    "linkedin"
+  ],
+  "video_original": "VID-20261027-WA0006.mp4",
+  "video_normalized": "VID-20261027-WA0006_META_48K.mp4",
+  "video_sha256_original": "24148c620f19747ffc7cb8a865680e19b40411ac1d21d3fa2288b8c552fe97cb",
+  "links": {
+    "agentpricing": "https://www.agentpricing.com/j.malafronte",
+    "whatsapp": "https://wa.me/393713708294"
+  },
+  "queue_max_lag_minutes": 45,
+  "retry_limit": 2,
+  "quota_alert_percent": 70,
+  "quota_block_percent": 80,
+  "safety": {
+    "production_enabled": false,
+    "old_supabase_project_denied": "nqnmlsmeiynxbdojeyjt",
+    "tokens": "github_actions_secrets_only",
+    "video": "external_https_url_only_after_rights_verified",
+    "billing": "no_upgrades",
+    "missing_quota": "UNKNOWN_BLOCK",
+    "uncertain_publish": "STOP_AND_RECONCILE"
+  }
+}
