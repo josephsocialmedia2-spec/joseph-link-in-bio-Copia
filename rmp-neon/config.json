@@ -1,1 +1,6 @@
-{"authUrl":"","dataApiUrl":"","schema":"rmp","note":"Neon URLs must be configured; never add database passwords or API secrets."}
+ 
+{
+  "authUrl": "https://ep-summer-mud-b9wuefow.neonauth.c-7.eu-central-1.aws.neon.tech/real_media_pro/auth",
+  "dataApiUrl": "https://ep-summer-mud-b9wuefow.apirest.c-7.eu-central-1.aws.neon.tech/real_media_pro/rest/v1",
+  "schema": "rmp"
+}
