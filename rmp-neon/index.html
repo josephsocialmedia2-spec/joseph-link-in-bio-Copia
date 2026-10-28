@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://*.neon.tech https://*.neon.build https://esm.sh https://*.esm.sh; img-src 'self' data:; style-src 'self'; script-src 'self' https://esm.sh https://*.esm.sh; object-src 'none'; base-uri 'none'; form-action 'self'">
+<title>REAL MEDIA PRO | Dashboard Neon</title>
+<link rel="stylesheet" href="./style.css"></head><body>
+<header class="mast"><div class="brand"><div class="brandmark">RMP</div><div><strong>REAL MEDIA PRO</strong><small>Nuovo pannello sicuro · Neon Free</small></div></div><span id="stateBadge" class="status">Non collegato</span></header>
+<main>
+<section class="intro"><div><p class="eyebrow">JOSEPH DIGITAL STRATEGIST · AVIGLIANA E VALLE DI SUSA</p><h1>Dashboard pubblicazioni</h1><p>Facebook, Instagram, LinkedIn · 10:00 / 16:00 / 20:00 · ora italiana. La pubblicazione resta sospesa fino a verifica.</p></div><button id="logout" class="ghost" hidden>Esci</button></section>
+<section id="loginBox" class="panel auth"><h2>Accesso amministratore</h2><p>Per un accesso verificato usa il tuo account Google. In alternativa crea un account con email e password. La password resta gestita da Neon Auth e non viene salvata su GitHub.</p>
+<button id="googleLogin" type="button">Accedi con Google</button>
+<p>Oppure con email:</p>
+<form id="loginForm"><label>Email<input id="email" type="email" required autocomplete="username"></label><label>Password<input id="password" type="password" required minlength="12" autocomplete="current-password"></label>
+<div class="actions"><button type="submit">Accedi</button><button type="button" id="register" class="ghost">Crea account</button></div></form>
+<p id="loginError" class="error" role="alert"></p><p class="hint">Dopo la registrazione l'amministratore dovrà autorizzare il tuo utente. Nessun dato è accessibile prima della verifica.</p></section>
+<section id="approvalBox" class="panel auth" hidden><h2>Accesso creato, autorizzazione in attesa</h2><p>Hai effettuato l'accesso, ma il tuo account non è ancora autorizzato a vedere i dati REAL MEDIA PRO.</p><p id="currentAccount"></p><button id="retryApproval" type="button" class="ghost">Verifica autorizzazione</button></section>
+<section id="app" hidden><div class="metrics" id="metrics"></div>
+<nav class="tabs" aria-label="Sezioni della dashboard"><button data-tab="calendar" class="selected">Calendario</button><button data-tab="next">Prossime</button><button data-tab="accounts">Connessioni</button><button data-tab="history">Storico</button><button data-tab="errors">Errori</button><button data-tab="usage">Consumi</button><button data-tab="admin">Impostazioni</button></nav>
+<section class="panel"><div class="section-head"><h2 id="tabTitle">Calendario</h2><button class="ghost" id="refresh">Aggiorna dati</button></div><div id="content" class="scroll"></div></section>
+<footer>Nessun accesso pubblico al database. Il pannello non contiene password PostgreSQL, token Facebook, Instagram o LinkedIn. Quote non verificate = pubblicazioni sospese.</footer></section>
+</main><script type="module" src="./app.js"></script></body></html>
