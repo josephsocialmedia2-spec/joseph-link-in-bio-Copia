@@ -120,7 +120,7 @@ def quotas_ok():
 
 def graph_get(node, fields, token):
     query = urlencode({"fields": fields, "access_token": token})
-    return req(GRAPH + "/" + quote(str(node), safe="") + "?" + query)[1]
+    return req(GRAPH + "/" + quote(str(node), safe="/") + "?" + query)[1]
 
 
 def graph_post(node, values, token):
@@ -385,7 +385,6 @@ def seed(days=4):
     count = 0
     for step in range(days):
         for item in daily_posts(now + timedelta(days=step)):
-            db("rmp_posts", "POST", item, "?on_conflict=id") if False else None
             # On conflict ignore: preserves historic, in-flight and published records.
             secret = must_env("RMP_SUPABASE_SERVICE_ROLE")
             req(db_url() + "/rest/v1/rmp_posts?on_conflict=id", "POST", item,
@@ -424,6 +423,8 @@ def main():
     if args.mode == "tick" and not opts.get("live_test_verified"):
         raise Blocked("First authorized live test not independently verified")
     video_url()
+    # Verify the exact approved bytes before even making a Facebook/Instagram request.
+    download_video()
     quotas_ok()
     ids = verify_connections()
     reconcile(ids)
