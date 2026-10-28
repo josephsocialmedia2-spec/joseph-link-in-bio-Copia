@@ -85,6 +85,20 @@ class FailClosedTests(unittest.TestCase):
             else:
                 os.environ['RMP_VIDEO_SHA256'] = original
 
+    def test_linkedin_must_be_verified_person_not_company(self):
+        expected = {"id": "member_APP_123", "localizedFirstName": "Joseph",
+                    "localizedLastName": "Malafronte"}
+        result = worker.verify_linkedin_person("urn:li:person:member_APP_123", expected)
+        self.assertEqual(result, "Joseph Malafronte")
+        with self.assertRaises(worker.Blocked):
+            worker.verify_linkedin_person("urn:li:organization:123", expected)
+        with self.assertRaises(worker.Blocked):
+            worker.verify_linkedin_person("urn:li:person:wrong", expected)
+        with self.assertRaises(worker.Blocked):
+            worker.verify_linkedin_person("urn:li:person:member_APP_123", {"id": "member_APP_123"})
+        with self.assertRaises(worker.Blocked):
+            worker.verify_linkedin_person("https://www.linkedin.com/in/josephmalafronte", expected)
+
     def test_missing_quota_refuses_live(self):
         orig = worker.db
         worker.db = lambda *_: []
