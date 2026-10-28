@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "snapshot_date": "2026-10-28",
+  "source": "Supabase qmeftxsdfeyqozwoivzo / public.rmp_publication_jobs",
+  "live_sync": false,
+  "note": "Riepilogo pubblico senza credenziali; è una fotografia della verifica del 28/10, NON uno stato operativo in tempo reale.",
+  "scope": {
+    "all_pages": 48,
+    "promotional_pages": 45,
+    "internal_pages_excluded": 3,
+    "tracks": {
+      "immobiliare": 25,
+      "imprese": 20
+    }
+  },
+  "queue": {
+    "total": 135,
+    "status": "DRAFT",
+    "platforms": {
+      "facebook": 45,
+      "instagram": 45,
+      "linkedin": 45
+    },
+    "tracks": {
+      "immobiliare": 75,
+      "imprese": 60
+    },
+    "first_local": "2026-10-29T10:00:00",
+    "last_local": "2026-11-12T20:00:00",
+    "timezone": "Europe/Rome"
+  },
+  "limitations": {
+    "published": 0,
+    "media_uploaded": 0,
+    "api_accounts_verified": 0,
+    "live_scheduler_enabled": false,
+    "facebook_groups_api_publishing_supported": false
+  },
+  "git_source": "gestione/supabase/seed_editorial_drafts_45x3.sql"
+}
