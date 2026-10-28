@@ -144,7 +144,7 @@ def expiry_ok(platform):
         raise Blocked("Token expiry or renewal requires attention: " + platform)
 
 
-def verify_connections():
+def verify_connections(allow_register=False):
     rows = db("rmp_accounts?select=*")
     entries = {r["platform"]: r for r in rows}
     if set(entries) != set(PLATFORMS):
@@ -178,7 +178,15 @@ def verify_connections():
     for platform in PLATFORMS:
         if names[platform].strip().casefold() != entries[platform]["expected_name"].strip().casefold():
             raise Blocked("Account name ambiguous or changed: " + platform)
-        if not entries[platform].get("verified") or entries[platform].get("account_id") != ids[platform]:
+        previous_id = entries[platform].get("account_id")
+        if previous_id and previous_id != ids[platform]:
+            raise Blocked("Destination differs from previously approved account: " + platform)
+        if allow_register:
+            db("rmp_accounts", "PATCH",
+               {"account_id": ids[platform], "display_name": names[platform],
+                "verified": True, "verified_at": datetime.now(timezone.utc).isoformat(),
+                "last_error": None}, "?platform=eq." + platform)
+        elif not entries[platform].get("verified") or previous_id != ids[platform]:
             raise Blocked("Destination not approved in isolated account registry: " + platform)
     return ids
 
@@ -331,6 +339,9 @@ def mark_published(post, remote_id, permalink=None):
 def process(post, ids):
     # Non-atomic external APIs have no cross-platform exactly-once guarantee.
     # Claim in database first; a crashed claimed item will never be auto-retried.
+    if post["attempts"] >= MAX_ATTEMPTS:
+        patch_post(post["id"], {"status": "BLOCKED", "last_error": "Retry cap reached"})
+        return
     matches = remote_search(post, ids)
     if matches:
         patch_post(post["id"], {"status": "UNCERTAIN",
@@ -405,10 +416,11 @@ def main():
                          ensure_ascii=False, indent=2))
         return
     if args.mode == "seed":
+        quotas_ok()
         seed()
         return
     if args.mode == "check":
-        ids = verify_connections()
+        ids = verify_connections(allow_register=True)
         print("VERIFIED READ-ONLY DESTINATIONS: " + ",".join(ids))
         return
     opts = settings()
