@@ -64,3 +64,16 @@ Per i dettagli e i passaggi restanti: `README.md` in questa cartella.
 - BLOCCATO: nessun accesso OAuth social verificabile nella sessione; il connettore GitHub non permette lettura dei Secrets e non consente l'inferenza del loro stato.
 - BLOCCATO: diritti commerciali del video non documentati, URL video pubblica conforme e quote social non verificate.
 - NON ESEGUITO: pubblicazione reale, controllo post via API ufficiali, merge su main e attivazione cron.
+
+## Attivazione infrastrutturale confermata — 28 ottobre 2026, Europe/Rome
+
+- **COMPLETATO:** progetto Supabase isolato creato, ID `tonwtdxjdseuizmezcht`, nome `REAL MEDIA PRO - Social Isolato`, organizzazione `fshyvehqjleenszxjchb`, regione `eu-central-1`, stato `ACTIVE_HEALTHY`. Prezzo confermato tramite preventivo provider **0 USD/mese**. Nessuna modifica al progetto preesistente `nqnmlsmeiynxbdojeyjt`.
+- **COMPLETATO:** applicata migration `20261028054551_rmp_isolated_social_schema_initial` sul **nuovo** progetto. Sei tabelle `public.rmp_*`, tutte con RLS. Righe iniziali: settings 1, accounts 3, quotas 4 (tutte UNKNOWN), admins 0.
+- **VERIFICATO:** `get_advisors(security)` restituisce nessun problema. `list_tables` e pg_policies verificano RLS e policy su tutte e 6 le tabelle. Un utente autenticato senza ruolo di admin vede 0 righe da settings/accounts/quotas/admins e non riesce a cambiare `enabled`; `anon` non ha SELECT; authenticated non ha UPDATE della colonna `rights_verified` e non può inserire post.
+- **BLOCCATO:** un indice prestazionale suggerito per FK `rmp_events(post_id)` non è stato aggiunto perché il controllo di sicurezza ha respinto il DDL. Non influisce sul blocco delle pubblicazioni, ma va ri-verificato.
+- **COMPLETATO:** inserite **63 voci READY** per 7 giorni 28 ottobre–3 novembre 2026; 3 fasce 10:00, 16:00, 20:00 e 3 canali. SQL con `AT TIME ZONE 'Europe/Rome'`, conflitti ignorati; validazione: 63 ID unici, 63 caption con entrambi i link, nessun disallineamento orario.
+- **COMPLETATO:** pubblicati solo i **quattro file statici** della dashboard in `main:rmp-social/` con URL pubblico previsto `https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/rmp-social/`. Contiene esclusivamente key Supabase **publishable**, mai segreti o token. CI GitHub Pages `40640039706` ha terminato con `success`; raggiungibilità dal browser dell'utente non verificata.
+- **BLOCCATO:** sul nuovo progetto Supabase Auth `auth.users` contiene zero utenti: nessun amministratore può ancora accedere al pannello; bootstrap Auth e iscrizione amministratore tramite modalità sicura ancora da completare.
+- **BLOCCATO:** accessi OAuth/autorizzazioni ufficiali e identità account Facebook, Instagram e LinkedIn non verificati; diritti video non certificati; quote effettive Meta/LinkedIn/GitHub/Supabase sconosciute; video disponibile in Libreria ma non mediante URL HTTPS verificata per le API social.
+- **VERIFICATO:** `rmp_settings.enabled=false`, `rights_verified=false`, `live_test_verified=false`. Nessuna pubblicazione effettiva (link post: nessuno); workflow scheduler su ramo separato, non attivo in `main`.
+- **NON ESEGUITO:** prova di pubblicazione reale, verifica del post con API, attivazione scheduler e test di login di un vero utente admin.
