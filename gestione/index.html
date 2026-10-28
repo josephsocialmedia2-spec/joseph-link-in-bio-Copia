@@ -58,6 +58,8 @@ function urlSocial(platform,value){
  }catch(e){return ""}
 }
 function socialUrl(id,key){
+ if(key==="facebook")return "https://www.facebook.com/josephrealmedia/";
+ if(key==="instagram")return "https://www.instagram.com/realmediaproageency/";
  var local=state(id).social||{};
  if(Object.prototype.hasOwnProperty.call(local,key))return urlSocial(key,local[key]);
  return urlSocial(key,(publishedSocial[id]||{})[key]||"");
