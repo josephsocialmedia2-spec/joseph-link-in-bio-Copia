@@ -65,3 +65,15 @@ be completed by the owner via the Neon app. No credentials in chat.
 - Neon Auth reports **not enabled** (HTTP 404); therefore authenticated web dashboard remains incomplete. The published old dashboard still connects to restricted Supabase, not Neon.
 - Social OAuth, rights, secrets, live API publishing unverified. **No scheduler or publishing activated.** Old Supabase projects untouched.
 - CI offline tests: https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/actions/runs/40645174974 passed prior to connecting Neon. SQL applied to Neon directly from the staged file; adapter not live-tested.
+
+## Authentication and dashboard, 28 October 2026 (verified)
+- Managed Better Auth was enabled on the Neon `production` branch, database `real_media_pro`. User credentials must be entered only in Neon Auth through the browser.
+- Neon Data API provisioned for `rmp` schema **without default grants**, auth provider `neon_auth`, allowed CORS origin `https://josephsocialmedia2-spec.github.io`, max rows 250, aggregates disabled.
+- Added only the official GitHub Pages origin to Neon Auth trusted domains.
+- Six `rmp` tables have RLS enabled, with explicit PostgreSQL grants. `anonymous` cannot SELECT posts; a non-admin authenticated role sees 0 settings/posts/admin rows. `authenticated` cannot update `rights_verified`. Dashboard admin can pause publishing but cannot bypass live test.
+- **No admin user exists** in Neon `rmp.admin_users`: grant only after user has authenticated with a verified identity, preferably Google OAuth with verified email, then record the verified UUID in admin_users.
+- Private Neon object storage bucket `rmp-approved-video` has been created. **Video not uploaded**, rights not certified.
+- Separate static dashboard was published to **main** at `/rmp-neon/`; GitHub Pages deployment and offline JS checks succeeded. It currently has an intentionally empty `rmp-neon/config.json` for safe manual configuration. **Login is not functional until authUrl and dataApiUrl are set**. Auth and Data API URL values are public service endpoints, never a PostgreSQL password.
+- Attempt to publish the configured public endpoint file through the connected GitHub write action was blocked by a safety control. No attempt to circumvent; leave placeholder and request the account owner to finish the two nonsecret public fields via GitHub UI.
+- No website backend or social OAuth has been configured or proven; no production schedule enabled, zero real social posts.
+- Security policy record: `neon/security-policies.sql`; audit data did not modify previous Supabase projects.
