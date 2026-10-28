@@ -34,9 +34,12 @@ jobs:
         run: |
           python -m py_compile campagne/immobiliare/social-quotidiano/rmp-isolato/schedule.py campagne/immobiliare/social-quotidiano/rmp-isolato/worker.py
           python -m py_compile campagne/immobiliare/social-quotidiano/rmp-isolato/neon/seed.py
+          python -m py_compile campagne/immobiliare/social-quotidiano/rmp-isolato/neon/run_worker.py
           node --check campagne/immobiliare/social-quotidiano/rmp-isolato/dashboard/app.js
       - name: Verify offline logic and fail-closed guards
         run: python -m unittest discover -s campagne/immobiliare/social-quotidiano/rmp-isolato/tests -v
+      - name: Check Neon worker offline dry run (no connection or publication)
+        run: python campagne/immobiliare/social-quotidiano/rmp-isolato/neon/run_worker.py dry-run --date 2026-10-28 > /tmp/rmp-neon-dry-run.json
       - name: Generate offline dry run
         run: python campagne/immobiliare/social-quotidiano/rmp-isolato/schedule.py 2026-10-28 > /tmp/rmp-dry-run.json
   dispatcher:
