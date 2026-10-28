@@ -6,28 +6,28 @@ Dashboard: https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/ge
 
 Catalogo clienti: https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/scopri/
 
-- La pagina è pensata per essere aperta da smartphone nel messaggio automatico di benvenuto WhatsApp Business e contiene **46 destinazioni pubbliche**: 21 guide immobiliari, 18 percorsi per imprese e 7 approfondimenti.
-- Il catalogo è registrato come voce **SCOPRI** della Cabina di Regia (48 voci complessive); include il pulsante FATTO con data e i campi social.
+- La pagina è pensata per essere aperta da smartphone nel messaggio automatico di benvenuto WhatsApp Business e contiene **41 destinazioni pubbliche**: 16 guide immobiliari, 18 percorsi per imprese e 7 approfondimenti.
+- Il catalogo è registrato come voce **SCOPRI** della Cabina di Regia (43 voci complessive); include il pulsante FATTO con data e i campi social.
 - **REGIA**, la pagina interna del Piano Editoriale e la bozza PRIVACY non sono elencate nel catalogo clienti. Il modello HTML tecnico non è una pagina promozionale.
-- Il Piano Editoriale mantiene **47 schede di contenuto**: il catalogo `SCOPRI` è un indice di navigazione, non un argomento aggiuntivo da pubblicare quotidianamente.
+- Il Piano Editoriale mantiene **42 schede di contenuto**: il catalogo `SCOPRI` è un indice di navigazione, non un argomento aggiuntivo da pubblicare quotidianamente.
 - Il messaggio di benvenuto da copiare in WhatsApp Business è nel file [scopri/README.md](../scopri/README.md); questa dashboard non modifica automaticamente l'account WhatsApp.
 
-## Piano editoriale (47 schede, 23 ore)
+## Piano editoriale (42 schede, 23 ore)
 
 Calendario: https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/piano-editoriale/
 
-Il piano deriva dalla lettura delle 47 pagine registrate nella Cabina di Regia e usa [pagine.json](piano-editoriale/pagine.json) come fonte delle domande, risposte, errori comuni e azioni operative.
+Il piano deriva dalla lettura delle 42 pagine registrate nella Cabina di Regia e usa [pagine.json](piano-editoriale/pagine.json) come fonte delle domande, risposte, errori comuni e azioni operative.
 
-- **47 uscite quotidiane** nel calendario completo, distribuite fra 00:00 e 22:59 nel fuso Europe/Rome. Gli orari ruotano giornalmente.
-- **329 uscite in sette giorni**, con sette angoli comunicativi: domanda, errore, verifiche, vero/falso, azione, scenario ipotetico e FAQ.
-- Filtri per **39 landing commerciali**, 21 immobiliari, 18 attività locali e 8 pagine di servizio.
+- **42 uscite quotidiane** nel calendario completo, distribuite fra 00:00 e 22:59 nel fuso Europe/Rome. Gli orari ruotano giornalmente.
+- **294 uscite in sette giorni**, con sette angoli comunicativi: domanda, errore, verifiche, vero/falso, azione, scenario ipotetico e FAQ.
+- Filtri per **34 landing commerciali**, 16 immobiliari, 18 attività locali e 8 pagine di servizio.
 - **REGIA** è interna e **PRIVACY** è una bozza: il piano segnala entrambe come non adatte alla pubblicazione senza valutazione preventiva.
 - Ogni riga mostra orario, pagina, canale proposto, materiale creativo richiesto, stato e testo per il post. Lo stato si conserva solo nel browser; esporta il backup degli stati.
 - Esporta CSV per il giorno o per sette giorni, con contenuti completi, destinazioni UTM e formati suggeriti. Il CSV non pubblica nulla.
 - I collegamenti social sono letti dal file pubblico `gestione/social-links.json` e anche dalle impostazioni locali della Cabina di Regia nello stesso browser.
 - **Nessuna pubblicazione automatica è attivata.** L'eventuale importazione in un sistema esterno richiede revisione dei testi, produzioni grafiche e autorizzazioni ai profili.
 
-Il pianificatore è uno **strumento tecnico interno** e non viene incluso fra le 47 pagine editoriali da promuovere.
+Il pianificatore è uno **strumento tecnico interno** e non viene incluso fra le 42 pagine editoriali da promuovere.
 
 ## FATTO con data e collegamenti social
 
@@ -58,21 +58,21 @@ Questo è un **sito pubblico statico** su GitHub Pages, non un'applicazione ammi
 - WhatsApp: 371 370 8294 → https://wa.me/393713708294
 - Telefono: 352 202 4365 → tel:+393522024365
 
-## Totali verificati il 24 ottobre 2026
+## Totali aggiornati il 28 ottobre 2026
 
-- 48 pagine gestite nella Cabina di Regia, incluso il nuovo catalogo clienti.
-- 21 landing immobiliari, 18 landing per attività locali, 9 pagine di servizio.
-- 51 file HTML nel repository: 48 registrati, una guida aggiuntiva, un calendario editoriale interno e un modello tecnico.
+- 43 pagine gestite nella Cabina di Regia, incluso il nuovo catalogo clienti.
+- 16 landing immobiliari, 18 landing per attività locali, 9 pagine di servizio.
+- Il ramo di backup `backup/real-estate-25-pages-20261028` conserva le 5 landing accorpate e l'inventario precedente; il file `404.html` reindirizza via browser i loro vecchi percorsi.
 
 ## Inventario di riferimento
 
-[Inventario corrente (48 pagine)](../campagne/INVENTARIO.md) · [Audit storico delle prime pagine](../campagne/CONTROLLO_LANDING.md) · [Piano social](../campagne/PIANO_SOCIAL.md)
+[Inventario corrente (43 pagine)](../campagne/INVENTARIO.md) · [Audit storico delle prime pagine](../campagne/CONTROLLO_LANDING.md) · [Piano social](../campagne/PIANO_SOCIAL.md)
 
 ## Regia social delle due linee editoriali (28 ottobre 2026)
 
 - La dashboard **resta nello stesso progetto GitHub**. Il nuovo pannello «Social e gruppi» nella Regia legge `gestione/social-routing.json` e lo script pubblico `gestione/social-regia.js`.
-- Il registro `gestione/social-links.json` conserva i link delle 48 pagine, includendo ora LinkedIn. **45 schede** sono associate a una linea editoriale, mentre REGIA, PRIVACY e HUB restano escluse dagli instradamenti promozionali.
-- **21 landing immobiliari** vengono instradate verso la linea «Joseph Digital Real Estate»; **18 landing per attività locali** verso «REAL MEDIA PRO — marketing per imprese». Le altre sei schede di supporto non tecniche vengono instradate per tema (totali: 25 immobiliare e 20 imprese).
+- Il registro `gestione/social-links.json` conserva i collegamenti delle 43 pagine correnti e riferimenti storici di 5 pagine accorpate, senza modificare gli URL social. **40 schede** sono associate a una linea editoriale, mentre REGIA, PRIVACY e HUB restano escluse dagli instradamenti promozionali.
+- **16 landing immobiliari** vengono instradate verso la linea «Joseph Digital Real Estate»; **18 landing per attività locali** verso «REAL MEDIA PRO — marketing per imprese». Le altre sei schede di supporto non tecniche vengono instradate per tema (totali: 20 immobiliare e 20 imprese).
 - Immobiliare La Sacra è registrata come **partner commerciale**, non come account da amministrare senza autorizzazione. Non viene creata né attribuita una pagina social del partner.
 - Gli URL pubblici provengono dai dati recuperati da F1 Social e dai riferimenti già comunicati. **Non attestano la proprietà degli account, l'identità API, i permessi pubblicitari o il collegamento OAuth.** L'Instagram dedicato della linea immobiliare è ancora da identificare.
 - Il nuovo registro gruppi permette di salvare **soltanto nel browser corrente** nome, URL Facebook/LinkedIn e linea editoriale. Un clic apre la pagina del gruppo dove svolgere l'iscrizione manualmente. Il CSV esportato aiuta la verifica delle regole di promozione e delle autorizzazioni degli amministratori.
