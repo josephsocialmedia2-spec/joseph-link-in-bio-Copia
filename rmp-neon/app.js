@@ -147,6 +147,48 @@ async function load(){
   ].map(([name,value])=>{const card=el("div",undefined,"stat");card.append(el("strong",value),el("span",name));return card;}));
   draw();
 }
+function officialLink(title,url){
+  const a=el("a",title,"official-link");
+  a.href=url;a.target="_blank";a.rel="noopener noreferrer";
+  return a;
+}
+function renderAccountSetup(box){
+  const rows=data.accounts||[];
+  const connected=rows.filter(a=>a.verified===true).length;
+  box.append(el("p","Stato connessioni: "+connected+" di 3 verificate. Le autorizzazioni di pubblicazione vengono convalidate esclusivamente tramite API ufficiali.","hint"));
+  const cards=el("div",undefined,"connections-grid");
+  const options=[
+    {key:"facebook",title:"Facebook",summary:"Pagina Facebook ufficiale di REAL MEDIA PRO",
+      note:"Verifica che tu disponga del controllo della Pagina e che la Pagina sia correttamente associata all'account Instagram professionale.",
+      links:[["Apri Meta Business Suite","https://business.facebook.com/"],["Gestisci app Meta","https://developers.facebook.com/apps/"]]},
+    {key:"instagram",title:"Instagram",summary:"Account professionale collegato alla Pagina Facebook",
+      note:"Per la pubblicazione automatica dei Reel servono un account Business o Creator, il collegamento alla Pagina e autorizzazioni API appropriate.",
+      links:[["Apri gestione Instagram","https://www.instagram.com/"],["App e permessi Meta","https://developers.facebook.com/apps/"]]},
+    {key:"linkedin",title:"LinkedIn",summary:"Pagina aziendale REAL MEDIA PRO",
+      note:"Per pubblicare a nome di un'organizzazione servono un ruolo abilitato nella Pagina, un'app autorizzata e i permessi dell'API LinkedIn.",
+      links:[["Apri LinkedIn","https://www.linkedin.com/"],["Gestisci app LinkedIn","https://www.linkedin.com/developers/apps"]]}
+  ];
+  for(const item of options){
+    const account=rows.find(a=>a.platform===item.key)||{};
+    const card=el("article",undefined,"connection-card");
+    const head=el("div",undefined,"connection-head");
+    head.append(el("h3",item.title));
+    const status=el("span",account.verified?"Verificato":"Da collegare",
+      account.verified?"connection-verified":"connection-pending");
+    head.append(status);
+    card.append(head,el("p",item.summary,"connection-subtitle"));
+    if(account.display_name)card.append(el("p","Account: "+account.display_name));
+    if(account.last_error)card.append(el("p","Ultimo errore: "+account.last_error,"error"));
+    card.append(el("p",item.note));
+    const links=el("div",undefined,"connection-links");
+    for(const [title,url] of item.links)links.append(officialLink(title,url));
+    card.append(links);cards.append(card);
+  }
+  box.append(cards,el("p",
+    "Questi collegamenti aprono i siti ufficiali: non attivano automaticamente OAuth. Non incollare password, access token o segreti nella dashboard né in chat. Le pubblicazioni rimangono sospese fino alla verifica server-side.",
+    "hint"));
+}
+
 function draw(){
   $("tabTitle").textContent=labels[currentTab];
   const box=$("content");box.replaceChildren();
@@ -164,6 +206,10 @@ function draw(){
       catch(e){alert(errorMessage(e));}
     });
     box.append(b,el("p","L'attivazione richiede verifiche server-side di diritti, OAuth, quote e post di prova; non è possibile abilitarla dal browser.","hint"));
+    return;
+  }
+  if(currentTab==="accounts"){
+    renderAccountSetup(box);
     return;
   }
   if(currentTab==="calendar"){
