@@ -33,6 +33,7 @@ jobs:
       - name: Syntax checks for Python and dashboard JavaScript
         run: |
           python -m py_compile campagne/immobiliare/social-quotidiano/rmp-isolato/schedule.py campagne/immobiliare/social-quotidiano/rmp-isolato/worker.py
+          python -m py_compile campagne/immobiliare/social-quotidiano/rmp-isolato/neon/seed.py
           node --check campagne/immobiliare/social-quotidiano/rmp-isolato/dashboard/app.js
       - name: Verify offline logic and fail-closed guards
         run: python -m unittest discover -s campagne/immobiliare/social-quotidiano/rmp-isolato/tests -v
