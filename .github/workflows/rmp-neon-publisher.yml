@@ -32,6 +32,34 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
+      - name: Non-sensitive credential readiness (presence only)
+        env:
+          CHECK_RMP_NEON_DATABASE_URL: ${{ secrets.RMP_NEON_DATABASE_URL }}
+          CHECK_RMP_VIDEO_URL: ${{ secrets.RMP_VIDEO_URL }}
+          CHECK_RMP_FACEBOOK_PAGE_ID: ${{ secrets.RMP_FACEBOOK_PAGE_ID }}
+          CHECK_RMP_FACEBOOK_TOKEN: ${{ secrets.RMP_FACEBOOK_TOKEN }}
+          CHECK_RMP_INSTAGRAM_ACCOUNT_ID: ${{ secrets.RMP_INSTAGRAM_ACCOUNT_ID }}
+          CHECK_RMP_INSTAGRAM_TOKEN: ${{ secrets.RMP_INSTAGRAM_TOKEN }}
+          CHECK_RMP_LINKEDIN_OWNER_URN: ${{ secrets.RMP_LINKEDIN_OWNER_URN }}
+          CHECK_RMP_LINKEDIN_TOKEN: ${{ secrets.RMP_LINKEDIN_TOKEN }}
+          CHECK_RMP_VIDEO_HOST: ${{ vars.RMP_VIDEO_HOST }}
+          CHECK_RMP_VIDEO_SHA256: ${{ vars.RMP_VIDEO_SHA256 }}
+          CHECK_RMP_FACEBOOK_TOKEN_EXPIRES_AT: ${{ vars.RMP_FACEBOOK_TOKEN_EXPIRES_AT }}
+          CHECK_RMP_INSTAGRAM_TOKEN_EXPIRES_AT: ${{ vars.RMP_INSTAGRAM_TOKEN_EXPIRES_AT }}
+          CHECK_RMP_LINKEDIN_TOKEN_EXPIRES_AT: ${{ vars.RMP_LINKEDIN_TOKEN_EXPIRES_AT }}
+          CHECK_RMP_LIVE_PUBLISH: ${{ vars.RMP_LIVE_PUBLISH }}
+        run: |
+          python - <<'PY'
+          import os
+          from datetime import datetime, timezone
+          keys = ["RMP_NEON_DATABASE_URL","RMP_VIDEO_URL","RMP_FACEBOOK_PAGE_ID","RMP_FACEBOOK_TOKEN","RMP_INSTAGRAM_ACCOUNT_ID","RMP_INSTAGRAM_TOKEN","RMP_LINKEDIN_OWNER_URN","RMP_LINKEDIN_TOKEN","RMP_VIDEO_HOST","RMP_VIDEO_SHA256","RMP_FACEBOOK_TOKEN_EXPIRES_AT","RMP_INSTAGRAM_TOKEN_EXPIRES_AT","RMP_LINKEDIN_TOKEN_EXPIRES_AT"]
+          print('RMP non-sensitive credential inventory at', datetime.now(timezone.utc).isoformat())
+          for name in keys:
+              status = 'PRESENT' if os.getenv('CHECK_'+name) else 'MISSING'
+              print(name+': '+status)
+          print('RMP_LIVE_PUBLISH: '+('YES' if os.getenv('CHECK_RMP_LIVE_PUBLISH')=='YES' else 'NOT_ENABLED'))
+          print('Inventory is presence-only: no token, password, or secret value is printed.')
+          PY
       - name: Syntax, unit tests and offline preview
         run: |
           python -m py_compile campagne/immobiliare/social-quotidiano/rmp-isolato/schedule.py
