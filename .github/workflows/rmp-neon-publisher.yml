@@ -1,0 +1,117 @@
+name: REAL MEDIA PRO — Neon safe scheduler
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'campagne/immobiliare/social-quotidiano/rmp-isolato/**'
+      - '.github/workflows/rmp-neon-publisher.yml'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Safe mode, live test only after verified credentials
+        required: true
+        type: choice
+        default: dry-run
+        options: [dry-run, check, seed, reconcile, test-publish, tick]
+  schedule:
+    # UTC alternatives for summer and winter time in Europe/Rome.
+    # GitHub Actions may execute late. The Python worker checks exact due windows.
+    - cron: '0,20 8,9,14,15,18,19 * * *'
+permissions:
+  contents: read
+concurrency:
+  group: rmp-neon-publisher
+  cancel-in-progress: false
+jobs:
+  validate:
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Syntax, unit tests and offline preview
+        run: |
+          python -m py_compile campagne/immobiliare/social-quotidiano/rmp-isolato/schedule.py
+          python -m py_compile campagne/immobiliare/social-quotidiano/rmp-isolato/worker.py
+          python -m py_compile campagne/immobiliare/social-quotidiano/rmp-isolato/neon/seed.py
+          python -m py_compile campagne/immobiliare/social-quotidiano/rmp-isolato/neon/run_worker.py
+          python -m unittest discover -s campagne/immobiliare/social-quotidiano/rmp-isolato/tests -v
+          python campagne/immobiliare/social-quotidiano/rmp-isolato/neon/run_worker.py dry-run --date 2026-10-28 > /tmp/rmp-preview.json
+          python - <<'PY'
+          import json
+          with open('/tmp/rmp-preview.json') as f: obj=json.load(f)
+          assert obj['mode']=='DRY_RUN_NO_NETWORK'
+          assert len(obj['posts'])==9
+          assert {p['platform'] for p in obj['posts']}=={'facebook','instagram','linkedin'}
+          assert {p['local_time'] for p in obj['posts']}=={'10:00','16:00','20:00'}
+          print('Nine-post offline preview PASS; no real publication')
+          PY
+  dispatcher:
+    if: always() && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && needs.validate.result == 'success'))
+    needs: [validate]
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    env:
+      PYTHONUNBUFFERED: '1'
+      RMP_LIVE_PUBLISH: ${{ vars.RMP_LIVE_PUBLISH }}
+      RMP_NEON_DATABASE_URL: ${{ secrets.RMP_NEON_DATABASE_URL }}
+      RMP_VIDEO_URL: ${{ secrets.RMP_VIDEO_URL }}
+      RMP_VIDEO_HOST: ${{ vars.RMP_VIDEO_HOST }}
+      RMP_VIDEO_SHA256: ${{ vars.RMP_VIDEO_SHA256 }}
+      RMP_FACEBOOK_PAGE_ID: ${{ secrets.RMP_FACEBOOK_PAGE_ID }}
+      RMP_FACEBOOK_TOKEN: ${{ secrets.RMP_FACEBOOK_TOKEN }}
+      RMP_FACEBOOK_TOKEN_EXPIRES_AT: ${{ vars.RMP_FACEBOOK_TOKEN_EXPIRES_AT }}
+      RMP_INSTAGRAM_ACCOUNT_ID: ${{ secrets.RMP_INSTAGRAM_ACCOUNT_ID }}
+      RMP_INSTAGRAM_TOKEN: ${{ secrets.RMP_INSTAGRAM_TOKEN }}
+      RMP_INSTAGRAM_TOKEN_EXPIRES_AT: ${{ vars.RMP_INSTAGRAM_TOKEN_EXPIRES_AT }}
+      RMP_LINKEDIN_OWNER_URN: ${{ secrets.RMP_LINKEDIN_OWNER_URN }}
+      RMP_LINKEDIN_TOKEN: ${{ secrets.RMP_LINKEDIN_TOKEN }}
+      RMP_LINKEDIN_TOKEN_EXPIRES_AT: ${{ vars.RMP_LINKEDIN_TOKEN_EXPIRES_AT }}
+      LINKEDIN_API_VERSION: '202610'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Gate and log actual dispatch state
+        id: gate
+        env:
+          EVENT: ${{ github.event_name }}
+          INPUT_MODE: ${{ inputs.mode }}
+        run: |
+          MODE="$INPUT_MODE"
+          if [ "$EVENT" = "schedule" ]; then MODE=tick; fi
+          echo "mode=$MODE" >> "$GITHUB_OUTPUT"
+          if [ "$MODE" = "dry-run" ]; then
+            echo 'RMP: offline preview only.'
+            echo 'proceed=false' >> "$GITHUB_OUTPUT"
+          elif [ "$MODE" = "tick" ] && [ "$RMP_LIVE_PUBLISH" != 'YES' ]; then
+            echo 'RMP: SUSPENDED — no tokens accessed and no external publishing.'
+            echo 'proceed=false' >> "$GITHUB_OUTPUT"
+          elif [ "$MODE" = "test-publish" ] && [ "$RMP_LIVE_PUBLISH" != 'YES' ]; then
+            echo 'RMP: test remains disabled by safety switch.'
+            echo 'proceed=false' >> "$GITHUB_OUTPUT"
+          else
+            echo 'proceed=true' >> "$GITHUB_OUTPUT"
+          fi
+      - name: Offline preview
+        if: steps.gate.outputs.mode == 'dry-run'
+        run: python campagne/immobiliare/social-quotidiano/rmp-isolato/neon/run_worker.py dry-run
+      - name: Install Neon driver when permitted
+        if: steps.gate.outputs.proceed == 'true'
+        run: python -m pip install -r campagne/immobiliare/social-quotidiano/rmp-isolato/neon/requirements-neon.txt
+      - name: Require private Neon connection
+        if: steps.gate.outputs.proceed == 'true'
+        run: |
+          if [ -z "$RMP_NEON_DATABASE_URL" ]; then
+            echo 'RMP: BLOCKED — no database secret configured.'
+            exit 1
+          fi
+      - name: Run server-side worker against Neon
+        if: steps.gate.outputs.proceed == 'true'
+        env:
+          REQUESTED_MODE: ${{ steps.gate.outputs.mode }}
+        run: python campagne/immobiliare/social-quotidiano/rmp-isolato/neon/run_worker.py "$REQUESTED_MODE"
