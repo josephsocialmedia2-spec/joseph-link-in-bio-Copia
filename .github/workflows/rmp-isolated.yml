@@ -1,0 +1,84 @@
+name: REAL MEDIA PRO isolated system — safe tests and gated scheduler
+on:
+  push:
+    branches:
+      - feature/rmp-social-isolato-20261028
+    paths:
+      - 'campagne/immobiliare/social-quotidiano/rmp-isolato/**'
+      - '.github/workflows/rmp-isolated.yml'
+  workflow_dispatch:
+    inputs:
+      mode:
+        type: choice
+        options: [dry-run, check, seed, test-publish, tick, reconcile]
+        required: true
+        default: dry-run
+  schedule:
+    # UTC candidates for both CET/CEST. Timezone conversion is in Python.
+    # No guarantee of exact execution: Actions may delay/drop scheduled events.
+    - cron: '0,20 8,9,14,15,18,19 * * *'
+permissions:
+  contents: read
+concurrency:
+  group: real-media-pro-isolated
+  cancel-in-progress: false
+jobs:
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Syntax checks for Python and dashboard JavaScript
+        run: |
+          python -m py_compile campagne/immobiliare/social-quotidiano/rmp-isolato/schedule.py campagne/immobiliare/social-quotidiano/rmp-isolato/worker.py
+          python -m py_compile campagne/immobiliare/social-quotidiano/rmp-isolato/neon/seed.py
+          python -m py_compile campagne/immobiliare/social-quotidiano/rmp-isolato/neon/run_worker.py
+          node --check campagne/immobiliare/social-quotidiano/rmp-isolato/dashboard/app.js
+      - name: Verify offline logic and fail-closed guards
+        run: python -m unittest discover -s campagne/immobiliare/social-quotidiano/rmp-isolato/tests -v
+      - name: Check Neon worker offline dry run (no connection or publication)
+        run: python campagne/immobiliare/social-quotidiano/rmp-isolato/neon/run_worker.py dry-run --date 2026-10-28 > /tmp/rmp-neon-dry-run.json
+      - name: Generate offline dry run
+        run: python campagne/immobiliare/social-quotidiano/rmp-isolato/schedule.py 2026-10-28 > /tmp/rmp-dry-run.json
+  dispatcher:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    needs: unit-test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PYTHONUNBUFFERED: '1'
+      RMP_SUPABASE_URL: ${{ secrets.RMP_SUPABASE_URL }}
+      RMP_SUPABASE_SERVICE_ROLE: ${{ secrets.RMP_SUPABASE_SERVICE_ROLE }}
+      RMP_LIVE_PUBLISH: ${{ vars.RMP_LIVE_PUBLISH }}
+      RMP_VIDEO_URL: ${{ secrets.RMP_VIDEO_URL }}
+      RMP_VIDEO_HOST: ${{ vars.RMP_VIDEO_HOST }}
+      RMP_VIDEO_SHA256: ${{ vars.RMP_VIDEO_SHA256 }}
+      RMP_FACEBOOK_PAGE_ID: ${{ secrets.RMP_FACEBOOK_PAGE_ID }}
+      RMP_FACEBOOK_TOKEN: ${{ secrets.RMP_FACEBOOK_TOKEN }}
+      RMP_FACEBOOK_TOKEN_EXPIRES_AT: ${{ vars.RMP_FACEBOOK_TOKEN_EXPIRES_AT }}
+      RMP_INSTAGRAM_ACCOUNT_ID: ${{ secrets.RMP_INSTAGRAM_ACCOUNT_ID }}
+      RMP_INSTAGRAM_TOKEN: ${{ secrets.RMP_INSTAGRAM_TOKEN }}
+      RMP_INSTAGRAM_TOKEN_EXPIRES_AT: ${{ vars.RMP_INSTAGRAM_TOKEN_EXPIRES_AT }}
+      RMP_LINKEDIN_OWNER_URN: ${{ secrets.RMP_LINKEDIN_OWNER_URN }}
+      RMP_LINKEDIN_TOKEN: ${{ secrets.RMP_LINKEDIN_TOKEN }}
+      RMP_LINKEDIN_TOKEN_EXPIRES_AT: ${{ vars.RMP_LINKEDIN_TOKEN_EXPIRES_AT }}
+      LINKEDIN_API_VERSION: '202610'
+    defaults:
+      run:
+        working-directory: campagne/immobiliare/social-quotidiano/rmp-isolato
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Always dry-run first
+        run: python worker.py dry-run > /tmp/rmp-preflight.json
+      - name: Execute only requested mode, never assume live
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            python worker.py tick
+          else
+            python worker.py "${{ inputs.mode }}"
+          fi

@@ -1,0 +1,5 @@
+{
+  "supabaseUrl": "https://tonwtdxjdseuizmezcht.supabase.co",
+  "publishableKey": "sb_publishable_LcruTp8JmjwOVQbMTzwn_w_v1cSoNTg",
+  "note": "Public publishable key only. No service role or social API tokens in browser."
+}
