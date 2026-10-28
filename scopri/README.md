@@ -8,7 +8,7 @@ Destinazione originale del catalogo (da mantenere come URL ufficiale):
 
 https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/scopri/
 
-Il catalogo è una pagina pubblica, costruita il 26 ottobre 2026 per essere visualizzata su smartphone. Riunisce **46 collegamenti a pagine pubbliche esistenti**, organizzati per esigenza: **21 guide immobiliari, 18 pagine per attività locali, 7 pagine informative e di approfondimento**.
+Il catalogo è una pagina pubblica, costruita il 26 ottobre 2026 per essere visualizzata su smartphone. Riunisce **41 collegamenti a pagine pubbliche esistenti**, organizzati per esigenza: **16 guide immobiliari, 18 pagine per attività locali, 7 pagine informative e di approfondimento**.
 
 Sono esclusi il pannello interno `gestione/index.html`, il calendario `gestione/piano-editoriale/index.html`, il modello HTML tecnico `campagne/assets/rmp-module-template.html` e l'informativa preliminare `privacy-censimento/index.html`. Il file aggiuntivo `campagne/immobiliare/vendere-seconda-casa/guida.html` è incluso perché è una guida visitabile. Il numero **50** indica i file HTML rilevati nel repository prima di creare il catalogo, non 50 pagine idonee al pubblico.
 
