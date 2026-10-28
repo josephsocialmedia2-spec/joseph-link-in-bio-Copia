@@ -1,5 +1,5 @@
 -- REAL MEDIA PRO isolated schema. APPLY ONLY TO A NEW PROJECT, NEVER nqnmlsmeiynxbdojeyjt.
--- This is a staged SQL design, NOT executed against any database.
+-- Applied ONLY to new project tonwtdxjdseuizmezcht (never old nqnmlsmeiynxbdojeyjt).
 create table if not exists public.rmp_admins (
   user_id uuid primary key references auth.users(id) on delete cascade,
   created_at timestamptz not null default now()
@@ -32,6 +32,12 @@ create table if not exists public.rmp_quotas (
   verified_at timestamptz,
   source text not null default 'UNKNOWN'
 );
+insert into public.rmp_quotas(provider,used,allowance,source) values
+('github_actions', 0, null, 'UNKNOWN'),
+('supabase', 0, null, 'UNKNOWN'),
+('meta', 0, null, 'UNKNOWN'),
+('linkedin', 0, null, 'UNKNOWN')
+on conflict (provider) do nothing;
 create table if not exists public.rmp_posts (
   id text primary key,
   platform text not null check (platform in ('facebook','instagram','linkedin')),
