@@ -115,17 +115,6 @@
       "technical": false
     },
     {
-      "id": "IMM03",
-      "title": "Annuncio immobiliare efficace",
-      "sector": "Immobiliare",
-      "path": "campagne/immobiliare/presentare-immobile/index.html",
-      "question": "Cosa rende efficace un annuncio immobiliare?",
-      "answer": "Servono un titolo preciso, informazioni verificabili e immagini fedeli.",
-      "mistake": "Pubblicare slogan senza dettagli utili.",
-      "action": "Prepara la scheda con tipologia, caratteristiche e CTA.",
-      "technical": false
-    },
-    {
       "id": "IMM04",
       "title": "Non riesco a vendere casa",
       "sector": "Immobiliare",
@@ -137,17 +126,6 @@
       "technical": false
     },
     {
-      "id": "IMM05",
-      "title": "Pubblicizzare casa da privato",
-      "sector": "Immobiliare",
-      "path": "campagne/immobiliare/pubblico-interessato/index.html",
-      "question": "Come pubblicizzare casa da privato?",
-      "answer": "La promozione richiede messaggi accurati, canali adatti e gestione responsabile dei contatti.",
-      "mistake": "Credere che un post sia una strategia completa.",
-      "action": "Usa contenuti reali, contatti chiari e verifiche professionali.",
-      "technical": false
-    },
-    {
       "id": "IMM06",
       "title": "Prezzi delle case vendute nella mia zona",
       "sector": "Immobiliare",
@@ -156,17 +134,6 @@
       "answer": "Prezzi richiesti, quotazioni OMI e corrispettivi effettivi non sono la stessa fonte.",
       "mistake": "Usare una media €/m² come prezzo definitivo.",
       "action": "Confronta zona, data e tipologia con dati verificabili.",
-      "technical": false
-    },
-    {
-      "id": "IMM07",
-      "title": "Casa in vendita da mesi",
-      "sector": "Immobiliare",
-      "path": "campagne/immobiliare/errori-promozione/index.html",
-      "question": "Cosa fare se la casa è in vendita da mesi?",
-      "answer": "È utile verificare le campagne già svolte, il prezzo e l'interesse effettivo.",
-      "mistake": "Ripubblicare sempre lo stesso annuncio.",
-      "action": "Analizza i risultati e pianifica un rilancio.",
       "technical": false
     },
     {
@@ -258,17 +225,6 @@
       "technical": false
     },
     {
-      "id": "IMM16",
-      "title": "Stima immobile ereditato",
-      "sector": "Immobiliare",
-      "path": "campagne/immobiliare/stima-immobile-ereditato/index.html",
-      "question": "Come stimare un immobile ereditato?",
-      "answer": "Valore di mercato, rendita catastale e valori fiscali hanno scopi diversi.",
-      "mistake": "Usare il valore della successione come prezzo di vendita certo.",
-      "action": "Chiedi una stima motivata con criteri condivisi.",
-      "technical": false
-    },
-    {
       "id": "IMM17",
       "title": "Vendere seconda casa",
       "sector": "Immobiliare",
@@ -277,17 +233,6 @@
       "answer": "Posizione, utilizzo, costi e pubblico richiedono un posizionamento specifico.",
       "mistake": "Applicare lo stesso piano della prima casa.",
       "action": "Verifica caratteristiche e fiscalità con i professionisti.",
-      "technical": false
-    },
-    {
-      "id": "IMM18",
-      "title": "Differenza tra prezzo richiesto e valore della casa",
-      "sector": "Immobiliare",
-      "path": "campagne/immobiliare/prezzo-richiesto-valore/index.html",
-      "question": "Prezzo richiesto e valore di stima coincidono?",
-      "answer": "Il prezzo richiesto è una proposta, la stima un'analisi e il prezzo finale nasce dalla vendita.",
-      "mistake": "Presentare il prezzo dell'annuncio come risultato garantito.",
-      "action": "Distingui i tre valori quando pianifichi la vendita.",
       "technical": false
     },
     {
