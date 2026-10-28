@@ -225,6 +225,17 @@ def verify_remote(platform, remote_id):
     return code == 200 and obj.get("id") == remote_id and obj.get("lifecycleState") == "PUBLISHED", None
 
 
+def verify_media_identity(options):
+    """Require the exact SHA-256 registered in the private database."""
+    approved = str(options.get("media_sha256") or "").lower()
+    configured = must_env("RMP_VIDEO_SHA256").lower()
+    if len(approved) != 64 or not all(c in "0123456789abcdef" for c in approved):
+        raise Blocked("Approved media checksum is missing or invalid in Neon")
+    if approved != configured:
+        raise Blocked("Configured media checksum does not match the reviewed video")
+    return approved
+
+
 def video_url():
     url = must_env("RMP_VIDEO_URL")
     parsed = urlparse(url)
@@ -434,6 +445,7 @@ def main():
         raise Blocked("Publishing paused or rights evidence not verified")
     if args.mode == "tick" and not opts.get("live_test_verified"):
         raise Blocked("First authorized live test not independently verified")
+    verify_media_identity(opts)
     video_url()
     # Verify the exact approved bytes before even making a Facebook/Instagram request.
     download_video()
