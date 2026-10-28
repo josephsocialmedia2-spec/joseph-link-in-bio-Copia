@@ -92,12 +92,14 @@ usare e verificare separatamente il flusso `video_reels`.
 8. Se test, diritti, quote, URL e autorizzazioni sono verificati,
    impostare `rmp_settings.rights_verified = true` dopo evidenza reale,
    `rmp_settings.enabled = true`, `RMP_LIVE_PUBLISH=YES`.
-   Allo slot **già previsto**, eseguire `test-publish`: pubblica **al massimo
-   una** voce READY già esistente, non crea un post aggiuntivo. Un GET API
-   positivo marca la prova e `live_test_verified`.
+   Allo slot **già previsto**, eseguire `test-publish`: prova le **tre piattaforme
+   dello stesso slot** (tre voci già esistenti; nessuna pubblicazione extra).
+   Solo tre GET API positivi nello stesso slot marcano `live_test_verified`.
 9. Solo dopo prova positiva e QA reale, portare workflow su `main` per
    abilitare lo schedule e il sito. **NON FARE MERGE ADESSO**.
-   Usare `tick` per eseguire altre voci READY degli slot esistenti.
+   Gli slot successivi sono gestiti con `tick`. Il comando manuale
+   `workflow_dispatch` richiede che GitHub riconosca il workflow sul ramo
+   predefinito: questa possibilità non è stata verificata in staging.
 
 ## Scheduler e sicurezza operativa
 
