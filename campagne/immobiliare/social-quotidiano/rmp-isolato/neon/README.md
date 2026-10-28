@@ -25,10 +25,11 @@ be completed by the owner via the Neon app. No credentials in chat.
    `python neon/seed.py --days 7` from the parent project folder, with
    `RMP_NEON_DATABASE_URL` only in protected GitHub Actions secrets.
    `psycopg[binary]==3.3.6` from requirements-neon.txt.
-5. Replace the old Supabase REST worker with a tested PostgreSQL adapter and
-   atomic conditional claims before enabling any GitHub cron. **This worker
-   adapter is not yet implemented or installed.** Existing worker.py remains
-   Supabase-specific and must not be used against Neon.
+5. The staging PostgreSQL adapter in `neon/run_worker.py` now reuses the worker's
+   fail-closed social API code and replaces direct Supabase REST access with
+   server-only, parameterized PostgreSQL queries and atomic conditional claims.
+   **Offline syntax/dry-run tests only; no real Neon database or live API test.**
+   Existing `worker.py` remains Supabase-specific and must not be run against Neon.
 6. Rebuild dashboard auth safely using a Neon-backed authenticated API.
    GitHub Pages JavaScript must NEVER include a PostgreSQL connection string,
    OAuth client secret or social-platform token. The published dashboard
@@ -51,6 +52,6 @@ be completed by the owner via the Neon app. No credentials in chat.
 - PostgreSQL schema: STAGED IN GITHUB, not applied.
 - Seed generator: STAGED IN GITHUB, not run against any Neon database.
 - Neon project/database: NOT CREATED, connection pending.
-- Neon worker/dashboard: NOT IMPLEMENTED.
+- Neon worker: STAGING ADAPTER IMPLEMENTED, not integration-tested. Dashboard: NOT MIGRATED.
 - OAuth social/live publications/scheduler: NOT ACTIVE.
 - No additional costs.
