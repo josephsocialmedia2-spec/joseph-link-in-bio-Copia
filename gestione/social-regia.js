@@ -62,7 +62,7 @@ fetch(endpoint,{cache:"no-store"}).then(function(r){if(!r.ok)throw Error("HTTP "
    var caption=ch==="facebook"?"Facebook":ch==="instagram"?"Instagram":"LinkedIn";
    return url?'<a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer" title="URL presente: API da autorizzare">'+caption+' ↗</a>':'<span>'+caption+' · mancante</span>';
   }).join("");
-  return '<article class="routingCard"><h3>'+esc(line.label)+'</h3><p class="routingSmall"><strong>'+counts[k]+' pagine associate</strong> ('+(k==="immobiliare"?"21 landing e 4 pagine di supporto":"18 landing e 2 pagine di supporto")+') · '+esc(line.goal)+'</p><div class="routingChannels">'+links+'</div><p class="routingSmall">Stato: URL registrati; OAuth e pubblicazioni non verificati'+(line.partner?' · '+esc(line.partner):"")+'</p></article>';
+  return '<article class="routingCard"><h3>'+esc(line.label)+'</h3><p class="routingSmall"><strong>'+counts[k]+' pagine associate</strong> ('+(k==="immobiliare"?"16 landing e 4 pagine di supporto":"18 landing e 2 pagine di supporto")+') · '+esc(line.goal)+'</p><div class="routingChannels">'+links+'</div><p class="routingSmall">Stato: URL registrati; OAuth e pubblicazioni non verificati'+(line.partner?' · '+esc(line.partner):"")+'</p></article>';
  }).join("");
 }).catch(function(){document.getElementById("socialRoutingCards").textContent="Impossibile leggere gestione/social-routing.json. Verificare il file GitHub."});
 function validGroupUrl(url,p){
