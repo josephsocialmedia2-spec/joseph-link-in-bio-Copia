@@ -52,7 +52,7 @@ def daily_posts(day: date):
                 "id": f"rmp-{day:%Y%m%d}-{hhmm.replace(':','')}-{platform}",
                 "local_date": day.isoformat(), "local_time": hhmm,
                 "platform": platform, "scheduled_at": instant.isoformat(),
-                "caption": caption(platform, i), "status": "READY"
+                "caption": caption(platform, i) + f"\n\nAggiornamento: {day:%d/%m/%Y}", "status": "READY"
             })
     return rows
 
