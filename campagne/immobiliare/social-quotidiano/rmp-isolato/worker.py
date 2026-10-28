@@ -6,6 +6,7 @@ Stdlib only. Requires manual OAuth and a rights-cleared public HTTPS video URL.
 import argparse
 import hashlib
 import json
+import re
 import os
 import sys
 import time
@@ -152,8 +153,10 @@ def verify_connections(allow_register=False):
     page = must_env("RMP_FACEBOOK_PAGE_ID")
     ig = must_env("RMP_INSTAGRAM_ACCOUNT_ID")
     owner = must_env("RMP_LINKEDIN_OWNER_URN")
-    if not owner.startswith("urn:li:organization:"):
-        raise Blocked("LinkedIn organizational destination is not verified")
+    # Approved destination: the authenticated PERSONAL profile, never a company Page.
+    # A public /in/ URL alone cannot supply the app-scoped LinkedIn member ID.
+    if not re.fullmatch(r"urn:li:person:[A-Za-z0-9_-]{1,100}", owner):
+        raise Blocked("LinkedIn personal member URN is required and must be OAuth-verified")
     fb_token = must_env("RMP_FACEBOOK_TOKEN")
     ig_token = must_env("RMP_INSTAGRAM_TOKEN")
     for platform in PLATFORMS:
@@ -168,12 +171,22 @@ def verify_connections(allow_register=False):
     linked = page_info.get("instagram_business_account") or {}
     if str(linked.get("id")) != ig:
         raise Blocked("Instagram account is not associated with the approved Page")
-    orgid = owner.rsplit(":", 1)[-1]
-    li_info = req(LINKEDIN_BASE + "/organizations/" + quote(orgid),
-                  headers=linkedin_headers())[1]
+    # /v2/me is the authorized member profile endpoint. Requires LinkedIn
+    # profile-read permission, which may be unavailable to an unapproved app.
+    # Fail closed if it cannot identify the member; do not fall back to a
+    # public vanity name, guessed URN, or a different authenticated account.
+    li_info = req("https://api.linkedin.com/v2/me", headers=linkedin_headers())[1]
+    if not isinstance(li_info, dict):
+        raise Blocked("LinkedIn authenticated member profile response invalid")
+    member_id = li_info.get("id")
+    if not member_id or owner != "urn:li:person:" + str(member_id):
+        raise Blocked("LinkedIn personal profile does not match the approved owner URN")
+    member_name = " ".join(filter(None, (
+        str(li_info.get("localizedFirstName") or "").strip(),
+        str(li_info.get("localizedLastName") or "").strip())))
     names = {"facebook": page_info.get("name", ""),
              "instagram": ig_info.get("username", ""),
-             "linkedin": li_info.get("localizedName", "")}
+             "linkedin": member_name}
     ids = {"facebook": page, "instagram": ig, "linkedin": owner}
     for platform in PLATFORMS:
         if names[platform].strip().casefold() != entries[platform]["expected_name"].strip().casefold():
