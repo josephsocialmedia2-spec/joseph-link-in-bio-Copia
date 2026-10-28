@@ -24,3 +24,18 @@
 .caption-details{max-width:330px}
 @media(max-width:900px){.post-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.post-cards{grid-template-columns:1fr}.date-nav{display:grid;grid-template-columns:1fr 1fr}.date-picker-label{grid-column:1/-1;grid-row:1}.date-nav button{font-size:13px;padding:11px 8px}.page-nav button{padding:10px 8px}.page-nav span{flex:1;text-align:center;font-size:13px}}
+
+
+/* Account connection guide: read-only links; no OAuth tokens in browser */
+.connections-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-bottom:18px}
+.connection-card{background:#fff;border:1px solid #d4e0f2;border-radius:12px;padding:18px;min-width:0}
+.connection-head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.connection-head h3{font-size:18px;margin:0}
+.connection-subtitle{font-weight:700;font-size:14px}
+.connection-pending,.connection-verified{font-size:12px;border-radius:20px;padding:5px 9px;font-weight:700}
+.connection-pending{color:#7c4d13;background:#fff5df}
+.connection-verified{color:#136744;background:#e7f8ed}
+.connection-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.official-link{font-size:13px;text-decoration:none;border:1px solid #a9bddf;border-radius:8px;padding:9px 11px;color:#164bd6;font-weight:700;background:#fff}
+.official-link:hover{text-decoration:underline;background:#f1f5fc}
+@media(max-width:900px){.connections-grid{grid-template-columns:1fr}}
