@@ -446,20 +446,24 @@ def main():
               "&scheduled_at=lte." + quote(now.isoformat(), safe="") +
               "&order=scheduled_at.asc&select=*&limit=30")
     candidates = due(rows, now)
-    if args.mode == "test-publish":
-        # One existing slot, not an extra posting; other platforms are handled by tick.
-        candidates = candidates[:1]
+    if args.mode == "test-publish" and candidates:
+        # Test all THREE platforms in the SAME existing slot; never create extra jobs.
+        test_slot = candidates[0]["scheduled_at"]
+        candidates = [p for p in candidates if p["scheduled_at"] == test_slot]
     for post in candidates:
         if AGENT not in post["caption"] or WHATSAPP not in post["caption"]:
             patch_post(post["id"], {"status": "BLOCKED", "last_error": "Required links missing"})
             continue
         process(post, ids)
     if args.mode == "test-publish" and candidates:
-        post = db("rmp_posts?id=eq." + quote(candidates[0]["id"]) + "&select=status")
-        if post and post[0]["status"] == "PUBLISHED":
+        slot = candidates[0]["scheduled_at"]
+        rows = db("rmp_posts?scheduled_at=eq." + quote(slot, safe="") +
+                  "&select=platform,status")
+        if len(rows) == 3 and {r["platform"] for r in rows} == set(PLATFORMS) and all(
+                r["status"] == "PUBLISHED" for r in rows):
             db("rmp_settings", "PATCH", {"live_test_verified": True},
                "?singleton=eq.true")
-            print("FIRST LIVE TEST independently verified")
+            print("ALL THREE PLATFORM TEST POSTS independently verified")
     print(json.dumps({"mode": args.mode, "candidates": len(candidates)}))
 
 
