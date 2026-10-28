@@ -440,6 +440,9 @@ def main():
     quotas_ok()
     ids = verify_connections()
     reconcile(ids)
+    # The scheduler must populate its queue before dispatch. Without this
+    # step a green workflow would publish zero items indefinitely.
+    seed(days=2)
     now = datetime.now(timezone.utc)
     cutoff = (now - timedelta(minutes=45)).isoformat()
     rows = db("rmp_posts?status=eq.READY&scheduled_at=gte." + quote(cutoff, safe="") +
