@@ -1,0 +1,36 @@
+name: REAL MEDIA PRO Neon dashboard — static checks
+on:
+  push:
+    paths:
+      - 'rmp-neon/**'
+      - '.github/workflows/rmp-neon-dashboard-check.yml'
+  pull_request:
+    paths:
+      - 'rmp-neon/**'
+      - '.github/workflows/rmp-neon-dashboard-check.yml'
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify dashboard syntax
+        run: node --check rmp-neon/app.js
+      - name: Fail on missing files or accidental secrets
+        run: |
+          test -f rmp-neon/index.html
+          test -f rmp-neon/config.json
+          test -f rmp-neon/style.css
+          python - <<'PY'
+          import json, pathlib, re
+          folder=pathlib.Path("rmp-neon")
+          config=json.loads((folder/"config.json").read_text())
+          assert set(config) >= {"authUrl","dataApiUrl"}
+          assert not any(key in config for key in ("password","service_role","database_url","postgresUrl","token","clientSecret"))
+          assert "type=\"module\"" in (folder/"index.html").read_text()
+          assert "signIn.email" in (folder/"app.js").read_text()
+          assert "signIn.social" in (folder/"app.js").read_text()
+          assert "update({enabled:false})" in (folder/"app.js").read_text()
+          print("Neon dashboard static checks passed; no live auth or data calls made.")
+          PY
