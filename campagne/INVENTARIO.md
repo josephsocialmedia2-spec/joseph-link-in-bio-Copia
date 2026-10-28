@@ -1,8 +1,8 @@
 # Inventario delle landing Real Media Pro
 
-Aggiornato al 24 ottobre 2026. Il volantino A5 Joseph Digital Strategist costituisce il riferimento di brand identity per tutte le pagine immobiliari. Le immagini delle case sono illustrazioni artificiali dichiarate, non annunci di immobili reali.
+Aggiornato al 28 ottobre 2026. Il volantino A5 Joseph Digital Strategist costituisce il riferimento di brand identity per tutte le pagine immobiliari. Le immagini delle case sono illustrazioni artificiali dichiarate, non annunci di immobili reali.
 
-**21 landing immobiliari** (20 temi distinti + un approfondimento sui video); **18 landing attività locali**; **9 pagine di servizio (inclusi la Regia Digitale e il catalogo clienti)** per un totale di **48 pagine HTML registrate nella dashboard**.
+**16 landing immobiliari** (15 temi distinti + un approfondimento sui video); **18 landing attività locali**; **9 pagine di servizio (inclusi la Regia Digitale e il catalogo clienti)** per un totale di **43 pagine HTML registrate nella dashboard**.
 
 | ID | Settore | Angolo | URL | Email | WhatsApp | Telefono |
 |---|---|---|---|---|---|---|
@@ -12,11 +12,7 @@ Aggiornato al 24 ottobre 2026. Il volantino A5 Joseph Digital Strategist costitu
 | IMM15 | immobiliare | Vendere casa ereditata | https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/immobiliare/vendere-casa-ereditata/ | agenziarealmediapro@gmail.com | 371 370 8294 | 352 202 4365 |
 | IMM04 | immobiliare | Non riesco a vendere casa | https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/immobiliare/annuncio-senza-richieste/ | agenziarealmediapro@gmail.com | 371 370 8294 | 352 202 4365 |
 | IMM12 | immobiliare | Documenti per vendere casa | https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/immobiliare/informazioni-prima-di-vendere/ | agenziarealmediapro@gmail.com | 371 370 8294 | 352 202 4365 |
-| IMM05 | immobiliare | Pubblicizzare casa da privato | https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/immobiliare/pubblico-interessato/ | agenziarealmediapro@gmail.com | 371 370 8294 | 352 202 4365 |
-| IMM07 | immobiliare | Casa in vendita da mesi | https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/immobiliare/errori-promozione/ | agenziarealmediapro@gmail.com | 371 370 8294 | 352 202 4365 |
-| IMM16 | immobiliare | Stima immobile ereditato | https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/immobiliare/stima-immobile-ereditato/ | agenziarealmediapro@gmail.com | 371 370 8294 | 352 202 4365 |
 | IMM17 | immobiliare | Vendere seconda casa | https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/immobiliare/vendere-seconda-casa/ | agenziarealmediapro@gmail.com | 371 370 8294 | 352 202 4365 |
-| IMM18 | immobiliare | Differenza tra prezzo richiesto e valore della casa | https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/immobiliare/prezzo-richiesto-valore/ | agenziarealmediapro@gmail.com | 371 370 8294 | 352 202 4365 |
 | IMM08 | immobiliare | Come preparare casa alla vendita | https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/immobiliare/preparare-la-casa/ | agenziarealmediapro@gmail.com | 371 370 8294 | 352 202 4365 |
 | IMM19 | immobiliare | Conformità catastale nella vendita di casa | https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/immobiliare/conformita-catastale/ | agenziarealmediapro@gmail.com | 371 370 8294 | 352 202 4365 |
 | IMM06 | immobiliare | Prezzi delle case vendute nella mia zona | https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/immobiliare/prezzi-territorio/ | agenziarealmediapro@gmail.com | 371 370 8294 | 352 202 4365 |
@@ -25,7 +21,6 @@ Aggiornato al 24 ottobre 2026. Il volantino A5 Joseph Digital Strategist costitu
 | IMM21 | immobiliare | Come scegliere un'agenzia immobiliare | https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/immobiliare/scegliere-agenzia/ | agenziarealmediapro@gmail.com | 371 370 8294 | 352 202 4365 |
 | IMM10 | immobiliare | Pubblicità immobiliare ad Avigliana | https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/immobiliare/visibilita-locale/ | agenziarealmediapro@gmail.com | 371 370 8294 | 352 202 4365 |
 | IMM02 | immobiliare | Vendere casa in Valle di Susa | https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/immobiliare/vendere-in-zona/ | agenziarealmediapro@gmail.com | 371 370 8294 | 352 202 4365 |
-| IMM03 | immobiliare | Annuncio immobiliare efficace | https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/immobiliare/presentare-immobile/ | agenziarealmediapro@gmail.com | 371 370 8294 | 352 202 4365 |
 | IMM09 | immobiliare | Video per un annuncio immobiliare efficace | https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/immobiliare/video-immobiliari/ | agenziarealmediapro@gmail.com | 371 370 8294 | 352 202 4365 |
 | COM01 | attivita | Più richieste per il ristorante | https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/attivita/ristoranti-prenotazioni/ | agenziarealmediapro@gmail.com | 371 370 8294 | 352 202 4365 |
 | COM02 | attivita | Riempire le fasce orarie più tranquille | https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/attivita/bar-fasce-orarie/ | agenziarealmediapro@gmail.com | 371 370 8294 | 352 202 4365 |
