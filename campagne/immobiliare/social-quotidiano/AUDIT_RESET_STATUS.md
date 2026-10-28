@@ -89,3 +89,14 @@ La documentazione ufficiale consultata per il backup è https://supabase.com/doc
 - Prossimo passaggio: aprire sul computer Windows la dashboard del progetto e il pannello Connect; riferire solo se è visibile, senza condividere stringhe o credenziali. Eventuale login esclusivamente nel browser locale dell'utente.
 - Consultata documentazione ufficiale Backup and Restore using the CLI: prevede client, credenziali database e gestione separata delle personalizzazioni auth/storage e della cronologia migrazioni. Nessun reset password autorizzato o eseguito. Il changelog markdown non è stato recuperato dal lettore web (content-type non supportato); ricontrollare prima dell'implementazione.
 - BACKUP_SUPABASE_PRE_RESET_REAL_MEDIA_PRO.zip non creato: non assegnare tale nome all'esportazione parziale.
+
+## Implementazione isolata — 28 ottobre 2026, ramo non predefinito
+
+- COMPLETATO: creato il ramo `feature/rmp-social-isolato-20261028` senza modifiche al ramo `main` o al Supabase `nqnmlsmeiynxbdojeyjt`.
+- COMPLETATO: realizzati file in `campagne/immobiliare/social-quotidiano/rmp-isolato/` (coda, RLS, programmatore, worker API, dashboard, CI, rapporto).
+- VERIFICATO: recuperato originale 3.540.857 byte, H.264 480×854/30fps, AAC 44,1kHz; hash `24148c620f19747ffc7cb8a865680e19b40411ac1d21d3fa2288b8c552fe97cb`.
+- COMPLETATO: normalizzato localmente MP4 540×960, H.264 30 fps, AAC 48kHz, 2.542.302 byte; hash `eede47a5ded2c52e344c5f834aa6a6be958674531fd552aa8c306058dace9fc1`. Nessun video inserito in Storage.
+- VERIFICATO: test CI di logica e calendario eseguiti sul ramo, ma non dimostrano OAuth, RLS applicata o pubblicazioni reali.
+- BLOCCATO: licenze e diritti materiali non provati; account Facebook/Instagram/LinkedIn e OAuth non verificati tramite credenziali reali; quota provider non misurata; nuovo Supabase gratuito non verificato.
+- NON ESEGUITO: SQL su nuovo progetto, hosting dashboard, pubblicazione prova, link post, attivazione schedulazione.
+- DETTAGLI: `rmp-isolato/AUDIT_IMPLEMENTAZIONE_20261028.md` e `rmp-isolato/README.md`. Nessuna autorizzazione a resettare il Supabase preesistente.
