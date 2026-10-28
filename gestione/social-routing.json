@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-10-28",
+  "note": "Registro pubblico dei profili e instradamento delle landing: NON contiene token né autorizza pubblicazioni. I profili devono essere verificati tramite le rispettive piattaforme prima delle campagne.",
+  "lines": {
+    "imprese": {
+      "label": "REAL MEDIA PRO — marketing per imprese",
+      "owner": "REAL MEDIA PRO",
+      "kind": "aziende_attivita_locali",
+      "profiles": {
+        "facebook": {
+          "url": "https://www.facebook.com/josephrealmedia",
+          "status": "URL_RECUPERATO_DA_F1_SOCIAL_NON_VERIFICATO"
+        },
+        "instagram": {
+          "url": "https://www.instagram.com/realmediaproageency/",
+          "status": "URL_RECUPERATO_DA_F1_SOCIAL_NON_VERIFICATO"
+        },
+        "linkedin": {
+          "url": "https://www.linkedin.com/in/josephmalafronte/",
+          "status": "PROFILO_PERSONALE_DICHIARATO_NON_VERIFICATO"
+        }
+      },
+      "goal": "Contatti e richieste di preventivo per promozione social, siti web, video e advertising"
+    },
+    "immobiliare": {
+      "label": "Joseph Digital Real Estate — promozione immobiliare",
+      "owner": "Joseph Digital Strategist / REAL MEDIA PRO",
+      "partner": "Immobiliare La Sacra (partner commerciale; la mediazione resta ai professionisti abilitati)",
+      "kind": "marketing_immobiliare",
+      "profiles": {
+        "facebook": {
+          "url": "https://www.facebook.com/JosephDigitalRealEstate/",
+          "status": "URL_INDICATO_IN_PRECEDENZA_NON_VERIFICATO"
+        },
+        "instagram": {
+          "url": "",
+          "status": "ACCOUNT_DISTINTO_NON_IDENTIFICATO"
+        },
+        "linkedin": {
+          "url": "https://www.linkedin.com/in/josephmalafronte/",
+          "status": "PROFILO_PERSONALE_CONDIVISO_NON_VERIFICATO"
+        }
+      },
+      "goal": "Richieste di analisi orientativa e promozione immobiliare, non mediazione"
+    }
+  },
+  "routing": {
+    "default": "imprese",
+    "sector_map": {
+      "Immobiliare": "immobiliare",
+      "Attività locali": "imprese"
+    },
+    "overrides": {
+      "PARTNER": "immobiliare",
+      "IMM-HUB": "immobiliare",
+      "STRATEGIE": "immobiliare",
+      "CREATIVE": "immobiliare"
+    },
+    "internal_only": [
+      "REGIA",
+      "PRIVACY"
+    ],
+    "service_no_campaign": [
+      "HUB"
+    ]
+  },
+  "groups": {
+    "automation": "NO_API_FACEBOOK_GROUPS; MANUAL_COMPLIANT_POSTING_ONLY",
+    "approval_required": true,
+    "items": []
+  },
+  "security": "Pubblicazione non attiva. Vietato salvare OAuth, password o chiavi in GitHub Pages."
+}
