@@ -11,7 +11,9 @@ This file documents actual system state, not a claim of live social publishing.
 - Published posts: 0. Social OAuth verified by official API: 0/3. The database remains `enabled=false`, `rights_verified=false`, `live_test_verified=false`.
 - Facebook target candidate: `Josephmalafronte`, page ID `911947508677134`; not yet API verified.
 - Instagram target candidate: `realmediaproagency`; do not confuse with the similar `realmediaproageency` identifier seen in a different portfolio. Not yet API verified.
-- LinkedIn organization/page destination: **not confirmed**. Do not auto-select a similarly named LinkedIn profile.
+- LinkedIn author destination **confirmed by user**: personal profile **Joseph Malafronte**, not a company Page. The generic LinkedIn feed URL is not an authenticated author ID; do not infer an API person URN from the public profile path.
+- Neon account registry stores expected personal name `Joseph Malafronte` and leaves `verified=false` / `account_id=NULL`.
+- Personal LinkedIn posting requires delegated `w_member_social` and an app-scoped `urn:li:person:{id}` obtained from an authorized member profile endpoint; verification is fail-closed on missing permission, name mismatch or wrong member ID. This worker additionally needs authorized read access to posts (`r_member_social`) to perform a safe remote duplicate check; that scope is restricted and may block the current automation. No workaround is assumed.
 - Verified normalized MP4: SHA256 `eede47a5ded2c52e344c5f834aa6a6be958674531fd552aa8c306058dace9fc1`, H.264 540x960, AAC, 17.5667s. Hash recorded in Neon settings, but rights are NOT certified and no public media URL is registered.
 - New private Neon bucket `rmp-approved-video` is empty. Original Supabase data and video objects must remain unchanged.
 
