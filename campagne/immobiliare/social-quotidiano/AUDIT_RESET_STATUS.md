@@ -74,3 +74,18 @@ La documentazione ufficiale consultata per il backup è https://supabase.com/doc
 - VERIFICATO: snapshot interni joseph_crm.daily_backups disponibili fino al 27 ottobre, record_count 300. Conservati nello stesso database, non costituiscono un backup integrale esterno.
 - COMPLETATO: censiti due nomi di secrets Vault, senza leggere valori. Non equivale all'inventario dei secrets Edge Functions.
 - BLOCCATO: backup completo e prova di ripristino. Nessuna modifica Supabase o cancellazione eseguita.
+
+
+## Ripresa operativa — 28 ottobre 2026, verifica SQL 05:05 UTC / 06:05 Europe/Rome
+- VERIFICATO: riletti rapporto, caption-master.md e automation-config.json tramite GitHub.
+- VERIFICATO: connettore Supabase operativo; progetto ACTIVE_HEALTHY, PostgreSQL 17.6.1.166; organizzazione free.
+- VERIFICATO: database 375254163 byte, Storage 177 oggetti / 11 bucket, Auth 4 utenti, cron 12 job attivi. Nessuna modifica alla produzione.
+- VERIFICATO: sistema operativo Windows confermato dall'utente in questa sessione.
+- VERIFICATO: Library individua il video VID-20261027-WA0006.mp4 (3540857 byte) e lo ZIP parziale (603796 byte). In questa ripresa non sono stati riletti i byte: checksum, codec, audio e diritti del video restano da verificare.
+- VERIFICATO: workflow social esistente avviabile solo manualmente; contiene generazione OpenAI e pubblicazione social opzionale. NON avviato. Il workflow CI su push filtra percorsi diversi da questo rapporto.
+- BLOCCATO: autenticazione client PostgreSQL e download Storage privato non stabiliti. Accesso dashboard sul computer dell'utente ancora da verificare; nessun nuovo tentativo nel browser condiviso.
+- NON ESEGUITO: dump completo, download Storage, ripristino isolato, reset, deployment e pubblicazioni.
+- BLOCCATO: quote residue effettive non disponibili dai controlli eseguiti; piano free non equivale a disponibilità illimitata.
+- Prossimo passaggio: aprire sul computer Windows la dashboard del progetto e il pannello Connect; riferire solo se è visibile, senza condividere stringhe o credenziali. Eventuale login esclusivamente nel browser locale dell'utente.
+- Consultata documentazione ufficiale Backup and Restore using the CLI: prevede client, credenziali database e gestione separata delle personalizzazioni auth/storage e della cronologia migrazioni. Nessun reset password autorizzato o eseguito. Il changelog markdown non è stato recuperato dal lettore web (content-type non supportato); ricontrollare prima dell'implementazione.
+- BACKUP_SUPABASE_PRE_RESET_REAL_MEDIA_PRO.zip non creato: non assegnare tale nome all'esportazione parziale.
