@@ -32,8 +32,12 @@ Nessuna dipendenza da OpenAI API, nessun workflow preesistente avviato.
 2. **BLOCCATO**: nessun account FB/IG/LinkedIn della destinazione identificato
    senza ambiguità e autorizzato in questa sessione tramite API; non sono
    disponibili token OAuth utilizzabili.
-3. **BLOCCATO**: non esiste un nuovo progetto Supabase con costo nullo
-   confermato e RLS applicata; il progetto preesistente è espressamente escluso.
+3. **BLOCCATO**: preventivo nuovo progetto Supabase recuperato il 28/10/2026:
+   **0 USD/mese** per l'organizzazione con ID `fshyvehqjleenszxjchb`.
+   La selezione esplicita dell'organizzazione è necessaria prima della creazione
+   in base alle regole del provider; nessun progetto è stato ancora creato.
+   Un branch database costa **0,01344 USD/ora**: non crearlo.
+   Il progetto preesistente rimane escluso.
 4. **BLOCCATO**: il video Library non è una URL HTTPS pubblica leggibile dalle
    API social. Una sola URL media verificata deve corrispondere al file con
    SHA-256 `eede47a5ded2c52e344c5f834aa6a6be958674531fd552aa8c306058dace9fc1`.
@@ -60,7 +64,7 @@ usare e verificare separatamente il flusso `video_reels`.
 ## Sequenza di attivazione, una sola volta (non eseguita)
 
 1. Documentare i diritti commerciali e approvare la specifica copia video.
-2. Verificare costo nullo del **nuovo** Supabase; creare progetto distinto.
+2. Il costo iniziale del **nuovo** Supabase è stato verificato a 0 USD/mese; dopo selezione esplicita dell'organizzazione creare progetto distinto.
    Applicare `sql/schema.sql` **solo** lì e verificare realmente tutte le RLS
    anche con utente non admin; creare un utente Auth e inserirne l'UUID verificato
    in `public.rmp_admins` mediante SQL amministrativo nel nuovo progetto.
@@ -141,3 +145,14 @@ In staging la pubblicazione è già disabilitata e il cron non è attivo.
 - LinkedIn Posts: https://learn.microsoft.com/en-us/linkedin/marketing/community-management/shares/posts-api
 - Supabase RLS: https://supabase.com/docs/guides/database/postgres/row-level-security
 - GitHub Actions schedule: https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows
+
+## Audit attivazione 28/10/2026, 06:4x Europe/Rome
+
+- VERIFICATO: singola organizzazione Supabase disponibile `fshyvehqjleenszxjchb`, singolo progetto esistente `nqnmlsmeiynxbdojeyjt`.
+- VERIFICATO: preventivo direttamente dal provider 0 USD/mese per nuovo progetto, 0,01344 USD/ora per branch database (escluso).
+- COMPLETATO: correzione di `worker.py` per chiamare `seed(days=2)` al ciclo di esecuzione protetto, prima del dispatch; priorità ad idempotenza.
+- VERIFICATO: CI offline passato sulla correzione commit `62332a25669f08a65a607e490aaee8b70034adb7`. Non è test API live.
+- VERIFICATO: nel MP4 normalizzato non compaiono tag metadata di licenza o titolarità; hash SHA-256 coerente. Non è una prova di diritti.
+- BLOCCATO: creazione progetto richiede scelta esplicita dell'organizzazione dal proprietario, secondo condizioni del provider. Nessun progetto creato.
+- BLOCCATO: OAuth Facebook/Instagram/LinkedIn non connessi o verificabili con gli accessi disponibili. Le variabili GitHub Secrets non possono essere lette tramite il connettore disponibile; l'assenza di accesso non dimostra che non esistano.
+- NON ESEGUITO: merge su main, cron live, test di pubblicazione, URL dashboard di produzione.
