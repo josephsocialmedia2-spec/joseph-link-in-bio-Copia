@@ -15,7 +15,7 @@ const cols = {
   usage:["provider","used","allowance","verified_at","source"]
 };
 let client = null;
-let currentTab = "calendar";
+let currentTab = new URLSearchParams(location.search).get("tab")==="accounts" ? "accounts" : "calendar";
 let data = {};
 let activeUser = null;
 let selectedDate = "";
@@ -190,6 +190,7 @@ function renderAccountSetup(box){
 }
 
 function draw(){
+  document.querySelectorAll("[data-tab]").forEach(b=>b.classList.toggle("selected",b.dataset.tab===currentTab));
   $("tabTitle").textContent=labels[currentTab];
   const box=$("content");box.replaceChildren();
   const posts=data.posts||[];
@@ -311,6 +312,6 @@ $("retryApproval").addEventListener("click",checkAuthorization);
 $("refresh").addEventListener("click",async()=>{try{await load()}catch(e){alert(errorMessage(e));}});
 $("logout").addEventListener("click",async()=>{try{if(client)await client.auth.signOut()}finally{activeUser=null;data={};display("loginBox");setStatus("Disconnesso");}});
 for(const button of document.querySelectorAll("[data-tab]")){
-  button.addEventListener("click",()=>{currentTab=button.dataset.tab;document.querySelectorAll("[data-tab]").forEach(b=>b.classList.toggle("selected",b===button));draw();});
+  button.addEventListener("click",()=>{currentTab=button.dataset.tab;const u=new URL(location.href);u.searchParams.set("tab",currentTab);history.replaceState(null,"",u);draw();});
 }
 boot();
