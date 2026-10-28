@@ -55,3 +55,13 @@ be completed by the owner via the Neon app. No credentials in chat.
 - Neon worker: STAGING ADAPTER IMPLEMENTED, not integration-tested. Dashboard: NOT MIGRATED.
 - OAuth social/live publications/scheduler: NOT ACTIVE.
 - No additional costs.
+
+## Actual Neon deployment — 28 October 2026
+- Organisation `org-shiny-poetry-87921624`, plan `free`, owner verified by connected provider.
+- Project `rough-mouse-11909259`, branch `br-rough-shadow-b927u5ww` (`production`), database `real_media_pro`, region `aws-eu-central-1`, compute 0.25 CU.
+- Six `rmp` schema tables created successfully using a transaction; 1 settings row disabled, 3 unverified social accounts, 5 UNKNOWN quotas.
+- 63 original posts migrated from read-only query on Supabase isolated project into Neon, all READY; distinct dates 7, exact timezone mismatch 0, required-link matches 63.
+- Neon branchable storage reports `enabled: true`, with **no video uploaded**.
+- Neon Auth reports **not enabled** (HTTP 404); therefore authenticated web dashboard remains incomplete. The published old dashboard still connects to restricted Supabase, not Neon.
+- Social OAuth, rights, secrets, live API publishing unverified. **No scheduler or publishing activated.** Old Supabase projects untouched.
+- CI offline tests: https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/actions/runs/40645174974 passed prior to connecting Neon. SQL applied to Neon directly from the staged file; adapter not live-tested.
