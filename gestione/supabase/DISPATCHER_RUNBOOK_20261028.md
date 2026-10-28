@@ -45,7 +45,7 @@ Il dispatcher sceglie solo i video READY in una finestra di 20 minuti dallo slot
 
 ## Limiti verificati
 
-- Il file `VID-20261027-WA0006.mp4` (e la versione `_SOCIAL_540x960.mp4`) non è stato individuato nelle risorse disponibili della Libreria, di Google Drive e dei due vecchi Storage Supabase. Non creare un video sostitutivo.
+- **Verifica successiva della Libreria (28 ottobre 2026):** individuati `VID-20261027-WA0006.mp4` e `VID-20261027-WA0006_SOCIAL_540x960.mp4`. La versione social è stata materializzata e verificata: **2.542.302 byte**, **H.264 540×960 + AAC**, **17,5667 s**, SHA-256 **`eede47a5ded2c52e344c5f834aa6a6be958674531fd552aa8c306058dace9fc1`**, corrispondente al media registrato nel sistema Neon precedente. **Non è ancora caricata nel bucket `rmp-social-videos` del progetto Supabase attuale; non dichiarare media_url valido o diritti verificati.** Non creare un video sostitutivo.
 - Il browser Meta Business Suite già autenticato NON costituisce consenso OAuth/API.
 - Il worker precedente `rmp-isolato` e la workflow Neon rimangono separati; NON abilitare due dispatcher concorrenti.
 - I 135 contenuti sono bozze testuali; non sono nove video già programmati per ogni giorno.
