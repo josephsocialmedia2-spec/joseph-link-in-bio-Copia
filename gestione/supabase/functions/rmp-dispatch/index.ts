@@ -92,6 +92,7 @@ async function fb(job,a,media){
  const d=new URLSearchParams({file_url:media.url,description:job.caption,published:"true"});
  const result=(await request(graph(encodeURIComponent(a.id)+"/videos"),a.token,"POST",d)).value;
  const id=String(result.id||"");if(!/^\d+$/.test(id))throw new Uncertain("FACEBOOK_POST_ID_UNKNOWN");
+ await patch(job,{external_post_id:id},"PUBLISHING");
  const v=(await request(graph(id+"?fields=id,permalink_url"),a.token)).value;
  if(String(v.id)!==id||!v.permalink_url)throw new Uncertain("FACEBOOK_POST_PERMALINK_PENDING");
  return {id,url:String(v.permalink_url)};
@@ -101,6 +102,7 @@ async function ig(job,a,media){
  const data=new URLSearchParams({media_type:"REELS",video_url:media.url,caption:job.caption,share_to_feed:"true"});
  const container=String((await request(graph(encodeURIComponent(a.id)+"/media"),a.token,"POST",data)).value.id||"");
  if(!/^\d+$/.test(container))throw new Uncertain("IG_CONTAINER_UNKNOWN");
+ await audit(job.id,"IG_CONTAINER_CREATED","PUBLISHING",{container_id:container});
  let ready=false;
  for(let i=0;i<7;i++){
   await sleep(2500);
@@ -111,6 +113,7 @@ async function ig(job,a,media){
  if(!ready)throw new Uncertain("IG_MEDIA_PROCESSING");
  const id=String((await request(graph(encodeURIComponent(a.id)+"/media_publish"),a.token,"POST",new URLSearchParams({creation_id:container}))).value.id||"");
  if(!/^\d+$/.test(id))throw new Uncertain("IG_PUBLISH_ID_UNKNOWN");
+ await patch(job,{external_post_id:id},"PUBLISHING");
  const v=(await request(graph(id+"?fields=id,permalink"),a.token)).value;
  if(String(v.id)!==id||!v.permalink)throw new Uncertain("IG_PERMALINK_PENDING");
  return {id,url:v.permalink};
@@ -148,6 +151,7 @@ async function li(job,a,media){
  });
  const urn=post.headers.get("x-restli-id");
  if(!/^urn:li:(ugcPost|share):\d+$/.test(urn||""))throw new Uncertain("LINKEDIN_POST_URN_UNKNOWN");
+ await patch(job,{external_post_id:urn},"PUBLISHING");
  const found=(await linkedin("posts/"+encodeURIComponent(urn)+"?viewContext=AUTHOR",a.token)).value;
  if(found.id!==urn||found.lifecycleState!=="PUBLISHED")throw new Uncertain("LINKEDIN_POST_NOT_VERIFIED");
  return {id:urn,url:null};
@@ -174,6 +178,29 @@ async function publish(job){
   return {state:"RECONCILE",job_id:job.id,platform:job.platform};
  }
 }
+// Autoreconciliazione sola lettura: non ripete mai una pubblicazione incerta.
+async function reconcile(job){
+ const p=await get("rmp_social_profiles",{id:"eq."+job.social_profile_id,select:"*"});
+ if(p.length!==1)throw new Blocked("RECONCILE_PROFILE_MISSING");
+ const ident=await verify(job,p[0]);
+ let id=job.external_post_id,link=null;
+ if(job.platform==="facebook"){
+  const v=(await request(graph(encodeURIComponent(id)+"?fields=id,permalink_url"),ident.token)).value;
+  if(String(v.id)!==id||!v.permalink_url)return false;
+  link=String(v.permalink_url);
+ }else if(job.platform==="instagram"){
+  const v=(await request(graph(encodeURIComponent(id)+"?fields=id,permalink"),ident.token)).value;
+  if(String(v.id)!==id||!v.permalink)return false;
+  link=String(v.permalink);
+ }else if(job.platform==="linkedin"){
+  const v=(await linkedin("posts/"+encodeURIComponent(id)+"?viewContext=AUTHOR",ident.token)).value;
+  if(v.id!==id||v.lifecycleState!=="PUBLISHED")return false;
+ }else return false;
+ const changed=await patch(job,{status:"PUBLISHED",external_post_url:link,published_at:new Date().toISOString(),last_error:null},"PUBLISHING");
+ if(!Array.isArray(changed)||changed.length!==1)return false;
+ await audit(job.id,"RECONCILED_REMOTE_POST","PUBLISHED",{platform:job.platform,external_id:id});
+ return true;
+}
 Deno.serve(async(req)=>{
  if(req.method!=="POST")return output(405,{state:"METHOD_NOT_ALLOWED"});
  try{
@@ -183,13 +210,19 @@ Deno.serve(async(req)=>{
   if(auth.length!==1||!equal(await hash(supplied),auth[0].key_sha256))return output(401,{state:"AUTH_REQUIRED"});
   const settings=await get("rmp_dispatch_settings",{singleton:"eq.true",select:"enabled"});
   if(settings.length!==1||settings[0].enabled!==true)return output(200,{state:"SUSPENDED",published:0});
+  const pending=await get("rmp_publication_jobs",{
+    status:"eq.PUBLISHING",external_post_id:"not.is.null",published_at:"is.null",
+    select:"*",order:"updated_at.asc",limit:"3"
+  });
+  let reconciled=0;
+  for(const job of pending){try{if(await reconcile(job))reconciled++}catch{ /* do not resubmit remote post */ }}
   const now=new Date(),since=new Date(now.getTime()-20*60000);
   const jobs=await get("rmp_publication_jobs",{
    status:"eq.READY",content_type:"in.(REEL,VIDEO)",
    scheduled_at:"gte."+since.toISOString(),and:"(scheduled_at.lte."+now.toISOString()+",media_url.not.is.null)",
    select:"*",order:"scheduled_at.asc",limit:"3"
   });
-  if(!jobs.length)return output(200,{state:"NO_APPROVED_VIDEO_DUE",published:0});
+  if(!jobs.length)return output(200,{state:"NO_APPROVED_VIDEO_DUE",published:0,reconciled});
   const results=[];
   for(const job of jobs){
    try{results.push(await publish(job))}
@@ -197,6 +230,6 @@ Deno.serve(async(req)=>{
     await audit(job.id,"PREFLIGHT_BLOCKED","READY",{reason});
     results.push({state:"BLOCKED",job_id:job.id,reason});}
   }
-  return output(200,{state:"PROCESSED",published:results.filter(x=>x.state==="PUBLISHED").length,results});
+  return output(200,{state:"PROCESSED",published:results.filter(x=>x.state==="PUBLISHED").length,reconciled,results});
  }catch{return output(503,{state:"BACKEND_UNAVAILABLE",published:0})}
 });
