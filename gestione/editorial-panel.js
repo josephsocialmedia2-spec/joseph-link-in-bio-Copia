@@ -78,7 +78,7 @@ show();
 }).catch(function(e){byId("sq-count").textContent="Catalogo non disponibile: "+e.message});
 fetch(API,{cache:"no-store"}).then(function(r){if(!r.ok)throw Error("HTTP "+r.status);return r.json()}).then(function(d){
 if(d.source!=="SUPABASE_LIVE"||typeof d.total!=="number")throw Error("Dati incompleti");
-byId("sq-live").textContent="Supabase LIVE · "+d.total+" job · bozze "+(d.status.DRAFT||0)+" · pubblicati "+d.published+" · Facebook "+d.platforms.facebook+" · Instagram "+d.platforms.instagram+" · LinkedIn "+d.platforms.linkedin;
+byId("sq-live").textContent="Supabase LIVE · "+d.total+" job · bozze "+(d.status.DRAFT||0)+" · pubblicati "+d.published+" · Facebook "+d.platforms.facebook+" · Instagram "+d.platforms.instagram+" · LinkedIn "+d.platforms.linkedin+" · motore "+(d.dispatcher_enabled?"ABILITATO":"SOSPESO")+" · account API verificati "+d.verified_profiles+" · video pronti "+d.ready_videos;
 }).catch(function(){byId("sq-live").textContent="Supabase non raggiungibile dal browser. Ultima verifica: 135 bozze, 0 pubblicazioni (28 ottobre 2026)."});
 var top=document.querySelector(".topactions");if(top){var a=document.createElement("a");a.href="#social-queue";a.textContent="Calendario social · 135 bozze";a.style.cssText="display:inline-block;padding:8px 10px;border-radius:7px;border:1px solid #47718d;color:white;text-decoration:none";top.appendChild(a)}
 })();
