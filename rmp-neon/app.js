@@ -164,9 +164,9 @@ function renderAccountSetup(box){
     {key:"instagram",title:"Instagram",summary:"Account professionale collegato alla Pagina Facebook",
       note:"Per la pubblicazione automatica dei Reel servono un account Business o Creator, il collegamento alla Pagina e autorizzazioni API appropriate.",
       links:[["Apri gestione Instagram","https://www.instagram.com/"],["App e permessi Meta","https://developers.facebook.com/apps/"]]},
-    {key:"linkedin",title:"LinkedIn",summary:"Pagina aziendale REAL MEDIA PRO",
-      note:"Per pubblicare a nome di un'organizzazione servono un ruolo abilitato nella Pagina, un'app autorizzata e i permessi dell'API LinkedIn.",
-      links:[["Apri LinkedIn","https://www.linkedin.com/"],["Gestisci app LinkedIn","https://www.linkedin.com/developers/apps"]]}
+    {key:"linkedin",title:"LinkedIn",summary:"Profilo personale Joseph Malafronte",
+      note:"Destinazione confermata: profilo personale, non pagina aziendale. Il collegamento OAuth deve verificare l'identità dell'utente e autorizzare la pubblicazione (w_member_social). Senza token e ID membro verificati il sistema non pubblica.",
+      links:[["Apri il feed LinkedIn","https://www.linkedin.com/feed/"],["Gestisci app LinkedIn","https://www.linkedin.com/developers/apps"]]}
   ];
   for(const item of options){
     const account=rows.find(a=>a.platform===item.key)||{};
