@@ -1,13 +1,13 @@
 # REAL MEDIA PRO — sistema social isolato (STAGING INATTIVO)
 
-**NON È UN SISTEMA IN PRODUZIONE.** Creato il 28/10/2026 nel ramo
+**LA DASHBOARD STATICA È PUBBLICATA, MA IL MOTORE SOCIAL NON È IN PRODUZIONE.** Creato il 28/10/2026 nel ramo
 `feature/rmp-social-isolato-20261028`; non integra né modifica il database
 Supabase esistente `nqnmlsmeiynxbdojeyjt`.
 
 ## Architettura implementata
 
 GitHub → GitHub Actions (standard runner, repository pubblico) → REST Supabase
-**nuovo progetto isolato** → API ufficiali Meta e LinkedIn.
+**nuovo progetto isolato `tonwtdxjdseuizmezcht`** → API ufficiali Meta e LinkedIn.
 Nessuna dipendenza da OpenAI API, nessun workflow preesistente avviato.
 
 - `schedule.py`: 9 righe/die (3 fasce × 3 canali); gestione CET/CEST tramite
@@ -16,9 +16,8 @@ Nessuna dipendenza da OpenAI API, nessun workflow preesistente avviato.
 - `worker.py`: dry-run, seed idempotente, verifica identità account,
   claim condizionale, riconciliazione, invio video e conferma via API,
   sospensione per esito incerto e scadenza token.
-- `sql/schema.sql`: 6 tabelle nuove con RLS, visibilità dei dati limitata agli
-  admin autorizzati, token social assenti dal database.
-- `dashboard/`: interfaccia responsive bianca e blu cobalto, login Supabase,
+- `sql/schema.sql`: 6 tabelle nuove con RLS, **applicate** al nuovo progetto, visibilità dei dati limitata agli admin autorizzati, token social assenti dal database.
+- `dashboard/`: interfaccia responsive bianca e blu cobalto, file statici pubblicati su GitHub Pages in `main:/rmp-social/`, login Supabase,
   calendario, programmazione, connessioni, storico, errori, quota e
   sospensione/ripresa. Chiave pubblicabile soltanto nel browser; chiave
   `service_role` soltanto nel runner.
@@ -44,7 +43,7 @@ Nessuna dipendenza da OpenAI API, nessun workflow preesistente avviato.
    Non caricare lo stesso file ripetutamente nello Storage.
 5. **BLOCCATO**: budget, quota e limiti reali non verificati; il codice
    interpreta i limiti mancanti come SCONOSCIUTI e blocca la pubblicazione.
-6. **NON ESEGUITO**: test OAuth/RLS reali, prova live e schedulazione attiva.
+6. **NON ESEGUITO**: test OAuth reali, test RLS con un vero amministratore, prova live e schedulazione attiva. La dashboard è pubblicata, ma l'accesso non è ancora utilizzabile.
 
 ## Video e controlli
 
@@ -156,3 +155,14 @@ In staging la pubblicazione è già disabilitata e il cron non è attivo.
 - BLOCCATO: creazione progetto richiede scelta esplicita dell'organizzazione dal proprietario, secondo condizioni del provider. Nessun progetto creato.
 - BLOCCATO: OAuth Facebook/Instagram/LinkedIn non connessi o verificabili con gli accessi disponibili. Le variabili GitHub Secrets non possono essere lette tramite il connettore disponibile; l'assenza di accesso non dimostra che non esistano.
 - NON ESEGUITO: merge su main, cron live, test di pubblicazione, URL dashboard di produzione.
+
+## Stato effettivo, 28 ottobre 2026
+
+- Nuovo database: **CREATO** e migrazione applicata, costo preventivato 0 USD/mese.
+- Tabelle: **6**, tutte RLS; report sicurezza Supabase senza vulnerabilità.
+- Coda: **63 pubblicazioni READY** per 28/10–03/11, tutte con due link obbligatori.
+- Dashboard (deploy GitHub Pages riuscito): https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/rmp-social/
+- Login dashboard: **BLOCCATO** perché Auth nel nuovo progetto ha 0 utenti. Creare un nuovo utente dal pannello Supabase **Authentication → Users → Add user**; non condividere password. Solo dopo verifica dell'UUID associarlo a `rmp_admins` con privilegi di amministrazione, quindi testare RLS con utente admin e non admin.
+- Motore social: **NON ATTIVO**. Nessun segreto OAuth Facebook, Instagram, LinkedIn confermato; nessun permesso di pubblicazione verificato. Mancano licenze dei media, quota misurata e URL video HTTPS conforme.
+- Stato server: `rmp_settings.enabled = false`, `rights_verified = false`, `live_test_verified = false`; il workflow scheduler è isolato in un ramo non predefinito.
+- Mai copiare `service_role` o token API nei file HTML/JS, nelle chat o nel repository.
