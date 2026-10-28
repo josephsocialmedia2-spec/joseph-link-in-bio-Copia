@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,follow"><title>Pagina spostata | Real Media Pro</title>
+<script>
+(function(){
+  "use strict";
+  var prefix="/joseph-link-in-bio-Copia/";
+  var moved={
+    "presentare-immobile":"video-immobiliari",
+    "pubblico-interessato":"vendere-senza-agenzia",
+    "errori-promozione":"annuncio-senza-richieste",
+    "stima-immobile-ereditato":"vendere-casa-ereditata",
+    "prezzo-richiesto-valore":"valore-casa"
+  };
+  var path=decodeURI(window.location.pathname);
+  if(!path.startsWith(prefix))return;
+  var relative=path.slice(prefix.length).replace(/\/+$/,"").replace(/\/index\.html$/,"");
+  var parts=relative.split("/");
+  if(parts.length!==3||parts[0]!=="campagne"||parts[1]!=="immobiliare")return;
+  var target=moved[parts[2]];
+  if(target)window.location.replace(prefix+"campagne/immobiliare/"+target+"/"+window.location.search+window.location.hash);
+})();
+</script>
+<style>body{font-family:system-ui,-apple-system,sans-serif;background:#fff;color:#19324c;margin:0;padding:10vh 20px}.wrap{max-width:640px;margin:auto;line-height:1.6}a{color:#0069b7}h1{font-size:2rem}</style>
+</head><body><main class="wrap"><h1>Pagina non trovata</h1><p>La guida richiesta potrebbe essere stata accorpata a una guida aggiornata. Consulta l'indice delle guide immobiliari.</p><p><a href="/joseph-link-in-bio-Copia/campagne/immobiliare/">Vai alle guide immobiliari</a></p></main></body></html>
