@@ -36,3 +36,13 @@ Il passaggio da 10 secondi a 60 secondi riduce gli avvii teorici da 360 a 60 per
 ## Esiti
 
 Da compilare con risultati verificati, non presumere che la modifica sia riuscita.
+
+## Esito operativo verificato — 28/10/2026
+
+- **COMPLETATO**: eseguita modifica SQL transazionale soltanto su ID 14, 15, 17, 18 usando `cron.alter_job(..., schedule => '* * * * *')`.
+- **VERIFICATO**: guardia prima e dopo la modifica su ID, nome, hash del comando, database, username, attivo e pianificazione; query successiva restituisce tutti e quattro con `schedule='* * * * *'` e `active=true`.
+- **VERIFICATO**: hash dei comandi invariati: 14 `1cc7a464442d53ed342a858ee5569136`; 15 `de46824405bd92fb379d0ee3276ecd99`; 17 `879223d83c2b6a852bf1f4040a35115d`; 18 `80d14f83d1fe94ce2d485434095eb464`.
+- **VERIFICATO**: totale sempre 12 job, tutti attivi, 4 target al minuto e 8 job non destinatari invariati nella loro pianificazione.
+- **VERIFICATO**: dopo il cambio tutti e quattro hanno registrato esecuzione `succeeded` alle `2026-10-28 06:18:00 UTC` (da `cron.job_run_details`).
+- **NON ESEGUITO**: nessuna modifica a media, bucket, dati applicativi, schema, quota o credenziali; nessun upgrade.
+- **NOTA**: non si può assumere che il cambio liberi le quote Supabase già superate. L'organizzazione resta soggetta al 402 fino al ripristino del provider.
