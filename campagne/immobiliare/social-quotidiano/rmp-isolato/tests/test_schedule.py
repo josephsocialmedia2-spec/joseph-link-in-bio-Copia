@@ -70,6 +70,21 @@ class FailClosedTests(unittest.TestCase):
                 if val is None: os.environ.pop(key, None)
                 else: os.environ[key] = val
 
+    def test_media_hash_must_match_approved_database(self):
+        original = os.environ.get('RMP_VIDEO_SHA256')
+        os.environ['RMP_VIDEO_SHA256'] = 'a' * 64
+        try:
+            self.assertEqual(worker.verify_media_identity({'media_sha256': 'a' * 64}), 'a' * 64)
+            with self.assertRaises(worker.Blocked):
+                worker.verify_media_identity({'media_sha256': 'b' * 64})
+            with self.assertRaises(worker.Blocked):
+                worker.verify_media_identity({'media_sha256': None})
+        finally:
+            if original is None:
+                os.environ.pop('RMP_VIDEO_SHA256', None)
+            else:
+                os.environ['RMP_VIDEO_SHA256'] = original
+
     def test_missing_quota_refuses_live(self):
         orig = worker.db
         worker.db = lambda *_: []
