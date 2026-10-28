@@ -145,6 +145,25 @@ def expiry_ok(platform):
         raise Blocked("Token expiry or renewal requires attention: " + platform)
 
 
+def verify_linkedin_person(owner, profile):
+    """Confirm the selected personal author equals the authenticated API member.
+
+    The vanity profile URL is NOT an API member ID; never derive an owner from it.
+    """
+    if not re.fullmatch(r"urn:li:person:[A-Za-z0-9_-]{1,100}", owner):
+        raise Blocked("LinkedIn destination must be a personal member URN")
+    if not isinstance(profile, dict) or not profile.get("id"):
+        raise Blocked("LinkedIn authenticated member identity unavailable")
+    if owner != "urn:li:person:" + str(profile["id"]):
+        raise Blocked("LinkedIn member does not match the approved profile")
+    name = " ".join(filter(None, (
+        str(profile.get("localizedFirstName") or "").strip(),
+        str(profile.get("localizedLastName") or "").strip())))
+    if not name:
+        raise Blocked("LinkedIn member name could not be verified")
+    return name
+
+
 def verify_connections(allow_register=False):
     rows = db("rmp_accounts?select=*")
     entries = {r["platform"]: r for r in rows}
@@ -176,14 +195,7 @@ def verify_connections(allow_register=False):
     # Fail closed if it cannot identify the member; do not fall back to a
     # public vanity name, guessed URN, or a different authenticated account.
     li_info = req("https://api.linkedin.com/v2/me", headers=linkedin_headers())[1]
-    if not isinstance(li_info, dict):
-        raise Blocked("LinkedIn authenticated member profile response invalid")
-    member_id = li_info.get("id")
-    if not member_id or owner != "urn:li:person:" + str(member_id):
-        raise Blocked("LinkedIn personal profile does not match the approved owner URN")
-    member_name = " ".join(filter(None, (
-        str(li_info.get("localizedFirstName") or "").strip(),
-        str(li_info.get("localizedLastName") or "").strip())))
+    member_name = verify_linkedin_person(owner, li_info)
     names = {"facebook": page_info.get("name", ""),
              "instagram": ig_info.get("username", ""),
              "linkedin": member_name}
