@@ -18,6 +18,9 @@ let client = null;
 let currentTab = "calendar";
 let data = {};
 let activeUser = null;
+let selectedDate = "";
+const PAGE_SIZE = 9;
+const pages = {next:0,history:0,errors:0};
 
 function msg(s){ $("loginError").textContent = String(s || ""); }
 function setStatus(s){ $("stateBadge").textContent = s; }
@@ -43,17 +46,78 @@ function table(rows,fields){
     const tr=el("tr");
     for(const col of fields){
       const td=el("td");
-      td.textContent=item[col]===null || item[col]===undefined?"—":String(item[col]);
-      if(col==="caption")td.className="caption";
-      if(col==="permalink" && /^https:\/\//.test(item[col]||"")){
+      if(col==="caption"){
+        const d=el("details",undefined,"caption-details");
+        d.append(el("summary",String(item[col]||"").replace(/\s+/g," ").slice(0,110)+"…"));
+        d.append(el("p",item[col]||"","full-caption"));
+        td.append(d);
+      }else if(col==="permalink" && /^https:\/\//.test(item[col]||"")){
         const a=el("a","Apri post");a.href=item[col];a.target="_blank";a.rel="noopener noreferrer";
-        td.replaceChildren(a);
+        td.append(a);
+      }else{
+        td.textContent=item[col]===null||item[col]===undefined?"—":String(item[col]);
       }
       tr.append(td);
     }
     body.append(tr);
   }
   t.append(body);return t;
+}
+function shortDate(iso){
+  try{return new Intl.DateTimeFormat("it-IT",{dateStyle:"full",timeZone:"UTC"}).format(new Date(iso+"T12:00:00Z"));}
+  catch{return iso;}
+}
+function postCards(rows,includeDate=false){
+  if(!rows.length)return el("p","Nessuna pubblicazione per questo giorno.");
+  const grid=el("div",undefined,"post-cards");
+  for(const post of rows){
+    const card=el("article",undefined,"post-card"),meta=el("div",undefined,"post-meta");
+    meta.append(el("strong",String(post.local_time||"").slice(0,5),"post-time"),
+      el("span",post.platform||"—","post-platform"),
+      el("span",post.status||"—","post-status"));
+    if(includeDate)meta.prepend(el("span",post.local_date||"—","post-date"));
+    card.append(meta);
+    const text=String(post.caption||""),firstLine=text.split("\n").find(s=>s.trim())||"Pubblicazione";
+    card.append(el("h3",firstLine,"post-title"));
+    const preview=text.split("\n").filter(s=>s.trim())[1]||"";
+    if(preview)card.append(el("p",preview.slice(0,105)+(preview.length>105?"…":""),"post-preview"));
+    const details=el("details",undefined,"post-details");
+    details.append(el("summary","Leggi il testo completo"),el("p",text,"full-caption"));
+    card.append(details);grid.append(card);
+  }
+  return grid;
+}
+function dateNavigation(posts,dates){
+  const bar=el("div",undefined,"date-nav");
+  const back=el("button","‹ Giorno precedente","ghost"),
+        forward=el("button","Giorno successivo ›","ghost");
+  const index=dates.indexOf(selectedDate);
+  back.disabled=index<=0;forward.disabled=index<0||index===dates.length-1;
+  back.addEventListener("click",()=>{selectedDate=dates[index-1];draw();});
+  forward.addEventListener("click",()=>{selectedDate=dates[index+1];draw();});
+  const label=el("label",undefined,"date-picker-label");
+  label.append(el("span","Giorno da visualizzare"));
+  const select=el("select",undefined,"day-select");
+  select.setAttribute("aria-label","Seleziona giorno");
+  for(const day of dates){
+    const count=posts.filter(p=>p.local_date===day).length;
+    const option=el("option",shortDate(day)+" · "+count+" post");
+    option.value=day;option.selected=day===selectedDate;select.append(option);
+  }
+  select.addEventListener("change",()=>{selectedDate=select.value;draw();});
+  label.append(select);bar.append(back,label,forward);
+  return bar;
+}
+function pageNavigation(count){
+  if(count<=PAGE_SIZE)return null;
+  const last=Math.ceil(count/PAGE_SIZE)-1,page=Math.min(pages[currentTab]||0,last);
+  const nav=el("div",undefined,"page-nav");
+  const back=el("button","‹ Precedente","ghost"),fwd=el("button","Successiva ›","ghost");
+  back.disabled=page===0;fwd.disabled=page===last;
+  back.addEventListener("click",()=>{pages[currentTab]=page-1;draw();});
+  fwd.addEventListener("click",()=>{pages[currentTab]=page+1;draw();});
+  nav.append(back,el("span","Pagina "+(page+1)+" di "+(last+1)+" · "+count+" risultati"),fwd);
+  return nav;
 }
 async function select(name,query){
   const result=await query;
@@ -68,6 +132,11 @@ async function load(){
     select("events",client.from("events").select("*").order("created_at",{ascending:false}).limit(100))
   ]);
   data={settings,posts,accounts,quotas,events};
+  const dates=[...new Set(posts.map(p=>p.local_date).filter(Boolean))].sort();
+  if(!dates.includes(selectedDate)){
+    const today=new Intl.DateTimeFormat("sv-SE",{year:"numeric",month:"2-digit",day:"2-digit",timeZone:"Europe/Rome"}).format(new Date());
+    selectedDate=dates.find(d=>d>=today)||dates[dates.length-1]||today;
+  }
   const cfg=settings[0]||{};
   setStatus(cfg.enabled?"Programmazione consentita":"Pubblicazioni sospese");
   $("metrics").replaceChildren(...[
@@ -97,13 +166,32 @@ function draw(){
     box.append(b,el("p","L'attivazione richiede verifiche server-side di diritti, OAuth, quote e post di prova; non è possibile abilitarla dal browser.","hint"));
     return;
   }
-  const rows=currentTab==="calendar"?[...posts].reverse():
-    currentTab==="next"?posts.filter(p=>p.status==="READY").sort((a,b)=>a.scheduled_at.localeCompare(b.scheduled_at)):
+  if(currentTab==="calendar"){
+    const dates=[...new Set(posts.map(p=>p.local_date).filter(Boolean))].sort();
+    if(!dates.length){box.append(el("p","Calendario vuoto."));return;}
+    if(!dates.includes(selectedDate))selectedDate=dates[0];
+    const daily=posts.filter(p=>p.local_date===selectedDate)
+      .sort((a,b)=>a.scheduled_at.localeCompare(b.scheduled_at));
+    box.append(dateNavigation(posts,dates));
+    box.append(el("p",shortDate(selectedDate)+" · "+daily.length+" pubblicazioni · 3 piattaforme","day-heading"));
+    box.append(postCards(daily));
+    box.append(el("p","Mostriamo un solo giorno alla volta. Le descrizioni complete si aprono su richiesta.","hint"));
+    return;
+  }
+  const rows=currentTab==="next"?posts.filter(p=>p.status==="READY").sort((a,b)=>a.scheduled_at.localeCompare(b.scheduled_at)):
     currentTab==="history"?posts.filter(p=>p.status==="PUBLISHED"):
     currentTab==="errors"?posts.filter(p=>["UNCERTAIN","CLAIMED","BLOCKED"].includes(p.status)):
     currentTab==="accounts"?data.accounts||[]:
     currentTab==="usage"?data.quotas||[]:[];
-  box.append(table(rows,cols[currentTab]||[]));
+  if(["next","history","errors"].includes(currentTab)){
+    const last=Math.max(0,Math.ceil(rows.length/PAGE_SIZE)-1);
+    pages[currentTab]=Math.min(pages[currentTab]||0,last);
+    const pageRows=rows.slice(pages[currentTab]*PAGE_SIZE,(pages[currentTab]+1)*PAGE_SIZE);
+    box.append(currentTab==="next"?postCards(pageRows,true):table(pageRows,cols[currentTab]));
+    const nav=pageNavigation(rows.length);if(nav)box.append(nav);
+  }else{
+    box.append(table(rows,cols[currentTab]||[]));
+  }
   if(currentTab==="usage")box.append(el("p","Quota sconosciuta = nessuna pubblicazione automatica. Avviso 70%, blocco 80%.","hint"));
 }
 async function checkAuthorization(){
