@@ -32,8 +32,8 @@ Il pianificatore è uno **strumento tecnico interno** e non viene incluso fra le
 ## FATTO con data e collegamenti social
 
 - Ogni pagina mostra il pulsante **✓ FATTO** con la data reale del completamento (formato italiano, fuso Europe/Rome). Premilo una seconda volta per annullare FATTO dopo conferma.
-- Le icone **Facebook, Instagram, YouTube e TikTok** sono visibili accanto a ogni pagina. Quando un link è configurato, aprono quel profilo; in assenza di link sono grigie e aprono i campi di configurazione.
-- In **Gestisci → Social dedicati a questa pagina** puoi inserire gli URL HTTPS effettivi, salvare localmente e generare un archivio JSON per GitHub. Non vengono creati profili social o collegamenti fittizi.
+- Le icone **Facebook, Instagram, LinkedIn, YouTube e TikTok** sono visibili accanto a ogni pagina. Quando un link è configurato, aprono quel profilo; in assenza di link sono grigie e aprono i campi di configurazione.
+- In **Gestisci → Social dedicati a questa pagina** puoi inserire o correggere gli URL HTTPS effettivi, salvare localmente e generare un archivio JSON per GitHub. Non vengono creati profili social o collegamenti fittizi.
 - **Stato e data FATTO e URL inseriti nella dashboard si salvano solo nel browser corrente.** Per condividere gli URL tra dispositivi, esporta `social-links.json` e pubblicalo in `gestione/social-links.json` tramite GitHub autenticato.
 - I pulsanti **Backup note JSON** e **Esporta registro CSV** includono lo stato FATTO con data; il CSV include anche gli URL social.
 
@@ -67,3 +67,14 @@ Questo è un **sito pubblico statico** su GitHub Pages, non un'applicazione ammi
 ## Inventario di riferimento
 
 [Inventario corrente (48 pagine)](../campagne/INVENTARIO.md) · [Audit storico delle prime pagine](../campagne/CONTROLLO_LANDING.md) · [Piano social](../campagne/PIANO_SOCIAL.md)
+
+## Regia social delle due linee editoriali (28 ottobre 2026)
+
+- La dashboard **resta nello stesso progetto GitHub**. Il nuovo pannello «Social e gruppi» nella Regia legge `gestione/social-routing.json` e lo script pubblico `gestione/social-regia.js`.
+- Il registro `gestione/social-links.json` conserva i link delle 48 pagine, includendo ora LinkedIn. **45 schede** sono associate a una linea editoriale, mentre REGIA, PRIVACY e HUB restano escluse dagli instradamenti promozionali.
+- **21 landing immobiliari** vengono instradate verso la linea «Joseph Digital Real Estate»; **18 landing per attività locali** verso «REAL MEDIA PRO — marketing per imprese». Le altre sei schede di supporto non tecniche vengono instradate per tema (totali: 25 immobiliare e 20 imprese).
+- Immobiliare La Sacra è registrata come **partner commerciale**, non come account da amministrare senza autorizzazione. Non viene creata né attribuita una pagina social del partner.
+- Gli URL pubblici provengono dai dati recuperati da F1 Social e dai riferimenti già comunicati. **Non attestano la proprietà degli account, l'identità API, i permessi pubblicitari o il collegamento OAuth.** L'Instagram dedicato della linea immobiliare è ancora da identificare.
+- Il nuovo registro gruppi permette di salvare **soltanto nel browser corrente** nome, URL Facebook/LinkedIn e linea editoriale. Un clic apre la pagina del gruppo dove svolgere l'iscrizione manualmente. Il CSV esportato aiuta la verifica delle regole di promozione e delle autorizzazioni degli amministratori.
+- Facebook ha dismesso l'API Groups per la pubblicazione nel 2024; non sono implementate adesioni o pubblicazioni automatiche nei gruppi, né aggiramenti delle restrizioni.
+- Questa è una dashboard **pubblica**: non inserirvi email personali degli iscritti, password, codici OAuth, token, credenziali API o dati riservati. Le autorizzazioni e la pubblicazione dei post devono essere gestite da un backend sicuro.
