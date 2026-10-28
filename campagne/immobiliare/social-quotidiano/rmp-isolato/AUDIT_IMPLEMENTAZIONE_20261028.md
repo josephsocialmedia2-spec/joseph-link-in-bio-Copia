@@ -52,3 +52,15 @@ Supabase per il nuovo schema isolato: la protezione è l'assenza di
 qualsiasi mutazione nel vecchio progetto.
 
 Per i dettagli e i passaggi restanti: `README.md` in questa cartella.
+
+## Tentativo di attivazione — 28 ottobre 2026 (ore mattutine italiane)
+
+- VERIFICATO: `mcp__Supabase__list_organizations` restituisce organizzazione `fshyvehqjleenszxjchb`. Unico progetto attivo resta `nqnmlsmeiynxbdojeyjt`; non modificato.
+- VERIFICATO: preventivo `get_cost` per nuovo progetto: **0 USD/mese**. Preventivo branch Supabase: **0,01344 USD/ora**, non autorizzato. Nessuna risorsa fatturabile creata.
+- COMPLETATO: correzione del dispatcher per inserire nella coda i giorni correnti e successivi ad ogni esecuzione live protetta. Senza questa correzione il runner non avrebbe trovato alcuna pubblicazione.
+- VERIFICATO: Actions sul commit `62332a25669f08a65a607e490aaee8b70034adb7` con conclusione `success` (test offline, non pubblicazione).
+- VERIFICATO: hash MP4 preparato `eede47a5ded2c52e344c5f834aa6a6be958674531fd552aa8c306058dace9fc1` e assenza di tag licenza/metadati di titolarità.
+- BLOCCATO: creazione di un nuovo progetto Supabase richiede selezione esplicita dell'organizzazione secondo le istruzioni del servizio. Non creata alcuna istanza.
+- BLOCCATO: nessun accesso OAuth social verificabile nella sessione; il connettore GitHub non permette lettura dei Secrets e non consente l'inferenza del loro stato.
+- BLOCCATO: diritti commerciali del video non documentati, URL video pubblica conforme e quote social non verificate.
+- NON ESEGUITO: pubblicazione reale, controllo post via API ufficiali, merge su main e attivazione cron.
