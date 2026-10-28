@@ -9,8 +9,8 @@
       "kind": "aziende_attivita_locali",
       "profiles": {
         "facebook": {
-          "url": "https://www.facebook.com/josephrealmedia",
-          "status": "URL_RECUPERATO_DA_F1_SOCIAL_NON_VERIFICATO"
+          "url": "https://www.facebook.com/josephrealmedia/",
+          "status": "URL_FORNITO_DALL_UTENTE_API_NON_VERIFICATA"
         },
         "instagram": {
           "url": "https://www.instagram.com/realmediaproageency/",
