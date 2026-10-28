@@ -65,3 +65,12 @@ La documentazione ufficiale consultata per il backup è https://supabase.com/doc
 - Nome: ESPORTAZIONE_PARZIALE_SUPABASE_20261027.zip. Archivio conservato separatamente dal repository, non pubblicato su GitHub Pages.
 - BLOCCATO: dump dati completo e download Storage privato, in assenza di un canale autenticato utilizzabile da client PostgreSQL/Storage.
 - NON ESEGUITO: prova di ripristino, reset e ricostruzione di produzione. L'integrità dello ZIP non equivale a ripristinabilità del progetto.
+
+
+## Verifica backup esistenti — 28 ottobre 2026
+- VERIFICATO: database 375229587 byte; 177 oggetti Storage; 12 job attivi.
+- VERIFICATO: le ultime cinque registrazioni f1_backup_runs (23–27 ottobre) sono NON_VERIFIED, byte_size 0, created_at e verified_at null. Non dimostrano backup utilizzabili.
+- VERIFICATO: il bucket f1-backups contiene un solo oggetto, datato 5 ottobre, 16887005 byte secondo i metadati. Contenuto e ripristinabilità NON VERIFICATI; non è un backup attuale del progetto.
+- VERIFICATO: snapshot interni joseph_crm.daily_backups disponibili fino al 27 ottobre, record_count 300. Conservati nello stesso database, non costituiscono un backup integrale esterno.
+- COMPLETATO: censiti due nomi di secrets Vault, senza leggere valori. Non equivale all'inventario dei secrets Edge Functions.
+- BLOCCATO: backup completo e prova di ripristino. Nessuna modifica Supabase o cancellazione eseguita.
