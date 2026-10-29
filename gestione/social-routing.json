@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-28",
+  "updated_at": "2026-10-29",
   "note": "Registro pubblico dei profili e instradamento delle landing: NON contiene token né autorizza pubblicazioni. I profili devono essere verificati tramite le rispettive piattaforme prima delle campagne.",
   "lines": {
     "imprese": {
@@ -31,11 +31,11 @@
       "profiles": {
         "facebook": {
           "url": "https://www.facebook.com/JosephDigitalRealEstate/",
-          "status": "URL_INDICATO_IN_PRECEDENZA_NON_VERIFICATO"
+          "status": "URL_FORNITO_DALL_UTENTE_API_NON_VERIFICATA"
         },
         "instagram": {
-          "url": "",
-          "status": "ACCOUNT_DISTINTO_NON_IDENTIFICATO"
+          "url": "https://www.instagram.com/realmediapro.it/",
+          "status": "URL_FORNITO_DALL_UTENTE_API_NON_VERIFICATA"
         },
         "linkedin": {
           "url": "https://www.linkedin.com/in/josephmalafronte/",
