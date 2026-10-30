@@ -83,6 +83,20 @@ document.getElementById('meta-verify').addEventListener('click',async()=>{
  if(d.profile_error)lines.push('Errore identificazione token: '+d.profile_error.type+' ('+d.profile_error.code+')');
  if(d.permissions?.length)lines.push('Permessi: '+d.permissions.map(p=>p.name+' ['+p.status+']').join(', '));
  if(d.permissions_error)lines.push('Permessi non leggibili: '+d.permissions_error.type+' ('+d.permissions_error.code+')');
+ if(d.missing_instagram_scopes?.length){
+  lines.push('MANCANO I PERMESSI INSTAGRAM: '+d.missing_instagram_scopes.join(', '));
+  lines.push('Per abilitarli: Meta for Developers → CASE IN PUBBLICITÀ 24/7 → Facebook Login for Business → Configurazioni → CASE247 Publisher.');
+  lines.push('Aggiungi instagram_basic e instagram_content_publish alle autorizzazioni della configurazione, salva e torna qui per Autorizza Meta.');
+ }
+ if(d.instagram_page_lookup){
+  const p=d.instagram_page_lookup;
+  lines.push('Verifica diretta Page ID 1402024242991896: '+(p.page_recognized?'riconosciuta':'non confermata con questa interrogazione'));
+  lines.push('Collegamento Instagram professionale visibile: '+(p.ig_business_id_present?'sì':'non rilevato'));
+  if(p.ig_connected_id_present)lines.push('Connessione Instagram alternativa rilevata, da verificare');
+  if(p.lookup_error)lines.push('Lookup Instagram: errore '+p.lookup_error.type+' ('+p.lookup_error.code+')');
+ }
+ const diagnoses={INSTAGRAM_PERMISSIONS_NOT_GRANTED:'L’app non ha i permessi Instagram; non è ancora possibile stabilire definitivamente il collegamento della Pagina.',PAGE_IG_LOOKUP_DENIED:'Meta non consente di leggere il collegamento Instagram della Pagina.',NO_INSTAGRAM_BUSINESS_ACCOUNT_VISIBLE:'La Pagina non espone un account Instagram professionale collegato.',IG_PROFILE_LOOKUP_DENIED:'L’app non riesce a leggere il profilo Instagram collegato.',IG_USERNAME_MISMATCH:'Il profilo Instagram collegato non coincide con @caseinpubblicita.',IG_MATCHED:'Profilo Instagram corrispondente rilevato.'};
+ if(d.instagram_diagnosis)lines.push('Diagnosi Instagram: '+(diagnoses[d.instagram_diagnosis]||d.instagram_diagnosis));
  lines.push('Pagina/Instagram associati a CASE247: '+(d.linked?'verificati':'non ancora verificati'));
  lines.push('Pubblicazione automatica: DISABILITATA, in attesa di test');
  output.textContent=lines.join('\n');
