@@ -19,10 +19,15 @@ const client=createClient('https://qmeftxsdfeyqozwoivzo.supabase.co','sb_publish
 const status=document.getElementById('authstatus');
 let allowed=false;
 async function refreshAuth(){
- const {data:{user}}=await client.auth.getUser();allowed=false;
- if(!user){status.textContent='Non autenticato — nessun accesso ai dati Supabase';return;}
+ const {data:{session},error:sessionError}=await client.auth.getSession();
+ allowed=false;
+ if(sessionError){status.textContent='Errore sessione: '+sessionError.message;return;}
+ if(!session){status.textContent='Non autenticato: apri il link ricevuto via email nello stesso browser, oppure richiedine uno nuovo.';return;}
+ const {data:{user},error:userError}=await client.auth.getUser();
+ if(userError||!user){status.textContent='Sessione non valida: '+(userError?.message||'utente non trovato');return;}
  const {data,error}=await client.from('case247_admins').select('user_id').eq('user_id',user.id).maybeSingle();
- allowed=!!data&&!error;status.textContent=allowed?'Amministratore autenticato: '+user.email:'Accesso effettuato, ma autorizzazione amministratore non presente';
+ allowed=!!data&&!error;
+ status.textContent=error?'Errore controllo amministratore: '+error.message:allowed?'Amministratore autenticato: '+user.email:'Accesso effettuato come '+user.email+', ma questo account non ha autorizzazione amministratore';
  if(allowed)await loadCloud();
 }
 async function loadCloud(){
@@ -55,5 +60,6 @@ document.getElementById('savecloud').addEventListener('click',async()=>{
  }
  status.textContent='40 slot salvati su Supabase';await loadCloud();
 });
+client.auth.onAuthStateChange((event)=>{if(event==='SIGNED_IN'||event==='SIGNED_OUT'||event==='TOKEN_REFRESHED')setTimeout(refreshAuth,0);});
 refreshAuth();
 </script></body></html>
