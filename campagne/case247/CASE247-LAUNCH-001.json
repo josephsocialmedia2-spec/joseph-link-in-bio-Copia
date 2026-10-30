@@ -1,0 +1,13 @@
+{
+  "campaign_id": "CASE247-LAUNCH-001",
+  "brand": "CASE IN PUBBLICITÀ 24/7",
+  "media_source": "campagne/case247/CASE247-LAUNCH-001.svg",
+  "caption_master": "CASE IN PUBBLICITÀ 24/7\n\nLA TUA CASA IN PUBBLICITÀ CONTINUA\n\nUn annuncio isolato non basta: per comunicare un immobile servono informazioni corrette, contenuti chiari e una strategia di presenza digitale nel tempo.\n\nProgettiamo comunicazione e promozione immobiliare per Avigliana e Valle di Susa, con attenzione alla presentazione degli immobili e alla continuità della visibilità. Le attività di intermediazione immobiliare restano riservate ai professionisti abilitati.\n\nVuoi parlarci della tua casa? Scrivici su WhatsApp: 371 370 8294\nhttps://wa.me/393713708294\n\n#CaseInPubblicita247 #Avigliana #ValleDiSusa #ComunicazioneImmobiliare",
+  "destinations": {
+    "facebook_page_id": "1402024242991896",
+    "instagram_username": "caseinpubblicita"
+  },
+  "status": "READY_FOR_MEDIA_QA",
+  "publishing": "MANUAL_TEST_ONLY",
+  "notes": "Visual illustrativo; differenti caption non ammesse senza revisione."
+}
