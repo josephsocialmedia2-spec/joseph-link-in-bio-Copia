@@ -7,7 +7,12 @@
     "facebook_page_id": "1402024242991896",
     "instagram_username": "caseinpubblicita"
   },
-  "status": "READY_FOR_MEDIA_QA",
+  "status": "READY_MEDIA_BLOCKED_OAUTH",
   "publishing": "MANUAL_TEST_ONLY",
-  "notes": "Visual illustrativo; differenti caption non ammesse senza revisione."
+  "notes": "Grafiche e caption condivise per FB/IG; token Meta attualmente respinto da Graph API. Non avviare job senza riautorizzazione.",
+  "media_url": "https://qmeftxsdfeyqozwoivzo.supabase.co/storage/v1/object/public/case247-public-media/CASE247-LAUNCH-001/v1/visual.jpg",
+  "media_sha256": "e7281ba5ddc4065fb3c75e6276b63b032e4156dafa185bcba4c179e197913da3",
+  "media_width": 1080,
+  "media_height": 1350,
+  "media_type": "image/jpeg"
 }
