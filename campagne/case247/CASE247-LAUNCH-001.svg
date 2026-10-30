@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350">
+<defs>
+ <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#F5FAFF"/><stop offset=".62" stop-color="#D9EFFF"/><stop offset="1" stop-color="#93CFFF"/></linearGradient>
+ <linearGradient id="night" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#051B39"/><stop offset=".58" stop-color="#083663"/><stop offset="1" stop-color="#1169B6"/></linearGradient>
+ <linearGradient id="home" x1="0" y1="0" x2="1" y2=".8"><stop stop-color="#FFFFFF"/><stop offset="1" stop-color="#BDDEF3"/></linearGradient>
+</defs>
+<rect width="1080" height="1350" fill="#F5FAFF"/>
+<rect width="1080" height="1000" fill="url(#sky)"/>
+<path d="M0 580 L155 418 L255 510 L403 318 L544 510 L665 360 L820 520 L932 386 L1080 572 L1080 875 L0 875Z" fill="#9CCBF0" opacity=".80"/>
+<path d="M0 660 L192 470 L275 556 L398 412 L519 563 L672 415 L846 612 L984 490 L1080 595 L1080 840 L0 840Z" fill="#4C9AD7"/>
+<path d="M0 740 L204 596 L314 676 L487 532 L635 702 L793 566 L1080 765 L1080 916 L0 916Z" fill="#0B568F"/>
+<path d="M0 740 Q460 840 1080 702 L1080 1000 L0 1000Z" fill="#08305B"/>
+<!-- architectural scene, deliberately illustrative rather than an actual listing -->
+<g transform="translate(475 550)">
+ <path d="M18 242 L314 36 L570 187 L570 430 L18 430Z" fill="#061D3D"/>
+ <path d="M314 75 L529 204 L529 412 L118 412 L118 226Z" fill="url(#home)"/>
+ <path d="M79 242 L312 71 L553 222" fill="none" stroke="#FFFFFF" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+ <rect x="350" y="252" width="117" height="160" fill="#0B416C"/>
+ <rect x="172" y="255" width="128" height="100" fill="#0B416C"/>
+ <path d="M234 255 V355 M172 306 H300" stroke="#9DD5F4" stroke-width="7"/>
+ <path d="M350 303 H467" stroke="#9DD5F4" stroke-width="7"/>
+ <rect x="20" y="425" width="550" height="18" fill="#75B5E8"/>
+</g>
+<rect width="1080" height="525" fill="#FFFFFF" opacity=".96"/>
+<rect x="70" y="64" width="14" height="84" fill="#147DD2"/>
+<text x="112" y="112" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="32" letter-spacing="5" fill="#147DD2">COMUNICAZIONE IMMOBILIARE</text>
+<text x="70" y="237" font-family="Arial,Helvetica,sans-serif" font-weight="900" font-size="83" letter-spacing="-2" fill="#082C58">CASE IN</text>
+<text x="70" y="340" font-family="Arial,Helvetica,sans-serif" font-weight="900" font-size="84" letter-spacing="-2" fill="#0877CF">PUBBLICITÀ</text>
+<text x="70" y="445" font-family="Arial,Helvetica,sans-serif" font-weight="900" font-size="110" letter-spacing="-2" fill="#082C58">24/7</text>
+<rect x="70" y="485" width="298" height="8" rx="4" fill="#1587E3"/>
+<text x="70" y="1055" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="45" fill="#FFFFFF">LA TUA CASA IN</text>
+<text x="70" y="1118" font-family="Arial,Helvetica,sans-serif" font-weight="800" font-size="50" fill="#FFFFFF">PUBBLICITÀ CONTINUA</text>
+<path d="M0 975 Q400 900 1080 975 V1350 H0Z" fill="url(#night)"/>
+<text x="70" y="1054" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="44" fill="#FFFFFF">LA TUA CASA IN</text>
+<text x="70" y="1119" font-family="Arial,Helvetica,sans-serif" font-weight="900" font-size="54" fill="#FFFFFF">PUBBLICITÀ CONTINUA</text>
+<text x="70" y="1176" font-family="Arial,Helvetica,sans-serif" font-size="30" fill="#C4E6FF">Avigliana · Valle di Susa</text>
+<rect x="60" y="1210" width="960" height="88" rx="21" fill="#087ED1"/>
+<text x="540" y="1268" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="800" font-size="43" fill="#FFFFFF">WHATSAPP 371 370 8294</text>
+<text x="540" y="1328" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="19" fill="#CBE6FD">Intermediazione riservata ai professionisti abilitati · Visual illustrativo</text>
+</svg>
