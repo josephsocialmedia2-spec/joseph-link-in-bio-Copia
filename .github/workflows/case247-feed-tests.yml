@@ -35,6 +35,7 @@ jobs:
               for i in range(3):
                   Image.new("RGB",(1100,1400),((50+i*50),105,160)).save(m.BANK/(f"test-{i}.jpg"))
               m.photos_commons=lambda:[]
+              m.photos_curated=lambda:[]
               m.choose_topic=lambda date:(("Quanto vale la tua casa?","Ogni casa ha una storia e necessita una presentazione pertinente.","valutazione"),None)
               m.req=lambda url,timeout=12:b'{"candidate":null}'
               for date,expected_count in [("2026-11-01",1),("2026-11-02",5)]:
