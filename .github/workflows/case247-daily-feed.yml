@@ -1,0 +1,85 @@
+name: CASE247 - grafiche notturne e coda autonoma (zero API paid)
+on:
+  schedule:
+    - cron: '15 4 * * *'
+      timezone: "Europe/Rome"
+    - cron: '45 9 * * *'
+      timezone: "Europe/Rome"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "generate = 3 proposte / queue = scelta e accodamento"
+        type: choice
+        required: true
+        default: generate
+        options:
+          - generate
+          - queue
+      choice:
+        description: "auto = scelta approvata o fallback autonomo"
+        type: choice
+        required: true
+        default: auto
+        options:
+          - auto
+          - A
+          - B
+          - C
+      date:
+        description: "YYYY-MM-DD (vuoto = oggi Europe/Rome)"
+        required: false
+        type: string
+permissions:
+  contents: write
+concurrency:
+  group: case247-daily-feed
+  cancel-in-progress: false
+jobs:
+  daily:
+    if: github.repository == 'josephsocialmedia2-spec/joseph-link-in-bio-Copia'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Free image compositor (NO AI payments)
+        run: python -m pip install --disable-pip-version-check Pillow==11.3.0
+      - name: Prepare overnight visuals or morning queue
+        shell: bash
+        env:
+          RUN_KIND: ${{ github.event_name }}
+          RUN_CRON: ${{ github.event.schedule }}
+          INPUT_MODE: ${{ inputs.mode }}
+          INPUT_CHOICE: ${{ inputs.choice }}
+          INPUT_DATE: ${{ inputs.date }}
+        run: |
+          set -euo pipefail
+          mode="${INPUT_MODE:-generate}"
+          if [[ "$RUN_KIND" == "schedule" ]]; then
+            if [[ "$RUN_CRON" == "45 9 * * *" ]]; then
+              mode="queue"
+            else
+              mode="generate"
+            fi
+          fi
+          args=("$mode")
+          if [[ -n "${INPUT_DATE:-}" ]]; then args+=(--date "$INPUT_DATE"); fi
+          if [[ "$mode" == "queue" ]]; then args+=(--choice "${INPUT_CHOICE:-auto}"); fi
+          python campagne/case247/auto_feed.py "${args[@]}"
+      - name: Commit proposal graphics and queue (without live Meta publishing)
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'case247-content-bot'
+          git config user.email 'case247-content-bot@users.noreply.github.com'
+          git add -A campagne/case247/auto-feed/days/ campagne/case247/auto-feed/ready/ campagne/case247/auto-feed/queue/ 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "Nessun nuovo asset."
+          else
+            git commit -m "CASE247: produzione notturna o coda editoriale del giorno"
+            git push
+          fi
