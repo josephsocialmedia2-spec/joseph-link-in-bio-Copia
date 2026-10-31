@@ -1,0 +1,54 @@
+name: CASE247 zero-cost feed smoke tests
+on:
+  push:
+    paths:
+      - '.github/workflows/case247-feed-tests.yml'
+      - '.github/workflows/case247-daily-feed.yml'
+      - 'campagne/case247/auto_feed.py'
+      - 'campagne/case247/ingest_queue.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install --disable-pip-version-check Pillow==11.3.0
+      - name: Syntax + offline graphic and unattended-queue tests
+        run: |
+          python -m py_compile campagne/case247/auto_feed.py campagne/case247/ingest_queue.py
+          python - <<'PY'
+          import importlib.util, sys, tempfile, json
+          from pathlib import Path
+          from PIL import Image
+          spec=importlib.util.spec_from_file_location("case247_test","campagne/case247/auto_feed.py")
+          m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+          with tempfile.TemporaryDirectory() as tmp:
+              base=Path(tmp)
+              m.HOME=base/"auto-feed"
+              m.BANK=base/"photo-bank";m.BANK.mkdir()
+              for i in range(3):
+                  Image.new("RGB",(1100,1400),((50+i*50),105,160)).save(m.BANK/(f"test-{i}.jpg"))
+              m.photos_commons=lambda:[]
+              m.choose_topic=lambda date:(("Quanto vale la tua casa?","Ogni casa ha una storia e necessita una presentazione pertinente.","valutazione"),None)
+              m.req=lambda url,timeout=12:b'{"candidate":null}'
+              for date,expected_count in [("2026-11-01",1),("2026-11-02",5)]:
+                  sys.argv=["auto_feed.py","generate","--date",date]
+                  m.main()
+                  manifest=json.loads((m.HOME/"days"/date/"manifest.json").read_text())
+                  assert len(manifest["candidates"])==3
+                  assert all((m.HOME/"days"/date/x["preview"]).is_file() for x in manifest["candidates"])
+                  sys.argv=["auto_feed.py","queue","--date",date]
+                  m.main()
+                  queue=json.loads((m.HOME/"queue"/(date+".json")).read_text())
+                  assert queue["state"]=="QUEUED_NOT_PUBLISHED"
+                  assert queue["external_post_id"] is None
+                  assert len(queue["files"])==expected_count
+                  assert all((m.ROOT/x).is_file() or (m.HOME/"ready"/date/Path(x).name).is_file() for x in queue["files"])
+              print("PASS: 3 candidates + 1 single + 5-slide carousel + automatic fallback + no Meta publishing")
+          PY
