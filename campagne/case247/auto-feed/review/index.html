@@ -30,7 +30,7 @@ strong{color:white}.meta{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}.pil
 <h1>Scegli la grafica di oggi</h1>
 <p>Tre proposte notturne. Scegli quella che preferisci; senza intervento, alle 09:45 il sistema seleziona automaticamente e mette in coda.</p>
 </div></header>
-<main>
+<main><section id="latest-approved" class="note" style="border:2px solid #328de4;background:#0a3057"><h2 style="margin:0 0 7px">Ultime 12 grafiche approvate · 31 ottobre 2026</h2><p>12 creatività per il calendario 1–4 novembre: <strong>8 Privati e 4 Aziende</strong>. Sono in coda GitHub, non pubblicate su Meta.</p><div class="kw-tabs"><a class="kw-tab" href="#archivio-privati">Visualizza le 8 grafiche Privati</a><a class="kw-tab" href="#archivio-aziende">Visualizza le 4 grafiche Aziende</a><a class="kw-tab" href="../../editorial-queue/2026-11-01_2026-11-04/">Apri galleria completa</a></div><p id="latest-check">Le anteprime sono caricate dall'archivio approvato GitHub.</p></section>
 <nav aria-label="Archivio contenuti approvati" class="kw-tabs" style="margin:3px 0 22px">
 <a class="kw-tab" href="#archivio-privati">Contenuti PRIVATI · 8</a>
 <a class="kw-tab" href="#archivio-aziende">Contenuti AZIENDE · 4</a>
@@ -134,7 +134,7 @@ init();
    const id=job.content_id;if(!/^CASE247-\d{3}$/.test(id))return null;
    const card=document.createElement("article");card.className="archive-card";
    const preview=document.createElement("a");preview.href=base+"assets/"+id+".jpg";preview.target="_blank";preview.rel="noopener";
-   const image=document.createElement("img");image.src=preview.href;image.alt="Contenuto approvato "+id+": "+job.title;image.loading="lazy";preview.append(image);card.append(preview);
+   const image=document.createElement("img");image.src=preview.href+"?v=20261031";image.onerror=()=>{image.onerror=null;image.src=base+"assets/"+id+".svg"};image.alt="Contenuto approvato "+id+": "+job.title;image.loading="lazy";preview.append(image);card.append(preview);
    const body=document.createElement("div");body.className="archive-body";
    const label=document.createElement("small");label.textContent=id+" · "+job.scheduled_at_local.replace("T"," ").slice(0,16)+" (Roma)";body.append(label);
    const h=document.createElement("h4");h.textContent=job.title;body.append(h);
@@ -146,7 +146,7 @@ init();
    body.append(actions);card.append(body);return card;
  }
  try{
-   const r=await fetch(base+"queue.json",{cache:"no-store"});if(!r.ok)throw Error("Archivio GitHub non raggiungibile ("+r.status+")");
+   const r=await fetch(base+"queue.json?v=20261031-approved12",{cache:"no-store"});if(!r.ok)throw Error("Archivio GitHub non raggiungibile ("+r.status+")");
    const q=await r.json();if(q.brand!=="CASE IN PUBBLICITÀ 24/7")throw Error("Archivio del brand non corrispondente");
    const jobs=(q.jobs||[]).filter(j=>j.platform==="facebook"&&j.approved===true);
    for(const [key,el] of Object.entries(groups)){
