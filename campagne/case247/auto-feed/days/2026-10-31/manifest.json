@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-31",
+  "brand": "CASE IN PUBBLICITÀ 24/7",
+  "format": "carousel",
+  "status": "AWAITING_MORNING_SELECTION",
+  "choice_deadline_rome": "09:30",
+  "queue_start_rome": "09:45",
+  "scheduled_publication_rome": "10:00",
+  "theme": "Vendere casa richiede metodo.",
+  "headline": "Vendere casa richiede metodo.",
+  "detail": "Dalla presentazione alla promozione: ogni passaggio merita attenzione e organizzazione.",
+  "caption": "Vendere casa richiede metodo.\n\nDalla presentazione alla promozione: ogni passaggio merita attenzione e organizzazione.\n\nCASE IN PUBBLICITÀ 24/7: comunicazione e promozione immobiliare tra Avigliana e la Valle di Susa. L'intermediazione resta riservata ai professionisti abilitati.\n\nScrivici indicando il tuo Comune: WhatsApp 371 370 8294 — https://wa.me/393713708294\n\n#CaseInPubblicita247 #Avigliana #ValleDiSusa #MarketingImmobiliare\n\nSpunto di attualità (approfondimento): https://news.google.com/rss/articles/CBMixgFBVV95cUxNRjlYUFVETlI0Vll5UVNFR29iM0xWM1FTbnVTc2Z6b1dnQTdXcWI0T3BjN3o2T1lZMDVKa2lOb0I3SnYyZGZFa3NDV1ZYa0hGVFJXd3dhVjl1STEyOThfcWtTSWNfaEY3R01pVEV5eDdUaml6VVpIUGhWU3dOV0hfcXJTNUEwR2IxUk1iTEhodjhyQVBvc0VqbVJ2ZVJWWkNYUDRvci10a200amVTQkVtQWRnUHN3bzRkT0VNTHJnZTlibC1ZdVE?oc=5",
+  "news_source": {
+    "headline": "Mutui, il Piemonte non rallenta: famiglie in corsa mentre l’Italia tira il freno - Quotidiano del Condominio",
+    "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxNRjlYUFVETlI0Vll5UVNFR29iM0xWM1FTbnVTc2Z6b1dnQTdXcWI0T3BjN3o2T1lZMDVKa2lOb0I3SnYyZGZFa3NDV1ZYa0hGVFJXd3dhVjl1STEyOThfcWtTSWNfaEY3R01pVEV5eDdUaml6VVpIUGhWU3dOV0hfcXJTNUEwR2IxUk1iTEhodjhyQVBvc0VqbVJ2ZVJWWkNYUDRvci10a200amVTQkVtQWRnUHN3bzRkT0VNTHJnZTlibC1ZdVE?oc=5",
+    "source": "Google News RSS — spunto tematico, non riproduzione della notizia"
+  },
+  "candidates": [
+    {
+      "id": "A",
+      "preview": "candidate-A.jpg",
+      "photo": {
+        "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/70/The_sitting_room_is_where_the_Lincoln_family_would_spend_their_evenings_together%2C_like_a_modern_living_room_or_family_room._%2843775bf9-a88e-4a9a-bb5f-51dcbda45aef%29.JPG/1920px-thumbnail.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "license": "public domain",
+        "credit": "NPS",
+        "origin": "https://commons.wikimedia.org/wiki/File%3AThe_sitting_room_is_where_the_Lincoln_family_would_spend_their_evenings_together%2C_like_a_modern_living_room_or_family_room._%2843775bf9-a88e-4a9a-bb5f-51dcbda45aef%29.JPG",
+        "key": "File:The sitting room is where the Lincoln family would spend their evenings together, like a modern living room or family room. (43775bf9-a88e-4a9a-bb5f-51dcbda45aef).JPG"
+      },
+      "score": 95,
+      "visual_variant": 0
+    },
+    {
+      "id": "B",
+      "preview": "candidate-B.jpg",
+      "photo": {
+        "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b4/Gardener_watering_the_garden_at_the_Hollywood_residence_of_Paul_deLongpre%2C_Hollywood_Boulevard_and_Cahuenga_Avenue%2C_ca.1902-1903_%28CHS-1754%29.jpg/1920px-Gardener_watering_the_garden_at_the_Hollywood_residence_of_Paul_deLongpre%2C_Hollywood_Boulevard_and_Cahuenga_Avenue%2C_ca.1902-1903_%28CHS-1754%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "license": "public domain",
+        "credit": "C. C. Pierce",
+        "origin": "https://commons.wikimedia.org/wiki/File%3AGardener_watering_the_garden_at_the_Hollywood_residence_of_Paul_deLongpre%2C_Hollywood_Boulevard_and_Cahuenga_Avenue%2C_ca.1902-1903_%28CHS-1754%29.jpg",
+        "key": "File:Gardener watering the garden at the Hollywood residence of Paul deLongpre, Hollywood Boulevard and Cahuenga Avenue, ca.1902-1903 (CHS-1754).jpg"
+      },
+      "score": 92,
+      "visual_variant": 1
+    },
+    {
+      "id": "C",
+      "preview": "candidate-C.jpg",
+      "photo": {
+        "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ce/A_view_over_the_corner_of_Plantage_Middenlaan_-_Plantage_Parklaan_in_Amsterdam%3B.jpg/1920px-A_view_over_the_corner_of_Plantage_Middenlaan_-_Plantage_Parklaan_in_Amsterdam%3B.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+        "license": "cc0",
+        "credit": "Fons Heijnsbroek",
+        "origin": "https://commons.wikimedia.org/wiki/File%3AA_view_over_the_corner_of_Plantage_Middenlaan_-_Plantage_Parklaan_in_Amsterdam%3B.jpg",
+        "key": "File:A view over the corner of Plantage Middenlaan - Plantage Parklaan in Amsterdam;.jpg"
+      },
+      "score": 89,
+      "visual_variant": 2
+    }
+  ],
+  "estimated_paid_api_cost_eur": 0,
+  "policy": "Do not substitute invented photos; candidates are previews pending selection; never publish via Meta here."
+}
