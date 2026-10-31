@@ -199,13 +199,18 @@ def main():
             if choice in ("A","B","C"):selected=choice
         except Exception:pass
     if selected=="auto":
-        # Picks strongest candidate; future rotation based on recent queue choices.
-        last=[]
-        for x in sorted((HOME/"queue").glob("*.json"),reverse=True)[:6]:
-            try:last.append(json.loads(x.read_text()).get("candidate"))
+        # Learns from the editor's prior real selections, while avoiding repetitive grids.
+        history=[]
+        for x in sorted((HOME/"queue").glob("*.json"),reverse=True)[:90]:
+            try:history.append(json.loads(x.read_text(encoding="utf-8")))
             except Exception:pass
+        recent=[x.get("candidate") for x in history[:6]]
+        manually_approved=[x.get("candidate") for x in history if x.get("selection_mode")=="MORNING_APPROVAL"]
         options=manifest["candidates"]
-        selected=max(options,key=lambda c:(c["score"]-9*last.count(c["id"]),c["id"]))["id"]
+        selected=max(options,key=lambda c:(
+            c["score"]+min(18,4*manually_approved.count(c["id"]))-9*recent.count(c["id"]),
+            c["id"]
+        ))["id"]
         route="AUTOMATIC_FALLBACK"
     else:route="MORNING_APPROVAL"
     chosen=next(x for x in manifest["candidates"] if x["id"]==selected)
