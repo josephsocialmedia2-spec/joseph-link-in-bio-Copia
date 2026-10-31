@@ -5,7 +5,26 @@
 :root{font:16px system-ui,-apple-system,Arial;color:#ebf5ff;background:#061c37}
 *{box-sizing:border-box}body{margin:0}header{padding:30px 5%;background:linear-gradient(125deg,#082c58,#094d91 70%,#2d174f)}h1{font-size:clamp(26px,4vw,42px);margin:0 0 5px}main{max-width:1300px;margin:auto;padding:24px 16px 80px}p{line-height:1.55;color:#d0ddec}a{color:#8fddff}
 strong{color:white}.meta{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}.pill{border:1px solid #4e779a;padding:8px 12px;border-radius:80px;font-size:13px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}.card{border:1px solid #35608a;background:#0a2c54;border-radius:18px;overflow:hidden}.card img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover}.body{padding:16px}.body h2{margin:0 0 6px}.body p{font-size:13px}.btn{border:0;border-radius:10px;background:#178beb;color:#fff;font-size:15px;font-weight:750;padding:13px 18px;cursor:pointer}.btn:disabled{opacity:.5;cursor:not-allowed}.card.selected{outline:3px solid #ffa654}.note{padding:14px;border-radius:12px;background:#132f4f;margin:20px 0}#result{white-space:pre-wrap;color:#9cfae2}#auth{color:#ffc989}@media(max-width:800px){.grid{grid-template-columns:1fr}.card{max-width:550px}}
-.kw-tabs{display:flex;gap:10px;flex-wrap:wrap}.kw-tab{border:1px solid #507ba1;border-radius:9px;background:#092c54;color:#fff;padding:11px 17px;cursor:pointer}.kw-tab[aria-selected="true"]{background:#178beb}.kw-table{width:100%;border-collapse:collapse;font-size:13px}.kw-table td,.kw-table th{text-align:left;padding:10px;border-bottom:1px solid #32577e}.kw-scroll{overflow-x:auto}.kw-links{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}.kw-search{background:#103b69;color:white;border:1px solid #507ba1;border-radius:8px;padding:12px;width:min(100%,400px)}</style></head>
+.kw-tabs{display:flex;gap:10px;flex-wrap:wrap}.kw-tab{border:1px solid #507ba1;border-radius:9px;background:#092c54;color:#fff;padding:11px 17px;cursor:pointer}.kw-tab[aria-selected="true"]{background:#178beb}.kw-table{width:100%;border-collapse:collapse;font-size:13px}.kw-table td,.kw-table th{text-align:left;padding:10px;border-bottom:1px solid #32577e}.kw-scroll{overflow-x:auto}.kw-links{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}.kw-search{background:#103b69;color:white;border:1px solid #507ba1;border-radius:8px;padding:12px;width:min(100%,400px)}
+/* CASE247: archivio editoriale approvato, separato dalle proposte quotidiane */
+.archive-intro{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;margin:10px 0 20px}.archive-intro a,.archive-links a{color:#C6EBFF;font-weight:700}
+.archive-group{border:1px solid #416D9B;border-radius:15px;background:#09294A;padding:18px;margin-top:18px}
+.archive-group h3{font-size:22px;margin:0}.archive-group p{margin:7px 0 13px}
+.archive-links{display:flex;flex-wrap:wrap;gap:14px;margin:10px 0 16px}
+.archive-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:16px}
+.archive-card{border:1px solid #40668C;border-radius:13px;overflow:hidden;background:#071B34}
+.archive-card img{display:block;width:100%;aspect-ratio:4/5;object-fit:contain;background:#fff}
+.archive-card .archive-body{padding:13px}
+.archive-card h4{font-size:15px;line-height:1.3;margin:7px 0}
+.archive-card small{color:#B4D2E9;display:block}
+.archive-card .archive-status{color:#A9EACA;font-weight:700}
+.archive-card details{margin:10px 0}
+.archive-card summary{cursor:pointer;color:#93D7FF;font-weight:700}
+.archive-card pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.6 system-ui;color:#DDEFFF}
+.archive-card .archive-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:13px}
+.archive-card .archive-actions a{color:#8FDDFF;font-size:13px}
+.archive-hint{background:#112E4D;border-left:3px solid #128BDB;padding:11px 13px;border-radius:7px}
+</style></head>
 <body><header><div style="max-width:1300px;margin:auto">
 <a href="../../../../gestione/canali-case247/">← Regia CASE247</a>
 <h1>Scegli la grafica di oggi</h1>
@@ -19,7 +38,35 @@ strong{color:white}.meta{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}.pil
 <p>Le tre opzioni condividono argomento e caption; cambia il trattamento fotografico. Quando scegli una proposta, si registra la tua decisione in Supabase. Se non scegli, il motore usa un punteggio di qualità e penalizza gli stili ripetuti nei giorni precedenti.</p>
 <p>Le grafiche selezionate vanno nella <a href="https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/tree/main/campagne/case247/auto-feed/queue">coda GitHub</a>. Non sono pubblicazioni già avvenute. Le fotografie esterne conservano la fonte e la licenza per il riutilizzo.</p>
 <a href="https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/actions/workflows/case247-daily-feed.yml" target="_blank" rel="noopener">Controlla le esecuzioni automatiche su GitHub</a>
-</section><section id="keyword-archive" class="note"><h2>Ricerca SEO — Privati e Aziende</h2><p>Keyword a coda corta e lunga collegate ai contenuti esistenti di CASE IN PUBBLICITÀ 24/7. Sono <strong>proposte da verificare</strong> con Ubersuggest, Google Trends e Search Console: nessun volume è stato inventato. Questa sezione non accoda post né modifica l'approvazione delle grafiche.</p><div class="kw-tabs"><button class="kw-tab" data-sector="privati" aria-selected="true">Privati</button><button class="kw-tab" data-sector="aziende" aria-selected="false">Aziende</button></div><p id="kw-description"></p><div id="kw-links" class="kw-links"></div><div class="kw-links"><input class="kw-search" id="kw-search" placeholder="Cerca una keyword..."><button class="btn" id="kw-copy" type="button">Copia keyword</button><button class="btn" id="kw-export" type="button">Esporta CSV</button></div><p id="kw-count"></p><div class="kw-scroll"><table class="kw-table"><thead><tr><th>Keyword</th><th>Coda</th><th>Landing</th><th>Validazione</th></tr></thead><tbody id="kw-rows"></tbody></table></div></section></main>
+</section>
+<section id="contenuti-approvati" class="note" aria-labelledby="archive-title">
+<h2 id="archive-title">Archivio contenuti approvati — Privati e Aziende</h2>
+<p>Qui trovi le <strong>12 grafiche già approvate</strong>, le caption e i file JPEG/SVG presenti in GitHub. I contenuti sono separati per destinatario: <strong>8 per i proprietari privati</strong> e <strong>4 per le aziende</strong>. Questa sezione è distinta dalle tre proposte giornaliere qui sopra.</p>
+<div class="archive-intro">
+<div class="kw-tabs"><a class="kw-tab" href="#archivio-privati">Privati · 8 contenuti</a><a class="kw-tab" href="#archivio-aziende">Aziende · 4 contenuti</a></div>
+<a href="../../editorial-queue/2026-11-01_2026-11-04/queue.json">Calendario completo · 24 uscite FB/IG</a>
+</div>
+<p class="archive-hint">Stato: <strong>accodati su GitHub, non pubblicati</strong>. Le pubblicazioni su Facebook e Instagram restano disattivate finché non sono verificati OAuth, ID Meta e collegamenti server-side. Orari pianificati: 10:00, 16:00 e 20:00 Europe/Rome.</p>
+<section id="archivio-privati" class="archive-group" aria-labelledby="archivio-privati-title">
+<h3 id="archivio-privati-title">Privati — Proprietari di immobili</h3>
+<p>Vendere casa, valore, fotografie, targeting, contatti e strategia immobiliare.</p>
+<div class="archive-links">
+<a href="../../editorial-queue/2026-11-01_2026-11-04/privati/">Apri cartella Privati · anteprime e caption</a>
+<a href="https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/tree/main/campagne/case247/editorial-queue/2026-11-01_2026-11-04/privati/" target="_blank" rel="noopener">Cartella Privati su GitHub</a>
+</div>
+<div class="archive-grid" id="archive-privati"><p>Caricamento delle 8 grafiche...</p></div>
+</section>
+<section id="archivio-aziende" class="archive-group" aria-labelledby="archivio-aziende-title">
+<h3 id="archivio-aziende-title">Aziende — Imprese e attività commerciali</h3>
+<p>Visibilità continuativa, obiettivi commerciali, pianificazione e posizionamento del brand.</p>
+<div class="archive-links">
+<a href="../../editorial-queue/2026-11-01_2026-11-04/aziende/">Apri cartella Aziende · anteprime e caption</a>
+<a href="https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/tree/main/campagne/case247/editorial-queue/2026-11-01_2026-11-04/aziende/" target="_blank" rel="noopener">Cartella Aziende su GitHub</a>
+</div>
+<div class="archive-grid" id="archive-aziende"><p>Caricamento delle 4 grafiche...</p></div>
+</section>
+</section>
+<section id="keyword-archive" class="note"><h2>Ricerca SEO — Privati e Aziende</h2><p>Keyword a coda corta e lunga collegate ai contenuti esistenti di CASE IN PUBBLICITÀ 24/7. Sono <strong>proposte da verificare</strong> con Ubersuggest, Google Trends e Search Console: nessun volume è stato inventato. Questa sezione non accoda post né modifica l'approvazione delle grafiche.</p><div class="kw-tabs"><button class="kw-tab" data-sector="privati" aria-selected="true">Privati</button><button class="kw-tab" data-sector="aziende" aria-selected="false">Aziende</button></div><p id="kw-description"></p><div id="kw-links" class="kw-links"></div><div class="kw-links"><input class="kw-search" id="kw-search" placeholder="Cerca una keyword..."><button class="btn" id="kw-copy" type="button">Copia keyword</button><button class="btn" id="kw-export" type="button">Esporta CSV</button></div><p id="kw-count"></p><div class="kw-scroll"><table class="kw-table"><thead><tr><th>Keyword</th><th>Coda</th><th>Landing</th><th>Validazione</th></tr></thead><tbody id="kw-rows"></tbody></table></div></section></main>
 <script type="module">
 import {createClient} from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 const supa=createClient("https://qmeftxsdfeyqozwoivzo.supabase.co","sb_publishable_KNgvCUxECyBFtd5MUrwDYg_BI5Z6Nsy");
@@ -71,4 +118,38 @@ async function init(){
 init();
 </script><script>
 (async()=>{const section=document.getElementById('keyword-archive'),tbody=document.getElementById('kw-rows'),links=document.getElementById('kw-links'),filter=document.getElementById('kw-search');let dataset,active='privati',visible=[];const c=(row,v)=>{let el=document.createElement('td');el.textContent=v;row.append(el)};const csv=v=>'"'+String(v).replace(/"/g,'""')+'"';const download=(value)=>{let url=URL.createObjectURL(new Blob([value],{type:'text/csv;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download='case247-seo-'+active+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1500)};function render(){let s=dataset.sections.find(x=>x.key===active);document.getElementById('kw-description').textContent=s.description;document.querySelectorAll('.kw-tab').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.sector===active)));links.replaceChildren();for(let l of s.contentLinks){const a=document.createElement('a');a.href=l.url;a.textContent=l.label;a.target='_blank';a.rel='noopener';links.append(a)}let q=filter.value.toLocaleLowerCase('it');visible=s.keywords.filter(k=>k.keyword.toLocaleLowerCase('it').includes(q));tbody.replaceChildren();for(let k of visible){let tr=document.createElement('tr');[k.keyword,k.tail,k.asset,k.status].forEach(v=>c(tr,v));tbody.append(tr)}document.getElementById('kw-count').textContent=visible.length+' keyword su '+s.keywords.length+' del settore '+s.label;}try{let r=await fetch('./keyword-archive.json',{cache:'no-store'});if(!r.ok)throw Error('Archivio assente');dataset=await r.json();document.querySelectorAll('.kw-tab').forEach(b=>b.addEventListener('click',()=>{active=b.dataset.sector;render()}));filter.addEventListener('input',render);document.getElementById('kw-copy').onclick=()=>navigator.clipboard.writeText(visible.map(x=>x.keyword).join('\n'));document.getElementById('kw-export').onclick=()=>download(['Keyword,Coda,Landing,Stato',...visible.map(k=>[k.keyword,k.tail,k.asset,k.status].map(csv).join(','))].join('\r\n'));render()}catch(e){document.getElementById('kw-count').textContent='Archivio SEO non disponibile: '+e.message}})();
+</script>
+<script>
+/* Archived approved posts are read from the canonical GitHub queue JSON.
+   The older daily selection workflow and SEO keyword archive are unchanged. */
+(async()=>{
+ const base="../../editorial-queue/2026-11-01_2026-11-04/";
+ const groups={privati:document.getElementById("archive-privati"),aziende:document.getElementById("archive-aziende")};
+ function make(kind,job){
+   const id=job.content_id;if(!/^CASE247-\d{3}$/.test(id))return null;
+   const card=document.createElement("article");card.className="archive-card";
+   const preview=document.createElement("a");preview.href=base+"assets/"+id+".jpg";preview.target="_blank";preview.rel="noopener";
+   const image=document.createElement("img");image.src=preview.href;image.alt="Contenuto approvato "+id+": "+job.title;image.loading="lazy";preview.append(image);card.append(preview);
+   const body=document.createElement("div");body.className="archive-body";
+   const label=document.createElement("small");label.textContent=id+" · "+job.scheduled_at_local.replace("T"," ").slice(0,16)+" (Roma)";body.append(label);
+   const h=document.createElement("h4");h.textContent=job.title;body.append(h);
+   const state=document.createElement("small");state.className="archive-status";state.textContent="APPROVATO · NON PUBBLICATO";body.append(state);
+   const details=document.createElement("details");const summary=document.createElement("summary");summary.textContent="Leggi la caption";details.append(summary);
+   const pre=document.createElement("pre");pre.textContent=job.caption;details.append(pre);body.append(details);
+   const actions=document.createElement("div");actions.className="archive-actions";
+   for(const ext of ["jpg","svg"]){const a=document.createElement("a");a.href=base+"assets/"+id+"."+ext;a.target="_blank";a.rel="noopener";a.textContent="Apri "+ext.toUpperCase();actions.append(a)}
+   body.append(actions);card.append(body);return card;
+ }
+ try{
+   const r=await fetch(base+"queue.json",{cache:"no-store"});if(!r.ok)throw Error("Archivio GitHub non raggiungibile ("+r.status+")");
+   const q=await r.json();if(q.brand!=="CASE IN PUBBLICITÀ 24/7")throw Error("Archivio del brand non corrispondente");
+   const jobs=(q.jobs||[]).filter(j=>j.platform==="facebook"&&j.approved===true);
+   for(const [key,el] of Object.entries(groups)){
+      const subset=jobs.filter(j=>j.audience===key);
+      const expected=key==="privati"?8:4;
+      if(subset.length!==expected){el.textContent="Attenzione: trovati "+subset.length+" contenuti su "+expected+" previsti. Controlla la coda.";continue}
+      el.replaceChildren();for(const j of subset){const card=make(key,j);if(card)el.append(card)}
+   }
+ }catch(e){for(const el of Object.values(groups)){el.textContent="Archivio temporaneamente non disponibile: "+e.message}}
+})();
 </script></body></html>
