@@ -1,0 +1,56 @@
+{
+  "brand": "Case in Pubblicità 24/7",
+  "wa_number": "393713708294",
+  "note": "Schede di gestione predisposte; URL effettivi e autorizzazioni social da verificare prima delle pubblicazioni",
+  "sites": [
+    {
+      "sector": "privati",
+      "code": "IMM01",
+      "name": "Quanto vale la mia casa",
+      "topic": "Valutazione",
+      "status": "DA_COLLEGARE"
+    },
+    {
+      "sector": "privati",
+      "code": "IMM04",
+      "name": "Non riesco a vendere casa",
+      "topic": "Vendita difficile",
+      "status": "DA_COLLEGARE"
+    },
+    {
+      "sector": "privati",
+      "code": "IMM13",
+      "name": "Valutazione casa Avigliana",
+      "topic": "Valutazione locale",
+      "status": "DA_COLLEGARE"
+    },
+    {
+      "sector": "privati",
+      "code": "IMM14",
+      "name": "Vendere senza agenzia",
+      "topic": "Vendita autonoma",
+      "status": "DA_COLLEGARE"
+    },
+    {
+      "sector": "privati",
+      "code": "IMM15",
+      "name": "Casa ereditata",
+      "topic": "Successione",
+      "status": "DA_COLLEGARE"
+    },
+    {
+      "sector": "aziende",
+      "code": "COM01",
+      "name": "Promozione per ristoranti",
+      "topic": "Ristorazione",
+      "status": "DA_COLLEGARE"
+    },
+    {
+      "sector": "aziende",
+      "code": "COM18",
+      "name": "Richieste tramite WhatsApp",
+      "topic": "Lead B2B",
+      "status": "DA_COLLEGARE"
+    }
+  ]
+}
