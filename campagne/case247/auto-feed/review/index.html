@@ -24,7 +24,19 @@ strong{color:white}.meta{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}.pil
 .archive-card .archive-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:13px}
 .archive-card .archive-actions a{color:#8FDDFF;font-size:13px}
 .archive-hint{background:#112E4D;border-left:3px solid #128BDB;padding:11px 13px;border-radius:7px}
-.sr-wrap{overflow-x:auto}.sr-table{width:100%;border-collapse:collapse;font-size:13px}.sr-table td,.sr-table th{padding:10px;text-align:left;border-bottom:1px solid #3c6081}.sr-controls{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}.sr-controls a{background:#174978;border:1px solid #487eaa;border-radius:8px;padding:9px 12px;text-decoration:none}.sr-small{font-size:12px;color:#bdd4e8}.sr-status{color:#ffd390}</style></head>
+.sr-wrap{overflow-x:auto}.sr-table{width:100%;border-collapse:collapse;font-size:13px}.sr-table td,.sr-table th{padding:10px;text-align:left;border-bottom:1px solid #3c6081}.sr-controls{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}.sr-controls a{background:#174978;border:1px solid #487eaa;border-radius:8px;padding:9px 12px;text-decoration:none}.sr-small{font-size:12px;color:#bdd4e8}.sr-status{color:#ffd390}
+.approved-visible{border:2px solid #2089df;background:linear-gradient(170deg,#082a4b,#071d37);margin:10px 0 25px;box-shadow:0 10px 25px #0003}
+.archive-row-head{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+.archive-row-head h2{font-size:clamp(23px,3.2vw,31px);margin:4px 0 10px}
+.archive-row-head .btn{display:inline-block;white-space:normal;text-decoration:none}
+.archive-eyebrow{font-size:11px;font-weight:900;letter-spacing:.1em;color:#94D9FF}
+.archive-counts{display:flex;flex-wrap:wrap;gap:9px;margin:16px 0}
+.archive-counts span{padding:7px 12px;background:#0D3A66;border:1px solid #4376a1;border-radius:9px;font-size:12px;font-weight:750}
+.approved-visible .archive-card img{object-fit:contain;aspect-ratio:4/5;display:block;width:100%;height:auto}
+.approved-visible .archive-card{min-width:0}
+.approved-visible .archive-group{scroll-margin-top:20px}
+.approved-visible .archive-card h4{overflow-wrap:anywhere}
+</style></head>
 <body><header><div style="max-width:1300px;margin:auto">
 <a href="../../../../gestione/canali-case247/">← Regia CASE247</a>
 <h1>Scegli la grafica di oggi</h1>
@@ -36,32 +48,213 @@ strong{color:white}.meta{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}.pil
 <a class="kw-tab" href="#archivio-aziende">Contenuti AZIENDE · 4</a>
 <a class="kw-tab" href="#keyword-archive">Keyword SEO</a>
 </nav>
-<section id="contenuti-approvati" class="note" aria-labelledby="archive-title">
-<h2 id="archive-title">Archivio contenuti approvati — Privati e Aziende</h2>
-<p>Qui trovi le <strong>12 grafiche già approvate</strong>, le caption e i file JPEG/SVG presenti in GitHub. I contenuti sono separati per destinatario: <strong>8 per i proprietari privati</strong> e <strong>4 per le aziende</strong>. Questa sezione è distinta dalle tre proposte giornaliere qui sopra.</p>
-<div class="archive-intro">
-<div class="kw-tabs"><a class="kw-tab" href="#archivio-privati">Privati · 8 contenuti</a><a class="kw-tab" href="#archivio-aziende">Aziende · 4 contenuti</a></div>
-<a href="../../editorial-queue/2026-11-01_2026-11-04/queue.json">Calendario completo · 24 uscite FB/IG</a>
-</div>
-<p class="archive-hint">Stato: <strong>accodati su GitHub, non pubblicati</strong>. Le pubblicazioni su Facebook e Instagram restano disattivate finché non sono verificati OAuth, ID Meta e collegamenti server-side. Orari pianificati: 10:00, 16:00 e 20:00 Europe/Rome.</p>
+<section id="contenuti-approvati" class="note approved-visible" aria-labelledby="archive-title">
+<div class="archive-row-head"><div><p class="archive-eyebrow">GRAFICHE APPROVATE · 31 OTTOBRE 2026</p>
+<h2 id="archive-title">Ultime 12 grafiche — suddivise per Privati e Aziende</h2><p>Queste sono le anteprime dei 12 JPEG presenti su GitHub. La galleria è visibile immediatamente senza attendere il caricamento del calendario o di Supabase.</p></div><a class="btn" href="../../editorial-queue/2026-11-01_2026-11-04/queue.json">Coda editoriale · 24 uscite</a></div>
+<div class="archive-counts"><span>8 Privati</span><span>4 Aziende</span><span>12 JPEG disponibili</span><span>10:00 / 16:00 / 20:00</span></div>
 <section id="archivio-privati" class="archive-group" aria-labelledby="archivio-privati-title">
-<h3 id="archivio-privati-title">Privati — Proprietari di immobili</h3>
-<p>Vendere casa, valore, fotografie, targeting, contatti e strategia immobiliare.</p>
-<div class="archive-links">
-<a href="../../editorial-queue/2026-11-01_2026-11-04/privati/">Apri cartella Privati · anteprime e caption</a>
-<a href="https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/tree/main/campagne/case247/editorial-queue/2026-11-01_2026-11-04/privati/" target="_blank" rel="noopener">Cartella Privati su GitHub</a>
-</div>
-<div class="archive-grid" id="archive-privati"><p>Caricamento delle 8 grafiche...</p></div>
+<div class="archive-row-head"><h3 id="archivio-privati-title">PRIVATI — Case e proprietari</h3><a class="btn" href="../../editorial-queue/2026-11-01_2026-11-04/privati/">Apri cartella Privati</a></div>
+<p>Vendita della casa, prezzo, fotografie, pubblico, contatti e metodo 24/7.</p>
+<div class="archive-links"><a href="https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/tree/main/campagne/case247/editorial-queue/2026-11-01_2026-11-04/privati/" target="_blank" rel="noopener">Cartella Privati su GitHub</a><a href="../../editorial-queue/2026-11-01_2026-11-04/queue.json">Caption e calendario</a></div>
+<div class="archive-grid" id="archive-privati"><article class="archive-card" data-id="CASE247-001">
+<a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-001.jpg" target="_blank" rel="noopener"><img loading="lazy" width="1080" height="1350" src="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-001.jpg?v=be3b27d" alt="Hai pubblicato casa. Ma chi la sta vedendo davvero?"></a>
+<div class="archive-body"><small>CASE247-001 · 2026-11-01 ore 10:00</small><h4>Hai pubblicato casa. Ma chi la sta vedendo davvero?</h4><small class="archive-status">APPROVATO · NON PUBBLICATO</small>
+<details><summary>Leggi la caption</summary><pre>Hai pubblicato casa. Ma chi la sta vedendo davvero?
+
+Hai inserito il tuo immobile su un portale. Adesso cosa succede? Pubblicare è soltanto il primo passaggio. Conta a chi arriva il messaggio, come viene presentata la casa e quali richieste produce. Una strategia coordina pubblico, contenuti, distribuzione e contatti. Prima di aspettare una telefonata, verifica come stai facendo conoscere il tuo immobile.
+
+Scrivi STRATEGIA per sapere cosa controllare.
+
+CASE IN PUBBLICITÀ 24/7 · Torino e Valle di Susa
+WhatsApp: https://wa.me/393713708294
+
+#CaseInPubblicita247 #ValleDiSusa #MarketingImmobiliare
+
+La comunicazione promozionale non sostituisce l'intermediazione riservata ai professionisti abilitati.</pre></details>
+<div class="archive-actions"><a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-001.jpg" target="_blank" rel="noopener">Apri JPG</a><a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-001.svg" target="_blank" rel="noopener">Apri SVG</a></div></div></article>
+<article class="archive-card" data-id="CASE247-002">
+<a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-002.jpg" target="_blank" rel="noopener"><img loading="lazy" width="1080" height="1350" src="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-002.jpg?v=be3b27d" alt="Il prezzo non racconta tutta la casa"></a>
+<div class="archive-body"><small>CASE247-002 · 2026-11-01 ore 16:00</small><h4>Il prezzo non racconta tutta la casa</h4><small class="archive-status">APPROVATO · NON PUBBLICATO</small>
+<details><summary>Leggi la caption</summary><pre>Il prezzo non racconta tutta la casa
+
+Quando un acquirente guarda un annuncio, il prezzo è uno dei primi elementi che nota. Ma non è l'unico. Posizione, distribuzione degli spazi, stato dell'immobile e possibilità di utilizzo cambiano la percezione del valore. Se comunichi soltanto il prezzo, rischi di lasciare fuori proprio ciò che distingue la tua casa. Una presentazione efficace racconta caratteristiche reali, non promesse.
+
+Scrivi VALORE per approfondire.
+
+CASE IN PUBBLICITÀ 24/7 · Torino e Valle di Susa
+WhatsApp: https://wa.me/393713708294
+
+#CaseInPubblicita247 #ValleDiSusa #MarketingImmobiliare
+
+La comunicazione promozionale non sostituisce l'intermediazione riservata ai professionisti abilitati.</pre></details>
+<div class="archive-actions"><a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-002.jpg" target="_blank" rel="noopener">Apri JPG</a><a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-002.svg" target="_blank" rel="noopener">Apri SVG</a></div></div></article>
+<article class="archive-card" data-id="CASE247-003">
+<a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-003.jpg" target="_blank" rel="noopener"><img loading="lazy" width="1080" height="1350" src="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-003.jpg?v=be3b27d" alt="I cinque errori di chi vende casa"></a>
+<div class="archive-body"><small>CASE247-003 · 2026-11-01 ore 20:00</small><h4>I cinque errori di chi vende casa</h4><small class="archive-status">APPROVATO · NON PUBBLICATO</small>
+<details><summary>Leggi la caption</summary><pre>I cinque errori di chi vende casa
+
+1. Pubblicare e aspettare. 2. Utilizzare fotografie poco chiare. 3. Descrivere soltanto i metri quadrati. 4. Non definire a chi potrebbe interessare l'immobile. 5. Non misurare le richieste ricevute. Nessuno di questi elementi, preso da solo, determina una vendita. Ma insieme possono rendere la comunicazione meno efficace. Vendere richiede metodo, non soltanto visibilità.
+
+Salva questo elenco prima di pubblicare il tuo immobile.
+
+CASE IN PUBBLICITÀ 24/7 · Torino e Valle di Susa
+WhatsApp: https://wa.me/393713708294
+
+#CaseInPubblicita247 #ValleDiSusa #MarketingImmobiliare
+
+La comunicazione promozionale non sostituisce l'intermediazione riservata ai professionisti abilitati.</pre></details>
+<div class="archive-actions"><a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-003.jpg" target="_blank" rel="noopener">Apri JPG</a><a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-003.svg" target="_blank" rel="noopener">Apri SVG</a></div></div></article>
+<article class="archive-card" data-id="CASE247-004">
+<a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-004.jpg" target="_blank" rel="noopener"><img loading="lazy" width="1080" height="1350" src="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-004.jpg?v=be3b27d" alt="La casa giusta, davanti alle persone sbagliate"></a>
+<div class="archive-body"><small>CASE247-004 · 2026-11-02 ore 10:00</small><h4>La casa giusta, davanti alle persone sbagliate</h4><small class="archive-status">APPROVATO · NON PUBBLICATO</small>
+<details><summary>Leggi la caption</summary><pre>La casa giusta, davanti alle persone sbagliate
+
+Una casa con giardino può rispondere a esigenze diverse da un bilocale vicino ai servizi. Un immobile da ristrutturare interessa persone con disponibilità e progetti differenti da chi cerca una soluzione pronta. Per questo il messaggio non può essere identico per tutte le proprietà. Prima di promuovere una casa, bisogna capire chi potrebbe riconoscerne il valore.
+
+Scrivi TARGET se vuoi ragionare sul pubblico della tua casa.
+
+CASE IN PUBBLICITÀ 24/7 · Torino e Valle di Susa
+WhatsApp: https://wa.me/393713708294
+
+#CaseInPubblicita247 #ValleDiSusa #MarketingImmobiliare
+
+La comunicazione promozionale non sostituisce l'intermediazione riservata ai professionisti abilitati.</pre></details>
+<div class="archive-actions"><a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-004.jpg" target="_blank" rel="noopener">Apri JPG</a><a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-004.svg" target="_blank" rel="noopener">Apri SVG</a></div></div></article>
+<article class="archive-card" data-id="CASE247-005">
+<a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-005.jpg" target="_blank" rel="noopener"><img loading="lazy" width="1080" height="1350" src="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-005.jpg?v=be3b27d" alt="Perché le fotografie non bastano"></a>
+<div class="archive-body"><small>CASE247-005 · 2026-11-02 ore 16:00</small><h4>Perché le fotografie non bastano</h4><small class="archive-status">APPROVATO · NON PUBBLICATO</small>
+<details><summary>Leggi la caption</summary><pre>Perché le fotografie non bastano
+
+Le immagini attirano l'attenzione, ma da sole non risolvono tutto. Servono una descrizione precisa, informazioni verificabili, un percorso di contatto semplice e un messaggio che spieghi i vantaggi dell'immobile senza esagerazioni. Ogni elemento deve aiutare il potenziale acquirente a capire se quella casa è adatta alle sue necessità.
+
+Condividi questo contenuto con chi sta preparando un annuncio.
+
+CASE IN PUBBLICITÀ 24/7 · Torino e Valle di Susa
+WhatsApp: https://wa.me/393713708294
+
+#CaseInPubblicita247 #ValleDiSusa #MarketingImmobiliare
+
+La comunicazione promozionale non sostituisce l'intermediazione riservata ai professionisti abilitati.</pre></details>
+<div class="archive-actions"><a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-005.jpg" target="_blank" rel="noopener">Apri JPG</a><a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-005.svg" target="_blank" rel="noopener">Apri SVG</a></div></div></article>
+<article class="archive-card" data-id="CASE247-006">
+<a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-006.jpg" target="_blank" rel="noopener"><img loading="lazy" width="1080" height="1350" src="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-006.jpg?v=be3b27d" alt="Vendere da privato o con un professionista?"></a>
+<div class="archive-body"><small>CASE247-006 · 2026-11-02 ore 20:00</small><h4>Vendere da privato o con un professionista?</h4><small class="archive-status">APPROVATO · NON PUBBLICATO</small>
+<details><summary>Leggi la caption</summary><pre>Vendere da privato o con un professionista?
+
+Come determinerai il prezzo richiesto? Come presenterai l'immobile? Come gestirai richieste, visite e documentazione? Come valuterai l'affidabilità degli interessati? Vendere da privato è una scelta possibile. Affidarsi a un agente immobiliare abilitato è un'altra. Il punto è prendere una decisione consapevole e comprendere quali attività, competenze e responsabilità richiede il percorso.
+
+Salva queste domande per la tua decisione.
+
+CASE IN PUBBLICITÀ 24/7 · Torino e Valle di Susa
+WhatsApp: https://wa.me/393713708294
+
+#CaseInPubblicita247 #ValleDiSusa #MarketingImmobiliare
+
+La comunicazione promozionale non sostituisce l'intermediazione riservata ai professionisti abilitati.</pre></details>
+<div class="archive-actions"><a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-006.jpg" target="_blank" rel="noopener">Apri JPG</a><a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-006.svg" target="_blank" rel="noopener">Apri SVG</a></div></div></article>
+<article class="archive-card" data-id="CASE247-007">
+<a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-007.jpg" target="_blank" rel="noopener"><img loading="lazy" width="1080" height="1350" src="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-007.jpg?v=be3b27d" alt="Il metodo 24/7 applicato agli immobili"></a>
+<div class="archive-body"><small>CASE247-007 · 2026-11-03 ore 10:00</small><h4>Il metodo 24/7 applicato agli immobili</h4><small class="archive-status">APPROVATO · NON PUBBLICATO</small>
+<details><summary>Leggi la caption</summary><pre>Il metodo 24/7 applicato agli immobili
+
+Analizzare l'immobile. Individuare il pubblico. Preparare messaggi e materiali. Pianificare la distribuzione. Monitorare richieste e riscontri. Correggere ciò che non funziona. Questa è la logica di CASE IN PUBBLICITÀ 24/7: continuità nella regia della comunicazione, non una promessa di vendita immediata o di pubblicità a pagamento illimitata.
+
+Scrivi METODO per conoscere l'approccio.
+
+CASE IN PUBBLICITÀ 24/7 · Torino e Valle di Susa
+WhatsApp: https://wa.me/393713708294
+
+#CaseInPubblicita247 #ValleDiSusa #MarketingImmobiliare
+
+La comunicazione promozionale non sostituisce l'intermediazione riservata ai professionisti abilitati.</pre></details>
+<div class="archive-actions"><a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-007.jpg" target="_blank" rel="noopener">Apri JPG</a><a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-007.svg" target="_blank" rel="noopener">Apri SVG</a></div></div></article>
+<article class="archive-card" data-id="CASE247-008">
+<a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-008.jpg" target="_blank" rel="noopener"><img loading="lazy" width="1080" height="1350" src="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-008.jpg?v=be3b27d" alt="Quante visualizzazioni servono per vendere?"></a>
+<div class="archive-body"><small>CASE247-008 · 2026-11-03 ore 16:00</small><h4>Quante visualizzazioni servono per vendere?</h4><small class="archive-status">APPROVATO · NON PUBBLICATO</small>
+<details><summary>Leggi la caption</summary><pre>Quante visualizzazioni servono per vendere?
+
+Un contenuto immobiliare può raggiungere tante persone senza generare richieste pertinenti. Per valutare la comunicazione bisogna guardare anche contatti ricevuti, qualità delle richieste, appuntamenti e riscontri concreti. La copertura aiuta a capire quante persone vedono il contenuto. Non basta, però, per misurare un risultato commerciale.
+
+Scrivi RISULTATI per sapere quali indicatori monitorare.
+
+CASE IN PUBBLICITÀ 24/7 · Torino e Valle di Susa
+WhatsApp: https://wa.me/393713708294
+
+#CaseInPubblicita247 #ValleDiSusa #MarketingImmobiliare
+
+La comunicazione promozionale non sostituisce l'intermediazione riservata ai professionisti abilitati.</pre></details>
+<div class="archive-actions"><a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-008.jpg" target="_blank" rel="noopener">Apri JPG</a><a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-008.svg" target="_blank" rel="noopener">Apri SVG</a></div></div></article></div>
 </section>
 <section id="archivio-aziende" class="archive-group" aria-labelledby="archivio-aziende-title">
-<h3 id="archivio-aziende-title">Aziende — Imprese e attività commerciali</h3>
-<p>Visibilità continuativa, obiettivi commerciali, pianificazione e posizionamento del brand.</p>
-<div class="archive-links">
-<a href="../../editorial-queue/2026-11-01_2026-11-04/aziende/">Apri cartella Aziende · anteprime e caption</a>
-<a href="https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/tree/main/campagne/case247/editorial-queue/2026-11-01_2026-11-04/aziende/" target="_blank" rel="noopener">Cartella Aziende su GitHub</a>
-</div>
-<div class="archive-grid" id="archive-aziende"><p>Caricamento delle 4 grafiche...</p></div>
+<div class="archive-row-head"><h3 id="archivio-aziende-title">AZIENDE — Imprese e attività locali</h3><a class="btn" href="../../editorial-queue/2026-11-01_2026-11-04/aziende/">Apri cartella Aziende</a></div>
+<p>Continuità, obiettivi commerciali, risultati, piano editoriale e identità del brand.</p>
+<div class="archive-links"><a href="https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/tree/main/campagne/case247/editorial-queue/2026-11-01_2026-11-04/aziende/" target="_blank" rel="noopener">Cartella Aziende su GitHub</a><a href="../../editorial-queue/2026-11-01_2026-11-04/queue.json">Caption e calendario</a></div>
+<div class="archive-grid" id="archive-aziende"><article class="archive-card" data-id="CASE247-009">
+<a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-009.jpg" target="_blank" rel="noopener"><img loading="lazy" width="1080" height="1350" src="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-009.jpg?v=be3b27d" alt="Il problema non è pubblicare poco"></a>
+<div class="archive-body"><small>CASE247-009 · 2026-11-03 ore 20:00</small><h4>Il problema non è pubblicare poco</h4><small class="archive-status">APPROVATO · NON PUBBLICATO</small>
+<details><summary>Leggi la caption</summary><pre>Il problema non è pubblicare poco
+
+Una presenza digitale improvvisata rischia di rendere un'attività poco riconoscibile. Il problema non si risolve soltanto aumentando il numero dei post. Servono messaggi coerenti, continuità, contenuti utili e un obiettivo per ogni pubblicazione. Un'impresa deve poter raccontare con chiarezza cosa fa, per chi lo fa e perché vale la pena contattarla.
+
+Scrivi PRESENZA se vuoi analizzare la tua comunicazione.
+
+CASE IN PUBBLICITÀ 24/7 · Torino e Valle di Susa
+WhatsApp: https://wa.me/393713708294
+
+#CaseInPubblicita247 #ValleDiSusa #MarketingImmobiliare
+
+La comunicazione promozionale non sostituisce l'intermediazione riservata ai professionisti abilitati.</pre></details>
+<div class="archive-actions"><a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-009.jpg" target="_blank" rel="noopener">Apri JPG</a><a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-009.svg" target="_blank" rel="noopener">Apri SVG</a></div></div></article>
+<article class="archive-card" data-id="CASE247-010">
+<a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-010.jpg" target="_blank" rel="noopener"><img loading="lazy" width="1080" height="1350" src="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-010.jpg?v=be3b27d" alt="Visualizzazioni o clienti?"></a>
+<div class="archive-body"><small>CASE247-010 · 2026-11-04 ore 10:00</small><h4>Visualizzazioni o clienti?</h4><small class="archive-status">APPROVATO · NON PUBBLICATO</small>
+<details><summary>Leggi la caption</summary><pre>Visualizzazioni o clienti?
+
+Per un ristorante conta anche quante prenotazioni arrivano. Per un'impresa edile, quante richieste di sopralluogo. Per un'attività di servizi, quante persone interessate entrano in contatto. Visualizzazioni e follower possono essere indicatori utili, ma non sono sempre il risultato finale. La strategia parte dall'obiettivo commerciale e costruisce i contenuti di conseguenza.
+
+Scrivi OBIETTIVO per individuare la metrica più utile.
+
+CASE IN PUBBLICITÀ 24/7 · Torino e Valle di Susa
+WhatsApp: https://wa.me/393713708294
+
+#CaseInPubblicita247 #ValleDiSusa #MarketingImmobiliare
+
+La comunicazione promozionale non sostituisce l'intermediazione riservata ai professionisti abilitati.</pre></details>
+<div class="archive-actions"><a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-010.jpg" target="_blank" rel="noopener">Apri JPG</a><a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-010.svg" target="_blank" rel="noopener">Apri SVG</a></div></div></article>
+<article class="archive-card" data-id="CASE247-011">
+<a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-011.jpg" target="_blank" rel="noopener"><img loading="lazy" width="1080" height="1350" src="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-011.jpg?v=be3b27d" alt="Il costo di ricominciare ogni settimana"></a>
+<div class="archive-body"><small>CASE247-011 · 2026-11-04 ore 16:00</small><h4>Il costo di ricominciare ogni settimana</h4><small class="archive-status">APPROVATO · NON PUBBLICATO</small>
+<details><summary>Leggi la caption</summary><pre>Il costo di ricominciare ogni settimana
+
+Cercare idee all'ultimo minuto, pubblicare senza calendario, dimenticare le richieste e non controllare i risultati: tutto questo rende difficile mantenere continuità. Un sistema editoriale definisce argomenti, tempi, responsabilità e indicatori. Non elimina il lavoro: lo rende più organizzato e controllabile.
+
+Salva questo contenuto per la prossima pianificazione.
+
+CASE IN PUBBLICITÀ 24/7 · Torino e Valle di Susa
+WhatsApp: https://wa.me/393713708294
+
+#CaseInPubblicita247 #ValleDiSusa #MarketingImmobiliare
+
+La comunicazione promozionale non sostituisce l'intermediazione riservata ai professionisti abilitati.</pre></details>
+<div class="archive-actions"><a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-011.jpg" target="_blank" rel="noopener">Apri JPG</a><a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-011.svg" target="_blank" rel="noopener">Apri SVG</a></div></div></article>
+<article class="archive-card" data-id="CASE247-012">
+<a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-012.jpg" target="_blank" rel="noopener"><img loading="lazy" width="1080" height="1350" src="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-012.jpg?v=be3b27d" alt="Non copiare i concorrenti"></a>
+<div class="archive-body"><small>CASE247-012 · 2026-11-04 ore 20:00</small><h4>Non copiare i concorrenti</h4><small class="archive-status">APPROVATO · NON PUBBLICATO</small>
+<details><summary>Leggi la caption</summary><pre>Non copiare i concorrenti
+
+Guardare cosa fanno i concorrenti può essere utile per comprendere il mercato. Copiarne linguaggio, stile e messaggi rischia invece di rendere la tua attività intercambiabile. Parti dalle domande dei clienti, dalle competenze dell'impresa e dalle differenze che puoi dimostrare. L'obiettivo non è sembrare più grande: è essere riconoscibile e credibile.
+
+Scrivi IDENTITÀ per iniziare a distinguerti.
+
+CASE IN PUBBLICITÀ 24/7 · Torino e Valle di Susa
+WhatsApp: https://wa.me/393713708294
+
+#CaseInPubblicita247 #ValleDiSusa #MarketingImmobiliare
+
+La comunicazione promozionale non sostituisce l'intermediazione riservata ai professionisti abilitati.</pre></details>
+<div class="archive-actions"><a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-012.jpg" target="_blank" rel="noopener">Apri JPG</a><a href="../../editorial-queue/2026-11-01_2026-11-04/assets/CASE247-012.svg" target="_blank" rel="noopener">Apri SVG</a></div></div></article></div>
 </section>
+<p class="archive-hint">Contenuti già approvati e registrati in coda GitHub per il periodo 1–4 novembre 2026, alle 10:00, 16:00 e 20:00 (Europe/Rome). <strong>Non pubblicati su Meta:</strong> OAuth e account Instagram non ancora verificati.</p>
 </section>
 <section class="note" id="proposte-giornaliere"><h2>Nuove proposte giornaliere</h2><p>Questa area è separata dalle 12 grafiche approvate. Mostra soltanto le proposte prodotte dal workflow giornaliero, quando disponibili.</p></section>
 <div class="meta"><span class="pill" id="day">Data</span><span class="pill" id="format">Formato</span><span class="pill">Selezione fino alle 09:44 · Europa/Roma</span><span class="pill">Pubblicazione prevista 10:00, previa autorizzazione Meta</span></div>
@@ -126,38 +319,5 @@ init();
 (async()=>{const section=document.getElementById('keyword-archive'),tbody=document.getElementById('kw-rows'),links=document.getElementById('kw-links'),filter=document.getElementById('kw-search');let dataset,active=(new URLSearchParams(location.search).get('settore')==='aziende'?'aziende':'privati'),visible=[];const c=(row,v)=>{let el=document.createElement('td');el.textContent=v;row.append(el)};const csv=v=>'"'+String(v).replace(/"/g,'""')+'"';const download=(value)=>{let url=URL.createObjectURL(new Blob([value],{type:'text/csv;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download='case247-seo-'+active+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1500)};function render(){let s=dataset.sections.find(x=>x.key===active);document.getElementById('kw-description').textContent=s.description;document.querySelectorAll('.kw-tab').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.sector===active)));links.replaceChildren();for(let l of s.contentLinks){const a=document.createElement('a');a.href=l.url;a.textContent=l.label;a.target='_blank';a.rel='noopener';links.append(a)}let q=filter.value.toLocaleLowerCase('it');visible=s.keywords.filter(k=>k.keyword.toLocaleLowerCase('it').includes(q));tbody.replaceChildren();for(let k of visible){let tr=document.createElement('tr');[k.keyword,k.tail,k.asset,k.status].forEach(v=>c(tr,v));tbody.append(tr)}document.getElementById('kw-count').textContent=visible.length+' keyword su '+s.keywords.length+' del settore '+s.label;}try{let r=await fetch('./keyword-archive.json',{cache:'no-store'});if(!r.ok)throw Error('Archivio assente');dataset=await r.json();document.querySelectorAll('.kw-tab').forEach(b=>b.addEventListener('click',()=>{active=b.dataset.sector;render()}));filter.addEventListener('input',render);document.getElementById('kw-copy').onclick=()=>navigator.clipboard.writeText(visible.map(x=>x.keyword).join('\n'));document.getElementById('kw-export').onclick=()=>download(['Keyword,Coda,Landing,Stato',...visible.map(k=>[k.keyword,k.tail,k.asset,k.status].map(csv).join(','))].join('\r\n'));render()}catch(e){document.getElementById('kw-count').textContent='Archivio SEO non disponibile: '+e.message}})();
 </script>
 <script>
-/* Archived approved posts are read from the canonical GitHub queue JSON.
-   The older daily selection workflow and SEO keyword archive are unchanged. */
-(async()=>{
- const base="../../editorial-queue/2026-11-01_2026-11-04/";
- const groups={privati:document.getElementById("archive-privati"),aziende:document.getElementById("archive-aziende")};
- function make(kind,job){
-   const id=job.content_id;if(!/^CASE247-\d{3}$/.test(id))return null;
-   const card=document.createElement("article");card.className="archive-card";
-   const preview=document.createElement("a");preview.href=base+"assets/"+id+".jpg";preview.target="_blank";preview.rel="noopener";
-   const image=document.createElement("img");image.src=preview.href+"?v=20261031";image.onerror=()=>{image.onerror=null;image.src=base+"assets/"+id+".svg"};image.alt="Contenuto approvato "+id+": "+job.title;image.loading="lazy";preview.append(image);card.append(preview);
-   const body=document.createElement("div");body.className="archive-body";
-   const label=document.createElement("small");label.textContent=id+" · "+job.scheduled_at_local.replace("T"," ").slice(0,16)+" (Roma)";body.append(label);
-   const h=document.createElement("h4");h.textContent=job.title;body.append(h);
-   const state=document.createElement("small");state.className="archive-status";state.textContent="APPROVATO · NON PUBBLICATO";body.append(state);
-   const details=document.createElement("details");const summary=document.createElement("summary");summary.textContent="Leggi la caption";details.append(summary);
-   const pre=document.createElement("pre");pre.textContent=job.caption;details.append(pre);body.append(details);
-   const actions=document.createElement("div");actions.className="archive-actions";
-   for(const ext of ["jpg","svg"]){const a=document.createElement("a");a.href=base+"assets/"+id+"."+ext;a.target="_blank";a.rel="noopener";a.textContent="Apri "+ext.toUpperCase();actions.append(a)}
-   body.append(actions);card.append(body);return card;
- }
- try{
-   const r=await fetch(base+"queue.json?v=20261031-approved12",{cache:"no-store"});if(!r.ok)throw Error("Archivio GitHub non raggiungibile ("+r.status+")");
-   const q=await r.json();if(q.brand!=="CASE IN PUBBLICITÀ 24/7")throw Error("Archivio del brand non corrispondente");
-   const jobs=(q.jobs||[]).filter(j=>j.platform==="facebook"&&j.approved===true);
-   for(const [key,el] of Object.entries(groups)){
-      const subset=jobs.filter(j=>j.audience===key);
-      const expected=key==="privati"?8:4;
-      if(subset.length!==expected){el.textContent="Attenzione: trovati "+subset.length+" contenuti su "+expected+" previsti. Controlla la coda.";continue}
-      el.replaceChildren();for(const j of subset){const card=make(key,j);if(card)el.append(card)}
-   }
- }catch(e){for(const el of Object.values(groups)){el.textContent="Archivio temporaneamente non disponibile: "+e.message}}
-})();
-</script><script>
 (async()=>{const rows=document.getElementById('sr-rows'),w=document.getElementById('sr-wa');let sector='privati';const message=(code)=>'Buongiorno, contatto Case in Pubblicità 24/7.\\nNome:\\nCognome:\\nTipo di richiesta:\\nSito o annuncio di riferimento: '+code;const makeWA=(code)=>'https://wa.me/393713708294?text='+encodeURIComponent(message(code));try{const res=await fetch('./site-registry.json',{cache:'no-store'});if(!res.ok)throw Error('Dati non disponibili');const data=await res.json();function render(){rows.replaceChildren();for(const s of data.sites.filter(x=>x.sector===sector)){const tr=document.createElement('tr');function cell(text){const td=document.createElement('td');td.textContent=text;tr.append(td);return td}cell(s.code+' — '+s.name);cell(s.topic);cell('Facebook e Instagram: da collegare');const td=cell('');const a=document.createElement('a');a.href='https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/tree/main/campagne/case247';a.target='_blank';a.rel='noopener';a.textContent='Archivio contenuti / ricerca gruppi';td.append(a);const td2=cell('');const wa=document.createElement('a');wa.href=makeWA(s.code);wa.target='_blank';wa.rel='noopener';wa.textContent='WhatsApp';td2.append(wa);rows.append(tr)}document.getElementById('sr-private').setAttribute('aria-selected',String(sector==='privati'));document.getElementById('sr-business').setAttribute('aria-selected',String(sector==='aziende'));w.href=makeWA(sector.toUpperCase());}document.getElementById('sr-private').onclick=()=>{sector='privati';render()};document.getElementById('sr-business').onclick=()=>{sector='aziende';render()};render()}catch(e){rows.textContent='Registro non disponibile: '+e.message}})();
 </script></body></html>
