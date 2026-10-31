@@ -77,7 +77,7 @@ jobs:
           set -euo pipefail
           git config user.name 'case247-content-bot'
           git config user.email 'case247-content-bot@users.noreply.github.com'
-          git add -A campagne/case247/auto-feed/days/ campagne/case247/auto-feed/ready/ campagne/case247/auto-feed/queue/ 2>/dev/null || true
+          git add -A campagne/case247/auto-feed/
           if git diff --cached --quiet; then
             echo "Nessun nuovo asset."
           else
