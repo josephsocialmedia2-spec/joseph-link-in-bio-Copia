@@ -31,6 +31,7 @@ on:
         type: string
 permissions:
   contents: write
+  id-token: write
 concurrency:
   group: case247-daily-feed
   cancel-in-progress: false
@@ -82,4 +83,10 @@ jobs:
           else
             git commit -m "CASE247: produzione notturna o coda editoriale del giorno"
             git push
+      - name: Register selected queue in Supabase using GitHub OIDC
+        if: ${{ github.event.schedule == '45 9 * * *' || (github.event_name == 'workflow_dispatch' && inputs.mode == 'queue') }}
+        env:
+          INPUT_DATE: ${{ inputs.date }}
+        run: |
+          python campagne/case247/ingest_queue.py "${INPUT_DATE:-}"
           fi
