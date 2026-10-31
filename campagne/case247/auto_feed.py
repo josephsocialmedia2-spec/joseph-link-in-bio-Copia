@@ -55,6 +55,25 @@ def photos_local():
             result.append({"path":str(p),"license":"Owned or independently authorized — verify source register","credit":"Foto archivio CASE247","origin":p.as_posix(),"key":p.name})
         except Exception:pass
     return result
+# Curated, individually verified FREE Unsplash photos. No AI-image charges.
+# Keep source and license metadata; avoid representing them as Italian listings.
+CURATED=[
+ {"url":"https://images.unsplash.com/photo-1766603636700-e9d80473f40f?auto=format&fit=crop&fm=jpg&q=85&w=2200",
+  "license":"Unsplash License (commercial reuse)","credit":"Alef Morais / Unsplash",
+  "origin":"https://unsplash.com/photos/modern-house-with-large-windows-and-a-green-lawn-d2hYqpR0YS0",
+  "key":"unsplash-modern-house-alef-morais-2025"},
+ {"url":"https://images.unsplash.com/photo-1767257919396-ede513c060af?auto=format&fit=crop&fm=jpg&q=85&w=2200",
+  "license":"Unsplash License (commercial reuse)","credit":"MChe Lee / Unsplash",
+  "origin":"https://unsplash.com/photos/sunlight-streams-across-a-modern-living-room-with-couch-Q0aniuqk4zU",
+  "key":"unsplash-sunlit-livingroom-mche-lee-2026"},
+ {"url":"https://images.unsplash.com/photo-1758523671285-9ff3f4e0ff38?auto=format&fit=crop&fm=jpg&q=85&w=2200",
+  "license":"Unsplash License (commercial reuse)","credit":"Vitaly Gariev / Unsplash",
+  "origin":"https://unsplash.com/photos/couple-happily-moving-into-a-new-home-x8l4lN6-xd0",
+  "key":"unsplash-couple-keys-new-home-2025"}
+]
+def photos_curated():
+    return [dict(p) for p in CURATED]
+
 def photos_commons():
     # Wikimedia license metadata is not a warranty. Skip unknown/SA/NC licensing.
     photos=[]
@@ -145,17 +164,24 @@ def main():
     ar.add_argument("mode",choices=["generate","queue"])
     ar.add_argument("--date",default=None)
     ar.add_argument("--choice",choices=["auto","A","B","C"],default="auto")
+    ar.add_argument("--refresh",action="store_true",help="Replace unapproved daily previews only; never touch queued days.")
     args=ar.parse_args()
     date=dt.date.fromisoformat(args.date) if args.date else dt.datetime.now(TZ).date()
     dest=HOME/"days"/date.isoformat()
     is_carousel=((date-BASE).days%2)!=0
     if args.mode=="generate":
         if (dest/"manifest.json").exists():
-            print("ALREADY_GENERATED",date);return
+            if args.refresh and not (HOME/"queue"/(date.isoformat()+".json")).exists():
+                import shutil
+                shutil.rmtree(dest)
+                print("REFRESH_UNAPPROVED",date)
+            else:
+                print("ALREADY_GENERATED",date);return
         topic,news=choose_topic(date)
         selected=[];seen=recent_keys()
-        all_photos=photos_local()+photos_commons()
-        all_photos.sort(key=lambda p:((p["key"] in seen),hashlib.sha256((date.isoformat()+p["key"]).encode()).hexdigest()))
+        all_photos=photos_local()+photos_curated()
+        # Never substitute arbitrary image-search results: they can be historic or off-topic.
+        all_photos.sort(key=lambda p:(p["key"] in seen, hashlib.sha256((date.isoformat()+p["key"]).encode()).hexdigest()))
         for p in all_photos:
             if len(selected)==3:break
             try: photo=get_photo(p)
