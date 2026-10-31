@@ -1,5 +1,8 @@
 name: CASE247 - grafiche notturne e coda autonoma (zero API paid)
 on:
+  push:
+    paths:
+      - '.github/workflows/case247-daily-feed.yml'
   schedule:
     - cron: '15 4 * * *'
       timezone: "Europe/Rome"
