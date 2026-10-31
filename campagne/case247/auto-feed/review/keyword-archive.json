@@ -9,16 +9,24 @@
       "description": "Proprietari di case e abitazioni",
       "contentLinks": [
         {
-          "label": "Contenuti editoriali esistenti",
+          "label": "Cartella contenuti Privati (8 contenuti)",
+          "url": "../../editorial-queue/2026-11-01_2026-11-04/privati/"
+        },
+        {
+          "label": "Cartella Privati (8 contenuti) su GitHub",
+          "url": "https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/tree/main/campagne/case247/editorial-queue/2026-11-01_2026-11-04/privati/"
+        },
+        {
+          "label": "Archivio completo dei 12 contenuti",
           "url": "../../editorial-queue/2026-11-01_2026-11-04/"
+        },
+        {
+          "label": "Coda editoriale approvata",
+          "url": "../../editorial-queue/2026-11-01_2026-11-04/queue.json"
         },
         {
           "label": "Archivio giornaliero",
           "url": "../days/"
-        },
-        {
-          "label": "Cartella contenuti GitHub",
-          "url": "https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/tree/main/campagne/case247/editorial-queue/2026-11-01_2026-11-04"
         }
       ],
       "keywords": [
@@ -120,8 +128,20 @@
       "description": "Negozi, capannoni, uffici e attività commerciali",
       "contentLinks": [
         {
-          "label": "Archivio campagne CASE247 (GitHub)",
-          "url": "https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/tree/main/campagne/case247"
+          "label": "Cartella contenuti Aziende (4 contenuti)",
+          "url": "../../editorial-queue/2026-11-01_2026-11-04/aziende/"
+        },
+        {
+          "label": "Cartella Aziende (4 contenuti) su GitHub",
+          "url": "https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/tree/main/campagne/case247/editorial-queue/2026-11-01_2026-11-04/aziende/"
+        },
+        {
+          "label": "Archivio completo dei 12 contenuti",
+          "url": "../../editorial-queue/2026-11-01_2026-11-04/"
+        },
+        {
+          "label": "Coda editoriale approvata",
+          "url": "../../editorial-queue/2026-11-01_2026-11-04/queue.json"
         },
         {
           "label": "Regia aziendale e slot pubblicitari",
