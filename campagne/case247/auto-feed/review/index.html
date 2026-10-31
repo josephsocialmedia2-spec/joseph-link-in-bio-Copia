@@ -43,7 +43,8 @@ async function init(){
  manifest=await r.json();document.getElementById("format").textContent=manifest.format==="carousel"?"Carosello 5 slide":"Post singolo";
  const selected=await selection().catch(()=>null);
  current=selected?.candidate||null;
- msg.textContent="Tema: "+manifest.headline+"\nScelta registrata: "+(current||"nessuna — fallback automatico alle 09:45");
+ const queueStatus=await fetch(endpoint+"?date="+day+"&mode=queue",{cache:"no-store"}).then(r=>r.json()).catch(()=>({}));
+ msg.textContent="Tema: "+manifest.headline+"\nScelta registrata: "+(current||"nessuna — fallback automatico alle 09:45")+"\nCoda Supabase: "+(queueStatus.status||"NON_VERIFICATA")+"\nPubblicazione effettiva Meta: non attestata dalla coda";
  cards.replaceChildren();
  for(const item of manifest.candidates){
   const el=document.createElement("article");el.className="card"+(item.id===current?" selected":"");
