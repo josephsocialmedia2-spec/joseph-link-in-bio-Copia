@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - '.github/workflows/case247-daily-feed.yml'
+      - 'campagne/case247/auto_feed.py'
   schedule:
     - cron: '15 4 * * *'
       timezone: "Europe/Rome"
@@ -73,6 +74,7 @@ jobs:
           args=("$mode")
           if [[ -n "${INPUT_DATE:-}" ]]; then args+=(--date "$INPUT_DATE"); fi
           if [[ "$mode" == "queue" ]]; then args+=(--choice "${INPUT_CHOICE:-auto}"); fi
+          if [[ "$mode" == "generate" && "$RUN_KIND" == "push" ]]; then args+=(--refresh); fi
           python campagne/case247/auto_feed.py "${args[@]}"
       - name: Commit proposal graphics and queue (without live Meta publishing)
         shell: bash
