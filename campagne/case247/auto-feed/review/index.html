@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CASE247 — Scegli le grafiche di oggi</title>
+<style>
+:root{font:16px system-ui,-apple-system,Arial;color:#ebf5ff;background:#061c37}
+*{box-sizing:border-box}body{margin:0}header{padding:30px 5%;background:linear-gradient(125deg,#082c58,#094d91 70%,#2d174f)}h1{font-size:clamp(26px,4vw,42px);margin:0 0 5px}main{max-width:1300px;margin:auto;padding:24px 16px 80px}p{line-height:1.55;color:#d0ddec}a{color:#8fddff}
+strong{color:white}.meta{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}.pill{border:1px solid #4e779a;padding:8px 12px;border-radius:80px;font-size:13px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}.card{border:1px solid #35608a;background:#0a2c54;border-radius:18px;overflow:hidden}.card img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover}.body{padding:16px}.body h2{margin:0 0 6px}.body p{font-size:13px}.btn{border:0;border-radius:10px;background:#178beb;color:#fff;font-size:15px;font-weight:750;padding:13px 18px;cursor:pointer}.btn:disabled{opacity:.5;cursor:not-allowed}.card.selected{outline:3px solid #ffa654}.note{padding:14px;border-radius:12px;background:#132f4f;margin:20px 0}#result{white-space:pre-wrap;color:#9cfae2}#auth{color:#ffc989}@media(max-width:800px){.grid{grid-template-columns:1fr}.card{max-width:550px}}
+</style></head>
+<body><header><div style="max-width:1300px;margin:auto">
+<a href="../../../../gestione/canali-case247/">← Regia CASE247</a>
+<h1>Scegli la grafica di oggi</h1>
+<p>Tre proposte notturne. Scegli quella che preferisci; senza intervento, alle 09:45 il sistema seleziona automaticamente e mette in coda.</p>
+</div></header>
+<main>
+<div class="meta"><span class="pill" id="day">Data</span><span class="pill" id="format">Formato</span><span class="pill">Selezione fino alle 09:44 · Europa/Roma</span><span class="pill">Pubblicazione prevista 10:00, previa autorizzazione Meta</span></div>
+<p id="auth"></p><div id="result" class="note">Caricamento delle proposte...</div>
+<div id="cards" class="grid"></div>
+<section class="note"><strong>Regole operative</strong>
+<p>Le tre opzioni condividono argomento e caption; cambia il trattamento fotografico. Quando scegli una proposta, si registra la tua decisione in Supabase. Se non scegli, il motore usa un punteggio di qualità e penalizza gli stili ripetuti nei giorni precedenti.</p>
+<p>Le grafiche selezionate vanno nella <a href="../../../../campagne/case247/auto-feed/queue/">coda GitHub</a>. Non sono pubblicazioni già avvenute. Le fotografie esterne conservano la fonte e la licenza per il riutilizzo.</p>
+<a href="https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/actions/workflows/case247-daily-feed.yml" target="_blank" rel="noopener">Controlla le esecuzioni automatiche su GitHub</a>
+</section></main>
+<script type="module">
+import {createClient} from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+const supa=createClient("https://qmeftxsdfeyqozwoivzo.supabase.co","sb_publishable_KNgvCUxECyBFtd5MUrwDYg_BI5Z6Nsy");
+const endpoint="https://qmeftxsdfeyqozwoivzo.supabase.co/functions/v1/case247-feed-choice";
+const files="/joseph-link-in-bio-Copia/campagne/case247/auto-feed/days/";
+const dates=new Intl.DateTimeFormat("en-GB",{timeZone:"Europe/Rome",day:"2-digit",month:"2-digit",year:"numeric"}).formatToParts(new Date());
+const p=Object.fromEntries(dates.filter(x=>x.type!=="literal").map(x=>[x.type,x.value]));
+const day=p.year+"-"+p.month+"-"+p.day;
+const msg=document.getElementById("result"),auth=document.getElementById("auth"),cards=document.getElementById("cards");
+document.getElementById("day").textContent="Oggi · "+day;
+let current=null;let manifest=null;
+async function selection(){
+ const r=await fetch(endpoint+"?date="+day,{cache:"no-store"});
+ return r.ok?await r.json():null;
+}
+async function init(){
+ const {data:{session}}=await supa.auth.getSession();
+ auth.innerHTML=session?"Autenticato. Se sei amministratore, puoi scegliere una proposta.":"Per scegliere, <a href='../../../../gestione/canali-case247/'>accedi come amministratore alla dashboard CASE247</a> e torna qui.";
+ let r;try{r=await fetch(files+day+"/manifest.json?v="+Date.now(),{cache:"no-cache"});}catch{}
+ if(!r||!r.ok){msg.textContent="Proposte non ancora presenti oggi. Controlla l'azione GitHub delle 04:15: potrebbero mancare foto autorizzate o l'esecuzione potrebbe essere in ritardo.";return}
+ manifest=await r.json();document.getElementById("format").textContent=manifest.format==="carousel"?"Carosello 5 slide":"Post singolo";
+ const selected=await selection().catch(()=>null);
+ current=selected?.candidate||null;
+ msg.textContent="Tema: "+manifest.headline+"\nScelta registrata: "+(current||"nessuna — fallback automatico alle 09:45");
+ cards.replaceChildren();
+ for(const item of manifest.candidates){
+  const el=document.createElement("article");el.className="card"+(item.id===current?" selected":"");
+  const image=document.createElement("img");image.alt="Proposta fotografica "+item.id+" · "+manifest.headline;image.loading="lazy";image.src=files+day+"/"+item.preview;el.append(image);
+  const body=document.createElement("div");body.className="body";
+  const h=document.createElement("h2");h.textContent="Proposta "+item.id;body.append(h);
+  const credit=document.createElement("p");credit.textContent="Fonte: "+item.photo.credit+" · "+item.photo.license;body.append(credit);
+  const button=document.createElement("button");button.type="button";button.className="btn";button.textContent=item.id===current?"Selezionata":"Approva proposta "+item.id;
+  button.disabled=item.id===current||!session;
+  button.onclick=async()=>{
+   button.disabled=true;msg.textContent="Salvataggio selezione...";
+   try{
+    const {data:{session:live}}=await supa.auth.getSession();
+    if(!live)throw new Error("Accesso amministratore richiesto");
+    const res=await fetch(endpoint,{method:"POST",headers:{"content-type":"application/json",authorization:"Bearer "+live.access_token},body:JSON.stringify({date:day,candidate:item.id})});
+    const data=await res.json();
+    if(!res.ok)throw new Error(data.error||"Errore approvazione");
+    current=item.id;msg.textContent="Approvata la proposta "+item.id+". Verrà accodata alle 09:45.";await init();
+   }catch(err){msg.textContent="Scelta non salvata: "+err.message}finally{button.disabled=false}
+  };
+  body.append(button);el.append(body);cards.append(el);
+ }
+}
+init();
+</script></body></html>
