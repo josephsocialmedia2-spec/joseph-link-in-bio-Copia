@@ -1,0 +1,225 @@
+{
+  "brand": "Case in Pubblicità 24/7",
+  "date": "2026-10-31",
+  "source": "proposte editoriali da verificare, non risultati Ubersuggest",
+  "sections": [
+    {
+      "key": "privati",
+      "label": "PRIVATI",
+      "description": "Proprietari di case e abitazioni",
+      "contentLinks": [
+        {
+          "label": "Contenuti editoriali esistenti",
+          "url": "../../editorial-queue/2026-11-01_2026-11-04/"
+        },
+        {
+          "label": "Archivio giornaliero",
+          "url": "../days/"
+        },
+        {
+          "label": "Cartella contenuti GitHub",
+          "url": "https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/tree/main/campagne/case247/editorial-queue/2026-11-01_2026-11-04"
+        }
+      ],
+      "keywords": [
+        {
+          "keyword": "vendere casa",
+          "tail": "corta",
+          "asset": "IMM01",
+          "status": "DA_VERIFICARE"
+        },
+        {
+          "keyword": "voglio vendere casa",
+          "tail": "corta",
+          "asset": "IMM01",
+          "status": "DA_VERIFICARE"
+        },
+        {
+          "keyword": "come vendere casa",
+          "tail": "corta",
+          "asset": "IMM01",
+          "status": "DA_VERIFICARE"
+        },
+        {
+          "keyword": "come vendere casa senza agenzia",
+          "tail": "lunga",
+          "asset": "IMM14",
+          "status": "DA_VERIFICARE"
+        },
+        {
+          "keyword": "vendere casa da privato",
+          "tail": "lunga",
+          "asset": "IMM14",
+          "status": "DA_VERIFICARE"
+        },
+        {
+          "keyword": "quanto vale la mia casa",
+          "tail": "lunga",
+          "asset": "IMM01",
+          "status": "DA_VERIFICARE"
+        },
+        {
+          "keyword": "valutazione casa Avigliana",
+          "tail": "corta",
+          "asset": "IMM13",
+          "status": "DA_VERIFICARE"
+        },
+        {
+          "keyword": "non riesco a vendere casa",
+          "tail": "lunga",
+          "asset": "IMM04",
+          "status": "DA_VERIFICARE"
+        },
+        {
+          "keyword": "perché la mia casa non si vende",
+          "tail": "lunga",
+          "asset": "IMM04",
+          "status": "DA_VERIFICARE"
+        },
+        {
+          "keyword": "vendere una casa ereditata",
+          "tail": "lunga",
+          "asset": "IMM15",
+          "status": "DA_VERIFICARE"
+        },
+        {
+          "keyword": "documenti per vendere casa",
+          "tail": "lunga",
+          "asset": "IMM01",
+          "status": "DA_VERIFICARE"
+        },
+        {
+          "keyword": "quanto costa vendere casa",
+          "tail": "lunga",
+          "asset": "IMM01",
+          "status": "DA_VERIFICARE"
+        },
+        {
+          "keyword": "come vendere casa velocemente",
+          "tail": "lunga",
+          "asset": "IMM01",
+          "status": "DA_VERIFICARE"
+        },
+        {
+          "keyword": "vendere casa Sant'Ambrogio di Torino",
+          "tail": "lunga",
+          "asset": "IMM01",
+          "status": "DA_VERIFICARE"
+        },
+        {
+          "keyword": "come valutare casa ad Almese",
+          "tail": "lunga",
+          "asset": "IMM01",
+          "status": "DA_VERIFICARE"
+        }
+      ]
+    },
+    {
+      "key": "aziende",
+      "label": "AZIENDE",
+      "description": "Negozi, capannoni, uffici e attività commerciali",
+      "contentLinks": [
+        {
+          "label": "Archivio campagne CASE247 (GitHub)",
+          "url": "https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/tree/main/campagne/case247"
+        },
+        {
+          "label": "Regia aziendale e slot pubblicitari",
+          "url": "../../../../gestione/canali-case247/"
+        }
+      ],
+      "keywords": [
+        {
+          "keyword": "vendere immobile commerciale",
+          "tail": "corta",
+          "asset": "COMMERCIALE_DA_MAPPARE",
+          "status": "DA_VERIFICARE"
+        },
+        {
+          "keyword": "vendere negozio",
+          "tail": "corta",
+          "asset": "COMMERCIALE_DA_MAPPARE",
+          "status": "DA_VERIFICARE"
+        },
+        {
+          "keyword": "come vendere un negozio",
+          "tail": "lunga",
+          "asset": "COMMERCIALE_DA_MAPPARE",
+          "status": "DA_VERIFICARE"
+        },
+        {
+          "keyword": "vendere capannone industriale",
+          "tail": "corta",
+          "asset": "COMMERCIALE_DA_MAPPARE",
+          "status": "DA_VERIFICARE"
+        },
+        {
+          "keyword": "vendere ufficio",
+          "tail": "corta",
+          "asset": "COMMERCIALE_DA_MAPPARE",
+          "status": "DA_VERIFICARE"
+        },
+        {
+          "keyword": "vendita attività commerciale",
+          "tail": "corta",
+          "asset": "COMMERCIALE_DA_MAPPARE",
+          "status": "DA_VERIFICARE"
+        },
+        {
+          "keyword": "come vendere un'attività commerciale",
+          "tail": "lunga",
+          "asset": "COMMERCIALE_DA_MAPPARE",
+          "status": "DA_VERIFICARE"
+        },
+        {
+          "keyword": "quanto vale un locale commerciale",
+          "tail": "lunga",
+          "asset": "COMMERCIALE_DA_MAPPARE",
+          "status": "DA_VERIFICARE"
+        },
+        {
+          "keyword": "valutazione capannone industriale",
+          "tail": "corta",
+          "asset": "COMMERCIALE_DA_MAPPARE",
+          "status": "DA_VERIFICARE"
+        },
+        {
+          "keyword": "come trovare acquirenti per un capannone",
+          "tail": "lunga",
+          "asset": "COMMERCIALE_DA_MAPPARE",
+          "status": "DA_VERIFICARE"
+        },
+        {
+          "keyword": "vendere negozio a Torino",
+          "tail": "lunga",
+          "asset": "COMMERCIALE_DA_MAPPARE",
+          "status": "DA_VERIFICARE"
+        },
+        {
+          "keyword": "vendere capannone in provincia di Torino",
+          "tail": "lunga",
+          "asset": "COMMERCIALE_DA_MAPPARE",
+          "status": "DA_VERIFICARE"
+        },
+        {
+          "keyword": "pubblicità immobili commerciali",
+          "tail": "corta",
+          "asset": "COMMERCIALE_DA_MAPPARE",
+          "status": "DA_VERIFICARE"
+        },
+        {
+          "keyword": "promuovere un immobile commerciale sui social",
+          "tail": "lunga",
+          "asset": "COMMERCIALE_DA_MAPPARE",
+          "status": "DA_VERIFICARE"
+        },
+        {
+          "keyword": "come pubblicizzare un locale commerciale",
+          "tail": "lunga",
+          "asset": "COMMERCIALE_DA_MAPPARE",
+          "status": "DA_VERIFICARE"
+        }
+      ]
+    }
+  ]
+}
