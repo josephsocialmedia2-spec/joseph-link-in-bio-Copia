@@ -87,7 +87,14 @@ jobs:
             echo "Nessun nuovo asset."
           else
             git commit -m "CASE247: produzione notturna o coda editoriale del giorno"
-            git push
+            pushed=0
+            for attempt in 1 2 3; do
+              if git push; then pushed=1; break; fi
+              git fetch origin main
+              git rebase origin/main
+              sleep 2
+            done
+            [[ "$pushed" == "1" ]] || { echo "GitHub push non riuscito dopo 3 tentativi"; exit 1; }
           fi
       - name: Register selected queue in Supabase using GitHub OIDC
         if: ${{ github.event.schedule == '45 9 * * *' || (github.event_name == 'workflow_dispatch' && inputs.mode == 'queue') }}
