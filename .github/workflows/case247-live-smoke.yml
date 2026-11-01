@@ -7,6 +7,10 @@ on:
       - 'scripts/case247_public_smoke.py'
       - 'gestione/case247-operazioni/index.html'
       - 'gestione/index.html'
+  pull_request:
+    paths:
+      - '.github/workflows/case247-live-smoke.yml'
+      - 'scripts/case247_public_smoke.py'
   workflow_dispatch:
 permissions:
   contents: read
