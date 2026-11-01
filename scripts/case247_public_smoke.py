@@ -5,6 +5,7 @@ No login, no tokens, no mutations, no social publication.
 from __future__ import annotations
 import json
 import os
+import time
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.request import Request, urlopen
@@ -39,6 +40,16 @@ def request(url,method="GET",headers=None,data=None):
   except (URLError,OSError) as e:
     return {"status":0,"url":url,"body":"","headers":{},"error":type(e).__name__+": "+str(e)[:150]}
 
+def request_with_retry(url,max_attempts=3):
+  """Retry only safe GET requests on transient gateway/CDN errors."""
+  for attempt in range(max_attempts):
+    reply=request(url)
+    if reply["status"] not in (0,429,502,503,504):
+      return reply
+    if attempt+1<max_attempts:
+      time.sleep(1.2*(attempt+1))
+  return reply
+
 def main():
   checks=[]
   def check(name,condition,details):
@@ -64,7 +75,7 @@ def main():
   jpg_results=[]
   for index in range(1,13):
     url=SITE+"campagne/case247/editorial-queue/2026-11-01_2026-11-04/assets/CASE247-"+str(index).zfill(3)+".jpg"
-    response=request(url)
+    response=request_with_retry(url)
     jpg_results.append({"id":index,"status":response["status"]})
   check("ALL_12_APPROVED_JPG",all(a["status"]==200 for a in jpg_results),jpg_results)
 
