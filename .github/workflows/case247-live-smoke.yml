@@ -1,0 +1,40 @@
+name: "CASE247 live smoke — GitHub Pages and Supabase (read-only)"
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/case247-live-smoke.yml'
+      - 'scripts/case247_public_smoke.py'
+      - 'gestione/case247-operazioni/index.html'
+      - 'gestione/index.html'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  public-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify live pages and unsigned API protections
+        run: python scripts/case247_public_smoke.py
+      - name: Parse live CRM page JavaScript (if downloaded)
+        if: always()
+        shell: bash
+        run: |
+          if [ -f /tmp/case247-inline.mjs ]; then
+            node --check /tmp/case247-inline.mjs
+          else
+            echo "Missing live module source; public smoke checks already report this failure."
+            exit 1
+          fi
+      - name: Upload non-sensitive smoke report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: case247-readonly-live-smoke
+          path: audit/case247/live-smoke-report.json
+          if-no-files-found: warn
