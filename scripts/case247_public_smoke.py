@@ -79,6 +79,17 @@ def main():
     jpg_results.append({"id":index,"status":response["status"]})
   check("ALL_12_APPROVED_JPG",all(a["status"]==200 for a in jpg_results),jpg_results)
 
+  personal=request_with_retry(SITE+"campagne/case247/auto-feed/review/joseph-personal/")
+  check("JOSEPH_PERSONAL_GALLERY_HTTP_200",personal["status"]==200,personal["status"])
+  check("JOSEPH_PERSONAL_MANIFEST",personal["status"]==200 and "CASE IN PUBBLICITÀ 24/7" in personal["body"],"Photo gallery and captions")
+  check("JOSEPH_REVIEW_LINK",review["status"]==200 and 'id="joseph-4xday"' in review["body"],"Review linked to four new photo graphics")
+  personal_assets=[]
+  for index in range(1,5):
+    url=SITE+"campagne/case247/auto-feed/review/joseph-personal/assets/CASE247-JOSEPH-"+str(index).zfill(2)+".jpg"
+    image=request_with_retry(url)
+    personal_assets.append({"id":index,"status":image["status"]})
+  check("ALL_4_JOSEPH_GRAPHICS",all(a["status"]==200 for a in personal_assets),personal_assets)
+
   edge=request(EDGE,headers={"Origin":ORIGIN})
   check("EDGE_UNAUTH_DENIED",edge["status"] in (401,403),"GET without access token -> "+str(edge["status"]))
   check("EDGE_NO_PRIVILEGED_DATA",not any(x in edge["body"] for x in ["organization_id","service_role_key","SUPABASE_SECRET_KEYS"]),"no sensitive data in error body")
