@@ -74,3 +74,15 @@ Tabelle nuove: `case247_organizations`, `case247_staff_members`, `case247_page_i
 - Pipeline GitHub Actions `CASE247 safe integration QA`: prima esecuzione su commit `c0ea033d` completata con `success`; pipeline riavviata in seguito all'aggiornamento del middleware ufficiale.
 - Documentazione API di riferimento: https://supabase.com/docs/guides/functions/auth e https://supabase.com/docs/guides/functions/auth-headers.
 - Nessun test HTTP in sessione amministratore è stato simulato come riuscito.
+
+## Verifica live GitHub Pages + endpoint — 1 novembre 2026
+- Dashboard `/gestione/` e nuova Regia `/gestione/case247-operazioni/`: **HTTP 200** verificato tramite GitHub Actions.
+- 12 moduli operativi, pannello review 8 Privati + 4 Aziende e **tutti e 12 i JPG**: controlli HTTP riusciti.
+- Edge Function CRM senza token: **GET 401, POST 401**. Preflight CORS dal dominio GitHub Pages: **204** con origine consentita.
+- Sintassi JS della pagina Regia: `node --check` superato.
+- Risultato finale collaudo pubblico: **14/14 controlli riusciti**, workflow https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/actions/runs/41332029729.
+- Il primo test esteso ha rilevato un HTTP 503 temporaneo su un asset, poi disponibile HTTP 200; il runner applica un retry limitato soltanto ai GET per errori transitori. Non nascondere eventuali errori persistenti.
+- Endpoint CRM aggiornato alla **versione 3**, con verifica esplicita dell'organizzazione `CASE IN PUBBLICITÀ 24/7`; il front-end impone lo stesso filtro e non abilita il form senza conferma GET autorizzata.
+- Esito test salvato in `case247_workflow_events` come evento `github_actions_41332029729`, status `SUCCEEDED`.
+- **Test di login amministratore e POST autenticato da browser: ancora non effettuati**. Nessuna credenziale o email OTP è stata recuperata o consumata dall'assistente.
+- Pubblicazione Meta e Seller Radar schedulato: **ancora disabilitati**.
