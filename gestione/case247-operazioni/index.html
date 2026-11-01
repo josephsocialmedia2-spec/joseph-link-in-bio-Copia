@@ -1,0 +1,84 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>CASE247 · Regia operativa unificata</title>
+<style>
+:root{color-scheme:dark;font:15px/1.5 system-ui,-apple-system,Arial,sans-serif;--bg:#07172B;--panel:#0E2947;--line:#2C577C;--ink:#E8F4FF;--muted:#B1C9DD;--blue:#188BE9}*{box-sizing:border-box}body{background:var(--bg);color:var(--ink);margin:0}header{padding:24px max(18px,calc((100vw - 1440px)/2));border-bottom:1px solid var(--line);background:#0B3158}header h1{font-size:clamp(24px,3vw,36px);margin:7px 0}a{color:#8ED7FF}main{max-width:1440px;margin:auto;padding:22px 18px 90px}.intro{color:var(--muted)}.toplinks,.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:13px 0 22px}.toplinks a,.tabs a{display:inline-flex;align-items:center;border:1px solid var(--line);padding:9px 12px;border-radius:10px;text-decoration:none;color:var(--ink);background:#123A61}.toplinks a:hover,.tabs a:hover{background:#185288}.auth{background:#0F2C4C;border:1px solid #396B91;border-radius:12px;padding:16px;margin:0 0 25px}.auth input{padding:10px 12px;background:#06213B;color:white;border:1px solid #487397;border-radius:9px;max-width:390px;width:100%}.auth button{padding:10px 13px;background:#188BE9;color:white;font-weight:800;border:0;border-radius:9px;cursor:pointer}.auth .controls{display:flex;gap:9px;flex-wrap:wrap}#status{color:#C3DFF5}.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}.kpi{padding:16px;background:#0C2745;border:1px solid #35658B;border-radius:13px}.kpi strong{font-size:29px;display:block;font-variant-numeric:tabular-nums}.kpi span{font-size:12px;color:var(--muted)}section.module{margin:20px 0;padding:20px;background:var(--panel);border:1px solid var(--line);border-radius:14px;scroll-margin-top:18px}section.module h2{margin:0 0 7px;font-size:21px}section.module p{color:var(--muted)}.empty{padding:14px;border:1px dashed #5781A1;border-radius:9px;color:#C5D7E6}.scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:11px;border-bottom:1px solid #315371;vertical-align:top}th{color:#90D7FF;font-weight:800}td{color:#E2EDF7}td.title-cell{min-width:260px}.state{font-size:11px;font-weight:800;border:1px solid #507594;background:#164064;border-radius:40px;padding:3px 8px;white-space:nowrap}code{color:#BAE9FF}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #9AE2FF;outline-offset:3px}@media(max-width:600px){section.module{padding:13px}.tabs a{font-size:12px}.kpis{grid-template-columns:repeat(2,1fr)}}</style></head>
+<body><header><a href="../">← Dashboard principale</a><h1>CASE IN PUBBLICITÀ 24/7 — REGIA OPERATIVA</h1><p class="intro">CRM, inventario landing, strategie, Seller Radar e autorizzazioni. Dati effettivi da Supabase; nessun KPI simulato.</p></header><main>
+<div class="toplinks"><a href="../../campagne/case247/auto-feed/review/#contenuti-approvati">Revisione 12 grafiche</a><a href="../canali-case247/">Canali Facebook e Instagram</a><a href="https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/tree/main/campagne/case247" target="_blank" rel="noopener">Repository campagne</a></div>
+<div class="auth"><strong>Accesso riservato al personale CASE247</strong><p>Le informazioni CRM non vengono caricate senza sessione Supabase e assegnazione all'organizzazione. Se non sei autorizzato vedrai soltanto uno stato vuoto.</p><div class="controls"><input id="email" type="email" placeholder="Email amministratore" autocomplete="email" aria-label="Email amministratore"><button type="button" id="send-login">Invia link di accesso</button><button type="button" id="logout">Esci</button><button type="button" id="reload">Aggiorna dati reali</button></div><p id="status" role="status">Verifica autenticazione…</p></div>
+<div class="kpis" id="kpis"><div class="kpi"><strong>—</strong><span>Lead registrati</span></div><div class="kpi"><strong>—</strong><span>Appuntamenti registrati</span></div><div class="kpi"><strong>—</strong><span>Osservazioni immobiliari</span></div><div class="kpi"><strong>—</strong><span>Strategie catalogate</span></div><div class="kpi"><strong>—</strong><span>Pagine censite</span></div><div class="kpi"><strong>—</strong><span>Workflow registrati</span></div></div>
+<nav class="tabs" aria-label="Moduli Regia"><a href="#panoramica">01 Panoramica</a><a href="#radar">02 Seller Radar</a><a href="#crm">03 CRM Privati</a><a href="#b2b">04 CRM B2B</a><a href="#leadgen">05 Lead Generation</a><a href="#social">06 Social</a><a href="#review">07 Review</a><a href="#workflow">08 Workflow</a><a href="#appuntamenti">09 Appuntamenti</a><a href="#strategie">10 Strategie</a><a href="#analytics">11 Analytics</a><a href="#sicurezza">12 Sicurezza</a><a href="#pagine">Inventario pagine</a></nav>
+<section id="panoramica" class="module"><h2>01 — Panoramica</h2><p>Cruscotto basato sui dati effettivamente presenti nel progetto Supabase operativo.</p><div id="overview-data" class="empty">Accedi per visualizzare i dati.</div></section>
+<section id="radar" class="module"><h2>02 — Seller Radar</h2><p>Monitoraggio di dati immobiliari ottenuti tramite fonti autorizzate. Non è un elenco da contattare con messaggi commerciali.</p><div id="radar-data" class="empty">Accesso richiesto.</div><div id="sources-data"></div></section>
+<section id="crm" class="module"><h2>03 — CRM Proprietari</h2><p>Solo richieste inbound registrate; nessun dato raccolto automaticamente da annunci pubblici.</p><div id="crm-data" class="empty">Accesso richiesto.</div></section>
+<section id="b2b" class="module"><h2>04 — CRM Commerciale / B2B</h2><p>Opportunità dichiarate relative ad attività, negozi, capannoni e aziende.</p><div id="b2b-data" class="empty">Accesso richiesto.</div></section>
+<section id="leadgen" class="module"><h2>05 — Lead Generation</h2><p>Conteggi per provenienza effettivamente registrata. La raccolta pubblica resta disabilitata in assenza di protezione anti-bot e informativa approvata.</p><div id="leadgen-data" class="empty">Accesso richiesto.</div></section>
+<section id="social" class="module"><h2>06 — Social Regia</h2><p>Facebook e Instagram: approvazioni e destinazioni devono essere verificate prima dell'invio. Gli slot non autorizzati restano inattivi.</p><div id="social-data" class="empty">Verifica in corso.</div><p><a href="../canali-case247/">Apri i 40 slot social</a></p></section>
+<section id="review" class="module"><h2>07 — Revisione contenuti</h2><p>12 contenuti approvati su GitHub; non equivalgono a post già pubblicati.</p><a href="../../campagne/case247/auto-feed/review/#archivio-privati">Privati — 8 grafiche</a> · <a href="../../campagne/case247/auto-feed/review/#archivio-aziende">Aziende — 4 grafiche</a></section>
+<section id="workflow" class="module"><h2>08 — Workflow</h2><p>I workflow sono considerati attivi soltanto se dispongono di trigger, permessi e test reali.</p><div id="workflow-data" class="empty">Accesso richiesto.</div></section>
+<section id="appuntamenti" class="module"><h2>09 — Appuntamenti</h2><p>Solo richieste realmente inserite in CRM; nessun evento calendario simulato.</p><div id="appointments-data" class="empty">Accesso richiesto.</div></section>
+<section id="strategie" class="module"><h2>10 — Catalogo acquisizione: 59 strategie</h2><p>Importate dal catalogo Excel. Stato iniziale CATALOGATA; non equivale a esecuzione o automazione attiva.</p><div id="strategies-data" class="empty">Accesso richiesto.</div></section>
+<section id="analytics" class="module"><h2>11 — Analytics e ROI</h2><p>Mostra soltanto aggregazioni di record realmente presenti; il ROI rimane non calcolabile senza costi e attribuzioni verificati.</p><div id="analytics-data" class="empty">Accesso richiesto.</div></section>
+<section id="sicurezza" class="module"><h2>12 — Sicurezza e autorizzazioni</h2><p>Le chiavi di servizio e i token OAuth non vengono mai mostrati in questa pagina.</p><div id="security-data" class="empty">Accesso richiesto.</div></section>
+<section id="pagine" class="module"><h2>Inventario delle pagine</h2><p>Il censimento di 48 route Supabase è distinto dalla scansione automatica dell'intero repository. Nessuna pagina client viene integrata automaticamente.</p><div id="pages-data" class="empty">Accesso richiesto.</div><p><a href="https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/blob/feature/case247-unified-regia-20261101/audit/case247/repository-inventory.json" target="_blank" rel="noopener">Vedi la scansione dei file su GitHub (quando il workflow è concluso)</a></p></section>
+</main>
+<script type="module">
+import {createClient} from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+const client=createClient('https://qmeftxsdfeyqozwoivzo.supabase.co','sb_publishable_KNgvCUxECyBFtd5MUrwDYg_BI5Z6Nsy');
+const $=id=>document.getElementById(id);
+const safeText=(id,text)=>{$(id).textContent=text};
+const escapeHtml=s=>String(s??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+function table(id,rows,cols,empty='Nessun dato registrato.'){
+  const root=$(id);root.replaceChildren();
+  if(!rows?.length){root.textContent=empty;return}
+  const wrap=document.createElement('div');wrap.className='scroll';
+  const t=document.createElement('table');
+  const thead=document.createElement('thead'),hr=document.createElement('tr');
+  for(const c of cols){const th=document.createElement('th');th.textContent=c[0];hr.append(th)}thead.append(hr);t.append(thead);
+  const tb=document.createElement('tbody');
+  for(const r of rows){const tr=document.createElement('tr');for(const [label,key] of cols){const td=document.createElement('td');td.textContent=String(r[key]??'—');tr.append(td)}tb.append(tr)}t.append(tb);wrap.append(t);root.append(wrap);
+}
+const load=async()=>{
+  $('status').textContent='Verifica sessione e organizzazione…';
+  const auth=await client.auth.getUser();
+  if(auth.error||!auth.data.user){$('status').textContent='Non autenticato. Richiedi il link di accesso con la tua email amministratore.';return}
+  const uid=auth.data.user.id;
+  const member=await client.from('case247_staff_members').select('organization_id,staff_role').eq('user_id',uid).eq('active',true).limit(1).maybeSingle();
+  if(member.error||!member.data){$('status').textContent='Account autenticato, ma non autorizzato al CRM CASE247.';return}
+  const org=member.data.organization_id;
+  $('status').textContent='Accesso verificato: '+auth.data.user.email+' · ruolo: '+member.data.staff_role;
+  const query=(name,cols,limit=100)=>client.from(name).select(cols).eq('organization_id',org).limit(limit);
+  const names=['case247_crm_leads','case247_crm_appointments','case247_market_observations','case247_strategies','case247_page_inventory','case247_workflow_events','case247_sources'];
+  const [leadsR,appointmentsR,radarR,strategiesR,pagesR,workflowR,sourcesR,socialR]=await Promise.all([
+    query(names[0],'id,stage,inquiry_type,page_source_path,created_at,contact_id,property_id'),
+    query(names[1],'id,lead_id,starts_at,ends_at,kind,state'),
+    query(names[2],'id,comune,property_kind,asking_eur,listing_state,observed_at,source_url'),
+    query(names[3],'strategy_code,name,family,status,source_url',100),
+    query(names[4],'legacy_page_id,title,source_path,sector,owner_class,integration_status,integration_enabled',200),
+    query(names[5],'workflow,status,event_key,error_code,created_at',100),
+    query(names[6],'name,method,rights_status,source_url',100),
+    client.from('case247_publish_config').select('enabled,meta_page_id,meta_ig_id,oauth_verified_at').maybeSingle()
+  ]);
+  const all=[leadsR,appointmentsR,radarR,strategiesR,pagesR,workflowR,sourcesR];
+  if(all.some(r=>r.error)){$('status').textContent='Dati parziali: '+all.filter(r=>r.error).map(r=>r.error.message).join(' / ')}
+  const leads=leadsR.data||[],appts=appointmentsR.data||[],radar=radarR.data||[],strategies=strategiesR.data||[],pages=pagesR.data||[],workflows=workflowR.data||[],sources=sourcesR.data||[];
+  const counts=[[leads,'Lead registrati'],[appts,'Appuntamenti registrati'],[radar,'Osservazioni immobiliari'],[strategies,'Strategie catalogate'],[pages,'Pagine censite'],[workflows,'Workflow registrati']];
+  $('kpis').replaceChildren();for(const [items,label] of counts){const card=document.createElement('div');card.className='kpi';const strong=document.createElement('strong');strong.textContent=String(items.length);const span=document.createElement('span');span.textContent=label;card.append(strong,span);$('kpis').append(card)}
+  safeText('overview-data','Dati aggiornati al caricamento corrente. Lead '+leads.length+' · Appuntamenti '+appts.length+' · Strategie ATTIVE '+strategies.filter(x=>x.status==='ATTIVA').length+' · Pagine integrate '+pages.filter(x=>x.integration_enabled).length+'. I conteggi sono basati su massimo 100 record per raccolta; confrontare i totali nel database per volumi maggiori.');
+  table('radar-data',radar,['Comune','comune'].constructor===Array? [['Comune','comune'],['Tipo','property_kind'],['Prezzo richiesto €','asking_eur'],['Stato annuncio','listing_state'],['Rilevato','observed_at']]:[], 'Nessuna osservazione da fonte autorizzata registrata.');
+  table('sources-data',sources,[['Fonte','name'],['Metodo','method'],['Diritti','rights_status']]);
+  table('crm-data',leads.filter(x=>!String(x.inquiry_type).toUpperCase().includes('B2B')),[['Stato','stage'],['Richiesta','inquiry_type'],['Landing','page_source_path'],['Ricevuta','created_at']], 'Nessun lead inbound residenziale.');
+  table('b2b-data',leads.filter(x=>String(x.inquiry_type).toUpperCase().includes('B2B')),[['Stato','stage'],['Richiesta','inquiry_type'],['Origine','page_source_path']], 'Nessuna richiesta B2B registrata.');
+  safeText('leadgen-data', 'Richieste presenti: '+leads.length+'. Richieste con origine pagina valorizzata: '+leads.filter(x=>x.page_source_path).length+'. Nessuna metrica di traffico o costo importata: conversioni e CPA non disponibili.');
+  safeText('social-data',socialR.error?'Configurazione social non leggibile: '+socialR.error.message:!socialR.data?'Configurazione social assente':(socialR.data.enabled?'Scheduler configurato come attivo':'Scheduler disabilitato')+' · Page ID: '+(socialR.data.meta_page_id?'registrato':'assente')+' · Instagram Professional ID: '+(socialR.data.meta_ig_id?'registrato':'non verificato')+' · OAuth: '+(socialR.data.oauth_verified_at?'data registrata':'NON verificato'));
+  table('workflow-data',workflows,[['Workflow','workflow'],['Stato','status'],['Ultimo evento','created_at'],['Errore','error_code']]);
+  table('appointments-data',appts,[['Inizio','starts_at'],['Fine','ends_at'],['Tipo','kind'],['Stato','state']]);
+  table('strategies-data',strategies.sort((a,b)=>a.strategy_code.localeCompare(b.strategy_code)),[['Codice','strategy_code'],['Strategia','name'],['Famiglia','family'],['Stato','status'],['Fonte URL','source_url']],'Catalogo non ancora presente.');
+  const stageCounts=leads.reduce((acc,x)=>(acc[x.stage]=(acc[x.stage]||0)+1,acc),{});
+  safeText('analytics-data','Lead per stato: '+JSON.stringify(stageCounts)+' · Appuntamenti: '+appts.length+' · Incarichi registrati: '+leads.filter(x=>x.stage==='MANDATE').length+'. ROI: NON DISPONIBILE (assenza di costi e attribuzione verificata).');
+  safeText('security-data','Utente autenticato via Supabase; dati filtrati per organizzazione con RLS. Ruolo: '+member.data.staff_role+'. Il backend dei form pubblici richiede ancora gate anti-bot e informativa approvata. Segreti mai presenti nel frontend.');
+  table('pages-data',pages,[['ID','legacy_page_id'],['Titolo','title'],['Percorso','source_path'],['Settore','sector'],['Proprietà','owner_class'],['Stato','integration_status']], 'Inventario non ancora sincronizzato.');
+};
+$('send-login').addEventListener('click',async()=>{const email=$('email').value.trim();if(!email){$('status').textContent='Inserisci email';return}const r=await client.auth.signInWithOtp({email,options:{emailRedirectTo:location.href}});$('status').textContent=r.error?'Errore OTP: '+r.error.message:'Controlla la posta per il link di accesso.'});
+$('logout').addEventListener('click',async()=>{await client.auth.signOut();location.reload()});
+$('reload').addEventListener('click',load);
+load();
+</script></body></html>
