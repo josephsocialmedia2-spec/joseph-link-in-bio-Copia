@@ -1,0 +1,55 @@
+name: "CASE247 - Render Joseph 4 daily photos"
+on:
+  push:
+    branches: ["feature/case247-joseph-personal-posts-20261101"]
+    paths:
+      - "campagne/case247/auto-feed/review/joseph-personal/index.html"
+      - "scripts/case247_render_joseph_posts.mjs"
+      - ".github/workflows/case247-joseph-render.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: case247-joseph-render
+  cancel-in-progress: false
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install browser-based renderer
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Start local Github Pages preview
+        run: |
+          python3 -m http.server 8731 --directory . >/tmp/case247-web.log 2>&1 &
+          sleep 3
+      - name: Render four approved creatives as JPG
+        run: node scripts/case247_render_joseph_posts.mjs
+      - name: Validate JPG images
+        shell: bash
+        run: |
+          set -euo pipefail
+          for i in 01 02 03 04; do
+            f="campagne/case247/auto-feed/review/joseph-personal/assets/CASE247-JOSEPH-$i.jpg"
+            test -s "$f"
+            file "$f" | grep -q "JPEG image data"
+          done
+      - name: Commit four JPGs without enabling publication
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "case247-joseph-render-bot"
+          git config user.email "case247-joseph-render-bot@users.noreply.github.com"
+          git add campagne/case247/auto-feed/review/joseph-personal/assets/*.jpg
+          if ! git diff --cached --quiet; then
+            git commit -m "CASE247: 4 JPG 1254px con Joseph, solo revisione"
+            git push origin HEAD:feature/case247-joseph-personal-posts-20261101
+          fi
