@@ -1,0 +1,53 @@
+{
+  "brand": "CASE IN PUBBLICITÀ 24/7",
+  "series": "Joseph — 4 interventi personali al giorno",
+  "created_at": "2026-11-01",
+  "format": "1254x1254",
+  "source": "Versioni vettoriali renderizzate tramite ritratto presente nel repository GitHub",
+  "items": [
+    {
+      "id": "CASE247-JOSEPH-01",
+      "title": "IL MERCATO CAMBIA. LA STRATEGIA DEVE CAMBIARE.",
+      "topic": "strategia",
+      "caption": "Oggi non basta pubblicare una casa: servono prezzo coerente, visibilità continuativa e contenuti che aiutino a ricevere richieste pertinenti. Analizziamo insieme il tuo immobile. Scrivimi: https://wa.me/393713708294",
+      "jpeg": "./assets/CASE247-JOSEPH-01.jpg",
+      "status": "READY_FOR_REVIEW_NOT_SCHEDULED",
+      "meta_published": false
+    },
+    {
+      "id": "CASE247-JOSEPH-02",
+      "title": "MUTUI E DOMANDA. CHI COMPRA OGGI È PIÙ SELETTIVO.",
+      "topic": "mutui",
+      "caption": "Per parlare agli acquirenti bisogna presentare ogni immobile al pubblico appropriato, con informazioni chiare e una distribuzione pianificata. Posizioniamo meglio il tuo immobile. Scrivimi: https://wa.me/393713708294",
+      "jpeg": "./assets/CASE247-JOSEPH-02.jpg",
+      "status": "READY_FOR_REVIEW_NOT_SCHEDULED",
+      "meta_published": false
+    },
+    {
+      "id": "CASE247-JOSEPH-03",
+      "title": "CASE GREEN. LA CLASSE ENERGETICA CONTA SEMPRE DI PIÙ.",
+      "topic": "efficienza",
+      "caption": "Comfort, consumi e costi di gestione possono influenzare l'interesse di chi acquista. Comunicare dati energetici verificati aiuta a valorizzare la casa. Raccontiamo i punti forti della tua casa. Scrivimi: https://wa.me/393713708294",
+      "jpeg": "./assets/CASE247-JOSEPH-03.jpg",
+      "status": "READY_FOR_REVIEW_NOT_SCHEDULED",
+      "meta_published": false
+    },
+    {
+      "id": "CASE247-JOSEPH-04",
+      "title": "VISIBILITÀ CONTINUA. PIÙ PRESENZA, PIÙ OCCASIONI.",
+      "topic": "visibilita",
+      "caption": "Una comunicazione costante mantiene visibile l'immobile agli acquirenti potenzialmente interessati. Servono metodo, misurazione e aggiornamenti mirati. Costruiamo il tuo piano pubblicitario. Scrivimi: https://wa.me/393713708294",
+      "jpeg": "./assets/CASE247-JOSEPH-04.jpg",
+      "status": "READY_FOR_REVIEW_NOT_SCHEDULED",
+      "meta_published": false
+    }
+  ],
+  "suggested_times_local": [
+    "08:00",
+    "12:00",
+    "18:00",
+    "21:30"
+  ],
+  "timezone": "Europe/Rome",
+  "meta_enabled": false
+}
