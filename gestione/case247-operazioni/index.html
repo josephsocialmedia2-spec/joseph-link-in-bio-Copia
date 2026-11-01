@@ -67,7 +67,27 @@ const load=async()=>{
   const member=await client.from('case247_staff_members').select('organization_id,staff_role').eq('user_id',uid).eq('active',true).limit(1).maybeSingle();
   if(member.error||!member.data){$('status').textContent='Account autenticato, ma non autorizzato al CRM CASE247.';return}
   const org=member.data.organization_id;
-  $('intake-submit').disabled=false;
+  $('intake-submit').disabled=true;
+  $('intake-result').textContent='Verifica autorizzazioni della funzione CRM…';
+  // Non abilitare registrazioni finché l'endpoint non conferma autorizzazione applicativa.
+  try {
+    const session=await client.auth.getSession();
+    const jwt=session.data?.session?.access_token;
+    if(!jwt) throw new Error('SESSION_NOT_AVAILABLE');
+    const probe=await fetch('https://qmeftxsdfeyqozwoivzo.supabase.co/functions/v1/case247-crm-admin-intake',{
+      method:'GET',headers:{
+        authorization:'Bearer '+jwt,
+        apikey:'sb_publishable_KNgvCUxECyBFtd5MUrwDYg_BI5Z6Nsy'
+      }
+    });
+    const response=await probe.json().catch(()=>({}));
+    if(!probe.ok || response.authorized!==true || response.ok!==true)throw new Error(String(response.error||'SERVER_AUTH_TEST_FAILED'));
+    $('intake-submit').disabled=false;
+    $('intake-result').textContent='Endpoint CRM verificato per questa sessione. Puoi registrare richieste volontarie; nessun invio pubblicitario verrà effettuato.';
+  } catch(error) {
+    $('intake-submit').disabled=true;
+    $('intake-result').textContent='Registrazione bloccata: controllo backend non superato ('+String(error.message||error)+'). Nessun dato è stato inviato.';
+  }
   $('status').textContent='Accesso verificato: '+auth.data.user.email+' · ruolo: '+member.data.staff_role;
   const query=(name,cols,limit=100)=>client.from(name).select(cols).eq('organization_id',org).limit(limit);
   const names=['case247_crm_leads','case247_crm_appointments','case247_market_observations','case247_strategies','case247_page_inventory','case247_workflow_events','case247_sources'];
@@ -142,7 +162,7 @@ $('intake-form').addEventListener('submit',async(e)=>{
     out.textContent='Richiesta registrata nel CRM. ID: '+body.lead_id+' · stato: '+body.stage+'. Nessun invio marketing effettuato.';
     form.reset();await load();
   }catch(err){out.textContent='Registrazione non confermata: '+err.message+' · ID tentativo: '+eventId+'. Non reinviare alla cieca: controlla il CRM.';}
-  finally{btn.disabled=false}
+  finally{btn.disabled=true;await load()}
 });
 
 load();
