@@ -5,6 +5,7 @@ No login, no tokens, no mutations, no social publication.
 from __future__ import annotations
 import json
 import os
+import time
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.request import Request, urlopen
@@ -28,8 +29,8 @@ class ScriptExtractor(HTMLParser):
   def handle_data(self,data):
     if self.in_script:self.scripts[-1]+=data
 
-def request(url,method="GET",headers=None):
-  req=Request(url,method=method,headers=headers or {})
+def request(url,method="GET",headers=None,data=None):
+  req=Request(url,method=method,headers=headers or {},data=data)
   try:
     with urlopen(req,timeout=25) as response:
       b=response.read(400000)
@@ -38,6 +39,16 @@ def request(url,method="GET",headers=None):
     return {"status":e.code,"url":url,"body":e.read(10000).decode("utf-8","replace"),"headers":dict(e.headers)}
   except (URLError,OSError) as e:
     return {"status":0,"url":url,"body":"","headers":{},"error":type(e).__name__+": "+str(e)[:150]}
+
+def request_with_retry(url,max_attempts=3):
+  """Retry only safe GET requests on transient gateway/CDN errors."""
+  for attempt in range(max_attempts):
+    reply=request(url)
+    if reply["status"] not in (0,429,502,503,504):
+      return reply
+    if attempt+1<max_attempts:
+      time.sleep(1.2*(attempt+1))
+  return reply
 
 def main():
   checks=[]
@@ -61,12 +72,22 @@ def main():
   check("REVIEW_12_APPROVED",review["status"]==200 and review["body"].count('class="archive-card"')==12,"12 static cards")
   check("REVIEW_BOTH_AUDIENCES",all('id="archivio-'+sector+'"' in review["body"] for sector in ["privati","aziende"]),"privati, aziende")
 
-  asset=request(SITE+"campagne/case247/editorial-queue/2026-11-01_2026-11-04/assets/CASE247-001.jpg")
-  check("JPG_AVAILABLE",asset["status"]==200,asset["status"])
+  jpg_results=[]
+  for index in range(1,13):
+    url=SITE+"campagne/case247/editorial-queue/2026-11-01_2026-11-04/assets/CASE247-"+str(index).zfill(3)+".jpg"
+    response=request_with_retry(url)
+    jpg_results.append({"id":index,"status":response["status"]})
+  check("ALL_12_APPROVED_JPG",all(a["status"]==200 for a in jpg_results),jpg_results)
 
   edge=request(EDGE,headers={"Origin":ORIGIN})
   check("EDGE_UNAUTH_DENIED",edge["status"] in (401,403),"GET without access token -> "+str(edge["status"]))
   check("EDGE_NO_PRIVILEGED_DATA",not any(x in edge["body"] for x in ["organization_id","service_role_key","SUPABASE_SECRET_KEYS"]),"no sensitive data in error body")
+  unsigned_post=request(EDGE,method="POST",
+    headers={"Origin":ORIGIN,"Content-Type":"application/json"},
+    data=b'{"action":"create_inbound_lead","event_id":"synthetic-denied-no-jwt"}')
+  check("EDGE_UNAUTH_POST_DENIED",unsigned_post["status"] in (401,403),
+    "POST without access token -> "+str(unsigned_post["status"]))
+
 
   pre=request(EDGE,method="OPTIONS",headers={"Origin":ORIGIN,"Access-Control-Request-Method":"GET","Access-Control-Request-Headers":"authorization,apikey,content-type"})
   allow=next((v for k,v in pre["headers"].items() if k.lower()=="access-control-allow-origin"),None)
