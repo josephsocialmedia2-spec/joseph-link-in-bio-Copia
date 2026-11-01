@@ -49,7 +49,7 @@
 </div>
 <div class="bottom"><div class="whatsapp"><span class="wa-icon">☎</span><b>Scrivimi su WhatsApp</b></div><p class="bottom-line">Costruiamo il tuo piano pubblicitario.</p></div>
 </article><figcaption>#4 · visibilita · <a href="./assets/CASE247-JOSEPH-04.jpg">JPEG</a></figcaption></figure></div></div>
-<div id="render-targets" style="position:absolute;left:-10000px;top:0;width:1254px"><article class="poster" id="poster-01" aria-label="IL MERCATO CAMBIA. LA STRATEGIA DEVE CAMBIARE.">
+<div id="render-targets" style="position:static;left:0;top:0;width:1254px;display:none"><article class="poster" id="render-poster-01" aria-label="IL MERCATO CAMBIA. LA STRATEGIA DEVE CAMBIARE.">
 <div class="background-house"></div><div class="geometric"></div><img class="portrait" src="../../../../../assets/joseph-portrait-campagne-2026.webp" crossorigin="anonymous" alt="">
 <div class="fog"></div>
 <header class="brand"><svg width="156" height="110" viewBox="0 0 156 110" aria-hidden="true"><path d="M7 59 77 7l71 53" fill="none" stroke="#006EE8" stroke-width="14" stroke-linejoin="round"/><path d="M27 56v45h99V56" fill="none" stroke="#092B5B" stroke-width="11"/><path d="M64 66h14v14H64zm20 0h14v14H84zM64 84h14v14H64zm20 0h14v14H84z" fill="#0C79E5"/></svg>
@@ -61,7 +61,7 @@
 </div>
 <div class="bottom"><div class="whatsapp"><span class="wa-icon">☎</span><b>Scrivimi su WhatsApp</b></div><p class="bottom-line">Analizziamo insieme il tuo immobile.</p></div>
 </article>
-<article class="poster" id="poster-02" aria-label="MUTUI E DOMANDA. CHI COMPRA OGGI È PIÙ SELETTIVO.">
+<article class="poster" id="render-poster-02" aria-label="MUTUI E DOMANDA. CHI COMPRA OGGI È PIÙ SELETTIVO.">
 <div class="background-house"></div><div class="geometric"></div><img class="portrait" src="../../../../../assets/joseph-portrait-campagne-2026.webp" crossorigin="anonymous" alt="">
 <div class="fog"></div>
 <header class="brand"><svg width="156" height="110" viewBox="0 0 156 110" aria-hidden="true"><path d="M7 59 77 7l71 53" fill="none" stroke="#006EE8" stroke-width="14" stroke-linejoin="round"/><path d="M27 56v45h99V56" fill="none" stroke="#092B5B" stroke-width="11"/><path d="M64 66h14v14H64zm20 0h14v14H84zM64 84h14v14H64zm20 0h14v14H84z" fill="#0C79E5"/></svg>
@@ -73,7 +73,7 @@
 </div>
 <div class="bottom"><div class="whatsapp"><span class="wa-icon">☎</span><b>Scrivimi su WhatsApp</b></div><p class="bottom-line">Posizioniamo meglio il tuo immobile.</p></div>
 </article>
-<article class="poster" id="poster-03" aria-label="CASE GREEN. LA CLASSE ENERGETICA CONTA SEMPRE DI PIÙ.">
+<article class="poster" id="render-poster-03" aria-label="CASE GREEN. LA CLASSE ENERGETICA CONTA SEMPRE DI PIÙ.">
 <div class="background-house"></div><div class="geometric"></div><img class="portrait" src="../../../../../assets/joseph-portrait-campagne-2026.webp" crossorigin="anonymous" alt="">
 <div class="fog"></div>
 <header class="brand"><svg width="156" height="110" viewBox="0 0 156 110" aria-hidden="true"><path d="M7 59 77 7l71 53" fill="none" stroke="#006EE8" stroke-width="14" stroke-linejoin="round"/><path d="M27 56v45h99V56" fill="none" stroke="#092B5B" stroke-width="11"/><path d="M64 66h14v14H64zm20 0h14v14H84zM64 84h14v14H64zm20 0h14v14H84z" fill="#0C79E5"/></svg>
@@ -85,7 +85,7 @@
 </div>
 <div class="bottom"><div class="whatsapp"><span class="wa-icon">☎</span><b>Scrivimi su WhatsApp</b></div><p class="bottom-line">Raccontiamo i punti forti della tua casa.</p></div>
 </article>
-<article class="poster" id="poster-04" aria-label="VISIBILITÀ CONTINUA. PIÙ PRESENZA, PIÙ OCCASIONI.">
+<article class="poster" id="render-poster-04" aria-label="VISIBILITÀ CONTINUA. PIÙ PRESENZA, PIÙ OCCASIONI.">
 <div class="background-house"></div><div class="geometric"></div><img class="portrait" src="../../../../../assets/joseph-portrait-campagne-2026.webp" crossorigin="anonymous" alt="">
 <div class="fog"></div>
 <header class="brand"><svg width="156" height="110" viewBox="0 0 156 110" aria-hidden="true"><path d="M7 59 77 7l71 53" fill="none" stroke="#006EE8" stroke-width="14" stroke-linejoin="round"/><path d="M27 56v45h99V56" fill="none" stroke="#092B5B" stroke-width="11"/><path d="M64 66h14v14H64zm20 0h14v14H84zM64 84h14v14H64zm20 0h14v14H84z" fill="#0C79E5"/></svg>
@@ -97,4 +97,13 @@
 </div>
 <div class="bottom"><div class="whatsapp"><span class="wa-icon">☎</span><b>Scrivimi su WhatsApp</b></div><p class="bottom-line">Costruiamo il tuo piano pubblicitario.</p></div>
 </article></div>
-</body></html>
+<script>
+if(new URLSearchParams(location.search).has("render")){
+ document.querySelector(".container").style.display="none";
+ const target=document.getElementById("render-targets");
+ target.style.display="block";
+ target.style.position="static";
+ document.body.style.margin="0";
+ document.body.style.background="#ffffff";
+}
+</script></body></html>
