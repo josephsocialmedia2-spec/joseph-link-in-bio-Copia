@@ -1,0 +1,61 @@
+{
+  "date": "2026-11-01",
+  "brand": "CASE IN PUBBLICITÀ 24/7",
+  "format": "post",
+  "status": "AWAITING_MORNING_SELECTION",
+  "choice_deadline_rome": "09:30",
+  "queue_start_rome": "09:45",
+  "scheduled_publication_rome": "10:00",
+  "theme": "Quanto vale la tua casa?",
+  "headline": "Quanto vale la tua casa?",
+  "detail": "Il prezzo richiesto da altri venditori non è una valutazione. Contano caratteristiche, contesto e confronti pertinenti.",
+  "caption": "Quanto vale la tua casa?\n\nIl prezzo richiesto da altri venditori non è una valutazione. Contano caratteristiche, contesto e confronti pertinenti.\n\nCASE IN PUBBLICITÀ 24/7: comunicazione e promozione immobiliare tra Avigliana e la Valle di Susa. L'intermediazione resta riservata ai professionisti abilitati.\n\nScrivici indicando il tuo Comune: WhatsApp 371 370 8294 — https://wa.me/393713708294\n\n#CaseInPubblicita247 #Avigliana #ValleDiSusa #MarketingImmobiliare\n\nSpunto di attualità (approfondimento): https://news.google.com/rss/articles/CBMi1gFBVV95cUxPX3g0VThWSzU3MVJYc21Tcm4yNFF1NGxHdUFoNUE0UzdMVDVXYlJUV092OU5Ud1JOVHBaWWlVMVc5cm10cjB5bkpNeFpjbFNmZGs4TXp6NkdpQUpaUG1VNEdOYzMxbnlyQVFPRmxpaDlfa0FWZG1FUFJyRkwwZWV1SG5RS3dqaV9MbDRTVHowQzNVaFlMeWRybEhOYTZ5X2hFWHktV2ptQnRkUDU1NUFLYVFwbEtGYjh6cFE1RmpNQnNYRW1faFFDb1AtS01zUkdrZnA2VHdB?oc=5",
+  "news_source": {
+    "headline": "Il mercato immobiliare? È in crescita in provincia: «Condizioni di mercato e prezzi» - Unione Monregalese",
+    "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxPX3g0VThWSzU3MVJYc21Tcm4yNFF1NGxHdUFoNUE0UzdMVDVXYlJUV092OU5Ud1JOVHBaWWlVMVc5cm10cjB5bkpNeFpjbFNmZGs4TXp6NkdpQUpaUG1VNEdOYzMxbnlyQVFPRmxpaDlfa0FWZG1FUFJyRkwwZWV1SG5RS3dqaV9MbDRTVHowQzNVaFlMeWRybEhOYTZ5X2hFWHktV2ptQnRkUDU1NUFLYVFwbEtGYjh6cFE1RmpNQnNYRW1faFFDb1AtS01zUkdrZnA2VHdB?oc=5",
+    "source": "Google News RSS — spunto tematico, non riproduzione della notizia"
+  },
+  "candidates": [
+    {
+      "id": "A",
+      "preview": "candidate-A.jpg",
+      "photo": {
+        "url": "https://images.unsplash.com/photo-1767257919396-ede513c060af?auto=format&fit=crop&fm=jpg&q=85&w=2200",
+        "license": "Unsplash License (commercial reuse)",
+        "credit": "MChe Lee / Unsplash",
+        "origin": "https://unsplash.com/photos/sunlight-streams-across-a-modern-living-room-with-couch-Q0aniuqk4zU",
+        "key": "unsplash-sunlit-livingroom-mche-lee-2026"
+      },
+      "score": 95,
+      "visual_variant": 0
+    },
+    {
+      "id": "B",
+      "preview": "candidate-B.jpg",
+      "photo": {
+        "url": "https://images.unsplash.com/photo-1766603636700-e9d80473f40f?auto=format&fit=crop&fm=jpg&q=85&w=2200",
+        "license": "Unsplash License (commercial reuse)",
+        "credit": "Alef Morais / Unsplash",
+        "origin": "https://unsplash.com/photos/modern-house-with-large-windows-and-a-green-lawn-d2hYqpR0YS0",
+        "key": "unsplash-modern-house-alef-morais-2025"
+      },
+      "score": 92,
+      "visual_variant": 1
+    },
+    {
+      "id": "C",
+      "preview": "candidate-C.jpg",
+      "photo": {
+        "url": "https://images.unsplash.com/photo-1758523671285-9ff3f4e0ff38?auto=format&fit=crop&fm=jpg&q=85&w=2200",
+        "license": "Unsplash License (commercial reuse)",
+        "credit": "Vitaly Gariev / Unsplash",
+        "origin": "https://unsplash.com/photos/couple-happily-moving-into-a-new-home-x8l4lN6-xd0",
+        "key": "unsplash-couple-keys-new-home-2025"
+      },
+      "score": 89,
+      "visual_variant": 2
+    }
+  ],
+  "estimated_paid_api_cost_eur": 0,
+  "policy": "Do not substitute invented photos; candidates are previews pending selection; never publish via Meta here."
+}
