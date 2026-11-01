@@ -1,10 +1,8 @@
 // CASE247 internal CRM intake. Only authorized staff with a validated Supabase JWT.
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-import { createClient } from "npm:@supabase/supabase-js@2.57.0";
+import { withSupabase } from "npm:@supabase/server@1";
 
 type Json = Record<string, unknown>;
-const SUPABASE_URL = Deno.env.get("SUPABASE_URL") ?? "";
-const SECRET = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
 const allowedOrigin = "https://josephsocialmedia2-spec.github.io";
 const allow = (o: string|null) => (!o || o === allowedOrigin) ? (o ?? allowedOrigin) : null;
 const send = (status: number, body: Json, origin: string | null) =>
@@ -19,7 +17,7 @@ const trim = (v: unknown, max: number): string =>
 const emailValid = (s: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s) && s.length <= 200;
 const uuidValid = (s: string) => /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i.test(s);
 
-Deno.serve(async (req) => {
+const authenticatedHandler = withSupabase({auth:"user"}, async (req, ctx) => {
   const origin = allow(req.headers.get("origin"));
   if (req.headers.get("origin") && !origin) return send(403,{error:"ORIGIN_NOT_ALLOWED"},null);
   if (req.method === "OPTIONS") return new Response(null,{status:204,headers:{
@@ -28,14 +26,12 @@ Deno.serve(async (req) => {
     "access-control-allow-headers":"authorization,apikey,content-type",
     "access-control-max-age":"300"
   }});
-  if (!SUPABASE_URL || !SECRET) return send(503,{error:"BACKEND_SECRETS_MISSING"},origin);
-  const token=(req.headers.get("authorization") || "").replace(/^Bearer\s+/i,"");
-  if (!token || token.length > 5000) return send(401,{error:"AUTH_REQUIRED"},origin);
-  const service=createClient(SUPABASE_URL,SECRET,{auth:{persistSession:false,autoRefreshToken:false}});
-  const {data:ident,error:authError}=await service.auth.getUser(token);
-  if (authError || !ident?.user) return send(401,{error:"INVALID_SESSION"},origin);
+  // The official middleware validates the user JWT; only the server receives admin access.
+  const userId=ctx.userClaims?.id;
+  const service=ctx.supabaseAdmin;
+  if(!userId || !service) return send(401,{error:"INVALID_SESSION"},origin);
   const {data:members,error:memberError}=await service.from("case247_staff_members")
-    .select("organization_id,staff_role").eq("user_id",ident.user.id).eq("active",true)
+    .select("organization_id,staff_role").eq("user_id",userId).eq("active",true)
     .in("staff_role",["admin","editor"]).limit(2);
   if (memberError || !members?.length) return send(403,{error:"NOT_CASE247_STAFF"},origin);
   if (members.length !== 1) return send(409,{error:"MULTIPLE_ORG_MEMBERSHIP_USE_SCOPED_ENDPOINT"},origin);
@@ -114,4 +110,18 @@ Deno.serve(async (req) => {
   }
   // A staff-created lead does not imply marketing consent, even when the owner requested a reply.
   return send(201,{ok:true,lead_id:lead.data.id,stage:lead.data.stage,marketing_consent:false,outbound_marketing:false},origin);
+});
+
+Deno.serve((req: Request) => {
+  // CORS preflight must be handled before user JWT validation.
+  const requestOrigin=req.headers.get("origin");
+  const origin=allow(requestOrigin);
+  if(requestOrigin && !origin)return send(403,{error:"ORIGIN_NOT_ALLOWED"},null);
+  if(req.method==="OPTIONS")return new Response(null,{status:204,headers:{
+    "access-control-allow-origin":origin ?? allowedOrigin,
+    "access-control-allow-methods":"POST, GET, OPTIONS",
+    "access-control-allow-headers":"authorization,apikey,content-type",
+    "access-control-max-age":"300"
+  }});
+  return authenticatedHandler(req);
 });
