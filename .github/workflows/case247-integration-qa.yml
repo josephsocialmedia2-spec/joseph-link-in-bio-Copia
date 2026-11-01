@@ -1,0 +1,35 @@
+name: "CASE247 safe integration QA"
+on:
+  push:
+    branches:
+      - 'feature/case247-unified-regia-20261101'
+    paths:
+      - 'scripts/case247_static_qa.py'
+      - 'config/case247-strategy-catalog.json'
+      - 'gestione/case247-operazioni/**'
+      - 'gestione/index.html'
+      - 'supabase/functions/case247-crm-admin-intake/**'
+      - 'audit/case247/**'
+      - '.github/workflows/case247-integration-qa.yml'
+  pull_request:
+    paths:
+      - 'scripts/case247_static_qa.py'
+      - 'config/case247-strategy-catalog.json'
+      - 'gestione/case247-operazioni/**'
+      - 'gestione/index.html'
+      - 'supabase/functions/case247-crm-admin-intake/**'
+      - 'audit/case247/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static-safety:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test inventory, links, permissions, catalog and Meta fail-closed
+        run: python scripts/case247_static_qa.py
