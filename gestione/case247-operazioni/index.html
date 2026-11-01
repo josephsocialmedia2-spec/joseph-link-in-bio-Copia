@@ -64,9 +64,12 @@ const load=async()=>{
   const auth=await client.auth.getUser();
   if(auth.error||!auth.data.user){$('status').textContent='Non autenticato. Richiedi il link di accesso con la tua email amministratore.';return}
   const uid=auth.data.user.id;
-  const member=await client.from('case247_staff_members').select('organization_id,staff_role').eq('user_id',uid).eq('active',true).limit(1).maybeSingle();
+  const organization=await client.from('case247_organizations').select('id').eq('name','CASE IN PUBBLICITÀ 24/7').maybeSingle();
+  if(organization.error||!organization.data?.id){$('status').textContent='Nessun accesso all’organizzazione CASE247.';return}
+  const org=organization.data.id;
+  const member=await client.from('case247_staff_members').select('organization_id,staff_role')
+    .eq('user_id',uid).eq('organization_id',org).eq('active',true).maybeSingle();
   if(member.error||!member.data){$('status').textContent='Account autenticato, ma non autorizzato al CRM CASE247.';return}
-  const org=member.data.organization_id;
   $('intake-submit').disabled=true;
   $('intake-result').textContent='Verifica autorizzazioni della funzione CRM…';
   // Non abilitare registrazioni finché l'endpoint non conferma autorizzazione applicativa.
