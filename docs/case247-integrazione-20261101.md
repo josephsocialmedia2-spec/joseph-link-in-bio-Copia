@@ -4,7 +4,7 @@ Data: 2026-11-01 · Progetto Supabase: `qmeftxsdfeyqozwoivzo` · Sviluppo GitHub
 ## Perimetro e rollback
 - Punto iniziale di ripristino su `main`: commit `61fbcb4d669a96bd87d55f9cbd4e0855c31c63e1`.
 - Il branch introduce UI e script indipendenti; nessun vecchio dispatcher viene abilitato.
-- Le modifiche SQL sono state **applicate al Supabase operativo** come migrazioni ADDITIVE: `20261101153819_case247_unified_crm_foundation_20261101` e `20261101154839_case247_inventory_and_source_gate_20261101`.
+- Le modifiche SQL sono state **applicate al Supabase operativo** come migrazioni ADDITIVE: `20261101153819_case247_unified_crm_foundation_20261101` e `20261101154839_case247_inventory_and_source_gate_20261101`, seguite dalla migrazione additiva `case247_source_guard_service_role_usage_20261101`.
 - Non cancellare migrazioni, tabelle o record per un rollback. Un rollback applicativo usa la precedente versione GitHub della dashboard; i dati CRM aggiuntivi rimangono isolati in Supabase.
 
 ## Audit verificato
@@ -28,7 +28,7 @@ Tabelle nuove: `case247_organizations`, `case247_staff_members`, `case247_page_i
 - Cross-tenant foreign key per contatti/immobili/lead; `case247_private.is_member` usata per le policy.
 - Il consenso marketing non deriva dall'invio di una richiesta: preferenze esplicite e revoche sono entità distinte.
 - Le osservazioni Seller Radar richiedono una fonte `APPROVED` con data di verifica; `case247_source_gate` impedisce l'inserimento da fonti non approvate.
-- `case247-crm-admin-intake` è una Edge Function nuova con `verify_jwt=true`; controlla l'utente e la membership sul server. Solo personale `admin/editor` può inserire richieste inbound. Zero invii promozionali.
+- `case247-crm-admin-intake` è una Edge Function nuova (versione 2, middleware ufficiale `@supabase/server`, verifica JWT e `ctx.supabaseAdmin`) con `verify_jwt=true`; controlla l'utente e la membership sul server. Solo personale `admin/editor` può inserire richieste inbound. Zero invii promozionali.
 - Il modulo di inserimento si trova in `gestione/case247-operazioni/`; le richieste esterne pubbliche sono ancora bloccate in attesa di informativa e CAPTCHA.
 
 ## Regia Digitale
@@ -46,7 +46,7 @@ Tabelle nuove: `case247_organizations`, `case247_staff_members`, `case247_page_i
 6. Sessione `authenticated` senza ID utente: 0 lead, 0 pagine, 0 strategie visibili.
 7. `anon`: nessun privilegio SELECT sui lead né INSERT tramite client autenticato.
 8. QA statica su file GitHub: controlli su inventario, 59 strategie, 12 moduli e 24 job; workflow GitHub `CASE247 safe integration QA` disponibile. **Verificare esito CI sul PR**.
-9. Edge Function `case247-crm-admin-intake` distribuita: version 1, `verify_jwt=true`. **Manca test HTTP autenticato end-to-end**, dunque non dichiarare il form operativo finché quel test non riesce.
+9. Edge Function `case247-crm-admin-intake` distribuita: versione 2, `verify_jwt=true`. **Manca test HTTP autenticato end-to-end**, dunque non dichiarare il form operativo finché quel test non riesce.
 
 ## Osservazioni sicurezza da risolvere
 - Linter Supabase: `pg_net` nello schema `public` (preesistente); protezione password compromesse disabilitata in Auth (modifica da console, se disponibile).
@@ -69,3 +69,8 @@ Tabelle nuove: `case247_organizations`, `case247_staff_members`, `case247_page_i
 4. Solo per la nuova Regia, fai merge del branch in `main`; controlla deployment GitHub Pages e corretta navigazione.
 5. Conferma tempi e condizioni OAuth prima di attivare le pubblicazioni social.
 6. Rollback UI: ripristina `gestione/index.html` dalla versione precedente al merge; lascia le tabelle protette e inattive.
+
+## QA supplementare
+- Pipeline GitHub Actions `CASE247 safe integration QA`: prima esecuzione su commit `c0ea033d` completata con `success`; pipeline riavviata in seguito all'aggiornamento del middleware ufficiale.
+- Documentazione API di riferimento: https://supabase.com/docs/guides/functions/auth e https://supabase.com/docs/guides/functions/auth-headers.
+- Nessun test HTTP in sessione amministratore è stato simulato come riuscito.
