@@ -30,13 +30,15 @@ const authenticatedHandler = withSupabase({auth:"user"}, async (req, ctx) => {
   const userId=ctx.userClaims?.id;
   const service=ctx.supabaseAdmin;
   if(!userId || !service) return send(401,{error:"INVALID_SESSION"},origin);
-  const {data:members,error:memberError}=await service.from("case247_staff_members")
-    .select("organization_id,staff_role").eq("user_id",userId).eq("active",true)
-    .in("staff_role",["admin","editor"]).limit(2);
-  if (memberError || !members?.length) return send(403,{error:"NOT_CASE247_STAFF"},origin);
-  if (members.length !== 1) return send(409,{error:"MULTIPLE_ORG_MEMBERSHIP_USE_SCOPED_ENDPOINT"},origin);
-  const org=members[0].organization_id;
-  if (req.method === "GET") return send(200,{ok:true,authorized:true,role:members[0].staff_role,write_mode:"STAFF_ONLY",outbound_marketing:false},origin);
+  // Bind this endpoint to the CASE247 organization, never to an arbitrary membership.
+  const target=await service.from("case247_organizations").select("id").eq("name","CASE IN PUBBLICITÀ 24/7").maybeSingle();
+  if(target.error || !target.data?.id) return send(503,{error:"CASE247_ORGANIZATION_UNAVAILABLE"},origin);
+  const org=target.data.id;
+  const {data:member,error:memberError}=await service.from("case247_staff_members")
+    .select("staff_role").eq("user_id",userId).eq("organization_id",org).eq("active",true)
+    .in("staff_role",["admin","editor"]).maybeSingle();
+  if (memberError || !member) return send(403,{error:"NOT_CASE247_STAFF"},origin);
+  if (req.method === "GET") return send(200,{ok:true,authorized:true,role:member.staff_role,write_mode:"STAFF_ONLY",outbound_marketing:false},origin);
   if (req.method !== "POST") return send(405,{error:"METHOD_NOT_ALLOWED"},origin);
   const size=Number(req.headers.get("content-length") || "0");
   if (size > 9000) return send(413,{error:"PAYLOAD_TOO_LARGE"},origin);
