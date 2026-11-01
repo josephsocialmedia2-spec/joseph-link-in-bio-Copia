@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#142f49">
+<title>OCME Studio | Schemi a cascata</title>
+<meta name="description" content="Editor OCME: comprensione IDEA-SOLUZIONE-VISIONE e schema a cascata, pronto per la stampa A4 orizzontale o il salvataggio in PDF.">
+<style>
+:root{--navy:#142f49;--green:#198958;--red:#b73b37;--grey:#667688;--line:#d9e3e9}
+*{box-sizing:border-box}
+body{margin:0;background:#eef2f6;color:var(--navy);font:14px/1.45 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+.toolbar{max-width:1250px;margin:20px auto;padding:19px 22px;background:#fff;border-radius:13px;box-shadow:0 3px 18px #152f4917}
+h1{margin:0;font-size:22px}h2{font-size:14px;margin:0 0 8px}p{margin:8px 0;color:#566b7e}small{font-size:12px}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin:15px 0}
+button,.upload-label{border:0;padding:10px 12px;background:var(--navy);color:white;border-radius:6px;cursor:pointer;font-weight:700;font-size:12px}
+button.secondary,.upload-label{background:#e5edf2;color:var(--navy)}button.accent{background:var(--green)}
+button:focus-visible,.upload-label:focus-within,input:focus-visible,textarea:focus-visible{outline:2px solid #2b88d6;outline-offset:2px}
+input[type=file]{display:none}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+label{display:block;font-size:12px;font-weight:700;margin-top:10px;margin-bottom:3px}
+input[type=text],textarea{width:100%;border:1px solid #b7c7d3;border-radius:6px;padding:9px;font:13px/1.5 system-ui;color:#142f49}
+textarea{resize:vertical;min-height:73px}#outline{min-height:215px;font:12px/1.55 ui-monospace,Consolas,monospace}
+#source{min-height:70px}
+.hint{font-size:12px;padding:9px;border-left:3px solid var(--green);background:#f0f7f2;margin-top:11px}
+.warn{color:#922d24;border-left-color:#c64c3b;background:#fff2ef}
+.guide{font-size:12px;color:#475d6c}
+.paper{width:297mm;height:210mm;background:white;margin:20px auto;box-shadow:0 7px 26px #152f4930;overflow:hidden}
+.head{height:17mm;background:var(--navy);display:flex;justify-content:space-between;align-items:center;color:#fff;padding:0 10mm}
+.head strong{font-size:19px;letter-spacing:.4px}.head span{font-size:10px;color:#c8dae8}
+.body{display:grid;grid-template-columns:39% 61%;gap:5mm;height:185mm;padding:8mm 10mm 3mm}
+.left{border-right:1px solid #dde5ed;padding-right:5mm;overflow:hidden}
+.right{min-width:0;overflow:hidden}
+.kicker{color:var(--green);font-weight:800;letter-spacing:.7px;font-size:10px;margin-bottom:8px}
+.topic{font-weight:700;border-bottom:1px solid #8198aa;padding:6px 0;margin-bottom:11px;min-height:27px;overflow-wrap:anywhere}
+.response{min-height:41mm;padding:9px 10px;border:1px solid #dce6ec;border-radius:5px;background:#f8fafb;margin:0 0 5mm}
+.response strong{font-size:12px}.response em{display:block;font-size:10px;color:var(--grey);font-style:normal}
+.response p{font-size:11px;color:#20394b;white-space:pre-wrap;overflow-wrap:anywhere;margin-top:9px}
+.schematitle{font-size:12px;font-weight:800;border-bottom:1px solid #cbd7e0;padding-bottom:5px;margin-bottom:8px}
+#diagram{width:100%;height:153mm;display:block;overflow:visible}
+.foot{padding:0 10mm;font-size:9px;color:#637588}
+@page{size:A4 landscape;margin:0}
+@media print{html,body{width:297mm;height:210mm;background:white}.toolbar{display:none!important}.paper{margin:0;box-shadow:none;width:297mm;height:210mm;break-after:avoid;page-break-after:avoid}.head,.response{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+@media screen and (max-width:1190px){.toolbar{margin:10px}.paper{transform:scale(.7);transform-origin:top left;margin:10px 0 -58mm 10px}}
+@media screen and (max-width:790px){.form{grid-template-columns:1fr}.toolbar{padding:14px}.paper{transform:scale(.45);margin-bottom:-113mm}}
+</style>
+</head>
+<body>
+<main>
+<section class="toolbar">
+ <h1>OCME Studio — Editor schemi a cascata</h1>
+ <p>Organizza un argomento, costruisci i rami a cascata e ottieni una <b>scheda A4 orizzontale</b>. I dati rimangono nel browser: niente account, niente invio a server.</p>
+ <div class="actions">
+ <button type="button" id="example">Esempio Smartphone</button>
+ <button type="button" id="blank" class="secondary">Modello vuoto</button>
+ <label class="upload-label">Importa TXT / JSON <input type="file" id="upload" accept=".txt,.json,text/plain,application/json"></label>
+ <button type="button" id="draft" class="secondary">Bozza da testo</button>
+ <button type="button" id="json" class="secondary">Scarica progetto JSON</button>
+ <button type="button" id="print" class="accent">Stampa / salva PDF A4</button>
+ </div>
+ <div class="form">
+ <div><h2>COMPRENSIONE</h2>
+  <label for="topic">Argomento da studiare</label><input type="text" id="topic" maxlength="130">
+  <label for="idea">1. IDEA — Che cosa vuole farmi capire?</label><textarea id="idea"></textarea>
+  <label for="solution">2. SOLUZIONE — Quale problema risolve?</label><textarea id="solution"></textarea>
+  <label for="vision">3. VISIONE — Qual è il principio generale?</label><textarea id="vision"></textarea>
+ </div>
+ <div><h2>SCHEMA A CASCATA</h2>
+  <label for="outline">Rami: un elemento per riga, 2 spazi per ogni livello subordinato</label>
+  <textarea id="outline" spellcheck="false"></textarea>
+  <label for="source">Testo da studiare (facoltativo)</label><textarea id="source"></textarea>
+  <div id="status" class="hint" aria-live="polite"></div>
+  <div class="guide">Per creare un sottoramo, aggiungi due spazi a inizio riga. Esempio: <b>DEFINIZIONE</b> e sotto <b>··significato</b>. La bozza automatica divide il testo per frasi: <b>non interpreta autonomamente la gerarchia</b>, che devi verificare.</div>
+ </div>
+ </div>
+ <p class="guide"><b>Per il PDF:</b> premi «Stampa / salva PDF A4», scegli <b>Salva come PDF</b>, formato A4, orientamento orizzontale, scala 100% e nessuna intestazione/piè di pagina aggiuntiva. Le risposte e lo schema vengono stampati senza i controlli dell'editor.</p>
+</section>
+<section class="paper" id="sheet">
+<header class="head"><strong>METODO OCME</strong><span>COMPRENSIONE · SCHEMA A CASCATA</span></header>
+<div class="body">
+ <section class="left"><div class="kicker">FASE 2 — COMPRENSIONE</div><div class="topic" id="topicPreview"></div>
+  <div class="response"><strong>1. IDEA</strong><em>Che cosa vuole farmi capire?</em><p id="ideaPreview"></p></div>
+  <div class="response"><strong>2. SOLUZIONE</strong><em>Quale problema risolve?</em><p id="solutionPreview"></p></div>
+  <div class="response"><strong>3. VISIONE</strong><em>Qual è il principio generale?</em><p id="visionPreview"></p></div>
+ </section>
+ <section class="right"><div class="kicker">FASE 3 — GERARCHIA DEI CONCETTI</div><div class="schematitle" id="schemaPreview"></div>
+  <svg id="diagram" viewBox="0 0 690 555" preserveAspectRatio="xMinYMin meet" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schema a cascata"></svg>
+ </section>
+</div>
+<footer class="foot">Lettura: argomento → ramo → sottoramo → dettaglio. In caso di troppi nodi, dividere in più schede; non sacrificare la leggibilità.</footer>
+</section>
+</main>
+<script>
+(function(){
+"use strict";
+var S='ocme_editor_v1',N='http://www.w3.org/2000/svg';
+var $=function(id){return document.getElementById(id)};
+var fields=['topic','idea','solution','vision','outline','source'];
+var sample={
+topic:'SMARTPHONE',
+idea:'Telefono portatile moderno per comunicare, navigare e utilizzare applicazioni.',
+solution:'Consente comunicazione e navigazione. WhatsApp ne mostra l’impiego concreto.',
+vision:'Hardware e sistema operativo collaborano per eseguire le funzioni.',
+outline:'DEFINIZIONE\n  telefono portatile moderno\n  comunicare\n  navigare su internet\nCOMPONENTI\n  schermo touch\n    comandi\n  sistema operativo\n    applicazioni\n  batteria\n    energia\nESEMPIO\n  WhatsApp\n  tocco del dito\n  apertura della app\n  energia per il messaggio',
+source:'Lo smartphone è un telefono portatile moderno per comunicare e navigare su internet. È composto da schermo touch, sistema operativo e batteria. Nell’uso di WhatsApp lo schermo rileva il dito, il sistema apre la app, la batteria fornisce energia.'
+};
+var blank={topic:'ARGOMENTO DA STUDIARE',idea:'',solution:'',vision:'',source:'',outline:'RAMO 1\n  Concetto secondario\n    Dettaglio\n  Altro concetto\nRAMO 2\n  Concetto secondario\n    Dettaglio\n  Altro concetto\nRAMO 3\n  Concetto secondario\n    Dettaglio'};
+function take(){var x={};fields.forEach(function(k){x[k]=$(k).value});return x}
+function put(x){fields.forEach(function(k){$(k).value=typeof x[k]==='string'?x[k]:''});render()}
+function outline(t){var roots=[],stack=[];t.split(/\r?\n/).forEach(function(row){if(!row.trim())return;
+ var sp=(row.match(/^ */)||[''])[0].length, lev=Math.min(6,Math.floor(sp/2)), node={text:row.trim().replace(/^[-*]\s*/,''),children:[]};
+ if(lev===0||stack.length===0){roots.push(node);stack=[node];return}
+ if(lev>stack.length)lev=stack.length;
+ while(stack.length>lev)stack.pop();
+ var parent=stack[stack.length-1];
+ if(parent){parent.children.push(node)}else{roots.push(node)}
+ stack.push(node);
+});return roots}
+function el(tag,attrs,txt){var t=document.createElementNS(N,tag);Object.keys(attrs||{}).forEach(function(k){t.setAttribute(k,attrs[k])});if(txt!==undefined)t.textContent=txt;return t}
+function line(svg,path){svg.appendChild(el('path',{d:path,stroke:'#198958','stroke-width':'1.7',fill:'none','stroke-linecap':'round','stroke-linejoin':'round'}))}
+function wrap(str,n){var words=str.split(/\s+/),lines=[''];words.forEach(function(w){var k=lines.length-1;if(lines[k]&&(lines[k].length+w.length+1>n)){lines.push(w)}else{lines[k]=(lines[k]+' '+w).trim()}});return lines}
+function draw(roots){
+ var svg=$('diagram');svg.replaceChildren();var all=[],leaves=[];
+ function collect(n,depth){n.depth=depth;all.push(n);if(!n.children.length)leaves.push(n);else n.children.forEach(function(c){collect(c,depth+1)})}
+ roots.forEach(function(r){collect(r,0)});
+ var md=Math.max(0,...all.map(function(n){return n.depth})),step=leaves.length?Math.min(33,520/leaves.length):33,off=16+Math.max(0,(520-step*leaves.length)/2)+step/2;
+ leaves.forEach(function(n,i){n.y=off+i*step});
+ function place(n){if(n.children.length){n.children.forEach(place);n.y=(n.children[0].y+n.children[n.children.length-1].y)/2}}
+ roots.forEach(place);
+ var dx=132;all.forEach(function(n){n.x=14+n.depth*dx});
+ if(roots.length>1){line(svg,'M 4 '+roots[0].y+' V '+roots[roots.length-1].y)}
+ function branch(n){
+  if(!n.children.length)return;
+  var bus=n.x+110,min=n.children[0].y,max=n.children[n.children.length-1].y;
+  line(svg,'M '+(n.x+103)+' '+n.y+' H '+bus);
+  if(min!==max)line(svg,'M '+bus+' '+min+' V '+max);
+  n.children.forEach(function(c){line(svg,'M '+bus+' '+c.y+' H '+(c.x-5));svg.appendChild(el('path',{d:'M '+(c.x-5)+' '+c.y+' l -5 -2.5 v 5 z',fill:'#198958'}));branch(c)})
+ }
+ roots.forEach(function(r){line(svg,'M 4 '+r.y+' H '+(r.x-5));branch(r)});
+ var overlong=0;
+ all.forEach(function(n){
+  var ls=wrap(n.text,19);if(ls.length>2)overlong++;
+  ls.forEach(function(s,j){svg.appendChild(el('text',{x:n.x,y:n.y-(ls.length-1)*6+j*12,'font-family':'Arial,sans-serif','font-size':n.depth===0?'12':'11','font-weight':n.depth===0?'700':'500',fill:n.depth===0?'#bb403a':n.depth===1?'#183247':'#276a9e'},s))})
+ });
+ var trouble=leaves.length>14||md>4||overlong>0;
+ return {count:all.length,leaves:leaves.length,branches:roots.length,depth:md,tooDense:trouble,overlong:overlong};
+}
+var current={tooDense:false};
+function render(){
+ var data=take();$('topicPreview').textContent=data.topic||'________________';
+ $('schemaPreview').textContent='ARGOMENTO PRINCIPALE — '+(data.topic||'DA DEFINIRE');
+ ['idea','solution','vision'].forEach(function(k){$(k+'Preview').textContent=data[k]||'________________________________________________\n________________________________________________'});
+ current=draw(outline(data.outline));
+ var msg=current.branches+' rami principali · '+current.count+' nodi · '+current.leaves+' nodi terminali.';
+ if(current.tooDense){msg+=' ATTENZIONE: schema troppo denso o etichette lunghe; accorcia i nodi o dividi in più schede.';$('status').className='hint warn'}else{$('status').className='hint'}
+ $('status').textContent=msg+' Controlla la coerenza con il testo originale.';
+ try{localStorage.setItem(S,JSON.stringify(data))}catch(err){}
+}
+function download(name,text,type){var a=document.createElement('a'),u=URL.createObjectURL(new Blob([text],{type:type}));a.href=u;a.download=name;a.click();setTimeout(function(){URL.revokeObjectURL(u)},1000)}
+$('example').onclick=function(){put(sample)};
+$('blank').onclick=function(){put(blank)};
+$('json').onclick=function(){var d=take();d.format='ocme-cascata-v1';d.saved_at=new Date().toISOString();download('ocme-'+(d.topic||'schema').toLowerCase().replace(/[^a-z0-9_-]+/g,'-')+'.json',JSON.stringify(d,null,2),'application/json')};
+$('draft').onclick=function(){var t=$('source').value.trim();if(!t){$('status').textContent='Incolla prima il testo da studiare.';return}var ps=t.split(/\n\s*\n/),a=[];ps.slice(0,8).forEach(function(p,i){a.push('BLOCCO '+(i+1));(p.match(/[^.!?]+[.!?]?/g)||[]).slice(0,6).forEach(function(s){a.push('  '+s.trim().slice(0,110))})});$('outline').value=a.join('\n');render();$('status').textContent='Bozza provvisoria: verifica e riordina i concetti prima di stampare.'};
+$('upload').onchange=async function(ev){var f=ev.target.files&&ev.target.files[0];if(!f)return;try{var s=await f.text();if(f.name.toLowerCase().endsWith('.json')){var o=JSON.parse(s);put(Object.assign({},blank,o))}else{$('source').value=s;render();$('status').textContent='Testo caricato. Premi «Bozza da testo» e correggi la gerarchia.'}}catch(err){$('status').textContent='Errore importazione: '+err.message}ev.target.value=''};
+$('print').onclick=function(){if(current.tooDense){var go=window.confirm('Lo schema potrebbe risultare troppo denso su una singola pagina A4. Vuoi comunque aprire la stampa?');if(!go)return}window.print()};
+fields.forEach(function(k){$(k).addEventListener('input',render)});
+try{var old=localStorage.getItem(S);if(old){put(Object.assign({},blank,JSON.parse(old)))}else put(sample)}catch(err){put(sample)}
+})();
+</script>
+</body>
+</html>
