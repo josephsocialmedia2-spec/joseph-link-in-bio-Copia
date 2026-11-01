@@ -10,6 +10,10 @@ const problems=[];
 page.on("pageerror",e=>problems.push(e.message));
 await page.goto(base+"/campagne/case247/auto-feed/review/joseph-personal/?render=1",{waitUntil:"networkidle"});
 await page.evaluate(async()=>{await document.fonts.ready;await Promise.all([...document.querySelectorAll("img")].map(img=>img.decode().catch(()=>{})));});
+const portraits=await page.locator("#render-targets .portrait").evaluateAll(items=>items.map(img=>({complete:img.complete,width:img.naturalWidth,height:img.naturalHeight,src:img.currentSrc})));
+if(portraits.length!==4 || portraits.some(p=>!p.complete||p.width<300||p.height<300))throw Error("PORTRAIT_ASSET_NOT_LOADED_"+JSON.stringify(portraits));
+console.log("PORTRAIT_OK",portraits.map(p=>p.width+"x"+p.height).join(","));
+
 for(let number=1;number<=4;number++){
  const name=String(number).padStart(2,"0");
  const node=page.locator("#render-poster-"+name);
