@@ -39,6 +39,8 @@ check(all('id="'+v+'"' in regia for v in required),"Regia: 12 moduli richiesti p
 check('case247_staff_members' in regia and "getUser()" in regia,"Regia protetta da autenticazione e controllo staff")
 check('case247-crm-admin-intake' in regia,"Modulo inserimento inbound collegato all'Edge Function")
 check('case247_staff_members' in edge and 'withSupabase({auth:"user"}' in edge and 'ctx.userClaims' in edge,"Edge: autenticazione ufficiale JWT e membership server-side")
+check('eq("name","CASE IN PUBBLICITÀ 24/7")' in edge and 'eq("organization_id",org)' in edge,"Endpoint legato solo a tenant CASE247")
+check("eq('name','CASE IN PUBBLICITÀ 24/7')" in regia and "eq('organization_id',org)" in regia,"Dashboard legata solo a tenant CASE247")
 check('"outbound_marketing":false' in edge or 'outbound_marketing:false' in edge,"Edge: non invia comunicazioni marketing")
 check("ctx.supabaseAdmin" in edge and "@supabase/server@1" in edge,"Accesso amministrativo riservato al middleware server")
 check("SUPABASE_SERVICE_ROLE_KEY" not in regia and "service_role" not in regia.lower(),"Nessuna secret key nella pagina client")
