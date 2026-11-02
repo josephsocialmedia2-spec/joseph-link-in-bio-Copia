@@ -50,6 +50,11 @@ check("READ_ONLY_RELEASE_CENTER",('Centro verifiche GDPR' in center and 'method:
 check("RELEASE_CENTER_LINKED",('href="../case247-conformita/"' in admin))
 check("RELEASE_DOCUMENT_EXPLICITLY_PENDING",('PRE-PRODUZIONE' in release_doc and 'Nessun servizio di invio' in release_doc and 'Joseph Malafronte' in release_doc))
 check("SQL_DISPATCH_DEFENSE_IN_DEPTH",all(v in sql_guard for v in ('case247_private.enforce_property_dispatch','cfg.controller_confirmed','cfg.anti_bot_verified','cfg.notice_version','req.consent_text_email','req.consent_text_whatsapp','not cfg.intake_enabled')))
+check("CHANNEL_SCOPED_OPT_OUT",all(v in revoke for v in ('value="email"','value="whatsapp"','withdraw_scope:scope.value')))
+check("CHANNEL_SCOPED_BACKEND",all(v in server for v in ('withdraw_scope','CONCURRENT_CHANGE_RETRY')))
+check("OPT_OUT_DB_GATE",all(v in files[FILES[11]] for v in ('case247_cancel_pending_after_optout','OPT_OUT_EMAIL','OPT_OUT_WHATSAPP')))
+check("ADMIN_KILL_SWITCH",all(v in files[FILES[12]] for v in ('EMERGENCY_STOP','reactivation_available:false','email_outbound_enabled:false')))
+check("ADMIN_BUTTON_AND_MATCHING",all(v in admin for v in ('id="emergencyStop"','id="matches"','case247-emergency-stop')))
 
 URL="https://qmeftxsdfeyqozwoivzo.supabase.co/functions/v1/"
 def call(path,method="GET",payload=None,headers=None):
@@ -73,7 +78,7 @@ s,b,_=call("case247-campaign-drafts")
 check("DRAFT_ENDPOINT_REQUIRES_JWT",s in (401,403),s)
 s,b,headers=call("case247-public-requests",method="OPTIONS",headers={"Access-Control-Request-Method":"POST","Access-Control-Request-Headers":"content-type"})
 check("CORS_PREFLIGHT",s in (200,204) and headers.get("access-control-allow-origin")=="https://josephsocialmedia2-spec.github.io",s)
-print("TOTAL "+str(25-len(fails))+" / 25 check candidates",flush=True)
+print("TOTAL "+str(30-len(fails))+" / 30 check candidates",flush=True)
 if fails:
  print("FAILED: "+", ".join(fails),file=sys.stderr)
  sys.exit(1)
