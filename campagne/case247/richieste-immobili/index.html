@@ -61,8 +61,8 @@ footer{background:#051D37;color:#C3D9EB;padding:30px 0}footer a{color:#B7E6FF}
 <p class="fine">Inserisci almeno email o telefono. Questi dati possono essere utilizzati per gestire la richiesta che hai inviato; gli aggiornamenti promozionali richiedono i consensi facoltativi qui sotto.</p></fieldset>
 <fieldset><legend>3 — Preferenze e consensi facoltativi</legend>
 <div class="option-row">
-<label class="option"><input type="checkbox" name="email_optin" value="yes"><span><strong>Sì, desidero ricevere email da CASE IN PUBBLICITÀ 24/7.</strong> Autorizzo l'invio di proposte immobiliari e informazioni sulla promozione continuativa coerenti con la mia richiesta. Posso revocare il consenso in qualsiasi momento.</span></label>
-<label class="option"><input type="checkbox" name="whatsapp_optin" value="yes"><span><strong>Sì, desidero ricevere messaggi WhatsApp da CASE IN PUBBLICITÀ 24/7.</strong> Autorizzo le stesse categorie di aggiornamenti sul numero indicato. Posso interrompere gli invii in qualsiasi momento.</span></label>
+<label class="option"><input type="checkbox" name="email_optin" value="yes"><span><strong>Sì, desidero ricevere email da CASE IN PUBBLICITÀ 24/7.</strong> Autorizzo <span class="selected-purpose">proposte immobiliari pertinenti alla mia richiesta</span>. Consenso facoltativo e revocabile in qualsiasi momento.</span></label>
+<label class="option"><input type="checkbox" name="whatsapp_optin" value="yes"><span><strong>Sì, desidero ricevere messaggi WhatsApp da CASE IN PUBBLICITÀ 24/7.</strong> Autorizzo <span class="selected-purpose">proposte immobiliari pertinenti alla mia richiesta</span>. Consenso facoltativo e revocabile in qualsiasi momento.</span></label>
 <label class="option"><input type="checkbox" name="privacy_seen" required><span>Ho letto l'<a href="../privacy-richieste-immobili/" target="_blank" rel="noopener">informativa sul trattamento dei dati</a> relativa alla gestione della mia richiesta. La scelta di ricevere pubblicità è separata e facoltativa.</span></label>
 </div>
 <p class="fine">Le opzioni non sono preselezionate. Una richiesta non equivale a verifica del recapito: gli aggiornamenti promozionali saranno possibili solo dopo controlli indipendenti dei canali e attivazione dei servizi autorizzati.</p></fieldset>
@@ -98,7 +98,13 @@ async function init(){
  }catch(e){notice.textContent='Connessione temporaneamente non disponibile: nessun dato viene trasmesso.';button.disabled=true}
 }
 const kind=form.elements.namedItem('request_kind'),budget=document.getElementById('budgetWrap');
-kind.addEventListener('change',()=>{budget.hidden=kind.value!=='CERCO_CASA';if(budget.hidden)form.elements.namedItem('max_budget_eur').value=''});
+kind.addEventListener('change',()=>{budget.hidden=kind.value!=='CERCO_CASA';if(budget.hidden)form.elements.namedItem('max_budget_eur').value='';
+ const purposes={
+  CERCO_CASA:'proposte immobiliari corrispondenti alla tua ricerca di acquisto',
+  VOGLIO_VENDERE:'informazioni e servizi di pubblicità continuativa relativi alla vendita del tuo immobile',
+  ATTIVITA_IMMOBILE:'opportunità e comunicazioni immobiliari per attività, negozi e immobili commerciali'
+ };document.querySelectorAll('.selected-purpose').forEach(n=>n.textContent=purposes[kind.value]||'informazioni pertinenti alla tua richiesta');
+});
 kind.dispatchEvent(new Event('change'));
 form.addEventListener('submit',async e=>{
  e.preventDefault();if(!enabled||!turnstileToken||!version){setStatus('Modulo non ancora disponibile.',true);return}
