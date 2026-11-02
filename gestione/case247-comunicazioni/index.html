@@ -1,0 +1,96 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>CASE247 · Richieste, consensi e campagne immobiliari</title>
+<style>:root{font:15px/1.55 system-ui,-apple-system,Arial,sans-serif;color:#EAF4FF;background:#061A32;--panel:#0D2B4C;--line:#315C83;--blue:#1591EF;--muted:#BCD3E8}*{box-sizing:border-box}body{margin:0}a{color:#9BD8FF}header{background:linear-gradient(110deg,#092A53,#075DAB);padding:28px 22px}header .wrap,main{max-width:1250px;margin:auto}header h1{font-size:clamp(25px,3vw,36px);margin:7px 0}header p{color:#D4E9FC}main{padding:25px 18px 75px}.card{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:20px;margin:15px 0}.card h2{margin:0 0 9px;font-size:21px}.muted{color:var(--muted)}.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.btn,button{padding:10px 14px;border-radius:9px;color:#fff;background:#116AB7;border:1px solid #4296D4;font:inherit;font-weight:800;cursor:pointer;text-decoration:none}.btn.secondary{background:#092D4F}.btn[disabled],button:disabled{opacity:.5;cursor:not-allowed}input,select,textarea{padding:11px 12px;border:1px solid #486E91;background:#08203C;color:#fff;border-radius:8px;font:inherit;width:100%}label{display:grid;gap:6px;font-size:13px;font-weight:700}.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.full{grid-column:1/-1}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:11px}.stats div{padding:16px;border:1px solid #35628A;border-radius:10px;background:#0D355E}.stats b{display:block;font-size:28px}.stats small{color:#B4D5F0}.status{border-left:4px solid #4DABF5;background:#102D50;padding:12px;border-radius:7px}.tablebox{overflow:auto}table{border-collapse:collapse;width:100%;min-width:820px}th,td{text-align:left;border-bottom:1px solid #345574;padding:12px;vertical-align:top}th{font-size:12px;color:#86D3FF}td{font-size:13px}code{color:#C2EBFF}.warn{border-left:4px solid #E4B56A;background:#342A1E;padding:13px 16px;border-radius:8px}footer{text-align:center;color:#ADC8E2;padding:24px}@media(max-width:700px){.cols{grid-template-columns:1fr}header{padding:22px 14px}}</style></head><body>
+<header><div class="wrap"><a href="../">← Dashboard principale</a><h1>CASE IN PUBBLICITÀ 24/7 · Consensi e immobili</h1><p>Banca dati delle richieste volontarie, preferenze email e WhatsApp, bozze di comunicazione e verifiche prima degli invii.</p></div></header>
+<main><div class="toolbar"><a class="btn" href="../../campagne/case247/richieste-immobili/" target="_blank" rel="noopener">Apri modulo pubblico</a><a class="btn secondary" href="../../campagne/case247/privacy-richieste-immobili/" target="_blank" rel="noopener">Informativa in revisione</a><a class="btn secondary" href="../case247-operazioni/">Regia CRM</a></div>
+<section class="card" aria-labelledby="authTitle"><h2 id="authTitle">Accesso riservato</h2><p class="muted">I recapiti non sono contenuti in GitHub: sono letti da Supabase soltanto dopo autenticazione e controllo dell'organizzazione.</p><div class="toolbar"><label>Email amministratore<input id="email" type="email" autocomplete="email" placeholder="caseinpubblicita@gmail.com"></label><button id="signin" type="button">Invia link di accesso</button><button id="refresh" type="button">Aggiorna</button><button id="signout" type="button">Esci</button></div><p class="status" id="authStatus" role="status">Controllo sessione…</p></section>
+<div class="stats" id="stats"><div><b>—</b><small>Richieste</small></div><div><b>—</b><small>Email confermate</small></div><div><b>—</b><small>WhatsApp confermati</small></div><div><b>—</b><small>Campagne in bozza</small></div></div>
+<section class="card"><h2>Stato attivazione marketing</h2><div class="warn" id="activation">Non è possibile inviare messaggi promozionali senza consensi, verifica dei canali e approvazione privacy.</div></section>
+<section class="card"><h2>Richieste ricevute</h2><p class="muted">Distinzione tra <strong>richiesta ricevuta</strong>, <strong>preferenza espressa</strong> e <strong>recapito verificato</strong>. Solo quest'ultimo può diventare un destinatario, previa ulteriore verifica della campagna.</p><div id="requests" class="tablebox muted">Accedi per visualizzare i dati.</div></section>
+<section class="card"><h2>Campagne immobiliari — nuove bozze</h2><p class="muted">Prepara le schede di immobili in vendita e la comunicazione 24/7. Il comando crea una <strong>BOZZA NON APPROVATA</strong>, non invia email o WhatsApp e non autorizza l'utilizzo di annunci di terzi.</p>
+<form id="draftForm"><div class="cols">
+<label>Tipo di comunicazione<select name="content_kind"><option value="IMMOBILE_IN_VENDITA">Immobile in vendita</option><option value="PUBBLICITA_CONTINUA">Visibilità e pubblicità continuativa</option><option value="REPORT_MERCATO">Report di mercato</option></select></label>
+<label>Titolo della proposta *<input name="title" maxlength="160" required placeholder="Es. Appartamento con terrazzo ad Avigliana"></label>
+<label>Comune immobile<input name="location_comune" maxlength="120" placeholder="Es. Avigliana"></label>
+<label>Tipologia<input name="property_type" maxlength="90" placeholder="Appartamento, villa, capannone"></label>
+<label>Prezzo richiesto €<input name="max_price_eur" type="number" min="0" max="100000000" step="1000"></label>
+<label>Link informativo (https)<input name="landing_url" type="url" maxlength="400" placeholder="https://..."></label>
+<label class="full">Descrizione della proposta<textarea name="content_summary" rows="3" maxlength="450" placeholder="Caratteristiche essenziali verificate, senza dati privati"></textarea></label>
+</div><div class="toolbar" style="margin-top:17px"><button type="submit" id="createDraft" disabled>Crea bozza, senza inviare</button></div></form><p class="status" role="status" id="draftStatus">La creazione richiede una sessione editor autorizzata.</p><div class="tablebox" id="campaigns"></div></section>
+<section class="card"><h2>Regole operative per il database</h2>
+<p>Ogni invio richiede tre verifiche indipendenti: (1) consenso attivo per il singolo canale; (2) conferma dell'effettivo controllo del recapito; (3) contenuto approvato e diritto di promuovere l'immobile. Se manca anche un solo requisito, il database impedisce l'accodamento.</p><p>Non importare elenchi di numeri reperiti su annunci o portali per inviare pubblicità. Utilizza la landing su sito, social, materiali con QR code e campagne inbound per raccogliere iscrizioni volontarie.</p></section>
+</main><footer>CASE IN PUBBLICITÀ 24/7 · <a href="mailto:caseinpubblicita@gmail.com">Contatto privacy</a> · Nessun invio email/WhatsApp automatico attivo</footer>
+<script type="module">
+import {createClient} from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+const client=createClient('https://qmeftxsdfeyqozwoivzo.supabase.co','sb_publishable_KNgvCUxECyBFtd5MUrwDYg_BI5Z6Nsy');
+const el=id=>document.getElementById(id);
+const mk=(tag,txt)=>{const n=document.createElement(tag);n.textContent=String(txt??'—');return n};
+let canEdit=false;
+function renderTable(id,rows,columns){
+ const target=el(id);target.replaceChildren();if(!rows?.length){target.textContent='Nessuna registrazione presente.';return}
+ const table=document.createElement('table'),head=document.createElement('thead'),hr=document.createElement('tr');
+ for(const [label] of columns)hr.append(mk('th',label));head.append(hr);table.append(head);
+ const body=document.createElement('tbody');
+ for(const item of rows){const tr=document.createElement('tr');for(const [,field] of columns)tr.append(mk('td',item[field]));body.append(tr)}
+ table.append(body);target.append(table);
+}
+async function load(){
+ canEdit=false;el('createDraft').disabled=true;el('authStatus').textContent='Verifica sessione in corso…';
+ const {data,error}=await client.auth.getUser();
+ if(error||!data.user){el('authStatus').textContent='Non autenticato. Richiedi il link di accesso.';return}
+ const org=await client.from('case247_organizations').select('id').eq('name','CASE IN PUBBLICITÀ 24/7').maybeSingle();
+ if(org.error||!org.data){el('authStatus').textContent='Utente non autorizzato alla banca dati CASE247.';return}
+ const member=await client.from('case247_staff_members').select('staff_role').eq('user_id',data.user.id).eq('organization_id',org.data.id).eq('active',true).maybeSingle();
+ if(member.error||!member.data){el('authStatus').textContent='Account autenticato, senza ruolo CASE247.';return}
+ el('authStatus').textContent='Accesso riservato: '+data.user.email+' · ruolo: '+member.data.staff_role;
+ canEdit=['admin','editor'].includes(member.data.staff_role);
+ // Privileged backend must independently confirm authorization for draft writes.
+ if(canEdit){try{
+  const s=await client.auth.getSession();const jwt=s.data.session?.access_token;
+  const r=await fetch('https://qmeftxsdfeyqozwoivzo.supabase.co/functions/v1/case247-campaign-drafts',{method:'GET',headers:{apikey:'sb_publishable_KNgvCUxECyBFtd5MUrwDYg_BI5Z6Nsy',authorization:'Bearer '+jwt}});
+  const d=await r.json();if(!r.ok||d.staff!==true)throw Error();
+  el('createDraft').disabled=false;
+ }catch{canEdit=false;el('draftStatus').textContent='Scrittura sospesa: autorizzazione server non confermata.'}}
+ const oid=org.data.id;
+ const [requests,campaigns,settings]=await Promise.all([
+  client.from('case247_property_requests').select('request_kind,contact_name,email,phone,comune,email_optin_requested,whatsapp_optin_requested,email_verified_at,whatsapp_verified_at,status,requested_at').eq('organization_id',oid).order('requested_at',{ascending:false}).limit(100),
+  client.from('case247_property_campaigns').select('title,content_kind,location_comune,rights_to_promote_verified,reviewed_by_staff,campaign_status,created_at').eq('organization_id',oid).order('created_at',{ascending:false}).limit(80),
+  client.from('case247_optin_settings').select('intake_enabled,email_outbound_enabled,whatsapp_outbound_enabled,privacy_notice_approved,controller_confirmed,anti_bot_verified,notice_version').eq('organization_id',oid).maybeSingle()
+ ]);
+ if(requests.error||campaigns.error||settings.error){el('authStatus').textContent+=' · Errore lettura database';return}
+ const req=requests.data||[],camp=campaigns.data||[],cfg=settings.data;
+ const counts=[req.length,req.filter(r=>r.email_verified_at&&r.email_optin_requested&&r.status==='VERIFIED').length,
+  req.filter(r=>r.whatsapp_verified_at&&r.whatsapp_optin_requested&&r.status==='VERIFIED').length,
+  camp.filter(c=>c.campaign_status==='DRAFT').length];
+ el('stats').replaceChildren();['Richieste (max 100)','Email confermate (max 100)','WhatsApp confermati (max 100)','Campagne in bozza (max 80)'].forEach((label,i)=>{const c=document.createElement('div');c.append(mk('b',counts[i]),mk('small',label));el('stats').append(c)});
+ const active=cfg?.intake_enabled===true&&cfg?.privacy_notice_approved===true;
+ el('activation').textContent='Raccolta: '+(active?'CONFIGURATA NEL DATABASE':'DISABILITATA')+
+  ' · Email in uscita: '+(cfg?.email_outbound_enabled?'CONFIGURATA':'DISABILITATA')+
+  ' · WhatsApp in uscita: '+(cfg?.whatsapp_outbound_enabled?'CONFIGURATA':'DISABILITATA')+
+  ' · Informativa: '+(cfg?.notice_version||'da approvare')+
+  '. Nessun invio finché non risultano consenso verificato e campagna approvata.';
+ renderTable('requests',req,[['Richiesta','request_kind'],['Nome','contact_name'],['Email','email'],['Telefono','phone'],['Comune','comune'],['Opt-in email','email_optin_requested'],['Opt-in WhatsApp','whatsapp_optin_requested'],['Email verificata','email_verified_at'],['WhatsApp verificato','whatsapp_verified_at'],['Stato','status']]);
+ renderTable('campaigns',camp,[['Titolo','title'],['Categoria','content_kind'],['Comune','location_comune'],['Diritti verificati','rights_to_promote_verified'],['Revisione','reviewed_by_staff'],['Stato','campaign_status']]);
+}
+el('signin').addEventListener('click',async()=>{
+ const email=el('email').value.trim();if(!email){el('authStatus').textContent='Inserisci l’email';return}
+ const r=await client.auth.signInWithOtp({email,options:{emailRedirectTo:location.href}});
+ el('authStatus').textContent=r.error?'Errore: '+r.error.message:'Controlla la casella email per il link di accesso.';
+});
+el('signout').addEventListener('click',async()=>{await client.auth.signOut();location.reload()});
+el('refresh').addEventListener('click',load);
+el('draftForm').addEventListener('submit',async e=>{
+ e.preventDefault();if(!canEdit)return;
+ const form=new FormData(e.currentTarget),payload={action:'create_draft'};
+ for(const [k,v] of form.entries())payload[k]=v;
+ el('createDraft').disabled=true;el('draftStatus').textContent='Creazione bozza…';
+ try{
+  const s=await client.auth.getSession();const jwt=s.data.session?.access_token;if(!jwt)throw Error('AUTH_REQUIRED');
+  const r=await fetch('https://qmeftxsdfeyqozwoivzo.supabase.co/functions/v1/case247-campaign-drafts',{
+   method:'POST',headers:{'content-type':'application/json',apikey:'sb_publishable_KNgvCUxECyBFtd5MUrwDYg_BI5Z6Nsy',authorization:'Bearer '+jwt},body:JSON.stringify(payload)});
+  const d=await r.json().catch(()=>({}));if(!r.ok)throw Error(d.error||'HTTP_'+r.status);
+  el('draftStatus').textContent='Bozza salvata con ID '+d.id+'. Nessun messaggio inviato.';
+  e.currentTarget.reset();await load();
+ }catch(err){el('draftStatus').textContent='Salvataggio non confermato: '+err.message+'. Non ripetere senza controllare il database.';el('createDraft').disabled=false}
+});
+load();
+</script></body></html>
