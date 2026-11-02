@@ -31,6 +31,16 @@
     .saveHint{display:block;font-size:11px;color:#5b7288;margin-top:5px}
     @media(max-width:800px){.toolsMenu{left:0;right:auto}.dropZone{align-items:flex-start;flex-direction:column}.filePreview iframe{height:390px}.uploadPrimary{flex:1}}
     [hidden]{display:none!important}
+
+    .tutorIntro{font-size:12px;color:#60738a;margin:0 0 11px}
+    .lessonStep{border-left:3px solid #0074c1;background:#f7faff;border-radius:7px;padding:11px 13px;margin:10px 0}
+    .lessonStep strong{display:block;font-size:13px;color:#172f45}.lessonStep p{font-size:13px;line-height:1.62;margin:6px 0;color:#32445d;white-space:pre-wrap}
+    .lessonOrigin{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.45px;color:#166695;margin-bottom:5px}
+    .lessonOrigin.added{color:#86561b}.lessonOrigin.missing{color:#9b483b}
+    .tutorQuiz{border:1px solid #bdddd0;background:#f3faf6;border-radius:11px;padding:13px;margin-top:15px}
+    .tutorQuiz strong{font-size:13px}.tutorQuiz textarea{width:100%;margin:9px 0;min-height:64px;padding:10px;border:1px solid #b5cbd4;border-radius:8px;resize:vertical}
+    .tutorAnswer{margin-top:9px;padding:10px;border-radius:7px;background:white;border:1px solid #c7dfd4;white-space:pre-wrap;font-size:13px}
+    .studyLinks{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.studyLinks a{border:1px solid #cfe1ea;border-radius:8px;padding:7px 10px;font-size:12px;text-decoration:none;background:#fff}
   </style>
 </head>
 <body>
@@ -67,6 +77,24 @@
             <section class="panel" id="revisione"><div class="panelHead"><div><div class="eyebrow">02 · Riordino e correzione</div><h3>Quaderno ordinato — versione di lavoro</h3><p class="muted">Correggi qui senza alterare gli appunti di partenza.</p></div><span class="tag">Bozza modificabile</span></div><div class="panelBody"><div class="saveHint">Il riordino parte al caricamento e si aggiorna senza modificare l'originale. Puoi perfezionare il testo qui sotto.</div><details class="extraTools"><summary>Correzioni e versioni avanzate</summary><div class="miniActions"><button class="btn blue" id="tidy">Rielabora gli appunti</button><button class="btn" id="checkpoint">Salva versione</button><button class="btn" id="toggleHistory">Cronologia</button></div></details><textarea id="cleaned" class="editor revised" placeholder="Premi 'Riordina e correggi' per creare una copia ordinata dei materiali e degli appunti, senza perdere il testo originale."></textarea><div class="log" id="versionLog"></div><div class="callout warning" style="margin-top:12px"><b>Controllo delle correzioni:</b> il riordino automatico usa regole trasparenti. Non inventa contenuti né elimina il testo originale. Verifica le formule e le parole ambigue prima di considerare definitiva la versione ordinata.</div></div></section>
             <section class="panel" id="spiegazioni"><div class="panelHead"><div><div class="eyebrow">03 · Ricerca e comprensione</div><h3>Secondo blocco note: scrivi le spiegazioni</h3><p class="muted">Puoi incollare ciò che capisci dai video, dai libri e dalle pagine trovate su Google.</p></div><span class="tag teal">Alimenta lo schema</span></div><div class="panelBody"><label class="label" for="explain">SPIEGAZIONI CON PAROLE TUE</label><textarea id="explain" class="editor explain" placeholder="Esempio: L'interesse semplice si calcola sempre sul capitale iniziale. Se metto 2.000 euro al 5% per sei mesi, l'interesse è 50 euro e il montante è 2.050 euro. Quindi le parole chiave sono capitale, tasso, tempo, interesse e montante."></textarea><div class="row between" style="margin-top:9px"><span class="tiny" id="explanationWords">0 parole · Le parole chiave si aggiornano mentre scrivi</span><details class="extraTools"><summary>Esempio guidato</summary><button class="btn small" id="exampleExplain">Inserisci spiegazione d'esempio</button></details></div>
               <div class="line"></div><div class="eyebrow">Cerca una spiegazione esterna</div><div class="formrow"><input id="searchTopic" class="input grow" value="interesse semplice e montante" aria-label="Argomento da cercare"/><button class="btn small" id="googleSearch">Google ↗</button><button class="btn small" id="youtubeSearch">Video ↗</button></div><p class="sourceDisclaimer">Le ricerche si aprono nel motore esterno. Questa versione HTML non legge automaticamente risultati Google o trascrizioni dei video: incolla nel blocco note le spiegazioni che vuoi studiare, indicando la fonte.</p></div></section>
+            
+            <section class="panel" id="tutor">
+              <div class="panelHead"><div><div class="eyebrow">04 · Tutor di comprensione</div><h3>Spiegazione guidata e verifica</h3>
+              <p class="muted">Si prepara da sola dal materiale caricato. I passaggi aggiunti e quelli ricavati dal testo sono distinti.</p></div><span class="tag teal">Automatico</span></div>
+              <div class="panelBody">
+                <div class="callout" id="studyMode">Lettura del materiale in corso...</div>
+                <div id="studySteps" aria-live="polite"></div>
+                <div id="studyResearch"></div>
+                <div class="tutorQuiz" id="studyQuiz" aria-label="Allenamento di richiamo attivo">
+                  <strong id="studyProgress"></strong>
+                  <p id="studyQuestion" style="margin:9px 0"></p>
+                  <textarea id="studyReply" placeholder="Rispondi con parole tue, prima di vedere la soluzione..."></textarea>
+                  <div class="row" style="gap:8px;flex-wrap:wrap"><button type="button" class="btn blue" id="studyReveal">Mostra la risposta</button><button type="button" class="btn" id="studyNext" hidden>Domanda successiva →</button></div>
+                  <div class="tutorAnswer" id="studyAnswer" hidden></div>
+                </div>
+                <p class="sourceDisclaimer">Il tutor attuale lavora nel browser: riorganizza estratti, riconosce alcune formule e propone un esempio svolto. Non è un docente AI con ricerca autonoma; per altri argomenti indica esplicitamente i punti non spiegati dagli appunti.</p>
+              </div>
+            </section>
             <section class="panel" id="simulazione"><div class="panelHead"><div><div class="eyebrow">Esempio guidato</div><h3>Capire le formule con i numeri</h3><p class="muted">Esercizio interattivo collegato ai tuoi PDF.</p></div></div><div class="panelBody"><div class="calc"><div><label for="capital">Capitale C (€)</label><input class="input" id="capital" type="number" value="2000" min="0" step="100"/></div><div><label for="rate">Tasso r (%)</label><input class="input" id="rate" type="number" value="5" min="0" step="0.1"/></div><div><label for="months">Tempo n (mesi)</label><input class="input" id="months" type="number" value="6" min="0" step="1"/></div></div><div class="outcome"><div><small>Interesse semplice</small><strong id="interestValue">€ 50,00</strong></div><div><small>Montante</small><strong id="amountValue">€ 2.050,00</strong></div></div><p class="tiny" id="mathSteps" style="margin:10px 0 0">I = 2.000 × 0,05 × 6/12 = 50</p></div></section>
           </div>
           <div class="stack">
@@ -105,7 +133,7 @@
       ['Rata','R','estensioni','Simbolo usato negli appunti per le rate.',['rata','rate']]
     ].map(([name,mark,group,def,keys])=>({name,mark,group,def,keys}));
     const $=id=>document.getElementById(id);
-    const empty=()=>({doc:'interest',original:{interest:sourceInterest,symbols:sourceSymbols,custom:''},rough:{interest:'',symbols:'',custom:''},corrected:{interest:'',symbols:'',custom:''},explanations:{interest:'',symbols:'',custom:''},customKeywords:[],disabledKeywords:[],snapshots:[],uploadedName:'',uploadHistory:[],manualClean:{}});
+    const empty=()=>({doc:'interest',original:{interest:sourceInterest,symbols:sourceSymbols,custom:''},rough:{interest:'',symbols:'',custom:''},corrected:{interest:'',symbols:'',custom:''},explanations:{interest:'',symbols:'',custom:''},customKeywords:[],disabledKeywords:[],snapshots:[],uploadedName:'',uploadHistory:[],manualClean:{},studyIndex:{}});
     let state=empty();try{const s=JSON.parse(localStorage.getItem(STORAGE)||'null');if(s&&s.original&&s.rough&&s.corrected&&s.explanations)state={...empty(),...s}}catch(e){}
     let activeConcepts=[];let generatedSchema='';let toastTimer;let saveTimer;let previewUrl=null;let libraryPromises={};
     function toast(msg){const el=$('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),3500)}
@@ -152,9 +180,96 @@
     const headings={fondamenti:'Definizioni fondamentali',formule:'Formule e relazioni',tempo:'Misura del tempo',estensioni:'Altra simbologia',personali:'Concetti dalle tue spiegazioni'};
     function renderSchema(){const d=state.doc;const items=selected();const title=d==='symbols'?'MATEMATICA FINANZIARIA — SIMBOLOGIA':d==='interest'?'INTERESSE SEMPLICE E MONTANTE':topicFromName(state.uploadedName).toLocaleUpperCase('it');generatedSchema=title+'\n';const root=$('draft');root.innerHTML='';const t=document.createElement('div');t.className='draftTitle';t.textContent=title;root.appendChild(t);
       let nodeCount=0;Object.entries(headings).forEach(([group,heading])=>{const list=items.filter(x=>x.group===group);if(!list.length)return;const branch=document.createElement('div');branch.className='branch';const h=document.createElement('div');h.className='branchHeader';h.textContent=heading;branch.appendChild(h);generatedSchema+='\n• '+heading+'\n';for(const c of list){const leaf=document.createElement('div');leaf.className='leaf';leaf.textContent=c.name+' → '+(c.mark&&!c.mark.includes('?')?c.mark+' · ':'')+c.def;branch.appendChild(leaf);generatedSchema+='  - '+c.name+': '+c.def+'\n';nodeCount++}root.appendChild(branch)});if(!nodeCount)root.innerHTML='<div class="empty">Scrivi una spiegazione e abilita le parole chiave per costruire lo schema.</div>';$('schemaCount').textContent=`${nodeCount} concetti`}
-    function renderAll(){renderKeywords();renderSchema();$('explanationWords').textContent=($('explain').value.trim().match(/\S+/g)||[]).length+' parole · Aggiornamento automatico attivo';calculate()}
+
+    function getStudyFragments(source){
+      const trimmed=String(source||'').replace(/\r/g,'').replace(/\[Pagina\s+\d+\]/gi,' ').replace(/\s+/g,' ').trim();
+      if(!trimmed)return [];
+      const chunks=trimmed.split(/(?<=[.!?])\s+(?=[A-ZÀÈÉÌÒÙ0-9“"'])|(?<=:)\s+(?=[A-ZÀÈÉÌÒÙ])/u);
+      const useful=chunks.map(x=>x.trim()).filter(x=>x.length>28).slice(0,16);
+      if(!useful.length)return [trimmed.slice(0,390)];
+      const out=[];for(const c of useful){if(out.length>=4)break;out.push(c.slice(0,410))}
+      return out;
+    }
+    function lessonData(){
+      const d=state.doc;
+      const source=String(state.original[d]||'').trim();
+      const known=normalize(source);
+      const useful=getStudyFragments(source);
+      if(!source)return {mode:'Nessun testo leggibile. Il file può essere una scansione: trascrivi gli appunti nel blocco note per costruire la spiegazione.',steps:[],quiz:[]};
+      const added=normalize((state.rough[d]||'')+' '+(state.explanations[d]||''));
+      const steps=[];
+      const quiz=[];
+      const financial=/interess/.test(known)&&/capital/.test(known)&&/montant/.test(known);
+      const notation=(/annualit/.test(known)&&/periodicit/.test(known));
+      if(financial){
+        steps.push({title:'1. Che cosa stiamo calcolando?',origin:'SPIEGAZIONE DIDATTICA DALLA FORMULA',body:'Il capitale C è la somma iniziale. L’interesse I è la remunerazione maturata. Il montante M indica la somma finale: capitale iniziale più interesse. La relazione è espressa negli appunti.'});
+        steps.push({title:'2. Come leggere I = C × r × n',origin:'SPIEGAZIONE DIDATTICA DALLA FORMULA',body:'C = capitale iniziale; r = saggio o tasso espresso come numero decimale; n = tempo in anni o frazioni di anno. Se il tasso è del 5% annuo, usa r = 0,05; se l’impiego dura sei mesi, n = 6/12.'});
+        steps.push({title:'3. Dal capitale al montante',origin:'FORMULE DEL DOCUMENTO',body:'I = C × r × n. Poi M = C + I = C × (1 + r × n). Se conosci M, r e n, puoi risalire a C con C = M / (1 + r × n).'});
+        steps.push({title:'4. Esempio svolto: 2.000 €, 5% annuo, 6 mesi',origin:'ESEMPIO ELABORATO, NON COPIATO DAGLI APPUNTI',body:'C = 2.000 €; r = 0,05; n = 6/12 = 0,5 anni. I = 2.000 × 0,05 × 0,5 = 50 €. M = 2.000 + 50 = 2.050 €. L’esempio applica le formule fornite.'});
+        quiz.push({q:'Quali tre grandezze determinano l’interesse semplice?',a:'Il capitale iniziale C, il tasso r e il tempo n: I = C × r × n.'});
+        quiz.push({q:'Come si ricava il montante dal capitale e dall’interesse?',a:'M = C + I = C × (1 + r × n).'});
+        quiz.push({q:'Con C = 2.000 €, r = 5% annuo e n = 6 mesi, quanto valgono I e M?',a:'I = 2.000 × 0,05 × 6/12 = 50 €. Il montante M = 2.050 €.'});
+        return {mode:'Formule riconosciute: spiegazione guidata e un esempio numerico elaborato. Le formule sono nel documento; l’esempio è aggiunto per studiare.',steps,quiz};
+      }
+      if(notation){
+        steps.push({title:'1. Leggi prima il simbolo',origin:'SPIEGAZIONE DEI SIMBOLI DEL DOCUMENTO',body:'C indica il capitale iniziale; I l’interesse; M il montante; r il saggio o tasso; n il tempo. Prima di usare una formula, associa ogni lettera alla quantità rappresentata.'});
+        steps.push({title:'2. Distingui le operazioni',origin:'SINTESI BASATA SULLA TABELLA DEL DOCUMENTO',body:'L’annualità descrive una successione di capitali annui. La periodicità descrive capitali che si ripetono ogni n anni. La tabella distingue inoltre accumulazioni iniziali e finali.'});
+        steps.push({title:'3. Non confondere anticipazione e posticipazione',origin:'GLOSSARIO DEL DOCUMENTO',body:'Anticipazione: calcolare il capitale dato un montante futuro. Posticipazione: calcolare il montante dato il capitale iniziale.'});
+        quiz.push({q:'Che cosa indicano C, I e M?',a:'C = capitale iniziale, I = interesse, M = montante (capitale più interesse).'});
+        quiz.push({q:'Qual è la differenza tra annualità e periodicità?',a:'L’annualità è una successione di capitali annui; la periodicità è una successione di capitali ripetuti ogni n anni.'});
+        quiz.push({q:'Che cosa significa anticipazione nel glossario?',a:'Calcolare il capitale dato il valore esigibile in futuro, cioè il montante.'});
+        return {mode:'Lettura guidata della tabella dei simboli. Le spiegazioni derivano dalle definizioni e dal glossario degli appunti.',steps,quiz};
+      }
+      useful.slice(0,4).forEach((f,i)=>{
+        steps.push({title:'Passaggio '+(i+1)+' · dal documento',origin:'ESTRATTO DEL TESTO CARICATO',body:f});
+      });
+      const terms=selected().filter(x=>x.group!=='formule').slice(0,3);
+      for(const concept of terms){
+        let match=useful.find(f=>normalize(f).includes(normalize(concept.name)))||'';
+        quiz.push({q:'Che cosa puoi spiegare sul concetto «'+concept.name+'»?',a:match?'Nel documento si legge: '+match:'Il documento non fornisce una spiegazione esplicita di questo termine. Cerca una fonte prima di memorizzarlo.'});
+      }
+      if(!quiz.length&&useful.length)quiz.push({q:'Qual è il concetto principale del primo passaggio degli appunti?',a:'Rileggi questo estratto e rispondi senza guardare: '+useful[0]});
+      if(added)steps.push({title:'Spiegazioni aggiunte da te',origin:'APPUNTI PERSONALI (DA VERIFICARE)',body:((state.explanations[d]||state.rough[d]||'').trim()).slice(0,420)});
+      steps.push({title:'Da chiarire con una fonte esterna',origin:'NON VERIFICATO NEGLI APPUNTI',body:'Gli estratti sopra non sono una lezione completa. Per ogni termine non definito, cerca una spiegazione attendibile, un esempio risolto e la fonte. Poi incolla la spiegazione nel secondo blocco note.'});
+      return {mode:'Lettura assistita del testo: riporta gli estratti senza inventare una spiegazione mancante. Le definizioni vanno verificate.',steps,quiz};
+    }
+    function renderLesson(){
+      const data=lessonData();
+      $('studyMode').textContent=data.mode;
+      const box=$('studySteps');box.replaceChildren();
+      for(const step of data.steps){
+        const card=document.createElement('div');card.className='lessonStep';
+        const origin=document.createElement('span');origin.className='lessonOrigin'+(/ESEMPIO ELABORATO|PERSONALI|NON VERIFICATO/.test(step.origin)?' added':'');origin.textContent=step.origin;
+        const title=document.createElement('strong');title.textContent=step.title;
+        const p=document.createElement('p');p.textContent=step.body;
+        card.append(origin,title,p);box.appendChild(card);
+      }
+      const gap=$('studyResearch');gap.replaceChildren();
+      if(data.steps.length){
+        const title=document.createElement('p');title.className='tiny';title.textContent='Per approfondire, cerca una spiegazione e un video sullo stesso argomento:';
+        const links=document.createElement('div');links.className='studyLinks';
+        const topic=state.doc==='custom'?topicFromName(state.uploadedName):state.doc==='interest'?'interesse semplice e montante':'matematica finanziaria simbologia';
+        for(const item of [{title:'Spiegazione Google ↗',url:'https://www.google.com/search?q='+encodeURIComponent(topic+' spiegazione esercizi')},{title:'Video YouTube ↗',url:'https://www.youtube.com/results?search_query='+encodeURIComponent(topic+' lezione italiana')}]){const a=document.createElement('a');a.href=item.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=item.title;links.appendChild(a)}gap.append(title,links);
+      }
+      const quiz=$('studyQuiz');quiz.hidden=!data.quiz.length;
+      if(!data.quiz.length)return;
+      state.studyIndex=state.studyIndex||{};
+      let idx=Number(state.studyIndex[state.doc]||0);
+      if(!Number.isFinite(idx)||idx<0||idx>=data.quiz.length)idx=0;
+      const one=data.quiz[idx];
+      $('studyProgress').textContent='Verifica della comprensione · domanda '+(idx+1)+' di '+data.quiz.length;
+      $('studyQuestion').textContent=one.q;
+      $('studyReply').value='';
+      $('studyAnswer').textContent='';$('studyAnswer').hidden=true;
+      $('studyReveal').hidden=false;$('studyNext').hidden=true;
+      $('studyReveal').onclick=()=>{$('studyAnswer').textContent='Risposta di riferimento:\n'+one.a;$('studyAnswer').hidden=false;$('studyReveal').hidden=true;$('studyNext').hidden=false};
+      $('studyNext').textContent=idx===data.quiz.length-1?'Ricomincia il ripasso ↺':'Domanda successiva →';
+      $('studyNext').onclick=()=>{state.studyIndex[state.doc]=(idx+1)%data.quiz.length;persist();renderLesson()};
+    }
+
+    function renderAll(){renderKeywords();renderSchema();renderLesson();$('explanationWords').textContent=($('explain').value.trim().match(/\S+/g)||[]).length+' parole · Aggiornamento automatico attivo';calculate()}
     function calculate(){let C=Number($('capital').value||0),r=Number($('rate').value||0)/100,n=Number($('months').value||0)/12;const I=C*r*n,M=C+I;const euro=n=>new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR'}).format(n);$('interestValue').textContent=euro(I);$('amountValue').textContent=euro(M);$('mathSteps').textContent=`I = ${euro(C)} × ${(r*100).toLocaleString('it-IT')}% × ${Number($('months').value||0)}/12 = ${euro(I)}. M = C + I = ${euro(M)}.`}
-    function exportMD(){saveInputs();const d=state.doc;const a=[`# OCME — ${d==='symbols'?'Simbologia':d==='interest'?'Interesse e montante':'Appunti personali'}`,'','## Fonte originale (conservata)',state.original[d],'','## Note personali',state.rough[d],'','## Appunti ordinati e corretti',state.corrected[d],'','## Spiegazioni aggiuntive',state.explanations[d],'','## Concetti scelti',...selected().map(x=>'- '+x.name+': '+x.def),'','## Schema prima bozza',generatedSchema,''];download('OCME_Appunti_e_Schema.md',a.join('\n'),'text/markdown;charset=utf-8')}
+    function exportMD(){saveInputs();const d=state.doc;const a=[`# OCME — ${d==='symbols'?'Simbologia':d==='interest'?'Interesse e montante':'Appunti personali'}`,'','## Fonte originale (conservata)',state.original[d],'','## Note personali',state.rough[d],'','## Appunti ordinati e corretti',state.corrected[d],'','## Spiegazioni aggiuntive',state.explanations[d],'','## Concetti scelti',...selected().map(x=>'- '+x.name+': '+x.def),'','## Schema prima bozza',generatedSchema,'','## Spiegazione guidata / ripasso',...lessonData().steps.map(x=>x.title+' — '+x.body),''];download('OCME_Appunti_e_Schema.md',a.join('\n'),'text/markdown;charset=utf-8')}
     function openSearch(site){const q=$('searchTopic').value.trim()||'matematica finanziaria interesse semplice';window.open(site==='google'?'https://www.google.com/search?q='+encodeURIComponent(q+' spiegazione esempi esercizi'):'https://www.youtube.com/results?search_query='+encodeURIComponent(q+' spiegazione italiana'),'_blank','noopener,noreferrer')}
     async function importFile(f){if(!f)return;if(f.size>18*1024*1024){toast('File troppo grande per il browser: massimo 18 MB.');return}const lower=f.name.toLowerCase();$('saveStatus').textContent='◌ Lettura del documento…';let extracted='',type='',notice='',warning=false;
       try{
