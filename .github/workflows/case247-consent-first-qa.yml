@@ -1,0 +1,61 @@
+name: "CASE247 consent-first | GDPR safety checks"
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'campagne/case247/richieste-immobili/**'
+      - 'campagne/case247/privacy-richieste-immobili/**'
+      - 'campagne/case247/revoca-consenso/**'
+      - 'gestione/case247-comunicazioni/**'
+      - 'supabase/functions/case247-public-requests/**'
+      - 'supabase/functions/case247-campaign-drafts/**'
+      - 'scripts/case247_consent_first_qa.py'
+      - '.github/workflows/case247-consent-first-qa.yml'
+  pull_request:
+    paths:
+      - 'campagne/case247/richieste-immobili/**'
+      - 'campagne/case247/privacy-richieste-immobili/**'
+      - 'campagne/case247/revoca-consenso/**'
+      - 'gestione/case247-comunicazioni/**'
+      - 'supabase/functions/case247-public-requests/**'
+      - 'supabase/functions/case247-campaign-drafts/**'
+      - 'scripts/case247_consent_first_qa.py'
+      - '.github/workflows/case247-consent-first-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  consent-privacy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: GDPR safety, bot protection, server auth and publication locks
+        run: python scripts/case247_consent_first_qa.py
+      - name: Validate all JS embedded in HTML pages
+        shell: bash
+        run: |
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          class Extract(HTMLParser):
+            def __init__(self):super().__init__();self.flag=False;self.code=[]
+            def handle_starttag(self,tag,attrs):
+              if tag=='script' and not dict(attrs).get('src'):
+                self.code.append('');self.flag=True
+            def handle_endtag(self,tag):
+              if tag=='script':self.flag=False
+            def handle_data(self,data):
+              if self.flag:self.code[-1]+=data
+          paths=['campagne/case247/richieste-immobili/index.html','campagne/case247/revoca-consenso/index.html','gestione/case247-comunicazioni/index.html']
+          for i,p in enumerate(paths):
+            parser=Extract();parser.feed(Path(p).read_text(encoding='utf-8'))
+            for j,code in enumerate(parser.code):
+              out=Path('/tmp')/f'case247-{i}-{j}.mjs'
+              out.write_text(code,encoding='utf-8')
+              print(out)
+          PY
+          for script in /tmp/case247-*.mjs; do node --check "$script"; done
