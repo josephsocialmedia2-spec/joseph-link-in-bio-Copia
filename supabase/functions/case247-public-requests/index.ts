@@ -54,15 +54,27 @@ const handler=withSupabase({auth:"none"},async(req,ctx)=>{
  try{payload=await req.json();if(!payload||Array.isArray(payload)||typeof payload!=="object")throw Error()}catch{return reply(400,{error:"INVALID_JSON"},origin)}
  if(payload.action==="withdraw"){
   const provided=t(payload.withdraw_token,80);
+  const scope=t(payload.withdraw_scope||"all",16);
+  if(!["all","email","whatsapp"].includes(scope))return reply(422,{error:"INVALID_WITHDRAW_SCOPE"},origin);
   if(!/^[a-f0-9]{64}$/.test(provided))return reply(422,{error:"INVALID_WITHDRAW_TOKEN"},origin);
   const hashed=await sha256(provided);
-  const found=await admin.from("case247_property_requests").select("id,status").eq("organization_id",org).eq("revoke_token_sha256",hashed).maybeSingle();
+  const found=await admin.from("case247_property_requests").select("id,status,updated_at,email_optin_requested,whatsapp_optin_requested,email_verified_at,whatsapp_verified_at")
+   .eq("organization_id",org).eq("revoke_token_sha256",hashed).maybeSingle();
   if(found.error)return reply(503,{error:"WITHDRAWAL_UNAVAILABLE"},origin);
   if(!found.data)return reply(404,{error:"NOT_FOUND"},origin);
-  const update=await admin.from("case247_property_requests").update({status:"CANCELLED",revoked_at:new Date().toISOString(),email_optin_requested:false,whatsapp_optin_requested:false,updated_at:new Date().toISOString()})
-    .eq("id",found.data.id).eq("organization_id",org);
-  if(update.error)return reply(503,{error:"WITHDRAWAL_FAILED"},origin);
-  return reply(200,{ok:true,status:"REVOKED",message:"Le preferenze di marketing associate alla richiesta sono revocate."},origin);
+  const current=found.data;
+  if(current.status==="CANCELLED"||current.status==="EXPIRED")return reply(200,{ok:true,status:"REVOKED",scope:"all"},origin);
+  const emailActive=Boolean(current.email_optin_requested)&&scope!=="all"&&scope!=="email";
+  const whatsappActive=Boolean(current.whatsapp_optin_requested)&&scope!=="all"&&scope!=="whatsapp";
+  const verified=(emailActive&&current.email_verified_at)||(whatsappActive&&current.whatsapp_verified_at);
+  const nextStatus=verified?"VERIFIED":emailActive||whatsappActive?"PENDING_VERIFICATION":"CANCELLED";
+  const changes={email_optin_requested:emailActive,whatsapp_optin_requested:whatsappActive,status:nextStatus,
+    revoked_at:nextStatus==="CANCELLED"?new Date().toISOString():null,updated_at:new Date().toISOString()};
+  const updated=await admin.from("case247_property_requests").update(changes)
+   .eq("id",current.id).eq("organization_id",org).eq("updated_at",current.updated_at).select("id").maybeSingle();
+  if(updated.error)return reply(503,{error:"WITHDRAWAL_FAILED"},origin);
+  if(!updated.data)return reply(409,{error:"CONCURRENT_CHANGE_RETRY"},origin);
+  return reply(200,{ok:true,status:"REVOKED",scope,all_marketing_cancelled:nextStatus==="CANCELLED"},origin);
  }
  if(payload.action!=="create_request")return reply(400,{error:"UNKNOWN_ACTION"},origin);
  // Strict browser origin and all mandatory release controls are required to collect PII.
