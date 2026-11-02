@@ -4,7 +4,7 @@
 <main><div class="toolbar"><a class="btn" href="../../campagne/case247/richieste-immobili/" target="_blank" rel="noopener">Apri modulo pubblico</a><a class="btn secondary" href="../../campagne/case247/privacy-richieste-immobili/" target="_blank" rel="noopener">Informativa in revisione</a><a class="btn secondary" href="../case247-operazioni/">Regia CRM</a><a class="btn secondary" href="../case247-conformita/">Centro verifiche GDPR</a></div>
 <section class="card" aria-labelledby="authTitle"><h2 id="authTitle">Accesso riservato</h2><p class="muted">I recapiti non sono contenuti in GitHub: sono letti da Supabase soltanto dopo autenticazione e controllo dell'organizzazione.</p><div class="toolbar"><label>Email amministratore<input id="email" type="email" autocomplete="email" placeholder="caseinpubblicita@gmail.com"></label><button id="signin" type="button">Invia link di accesso</button><button id="refresh" type="button">Aggiorna</button><button id="signout" type="button">Esci</button></div><p class="status" id="authStatus" role="status">Controllo sessione…</p></section>
 <div class="stats" id="stats"><div><b>—</b><small>Richieste</small></div><div><b>—</b><small>Email confermate</small></div><div><b>—</b><small>WhatsApp confermati</small></div><div><b>—</b><small>Campagne in bozza</small></div></div>
-<section class="card"><h2>Stato attivazione marketing</h2><div class="warn" id="activation">Non è possibile inviare messaggi promozionali senza consensi, verifica dei canali e approvazione privacy.</div><p class="muted">Titolare identificato: Joseph Malafronte (persona fisica). La conferma del nominativo non equivale all’approvazione dell’informativa né all’abilitazione dei canali.</p><a href="../case247-conformita/">Verifiche di rilascio, controlli in tempo reale e attività ancora necessarie</a></section>
+<section class="card"><h2>Stato attivazione marketing</h2><div class="toolbar" style="margin:0 0 14px"><button id="emergencyStop" type="button" disabled>Arresto generale (solo amministratore)</button><span class="muted" id="stopStatus" role="status">Comando di sola disattivazione.</span></div><div class="warn" id="activation">Non è possibile inviare messaggi promozionali senza consensi, verifica dei canali e approvazione privacy.</div><p class="muted">Titolare identificato: Joseph Malafronte (persona fisica). La conferma del nominativo non equivale all’approvazione dell’informativa né all’abilitazione dei canali.</p><a href="../case247-conformita/">Verifiche di rilascio, controlli in tempo reale e attività ancora necessarie</a></section>
 <section class="card"><h2>Richieste ricevute</h2><p class="muted">Distinzione tra <strong>richiesta ricevuta</strong>, <strong>preferenza espressa</strong> e <strong>recapito verificato</strong>. Solo quest'ultimo può diventare un destinatario, previa ulteriore verifica della campagna.</p><div id="requests" class="tablebox muted">Accedi per visualizzare i dati.</div></section>
 <section class="card"><h2>Campagne immobiliari — nuove bozze</h2><p class="muted">Prepara le schede di immobili in vendita e la comunicazione 24/7. Il comando crea una <strong>BOZZA NON APPROVATA</strong>, non invia email o WhatsApp e non autorizza l'utilizzo di annunci di terzi.</p>
 <form id="draftForm"><div class="cols">
@@ -34,7 +34,7 @@ function renderTable(id,rows,columns){
  table.append(body);target.append(table);
 }
 async function load(){
- canEdit=false;el('createDraft').disabled=true;el('authStatus').textContent='Verifica sessione in corso…';
+ canEdit=false;el('createDraft').disabled=true;el('emergencyStop').disabled=true;el('authStatus').textContent='Verifica sessione in corso…';
  const {data,error}=await client.auth.getUser();
  if(error||!data.user){el('authStatus').textContent='Non autenticato. Richiedi il link di accesso.';return}
  const org=await client.from('case247_organizations').select('id').eq('name','CASE IN PUBBLICITÀ 24/7').maybeSingle();
@@ -43,6 +43,7 @@ async function load(){
  if(member.error||!member.data){el('authStatus').textContent='Account autenticato, senza ruolo CASE247.';return}
  el('authStatus').textContent='Accesso riservato: '+data.user.email+' · ruolo: '+member.data.staff_role;
  canEdit=['admin','editor'].includes(member.data.staff_role);
+ el('emergencyStop').disabled=member.data.staff_role!=='admin';
  // Privileged backend must independently confirm authorization for draft writes.
  if(canEdit){try{
   const s=await client.auth.getSession();const jwt=s.data.session?.access_token;
@@ -78,6 +79,22 @@ el('signin').addEventListener('click',async()=>{
 });
 el('signout').addEventListener('click',async()=>{await client.auth.signOut();location.reload()});
 el('refresh').addEventListener('click',load);
+el('emergencyStop').addEventListener('click',async()=>{
+ if(el('emergencyStop').disabled)return;
+ if(!window.confirm('Arrestare immediatamente la raccolta e tutti gli invii CASE247? Le code non inviate saranno annullate. Nessun comando di riattivazione viene creato.'))return;
+ el('emergencyStop').disabled=true;el('stopStatus').textContent='Arresto in corso…';
+ try{
+  const s=await client.auth.getSession();const jwt=s.data.session?.access_token;if(!jwt)throw Error('AUTH_REQUIRED');
+  const res=await fetch('https://qmeftxsdfeyqozwoivzo.supabase.co/functions/v1/case247-emergency-stop',{
+    method:'POST',headers:{'content-type':'application/json',apikey:'sb_publishable_KNgvCUxECyBFtd5MUrwDYg_BI5Z6Nsy',authorization:'Bearer '+jwt},
+    body:JSON.stringify({action:'EMERGENCY_STOP'})
+  });
+  const d=await res.json().catch(()=>({}));
+  if(!res.ok||!d.ok)throw Error(d.error||'STOP_NOT_CONFIRMED');
+  el('stopStatus').textContent='STOP CONFERMATO. Invii e raccolta disabilitati. Code annullate: '+d.cancelled_jobs;
+  await load();
+ }catch(e){el('stopStatus').textContent='Arresto non verificato: '+e.message+'. Controlla subito la configurazione Supabase.';await load()}
+});
 el('draftForm').addEventListener('submit',async e=>{
  e.preventDefault();if(!canEdit)return;
  const form=new FormData(e.currentTarget),payload={action:'create_draft'};
