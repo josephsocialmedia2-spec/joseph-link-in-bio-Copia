@@ -1,5 +1,16 @@
 name: "CASE247 consent-first | GDPR safety checks"
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'campagne/case247/richieste-immobili/**'
+      - 'campagne/case247/privacy-richieste-immobili/**'
+      - 'campagne/case247/revoca-consenso/**'
+      - 'gestione/case247-comunicazioni/**'
+      - 'supabase/functions/case247-public-requests/**'
+      - 'supabase/functions/case247-campaign-drafts/**'
+      - 'scripts/case247_consent_first_qa.py'
+      - '.github/workflows/case247-consent-first-qa.yml'
   pull_request:
     paths:
       - 'campagne/case247/richieste-immobili/**'
