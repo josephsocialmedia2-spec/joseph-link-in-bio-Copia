@@ -192,14 +192,15 @@
     }
     function lessonData(){
       const d=state.doc;
-      const source=String(state.original[d]||'').trim();
+      const original=String(state.original[d]||'').trim();
+      const source=original||String(state.rough[d]||'').trim()||String(state.explanations[d]||'').trim();
       const known=normalize(source);
       const useful=getStudyFragments(source);
       if(!source)return {mode:'Nessun testo leggibile. Il file può essere una scansione: trascrivi gli appunti nel blocco note per costruire la spiegazione.',steps:[],quiz:[]};
       const added=normalize((state.rough[d]||'')+' '+(state.explanations[d]||''));
       const steps=[];
       const quiz=[];
-      const financial=/interess/.test(known)&&/capital/.test(known)&&/montant/.test(known);
+      const financial=/interess/.test(known)&&/capital/.test(known)&&/montant/.test(known)&&(/i\s*=\s*c/i.test(source)||/interess.{0,60}proporzional/i.test(source)||d==='interest');
       const notation=(/annualit/.test(known)&&/periodicit/.test(known));
       if(financial){
         steps.push({title:'1. Che cosa stiamo calcolando?',origin:'SPIEGAZIONE DIDATTICA DALLA FORMULA',body:'Il capitale C è la somma iniziale. L’interesse I è la remunerazione maturata. Il montante M indica la somma finale: capitale iniziale più interesse. La relazione è espressa negli appunti.'});
@@ -221,7 +222,7 @@
         return {mode:'Lettura guidata della tabella dei simboli. Le spiegazioni derivano dalle definizioni e dal glossario degli appunti.',steps,quiz};
       }
       useful.slice(0,4).forEach((f,i)=>{
-        steps.push({title:'Passaggio '+(i+1)+' · dal documento',origin:'ESTRATTO DEL TESTO CARICATO',body:f});
+        steps.push({title:'Passaggio '+(i+1)+' · dal documento',origin:original?'ESTRATTO DEL TESTO CARICATO':'ESTRATTO DEI TUOI APPUNTI',body:f});
       });
       const terms=selected().filter(x=>x.group!=='formule').slice(0,3);
       for(const concept of terms){
@@ -231,7 +232,7 @@
       if(!quiz.length&&useful.length)quiz.push({q:'Qual è il concetto principale del primo passaggio degli appunti?',a:'Rileggi questo estratto e rispondi senza guardare: '+useful[0]});
       if(added)steps.push({title:'Spiegazioni aggiunte da te',origin:'APPUNTI PERSONALI (DA VERIFICARE)',body:((state.explanations[d]||state.rough[d]||'').trim()).slice(0,420)});
       steps.push({title:'Da chiarire con una fonte esterna',origin:'NON VERIFICATO NEGLI APPUNTI',body:'Gli estratti sopra non sono una lezione completa. Per ogni termine non definito, cerca una spiegazione attendibile, un esempio risolto e la fonte. Poi incolla la spiegazione nel secondo blocco note.'});
-      return {mode:'Lettura assistita del testo: riporta gli estratti senza inventare una spiegazione mancante. Le definizioni vanno verificate.',steps,quiz};
+      return {mode:(original?'Lettura assistita del file: ':'Lettura assistita dei tuoi appunti: ')+'riporta gli estratti senza inventare una spiegazione mancante. Le definizioni vanno verificate.',steps,quiz};
     }
     function renderLesson(){
       const data=lessonData();
