@@ -1,0 +1,687 @@
+{
+  "cron": [
+    {
+      "name": "case247-purge-unverified-requests",
+      "active": true,
+      "schedule": "20 3 * * *"
+    }
+  ],
+  "tables": [
+    {
+      "rls": true,
+      "name": "case247_optin_settings",
+      "columns": [
+        {
+          "name": "organization_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "controller_confirmed",
+          "type": "boolean",
+          "default": "false",
+          "nullable": "NO"
+        },
+        {
+          "name": "privacy_notice_approved",
+          "type": "boolean",
+          "default": "false",
+          "nullable": "NO"
+        },
+        {
+          "name": "anti_bot_verified",
+          "type": "boolean",
+          "default": "false",
+          "nullable": "NO"
+        },
+        {
+          "name": "intake_enabled",
+          "type": "boolean",
+          "default": "false",
+          "nullable": "NO"
+        },
+        {
+          "name": "email_outbound_enabled",
+          "type": "boolean",
+          "default": "false",
+          "nullable": "NO"
+        },
+        {
+          "name": "whatsapp_outbound_enabled",
+          "type": "boolean",
+          "default": "false",
+          "nullable": "NO"
+        },
+        {
+          "name": "notice_version",
+          "type": "text",
+          "default": "'DRAFT-2026-11-02'::text",
+          "nullable": "NO"
+        },
+        {
+          "name": "controller_display_name",
+          "type": "text",
+          "default": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "contact_email",
+          "type": "text",
+          "default": "'caseinpubblicita@gmail.com'::text",
+          "nullable": "NO"
+        },
+        {
+          "name": "legal_review_note",
+          "type": "text",
+          "default": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "nullable": "NO"
+        }
+      ],
+      "policies": [
+        {
+          "name": "case247_staff_read",
+          "roles": [
+            "authenticated"
+          ],
+          "using": "case247_private.is_member(organization_id)",
+          "command": "SELECT"
+        }
+      ],
+      "constraints": [
+        {
+          "name": "case247_optin_settings_organization_id_fkey",
+          "definition": "FOREIGN KEY (organization_id) REFERENCES case247_organizations(id) ON DELETE RESTRICT"
+        },
+        {
+          "name": "case247_optin_settings_pkey",
+          "definition": "PRIMARY KEY (organization_id)"
+        },
+        {
+          "name": "optin_enable_requires_reviews",
+          "definition": "CHECK (((NOT intake_enabled) OR (controller_confirmed AND privacy_notice_approved AND anti_bot_verified)))"
+        },
+        {
+          "name": "optin_never_send_without_intake",
+          "definition": "CHECK (((NOT (email_outbound_enabled OR whatsapp_outbound_enabled)) OR (intake_enabled AND privacy_notice_approved AND controller_confirmed)))"
+        }
+      ]
+    },
+    {
+      "rls": true,
+      "name": "case247_property_campaigns",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "nullable": "NO"
+        },
+        {
+          "name": "organization_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "content_kind",
+          "type": "text",
+          "default": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "title",
+          "type": "text",
+          "default": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "location_comune",
+          "type": "text",
+          "default": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "property_type",
+          "type": "text",
+          "default": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "max_price_eur",
+          "type": "numeric",
+          "default": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "landing_url",
+          "type": "text",
+          "default": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "content_summary",
+          "type": "text",
+          "default": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "rights_to_promote_verified",
+          "type": "boolean",
+          "default": "false",
+          "nullable": "NO"
+        },
+        {
+          "name": "reviewed_by_staff",
+          "type": "boolean",
+          "default": "false",
+          "nullable": "NO"
+        },
+        {
+          "name": "campaign_status",
+          "type": "text",
+          "default": "'DRAFT'::text",
+          "nullable": "NO"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "nullable": "NO"
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "nullable": "NO"
+        }
+      ],
+      "policies": [
+        {
+          "name": "case247_staff_read",
+          "roles": [
+            "authenticated"
+          ],
+          "using": "case247_private.is_member(organization_id)",
+          "command": "SELECT"
+        }
+      ],
+      "constraints": [
+        {
+          "name": "case247_property_campaigns_campaign_status_check",
+          "definition": "CHECK ((campaign_status = ANY (ARRAY['DRAFT'::text, 'APPROVED'::text, 'PAUSED'::text, 'CANCELLED'::text])))"
+        },
+        {
+          "name": "case247_property_campaigns_content_kind_check",
+          "definition": "CHECK ((content_kind = ANY (ARRAY['IMMOBILE_IN_VENDITA'::text, 'PUBBLICITA_CONTINUA'::text, 'REPORT_MERCATO'::text])))"
+        },
+        {
+          "name": "case247_property_campaigns_organization_id_fkey",
+          "definition": "FOREIGN KEY (organization_id) REFERENCES case247_organizations(id)"
+        },
+        {
+          "name": "case247_property_campaigns_pkey",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "property_campaign_approval_gate",
+          "definition": "CHECK (((campaign_status <> 'APPROVED'::text) OR (rights_to_promote_verified AND reviewed_by_staff)))"
+        }
+      ]
+    },
+    {
+      "rls": true,
+      "name": "case247_property_dispatch_jobs",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "nullable": "NO"
+        },
+        {
+          "name": "organization_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "campaign_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "request_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "channel",
+          "type": "text",
+          "default": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'HELD'::text",
+          "nullable": "NO"
+        },
+        {
+          "name": "external_message_id",
+          "type": "text",
+          "default": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "attempted_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "sent_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "error_code",
+          "type": "text",
+          "default": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "nullable": "NO"
+        }
+      ],
+      "policies": [
+        {
+          "name": "case247_staff_read",
+          "roles": [
+            "authenticated"
+          ],
+          "using": "case247_private.is_member(organization_id)",
+          "command": "SELECT"
+        }
+      ],
+      "constraints": [
+        {
+          "name": "case247_property_dispatch_job_organization_id_campaign_id_r_key",
+          "definition": "UNIQUE (organization_id, campaign_id, request_id, channel)"
+        },
+        {
+          "name": "case247_property_dispatch_jobs_campaign_id_fkey",
+          "definition": "FOREIGN KEY (campaign_id) REFERENCES case247_property_campaigns(id)"
+        },
+        {
+          "name": "case247_property_dispatch_jobs_channel_check",
+          "definition": "CHECK ((channel = ANY (ARRAY['email'::text, 'whatsapp'::text])))"
+        },
+        {
+          "name": "case247_property_dispatch_jobs_organization_id_fkey",
+          "definition": "FOREIGN KEY (organization_id) REFERENCES case247_organizations(id)"
+        },
+        {
+          "name": "case247_property_dispatch_jobs_pkey",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "case247_property_dispatch_jobs_request_id_fkey",
+          "definition": "FOREIGN KEY (request_id) REFERENCES case247_property_requests(id)"
+        },
+        {
+          "name": "case247_property_dispatch_jobs_status_check",
+          "definition": "CHECK ((status = ANY (ARRAY['HELD'::text, 'QUEUED'::text, 'SENT'::text, 'BLOCKED'::text, 'FAILED'::text, 'CANCELLED'::text])))"
+        }
+      ]
+    },
+    {
+      "rls": true,
+      "name": "case247_property_request_events",
+      "columns": [
+        {
+          "name": "id",
+          "type": "bigint",
+          "default": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "organization_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "request_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "event_type",
+          "type": "text",
+          "default": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "evidence",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "nullable": "NO"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "nullable": "NO"
+        }
+      ],
+      "policies": [
+        {
+          "name": "case247_staff_read",
+          "roles": [
+            "authenticated"
+          ],
+          "using": "case247_private.is_member(organization_id)",
+          "command": "SELECT"
+        }
+      ],
+      "constraints": [
+        {
+          "name": "case247_property_request_events_event_type_check",
+          "definition": "CHECK ((event_type = ANY (ARRAY['SUBMITTED'::text, 'EMAIL_OPTIN_REQUESTED'::text, 'WHATSAPP_OPTIN_REQUESTED'::text, 'EMAIL_CONFIRMED'::text, 'WHATSAPP_CONFIRMED'::text, 'REVOKED'::text, 'EXPIRED'::text, 'ADMIN_REVIEW'::text])))"
+        },
+        {
+          "name": "case247_property_request_events_organization_id_fkey",
+          "definition": "FOREIGN KEY (organization_id) REFERENCES case247_organizations(id)"
+        },
+        {
+          "name": "case247_property_request_events_pkey",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "case247_property_request_events_request_id_fkey",
+          "definition": "FOREIGN KEY (request_id) REFERENCES case247_property_requests(id)"
+        }
+      ]
+    },
+    {
+      "rls": true,
+      "name": "case247_property_requests",
+      "columns": [
+        {
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "nullable": "NO"
+        },
+        {
+          "name": "organization_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "submission_key",
+          "type": "text",
+          "default": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "request_kind",
+          "type": "text",
+          "default": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "contact_name",
+          "type": "text",
+          "default": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "email",
+          "type": "text",
+          "default": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "phone",
+          "type": "text",
+          "default": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "comune",
+          "type": "text",
+          "default": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "property_type",
+          "type": "text",
+          "default": "'da_definire'::text",
+          "nullable": "NO"
+        },
+        {
+          "name": "max_budget_eur",
+          "type": "numeric",
+          "default": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "message",
+          "type": "text",
+          "default": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "frequency",
+          "type": "text",
+          "default": "'settimanale'::text",
+          "nullable": "NO"
+        },
+        {
+          "name": "email_optin_requested",
+          "type": "boolean",
+          "default": "false",
+          "nullable": "NO"
+        },
+        {
+          "name": "whatsapp_optin_requested",
+          "type": "boolean",
+          "default": "false",
+          "nullable": "NO"
+        },
+        {
+          "name": "notice_version",
+          "type": "text",
+          "default": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "consent_text_email",
+          "type": "text",
+          "default": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "consent_text_whatsapp",
+          "type": "text",
+          "default": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "user_agent_sha256",
+          "type": "text",
+          "default": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "origin_url",
+          "type": "text",
+          "default": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "requested_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "nullable": "NO"
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "default": "'PENDING_VERIFICATION'::text",
+          "nullable": "NO"
+        },
+        {
+          "name": "email_verified_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "whatsapp_verified_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "revoked_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "nullable": "YES"
+        },
+        {
+          "name": "expiry_at",
+          "type": "timestamp with time zone",
+          "default": "(now() + '30 days'::interval)",
+          "nullable": "NO"
+        },
+        {
+          "name": "revoke_token_sha256",
+          "type": "text",
+          "default": null,
+          "nullable": "NO"
+        },
+        {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "nullable": "NO"
+        },
+        {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "nullable": "NO"
+        }
+      ],
+      "policies": [
+        {
+          "name": "case247_staff_read",
+          "roles": [
+            "authenticated"
+          ],
+          "using": "case247_private.is_member(organization_id)",
+          "command": "SELECT"
+        }
+      ],
+      "constraints": [
+        {
+          "name": "case247_property_requests_comune_check",
+          "definition": "CHECK (((length(comune) >= 2) AND (length(comune) <= 120)))"
+        },
+        {
+          "name": "case247_property_requests_contact_name_check",
+          "definition": "CHECK (((length(contact_name) >= 2) AND (length(contact_name) <= 160)))"
+        },
+        {
+          "name": "case247_property_requests_frequency_check",
+          "definition": "CHECK ((frequency = ANY (ARRAY['settimanale'::text, 'solo_pertinenti'::text])))"
+        },
+        {
+          "name": "case247_property_requests_max_budget_eur_check",
+          "definition": "CHECK (((max_budget_eur IS NULL) OR ((max_budget_eur >= (1000)::numeric) AND (max_budget_eur <= (100000000)::numeric))))"
+        },
+        {
+          "name": "case247_property_requests_organization_id_fkey",
+          "definition": "FOREIGN KEY (organization_id) REFERENCES case247_organizations(id)"
+        },
+        {
+          "name": "case247_property_requests_organization_id_submission_key_key",
+          "definition": "UNIQUE (organization_id, submission_key)"
+        },
+        {
+          "name": "case247_property_requests_pkey",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "case247_property_requests_request_kind_check",
+          "definition": "CHECK ((request_kind = ANY (ARRAY['CERCO_CASA'::text, 'VOGLIO_VENDERE'::text, 'ATTIVITA_IMMOBILE'::text])))"
+        },
+        {
+          "name": "case247_property_requests_revoke_token_sha256_key",
+          "definition": "UNIQUE (revoke_token_sha256)"
+        },
+        {
+          "name": "case247_property_requests_status_check",
+          "definition": "CHECK ((status = ANY (ARRAY['PENDING_VERIFICATION'::text, 'VERIFIED'::text, 'CANCELLED'::text, 'EXPIRED'::text])))"
+        },
+        {
+          "name": "case247_property_requests_submission_key_check",
+          "definition": "CHECK (((length(submission_key) >= 16) AND (length(submission_key) <= 100)))"
+        },
+        {
+          "name": "optin_contact_channels",
+          "definition": "CHECK (((email IS NOT NULL) OR (phone IS NOT NULL)))"
+        },
+        {
+          "name": "optin_email_requires_address",
+          "definition": "CHECK (((NOT email_optin_requested) OR (email IS NOT NULL)))"
+        },
+        {
+          "name": "optin_request_specific_purposes",
+          "definition": "CHECK ((NOT ((request_kind = 'VOGLIO_VENDERE'::text) AND (max_budget_eur IS NOT NULL))))"
+        },
+        {
+          "name": "optin_verified_state_proof",
+          "definition": "CHECK (((status <> 'VERIFIED'::text) OR ((email_optin_requested AND (email_verified_at IS NOT NULL)) OR (whatsapp_optin_requested AND (whatsapp_verified_at IS NOT NULL)))))"
+        },
+        {
+          "name": "optin_whatsapp_requires_phone",
+          "definition": "CHECK (((NOT whatsapp_optin_requested) OR (phone IS NOT NULL)))"
+        }
+      ]
+    }
+  ],
+  "project": "qmeftxsdfeyqozwoivzo",
+  "functions": [
+    {
+      "sql": "CREATE OR REPLACE FUNCTION case247_private.enforce_property_dispatch()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO ''\nAS $function$\ndeclare cfg record; req record; camp record;\nbegin\n  if NEW.status not in ('QUEUED','SENT') then return NEW; end if;\n  select * into cfg from public.case247_optin_settings where organization_id=NEW.organization_id;\n  select * into req from public.case247_property_requests where id=NEW.request_id and organization_id=NEW.organization_id;\n  select * into camp from public.case247_property_campaigns where id=NEW.campaign_id and organization_id=NEW.organization_id;\n  if cfg is null or req is null or camp is null then\n    raise exception 'CASE247_ORGANIZATION_MISMATCH';\n  end if;\n  if not cfg.intake_enabled or not cfg.privacy_notice_approved or\n    not camp.rights_to_promote_verified or not camp.reviewed_by_staff or\n    camp.campaign_status <> 'APPROVED' then\n      raise exception 'CASE247_CAMPAIGN_NOT_APPROVED';\n  end if;\n  if req.status <> 'VERIFIED' or req.revoked_at is not null or\n    req.expiry_at <= now() then raise exception 'CASE247_NO_VALID_SUBSCRIPTION'; end if;\n  if (NEW.channel='email' and (not cfg.email_outbound_enabled or not req.email_optin_requested or req.email_verified_at is null))\n    or (NEW.channel='whatsapp' and (not cfg.whatsapp_outbound_enabled or not req.whatsapp_optin_requested or req.whatsapp_verified_at is null))\n  then raise exception 'CASE247_CHANNEL_CONSENT_NOT_VERIFIED'; end if;\n  return NEW;\nend $function$\n",
+      "name": "enforce_property_dispatch"
+    },
+    {
+      "sql": "CREATE OR REPLACE FUNCTION case247_private.log_property_request_evidence()\n RETURNS trigger\n LANGUAGE plpgsql\n SET search_path TO ''\nAS $function$\nbegin\n if tg_op='INSERT' then\n  insert into public.case247_property_request_events(organization_id,request_id,event_type,evidence)\n  values (new.organization_id,new.id,'SUBMITTED',jsonb_build_object(\n    'notice_version',new.notice_version,'request_kind',new.request_kind,\n    'email_optin',new.email_optin_requested,'whatsapp_optin',new.whatsapp_optin_requested,\n    'origin',new.origin_url,'submitted_at',new.requested_at));\n  if new.email_optin_requested then\n    insert into public.case247_property_request_events(organization_id,request_id,event_type,evidence)\n    values(new.organization_id,new.id,'EMAIL_OPTIN_REQUESTED',jsonb_build_object(\n       'consent_text',new.consent_text_email,'notice_version',new.notice_version));\n  end if;\n  if new.whatsapp_optin_requested then\n    insert into public.case247_property_request_events(organization_id,request_id,event_type,evidence)\n    values(new.organization_id,new.id,'WHATSAPP_OPTIN_REQUESTED',jsonb_build_object(\n       'consent_text',new.consent_text_whatsapp,'notice_version',new.notice_version));\n  end if;\n elsif tg_op='UPDATE' then\n  if new.status='CANCELLED' and old.status is distinct from 'CANCELLED' then\n   insert into public.case247_property_request_events(organization_id,request_id,event_type,evidence)\n   values(new.organization_id,new.id,'REVOKED',jsonb_build_object('at',new.revoked_at,'source','selfservice_token'));\n  end if;\n  if new.email_verified_at is not null and old.email_verified_at is null then\n   insert into public.case247_property_request_events(organization_id,request_id,event_type,evidence)\n   values(new.organization_id,new.id,'EMAIL_CONFIRMED',jsonb_build_object('at',new.email_verified_at));\n  end if;\n  if new.whatsapp_verified_at is not null and old.whatsapp_verified_at is null then\n   insert into public.case247_property_request_events(organization_id,request_id,event_type,evidence)\n   values(new.organization_id,new.id,'WHATSAPP_CONFIRMED',jsonb_build_object('at',new.whatsapp_verified_at));\n  end if;\n end if;\n return new;\nend $function$\n",
+      "name": "log_property_request_evidence"
+    },
+    {
+      "sql": "CREATE OR REPLACE FUNCTION case247_private.purge_expired_capture_requests()\n RETURNS integer\n LANGUAGE plpgsql\n SET search_path TO ''\nAS $function$\ndeclare ids uuid[]; n integer:=0;\nbegin\n select array_agg(r.id) into ids\n from public.case247_property_requests r\n where (\n   (r.status='PENDING_VERIFICATION' and r.expiry_at<now())\n   or (r.status='CANCELLED' and r.revoked_at<now()-interval '30 days')\n ) and not exists(\n  select 1 from public.case247_property_dispatch_jobs d\n  where d.request_id=r.id and d.status='SENT'\n );\n if ids is null then return 0; end if;\n delete from public.case247_property_dispatch_jobs where request_id=any(ids);\n delete from public.case247_property_request_events where request_id=any(ids);\n delete from public.case247_property_requests where id=any(ids);\n get diagnostics n=row_count;\n return n;\nend $function$\n",
+      "name": "purge_expired_capture_requests"
+    }
+  ],
+  "captured_at": "2026-11-02"
+}
