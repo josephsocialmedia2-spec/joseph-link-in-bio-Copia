@@ -16,6 +16,10 @@
 <label>Link informativo (https)<input name="landing_url" type="url" maxlength="400" placeholder="https://..."></label>
 <label class="full">Descrizione della proposta<textarea name="content_summary" rows="3" maxlength="450" placeholder="Caratteristiche essenziali verificate, senza dati privati"></textarea></label>
 </div><div class="toolbar" style="margin-top:17px"><button type="submit" id="createDraft" disabled>Crea bozza, senza inviare</button></div></form><p class="status" role="status" id="draftStatus">La creazione richiede una sessione editor autorizzata.</p><div class="tablebox" id="campaigns"></div></section>
+<section class="card" aria-labelledby="matchingTitle"><h2 id="matchingTitle">Abbinamenti immobili–richieste (anteprima interna)</h2>
+<p class="muted">Confronto deterministico tra comune, tipologia e prezzo. Mostra solo risultati interni agli utenti autorizzati; <strong>non prepara code e non invia messaggi</strong>. Le bozze prive del diritto di pubblicizzazione non sono considerate autorizzate.</p>
+<div id="matches" class="tablebox muted">Accedi per consultare gli abbinamenti.</div>
+<p id="matchNote" class="muted"></p></section>
 <section class="card"><h2>Regole operative per il database</h2>
 <p>Ogni invio richiede tre verifiche indipendenti: (1) consenso attivo per il singolo canale; (2) conferma dell'effettivo controllo del recapito; (3) contenuto approvato e diritto di promuovere l'immobile. Se manca anche un solo requisito, il database impedisce l'accodamento.</p><p>Non importare elenchi di numeri reperiti su annunci o portali per inviare pubblicità. Utilizza la landing su sito, social, materiali con QR code e campagne inbound per raccogliere iscrizioni volontarie.</p></section>
 </main><footer>CASE IN PUBBLICITÀ 24/7 · <a href="mailto:caseinpubblicita@gmail.com">Contatto privacy</a> · Nessun invio email/WhatsApp automatico attivo</footer>
@@ -53,8 +57,8 @@ async function load(){
  }catch{canEdit=false;el('draftStatus').textContent='Scrittura sospesa: autorizzazione server non confermata.'}}
  const oid=org.data.id;
  const [requests,campaigns,settings]=await Promise.all([
-  client.from('case247_property_requests').select('request_kind,contact_name,email,phone,comune,email_optin_requested,whatsapp_optin_requested,email_verified_at,whatsapp_verified_at,revoked_at,status,requested_at').eq('organization_id',oid).order('requested_at',{ascending:false}).limit(100),
-  client.from('case247_property_campaigns').select('title,content_kind,location_comune,rights_to_promote_verified,reviewed_by_staff,campaign_status,created_at').eq('organization_id',oid).order('created_at',{ascending:false}).limit(80),
+  client.from('case247_property_requests').select('request_kind,contact_name,email,phone,comune,property_type,max_budget_eur,frequency,email_optin_requested,whatsapp_optin_requested,consent_text_email,consent_text_whatsapp,email_verified_at,whatsapp_verified_at,revoked_at,expiry_at,status,requested_at').eq('organization_id',oid).order('requested_at',{ascending:false}).limit(100),
+  client.from('case247_property_campaigns').select('title,content_kind,location_comune,property_type,max_price_eur,rights_to_promote_verified,reviewed_by_staff,campaign_status,created_at').eq('organization_id',oid).order('created_at',{ascending:false}).limit(80),
   client.from('case247_optin_settings').select('intake_enabled,email_outbound_enabled,whatsapp_outbound_enabled,privacy_notice_approved,controller_confirmed,anti_bot_verified,notice_version').eq('organization_id',oid).maybeSingle()
  ]);
  if(requests.error||campaigns.error||settings.error){el('authStatus').textContent+=' · Errore lettura database';return}
@@ -71,6 +75,37 @@ async function load(){
   '. Nessun invio finché non risultano consenso verificato e campagna approvata.';
  renderTable('requests',req,[['Richiesta','request_kind'],['Nome','contact_name'],['Email','email'],['Telefono','phone'],['Comune','comune'],['Opt-in email','email_optin_requested'],['Opt-in WhatsApp','whatsapp_optin_requested'],['Email verificata','email_verified_at'],['WhatsApp verificato','whatsapp_verified_at'],['Stato','status']]);
  renderTable('campaigns',camp,[['Titolo','title'],['Categoria','content_kind'],['Comune','location_comune'],['Diritti verificati','rights_to_promote_verified'],['Revisione','reviewed_by_staff'],['Stato','campaign_status']]);
+
+ const canon=v=>String(v||'').normalize('NFKC').toLocaleLowerCase('it-IT').trim().replace(/\s+/g,' ');
+ const previews=[];
+ const today=Date.now();
+ for(const request of req){
+  if(request.request_kind!=='CERCO_CASA'||['CANCELLED','EXPIRED'].includes(request.status)||request.revoked_at)continue;
+  if(request.expiry_at && new Date(request.expiry_at).getTime()<=today)continue;
+  for(const campaign of camp){
+   if(campaign.content_kind!=='IMMOBILE_IN_VENDITA'||['CANCELLED','PAUSED'].includes(campaign.campaign_status))continue;
+   if(!canon(request.comune)||canon(request.comune)!==canon(campaign.location_comune))continue;
+   const kind=canon(request.property_type),offerType=canon(campaign.property_type);
+   if(kind && kind!=='da_definire' && offerType && kind!==offerType)continue;
+   const budget=Number(request.max_budget_eur),price=Number(campaign.max_price_eur);
+   if(budget>0 && price>0 && price>budget)continue;
+   const emailOk=request.status==='VERIFIED'&&request.email_optin_requested&&request.email_verified_at&&request.consent_text_email;
+   const whatsappOk=request.status==='VERIFIED'&&request.whatsapp_optin_requested&&request.whatsapp_verified_at&&request.consent_text_whatsapp;
+   const eligible=campaign.campaign_status==='APPROVED'&&campaign.rights_to_promote_verified&&campaign.reviewed_by_staff&&
+      (Boolean(emailOk)||Boolean(whatsappOk));
+   let reason=!campaign.rights_to_promote_verified?'DIRITTO DA VERIFICARE':
+     !campaign.reviewed_by_staff||campaign.campaign_status!=='APPROVED'?'BOZZA / NON APPROVATA':
+     !emailOk&&!whatsappOk?'CANALE NON VERIFICATO':
+     !(budget>0&&price>0)?'PREZZO/BUDGET INCOMPLETI':'PRE-CANDIDATO INTERNO';
+   previews.push({
+     nome:request.contact_name,immobile:campaign.title,zona:request.comune,
+     canali:(emailOk?'Email ':'')+(whatsappOk?'WhatsApp':'')||'Nessuno verificato',
+     valutazione:reason,score:eligible?'Dati da validare':'Non inviabile'
+   });
+  }
+ }
+ renderTable('matches',previews.slice(0,100),[['Richiedente','nome'],['Immobile','immobile'],['Comune','zona'],['Canali verificati','canali'],['Esito','valutazione'],['Invio','score']]);
+ el('matchNote').textContent=previews.length+' abbinamenti interni su max 100 richieste e 80 campagne. Calcolo senza invii; approvazione umana e verifiche legali sempre obbligatorie.';
 }
 el('signin').addEventListener('click',async()=>{
  const email=el('email').value.trim();if(!email){el('authStatus').textContent='Inserisci l’email';return}
