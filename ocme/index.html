@@ -49,7 +49,7 @@ textarea{resize:vertical;min-height:73px}#outline{min-height:215px;font:12px/1.5
 <main>
 <section class="toolbar">
  <h1>OCME Studio — Editor schemi a cascata</h1>
- <p style="margin:7px 0 0"><a href="./palazzo/" style="font-weight:700;color:#167a59">Apri il Palazzo della Memoria — Allenamento guidato →</a></p>
+ <p style="margin:7px 0 0"><a href="./laboratorio/" style="font-weight:700;color:#167a59">Apri il Laboratorio di comprensione — Appunti, spiegazioni e parole chiave →</a> · <a href="./palazzo/" style="font-weight:700;color:#167a59">Apri il Palazzo della Memoria — Allenamento guidato →</a></p>
  <p>Organizza un argomento, costruisci i rami a cascata e ottieni una <b>scheda A4 orizzontale</b>. I dati rimangono nel browser: niente account, niente invio a server.</p>
  <div class="actions">
  <button type="button" id="example">Esempio Smartphone</button>
@@ -166,6 +166,7 @@ $('upload').onchange=async function(ev){var f=ev.target.files&&ev.target.files[0
 $('print').onclick=function(){if(current.tooDense){var go=window.confirm('Lo schema potrebbe risultare troppo denso su una singola pagina A4. Vuoi comunque aprire la stampa?');if(!go)return}window.print()};
 fields.forEach(function(k){$(k).addEventListener('input',render)});
 try{var old=localStorage.getItem(S);if(old){put(Object.assign({},blank,JSON.parse(old)))}else put(sample)}catch(err){put(sample)}
+try{var handoff=sessionStorage.getItem('ocme_laboratorio_handoff_v1');if(handoff){sessionStorage.removeItem('ocme_laboratorio_handoff_v1');if(window.confirm('Importare la bozza dal Laboratorio? Il progetto attualmente aperto nell’editor verrà sostituito. Prima esportalo in JSON se vuoi conservarlo.')){var incoming=JSON.parse(handoff);if(incoming&&typeof incoming.outline==='string'){put(Object.assign({},blank,incoming));$('status').textContent='Bozza trasferita dal Laboratorio. Controlla e perfeziona lo schema prima di proseguire.';}}}}catch(err){$('status').textContent='Non è stato possibile leggere la bozza trasferita.'}
 })();
 </script>
 </body>
