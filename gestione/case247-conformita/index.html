@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer">
+<title>Centro verifiche GDPR | CASE IN PUBBLICITÀ 24/7</title>
+<style>
+:root{font:16px/1.5 system-ui,-apple-system,Arial,sans-serif;color:#e9f4ff;background:#061b33}
+*{box-sizing:border-box}body{margin:0}a{color:#a4dcff}header{background:linear-gradient(125deg,#09254a,#0969b5);padding:34px 18px}
+.wrap{max-width:1050px;margin:auto}h1{font-size:clamp(27px,4vw,42px);line-height:1.14;margin:12px 0}h2{font-size:22px;margin:0 0 10px}
+p{color:#c3d8eb}main{padding:25px 18px 60px}.panel{background:#0d2b4a;border:1px solid #376487;border-radius:14px;padding:22px;margin:17px 0}
+.info{border-left:4px solid #edb76b;padding:13px 17px;background:#332c23;border-radius:7px}
+.good{color:#a5f3c4}.hold{color:#ffdc9e}.unknown{color:#c0d5e8}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.item{border:1px solid #315778;border-radius:9px;padding:14px;background:#102f4f}.item strong{display:block;margin-bottom:4px}.item small{color:#c6d9eb;display:block}
+nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:19px}nav a{border:1px solid #79b9e8;border-radius:8px;padding:10px 13px;text-decoration:none;font-weight:700}
+.status{font-weight:700;border:1px solid #5885ae;background:#0a2340;border-radius:8px;padding:13px}
+code{word-break:break-word;color:#b4e8ff}ul{padding-left:22px}li{margin:9px 0;color:#d4e8f6}footer{padding:22px;text-align:center;color:#bdd1e5}
+@media(max-width:720px){.grid{grid-template-columns:1fr}}
+</style></head><body>
+<header><div class="wrap"><a href="../case247-comunicazioni/">← Torna alla gestione comunicazioni</a>
+<h1>Centro verifiche GDPR</h1><p>CASE IN PUBBLICITÀ 24/7 · Stato tecnico e attività necessarie prima della raccolta e degli invii.</p>
+<nav><a href="../../campagne/case247/richieste-immobili/">Modulo richieste</a>
+<a href="../../campagne/case247/privacy-richieste-immobili/">Informativa in bozza</a>
+<a href="../../campagne/case247/revoca-consenso/">Revoca consensi</a></nav></div></header>
+<main class="wrap">
+<section class="panel"><h2>Verifica operativa in tempo reale</h2>
+<p>Questa verifica interroga soltanto lo stato pubblico dell'API: non invia dati personali, non modifica i consensi e non può attivare le campagne.</p>
+<div class="status" id="apiState" role="status" aria-live="polite">Controllo stato del modulo…</div>
+<p id="checkedAt" class="unknown"></p>
+<div class="info"><strong>Regola di pubblicazione:</strong> nessuna casella di spunta costituisce da sola prova dell'identità del recapito. Nessun invio promozionale è autorizzato da questa pagina.</div>
+</section>
+<section class="panel"><h2>Verifiche documentate</h2>
+<div class="grid">
+<div class="item"><strong class="good">✓ Titolare identificato</strong><small>Joseph Malafronte, persona fisica; conferma espressa il 2 novembre 2026.</small></div>
+<div class="item"><strong class="good">✓ Registro e revoca predisposti</strong><small>Consensi separati e revoca tramite token; controlli DB presenti (verificati il 2 novembre 2026).</small></div>
+<div class="item"><strong class="hold">In attesa: informativa definitiva</strong><small>Ruoli dei fornitori, localizzazione, tempi di conservazione e recapito ufficiale ancora da verificare.</small></div>
+<div class="item"><strong class="hold">In attesa: antispam</strong><small>Cloudflare Turnstile e prove end-to-end da completare prima di raccogliere recapiti.</small></div>
+<div class="item"><strong class="hold">In attesa: conferma dei canali</strong><small>Prova del controllo del recapito email e WhatsApp, verifiche separate, niente attivazione automatica.</small></div>
+<div class="item"><strong class="hold">In attesa: servizi di invio</strong><small>Provider autorizzati, template e disiscrizione efficaci; verifica dei diritti di pubblicazione degli immobili.</small></div>
+</div></section>
+<section class="panel"><h2>Condizioni di rilascio</h2>
+<p>Il rilascio richiede la conclusione delle verifiche e una decisione documentata del titolare. Questa pagina è di consultazione: non offre comandi per attivare la raccolta o le spedizioni.</p>
+<ul>
+<li>Convalidare identità e recapito operativo del titolare, informativa art. 13, registro e accordi con i fornitori.</li>
+<li>Testare antispam, prova dei consensi, conferma indipendente dei recapiti, revoca e richiesta di cancellazione.</li>
+<li>Collaudare con destinatari realmente consenzienti e con campagne per immobili che si ha il diritto di pubblicizzare.</li>
+<li>Solo dopo prove documentate e autorizzazione, valutare l'abilitazione dei canali uno alla volta.</li>
+</ul>
+<p><a href="https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/blob/main/docs/case247-piano-rilascio-gdpr.md">Apri il piano tecnico e giuridico su GitHub</a></p>
+</section></main>
+<footer>CASE IN PUBBLICITÀ 24/7 · Nessun dato personale memorizzato in questa pagina.</footer>
+<script>
+(function(){
+"use strict";
+const target=document.getElementById("apiState");
+const when=document.getElementById("checkedAt");
+const endpoint="https://qmeftxsdfeyqozwoivzo.supabase.co/functions/v1/case247-public-requests";
+fetch(endpoint,{method:"GET",cache:"no-store",credentials:"omit"}).then(async r=>{
+if(!r.ok)throw Error("API_HTTP_"+r.status);
+const data=await r.json();
+if(data.intake_enabled===false){
+  target.textContent="RACCOLTA DISABILITATA — stato confermato dall'API.";
+  target.className="status hold";
+} else if(data.intake_enabled===true){
+  target.textContent="ATTENZIONE: l'API segnala raccolta attiva. Verificare immediatamente approvazioni, contatti e controlli prima di promuovere il modulo.";
+  target.className="status hold";
+}else{throw Error("RISPOSTA_NON_VALIDA")}
+when.textContent="Ultimo controllo API: "+new Date().toLocaleString("it-IT")+". Il controllo non dimostra la conformità legale.";
+}).catch(()=>{
+target.textContent="STATO NON VERIFICABILE — controllo API non riuscito; non assumere che la raccolta sia attiva o sicura.";
+target.className="status hold";
+when.textContent="Verificare la funzione Supabase prima di ogni rilascio.";
+});
+})();
+</script></body></html>
