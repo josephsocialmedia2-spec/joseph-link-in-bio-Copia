@@ -14,7 +14,10 @@ FILES=[
  "supabase/functions/case247-public-requests/index.ts",
  "supabase/functions/case247-campaign-drafts/index.ts",
  "gestione/index.html",
- "gestione/case247-operazioni/index.html"
+ "gestione/case247-operazioni/index.html",
+ "gestione/case247-conformita/index.html",
+ "docs/case247-piano-rilascio-gdpr.md",
+ "supabase/schema/case247-dispatch-gate-hardened.sql"
 ]
 fails=[]
 def check(label,ok,detail=""):
@@ -22,7 +25,7 @@ def check(label,ok,detail=""):
  if not ok:fails.append(label)
 
 files={p:(ROOT/p).read_text(encoding="utf-8") if (ROOT/p).is_file() else "" for p in FILES}
-check("ALL_8_FILES",all(files.values()))
+check("ALL_11_FILES",all(files.values()))
 page=files[FILES[0]];notice=files[FILES[1]];revoke=files[FILES[2]];admin=files[FILES[3]]
 server=files[FILES[4]];staff=files[FILES[5]]
 check("THREE_INBOUND_TYPES",all(v in page for v in ("CERCO_CASA","VOGLIO_VENDERE","ATTIVITA_IMMOBILE")))
@@ -40,6 +43,11 @@ check("STAFF_DRAFT_ONLY",('campaign_status:"DRAFT"' in staff and "rights_to_prom
 check("STAFF_AUTH_REQUIRED",('withSupabase({auth:"user"}' in staff and 'eq("organization_id",org)' in staff))
 check("ROOT_DASHBOARD_LINKS",('href="./case247-comunicazioni/"' in files[FILES[6]] and 'href="../campagne/case247/richieste-immobili/"' in files[FILES[6]]))
 check("REGIA_LINKED",('href="../case247-comunicazioni/"' in files[FILES[7]]))
+center=files[FILES[8]];release_doc=files[FILES[9]];sql_guard=files[FILES[10]]
+check("READ_ONLY_RELEASE_CENTER",('Centro verifiche GDPR' in center and 'method:"GET"' in center and 'credentials:"omit"' in center and 'STATO NON VERIFICABILE' in center))
+check("RELEASE_CENTER_LINKED",('href="../case247-conformita/"' in admin))
+check("RELEASE_DOCUMENT_EXPLICITLY_PENDING",('PRE-PRODUZIONE' in release_doc and 'Nessun servizio di invio' in release_doc and 'Joseph Malafronte' in release_doc))
+check("SQL_DISPATCH_DEFENSE_IN_DEPTH",all(v in sql_guard for v in ('case247_private.enforce_property_dispatch','cfg.controller_confirmed','cfg.anti_bot_verified','cfg.notice_version','req.consent_text_email','req.consent_text_whatsapp','not cfg.intake_enabled')))
 
 URL="https://qmeftxsdfeyqozwoivzo.supabase.co/functions/v1/"
 def call(path,method="GET",payload=None,headers=None):
@@ -63,7 +71,7 @@ s,b,_=call("case247-campaign-drafts")
 check("DRAFT_ENDPOINT_REQUIRES_JWT",s in (401,403),s)
 s,b,headers=call("case247-public-requests",method="OPTIONS",headers={"Access-Control-Request-Method":"POST","Access-Control-Request-Headers":"content-type"})
 check("CORS_PREFLIGHT",s in (200,204) and headers.get("access-control-allow-origin")=="https://josephsocialmedia2-spec.github.io",s)
-print("TOTAL "+str(21-len(fails))+" / 21 check candidates",flush=True)
+print("TOTAL "+str(25-len(fails))+" / 25 check candidates",flush=True)
 if fails:
  print("FAILED: "+", ".join(fails),file=sys.stderr)
  sys.exit(1)
