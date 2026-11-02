@@ -17,7 +17,9 @@ FILES=[
  "gestione/case247-operazioni/index.html",
  "gestione/case247-conformita/index.html",
  "docs/case247-piano-rilascio-gdpr.md",
- "supabase/schema/case247-dispatch-gate-hardened.sql"
+ "supabase/schema/case247-dispatch-gate-hardened.sql",
+ "supabase/schema/case247-channel-revocation-queue-gate.sql",
+ "supabase/functions/case247-emergency-stop/index.ts"
 ]
 fails=[]
 def check(label,ok,detail=""):
@@ -25,7 +27,7 @@ def check(label,ok,detail=""):
  if not ok:fails.append(label)
 
 files={p:(ROOT/p).read_text(encoding="utf-8") if (ROOT/p).is_file() else "" for p in FILES}
-check("ALL_11_FILES",all(files.values()))
+check("ALL_13_FILES",all(files.values()))
 page=files[FILES[0]];notice=files[FILES[1]];revoke=files[FILES[2]];admin=files[FILES[3]]
 server=files[FILES[4]];staff=files[FILES[5]]
 check("THREE_INBOUND_TYPES",all(v in page for v in ("CERCO_CASA","VOGLIO_VENDERE","ATTIVITA_IMMOBILE")))
