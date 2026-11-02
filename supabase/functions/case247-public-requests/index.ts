@@ -5,10 +5,13 @@ import { withSupabase } from "npm:@supabase/server@1";
 const ALLOWED_ORIGIN="https://josephsocialmedia2-spec.github.io";
 const BRAND="CASE IN PUBBLICITÀ 24/7";
 type Body = Record<string,unknown>;
-const consentEmail=(kind:string)=>
- "Autorizzo CASE IN PUBBLICITÀ 24/7 a inviarmi via EMAIL proposte immobiliari e informazioni sulla promozione continuativa coerenti con la richiesta "+kind+". Consenso facoltativo, revocabile in qualsiasi momento.";
-const consentWhatsApp=(kind:string)=>
- "Autorizzo CASE IN PUBBLICITÀ 24/7 a inviarmi su WHATSAPP proposte immobiliari e informazioni sulla promozione continuativa coerenti con la richiesta "+kind+". Consenso facoltativo, revocabile in qualsiasi momento.";
+const purpose=(kind:string)=>({
+ "CERCO_CASA":"proposte immobiliari corrispondenti alla mia ricerca di acquisto",
+ "VOGLIO_VENDERE":"informazioni e servizi di pubblicità continuativa relativi alla vendita del mio immobile",
+ "ATTIVITA_IMMOBILE":"opportunità e comunicazioni immobiliari per attività, negozi e immobili commerciali"
+}[kind]||"comunicazioni relative alla richiesta immobiliare");
+const consentEmail=(kind:string)=>"Autorizzo CASE IN PUBBLICITÀ 24/7 a inviarmi via EMAIL "+purpose(kind)+". Consenso facoltativo e revocabile.";
+const consentWhatsApp=(kind:string)=>"Autorizzo CASE IN PUBBLICITÀ 24/7 a inviarmi via WHATSAPP "+purpose(kind)+". Consenso facoltativo e revocabile.";
 const reply=(status:number,content:Body,origin:string|null)=>
  new Response(JSON.stringify(content),{status,headers:{
  "content-type":"application/json; charset=utf-8","cache-control":"no-store","vary":"origin",
