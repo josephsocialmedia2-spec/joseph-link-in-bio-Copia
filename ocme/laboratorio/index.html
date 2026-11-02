@@ -31,6 +31,9 @@
     .saveHint{display:block;font-size:11px;color:#5b7288;margin-top:5px}
     @media(max-width:800px){.toolsMenu{left:0;right:auto}.dropZone{align-items:flex-start;flex-direction:column}.filePreview iframe{height:390px}.uploadPrimary{flex:1}}
     [hidden]{display:none!important}
+    .pdfControl{display:flex;justify-content:center;align-items:center;gap:14px;padding:10px;background:#edf6fc;border-bottom:1px solid #d8e5f0;font-size:12px;font-weight:700}
+    .pdfCanvas{display:block;max-width:100%;margin:10px auto;background:white;box-shadow:0 1px 8px #12284522}
+    #documentPreview{padding-bottom:4px}
 
     .tutorIntro{font-size:12px;color:#60738a;margin:0 0 11px}
     .lessonStep{border-left:3px solid #0074c1;background:#f7faff;border-radius:7px;padding:11px 13px;margin:10px 0}
@@ -154,7 +157,55 @@
     function archiveCustom(){if(!state.uploadedName&&!state.original.custom&&!state.rough.custom&&!state.corrected.custom&&!state.explanations.custom)return;state.uploadHistory=state.uploadHistory||[];state.uploadHistory.unshift({name:state.uploadedName||'Appunti personali',original:state.original.custom||'',rough:state.rough.custom||'',corrected:state.corrected.custom||'',explanations:state.explanations.custom||''});state.uploadHistory=state.uploadHistory.slice(0,10)}
     function restoreCustom(p){state.uploadedName=p.name||'Documento';state.original.custom=p.original||'';state.rough.custom=p.rough||'';state.corrected.custom=p.corrected||'';state.explanations.custom=p.explanations||'';state.doc='custom';clearPreview();persist();loadDoc()}
     function clearPreview(){if(previewUrl){URL.revokeObjectURL(previewUrl);previewUrl=null}$('documentPreview').replaceChildren();$('documentPreview').hidden=true}
-    function showPreview(f,kind){clearPreview();if(!kind)return;previewUrl=URL.createObjectURL(f);const box=$('documentPreview');let node;if(kind==='pdf'){node=document.createElement('iframe');node.title='Anteprima originale: '+f.name;node.setAttribute('sandbox','allow-same-origin allow-scripts allow-downloads');node.src=previewUrl}else{node=document.createElement('img');node.alt='Immagine originale caricata: '+f.name;node.src=previewUrl}box.appendChild(node);box.hidden=false}
+    async function showPreview(f,kind,pdfDoc){
+      clearPreview();if(!kind)return;
+      const box=$('documentPreview');box.hidden=false;
+      if(kind==='image'){
+        previewUrl=URL.createObjectURL(f);
+        const img=document.createElement('img');img.alt='Immagine originale caricata: '+f.name;img.src=previewUrl;box.appendChild(img);return;
+      }
+      // Chrome può bloccare il visualizzatore PDF integrato in iframe sandbox:
+      // PDF.js disegna invece ogni pagina in un canvas dello stesso documento.
+      if(kind==='pdf'){
+        if(!pdfDoc){
+          const warning=document.createElement('p');warning.className='fileInfo warn';warning.style.padding='15px';
+          warning.textContent='Il PDF è stato selezionato ma non può essere disegnato qui. Controlla la connessione, oppure leggi il testo estratto nella finestra sottostante.';
+          box.appendChild(warning);return;
+        }
+        const bar=document.createElement('div');bar.className='pdfControl';
+        const previous=document.createElement('button');previous.type='button';previous.className='btn small';previous.textContent='◀';
+        previous.setAttribute('aria-label','Pagina precedente');
+        const count=document.createElement('span');count.setAttribute('aria-live','polite');
+        const next=document.createElement('button');next.type='button';next.className='btn small';next.textContent='▶';
+        next.setAttribute('aria-label','Pagina successiva');
+        bar.append(previous,count,next);
+        const canvas=document.createElement('canvas');canvas.className='pdfCanvas';canvas.setAttribute('role','img');canvas.setAttribute('aria-label','Pagina PDF originale');
+        const busy=document.createElement('p');busy.className='fileInfo';busy.textContent='Preparazione anteprima...';
+        box.append(bar,busy,canvas);
+        let pageNo=1, rendering=false;
+        async function paint(){
+          if(rendering)return;rendering=true;previous.disabled=true;next.disabled=true;count.textContent='Pagina '+pageNo+' di '+pdfDoc.numPages;
+          try{
+            const page=await pdfDoc.getPage(pageNo);
+            if(!box.isConnected)return;
+            const normal=page.getViewport({scale:1});
+            const cssScale=Math.max(.25,Math.min(1.45,(box.clientWidth-26)/normal.width));
+            const pixelRatio=Math.min(window.devicePixelRatio||1,2);
+            const viewport=page.getViewport({scale:cssScale*pixelRatio});
+            canvas.width=Math.ceil(viewport.width);canvas.height=Math.ceil(viewport.height);
+            canvas.style.width=Math.round(viewport.width/pixelRatio)+'px';
+            canvas.style.height=Math.round(viewport.height/pixelRatio)+'px';
+            const context=canvas.getContext('2d',{alpha:false});
+            await page.render({canvasContext:context,viewport}).promise;
+            if(box.isConnected)busy.textContent='';
+          }catch(e){busy.textContent='Anteprima grafica non disponibile; puoi leggere il testo estratto qui sotto.'}
+          finally{rendering=false;previous.disabled=pageNo<=1;next.disabled=pageNo>=pdfDoc.numPages}
+        }
+        previous.onclick=()=>{if(rendering||pageNo<=1)return;pageNo--;paint()};
+        next.onclick=()=>{if(rendering||pageNo>=pdfDoc.numPages)return;pageNo++;paint()};
+        await paint();
+      }
+    }
     function ensureLibrary(globalName,src){if(window[globalName])return Promise.resolve(window[globalName]);if(libraryPromises[globalName])return libraryPromises[globalName];libraryPromises[globalName]=new Promise((resolve,reject)=>{const el=document.createElement('script');el.src=src;el.async=true;el.onload=()=>window[globalName]?resolve(window[globalName]):reject(new Error('Libreria non disponibile'));el.onerror=()=>reject(new Error('Controlla la connessione a Internet'));document.head.appendChild(el)}).catch(e=>{delete libraryPromises[globalName];throw e});return libraryPromises[globalName]}
     function setFileNotice(text,warning){$('fileInfo').textContent=text;$('fileInfo').classList.toggle('warn',!!warning)}
 
@@ -272,15 +323,15 @@
     function calculate(){let C=Number($('capital').value||0),r=Number($('rate').value||0)/100,n=Number($('months').value||0)/12;const I=C*r*n,M=C+I;const euro=n=>new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR'}).format(n);$('interestValue').textContent=euro(I);$('amountValue').textContent=euro(M);$('mathSteps').textContent=`I = ${euro(C)} × ${(r*100).toLocaleString('it-IT')}% × ${Number($('months').value||0)}/12 = ${euro(I)}. M = C + I = ${euro(M)}.`}
     function exportMD(){saveInputs();const d=state.doc;const a=[`# OCME — ${d==='symbols'?'Simbologia':d==='interest'?'Interesse e montante':'Appunti personali'}`,'','## Fonte originale (conservata)',state.original[d],'','## Note personali',state.rough[d],'','## Appunti ordinati e corretti',state.corrected[d],'','## Spiegazioni aggiuntive',state.explanations[d],'','## Concetti scelti',...selected().map(x=>'- '+x.name+': '+x.def),'','## Schema prima bozza',generatedSchema,'','## Spiegazione guidata / ripasso',...lessonData().steps.map(x=>x.title+' — '+x.body),''];download('OCME_Appunti_e_Schema.md',a.join('\n'),'text/markdown;charset=utf-8')}
     function openSearch(site){const q=$('searchTopic').value.trim()||'matematica finanziaria interesse semplice';window.open(site==='google'?'https://www.google.com/search?q='+encodeURIComponent(q+' spiegazione esempi esercizi'):'https://www.youtube.com/results?search_query='+encodeURIComponent(q+' spiegazione italiana'),'_blank','noopener,noreferrer')}
-    async function importFile(f){if(!f)return;if(f.size>18*1024*1024){toast('File troppo grande per il browser: massimo 18 MB.');return}const lower=f.name.toLowerCase();$('saveStatus').textContent='◌ Lettura del documento…';let extracted='',type='',notice='',warning=false;
+    async function importFile(f){if(!f)return;if(f.size>18*1024*1024){toast('File troppo grande per il browser: massimo 18 MB.');return}const lower=f.name.toLowerCase();$('saveStatus').textContent='◌ Lettura del documento…';let extracted='',type='',notice='',warning=false,pdfDoc=null;
       try{
-        if(lower.endsWith('.pdf')){type='pdf';const lib=await ensureLibrary('pdfjsLib','https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');lib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';const pdf=await lib.getDocument({data:await f.arrayBuffer()}).promise;const chunks=[];for(let i=1;i<=pdf.numPages;i++){const pg=await pdf.getPage(i);const data=await pg.getTextContent();chunks.push('[Pagina '+i+']\n'+data.items.map(k=>k.str).join(' '))}extracted=chunks.join('\n\n');const plain=extracted.replace(/\[Pagina \d+\]/g,'').trim();if(!plain){extracted='';warning=true;notice='PDF aperto nella prima finestra. È una scansione o non contiene testo selezionabile: serve OCR o una trascrizione manuale.'}else notice='PDF aperto e testo estratto automaticamente da '+pdf.numPages+' pagine.'}
+        if(lower.endsWith('.pdf')){type='pdf';const lib=await ensureLibrary('pdfjsLib','https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js');lib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';const pdf=await lib.getDocument({data:await f.arrayBuffer()}).promise;pdfDoc=pdf;const chunks=[];for(let i=1;i<=pdf.numPages;i++){const pg=await pdf.getPage(i);const data=await pg.getTextContent();chunks.push('[Pagina '+i+']\n'+data.items.map(k=>k.str).join(' '))}extracted=chunks.join('\n\n');const plain=extracted.replace(/\[Pagina \d+\]/g,'').trim();if(!plain){extracted='';warning=true;notice='PDF aperto nella prima finestra. È una scansione o non contiene testo selezionabile: serve OCR o una trascrizione manuale.'}else notice='PDF aperto e testo estratto automaticamente da '+pdf.numPages+' pagine.'}
         else if(lower.endsWith('.docx')){const lib=await ensureLibrary('mammoth','https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.9.0/mammoth.browser.min.js');const result=await lib.extractRawText({arrayBuffer:await f.arrayBuffer()});extracted=(result.value||'').trim();notice='Documento Word caricato: il contenuto testuale è visibile nella prima finestra (senza impaginazione originale).';if(!extracted){warning=true;notice='Il documento Word non contiene testo leggibile: verifica se contiene solo immagini.'}}
         else if(/\.(png|jpg|jpeg)$/i.test(lower)){type='image';extracted='';notice='Immagine aperta nella prima finestra. La lettura automatica della scrittura richiede OCR, non disponibile in questa versione.';warning=true}
         else if(/\.(txt|md)$/i.test(lower)){extracted=await f.text();notice='File di testo aperto nella prima finestra e analizzato automaticamente.'}
         else{toast('Formato non supportato. Usa PDF, DOCX, TXT, MD, JPG o PNG.');return}
       }catch(err){if(type==='pdf'||lower.endsWith('.docx')){warning=true;notice='Il file è stato selezionato, ma non è possibile estrarre il testo: '+err.message+'. Controlla la connessione o usa TXT.';extracted=''}else{toast('Errore lettura: '+err.message);return}}
-      setCustom(extracted,f.name);showPreview(f,type);if(extracted.trim()){tidy();setFileNotice(notice,false)}else{state.corrected.custom='Documento caricato: '+f.name+'\nIl testo non è stato estratto. Scrivi la trascrizione nel blocco note sottostante.';$('cleaned').value=state.corrected.custom;persist();renderAll();setFileNotice(notice,true)}$('materiali').scrollIntoView({behavior:'smooth',block:'start'});toast(warning?'File aperto: serve trascrizione per generare concetti':'File caricato: appunti e schema preliminare già pronti')}
+      setCustom(extracted,f.name);await showPreview(f,type,pdfDoc);if(extracted.trim()){tidy();setFileNotice(notice,false)}else{state.corrected.custom='Documento caricato: '+f.name+'\nIl testo non è stato estratto. Scrivi la trascrizione nel blocco note sottostante.';$('cleaned').value=state.corrected.custom;persist();renderAll();setFileNotice(notice,true)}$('materiali').scrollIntoView({behavior:'smooth',block:'start'});toast(warning?'File aperto: serve trascrizione per generare concetti':'File caricato: appunti e schema preliminare già pronti')}
     function setCustom(s,label){saveInputs();checkpoint('Prima di caricare '+label);archiveCustom();state.original.custom=s;state.doc='custom';state.uploadedName=label;state.rough.custom='';state.corrected.custom='';state.explanations.custom='';state.manualClean=state.manualClean||{};state.manualClean.custom=false;persist();loadDoc()}
     const example=`L’interesse semplice è il compenso per l’uso di un capitale: dipende dal capitale iniziale, dal tasso e dal tempo. Si calcola con I = C × r × n.\n\nIl montante è la somma finale: M = C + I = C × (1 + r × n). Il tasso del 5% si scrive 0,05 e, se il tasso è annuo, sei mesi corrispondono a 6/12 di anno.\n\nEsempio di spiegazione ricostruita: investendo 2.000 euro al 5% annuo per 6 mesi, l’interesse è 2.000 × 0,05 × 6/12 = 50 euro. Il montante è 2.050 euro.\n\nFonte dell'approfondimento: Treccani — Interesse; UbiLearning — Capitale, Interesse, Montante.`;
     document.querySelectorAll('[data-doc]').forEach(el=>el.onclick=()=>{saveInputs();state.doc=el.dataset.doc;persist();loadDoc()});document.querySelectorAll('[data-scroll]').forEach(el=>el.onclick=()=>{document.querySelectorAll('.navBtn').forEach(x=>x.classList.remove('active'));el.classList.add('active');$(el.dataset.scroll).scrollIntoView({behavior:'smooth',block:'start'})});
