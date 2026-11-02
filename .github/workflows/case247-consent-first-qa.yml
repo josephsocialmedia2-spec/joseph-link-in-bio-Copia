@@ -10,8 +10,10 @@ on:
       - 'gestione/case247-conformita/**'
       - 'docs/case247-piano-rilascio-gdpr.md'
       - 'supabase/schema/case247-dispatch-gate-hardened.sql'
+      - 'supabase/schema/case247-channel-revocation-queue-gate.sql'
       - 'supabase/functions/case247-public-requests/**'
       - 'supabase/functions/case247-campaign-drafts/**'
+      - 'supabase/functions/case247-emergency-stop/**'
       - 'scripts/case247_consent_first_qa.py'
       - '.github/workflows/case247-consent-first-qa.yml'
   pull_request:
@@ -23,8 +25,10 @@ on:
       - 'gestione/case247-conformita/**'
       - 'docs/case247-piano-rilascio-gdpr.md'
       - 'supabase/schema/case247-dispatch-gate-hardened.sql'
+      - 'supabase/schema/case247-channel-revocation-queue-gate.sql'
       - 'supabase/functions/case247-public-requests/**'
       - 'supabase/functions/case247-campaign-drafts/**'
+      - 'supabase/functions/case247-emergency-stop/**'
       - 'scripts/case247_consent_first_qa.py'
       - '.github/workflows/case247-consent-first-qa.yml'
   workflow_dispatch:
