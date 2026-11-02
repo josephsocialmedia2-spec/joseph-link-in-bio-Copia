@@ -52,14 +52,14 @@ async function load(){
  }catch{canEdit=false;el('draftStatus').textContent='Scrittura sospesa: autorizzazione server non confermata.'}}
  const oid=org.data.id;
  const [requests,campaigns,settings]=await Promise.all([
-  client.from('case247_property_requests').select('request_kind,contact_name,email,phone,comune,email_optin_requested,whatsapp_optin_requested,email_verified_at,whatsapp_verified_at,status,requested_at').eq('organization_id',oid).order('requested_at',{ascending:false}).limit(100),
+  client.from('case247_property_requests').select('request_kind,contact_name,email,phone,comune,email_optin_requested,whatsapp_optin_requested,email_verified_at,whatsapp_verified_at,revoked_at,status,requested_at').eq('organization_id',oid).order('requested_at',{ascending:false}).limit(100),
   client.from('case247_property_campaigns').select('title,content_kind,location_comune,rights_to_promote_verified,reviewed_by_staff,campaign_status,created_at').eq('organization_id',oid).order('created_at',{ascending:false}).limit(80),
   client.from('case247_optin_settings').select('intake_enabled,email_outbound_enabled,whatsapp_outbound_enabled,privacy_notice_approved,controller_confirmed,anti_bot_verified,notice_version').eq('organization_id',oid).maybeSingle()
  ]);
  if(requests.error||campaigns.error||settings.error){el('authStatus').textContent+=' · Errore lettura database';return}
  const req=requests.data||[],camp=campaigns.data||[],cfg=settings.data;
- const counts=[req.length,req.filter(r=>r.email_verified_at&&r.email_optin_requested&&r.status==='VERIFIED').length,
-  req.filter(r=>r.whatsapp_verified_at&&r.whatsapp_optin_requested&&r.status==='VERIFIED').length,
+ const counts=[req.length,req.filter(r=>r.email_verified_at&&r.email_optin_requested&&!r.revoked_at&&r.status==='VERIFIED').length,
+  req.filter(r=>r.whatsapp_verified_at&&r.whatsapp_optin_requested&&!r.revoked_at&&r.status==='VERIFIED').length,
   camp.filter(c=>c.campaign_status==='DRAFT').length];
  el('stats').replaceChildren();['Richieste (max 100)','Email confermate (max 100)','WhatsApp confermati (max 100)','Campagne in bozza (max 80)'].forEach((label,i)=>{const c=document.createElement('div');c.append(mk('b',counts[i]),mk('small',label));el('stats').append(c)});
  const active=cfg?.intake_enabled===true&&cfg?.privacy_notice_approved===true;
