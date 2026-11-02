@@ -7,6 +7,9 @@ on:
       - 'campagne/case247/privacy-richieste-immobili/**'
       - 'campagne/case247/revoca-consenso/**'
       - 'gestione/case247-comunicazioni/**'
+      - 'gestione/case247-conformita/**'
+      - 'docs/case247-piano-rilascio-gdpr.md'
+      - 'supabase/schema/case247-dispatch-gate-hardened.sql'
       - 'supabase/functions/case247-public-requests/**'
       - 'supabase/functions/case247-campaign-drafts/**'
       - 'scripts/case247_consent_first_qa.py'
@@ -17,6 +20,9 @@ on:
       - 'campagne/case247/privacy-richieste-immobili/**'
       - 'campagne/case247/revoca-consenso/**'
       - 'gestione/case247-comunicazioni/**'
+      - 'gestione/case247-conformita/**'
+      - 'docs/case247-piano-rilascio-gdpr.md'
+      - 'supabase/schema/case247-dispatch-gate-hardened.sql'
       - 'supabase/functions/case247-public-requests/**'
       - 'supabase/functions/case247-campaign-drafts/**'
       - 'scripts/case247_consent_first_qa.py'
@@ -50,7 +56,7 @@ jobs:
               if tag=='script':self.flag=False
             def handle_data(self,data):
               if self.flag:self.code[-1]+=data
-          paths=['campagne/case247/richieste-immobili/index.html','campagne/case247/revoca-consenso/index.html','gestione/case247-comunicazioni/index.html']
+          paths=['campagne/case247/richieste-immobili/index.html','campagne/case247/revoca-consenso/index.html','gestione/case247-comunicazioni/index.html','gestione/case247-conformita/index.html']
           for i,p in enumerate(paths):
             parser=Extract();parser.feed(Path(p).read_text(encoding='utf-8'))
             for j,code in enumerate(parser.code):
