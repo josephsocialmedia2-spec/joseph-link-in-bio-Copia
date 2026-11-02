@@ -1,5 +1,5 @@
 # CASE IN PUBBLICITÀ 24/7 — Raccolta richieste immobili e consensi email / WhatsApp
-Versione: 2026-11-02. Repositorio: `josephsocialmedia2-spec/joseph-link-in-bio-Copia`.
+Versione: 2026-11-02 (aggiornamento conferma titolare). Repositorio: `josephsocialmedia2-spec/joseph-link-in-bio-Copia`.
 Progetto Supabase **solo** `qmeftxsdfeyqozwoivzo`.
 
 ## Scopo
@@ -40,10 +40,11 @@ Cancella richieste non confermate scadute da 30 giorni e revoche da 30 giorni se
 storia di invii `SENT`; gli audit collegati vengono cancellati con i dati.
 Le registrazioni di invii avvenuti richiedono una retention dedicata da validare.
 
-## Stato reale al 2 novembre 2026
+## Stato reale al 2 novembre 2026 — dopo conferma dell'identità
+- **Titolare confermato dall'interessato**: Joseph Malafronte, persona fisica, per il marchio CASE IN PUBBLICITÀ 24/7. Nessuna società o partita IVA è stata attribuita in assenza di specifiche informazioni.
 - Modulo pubblicabile, ma **raccolta dati disabilitata**.
-- `case247_optin_settings.intake_enabled=false`, `controller_confirmed=false`,
-  `privacy_notice_approved=false`, `anti_bot_verified=false`.
+- `case247_optin_settings.controller_confirmed=true` e `controller_display_name='Joseph Malafronte'` (identità, non approvazione legale).
+- `case247_optin_settings.intake_enabled=false`, `privacy_notice_approved=false`, `anti_bot_verified=false`.
 - Invio email e WhatsApp **disabilitati**.
 - Endpoint pubblico richiede anche `CASE247_LEGAL_RELEASE_APPROVED=true`,
   `CASE247_TURNSTILE_SECRET_KEY` e `CASE247_TURNSTILE_SITE_KEY`, segreti solo server.
@@ -53,9 +54,7 @@ Le registrazioni di invii avvenuti richiedono una retention dedicata da validare
   non equivale a consenso per invii promozionali ricorrenti.
 
 ## Release gate — condizioni necessarie prima di attivare
-1. Confermare formalmente nome completo del titolare, recapiti e identità
-   (la vecchia informativa cita Joseph Malafronte come persona fisica, ma va
-   verificata per il brand CASE247).
+1. **Completato per il nome e la natura giuridica**: titolare Joseph Malafronte, persona fisica. **Ancora da verificare**: un recapito ufficiale effettivamente presidiato per le richieste di esercizio dei diritti ed eventuali ulteriori estremi di identificazione richiesti.
 2. Approvare l'informativa definitiva art. 13 GDPR: finalità/basi, categorie di
    interessati, conservazione, trasferimenti, fornitori e ruoli, diritti e revoca.
 3. Configurare e testare Cloudflare Turnstile con dominio GitHub Pages,
@@ -77,6 +76,9 @@ Le registrazioni di invii avvenuti richiedono una retention dedicata da validare
 10. Impostare sempre un'opzione per fermare gli invii in ciascun messaggio.
    L'email di marketing deve riportare identificazione mittente e disiscrizione,
    i messaggi WhatsApp rispettare opt-out e policy Meta.
+
+## Limiti della conferma
+La conferma della persona fisica consente di identificare il titolare ma non sostituisce la revisione della base giuridica, delle informazioni obbligatorie dell'art. 13, degli accordi con responsabili esterni, del test del modulo, della verifica dei recapiti o delle politiche delle piattaforme di invio. Il link WhatsApp avviato spontaneamente dall'utente non è un opt-in generalizzato. Restano disabilitati raccolta, invii e approvazione automatica delle campagne.
 
 ## Controlli effettivamente eseguiti
 - Migrazioni Supabase additive riuscite; RLS presente e `anon` non ha SELECT.
