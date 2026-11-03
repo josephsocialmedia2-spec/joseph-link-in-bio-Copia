@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-29",
+  "updated_at": "2026-11-03",
   "note": "Una struttura centrale. I profili per paese sono censiti separatamente in config/case247-territorio.json. I collegamenti non autorizzano da soli pubblicazioni.",
   "lines": {
     "imprese": {
@@ -55,7 +55,48 @@
       "PARTNER": "immobiliare",
       "IMM-HUB": "immobiliare",
       "STRATEGIE": "immobiliare",
-      "CREATIVE": "immobiliare"
+      "CREATIVE": "immobiliare",
+      "PAESE-AVIGLIANA": "territorial",
+      "PAESE-ALMESE": "territorial",
+      "PAESE-RUBIANA": "territorial",
+      "PAESE-VILLAR-DORA": "territorial",
+      "PAESE-CAPRIE": "territorial",
+      "PAESE-CONDOVE": "territorial",
+      "PAESE-SANT-AMBROGIO-DI-TORINO": "territorial",
+      "PAESE-CHIUSA-DI-SAN-MICHELE": "territorial",
+      "PAESE-VAIE": "territorial",
+      "PAESE-SAN-DIDERO": "territorial",
+      "PAESE-BORGONE-SUSA": "territorial",
+      "PAESE-BUSSOLENO": "territorial",
+      "PAESE-CHIANOCCO": "territorial",
+      "PAESE-SUSA": "territorial",
+      "PAESE-MOMPANTERO": "territorial",
+      "PAESE-SAN-GIORIO-DI-SUSA": "territorial",
+      "PAESE-VILLAR-FOCCHIARDO": "territorial",
+      "PAESE-VENAUS": "territorial",
+      "PAESE-GIAGLIONE": "territorial",
+      "PAESE-GRAVERE": "territorial",
+      "PAESE-EXILLES": "territorial",
+      "PAESE-SALBERTRAND": "territorial",
+      "PAESE-OULX": "territorial",
+      "PAESE-SAUZE-D-OULX": "territorial",
+      "PAESE-CESANA-TORINESE": "territorial",
+      "PAESE-CLAVIERE": "territorial",
+      "PAESE-NOVALESA": "territorial",
+      "PAESE-MONCENISIO": "territorial",
+      "PAESE-PRAGELATO": "territorial",
+      "PAESE-BARDONECCHIA": "territorial",
+      "PAESE-CHIOMONTE": "territorial",
+      "PAESE-SANT-ANTONINO-DI-SUSA": "territorial",
+      "PAESE-RIVOLI": "territorial",
+      "PAESE-GIAVENO": "territorial",
+      "PAESE-GRUGLIASCO": "territorial",
+      "PAESE-TORINO": "territorial",
+      "PAESE-MONCALIERI": "territorial",
+      "PAESE-COLLEGNO": "territorial",
+      "PAESE-PIANEZZA": "territorial",
+      "PAESE-BORGARO-TORINESE": "territorial",
+      "PAESE-VALGIOIE": "territorial"
     },
     "internal_only": [
       "REGIA",
@@ -70,5 +111,341 @@
     "approval_required": true,
     "items": []
   },
-  "security": "Pubblicazione non attiva. Vietato salvare OAuth, password o chiavi in GitHub Pages."
+  "security": "Pubblicazione non attiva. Vietato salvare OAuth, password o chiavi in GitHub Pages.",
+  "territorial": {
+    "config": "../config/case247-territorio.json",
+    "fallback_to_central": false,
+    "auto_publish": false,
+    "match_policy": "VERIFICATO_FONTE",
+    "towns": {
+      "avigliana": {
+        "landing_id": "PAESE-AVIGLIANA",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/avigliana/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "almese": {
+        "landing_id": "PAESE-ALMESE",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/almese/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "rubiana": {
+        "landing_id": "PAESE-RUBIANA",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/rubiana/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "villar-dora": {
+        "landing_id": "PAESE-VILLAR-DORA",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/villar-dora/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "caprie": {
+        "landing_id": "PAESE-CAPRIE",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/caprie/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "condove": {
+        "landing_id": "PAESE-CONDOVE",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/condove/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "sant-ambrogio-di-torino": {
+        "landing_id": "PAESE-SANT-AMBROGIO-DI-TORINO",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "chiusa-di-san-michele": {
+        "landing_id": "PAESE-CHIUSA-DI-SAN-MICHELE",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/chiusa-di-san-michele/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "vaie": {
+        "landing_id": "PAESE-VAIE",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/vaie/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "san-didero": {
+        "landing_id": "PAESE-SAN-DIDERO",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/san-didero/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "borgone-susa": {
+        "landing_id": "PAESE-BORGONE-SUSA",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/borgone-susa/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "bussoleno": {
+        "landing_id": "PAESE-BUSSOLENO",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/bussoleno/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "chianocco": {
+        "landing_id": "PAESE-CHIANOCCO",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/chianocco/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "susa": {
+        "landing_id": "PAESE-SUSA",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/susa/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "mompantero": {
+        "landing_id": "PAESE-MOMPANTERO",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/mompantero/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "san-giorio-di-susa": {
+        "landing_id": "PAESE-SAN-GIORIO-DI-SUSA",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/san-giorio-di-susa/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "villar-focchiardo": {
+        "landing_id": "PAESE-VILLAR-FOCCHIARDO",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/villar-focchiardo/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "venaus": {
+        "landing_id": "PAESE-VENAUS",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/venaus/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "giaglione": {
+        "landing_id": "PAESE-GIAGLIONE",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/giaglione/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "gravere": {
+        "landing_id": "PAESE-GRAVERE",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/gravere/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "exilles": {
+        "landing_id": "PAESE-EXILLES",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/exilles/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "salbertrand": {
+        "landing_id": "PAESE-SALBERTRAND",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/salbertrand/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "oulx": {
+        "landing_id": "PAESE-OULX",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/oulx/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "sauze-d-oulx": {
+        "landing_id": "PAESE-SAUZE-D-OULX",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sauze-d-oulx/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "cesana-torinese": {
+        "landing_id": "PAESE-CESANA-TORINESE",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/cesana-torinese/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "claviere": {
+        "landing_id": "PAESE-CLAVIERE",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/claviere/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "novalesa": {
+        "landing_id": "PAESE-NOVALESA",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/novalesa/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "moncenisio": {
+        "landing_id": "PAESE-MONCENISIO",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/moncenisio/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "pragelato": {
+        "landing_id": "PAESE-PRAGELATO",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/pragelato/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "bardonecchia": {
+        "landing_id": "PAESE-BARDONECCHIA",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/bardonecchia/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "chiomonte": {
+        "landing_id": "PAESE-CHIOMONTE",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/chiomonte/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "sant-antonino-di-susa": {
+        "landing_id": "PAESE-SANT-ANTONINO-DI-SUSA",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-antonino-di-susa/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "rivoli": {
+        "landing_id": "PAESE-RIVOLI",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/rivoli/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "giaveno": {
+        "landing_id": "PAESE-GIAVENO",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/giaveno/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "grugliasco": {
+        "landing_id": "PAESE-GRUGLIASCO",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/grugliasco/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "torino": {
+        "landing_id": "PAESE-TORINO",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/torino/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "moncalieri": {
+        "landing_id": "PAESE-MONCALIERI",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/moncalieri/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "collegno": {
+        "landing_id": "PAESE-COLLEGNO",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/collegno/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "pianezza": {
+        "landing_id": "PAESE-PIANEZZA",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/pianezza/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "borgaro-torinese": {
+        "landing_id": "PAESE-BORGARO-TORINESE",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/borgaro-torinese/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      },
+      "valgioie": {
+        "landing_id": "PAESE-VALGIOIE",
+        "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/valgioie/",
+        "facebook_url": "",
+        "instagram_url": "",
+        "status": "DA_VERIFICARE",
+        "contents": "../campagne/case247/territorio/bozze.json"
+      }
+    }
+  }
 }

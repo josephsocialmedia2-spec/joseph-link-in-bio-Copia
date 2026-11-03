@@ -1,0 +1,401 @@
+{
+  "policy": "Comune dichiarato nella descrizione della fonte; non è verifica catastale o del civico. Rivalidare se cambia la descrizione.",
+  "items": {
+    "11421589602631": {
+      "town_id": "borgaro-torinese",
+      "municipality": "Borgaro Torinese",
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-a-borgaro",
+      "evidence": "Elegante appartamento al secondo piano di Borgaro",
+      "description_sha256": "eb36db49f2c1294a34e82809372f81ced7b81b788bd06be259e3d787c39d2894",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "11230406017351": {
+      "town_id": "sant-ambrogio-di-torino",
+      "municipality": "Sant’Ambrogio di Torino",
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-sa-santambrogio",
+      "evidence": "SANT'AMBROGIO IN PICCOLA PALAZZINA",
+      "description_sha256": "77758ff14a6d1ceb2609f7e90783f25c6fe3bbc8fe5e7f55698d2655e14aee22",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "11228888760647": {
+      "town_id": "grugliasco",
+      "municipality": "Grugliasco",
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-a-grugliasco-2",
+      "evidence": "Novità a Grugliasco, in Via Don Caustico",
+      "description_sha256": "0472911547ebc498a7c3b0a04d09c4ca26acd86b5d1a06f9b57c4c6f891f1598",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "11203075113287": {
+      "town_id": "valgioie",
+      "municipality": "Valgioie",
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
+      "evidence": "bilocale completamente ristrutturato a Valgioie",
+      "description_sha256": "610eafe69fbd6885b3520092ea022c2a3a80100c3f3588b05e3600e53ca514e5",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "11190682255687": {
+      "town_id": "rivoli",
+      "municipality": "Rivoli",
+      "source_url": "https://lasacraimmobiliare.it/products/attivita-caffetteria-pasticceria-a-rivoli",
+      "evidence": "A Rivoli proponiamo in cessione attività",
+      "description_sha256": "1e313233f6189c93fcf3c7c631dd140160fa7e595e625ca0aad2531ba50f960a",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "11136591069511": {
+      "town_id": "avigliana",
+      "municipality": "Avigliana",
+      "source_url": "https://lasacraimmobiliare.it/products/attivita-bar-ristorante-tabacchi-lotto",
+      "evidence": "Attività commerciale consolidata ad Avigliana",
+      "description_sha256": "4f2cb52011d445e80767ca87dacf6f70bccf045412b43cd60b3b1e0fe4b0f44e",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "11101300195655": {
+      "town_id": "moncalieri",
+      "municipality": "Moncalieri",
+      "source_url": "https://lasacraimmobiliare.it/products/alloggio-a-moncalieri-di-4-locali",
+      "evidence": "Esclusiva proprietà a Moncalieri",
+      "description_sha256": "a5f1154599bdf1a9ed05f0e48f7b2cce9e9a4d4e6da1359c1964644fa05faf04",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "11038271897927": {
+      "town_id": "sant-antonino-di-susa",
+      "municipality": "Sant’Antonino di Susa",
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-al-piano-terra-a-santantonino-di-di-susa",
+      "evidence": "Affacciato sulla tranquilla Sant'Antonino di Susa, questo appartamento",
+      "description_sha256": "ca6136663b39a4b16f04a26e402624930dd3211694c27d9a7c3bc70e6e80a2b9",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "11025377689927": {
+      "town_id": "avigliana",
+      "municipality": "Avigliana",
+      "source_url": "https://lasacraimmobiliare.it/products/attivita-bar-ristorante-ad-avigliana",
+      "evidence": "Cedesi attività bar ristorante ad Avigliana",
+      "description_sha256": "1afd034e0f608e9d8045f3a3e722d9df322c481d41669727a6efdc13bbd56639",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10974704042311": {
+      "town_id": "torino",
+      "municipality": "Torino",
+      "source_url": "https://lasacraimmobiliare.it/products/alloggio-a-torino-tre-locali",
+      "evidence": "alloggio nel cuore di Torino",
+      "description_sha256": "ed21a074bf09bc2dfa30887f6c8bf24b0fcbfabc6a035d9d198b798b9b3fbed7",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10903112876359": {
+      "town_id": "grugliasco",
+      "municipality": "Grugliasco",
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-a-grugliasco-1",
+      "evidence": "appartamento al secondo piano a Grugliasco",
+      "description_sha256": "0c6e600b1c5f39bad548ef1997d737ec64dc806142218320e5623b528f4f5276",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10886810075463": {
+      "town_id": "avigliana",
+      "municipality": "Avigliana",
+      "source_url": "https://lasacraimmobiliare.it/products/chalet-ad-avigliana",
+      "evidence": "Affascinante chalet ad Avigliana",
+      "description_sha256": "770e1dc3212e6428812a177ba198bf6d0bde030b6806e52e30025d607bb67b12",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10826816553287": {
+      "town_id": "villar-dora",
+      "municipality": "Villar Dora",
+      "source_url": "https://lasacraimmobiliare.it/products/villar-dora-appartamento-in-quadrifamiliare",
+      "evidence": "Nel cuore di Villar Dora",
+      "description_sha256": "9eba3fbd47384d831591d849c849a444161ebcfcab6e84a2e7c1c6de6ee7c066",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10816074056007": {
+      "town_id": "caprie",
+      "municipality": "Caprie",
+      "source_url": "https://lasacraimmobiliare.it/products/piano-terra-in-bifamigliare",
+      "evidence": "A Caprie, in zona tranquilla",
+      "description_sha256": "b0cc9e31233002fadc731d5901cac0e3542439b959e3936c8960127d4cbc4691",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10808056250695": {
+      "town_id": "rivoli",
+      "municipality": "Rivoli",
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-a-rivvoli-quattro-locali",
+      "evidence": "Ampio appartamento di 4 locali a Rivoli",
+      "description_sha256": "c017a827d0f7802643ed834dc8e41aaf283adf91820844ea258c473b875f4753",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10790750257479": {
+      "town_id": "rivoli",
+      "municipality": "Rivoli",
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-bilocale-in-vendita-a-rivoli",
+      "evidence": "A Rivoli, in zona comoda e ben servita",
+      "description_sha256": "695fa7810621705e4ebd578cf7d9f6f5ca1bc0ca245dfea1a71e545382195711",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10781715595591": {
+      "town_id": "villar-dora",
+      "municipality": "Villar Dora",
+      "source_url": "https://lasacraimmobiliare.it/products/due-alloggi-in-in-quadrifamilare-villar-dora",
+      "evidence": "L’immobile è situato nel centro di Villar Dora",
+      "description_sha256": "d523cca2c59d6ccd06d5ad5e2ce8c2717072ede73e993e661f8fd727e93ae550",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10777477611847": {
+      "town_id": "caprie",
+      "municipality": "Caprie",
+      "source_url": "https://lasacraimmobiliare.it/products/trilocale-con-terrazzo-e-box-a-caprie",
+      "evidence": "A Caprie, nella tranquilla e soleggiata frazione Novaretto",
+      "description_sha256": "27e84fe1be993791d0fd30a87512e10bb48329ede1bf444494fe98e779e0a0f8",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10770991481159": {
+      "town_id": "rubiana",
+      "municipality": "Rubiana",
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-a-rubiana",
+      "evidence": "in Via Roma a Rubiana",
+      "description_sha256": "4a5d174bd6ac9c398f5a7383cd14b2765eeb41a8571c82446aef5dfaefd78e06",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10759305756999": {
+      "town_id": "rubiana",
+      "municipality": "Rubiana",
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-due-locali-in-vendita-a-rubiana-disponibile-subito",
+      "evidence": "A Rubiana proponiamo in vendita",
+      "description_sha256": "b3b0501c220c204206484eb677c810097a5bd56764a2bda997ffb32775cb8a48",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10666264625479": {
+      "town_id": "pianezza",
+      "municipality": "Pianezza",
+      "source_url": "https://lasacraimmobiliare.it/products/trilocale-in-vendita-a-pianezza-con-giardino-esclusivo",
+      "evidence": "A Pianezza proponiamo in vendita",
+      "description_sha256": "e6f302dfef206d2170435526277a1e32a761ae40b76b65a46a27f5a04769cc61",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10724689871175": {
+      "town_id": "sant-ambrogio-di-torino",
+      "municipality": "Sant’Ambrogio di Torino",
+      "source_url": "https://lasacraimmobiliare.it/products/bilocale-in-vendita-a-sant-ambrogio-disponibile-subito",
+      "evidence": "Nel cuore di Sant’Ambrogio proponiamo in vendita",
+      "description_sha256": "f90a84e862118573f3c3082edb91c480b0b2f6e793f67629028384791ce72114",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10671726395719": {
+      "town_id": "collegno",
+      "municipality": "Collegno",
+      "source_url": "https://lasacraimmobiliare.it/products/alloggio-di-due-locali-collegno",
+      "evidence": "COLLEGNO - A 200 metri da C.so Francia",
+      "description_sha256": "915628b64b29a3b6723116492281dfc2f13c6ef206245627f0ebfaa124852c46",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10716674720071": {
+      "town_id": "sant-ambrogio-di-torino",
+      "municipality": "Sant’Ambrogio di Torino",
+      "source_url": "https://lasacraimmobiliare.it/products/cessione-attivita-alimentare-storica-a-sant-ambrogio-di-torino",
+      "evidence": "A Sant’Ambrogio di Torino, in Via Umberto I",
+      "description_sha256": "614cb87cafa7af2db2ea027993502598db2b702278a3ae271fa82cef56df3d78",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10680937873735": {
+      "town_id": "sant-ambrogio-di-torino",
+      "municipality": "Sant’Ambrogio di Torino",
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-in-bifamiliare-a-sant-ambrogio-con-box-doppio",
+      "evidence": "A Sant’Ambrogio proponiamo in vendita",
+      "description_sha256": "c684ad68a41e4bc073efd059d661ade7cb2d8fd790759d7b0491e154fd43af64",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10673635721543": {
+      "town_id": "sant-ambrogio-di-torino",
+      "municipality": "Sant’Ambrogio di Torino",
+      "source_url": "https://lasacraimmobiliare.it/products/negozio-commerciale-in-affitto-a-sant-ambrogio-di-torino",
+      "evidence": "negozio commerciale in posizione strategica a Sant’Ambrogio di Torino",
+      "description_sha256": "400583748e49082e729c534577826b12c382d84e67ceb355ec27738c34215651",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10640300179783": {
+      "town_id": "sant-ambrogio-di-torino",
+      "municipality": "Sant’Ambrogio di Torino",
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-4-locali-arredato-in-affitto-a-sant-ambrogio",
+      "evidence": "A Sant’Ambrogio proponiamo in affitto",
+      "description_sha256": "747702dbfd3af2222634e0606250eb2bcc24286c1f3f1c3d62b1a8b341ac0d91",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10596910858567": {
+      "town_id": "villar-dora",
+      "municipality": "Villar Dora",
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-in-vendita-a-villar-dora-libero-subito-con-cortile-privato",
+      "evidence": "A Villar Dora, Torino, proponiamo in vendita",
+      "description_sha256": "4a140cd7089a887bba617a21f24c3850339aa4bd8adc4497f547df2534267149",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10577002398023": {
+      "town_id": "sant-ambrogio-di-torino",
+      "municipality": "Sant’Ambrogio di Torino",
+      "source_url": "https://lasacraimmobiliare.it/products/casa-indipendente-in-vendita-a-santambrogio-di-torino-con-terrazzo-e-giardino",
+      "evidence": "Nel centro di Sant'Ambrogio di Torino",
+      "description_sha256": "3fdef93867583265296bc886818868f8d450ceb7d031f73195e5754678ed8f62",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10577000005959": {
+      "town_id": "sant-antonino-di-susa",
+      "municipality": "Sant’Antonino di Susa",
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-in-vendita-a-sant-antonino-di-susa-con-terrazzo",
+      "evidence": "A Sant’Antonino di Susa, in Borgata Cresto",
+      "description_sha256": "c433fabb3907fdd1395be1db501f23d95daf5d98641d2ebf84709fdc23bdced2",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10574285603143": {
+      "town_id": "sant-ambrogio-di-torino",
+      "municipality": "Sant’Ambrogio di Torino",
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-in-vendita-a-sant-ambrogio-di-torino-con-giardino-privato",
+      "evidence": "A Sant’Ambrogio di Torino, in zona tranquilla",
+      "description_sha256": "41c57e8a14cac3a29568418709eaa3fd063ae0f484302816aab1e2b51ec9466f",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10564873093447": {
+      "town_id": "sant-ambrogio-di-torino",
+      "municipality": "Sant’Ambrogio di Torino",
+      "source_url": "https://lasacraimmobiliare.it/products/bilocale-in-affitto-a-santambrogio-di-torino-con-box-e-posto-auto",
+      "evidence": "A Sant'Ambrogio di Torino, in zona comoda ai servizi",
+      "description_sha256": "c60af5a1e163effea940b8c499cf3471f427932dd139010f53ffb53521fe4618",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10564780753223": {
+      "town_id": "sant-ambrogio-di-torino",
+      "municipality": "Sant’Ambrogio di Torino",
+      "source_url": "https://lasacraimmobiliare.it/products/terreno-agricolo-in-vendita-a-sant-ambrogio-di-torino-di-circa-2-000-mq",
+      "evidence": "A Sant’Ambrogio di Torino, in posizione tranquilla",
+      "description_sha256": "73ce8a3e3388a8e7e2691055ceecbab68e1d00789d002d2ece1f514bfc1be1a7",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10555969765703": {
+      "town_id": "sant-ambrogio-di-torino",
+      "municipality": "Sant’Ambrogio di Torino",
+      "source_url": "https://lasacraimmobiliare.it/products/porzione-di-villa-in-vendita-a-sant-ambrogio-con-giardino-e-piscina",
+      "evidence": "A Sant’Ambrogio, in posizione privilegiata",
+      "description_sha256": "afe0d0a9abe065635a79960057e32f706c66940f0dc43e5b0f2711097d02b512",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10555043021127": {
+      "town_id": "sant-ambrogio-di-torino",
+      "municipality": "Sant’Ambrogio di Torino",
+      "source_url": "https://lasacraimmobiliare.it/products/casa-semindipendente-in-affitto-a-sant-ambrogio-con-corte-esclusiva",
+      "evidence": "A Sant’Ambrogio, nel centro paese",
+      "description_sha256": "4c4bdaaa9da92aa26ceb5d3ce76b06d9b6a459068c38d5169b75f8453138b265",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10552842780999": {
+      "town_id": "torino",
+      "municipality": "Torino",
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-in-vendita-a-torino-zona-via-onorato-vigliani-ultimo-piano",
+      "evidence": "Nel cuore di Torino, in zona Via Onorato Vigliani",
+      "description_sha256": "2a33282bbb96b82788f96460c0ec9d6bad12110380d694eb12e0a0c040fe14aa",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10552816369991": {
+      "town_id": "caprie",
+      "municipality": "Caprie",
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-in-affitto-a-caprie-con-mansarda-e-box-doppio",
+      "evidence": "A Caprie, proponiamo in affitto",
+      "description_sha256": "34defd5383f58551765436200beb76075e3324b40e9931b75f6bd93c0265518c",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10552805753159": {
+      "town_id": "sant-ambrogio-di-torino",
+      "municipality": "Sant’Ambrogio di Torino",
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-in-vendita-a-sant-ambrogio-di-torino-appena-ribassato",
+      "evidence": "Nel cuore di Sant’Ambrogio di Torino proponiamo in vendita",
+      "description_sha256": "d82eee6aa169c40781fbade04066575bef5bab1209cec48b23e2a86f9f3f5444",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10552768561479": {
+      "town_id": "caprie",
+      "municipality": "Caprie",
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-in-vendita-a-caprie-ultimo-piano-con-ascensore",
+      "evidence": "A Caprie proponiamo in vendita",
+      "description_sha256": "531adbee676672fe6ec7ea747d7f623c8cd46fc9b7deb145256b1be4ff0d6e71",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10552748212551": {
+      "town_id": "sant-ambrogio-di-torino",
+      "municipality": "Sant’Ambrogio di Torino",
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-in-vendita-a-sant-ambrogio-di-torino-in-piazza-del-comune",
+      "evidence": "A Sant’Ambrogio di Torino, in Piazza del Comune",
+      "description_sha256": "377290ee6c7519664c66231b9786e73a2bcd019fd170831d51691446fe0baa8d",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10552683856199": {
+      "town_id": "sant-ambrogio-di-torino",
+      "municipality": "Sant’Ambrogio di Torino",
+      "source_url": "https://lasacraimmobiliare.it/products/casa-in-vendita-a-sant-ambrogio-con-doppia-esposizione-e-riscaldamento-autonomo",
+      "evidence": "Nel cuore di Sant’Ambrogio proponiamo in vendita",
+      "description_sha256": "87f5efdb1d6d14cfdab38e1d5d3d6c612898235738be0c05bbf69cd691e32e21",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10552459985223": {
+      "town_id": "sant-ambrogio-di-torino",
+      "municipality": "Sant’Ambrogio di Torino",
+      "source_url": "https://lasacraimmobiliare.it/products/bilocale-in-vendita-a-sant-ambrogio",
+      "evidence": "Nel cuore di Sant’Ambrogio proponiamo in vendita",
+      "description_sha256": "89cfe82dbe005140f116bd2630978f9d6f90c9fe2e79ec27d0e78d1e9eacca14",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10549582070087": {
+      "town_id": "sant-ambrogio-di-torino",
+      "municipality": "Sant’Ambrogio di Torino",
+      "source_url": "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq",
+      "evidence": "A Sant’Ambrogio di Torino proponiamo in vendita",
+      "description_sha256": "0e59ce5294d8a23db3ace2299a8b7260ee0efab9cd9a2a5f9336c94c99a20422",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    },
+    "10549571617095": {
+      "town_id": "sant-ambrogio-di-torino",
+      "municipality": "Sant’Ambrogio di Torino",
+      "source_url": "https://lasacraimmobiliare.it/products/terreno-edificabile-in-vendita-a-sant-ambrogio-di-torino-di-10-000-mq",
+      "evidence": "A Sant’Ambrogio di Torino proponiamo in vendita",
+      "description_sha256": "7c09d54c45832c283be0aea71b04c18ed9317c7b4f9d22da42cc7bca6887e2e8",
+      "reviewed_at": "2026-11-03",
+      "source_snapshot_at": "2026-11-03T14:49:58.576268+00:00"
+    }
+  }
+}

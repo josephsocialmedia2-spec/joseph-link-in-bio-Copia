@@ -15,3 +15,6 @@ privacy-censimento/*-clienti.csv
 .env
 .env.*
 # Il template VUOTO privacy-censimento/registro-consensi-template.csv è consentito.
+
+__pycache__/
+*.pyc

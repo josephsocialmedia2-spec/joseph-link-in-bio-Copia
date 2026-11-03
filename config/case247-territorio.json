@@ -1,18 +1,20 @@
 {
   "schema_version": 1,
   "brand": "Case in Pubblicità 24/7",
-  "updated_at": "2026-11-03T14:40:41.871673+00:00",
+  "updated_at": "2026-11-03T15:17:07.490841+00:00",
   "model": "UNA_STRUTTURA_UNA_REGIA_UNA_PAGINA_PER_PAESE",
   "source": "https://lasacraimmobiliare.it/",
   "catalog_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/immobili/catalogo.json",
   "catalog_schedule": "05:20 Europe/Rome",
-  "town_match_policy": "Menzione nel titolo; non equivale a indirizzo verificato. Le occorrenze dentro nomi di comuni più lunghi vengono escluse.",
+  "town_match_policy": "Comune verificato nella descrizione della fonte, con evidenza registrata. Nessuna assegnazione dal solo titolo. Modifiche della descrizione invalidano la verifica.",
   "central": {
     "facebook_url": "https://www.facebook.com/profile.php?id=61596180383970",
     "instagram_url": "https://www.instagram.com/caseinpubblicita/",
     "metricool_brand_id": 7844901,
     "metricool_connection": "FACEBOOK_INSTAGRAM_RILEVATI_DAL_CONNETTORE",
-    "publishing_permissions": "NON_VERIFICATE_DA_QUESTO_INTERVENTO"
+    "publishing_permissions": "NON_VERIFICATE_DA_QUESTO_INTERVENTO",
+    "metricool_facebook_id": "1402024242991896",
+    "metricool_identity_status": "DA_VERIFICARE: ID restituito da Metricool diverso dall’ID nell’URL centrale; non attribuire controllo o equivalenza senza verifica Meta."
   },
   "towns": [
     {
@@ -22,18 +24,33 @@
         "Avigliana"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/avigliana/",
-      "social_page_name": "Case in Pubblicità 24/7 · Avigliana",
+      "social_page_name": "Case in Pubblicità 24/7 - Avigliana",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Avigliana"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Avigliana. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "almese",
@@ -42,18 +59,33 @@
         "Almese"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/almese/",
-      "social_page_name": "Case in Pubblicità 24/7 · Almese",
+      "social_page_name": "Case in Pubblicità 24/7 - Almese",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Almese"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Almese. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "rubiana",
@@ -62,18 +94,33 @@
         "Rubiana"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/rubiana/",
-      "social_page_name": "Case in Pubblicità 24/7 · Rubiana",
+      "social_page_name": "Case in Pubblicità 24/7 - Rubiana",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Rubiana"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Rubiana. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "villar-dora",
@@ -82,18 +129,33 @@
         "Villar Dora"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/villar-dora/",
-      "social_page_name": "Case in Pubblicità 24/7 · Villar Dora",
+      "social_page_name": "Case in Pubblicità 24/7 - Villar Dora",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Villar Dora"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Villar Dora. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "caprie",
@@ -102,18 +164,33 @@
         "Caprie"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/caprie/",
-      "social_page_name": "Case in Pubblicità 24/7 · Caprie",
+      "social_page_name": "Case in Pubblicità 24/7 - Caprie",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Caprie"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Caprie. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "condove",
@@ -122,18 +199,33 @@
         "Condove"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/condove/",
-      "social_page_name": "Case in Pubblicità 24/7 · Condove",
+      "social_page_name": "Case in Pubblicità 24/7 - Condove",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Condove"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Condove. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "sant-ambrogio-di-torino",
@@ -144,18 +236,33 @@
         "Santambrogio"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
-      "social_page_name": "Case in Pubblicità 24/7 · Sant’Ambrogio di Torino",
+      "social_page_name": "Case in Pubblicità 24/7 - Sant’Ambrogio di Torino",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Sant’Ambrogio di Torino"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Sant’Ambrogio di Torino. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "chiusa-di-san-michele",
@@ -164,18 +271,33 @@
         "Chiusa di San Michele"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/chiusa-di-san-michele/",
-      "social_page_name": "Case in Pubblicità 24/7 · Chiusa di San Michele",
+      "social_page_name": "Case in Pubblicità 24/7 - Chiusa di San Michele",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Chiusa di San Michele"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Chiusa di San Michele. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "vaie",
@@ -184,18 +306,33 @@
         "Vaie"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/vaie/",
-      "social_page_name": "Case in Pubblicità 24/7 · Vaie",
+      "social_page_name": "Case in Pubblicità 24/7 - Vaie",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Vaie"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Vaie. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "san-didero",
@@ -204,18 +341,33 @@
         "San Didero"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/san-didero/",
-      "social_page_name": "Case in Pubblicità 24/7 · San Didero",
+      "social_page_name": "Case in Pubblicità 24/7 - San Didero",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - San Didero"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a San Didero. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "borgone-susa",
@@ -224,18 +376,33 @@
         "Borgone Susa"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/borgone-susa/",
-      "social_page_name": "Case in Pubblicità 24/7 · Borgone Susa",
+      "social_page_name": "Case in Pubblicità 24/7 - Borgone Susa",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Borgone Susa"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Borgone Susa. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "bussoleno",
@@ -244,18 +411,33 @@
         "Bussoleno"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/bussoleno/",
-      "social_page_name": "Case in Pubblicità 24/7 · Bussoleno",
+      "social_page_name": "Case in Pubblicità 24/7 - Bussoleno",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Bussoleno"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Bussoleno. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "chianocco",
@@ -264,18 +446,33 @@
         "Chianocco"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/chianocco/",
-      "social_page_name": "Case in Pubblicità 24/7 · Chianocco",
+      "social_page_name": "Case in Pubblicità 24/7 - Chianocco",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Chianocco"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Chianocco. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "susa",
@@ -284,18 +481,33 @@
         "Susa"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/susa/",
-      "social_page_name": "Case in Pubblicità 24/7 · Susa",
+      "social_page_name": "Case in Pubblicità 24/7 - Susa",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Susa"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Susa. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "mompantero",
@@ -304,18 +516,33 @@
         "Mompantero"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/mompantero/",
-      "social_page_name": "Case in Pubblicità 24/7 · Mompantero",
+      "social_page_name": "Case in Pubblicità 24/7 - Mompantero",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Mompantero"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Mompantero. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "san-giorio-di-susa",
@@ -324,18 +551,33 @@
         "San Giorio di Susa"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/san-giorio-di-susa/",
-      "social_page_name": "Case in Pubblicità 24/7 · San Giorio di Susa",
+      "social_page_name": "Case in Pubblicità 24/7 - San Giorio di Susa",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - San Giorio di Susa"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a San Giorio di Susa. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "villar-focchiardo",
@@ -344,18 +586,33 @@
         "Villar Focchiardo"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/villar-focchiardo/",
-      "social_page_name": "Case in Pubblicità 24/7 · Villar Focchiardo",
+      "social_page_name": "Case in Pubblicità 24/7 - Villar Focchiardo",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Villar Focchiardo"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Villar Focchiardo. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "venaus",
@@ -364,18 +621,33 @@
         "Venaus"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/venaus/",
-      "social_page_name": "Case in Pubblicità 24/7 · Venaus",
+      "social_page_name": "Case in Pubblicità 24/7 - Venaus",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Venaus"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Venaus. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "giaglione",
@@ -384,18 +656,33 @@
         "Giaglione"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/giaglione/",
-      "social_page_name": "Case in Pubblicità 24/7 · Giaglione",
+      "social_page_name": "Case in Pubblicità 24/7 - Giaglione",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Giaglione"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Giaglione. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "gravere",
@@ -404,18 +691,33 @@
         "Gravere"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/gravere/",
-      "social_page_name": "Case in Pubblicità 24/7 · Gravere",
+      "social_page_name": "Case in Pubblicità 24/7 - Gravere",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Gravere"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Gravere. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "exilles",
@@ -424,18 +726,33 @@
         "Exilles"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/exilles/",
-      "social_page_name": "Case in Pubblicità 24/7 · Exilles",
+      "social_page_name": "Case in Pubblicità 24/7 - Exilles",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Exilles"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Exilles. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "salbertrand",
@@ -444,18 +761,33 @@
         "Salbertrand"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/salbertrand/",
-      "social_page_name": "Case in Pubblicità 24/7 · Salbertrand",
+      "social_page_name": "Case in Pubblicità 24/7 - Salbertrand",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Salbertrand"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Salbertrand. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "oulx",
@@ -464,18 +796,33 @@
         "Oulx"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/oulx/",
-      "social_page_name": "Case in Pubblicità 24/7 · Oulx",
+      "social_page_name": "Case in Pubblicità 24/7 - Oulx",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Oulx"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Oulx. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "sauze-d-oulx",
@@ -484,18 +831,33 @@
         "Sauze d’Oulx"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sauze-d-oulx/",
-      "social_page_name": "Case in Pubblicità 24/7 · Sauze d’Oulx",
+      "social_page_name": "Case in Pubblicità 24/7 - Sauze d’Oulx",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Sauze d’Oulx"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Sauze d’Oulx. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "cesana-torinese",
@@ -504,18 +866,33 @@
         "Cesana Torinese"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/cesana-torinese/",
-      "social_page_name": "Case in Pubblicità 24/7 · Cesana Torinese",
+      "social_page_name": "Case in Pubblicità 24/7 - Cesana Torinese",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Cesana Torinese"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Cesana Torinese. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "claviere",
@@ -524,18 +901,33 @@
         "Claviere"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/claviere/",
-      "social_page_name": "Case in Pubblicità 24/7 · Claviere",
+      "social_page_name": "Case in Pubblicità 24/7 - Claviere",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Claviere"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Claviere. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "novalesa",
@@ -544,18 +936,33 @@
         "Novalesa"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/novalesa/",
-      "social_page_name": "Case in Pubblicità 24/7 · Novalesa",
+      "social_page_name": "Case in Pubblicità 24/7 - Novalesa",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Novalesa"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Novalesa. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "moncenisio",
@@ -564,18 +971,33 @@
         "Moncenisio"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/moncenisio/",
-      "social_page_name": "Case in Pubblicità 24/7 · Moncenisio",
+      "social_page_name": "Case in Pubblicità 24/7 - Moncenisio",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Moncenisio"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Moncenisio. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "pragelato",
@@ -584,18 +1006,33 @@
         "Pragelato"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/pragelato/",
-      "social_page_name": "Case in Pubblicità 24/7 · Pragelato",
+      "social_page_name": "Case in Pubblicità 24/7 - Pragelato",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Pragelato"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Pragelato. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "bardonecchia",
@@ -604,18 +1041,33 @@
         "Bardonecchia"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/bardonecchia/",
-      "social_page_name": "Case in Pubblicità 24/7 · Bardonecchia",
+      "social_page_name": "Case in Pubblicità 24/7 - Bardonecchia",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Bardonecchia"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Bardonecchia. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "chiomonte",
@@ -624,18 +1076,33 @@
         "Chiomonte"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/chiomonte/",
-      "social_page_name": "Case in Pubblicità 24/7 · Chiomonte",
+      "social_page_name": "Case in Pubblicità 24/7 - Chiomonte",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Chiomonte"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Chiomonte. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "sant-antonino-di-susa",
@@ -646,18 +1113,33 @@
         "Sant’Antonino di Dì Susa"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-antonino-di-susa/",
-      "social_page_name": "Case in Pubblicità 24/7 · Sant’Antonino di Susa",
+      "social_page_name": "Case in Pubblicità 24/7 - Sant’Antonino di Susa",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Sant’Antonino di Susa"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Sant’Antonino di Susa. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "rivoli",
@@ -666,18 +1148,33 @@
         "Rivoli"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/rivoli/",
-      "social_page_name": "Case in Pubblicità 24/7 · Rivoli",
+      "social_page_name": "Case in Pubblicità 24/7 - Rivoli",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Rivoli"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Rivoli. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "giaveno",
@@ -686,18 +1183,33 @@
         "Giaveno"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/giaveno/",
-      "social_page_name": "Case in Pubblicità 24/7 · Giaveno",
+      "social_page_name": "Case in Pubblicità 24/7 - Giaveno",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Giaveno"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Giaveno. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "grugliasco",
@@ -706,18 +1218,33 @@
         "Grugliasco"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/grugliasco/",
-      "social_page_name": "Case in Pubblicità 24/7 · Grugliasco",
+      "social_page_name": "Case in Pubblicità 24/7 - Grugliasco",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Grugliasco"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Grugliasco. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "torino",
@@ -726,18 +1253,33 @@
         "Torino"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/torino/",
-      "social_page_name": "Case in Pubblicità 24/7 · Torino",
+      "social_page_name": "Case in Pubblicità 24/7 - Torino",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Torino"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Torino. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "moncalieri",
@@ -746,18 +1288,33 @@
         "Moncalieri"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/moncalieri/",
-      "social_page_name": "Case in Pubblicità 24/7 · Moncalieri",
+      "social_page_name": "Case in Pubblicità 24/7 - Moncalieri",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Moncalieri"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Moncalieri. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "collegno",
@@ -766,18 +1323,33 @@
         "Collegno"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/collegno/",
-      "social_page_name": "Case in Pubblicità 24/7 · Collegno",
+      "social_page_name": "Case in Pubblicità 24/7 - Collegno",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Collegno"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Collegno. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "pianezza",
@@ -786,18 +1358,33 @@
         "Pianezza"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/pianezza/",
-      "social_page_name": "Case in Pubblicità 24/7 · Pianezza",
+      "social_page_name": "Case in Pubblicità 24/7 - Pianezza",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Pianezza"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Pianezza. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "borgaro-torinese",
@@ -807,18 +1394,33 @@
         "Borgaro"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/borgaro-torinese/",
-      "social_page_name": "Case in Pubblicità 24/7 · Borgaro Torinese",
+      "social_page_name": "Case in Pubblicità 24/7 - Borgaro Torinese",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Borgaro Torinese"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Borgaro Torinese. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     },
     {
       "id": "valgioie",
@@ -827,18 +1429,33 @@
         "Valgioie"
       ],
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/valgioie/",
-      "social_page_name": "Case in Pubblicità 24/7 · Valgioie",
+      "social_page_name": "Case in Pubblicità 24/7 - Valgioie",
       "channels": {
         "facebook": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE"
         },
         "instagram": {
           "url": "",
-          "status": "DA_CREARE_O_COLLEGARE"
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Valgioie"
         }
       },
-      "auto_publish": false
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE",
+        "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
+      },
+      "operational_status": "DA_VERIFICARE",
+      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "bio": "Immobili a Valgioie. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     }
   ]
 }

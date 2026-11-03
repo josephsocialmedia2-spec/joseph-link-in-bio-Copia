@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import re
 import unicodedata
+from verified_locations import apply_locations
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -24,18 +25,19 @@ def mention_ids(item, towns):
 def build():
     config = json.loads((ROOT / 'config/case247-territorio.json').read_text())
     catalog = json.loads((ROOT / 'immobili/catalogo.json').read_text())
+    apply_locations(catalog['items'])
     for item in catalog['items']:
         item['town_mentions'] = mention_ids(item, config['towns'])
     (ROOT / 'immobili/catalogo.json').write_text(json.dumps(catalog, ensure_ascii=False, indent=2) + '\n')
     drafts = []
     for town in config['towns']:
-        listings = [p for p in catalog['items'] if town['id'] in p['town_mentions']]
+        listings = [p for p in catalog['items'] if p.get('location_status') == 'VERIFICATO_FONTE' and p.get('town_id') == town['id']]
         for item in listings:
             price = 'Prezzo su richiesta' if item['price'] is None else f"{item['price']:,.0f} €".replace(',', '.')
             drafts.append({
                 'id': f"{town['id']}:{item['id']}", 'town_id': town['id'], 'town': town['name'],
                 'listing_id': item['id'], 'source_url': item['url'], 'media_url': item['image'],
-                'caption': f"{town['name']} · Dal catalogo La Sacra Immobiliare\n\n{item['title']}\n{price}\n\nL’annuncio cita {town['name']} nel titolo: verifica posizione, caratteristiche e disponibilità nella scheda originale.\n{item['url']}\n\nCase in Pubblicità 24/7 · Comunicazione immobiliare. Intermediazione: La Sacra Immobiliare.",
+                'caption': f"{town['name']} · Dal catalogo La Sacra Immobiliare\n\n{item['title']}\n{price}\n\nComune dichiarato nella descrizione della fonte: {town['name']}. Caratteristiche e disponibilità nella scheda originale.\n{item['url']}\nCatalogo locale: {town['landing_url']}\n\nCase in Pubblicità 24/7 · Comunicazione immobiliare. Intermediazione: La Sacra Immobiliare.",
                 'landing_url': town['landing_url'], 'status': 'BOZZA_DA_REVISIONARE',
                 'publishing_status': 'DESTINAZIONE_TERRITORIALE_DA_COLLEGARE',
                 'approved': False, 'auto_publish': False,

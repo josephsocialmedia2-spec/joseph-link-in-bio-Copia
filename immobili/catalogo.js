@@ -5,9 +5,6 @@
   const storageKey = 'case247-property-favourites-v1';
   let saved = new Set(), data = [], page = 1, mode = 'all';
   const townId = root.dataset.townId || '';
-  let localOnly = Boolean(townId);
-  const townAll = root.querySelector('#town-all');
-  if (townAll) townAll.addEventListener('change', () => { localOnly = !townAll.checked; page = 1; render(); });
   try { saved = new Set(JSON.parse(localStorage.getItem(storageKey) || '[]')); } catch (_) {}
   const money = new Intl.NumberFormat('it-IT', {style: 'currency', currency: 'EUR', maximumFractionDigits: 0});
   const fold = text => String(text || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
@@ -48,13 +45,13 @@
     const source = element('div', 'source'), link = element('a', '', 'Vedi immobile su La Sacra ↗');
     link.href = item.url; link.target = '_blank'; link.rel = 'noopener noreferrer';
     source.append(element('span', '', 'Annuncio originale'), link);
-    info.append(priceRow, element('h2', '', item.title.charAt(0) + item.title.slice(1).toLowerCase()), facts, element('div', 'agency', 'Partner · La Sacra Immobiliare'), source);
+    info.append(priceRow, element('p', 'location', item.location_status === 'VERIFICATO_FONTE' ? 'Comune verificato nella fonte: ' + item.municipality : 'Comune da verificare nella fonte'), element('h2', '', item.title.charAt(0) + item.title.slice(1).toLowerCase()), facts, element('div', 'agency', 'Partner · La Sacra Immobiliare'), source);
     article.append(photo, info); return article;
   }
   function render() {
     let list = data.filter(item => {
       const text = fold(item.title + ' ' + item.description);
-      return (!localOnly || (item.town_mentions || []).includes(townId)) && text.includes(fold($('#property-search').value)) &&
+      return text.includes(fold($('#property-search').value)) &&
         (!+$('#property-budget').value || (item.price !== null && item.price <= +$('#property-budget').value)) &&
         (!$('#property-type').value || item.category === $('#property-type').value) &&
         (mode !== 'saved' || saved.has(item.id)) && (mode !== 'business' || item.category === 'Impresa') &&
@@ -63,13 +60,31 @@
     });
     const order = $('#property-sort').value;
     list.sort((a, b) => order === 'asc' ? (a.price ?? Infinity) - (b.price ?? Infinity) : order === 'desc' ? (b.price ?? -Infinity) - (a.price ?? -Infinity) : String(b.published_at || '').localeCompare(String(a.published_at || '')));
-    const totalPages = Math.max(1, Math.ceil(list.length / 12)); page = Math.min(page, totalPages);
+    const totalPages = townId ? 1 : Math.max(1, Math.ceil(list.length / 12)); page = Math.min(page, totalPages);
     $('#result-count').textContent = list.length + (list.length === 1 ? ' immobile' : ' immobili');
     $('#saved-count').textContent = data.filter(i => saved.has(i.id)).length;
-    grid.replaceChildren(...list.slice((page - 1) * 12, page * 12).map(card));
-    if (!list.length) grid.append(element('p', 'empty', localOnly ? 'Nessun annuncio con il nome del paese nel titolo per questi filtri. Puoi mostrare tutto il catalogo La Sacra con la casella qui sopra.' : 'Nessun immobile con questi filtri. Prova a modificare la ricerca.'));
+    grid.replaceChildren();
+    if (townId) {
+      grid.classList.remove('grid');
+      const local = list.filter(i => i.location_status === 'VERIFICATO_FONTE' && i.town_id === townId);
+      const other = list.filter(i => !(i.location_status === 'VERIFICATO_FONTE' && i.town_id === townId));
+      for (const [title, items, empty] of [
+        ['Immobili a ' + root.dataset.townName, local, 'Nessun immobile con comune verificato disponibile per questo paese e questi filtri. Qui sotto trovi gli altri annunci.'],
+        ['Altri immobili disponibili', other, 'Nessun altro immobile corrisponde ai filtri selezionati.']
+      ]) {
+        const section = element('section', 'territorial-section');
+        section.append(element('h2', '', title));
+        const cards = element('div', 'grid');
+        cards.append(...items.map(card));
+        if (!items.length) cards.append(element('p', 'empty', empty));
+        section.append(cards); grid.append(section);
+      }
+    } else {
+      grid.append(...list.slice((page - 1) * 12, page * 12).map(card));
+      if (!list.length) grid.append(element('p', 'empty', 'Nessun immobile con questi filtri. Prova a modificare la ricerca.'));
+    }
     const pages = $('#property-pages'); pages.replaceChildren();
-    for (let n = 1; n <= totalPages; n++) {
+    for (let n = 1; !townId && n <= totalPages; n++) {
       const button = element('button', n === page ? 'active' : '', String(n)); button.type = 'button';
       button.setAttribute('aria-label', 'Pagina ' + n); if (n === page) button.setAttribute('aria-current', 'page');
       button.onclick = () => { page = n; render(); $('#result-count').scrollIntoView({block: 'start'}); }; pages.append(button);
@@ -80,7 +95,7 @@
   $('#reset-filters').onclick = () => { $('#property-search').value = ''; $('#property-budget').value = '0'; $('#property-type').value = ''; $('#property-sort').value = 'recent'; setMode('all'); };
   fetch(root.dataset.feed, {cache: 'no-cache'}).then(response => { if (!response.ok) throw new Error('HTTP ' + response.status); return response.json(); }).then(payload => {
     if (!Array.isArray(payload.items)) throw new Error('Invalid inventory');
-    data = payload.items;
+    data = [...new Map(payload.items.map(i => [i.id || i.url, i])).values()];
     const date = new Date(payload.last_success_at);
     $('#catalog-status').textContent = 'Ultimo aggiornamento riuscito: ' + date.toLocaleString('it-IT', {timeZone: 'Europe/Rome', dateStyle: 'short', timeStyle: 'short'}) + ' · Fonte: La Sacra Immobiliare';
     if (Date.now() - date.getTime() > 48 * 3600 * 1000) $('#catalog-status').textContent += ' · Aggiornamento in ritardo: verifica la disponibilità sul sito del partner.';

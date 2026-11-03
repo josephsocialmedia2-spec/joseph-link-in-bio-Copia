@@ -7,6 +7,7 @@ from pathlib import Path
 import re
 import time
 import urllib.request
+from verified_locations import apply_locations
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = 'https://lasacraimmobiliare.it'
@@ -69,12 +70,17 @@ def synchronize(snapshot=None):
     if not products:
         raise RuntimeError('Empty catalog: keeping last successful inventory')
     items = list({str(p['id']): normalize(p) for p in products}.values())
+    apply_locations(items)
+    previous = []
     output = ROOT / 'immobili' / 'catalogo.json'
     if output.exists():
         previous = json.loads(output.read_text()).get('items', [])
         if len(items) < len(previous) * .5:
             raise RuntimeError('Inventory unexpectedly fell by more than 50%; manual review required')
-    payload = {'source': SOURCE, 'last_success_at': dt.datetime.now(dt.timezone.utc).isoformat(), 'count': len(items), 'items': items}
+    before = {p['id']: p for p in previous}
+    after = {p['id']: p for p in items}
+    changes = {'removed_ids': sorted(before.keys() - after.keys()), 'added_ids': sorted(after.keys() - before.keys()), 'changed_ids': [key for key in before.keys() & after.keys() if any(before[key].get(field) != after[key].get(field) for field in ('price', 'title', 'description', 'image', 'url', 'contract'))]}
+    payload = {'changes': changes, 'source': SOURCE, 'last_success_at': dt.datetime.now(dt.timezone.utc).isoformat(), 'count': len(items), 'items': items}
     output.parent.mkdir(parents=True, exist_ok=True)
     temp = output.with_suffix('.tmp')
     temp.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + '\n')

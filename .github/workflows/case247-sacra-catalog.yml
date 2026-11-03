@@ -6,6 +6,9 @@ on:
   push:
     paths:
       - scripts/sync_sacra_catalog.py
+      - scripts/verified_locations.py
+      - scripts/build_territorial_drafts.py
+      - config/case247-location-verifications.json
       - .github/workflows/case247-sacra-catalog.yml
   workflow_dispatch:
 permissions:
@@ -27,6 +30,8 @@ jobs:
         run: python scripts/sync_sacra_catalog.py
       - name: Prepare town-specific drafts without publishing
         run: python scripts/build_territorial_drafts.py
+      - name: Validate territory routing
+        run: python -m unittest discover -s scripts -p test_territorial_drafts.py
       - name: Save successful inventory
         run: |
           git config user.name 'case247-catalog-bot'
