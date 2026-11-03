@@ -1,0 +1,58 @@
+name: CASE247 B2B Meta publisher
+on:
+  push:
+    paths:
+      - scripts/case247_b2b_publish.py
+      - scripts/test_case247_b2b_publish.py
+      - .github/workflows/case247-b2b-meta.yml
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Simulazione senza invio'
+        type: boolean
+        default: true
+      mode:
+        description: 'due = entro 60 minuti; next = singolo contenuto scelto'
+        type: choice
+        options: [due, next]
+        default: due
+      content_id:
+        description: 'Obbligatorio per next: ID approvato da pubblicare ora'
+        type: string
+        default: ''
+permissions:
+  contents: write
+concurrency:
+  group: case247-b2b-meta-publisher
+  cancel-in-progress: false
+jobs:
+  validate-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Syntax and duplicate safety tests
+        run: |
+          python -m py_compile scripts/case247_b2b_publish.py
+          python scripts/test_case247_b2b_publish.py
+      - name: Validate configuration and process approved B2B queue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          META_PAGE_ACCESS_TOKEN: ${{ secrets.META_PAGE_ACCESS_TOKEN }}
+          META_FACEBOOK_PAGE_ID: ${{ vars.META_FACEBOOK_PAGE_ID }}
+          META_INSTAGRAM_USER_ID: ${{ vars.META_INSTAGRAM_USER_ID }}
+          META_GRAPH_VERSION: ${{ vars.META_GRAPH_VERSION || 'v26.0' }}
+          DRY_RUN: ${{ github.event_name != 'workflow_dispatch' && 'true' || inputs.dry_run && 'true' || 'false' }}
+          PUBLISH_MODE: ${{ inputs.mode || 'due' }}
+          CONTENT_ID: ${{ inputs.content_id }}
+        run: python scripts/case247_b2b_publish.py
+      - name: Save diagnostic without credentials
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: case247-b2b-diagnostic
+          path: b2b-diagnostic.json
+          if-no-files-found: warn
