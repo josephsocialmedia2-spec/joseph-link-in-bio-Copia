@@ -1,0 +1,15 @@
+{
+  "checked_at_utc": "2026-11-03T10:17:53.119136+00:00",
+  "approved_jobs": 8,
+  "eligible_jobs": 0,
+  "missing_configuration": [
+    "META_PAGE_ACCESS_TOKEN",
+    "META_FACEBOOK_PAGE_ID",
+    "META_INSTAGRAM_USER_ID"
+  ],
+  "mode": "due",
+  "dry_run": true,
+  "records": {},
+  "queue_enabled": false,
+  "authentication": "NOT_VERIFIED"
+}
