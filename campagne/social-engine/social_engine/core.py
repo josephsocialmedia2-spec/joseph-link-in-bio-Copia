@@ -121,11 +121,11 @@ def prompt_for(item: dict, kind: str, slide: int | None = None) -> str:
         'Grafica statica: una headline + sottotitolo + CTA.' if kind == 'static' else 'Cover Story: headline breve, composizione verticale, CTA visibile.')
     return f'''Create ONE premium Italian social media image for Joseph Digital Strategist. Campaign {item['code']} — {title}.
 Use attached Joseph portrait as EXACT face identity reference; keep same identifiable face, no invented new identity. Scene: Joseph actually working (presenting a strategy, reviewing web analytics, filming marketing content). AI illustration must not imply a real witnessed event or customer testimonial.
-Use strictly approved REAL MEDIA PRO visual identity from branding/brand.json and the supplied brand MASTER image: navy #082C58 and #061A36, cobalt #1587E3, sky #59B9F6, pure white, subdued green only for WhatsApp CTA. Logo with blue geometric alpine mountains. Use clean, airy premium editorial composition, never copy overloaded flyer layouts. Confident, editorial, contemporary, photorealistic work scene with uncluttered typography, not a generic template. Professional look. Respect accurate spelling in Italian.
+Use strictly approved Case in Pubblicità 24/7 visual identity from branding/brand.json and the supplied brand MASTER image: navy #082C58 and #061A36, cobalt #1587E3, sky #59B9F6, pure white, subdued green only for WhatsApp CTA. Logo with blue geometric alpine mountains. Use clean, airy premium editorial composition, never copy overloaded flyer layouts. Confident, editorial, contemporary, photorealistic work scene with uncluttered typography, not a generic template. Professional look. Respect accurate spelling in Italian.
 {style_for(item['code'])}
 Source message: {copy}
 Visual narrative for {kind} {slide or ''}: {detail}
-Display authentic blue alpine mountains REAL MEDIA PRO logo as in the approved master; underneath display 'Joseph Digital Strategist'. Mention 'Il Metodo Remarketing' only when relevant. Do not invent a logo or use a generic monogram. Max 22 words of large text. Text must remain legible on phone, with safe margins. Do not include a printed web URL (CTA link is in post caption). No fake badges, sales guarantees, real-estate mediation promises, fabricated numbers, screenshots of invented dashboards, third-party logos, or watermark. Avoid overly busy decorative vectors.
+Display authentic blue alpine mountains Case in Pubblicità 24/7 logo as in the approved master; underneath display 'Joseph Digital Strategist'. Mention 'Il Metodo Remarketing' only when relevant. Do not invent a logo or use a generic monogram. Max 22 words of large text. Text must remain legible on phone, with safe margins. Do not include a printed web URL (CTA link is in post caption). No fake badges, sales guarantees, real-estate mediation promises, fabricated numbers, screenshots of invented dashboards, third-party logos, or watermark. Avoid overly busy decorative vectors.
 Generate portrait composition 2:3 allowing center crop to 4:5 for feed. Produce real pixels, no SVG substitutes.'''
 
 
@@ -154,7 +154,7 @@ class OpenAIOnlyGenerator:
             inputs.append(stack.enter_context(self.master_image.open('rb')))  # mandatory official brand master
             if previous and previous.exists():
                 inputs.append(stack.enter_context(previous.open('rb')))
-                prompt += '\nMaintain layout, palette, typographic hierarchy and face identity from the previous successfully brand-audited image, while preserving the verified Joseph face and true identity from the portrait reference and REAL MEDIA PRO master branding.'
+                prompt += '\nMaintain layout, palette, typographic hierarchy and face identity from the previous successfully brand-audited image, while preserving the verified Joseph face and true identity from the portrait reference and Case in Pubblicità 24/7 master branding.'
             result = self.client.images.edit(model=self.model, image=inputs,
                 prompt=prompt, size='1024x1536', quality='high', output_format='png')
         data = result.data[0].b64_json

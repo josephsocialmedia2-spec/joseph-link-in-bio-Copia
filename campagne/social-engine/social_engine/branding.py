@@ -23,7 +23,7 @@ def load_brand_rules(config: Path = BRAND_RULES) -> dict:
     if not config.is_file():
         raise BrandViolation("Brand rules missing: branding/brand.json")
     data = json.loads(config.read_text(encoding="utf-8"))
-    if data.get("brand") != "REAL MEDIA PRO":
+    if data.get("brand") != "Case in Pubblicità 24/7":
         raise BrandViolation("Unknown brand identity")
     return data
 
@@ -72,7 +72,7 @@ def visual_review(client, image_file: Path, master_image: Path, portrait_image: 
         return "data:" + mime + ";base64," + base64.b64encode(path.read_bytes()).decode("ascii")
     content = [
         {"type": "input_text", "text": (
-            "Review the third image for compliance with REAL MEDIA PRO visual branding. "
+            "Review the third image for compliance with Case in Pubblicità 24/7 visual branding. "
             "The first image is the brand MASTER, the second image is Joseph's REAL approved portrait. "
             "Assess color consistency (navy blue, cobalt, sky blue, white), brand legibility, "
             "typographic accuracy, uncluttered premium design, consistency with the master, "

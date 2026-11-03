@@ -143,7 +143,7 @@ def _linkedin(image_urls, caption):
                           "Content-Type": "image/jpeg"}
         _request(result["uploadUrl"], data=raw_jpeg, headers=upload_headers,
                  method="PUT", raw=True)
-        images.append({"id": result["image"], "altText": "Grafica informativa REAL MEDIA PRO"})
+        images.append({"id": result["image"], "altText": "Grafica informativa Case in Pubblicità 24/7"})
     post_body = {"author": owner, "commentary": caption, "visibility": "PUBLIC",
                  "distribution": {"feedDistribution": "MAIN_FEED",
                                   "targetEntities": [], "thirdPartyDistributionChannels": []},

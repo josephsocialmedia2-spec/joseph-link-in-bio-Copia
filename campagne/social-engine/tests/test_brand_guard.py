@@ -6,7 +6,7 @@ from social_engine.autopilot import select_next
 class BrandGateTests(unittest.TestCase):
     def test_master_brand_rules(self):
         rules=load_brand_rules()
-        self.assertEqual(rules["brand"], "REAL MEDIA PRO")
+        self.assertEqual(rules["brand"], "Case in Pubblicità 24/7")
         self.assertEqual(rules["archive"]["original_images"], 38)
         self.assertEqual(rules["archive"]["unique_images"], 28)
         self.assertEqual(rules["contact"]["whatsapp"], "https://wa.me/393713708294")

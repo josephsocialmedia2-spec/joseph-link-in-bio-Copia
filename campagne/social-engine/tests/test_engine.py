@@ -91,7 +91,7 @@ class EngineTests(unittest.TestCase):
         item={'code':'IMM01','title':'Quanto vale la casa','copy':'Dati sulla casa e il territorio.'}
         p=prompt_for(item,'carousel',5)
         self.assertIn('EXACT face identity',p)
-        self.assertIn('REAL MEDIA PRO',p)
+        self.assertIn('Case in Pubblicità 24/7',p)
         self.assertIn('no SVG substitutes',p)
         self.assertIn('WhatsApp',p)
 

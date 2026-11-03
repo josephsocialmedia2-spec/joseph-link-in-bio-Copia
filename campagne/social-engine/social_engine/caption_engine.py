@@ -84,7 +84,7 @@ def create_social_captions(client, topic: str, confirmed_facts: str,
         raise BrandViolation("Source must be a verified HTTPS URL")
     previous = "\n".join((previous_captions or [])[-4:])[:3000]
     prompt = f"""Write three distinct high-quality ITALIAN captions (Facebook, Instagram, LinkedIn)
-for REAL MEDIA PRO — Joseph Digital Strategist. Topic: {topic}
+for Case in Pubblicità 24/7 — Joseph Digital Strategist. Topic: {topic}
 VERIFIED / APPROVED facts ONLY: {confirmed_facts}
 Verified source URL: {source_url or "none (evergreen educational content only)"}
 Source publication date: {source_date or "not applicable"}

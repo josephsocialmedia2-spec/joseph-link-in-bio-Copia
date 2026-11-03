@@ -1,4 +1,4 @@
-name: REAL MEDIA PRO Neon dashboard — static checks
+name: Case in Pubblicità 24/7 Neon dashboard — static checks
 on:
   push:
     paths:

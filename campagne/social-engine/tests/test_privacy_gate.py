@@ -33,7 +33,7 @@ class PrivacyGateTests(unittest.TestCase):
         for page in (privacy, home, second):
             self.assertIn("Joseph Malafronte", page)
             self.assertIn("persona fisica", page)
-        self.assertIn("REAL MEDIA PRO", privacy)
+        self.assertIn("Case in Pubblicità 24/7", privacy)
         self.assertIn("recapito postale", privacy.lower())
         self.assertIn("Via Umberto I, 96", privacy)
         self.assertIn("10057", privacy)
