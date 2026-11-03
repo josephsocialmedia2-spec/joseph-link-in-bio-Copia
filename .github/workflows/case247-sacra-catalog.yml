@@ -1,0 +1,41 @@
+name: CASE247 - catalogo La Sacra giornaliero
+on:
+  schedule:
+    - cron: '20 5 * * *'
+      timezone: Europe/Rome
+  push:
+    paths:
+      - scripts/sync_sacra_catalog.py
+      - .github/workflows/case247-sacra-catalog.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+concurrency:
+  group: case247-sacra-catalog
+  cancel-in-progress: false
+jobs:
+  synchronize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Import complete public inventory
+        run: python scripts/sync_sacra_catalog.py
+      - name: Save successful inventory
+        run: |
+          git config user.name 'case247-catalog-bot'
+          git config user.email 'case247-catalog-bot@users.noreply.github.com'
+          git add immobili/catalogo.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Aggiorna catalogo pubblico La Sacra'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - name: Rebuild GitHub Pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api --method POST repos/${{ github.repository }}/pages/builds
