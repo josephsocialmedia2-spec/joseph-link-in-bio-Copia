@@ -4,6 +4,10 @@
   const $ = selector => root.querySelector(selector);
   const storageKey = 'case247-property-favourites-v1';
   let saved = new Set(), data = [], page = 1, mode = 'all';
+  const townId = root.dataset.townId || '';
+  let localOnly = Boolean(townId);
+  const townAll = root.querySelector('#town-all');
+  if (townAll) townAll.addEventListener('change', () => { localOnly = !townAll.checked; page = 1; render(); });
   try { saved = new Set(JSON.parse(localStorage.getItem(storageKey) || '[]')); } catch (_) {}
   const money = new Intl.NumberFormat('it-IT', {style: 'currency', currency: 'EUR', maximumFractionDigits: 0});
   const fold = text => String(text || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
@@ -50,7 +54,7 @@
   function render() {
     let list = data.filter(item => {
       const text = fold(item.title + ' ' + item.description);
-      return text.includes(fold($('#property-search').value)) &&
+      return (!localOnly || (item.town_mentions || []).includes(townId)) && text.includes(fold($('#property-search').value)) &&
         (!+$('#property-budget').value || (item.price !== null && item.price <= +$('#property-budget').value)) &&
         (!$('#property-type').value || item.category === $('#property-type').value) &&
         (mode !== 'saved' || saved.has(item.id)) && (mode !== 'business' || item.category === 'Impresa') &&
@@ -63,7 +67,7 @@
     $('#result-count').textContent = list.length + (list.length === 1 ? ' immobile' : ' immobili');
     $('#saved-count').textContent = data.filter(i => saved.has(i.id)).length;
     grid.replaceChildren(...list.slice((page - 1) * 12, page * 12).map(card));
-    if (!list.length) grid.append(element('p', 'empty', 'Nessun immobile con questi filtri. Prova a modificare la ricerca.'));
+    if (!list.length) grid.append(element('p', 'empty', localOnly ? 'Nessun annuncio con il nome del paese nel titolo per questi filtri. Puoi mostrare tutto il catalogo La Sacra con la casella qui sopra.' : 'Nessun immobile con questi filtri. Prova a modificare la ricerca.'));
     const pages = $('#property-pages'); pages.replaceChildren();
     for (let n = 1; n <= totalPages; n++) {
       const button = element('button', n === page ? 'active' : '', String(n)); button.type = 'button';

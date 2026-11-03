@@ -25,11 +25,13 @@ jobs:
           python-version: '3.12'
       - name: Import complete public inventory
         run: python scripts/sync_sacra_catalog.py
+      - name: Prepare town-specific drafts without publishing
+        run: python scripts/build_territorial_drafts.py
       - name: Save successful inventory
         run: |
           git config user.name 'case247-catalog-bot'
           git config user.email 'case247-catalog-bot@users.noreply.github.com'
-          git add immobili/catalogo.json
+          git add immobili/catalogo.json campagne/case247/territorio/bozze.json
           if ! git diff --cached --quiet; then
             git commit -m 'Aggiorna catalogo pubblico La Sacra'
             git pull --rebase origin main

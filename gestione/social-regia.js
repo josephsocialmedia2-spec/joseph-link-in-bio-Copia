@@ -1,4 +1,4 @@
-/* REAL MEDIA PRO — Regia social e gruppi. Solo dati pubblici. Nessun OAuth in GitHub Pages. */
+/* Case in Pubblicità 24/7 — Regia social e gruppi. Solo dati pubblici. Nessun OAuth in GitHub Pages. */
 (function(){
 "use strict";
 var endpoint="./social-routing.json";

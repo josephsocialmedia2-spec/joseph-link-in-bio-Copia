@@ -158,7 +158,7 @@ function renderAccountSetup(box){
   box.append(el("p","Stato connessioni: "+connected+" di 3 verificate. Le autorizzazioni di pubblicazione vengono convalidate esclusivamente tramite API ufficiali.","hint"));
   const cards=el("div",undefined,"connections-grid");
   const options=[
-    {key:"facebook",title:"Facebook",summary:"Pagina Facebook ufficiale di REAL MEDIA PRO",
+    {key:"facebook",title:"Facebook",summary:"Pagina Facebook ufficiale di Case in Pubblicità 24/7",
       note:"Verifica che tu disponga del controllo della Pagina e che la Pagina sia correttamente associata all'account Instagram professionale.",
       links:[["Apri Meta Business Suite","https://business.facebook.com/"],["Gestisci app Meta","https://developers.facebook.com/apps/"]]},
     {key:"instagram",title:"Instagram",summary:"Account professionale collegato alla Pagina Facebook",
@@ -275,7 +275,7 @@ async function register(){
   try{
     const email=$("email").value.trim(),password=$("password").value;
     if(!email||password.length<12)throw new Error("Inserisci email e una password di almeno 12 caratteri.");
-    unwrap(await client.auth.signUp.email({email,password,name:"REAL MEDIA PRO"}));
+    unwrap(await client.auth.signUp.email({email,password,name:"Case in Pubblicità 24/7"}));
     $("password").value="";
     msg("Account registrato. Accedi o verifica la tua email, poi richiedi autorizzazione amministrativa.");
     await checkAuthorization();

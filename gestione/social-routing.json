@@ -1,55 +1,55 @@
 {
   "schema_version": 1,
   "updated_at": "2026-10-29",
-  "note": "Registro pubblico dei profili e instradamento delle landing: NON contiene token né autorizza pubblicazioni. I profili devono essere verificati tramite le rispettive piattaforme prima delle campagne.",
+  "note": "Una struttura centrale. I profili per paese sono censiti separatamente in config/case247-territorio.json. I collegamenti non autorizzano da soli pubblicazioni.",
   "lines": {
     "imprese": {
-      "label": "REAL MEDIA PRO — marketing per imprese",
-      "owner": "REAL MEDIA PRO",
-      "kind": "aziende_attivita_locali",
+      "label": "Case in Pubblicità 24/7 — Immobili per l’impresa",
+      "owner": "Case in Pubblicità 24/7",
+      "kind": "marketing_immobiliare",
       "profiles": {
         "facebook": {
-          "url": "https://www.facebook.com/josephrealmedia/",
-          "status": "URL_FORNITO_DALL_UTENTE_API_NON_VERIFICATA"
+          "url": "https://www.facebook.com/profile.php?id=61596180383970",
+          "status": "URL_CENTRALE_FORNITO_DALL_UTENTE"
         },
         "instagram": {
-          "url": "https://www.instagram.com/realmediaproageency/",
-          "status": "URL_RECUPERATO_DA_F1_SOCIAL_NON_VERIFICATO"
+          "url": "https://www.instagram.com/caseinpubblicita/",
+          "status": "HANDLE_RILEVATO_IN_METRICOOL"
         },
         "linkedin": {
           "url": "https://www.linkedin.com/in/josephmalafronte/",
           "status": "PROFILO_PERSONALE_DICHIARATO_NON_VERIFICATO"
         }
       },
-      "goal": "Contatti e richieste di preventivo per promozione social, siti web, video e advertising"
+      "goal": "Visibilità degli immobili La Sacra e richieste immobiliari dal territorio"
     },
     "immobiliare": {
-      "label": "Joseph Digital Real Estate — promozione immobiliare",
-      "owner": "Joseph Digital Strategist / REAL MEDIA PRO",
+      "label": "Case in Pubblicità 24/7 — Residenziale e territorio",
+      "owner": "Case in Pubblicità 24/7",
       "partner": "Immobiliare La Sacra (partner commerciale; la mediazione resta ai professionisti abilitati)",
       "kind": "marketing_immobiliare",
       "profiles": {
         "facebook": {
-          "url": "https://www.facebook.com/JosephDigitalRealEstate/",
-          "status": "URL_FORNITO_DALL_UTENTE_API_NON_VERIFICATA"
+          "url": "https://www.facebook.com/profile.php?id=61596180383970",
+          "status": "URL_CENTRALE_FORNITO_DALL_UTENTE"
         },
         "instagram": {
-          "url": "https://www.instagram.com/realmediapro.it/",
-          "status": "URL_FORNITO_DALL_UTENTE_API_NON_VERIFICATA"
+          "url": "https://www.instagram.com/caseinpubblicita/",
+          "status": "HANDLE_RILEVATO_IN_METRICOOL"
         },
         "linkedin": {
           "url": "https://www.linkedin.com/in/josephmalafronte/",
           "status": "PROFILO_PERSONALE_CONDIVISO_NON_VERIFICATO"
         }
       },
-      "goal": "Richieste di analisi orientativa e promozione immobiliare, non mediazione"
+      "goal": "Visibilità degli immobili La Sacra e richieste immobiliari dal territorio"
     }
   },
   "routing": {
-    "default": "imprese",
+    "default": "immobiliare",
     "sector_map": {
       "Immobiliare": "immobiliare",
-      "Attività locali": "imprese"
+      "Immobili per l’impresa": "imprese"
     },
     "overrides": {
       "PARTNER": "immobiliare",

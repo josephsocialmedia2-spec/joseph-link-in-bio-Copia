@@ -1,0 +1,844 @@
+{
+  "schema_version": 1,
+  "brand": "Case in Pubblicità 24/7",
+  "updated_at": "2026-11-03T14:40:41.871673+00:00",
+  "model": "UNA_STRUTTURA_UNA_REGIA_UNA_PAGINA_PER_PAESE",
+  "source": "https://lasacraimmobiliare.it/",
+  "catalog_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/immobili/catalogo.json",
+  "catalog_schedule": "05:20 Europe/Rome",
+  "town_match_policy": "Menzione nel titolo; non equivale a indirizzo verificato. Le occorrenze dentro nomi di comuni più lunghi vengono escluse.",
+  "central": {
+    "facebook_url": "https://www.facebook.com/profile.php?id=61596180383970",
+    "instagram_url": "https://www.instagram.com/caseinpubblicita/",
+    "metricool_brand_id": 7844901,
+    "metricool_connection": "FACEBOOK_INSTAGRAM_RILEVATI_DAL_CONNETTORE",
+    "publishing_permissions": "NON_VERIFICATE_DA_QUESTO_INTERVENTO"
+  },
+  "towns": [
+    {
+      "id": "avigliana",
+      "name": "Avigliana",
+      "aliases": [
+        "Avigliana"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/avigliana/",
+      "social_page_name": "Case in Pubblicità 24/7 · Avigliana",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "almese",
+      "name": "Almese",
+      "aliases": [
+        "Almese"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/almese/",
+      "social_page_name": "Case in Pubblicità 24/7 · Almese",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "rubiana",
+      "name": "Rubiana",
+      "aliases": [
+        "Rubiana"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/rubiana/",
+      "social_page_name": "Case in Pubblicità 24/7 · Rubiana",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "villar-dora",
+      "name": "Villar Dora",
+      "aliases": [
+        "Villar Dora"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/villar-dora/",
+      "social_page_name": "Case in Pubblicità 24/7 · Villar Dora",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "caprie",
+      "name": "Caprie",
+      "aliases": [
+        "Caprie"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/caprie/",
+      "social_page_name": "Case in Pubblicità 24/7 · Caprie",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "condove",
+      "name": "Condove",
+      "aliases": [
+        "Condove"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/condove/",
+      "social_page_name": "Case in Pubblicità 24/7 · Condove",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "sant-ambrogio-di-torino",
+      "name": "Sant’Ambrogio di Torino",
+      "aliases": [
+        "Sant’Ambrogio di Torino",
+        "Sant’Ambrogio",
+        "Santambrogio"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "social_page_name": "Case in Pubblicità 24/7 · Sant’Ambrogio di Torino",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "chiusa-di-san-michele",
+      "name": "Chiusa di San Michele",
+      "aliases": [
+        "Chiusa di San Michele"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/chiusa-di-san-michele/",
+      "social_page_name": "Case in Pubblicità 24/7 · Chiusa di San Michele",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "vaie",
+      "name": "Vaie",
+      "aliases": [
+        "Vaie"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/vaie/",
+      "social_page_name": "Case in Pubblicità 24/7 · Vaie",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "san-didero",
+      "name": "San Didero",
+      "aliases": [
+        "San Didero"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/san-didero/",
+      "social_page_name": "Case in Pubblicità 24/7 · San Didero",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "borgone-susa",
+      "name": "Borgone Susa",
+      "aliases": [
+        "Borgone Susa"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/borgone-susa/",
+      "social_page_name": "Case in Pubblicità 24/7 · Borgone Susa",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "bussoleno",
+      "name": "Bussoleno",
+      "aliases": [
+        "Bussoleno"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/bussoleno/",
+      "social_page_name": "Case in Pubblicità 24/7 · Bussoleno",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "chianocco",
+      "name": "Chianocco",
+      "aliases": [
+        "Chianocco"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/chianocco/",
+      "social_page_name": "Case in Pubblicità 24/7 · Chianocco",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "susa",
+      "name": "Susa",
+      "aliases": [
+        "Susa"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/susa/",
+      "social_page_name": "Case in Pubblicità 24/7 · Susa",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "mompantero",
+      "name": "Mompantero",
+      "aliases": [
+        "Mompantero"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/mompantero/",
+      "social_page_name": "Case in Pubblicità 24/7 · Mompantero",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "san-giorio-di-susa",
+      "name": "San Giorio di Susa",
+      "aliases": [
+        "San Giorio di Susa"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/san-giorio-di-susa/",
+      "social_page_name": "Case in Pubblicità 24/7 · San Giorio di Susa",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "villar-focchiardo",
+      "name": "Villar Focchiardo",
+      "aliases": [
+        "Villar Focchiardo"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/villar-focchiardo/",
+      "social_page_name": "Case in Pubblicità 24/7 · Villar Focchiardo",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "venaus",
+      "name": "Venaus",
+      "aliases": [
+        "Venaus"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/venaus/",
+      "social_page_name": "Case in Pubblicità 24/7 · Venaus",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "giaglione",
+      "name": "Giaglione",
+      "aliases": [
+        "Giaglione"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/giaglione/",
+      "social_page_name": "Case in Pubblicità 24/7 · Giaglione",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "gravere",
+      "name": "Gravere",
+      "aliases": [
+        "Gravere"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/gravere/",
+      "social_page_name": "Case in Pubblicità 24/7 · Gravere",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "exilles",
+      "name": "Exilles",
+      "aliases": [
+        "Exilles"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/exilles/",
+      "social_page_name": "Case in Pubblicità 24/7 · Exilles",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "salbertrand",
+      "name": "Salbertrand",
+      "aliases": [
+        "Salbertrand"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/salbertrand/",
+      "social_page_name": "Case in Pubblicità 24/7 · Salbertrand",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "oulx",
+      "name": "Oulx",
+      "aliases": [
+        "Oulx"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/oulx/",
+      "social_page_name": "Case in Pubblicità 24/7 · Oulx",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "sauze-d-oulx",
+      "name": "Sauze d’Oulx",
+      "aliases": [
+        "Sauze d’Oulx"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sauze-d-oulx/",
+      "social_page_name": "Case in Pubblicità 24/7 · Sauze d’Oulx",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "cesana-torinese",
+      "name": "Cesana Torinese",
+      "aliases": [
+        "Cesana Torinese"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/cesana-torinese/",
+      "social_page_name": "Case in Pubblicità 24/7 · Cesana Torinese",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "claviere",
+      "name": "Claviere",
+      "aliases": [
+        "Claviere"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/claviere/",
+      "social_page_name": "Case in Pubblicità 24/7 · Claviere",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "novalesa",
+      "name": "Novalesa",
+      "aliases": [
+        "Novalesa"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/novalesa/",
+      "social_page_name": "Case in Pubblicità 24/7 · Novalesa",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "moncenisio",
+      "name": "Moncenisio",
+      "aliases": [
+        "Moncenisio"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/moncenisio/",
+      "social_page_name": "Case in Pubblicità 24/7 · Moncenisio",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "pragelato",
+      "name": "Pragelato",
+      "aliases": [
+        "Pragelato"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/pragelato/",
+      "social_page_name": "Case in Pubblicità 24/7 · Pragelato",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "bardonecchia",
+      "name": "Bardonecchia",
+      "aliases": [
+        "Bardonecchia"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/bardonecchia/",
+      "social_page_name": "Case in Pubblicità 24/7 · Bardonecchia",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "chiomonte",
+      "name": "Chiomonte",
+      "aliases": [
+        "Chiomonte"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/chiomonte/",
+      "social_page_name": "Case in Pubblicità 24/7 · Chiomonte",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "sant-antonino-di-susa",
+      "name": "Sant’Antonino di Susa",
+      "aliases": [
+        "Sant’Antonino di Susa",
+        "Sant’Antonino",
+        "Sant’Antonino di Dì Susa"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-antonino-di-susa/",
+      "social_page_name": "Case in Pubblicità 24/7 · Sant’Antonino di Susa",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "rivoli",
+      "name": "Rivoli",
+      "aliases": [
+        "Rivoli"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/rivoli/",
+      "social_page_name": "Case in Pubblicità 24/7 · Rivoli",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "giaveno",
+      "name": "Giaveno",
+      "aliases": [
+        "Giaveno"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/giaveno/",
+      "social_page_name": "Case in Pubblicità 24/7 · Giaveno",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "grugliasco",
+      "name": "Grugliasco",
+      "aliases": [
+        "Grugliasco"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/grugliasco/",
+      "social_page_name": "Case in Pubblicità 24/7 · Grugliasco",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "torino",
+      "name": "Torino",
+      "aliases": [
+        "Torino"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/torino/",
+      "social_page_name": "Case in Pubblicità 24/7 · Torino",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "moncalieri",
+      "name": "Moncalieri",
+      "aliases": [
+        "Moncalieri"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/moncalieri/",
+      "social_page_name": "Case in Pubblicità 24/7 · Moncalieri",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "collegno",
+      "name": "Collegno",
+      "aliases": [
+        "Collegno"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/collegno/",
+      "social_page_name": "Case in Pubblicità 24/7 · Collegno",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "pianezza",
+      "name": "Pianezza",
+      "aliases": [
+        "Pianezza"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/pianezza/",
+      "social_page_name": "Case in Pubblicità 24/7 · Pianezza",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "borgaro-torinese",
+      "name": "Borgaro Torinese",
+      "aliases": [
+        "Borgaro Torinese",
+        "Borgaro"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/borgaro-torinese/",
+      "social_page_name": "Case in Pubblicità 24/7 · Borgaro Torinese",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    },
+    {
+      "id": "valgioie",
+      "name": "Valgioie",
+      "aliases": [
+        "Valgioie"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/valgioie/",
+      "social_page_name": "Case in Pubblicità 24/7 · Valgioie",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_CREARE_O_COLLEGARE"
+        }
+      },
+      "auto_publish": false
+    }
+  ]
+}
