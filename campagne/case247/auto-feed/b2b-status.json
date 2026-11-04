@@ -1,7 +1,7 @@
 {
-  "checked_at_utc": "2026-11-03T10:17:53.119136+00:00",
+  "checked_at_utc": "2026-11-04T09:55:41.884790+00:00",
   "approved_jobs": 8,
-  "eligible_jobs": 0,
+  "eligible_jobs": 2,
   "missing_configuration": [
     "META_PAGE_ACCESS_TOKEN",
     "META_FACEBOOK_PAGE_ID",
@@ -11,5 +11,6 @@
   "dry_run": true,
   "records": {},
   "queue_enabled": false,
+  "schedule_requested": false,
   "authentication": "NOT_VERIFIED"
 }
