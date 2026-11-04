@@ -24,11 +24,11 @@ creds=service_account.Credentials.from_service_account_info(
 gs=AuthorizedSession(creds)
 headers={"apikey":KEY,"Authorization":"Bearer "+KEY,"Accept":"application/json"}
 
-def read_table(table, fields):
+def read_table(table, fields, order_col='created_at'):
     out=[]
     for offset in range(0,10000,1000):
         response=requests.get(SUPABASE+"/rest/v1/"+table,
-            params={"select":",".join(fields),"order":"created_at.asc","limit":1000,"offset":offset},
+            params={"select":",".join(fields),"order":order_col+".asc","limit":1000,"offset":offset},
             headers=headers,timeout=25)
         response.raise_for_status()
         batch=response.json()
@@ -47,7 +47,7 @@ def api_json(method,endpoint,payload=None):
     return response.json() if response.content else {}
 
 def sheet_get(range_name):
-    return api_json("GET","/values/"+requests.utils.quote(range_name,safe="!:'"))["values"]
+    return api_json("GET","/values/"+requests.utils.quote(range_name,safe="!:'")) .get("values",[])
 
 def write_table(name,rows,width):
     endpoint="/values/"+requests.utils.quote(name+"!A2",safe="!:'")+"?valueInputOption=RAW"
@@ -78,9 +78,9 @@ for x in subscribers:
         val(x,"state"),val(x,"confirmed_at"),val(x,"last_sent_month"),
         val(x,"unsubscribed_at"),notes.get(val(x,"id"),""),val(x,"id")])
 
-events=read_table("case247_newsletter_events",["id","subscriber_id","event_at","event_type","notice_version"])
+events=read_table("case247_newsletter_events",["id","subscriber_id","event_at","event_type","notice_version"],"event_at")
 consent_rows=[[val(x,"id"),val(x,"subscriber_id"),val(x,"event_at"),val(x,"event_type"),"EMAIL",val(x,"notice_version"),"Newsletter web",""] for x in events]
-dispatch=read_table("case247_newsletter_dispatches",["id","subscriber_id","issue_month","state","sent_at","provider_id","error_code"])
+dispatch=read_table("case247_newsletter_dispatches",["id","subscriber_id","issue_month","state","sent_at","provider_id","error_code"],"id")
 dispatch_rows=[[val(x,"id"),val(x,"subscriber_id"),val(x,"issue_month"),val(x,"state"),val(x,"sent_at"),val(x,"provider_id"),val(x,"error_code")] for x in dispatch]
 
 write_table("CONTATTI",contacts,14)
