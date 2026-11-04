@@ -95,7 +95,7 @@ def main():
   channels={}
   for r in records.values():
    target=os.getenv("META_FACEBOOK_PAGE_ID" if r.get("platform")=="facebook" else "META_INSTAGRAM_USER_ID")
-   if r.get("status")=="PUBLISHED" and r.get("permalink") and target and r.get("target_id")==target:
+   if r.get("source")=="meta_graph_api" and r.get("status")=="PUBLISHED" and r.get("permalink") and target and r.get("target_id")==target:
     channels.setdefault(r.get("content_id"),set()).add(r.get("platform"))
   if not any(pair=={"facebook","instagram"} for pair in channels.values()):raise RuntimeError("Verified two-channel pilot required")
  if pilot and not jobs:raise RuntimeError("Selected content ineligible or already attempted")
@@ -111,7 +111,7 @@ def main():
  for job in jobs:
   jid=job["id"]; path=job.get("media_jpeg",""); image=verify_image(job)
   if not path.startswith("campagne/case247/editorial-queue/") or not path.endswith(".jpg"):raise RuntimeError("Invalid media path")
-  identity={"platform":job["platform"],"content_id":job["content_id"],"target_id":page_id if job["platform"]=="facebook" else ig_id}
+  identity={"source":"meta_graph_api","platform":job["platform"],"content_id":job["content_id"],"target_id":page_id if job["platform"]=="facebook" else ig_id}
   records[jid]={**identity,"status":"ATTEMPTED_VERIFY_BEFORE_RETRY","at_utc":dt.datetime.now(dt.timezone.utc).isoformat(),"external_post_id":None}
   sha=write(L,{"schema_version":1,"records":records},sha)
   try:
