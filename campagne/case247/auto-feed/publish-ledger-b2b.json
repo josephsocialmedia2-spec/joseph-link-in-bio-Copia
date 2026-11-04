@@ -11,6 +11,14 @@
       "facebook_photo_id": "122098867107539346",
       "permalink": "https://www.facebook.com/photo/?fbid=122098867107539346&set=a.122094281379539346",
       "verified_at_utc": "2026-11-04T10:54:33.233Z"
+    },
+    "CASE247-010-instagram": {
+      "content_id": "CASE247-010",
+      "platform": "instagram",
+      "target_id": "17841415827906266",
+      "status": "ATTEMPTED_VERIFY_BEFORE_RETRY",
+      "source": "meta_business_suite_ui",
+      "at_utc": "2026-11-04T11:01:56.196Z"
     }
   }
 }
