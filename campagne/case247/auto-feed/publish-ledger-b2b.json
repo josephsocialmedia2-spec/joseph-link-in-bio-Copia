@@ -2,12 +2,15 @@
   "schema_version": 1,
   "records": {
     "CASE247-010-facebook": {
-      "status": "ATTEMPTED_VERIFY_BEFORE_RETRY",
+      "status": "PUBLISHED",
       "content_id": "CASE247-010",
       "platform": "facebook",
       "target_id": "1402024242991896",
       "at_utc": "2026-11-04T10:52:43.432Z",
-      "source": "facebook_page_ui"
+      "source": "facebook_page_ui",
+      "facebook_photo_id": "122098867107539346",
+      "permalink": "https://www.facebook.com/photo/?fbid=122098867107539346&set=a.122094281379539346",
+      "verified_at_utc": "2026-11-04T10:54:33.233Z"
     }
   }
 }
