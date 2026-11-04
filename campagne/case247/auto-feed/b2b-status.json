@@ -1,5 +1,5 @@
 {
-  "checked_at_utc": "2026-11-04T10:07:10.802208+00:00",
+  "checked_at_utc": "2026-11-04T11:05:20.364897+00:00",
   "approved_jobs": 8,
   "eligible_jobs": 0,
   "missing_configuration": [
@@ -7,7 +7,30 @@
   ],
   "mode": "due",
   "dry_run": true,
-  "records": {},
+  "records": {
+    "CASE247-010-facebook": {
+      "status": "PUBLISHED",
+      "content_id": "CASE247-010",
+      "platform": "facebook",
+      "target_id": "1402024242991896",
+      "at_utc": "2026-11-04T10:52:43.432Z",
+      "source": "facebook_page_ui",
+      "facebook_photo_id": "122098867107539346",
+      "permalink": "https://www.facebook.com/photo/?fbid=122098867107539346&set=a.122094281379539346",
+      "verified_at_utc": "2026-11-04T10:54:33.233Z"
+    },
+    "CASE247-010-instagram": {
+      "content_id": "CASE247-010",
+      "platform": "instagram",
+      "target_id": "17841415827906266",
+      "status": "PUBLISHED",
+      "source": "meta_business_suite_ui",
+      "at_utc": "2026-11-04T11:01:56.196Z",
+      "verified_at_utc": "2026-11-04T11:03:28.798Z",
+      "permalink": "https://www.instagram.com/p/DfUTZRBm1Xe/",
+      "external_post_id": "17890385271623640"
+    }
+  },
   "queue_enabled": false,
   "schedule_requested": false,
   "authentication": "NOT_VERIFIED"
