@@ -1,0 +1,53 @@
+name: Case247 territorial landing audit
+on:
+  schedule:
+    - cron: '17 3 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate configuration and check landing URLs
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, pathlib, urllib.request, urllib.error, datetime, time
+          root=pathlib.Path('.')
+          paths=['config/case247-territorio.json','gestione/social-links.json','gestione/social-routing.json','campagne/case247/territorio/bozze.json','gestione/work-checkpoint.json','gestione/work-next-actions.json']
+          for p in paths: json.loads((root/p).read_text(encoding='utf-8'))
+          cfg=json.loads((root/paths[0]).read_text(encoding='utf-8'))
+          seen=set()
+          results=[]
+          for town in cfg['towns']:
+              tid=town['id']
+              if tid in seen: raise ValueError('Duplicate town id: '+tid)
+              seen.add(tid)
+              url=town.get('landing_url','')
+              status='DA_VERIFICARE'; http_code=None; error=None
+              if not url.startswith('https://'):
+                  error='Missing or non-HTTPS URL'
+              else:
+                  try:
+                      req=urllib.request.Request(url,headers={'User-Agent':'Case247-Landing-Audit/1.0'})
+                      with urllib.request.urlopen(req,timeout=12) as response:
+                          http_code=response.status
+                          status='HTTP_OK' if response.status==200 else 'HTTP_ERROR'
+                  except urllib.error.HTTPError as e:
+                      http_code=e.code;error=str(e)
+                  except Exception as e:
+                      error=str(e)[:250]
+              results.append({'town_id':tid,'name':town['name'],'landing_url':url,'http_status':status,'http_code':http_code,'error':error,'meta_status':'DA_VERIFICARE'})
+              time.sleep(.1)
+          out={'checked_at_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'count':len(results),'http_ok':sum(x['http_status']=='HTTP_OK' for x in results),'results':results,'note':'HTTP checks do not verify Meta ownership, permissions or publishing.'}
+          pathlib.Path('territory-audit-report.json').write_text(json.dumps(out,ensure_ascii=False,indent=2),encoding='utf-8')
+          print('Landing HTTP OK:',out['http_ok'],'/',out['count'])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: case247-territory-audit
+          path: territory-audit-report.json
+          retention-days: 30
