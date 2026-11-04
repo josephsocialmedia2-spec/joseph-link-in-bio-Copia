@@ -1,0 +1,39 @@
+name: Case247 - Newsletter mensile consensuale
+on:
+  schedule:
+    # 1° giorno del mese, 08:00 e 09:00 UTC; server esegue solo alle 10:00 Europe/Rome
+    - cron: '0 8 1 * *'
+    - cron: '0 9 1 * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: case247-newsletter-monthly
+  cancel-in-progress: false
+jobs:
+  monthly_newsletter:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      CASE247_SERVICE_ROLE_KEY: ${{ secrets.CASE247_NEWSLETTER_SERVICE_ROLE_KEY }}
+    steps:
+      - name: Verifica chiave di invio
+        id: check
+        shell: bash
+        run: |
+          if [ -z "$CASE247_SERVICE_ROLE_KEY" ]; then
+            echo "Newsletter non attivata: manca il secret CASE247_NEWSLETTER_SERVICE_ROLE_KEY."
+            echo "ready=no" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=yes" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Richiedi invio al server protetto
+        if: steps.check.outputs.ready == 'yes'
+        shell: bash
+        run: |
+          curl --fail-with-body --silent --show-error --max-time 250 \
+            -X POST \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $CASE247_SERVICE_ROLE_KEY" \
+            --data '{"action":"monthly_send"}' \
+            "https://qmeftxsdfeyqozwoivzo.supabase.co/functions/v1/case247-newsletter"
