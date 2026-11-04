@@ -46,8 +46,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           META_PAGE_ACCESS_TOKEN: ${{ secrets.META_PAGE_ACCESS_TOKEN }}
-          META_FACEBOOK_PAGE_ID: ${{ vars.META_FACEBOOK_PAGE_ID }}
-          META_INSTAGRAM_USER_ID: ${{ vars.META_INSTAGRAM_USER_ID }}
+          META_FACEBOOK_PAGE_ID: ${{ vars.META_FACEBOOK_PAGE_ID || '1402024242991896' }}
+          META_INSTAGRAM_USER_ID: ${{ vars.META_INSTAGRAM_USER_ID || '17841415827906266' }}
           META_GRAPH_VERSION: ${{ vars.META_GRAPH_VERSION || 'v26.0' }}
           DRY_RUN: ${{ github.event_name == 'push' && 'true' || inputs.dry_run && 'true' || 'false' }}
           CASE247_B2B_SCHEDULE: ${{ vars.CASE247_B2B_SCHEDULE }}
