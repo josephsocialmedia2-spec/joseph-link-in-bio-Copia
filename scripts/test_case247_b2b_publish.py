@@ -13,6 +13,10 @@ class Safety(unittest.TestCase):
  def test_content_platform_duplicate(self):
   other=dict(self.j,id='other')
   with self.assertRaises(RuntimeError):eligible({'jobs':[self.j,other]}, {}, self.now)
+ def test_changed_job_id_still_blocked(self):
+  self.assertEqual(self.select(records={"old":{"content_id":"x","platform":"facebook"}}),[])
+ def test_stale_manual_blocked(self):
+  self.assertEqual(self.select(dict(self.j,scheduled_at_local="2026-11-02T20:00:00+01:00"),mode="next",cid="x"),[])
  def test_old_not_backfilled(self):self.assertEqual(self.select(dict(self.j,scheduled_at_local='2026-11-02T20:00:00+01:00')),[])
  def test_future_not_due(self):self.assertEqual(self.select(dict(self.j,scheduled_at_local='2026-11-04T20:00:00+01:00')),[])
  def test_explicit_now_requires_id(self):
