@@ -6,13 +6,13 @@
 <section class="panel"><h2>Iscriviti alla newsletter mensile</h2><p>Una email al mese con le proposte del nostro catalogo. Nessun obbligo: potrai disiscriverti in qualsiasi momento.</p><div class="note" id="status" role="status">Verifica disponibilità del servizio iscrizioni…</div>
 <form id="subscribeForm" autocomplete="on"><label class="field">Nome (facoltativo)<input name="name" maxlength="100" autocomplete="given-name"></label>
 <label class="field">Indirizzo email *<input name="email" type="email" maxlength="254" autocomplete="email" required></label>
-<label class="field">Telefono (facoltativo, per eventuale ricontatto su tua richiesta)<input name="phone" type="tel" maxlength="30" autocomplete="tel"></label>
+
 <label class="field">Zona che ti interessa<select name="interest"><option value="">Tutte le zone</option><option>Avigliana</option><option>Almese</option><option>Condove</option><option>Buttigliera Alta</option><option>Rivoli</option><option>Valle di Susa</option><option>Torino</option></select></label>
 <label class="check"><input type="checkbox" name="email_optin" required><span><strong>Acconsento all'invio di una email al mese</strong> con proposte immobiliari e novità di Case in Pubblicità 24/7. Il consenso è facoltativo e revocabile in qualsiasi momento.</span></label>
 <label class="check"><input type="checkbox" name="privacy_seen" required><span>Ho letto l'<a href="../campagne/case247/privacy-richieste-immobili/" target="_blank" rel="noopener noreferrer">informativa privacy</a>. La lettura dell'informativa non obbliga a ricevere pubblicità.</span></label>
 <input name="trap" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true"><div id="captcha"></div>
 <button class="btn" id="send" disabled type="submit">Conferma la richiesta di iscrizione</button><div id="result" role="status" aria-live="polite"></div></form>
-<p class="fine">L'iscrizione diventa valida soltanto dopo la conferma dell'indirizzo email. Il numero di telefono non autorizza messaggi promozionali, WhatsApp o telefonate pubblicitarie.</p></section></div>
+<p class="fine">L'iscrizione diventa valida soltanto dopo la conferma dell'indirizzo email. Se desideri essere ricontattato telefonicamente, utilizza il modulo separato per richieste immobiliari.</p></section></div>
 </main><footer>Joseph Malafronte · Case in Pubblicità 24/7 · <a href="mailto:caseinpubblicita@gmail.com">caseinpubblicita@gmail.com</a> · <a href="../campagne/case247/privacy-richieste-immobili/">Privacy</a></footer>
 <script>
 (()=>{'use strict';const api='https://qmeftxsdfeyqozwoivzo.supabase.co/functions/v1/case247-newsletter';const form=document.getElementById('subscribeForm'),send=document.getElementById('send'),status=document.getElementById('status'),result=document.getElementById('result');let version='',token='',ready=false;
