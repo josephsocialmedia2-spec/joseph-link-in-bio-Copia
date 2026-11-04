@@ -83,7 +83,19 @@ consent_rows=[[val(x,"id"),val(x,"subscriber_id"),val(x,"event_at"),val(x,"event
 dispatch=read_table("case247_newsletter_dispatches",["id","subscriber_id","issue_month","state","sent_at","provider_id","error_code"],"id")
 dispatch_rows=[[val(x,"id"),val(x,"subscriber_id"),val(x,"issue_month"),val(x,"state"),val(x,"sent_at"),val(x,"provider_id"),val(x,"error_code")] for x in dispatch]
 
+property_requests=read_table("case247_property_requests",[
+    "id","requested_at","contact_name","email","phone","comune","request_kind",
+    "property_type","max_budget_eur","status","email_optin_requested",
+    "email_verified_at","whatsapp_optin_requested","origin_url"],"created_at")
+request_rows=[[
+    val(x,"id"),val(x,"requested_at"),val(x,"contact_name"),val(x,"email"),
+    val(x,"phone"),val(x,"comune"),val(x,"request_kind"),val(x,"property_type"),
+    val(x,"max_budget_eur"),val(x,"status"),val(x,"email_optin_requested"),
+    val(x,"email_verified_at"),val(x,"whatsapp_optin_requested"),val(x,"origin_url")
+] for x in property_requests]
+
 write_table("CONTATTI",contacts,14)
 write_table("CONSENSI",consent_rows,8)
 write_table("INVII_MENSILI",dispatch_rows,7)
-print("CRM sheets synchronized; counts:",len(contacts),len(consent_rows),len(dispatch_rows))
+write_table("RICHIESTE_IMMOBILIARI",request_rows,14)
+print("CRM sheets synchronized; counts:",len(contacts),len(consent_rows),len(dispatch_rows),len(request_rows))
