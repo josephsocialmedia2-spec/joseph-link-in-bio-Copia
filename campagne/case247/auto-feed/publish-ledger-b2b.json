@@ -1,1 +1,13 @@
-{"schema_version":1,"records":{}}
+{
+  "schema_version": 1,
+  "records": {
+    "CASE247-010-facebook": {
+      "status": "ATTEMPTED_VERIFY_BEFORE_RETRY",
+      "content_id": "CASE247-010",
+      "platform": "facebook",
+      "target_id": "1402024242991896",
+      "at_utc": "2026-11-04T10:52:43.432Z",
+      "source": "facebook_page_ui"
+    }
+  }
+}
