@@ -16,9 +16,12 @@
       "content_id": "CASE247-010",
       "platform": "instagram",
       "target_id": "17841415827906266",
-      "status": "ATTEMPTED_VERIFY_BEFORE_RETRY",
+      "status": "PUBLISHED",
       "source": "meta_business_suite_ui",
-      "at_utc": "2026-11-04T11:01:56.196Z"
+      "at_utc": "2026-11-04T11:01:56.196Z",
+      "verified_at_utc": "2026-11-04T11:03:28.798Z",
+      "permalink": "https://www.instagram.com/p/DfUTZRBm1Xe/",
+      "external_post_id": "17890385271623640"
     }
   }
 }
