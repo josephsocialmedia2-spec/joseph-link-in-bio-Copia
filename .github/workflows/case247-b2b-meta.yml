@@ -15,12 +15,12 @@ on:
         type: boolean
         default: true
       mode:
-        description: 'due = entro 60 minuti; next = singolo contenuto scelto'
+        description: 'due = orario; next = oggi; recover = recupero esplicitamente autorizzato'
         type: choice
-        options: [due, next]
+        options: [due, next, recover]
         default: due
       content_id:
-        description: 'Obbligatorio per next: ID approvato da pubblicare ora'
+        description: 'Per next/recover: ID approvato; recupero consentito per CASE247-009, 011, 012'
         type: string
         default: ''
 permissions:
