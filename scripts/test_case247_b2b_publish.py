@@ -19,6 +19,19 @@ class Safety(unittest.TestCase):
   self.assertEqual(self.select(dict(self.j,scheduled_at_local="2026-11-02T20:00:00+01:00"),mode="next",cid="x"),[])
  def test_old_not_backfilled(self):self.assertEqual(self.select(dict(self.j,scheduled_at_local='2026-11-02T20:00:00+01:00')),[])
  def test_future_not_due(self):self.assertEqual(self.select(dict(self.j,scheduled_at_local='2026-11-04T20:00:00+01:00')),[])
+ def test_recovery_explicit_only(self):
+  old=dict(self.j,scheduled_at_local="2026-11-03T20:00:00+01:00",id="CASE247-009-facebook",content_id="CASE247-009")
+  self.now=dt.datetime(2026,11,6,9,40,tzinfo=dt.timezone.utc)
+  self.assertEqual(len(self.select(old,mode="recover",cid="CASE247-009")),1)
+  self.assertEqual(self.select(old,mode="recover",cid="CASE247-012"),[])
+  self.assertEqual(self.select(old,mode="recover",cid=""),[])
+ def test_recovery_rejects_unapproved_ids(self):
+  self.now=dt.datetime(2026,11,6,9,40,tzinfo=dt.timezone.utc)
+  self.assertEqual(self.select(mode="recover",cid="x"),[])
+ def test_recovery_rejects_prior_post(self):
+  self.now=dt.datetime(2026,11,6,9,40,tzinfo=dt.timezone.utc)
+  old=dict(self.j,id="CASE247-009-facebook",content_id="CASE247-009")
+  self.assertEqual(self.select(old,records={"CASE247-009-facebook":{"status":"PUBLISHED"}},mode="recover",cid="CASE247-009"),[])
  def test_explicit_now_requires_id(self):
   self.assertEqual(self.select(mode='next'),[])
   self.assertEqual(len(self.select(mode='next',cid='x')),1)
