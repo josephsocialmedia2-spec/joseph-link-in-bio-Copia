@@ -48,7 +48,10 @@ def eligible(q, records, now, mode="due", content_id=""):
   local=scheduled.astimezone(ZoneInfo("Europe/Rome"))
   if local.utcoffset()!=scheduled.utcoffset():raise RuntimeError("Wrong Rome UTC offset")
   age=(now-scheduled.astimezone(dt.timezone.utc)).total_seconds()
-  if mode=="next":
+  if mode=="recover":
+   # Explicitly approved recovery, never automatic: closed allow-list.
+   if not content_id or j["content_id"]!=content_id or content_id not in ("CASE247-009","CASE247-011","CASE247-012"):continue
+  elif mode=="next":
    if local.date()!=now.astimezone(ZoneInfo("Europe/Rome")).date():continue
    if not content_id or j["content_id"]!=content_id:continue
   elif not 0<=age<=3600:continue
@@ -89,7 +92,7 @@ def main():
  for job in all_b2b:verify_image(job)
  if report["dry_run"]:print("DRY RUN:", report["authentication"]);return
  if report["authentication"]!="ACCOUNT_LINK_VERIFIED_PUBLISH_PERMISSIONS_UNTESTED":raise RuntimeError("Meta preflight failed")
- pilot=os.getenv("GITHUB_EVENT_NAME")=="workflow_dispatch" and report["mode"]=="next" and bool(os.getenv("CONTENT_ID"))
+ pilot=os.getenv("GITHUB_EVENT_NAME")=="workflow_dispatch" and report["mode"] in ("next","recover") and bool(os.getenv("CONTENT_ID"))
  if not pilot:
   if not report["queue_enabled"]:raise RuntimeError("Automatic queue disabled")
   channels={}
