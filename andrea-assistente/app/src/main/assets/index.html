@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>Andrea Assistente</title>
+<style>
+:root{--bg:#0b111e;--card:#162137;--card2:#1c2b43;--ink:#f5f9ff;--muted:#a0b1ca;--edge:#2b3d58;--accent:#78ddca;--warn:#ffcc83}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top right,#182f4b 0,#0b111e 46%);color:var(--ink);font:15px/1.5 system-ui,-apple-system,Roboto,sans-serif}
+.wrap{max-width:740px;margin:auto;padding:26px 18px 90px}.brand{display:flex;gap:10px;align-items:center;font-size:12px;letter-spacing:2.2px;font-weight:800;color:var(--accent)}
+.logo{display:grid;place-items:center;background:var(--accent);color:#0b1d24;width:36px;height:36px;border-radius:12px;font-size:19px;letter-spacing:0}.intro{margin:26px 0 20px}.date{color:var(--muted);text-transform:capitalize;font-size:13px}
+h1{font-size:clamp(29px,7vw,42px);line-height:1.13;margin:7px 0 12px;letter-spacing:-1.4px}h2{font-size:19px;letter-spacing:-.4px;margin:0}p{margin:4px 0 0}.sub{color:var(--muted);font-size:13px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 24px}
+button{border:1px solid var(--edge);background:var(--card2);border-radius:12px;color:var(--ink);font-size:13px;font-weight:650;padding:11px 13px;cursor:pointer}
+button.primary{background:var(--accent);color:#08212a;border:0}button.tiny{font-size:12px;padding:7px 10px}button.danger{color:#ffb2b2}
+.grid{display:grid;gap:14px}.panel{background:rgba(22,33,55,.94);border:1px solid var(--edge);border-radius:20px;padding:18px 16px;margin-bottom:14px}
+.panelhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}.count{background:#24453f;color:var(--accent);border-radius:25px;padding:3px 9px;font-size:12px;font-weight:750}
+.entry{display:flex;gap:10px;align-items:start;border-top:1px solid #29374c;padding:13px 0}.entry:first-child{border-top:0}.entry .time{font-weight:750;white-space:nowrap;color:var(--accent);min-width:45px}
+.entry .body{flex:1;min-width:0}.entry .name{font-weight:650;overflow-wrap:anywhere}.entry .tag{color:var(--muted);font-size:12px;margin-top:2px}.entry button{padding:5px 8px;font-size:12px}
+.empty{padding:14px 2px;color:var(--muted);font-size:13px}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.mail{border-top:1px solid var(--edge);padding:13px 0}.mail:first-child{border:0}
+.mail .subject{font-weight:650}.mail .preview{font-size:12px;color:var(--muted);line-height:1.45;margin:4px 0 10px;overflow-wrap:anywhere}
+.pill{display:inline-block;background:#284137;color:var(--accent);border-radius:100px;padding:2px 9px;font-size:11px;margin-left:6px}
+.notice{border-left:3px solid var(--warn);padding-left:12px;color:#d8deeb;font-size:12px;margin:12px 0}
+.setting{display:flex;gap:10px;justify-content:space-between;align-items:center;padding:12px 0;border-top:1px solid var(--edge)}.setting:first-of-type{border-top:0}
+.setting strong{display:block;font-size:13px}.setting span{font-size:12px;color:var(--muted)}
+dialog{background:#142137;color:var(--ink);border:1px solid #3d5670;border-radius:20px;padding:22px;width:calc(100% - 28px);max-width:460px;box-shadow:0 20px 90px #000a}dialog::backdrop{background:#020913be}
+label{display:block;font-size:13px;font-weight:650;margin:16px 0 6px}
+input,select,textarea{width:100%;border:1px solid #466079;border-radius:11px;background:#0b1728;color:white;padding:13px;font:15px system-ui;min-height:45px}
+textarea{min-height:80px}.dialogbuttons{display:flex;gap:9px;justify-content:flex-end;margin-top:22px}
+.footer{font-size:11px;color:var(--muted);text-align:center;padding:22px 0 0}
+@media(min-width:600px){.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}.twocol .panel{margin:0 0 14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="brand"><div class="logo">A</div> ANDREA <span style="color:#7693ad">/ ASSISTENTE PERSONALE</span></div>
+<section class="intro"><div class="date" id="dateLine"></div><h1>Le cose importanti,<br>al momento giusto.</h1><p class="sub">Agenda, scuola, telefonate ed email in un unico posto.</p></section>
+<div class="actions">
+<button class="primary" onclick="openTask()">＋ Nuova attività</button>
+<button onclick="Android.recognize()">🎙 Detta</button>
+<button onclick="readAgenda('today')">▶ Leggi oggi</button>
+<button onclick="readAgenda('tomorrow')">▶ Leggi domani</button>
+</div>
+<div id="calendarWarning" class="notice" style="display:none">Per mostrare gli appuntamenti di Google Calendar sincronizzati sul telefono, <button class="tiny" onclick="Android.requestCalendar()">autorizza il calendario</button>.</div>
+<div class="twocol">
+<section class="panel"><div class="panelhead"><h2>Oggi</h2><span class="count" id="todayCount">0</span></div><div id="todayList"></div></section>
+<section class="panel"><div class="panelhead"><h2>Domani</h2><span class="count" id="tomorrowCount">0</span></div><div id="tomorrowList"></div></section>
+</div>
+<section class="panel" id="overduePanel" style="display:none"><div class="panelhead"><h2>Da recuperare</h2><span class="count" id="overdueCount">0</span></div><div id="overdueList"></div></section>
+<section class="panel">
+<div class="panelhead"><div><h2>Email ricevute</h2><p class="sub">Gmail, Outlook e Samsung Email</p></div><button class="tiny" onclick="Android.requestNotificationAccess()">Autorizza</button></div>
+<p class="notice">Per privacy, Andrea registra soltanto le <strong>nuove notifiche email</strong> visibili dopo l'autorizzazione. Non può leggere la casella completa né gli allegati. Prima di creare un impegno da una mail, verifica data e ora.</p>
+<div id="mailList"></div>
+</section>
+<section class="panel">
+<div class="panelhead"><div><h2>Orario scuola</h2><p class="sub">Lezioni settimanali ricorrenti</p></div><button class="tiny" onclick="document.getElementById('schoolDialog').showModal()">＋ Aggiungi</button></div>
+<div id="schoolList"></div>
+</section>
+<section class="panel">
+<div class="panelhead"><h2>Promemoria automatici</h2></div>
+<div class="setting"><div><strong>Briefing del mattino</strong><span id="morningValue">08:00 · Agenda di oggi</span></div><button class="tiny" onclick="changeTime('morning')">Modifica</button></div>
+<div class="setting"><div><strong>Promemoria della sera</strong><span id="eveningValue">20:30 · Programma di domani</span></div><button class="tiny" onclick="changeTime('evening')">Modifica</button></div>
+<div class="row" style="margin-top:13px"><button class="tiny" onclick="Android.requestExactAlarms()">Permetti orari precisi</button><button class="tiny" onclick="renderData()">Aggiorna agenda</button></div>
+<p class="sub" style="margin-top:12px">Se Android limita gli allarmi in background, la notifica può arrivare dopo l'orario indicato. Controlla anche le impostazioni batteria di Samsung.</p>
+</section>
+<div class="footer">Versione privata 0.1 · Dati salvati sul dispositivo · Nessuna password salvata</div>
+</div>
+
+<dialog id="taskDialog">
+<form onsubmit="saveTask(event)">
+<h2 id="taskTitle">Nuova attività</h2>
+<label for="taskName">Cosa devo ricordarti?</label><textarea id="taskName" required placeholder="Es. richiamare il proprietario di Avigliana"></textarea>
+<label for="taskWhen">Data e ora</label><input id="taskWhen" type="datetime-local" required>
+<label for="taskKind">Categoria</label>
+<select id="taskKind"><option>Personale</option><option>Lavoro</option><option>Richiamo</option><option>Scuola</option></select>
+<p class="sub">Conferma la scadenza prima del salvataggio.</p>
+<div class="dialogbuttons"><button type="button" onclick="document.getElementById('taskDialog').close()">Annulla</button><button class="primary" type="submit">Salva</button></div>
+</form>
+</dialog>
+<dialog id="schoolDialog"><form onsubmit="saveSchool(event)">
+<h2>Lezione settimanale</h2>
+<label>Giorno della settimana</label>
+<select id="schoolDay"><option value="2">Lunedì</option><option value="3">Martedì</option><option value="4">Mercoledì</option><option value="5">Giovedì</option><option value="6">Venerdì</option><option value="7">Sabato</option><option value="1">Domenica</option></select>
+<label>Materia o attività</label><input id="schoolName" required placeholder="Es. matematica - serale">
+<label>Inizio</label><input id="schoolStart" type="time" value="18:00" required>
+<label>Fine</label><input id="schoolEnd" type="time" value="20:00" required>
+<div class="dialogbuttons"><button type="button" onclick="document.getElementById('schoolDialog').close()">Annulla</button><button class="primary" type="submit">Salva</button></div>
+</form></dialog>
+<script>
+'use strict';
+var data={today:[],tomorrow:[],overdue:[],mails:[],school:[]};
+var days=['','Domenica','Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'];
+function esc(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]});}
+function pad(n){return String(n).padStart(2,'0')}
+function time(ms){var d=new Date(Number(ms));return pad(d.getHours())+':'+pad(d.getMinutes())}
+function localInput(date){return date.getFullYear()+'-'+pad(date.getMonth()+1)+'-'+pad(date.getDate())+'T'+pad(date.getHours())+':'+pad(date.getMinutes())}
+function tomorrowAtNine(){var d=new Date();d.setDate(d.getDate()+1);d.setHours(9,0,0,0);return d}
+function renderEntries(items,elem,emptyText){
+  var root=document.getElementById(elem), a=(items||[]).slice().sort(function(x,y){return x.when-y.when});
+  if(!a.length){root.innerHTML='<div class="empty">'+esc(emptyText)+'</div>';return;}
+  root.innerHTML=a.map(function(o){
+   var edit=Number(o.id)>0?'<button class="tiny" onclick="completeTask('+Number(o.id)+')">✓ Fatto</button>':'';
+   return '<div class="entry"><div class="time">'+esc(time(o.when))+'</div><div class="body"><div class="name">'+esc(o.title)+'</div><div class="tag">'+esc(o.kind||'Attività')+'</div></div>'+edit+'</div>';
+  }).join('');
+}
+function renderMails(){
+ var a=data.mails||[],el=document.getElementById('mailList');
+ if(!a.length){el.innerHTML='<p class="empty">Nessuna nuova notifica email acquisita. Per riceverle, premi Autorizza e abilita Andrea nell’accesso alle notifiche.</p>';return}
+ el.innerHTML=a.map(function(m,i){
+  var school=/scuola|galilei|lezion|serale|orario|compiti/i.test([m.sender,m.subject,m.preview].join(' '));
+  return '<div class="mail"><div class="subject">'+esc(m.sender||'Email')+(school?'<span class="pill">Scuola</span>':'')+
+  '</div><div class="sub">'+esc(new Date(m.received).toLocaleString('it-IT'))+'</div><div class="preview">'+esc(m.preview||m.subject)+'</div><button class="tiny" onclick="mailToTask('+i+')">＋ Crea attività da email</button></div>';
+ }).join('');
+}
+function renderSchool(){
+ var a=data.school||[],el=document.getElementById('schoolList');
+ if(!a.length){el.innerHTML='<p class="empty">Nessuna lezione inserita. Aggiungi le lezioni e i relativi orari una sola volta.</p>';return}
+ el.innerHTML=a.map(function(x){
+  return '<div class="entry"><div class="body"><div class="name">'+esc(days[x.weekday]+' · '+x.title)+'</div><div class="tag">'+esc(x.start+'–'+x.end)+'</div></div><button class="tiny danger" onclick="deleteSchool('+Number(x.id)+')">Elimina</button></div>';
+ }).join('');
+}
+function renderData(){
+ try{data=JSON.parse(Android.getSnapshot())}catch(e){return}
+ document.getElementById('todayCount').textContent=(data.today||[]).length;
+ document.getElementById('tomorrowCount').textContent=(data.tomorrow||[]).length;
+ document.getElementById('overdueCount').textContent=(data.overdue||[]).length;
+ document.getElementById('overduePanel').style.display=(data.overdue||[]).length?'block':'none';
+ document.getElementById('calendarWarning').style.display=data.calendarPermission?'none':'block';
+ document.getElementById('morningValue').textContent=pad(data.morningHour)+':'+pad(data.morningMinute)+' · Agenda di oggi';
+ document.getElementById('eveningValue').textContent=pad(data.eveningHour)+':'+pad(data.eveningMinute)+' · Programma di domani';
+ renderEntries(data.today,'todayList','Nessun impegno registrato per oggi.');
+ renderEntries(data.tomorrow,'tomorrowList','Nessun impegno registrato per domani.');
+ renderEntries(data.overdue,'overdueList','Nessuna attività arretrata.');
+ renderMails();renderSchool();
+ var now=new Date();
+ document.getElementById('dateLine').textContent=now.toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+}
+function openTask(initial,proposed){
+ document.getElementById('taskName').value=initial||'';
+ document.getElementById('taskWhen').value=localInput(proposed||tomorrowAtNine());
+ document.getElementById('taskKind').value='Lavoro';
+ document.getElementById('taskTitle').textContent=initial?'Conferma attività':'Nuova attività';
+ document.getElementById('taskDialog').showModal();
+}
+function saveTask(event){
+ event.preventDefault();
+ var title=document.getElementById('taskName').value.trim();
+ var when=new Date(document.getElementById('taskWhen').value).getTime();
+ if(!title||!Number.isFinite(when)){alert('Inserisci titolo, data e ora.');return}
+ if(Android.addTask(title,when,document.getElementById('taskKind').value)<0){alert('Impossibile salvare.');return}
+ document.getElementById('taskDialog').close();renderData();
+}
+function completeTask(id){Android.doneTask(id,true);renderData()}
+function deleteSchool(id){if(confirm('Eliminare questa lezione ricorrente?')){Android.deleteSchool(id);renderData()}}
+function saveSchool(event){
+ event.preventDefault();
+ Android.addSchool(Number(document.getElementById('schoolDay').value),
+ document.getElementById('schoolName').value,
+ document.getElementById('schoolStart').value,
+ document.getElementById('schoolEnd').value);
+ document.getElementById('schoolDialog').close();renderData();
+}
+function parseDateHint(s){
+ var proposed=tomorrowAtNine();
+ var l=(s||'').toLowerCase(),date=new Date();
+ if(/\bdopodomani\b/.test(l)){proposed.setDate(date.getDate()+2)}
+ else if(/\boggi\b/.test(l)){proposed=new Date()}
+ else if(/\bdomani\b/.test(l)){proposed.setDate(date.getDate()+1)}
+ var m=l.match(/\b(\d{1,2})[\/\-.](\d{1,2})(?:[\/\-.](\d{2,4}))?\b/);
+ if(m){
+   var yy=m[3]?Number(m[3]):date.getFullYear();
+   if(yy<100)yy+=2000;
+   var tentative=new Date(yy,Number(m[2])-1,Number(m[1]),9,0,0,0);
+   if(tentative.getDate()===Number(m[1])&&tentative.getMonth()===Number(m[2])-1){
+      if(!m[3]&&tentative.getTime()<date.getTime())tentative.setFullYear(tentative.getFullYear()+1);
+      proposed=tentative;
+   }
+ }
+ var t=l.match(/\b(?:alle|ore|h)\s*(\d{1,2})(?::|\.)(\d{2})\b/) || l.match(/\b(?:alle|ore)\s+(\d{1,2})\b/);
+ if(t&&Number(t[1])<24){proposed.setHours(Number(t[1]),Number(t[2]||0),0,0)}
+ return proposed;
+}
+function mailToTask(i){
+ var m=(data.mails||[])[i];if(!m)return;
+ openTask('Verificare email di '+(m.sender||'posta')+': '+(m.subject||m.preview||'messaggio').substring(0,165),
+ parseDateHint(m.preview));
+ document.getElementById('taskKind').value=/scuola|galilei|serale|lezion/i.test(m.sender+' '+m.preview)?'Scuola':'Lavoro';
+}
+function readAgenda(key){
+ var list=(data[key]||[]).slice().sort(function(a,b){return a.when-b.when});
+ var t=key==='tomorrow'?'Domani':'Oggi';
+ var s=t+'. ';
+ if(!list.length)s+='Non risultano impegni registrati.';
+ else s+=list.map(function(x){return 'Alle '+time(x.when)+', '+x.title+'.'}).join(' ');
+ Android.read(s);
+}
+function changeTime(key){
+ var h=key==='morning'?data.morningHour:data.eveningHour;
+ var m=key==='morning'?data.morningMinute:data.eveningMinute;
+ var value=prompt('Orario del promemoria (HH:MM)',pad(h)+':'+pad(m));
+ if(value===null)return;
+ if(!/^([01]?\d|2[0-3]):[0-5]\d$/.test(value)){alert('Usa il formato HH:MM, ad esempio 20:30.');return}
+ var p=value.split(':');Android.setDigestTime(key,Number(p[0]),Number(p[1]));renderData();
+}
+window.onSpeechResult=function(s){openTask(s,parseDateHint(s))};
+window.onSharedText=function(s){openTask('Verificare messaggio: '+String(s).substring(0,160),parseDateHint(s))};
+window.renderData=renderData;
+document.addEventListener('visibilitychange',function(){if(!document.hidden)renderData()});
+document.addEventListener('DOMContentLoaded',renderData);
+</script>
+</body>
+</html>
