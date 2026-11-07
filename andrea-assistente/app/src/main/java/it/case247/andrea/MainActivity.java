@@ -15,6 +15,7 @@ import android.speech.tts.TextToSpeech;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -42,6 +43,7 @@ public final class MainActivity extends Activity implements TextToSpeech.OnInitL
         web.getSettings().setAllowUniversalAccessFromFileURLs(false);
         web.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
         web.addJavascriptInterface(new NativeBridge(),"Android");
+        web.setWebChromeClient(new WebChromeClient());
         web.setWebViewClient(new WebViewClient(){
             @Override public boolean shouldOverrideUrlLoading(WebView v,String url){return true;}
         });
