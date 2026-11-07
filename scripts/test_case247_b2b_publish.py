@@ -36,8 +36,71 @@ class Safety(unittest.TestCase):
   self.assertEqual(self.select(mode='next'),[])
   self.assertEqual(len(self.select(mode='next',cid='x')),1)
  def test_unapproved_excluded(self):self.assertEqual(self.select(dict(self.j,approved=False)),[])
- def test_privati_excluded(self):self.assertEqual(self.select(dict(self.j,audience='privati')),[])
+ def test_privati_supported(self):self.assertEqual(len(self.select(dict(self.j,audience='privati'))),1)
  def test_existing_meta_id_blocks(self):self.assertEqual(self.select(dict(self.j,external_post_id='123')),[])
  def test_summer_offset(self):
   with self.assertRaises(RuntimeError):self.select(dict(self.j,scheduled_at_local='2026-07-03T20:00:00+01:00'))
+class RemoteSafety(unittest.TestCase):
+ def setUp(self):
+  self.job={"platform":"instagram","caption":"Test caption"}
+ def test_match_blocks_republication(self):
+  from unittest.mock import patch
+  from case247_b2b_publish import remote_matches
+  with patch('case247_b2b_publish.meta',return_value={"data":[{"id":"existing","caption":"Test  caption","permalink":"https://www.instagram.com/p/existing/"}]}):
+   self.assertEqual(remote_matches(self.job,"123")[0]["external_post_id"],"existing")
+ def test_cursor_does_not_replay_token_url(self):
+  from unittest.mock import patch
+  from case247_b2b_publish import remote_matches
+  with patch('case247_b2b_publish.meta',side_effect=[{"data":[],"paging":{"next":"https://untrusted.invalid/?access_token=SECRET","cursors":{"after":"abc"}}},{"data":[]}]) as api:
+   self.assertEqual(remote_matches(self.job,"123"),[])
+   self.assertIn('after=abc',api.call_args.args[0]);self.assertNotIn('SECRET',api.call_args.args[0])
+ def test_incomplete_history_blocks(self):
+  from unittest.mock import patch
+  from case247_b2b_publish import remote_matches
+  with patch('case247_b2b_publish.meta',return_value={"data":[],"paging":{"next":"somewhere"}}):
+   with self.assertRaises(RuntimeError):remote_matches(self.job,"123")
+ def test_network_failure_blocks(self):
+  from unittest.mock import patch
+  from case247_b2b_publish import remote_matches
+  with patch('case247_b2b_publish.meta',side_effect=RuntimeError('NETWORK_ERROR')):
+   with self.assertRaises(RuntimeError):remote_matches(self.job,"123")
+ def test_unknown_mode_blocked(self):
+  with self.assertRaises(RuntimeError):eligible({"jobs":[]},{},dt.datetime.now(dt.timezone.utc),'typo')
+ def test_future_calendar_is_unapproved(self):
+  import json
+  from pathlib import Path
+  q=json.loads(Path('campagne/case247/editorial-queue/2026-11-07_2026-12-06/queue.json').read_text())
+  self.assertEqual(len(q['jobs']),120)
+  self.assertEqual(eligible(q,{},dt.datetime(2026,11,7,19,tzinfo=dt.timezone.utc)),[])
+class FailureRecovery(unittest.TestCase):
+ def test_uncertain_post_never_sent_twice(self):
+  import case247_b2b_publish as pub
+  from unittest.mock import patch
+  from pathlib import Path
+  import tempfile
+  job={"id":"CASE247-009-facebook","content_id":"CASE247-009","platform":"facebook","audience":"aziende","approved":True,"scheduled_at_local":"2026-11-03T20:00:00+01:00","caption":"approved text","media_jpeg":"campagne/case247/editorial-queue/test/a.jpg"}
+  ledger={"records":{}};posts=[]
+  def read(path):return copy.deepcopy(ledger) if path==pub.L else {},'sha'
+  def write(path,data,sha):
+   if path==pub.L:ledger.update(copy.deepcopy(data))
+   return 'next-sha'
+  def meta(path,body=None):
+   if body is not None:posts.append(path);raise RuntimeError('NETWORK_ERROR_AFTER_POST')
+   if path.startswith('me?'):return {"id":"page"}
+   if path.startswith('page?'):return {"id":"page","instagram_business_account":{"id":"ig"}}
+   return {"id":"ig","username":"test"}
+  env={"META_PAGE_ACCESS_TOKEN":"test-only","META_FACEBOOK_PAGE_ID":"page","META_INSTAGRAM_USER_ID":"ig","PUBLISH_MODE":"recover","CONTENT_ID":"CASE247-009","GITHUB_EVENT_NAME":"workflow_dispatch","DRY_RUN":"false"}
+  with patch.dict(os.environ,env),patch.object(pub,'load_queues',return_value={"jobs":[job]}),patch.object(pub,'read',side_effect=read),patch.object(pub,'write',side_effect=write),patch.object(pub,'meta',side_effect=meta),patch.object(pub,'verify_image',return_value='https://example.test/a.jpg'),patch.object(pub,'remote_matches',return_value=[]),patch.object(pub,'save_status'),patch('builtins.print'):
+   with self.assertRaises(RuntimeError):pub.main()
+   self.assertEqual(ledger['records'][job['id']]['status'],'ATTEMPTED_VERIFY_BEFORE_RETRY')
+   with self.assertRaises(RuntimeError):pub.main()
+  self.assertEqual(len(posts),1)
+ def test_known_id_reconciled_without_post(self):
+  import case247_b2b_publish as pub
+  from unittest.mock import patch
+  job={"id":"job","platform":"instagram"};records={"job":{"status":"PUBLISHED_UNVERIFIED","external_post_id":"123","target_id":"ig"}}
+  with patch.dict(os.environ,{"META_INSTAGRAM_USER_ID":"ig"}),patch.object(pub,'remote_matches',return_value=[{"external_post_id":"123","permalink":"https://www.instagram.com/p/test/"}]),patch.object(pub,'write',return_value='new'),patch.object(pub,'meta') as api:
+   self.assertEqual(pub.reconcile_known_posts([job],records,'old'),'new')
+   self.assertEqual(records['job']['status'],'PUBLISHED');api.assert_not_called()
 if __name__=='__main__':unittest.main()
+

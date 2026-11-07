@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "brand": "Case in Pubblicità 24/7",
-  "updated_at": "2026-11-03T15:17:07.490841+00:00",
+  "updated_at": "2026-11-07T16:17:50.486843+00:00",
   "model": "UNA_STRUTTURA_UNA_REGIA_UNA_PAGINA_PER_PAESE",
   "source": "https://lasacraimmobiliare.it/",
   "catalog_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/immobili/catalogo.json",
@@ -50,7 +50,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Avigliana. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Avigliana. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "almese",
@@ -85,7 +89,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Almese. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Almese. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "rubiana",
@@ -120,7 +128,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Rubiana. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Rubiana. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "villar-dora",
@@ -155,7 +167,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Villar Dora. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Villar Dora. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "caprie",
@@ -190,7 +206,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Caprie. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Caprie. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "condove",
@@ -225,7 +245,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Condove. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Condove. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "sant-ambrogio-di-torino",
@@ -262,7 +286,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Sant’Ambrogio di Torino. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Sant’Ambrogio di Torino. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "chiusa-di-san-michele",
@@ -297,7 +325,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Chiusa di San Michele. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Chiusa di San Michele. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "vaie",
@@ -332,7 +364,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Vaie. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Vaie. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "san-didero",
@@ -367,7 +403,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a San Didero. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a San Didero. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "borgone-susa",
@@ -402,7 +442,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Borgone Susa. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Borgone Susa. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "bussoleno",
@@ -437,7 +481,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Bussoleno. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Bussoleno. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "chianocco",
@@ -472,7 +520,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Chianocco. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Chianocco. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "susa",
@@ -507,7 +559,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Susa. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Susa. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "mompantero",
@@ -542,7 +598,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Mompantero. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Mompantero. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "san-giorio-di-susa",
@@ -577,7 +637,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a San Giorio di Susa. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a San Giorio di Susa. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "villar-focchiardo",
@@ -612,7 +676,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Villar Focchiardo. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Villar Focchiardo. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "venaus",
@@ -647,7 +715,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Venaus. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Venaus. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "giaglione",
@@ -682,7 +754,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Giaglione. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Giaglione. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "gravere",
@@ -717,7 +793,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Gravere. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Gravere. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "exilles",
@@ -752,7 +832,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Exilles. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Exilles. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "salbertrand",
@@ -787,7 +871,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Salbertrand. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Salbertrand. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "oulx",
@@ -822,7 +910,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Oulx. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Oulx. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "sauze-d-oulx",
@@ -857,7 +949,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Sauze d’Oulx. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Sauze d’Oulx. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "cesana-torinese",
@@ -892,7 +988,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Cesana Torinese. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Cesana Torinese. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "claviere",
@@ -927,7 +1027,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Claviere. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Claviere. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "novalesa",
@@ -962,7 +1066,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Novalesa. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Novalesa. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "moncenisio",
@@ -997,7 +1105,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Moncenisio. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Moncenisio. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "pragelato",
@@ -1032,7 +1144,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Pragelato. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Pragelato. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "bardonecchia",
@@ -1067,7 +1183,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Bardonecchia. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Bardonecchia. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "chiomonte",
@@ -1102,7 +1222,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Chiomonte. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Chiomonte. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "sant-antonino-di-susa",
@@ -1139,7 +1263,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Sant’Antonino di Susa. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Sant’Antonino di Susa. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "rivoli",
@@ -1174,7 +1302,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Rivoli. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Rivoli. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "giaveno",
@@ -1209,7 +1341,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Giaveno. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Giaveno. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "grugliasco",
@@ -1244,7 +1380,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Grugliasco. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Grugliasco. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "torino",
@@ -1279,7 +1419,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Torino. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Torino. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "moncalieri",
@@ -1314,7 +1458,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Moncalieri. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Moncalieri. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "collegno",
@@ -1349,7 +1497,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Collegno. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Collegno. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "pianezza",
@@ -1384,7 +1536,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Pianezza. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Pianezza. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "borgaro-torinese",
@@ -1420,7 +1576,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Borgaro Torinese. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Borgaro Torinese. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     },
     {
       "id": "valgioie",
@@ -1455,7 +1615,11 @@
       },
       "operational_status": "DA_VERIFICARE",
       "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
-      "bio": "Immobili a Valgioie. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Valgioie. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "landing_check": {
+        "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+        "http_status": 200
+      }
     }
   ]
 }

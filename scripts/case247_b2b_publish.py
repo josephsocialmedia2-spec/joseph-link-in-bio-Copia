@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Approved B2B Meta image publisher. Fail closed and prevent automatic duplicates."""
-import os,json,base64,datetime as dt,urllib.request,urllib.parse,urllib.error,time
+import os,json,base64,datetime as dt,urllib.request,urllib.parse,urllib.error,time,socket
 from zoneinfo import ZoneInfo
 from pathlib import Path
 Q="campagne/case247/editorial-queue/2026-11-01_2026-11-04/queue.json"
@@ -17,7 +17,15 @@ def call(url,method="GET",data=None,token=None,gh=False):
   data=json.dumps(data).encode() if gh else urllib.parse.urlencode(data).encode()
  try:
   with urllib.request.urlopen(urllib.request.Request(url,data=data,headers=h,method=method),timeout=30) as r:return json.load(r)
- except urllib.error.HTTPError as e:raise RuntimeError(("GitHub" if gh else "Meta")+" API HTTP "+str(e.code)) from None
+ except urllib.error.HTTPError as e:
+  code=None
+  if not gh:
+   try:code=json.loads(e.read()).get("error",{}).get("code")
+   except (ValueError,AttributeError):pass
+  reason=" TOKEN_EXPIRED_OR_INVALID" if code==190 else ""
+  raise RuntimeError(("GitHub" if gh else "Meta")+" API HTTP "+str(e.code)+reason) from None
+ except (urllib.error.URLError,TimeoutError,socket.timeout):
+  raise RuntimeError(("GitHub" if gh else "Meta")+" NETWORK_ERROR_VERIFY_BEFORE_RETRY") from None
 def read(path):
  try:
   r=call(API+urllib.parse.quote(path,safe="/"),token=GH,gh=True)
@@ -38,9 +46,10 @@ def eligible(q, records, now, mode="due", content_id=""):
  keys=[(j["content_id"],j["platform"]) for j in jobs]
  attempted={(r.get("content_id"),r.get("platform")) for r in records.values()}
  if len(keys)!=len(set(keys)):raise RuntimeError("Duplicate content/platform")
+ if mode not in ("due","next","recover"):raise RuntimeError("Unknown publishing mode")
  result=[]
  for j in jobs:
-  if j.get("approved") is not True or j.get("audience")!="aziende" or j.get("platform") not in ("facebook","instagram"):continue
+  if j.get("approved") is not True or j.get("audience") not in ("aziende","privati") or j.get("platform") not in ("facebook","instagram"):continue
   if (j["content_id"],j["platform"]) in attempted:continue
   if j["id"] in records or j.get("external_post_id") or j.get("permalink"):continue
   scheduled=dt.datetime.fromisoformat(j["scheduled_at_local"])
@@ -67,12 +76,74 @@ def verify_image(job):
   if r.status!=200 or r.read()!=Path(path).read_bytes():raise RuntimeError("Public JPEG unavailable")
  return image
 
+
+def load_queues():
+ manifest,_=read("campagne/case247/editorial-queue/manifest.json")
+ paths=manifest.get("queues",[Q])
+ if not isinstance(paths,list) or not paths:raise RuntimeError("Queue manifest invalid")
+ combined={"jobs":[],"meta_enabled":False,"no_automatic_meta_publish":True}
+ for path in paths:
+  if not isinstance(path,str) or not path.startswith("campagne/case247/editorial-queue/") or ".." in path.split("/") or not path.endswith("/queue.json"):raise RuntimeError("Unsafe queue path")
+  queue,_=read(path)
+  if not queue.get("jobs"):raise RuntimeError("Editorial queue missing or empty")
+  for job in queue["jobs"]:
+   job["queue_enabled"]=queue.get("meta_enabled") is True and queue.get("no_automatic_meta_publish") is False
+   combined["jobs"].append(job)
+ combined["meta_enabled"]=any(j["queue_enabled"] for j in combined["jobs"])
+ combined["no_automatic_meta_publish"]=not combined["meta_enabled"]
+ return combined
+
+def remote_matches(job,target):
+ """Read complete account history before write; ambiguous caption matches block posting.
+ Do not follow paging.next: it can contain credentials. Use only opaque cursors.
+ """
+ facebook=job["platform"]=="facebook"
+ edge="published_posts" if facebook else "media"
+ fields="id,message,permalink_url,full_picture" if facebook else "id,caption,permalink,media_url"
+ path=target+"/"+edge+"?"+urllib.parse.urlencode({"fields":fields,"limit":100})
+ matches=[];cursor=None;seen=set()
+ normalize=lambda x:" ".join((x or "").split())
+ for _ in range(100):
+  response=meta(path+("&after="+urllib.parse.quote(cursor,safe="") if cursor else ""))
+  if not isinstance(response.get("data"),list):raise RuntimeError("Invalid Meta history response")
+  for post in response["data"]:
+   if normalize(post.get("message" if facebook else "caption"))==normalize(job["caption"]):
+    matches.append({"external_post_id":post.get("id"),"permalink":post.get("permalink_url" if facebook else "permalink"),"image_comparison":"REQUIRES_REVIEW_META_REENCODES_IMAGES"})
+  paging=response.get("paging",{})
+  if not paging.get("next"):return matches
+  cursor=paging.get("cursors",{}).get("after")
+  if not cursor or cursor in seen:raise RuntimeError("Incomplete Meta history; publishing blocked")
+  seen.add(cursor)
+ raise RuntimeError("Meta history pagination limit; publishing blocked")
+
+def reconcile_known_posts(jobs,records,sha):
+ """Read-only reconciliation of uncertain writes, never repeat a POST."""
+ by_id={j["id"]:j for j in jobs}
+ for jid,record in records.items():
+  if record.get("status")!="PUBLISHED_UNVERIFIED" or not record.get("external_post_id") or jid not in by_id:continue
+  job=by_id[jid]
+  expected=os.getenv("META_FACEBOOK_PAGE_ID" if job["platform"]=="facebook" else "META_INSTAGRAM_USER_ID")
+  if not expected or record.get("target_id")!=expected:continue
+  matches=remote_matches(job,expected)
+  matched=next((m for m in matches if str(m.get("external_post_id"))==str(record["external_post_id"]) and m.get("permalink")),None)
+  if matched:
+   record.update(status="PUBLISHED",permalink=matched["permalink"],verified_at_utc=dt.datetime.now(dt.timezone.utc).isoformat())
+   sha=write(L,{"schema_version":1,"records":records},sha)
+ return sha
+
+def save_status(report,records):
+ report["records"]=records
+ report["checked_at_utc"]=dt.datetime.now(dt.timezone.utc).isoformat()
+ Path("b2b-diagnostic.json").write_text(json.dumps(report,indent=2))
+ _,status_sha=read("campagne/case247/auto-feed/b2b-status.json")
+ write("campagne/case247/auto-feed/b2b-status.json",report,status_sha)
+
 def main():
- q,_=read(Q); ledger,sha=read(L); records=ledger.get("records",{})
+ q=load_queues(); ledger,sha=read(L); records=ledger.get("records",{})
  if not q.get("jobs"):raise RuntimeError("Editorial queue missing or empty")
  now=dt.datetime.now(dt.timezone.utc)
  jobs=eligible(q,records,now,os.getenv("PUBLISH_MODE","due"),os.getenv("CONTENT_ID",""))
- all_b2b=[j for j in q.get("jobs",[]) if j.get("approved") is True and j.get("audience")=="aziende"]
+ all_b2b=[j for j in q.get("jobs",[]) if j.get("approved") is True and j.get("audience") in ("aziende","privati")]
  missing=[k for k in ("META_PAGE_ACCESS_TOKEN","META_FACEBOOK_PAGE_ID","META_INSTAGRAM_USER_ID") if not os.getenv(k)]
  report={"checked_at_utc":now.isoformat(),"approved_jobs":len(all_b2b),"eligible_jobs":len(jobs),"missing_configuration":missing,"mode":os.getenv("PUBLISH_MODE","due"),"dry_run":os.getenv("DRY_RUN","true")!="false","records":records,"queue_enabled":q.get("meta_enabled") is True and q.get("no_automatic_meta_publish") is False}
  report["schedule_requested"]=os.getenv("CASE247_B2B_SCHEDULE")=="true"
@@ -85,13 +156,21 @@ def main():
    meta(os.environ["META_INSTAGRAM_USER_ID"]+"?fields=id,username")
    report["authentication"]="ACCOUNT_LINK_VERIFIED_PUBLISH_PERMISSIONS_UNTESTED"
   except RuntimeError as e:report["authentication"]=str(e)
- Path("b2b-diagnostic.json").write_text(json.dumps(report,indent=2))
- _,status_sha=read("campagne/case247/auto-feed/b2b-status.json")
- write("campagne/case247/auto-feed/b2b-status.json",report,status_sha)
+ report["pending_jobs"]=sum(j.get("approved") is not True for j in q["jobs"])
+ report["media_checks"]={}
+ for job in all_b2b:
+  try:verify_image(job);report["media_checks"][job["id"]]="AVAILABLE"
+  except Exception:report["media_checks"][job["id"]]="UNAVAILABLE"
+ save_status(report,records)
  print(json.dumps(report,indent=2))
- for job in all_b2b:verify_image(job)
- if report["dry_run"]:print("DRY RUN:", report["authentication"]);return
+ if report["dry_run"]:
+  print("DRY RUN:", report["authentication"])
+  if missing or report["authentication"]!="ACCOUNT_LINK_VERIFIED_PUBLISH_PERMISSIONS_UNTESTED" or "UNAVAILABLE" in report["media_checks"].values():
+   raise RuntimeError("Preflight incomplete: see diagnostic; no publication attempted")
+  return
  if report["authentication"]!="ACCOUNT_LINK_VERIFIED_PUBLISH_PERMISSIONS_UNTESTED":raise RuntimeError("Meta preflight failed")
+ sha=reconcile_known_posts(q["jobs"],records,sha)
+ save_status(report,records)
  pilot=os.getenv("GITHUB_EVENT_NAME")=="workflow_dispatch" and report["mode"] in ("next","recover") and bool(os.getenv("CONTENT_ID"))
  if not pilot:
   if not report["queue_enabled"]:raise RuntimeError("Automatic queue disabled")
@@ -101,6 +180,7 @@ def main():
    if r.get("source")=="meta_graph_api" and r.get("status")=="PUBLISHED" and r.get("permalink") and target and r.get("target_id")==target:
     channels.setdefault(r.get("content_id"),set()).add(r.get("platform"))
   if not any(pair=={"facebook","instagram"} for pair in channels.values()):raise RuntimeError("Verified two-channel pilot required")
+ if not pilot:jobs=[j for j in jobs if j.get("queue_enabled") is True]
  if pilot and not jobs:raise RuntimeError("Selected content ineligible or already attempted")
  if not jobs:print("No eligible approved B2B posts");return
  cid=min(jobs,key=lambda j:j["scheduled_at_local"])["content_id"]
@@ -115,6 +195,13 @@ def main():
   jid=job["id"]; path=job.get("media_jpeg",""); image=verify_image(job)
   if not path.startswith("campagne/case247/editorial-queue/") or not path.endswith(".jpg"):raise RuntimeError("Invalid media path")
   identity={"source":"meta_graph_api","platform":job["platform"],"content_id":job["content_id"],"target_id":page_id if job["platform"]=="facebook" else ig_id}
+  matches=remote_matches(job,identity["target_id"])
+  if matches:
+   records[jid]={**identity,"status":"REMOTE_MATCH_REQUIRES_REVIEW","matches":matches,"at_utc":dt.datetime.now(dt.timezone.utc).isoformat()}
+   sha=write(L,{"schema_version":1,"records":records},sha)
+   save_status(report,records)
+   print("Existing Meta content detected; blocked duplicate",jid)
+   continue
   records[jid]={**identity,"status":"ATTEMPTED_VERIFY_BEFORE_RETRY","at_utc":dt.datetime.now(dt.timezone.utc).isoformat(),"external_post_id":None}
   sha=write(L,{"schema_version":1,"records":records},sha)
   try:
@@ -143,6 +230,8 @@ def main():
    sha=write(L,{"schema_version":1,"records":records},sha)
    print("PUBLISHED",jid,postid)
   except Exception as e:
-   print("VERIFY MANUALLY before retry",jid,type(e).__name__,str(e))
+   print("VERIFY MANUALLY before retry",jid,type(e).__name__)
    raise
+  finally:
+   save_status(report,records)
 if __name__=="__main__":main()

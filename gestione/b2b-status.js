@@ -1,20 +1,38 @@
 (async()=>{
- const panel=document.createElement('section');panel.className='case-hub';panel.setAttribute('aria-label','Pubblicazioni aziende');
- const title=document.createElement('h2');title.textContent='Pubblicazioni aziende · Facebook e Instagram';panel.append(title);
- const body=document.createElement('div');body.textContent='Caricamento stato verificabile…';panel.append(body);
+ const panel=document.createElement('section');panel.className='case-hub';panel.setAttribute('aria-label','Pubblicazioni Privati e Aziende');
+ const title=document.createElement('h2');title.textContent='Regia pubblicazioni · Privati e Aziende';panel.append(title);
+ const body=document.createElement('div');body.textContent='Caricamento diagnosi…';panel.append(body);
  (document.querySelector('.hero')||document.querySelector('.topbar')).after(panel);
  const base='../campagne/case247/';
+ const line=(label,value)=>{const p=document.createElement('p'),b=document.createElement('strong');b.textContent=label+': ';p.append(b,document.createTextNode(String(value)));body.append(p)};
+ const link=(url,label)=>{const a=document.createElement('a');a.href=url;a.textContent=label;a.className='btn';body.append(a)};
  try{
-  const get=async p=>{const r=await fetch(base+p,{cache:'no-store'});if(!r.ok)throw Error('Stato non disponibile (HTTP '+r.status+')');return r.json()};
-  const [q,s,ledger]=await Promise.all([get('editorial-queue/2026-11-01_2026-11-04/queue.json'),get('auto-feed/b2b-status.json'),get('auto-feed/publish-ledger-b2b.json')]);
-  const jobs=q.jobs.filter(j=>j.approved===true&&j.audience==='aziende');
-  const records=ledger.records;const published=jobs.filter(j=>records[j.id]?.status==='PUBLISHED');
+  const get=async p=>{const r=await fetch(p,{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);return r.json()};
+  const [manifest,s,ledger]=await Promise.all([get(base+'editorial-queue/manifest.json'),get(base+'auto-feed/b2b-status.json'),get(base+'auto-feed/publish-ledger-b2b.json')]);
+  const queues=await Promise.all(manifest.queues.map(p=>get('../'+p)));
+  const jobs=queues.flatMap(q=>q.jobs.map(j=>({...j,queue_enabled:q.meta_enabled===true&&q.no_automatic_meta_publish===false})));
+  const records=ledger.records||{},values=Object.values(records),published=values.filter(r=>r.status==='PUBLISHED');
   body.textContent='';
-  const auto=q.meta_enabled===true && q.no_automatic_meta_publish===false && s.schedule_requested===true && s.authentication==='ACCOUNT_LINK_VERIFIED_PUBLISH_PERMISSIONS_UNTESTED' && jobs.some(j=>['facebook','instagram'].every(channel=>jobs.some(k=>k.content_id===j.content_id && k.platform===channel && records[k.id]?.status==='PUBLISHED')));
-  const next=auto && jobs.filter(j=>!records[j.id] && Date.parse(j.scheduled_at_local)>Date.now()).sort((a,b)=>Date.parse(a.scheduled_at_local)-Date.parse(b.scheduled_at_local))[0];
-  const lines=[['Approvati',jobs.length],['Pubblicati verificati',published.length],['Tentativi da verificare',jobs.filter(j=>records[j.id] && records[j.id].status!=='PUBLISHED').length],['Senza tentativo registrato',jobs.filter(j=>!records[j.id]).length],['Ultima diagnosi',s.checked_at_utc],['Autenticazione',s.authentication],['Configurazioni mancanti',(s.missing_configuration||[]).join(', ')||'Nessuna rilevata'],['Programmazione automatica',auto?'Abilitata secondo ultima diagnosi':'Non attiva secondo ultima diagnosi'],['Prossimo invio effettivo',next?next.scheduled_at_local:'Nessuno confermato']];
-  for(const [label,value] of lines){const p=document.createElement('p');const b=document.createElement('strong');b.textContent=label+': ';p.append(b,document.createTextNode(String(value)));body.append(p)}
-  for(const j of published){const r=records[j.id];if(!/^https:\/\/(www\.)?(facebook|instagram)\.com\//.test(r.permalink||''))continue;const a=document.createElement('a');a.href=r.permalink;a.textContent=j.id+' ↗';a.className='btn';body.append(a)}
- }catch(e){body.textContent=e.message+'. Nessuna pubblicazione confermata da questo pannello.'}
- const a=document.createElement('a');a.href='https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/actions/workflows/case247-b2b-meta.yml';a.textContent='Simulazione / Pubblica ora su GitHub ↗';a.className='btn';panel.append(a);
+  const fresh=Date.now()-Date.parse(s.checked_at_utc)<86400000;
+  const identity=fresh&&s.authentication==='ACCOUNT_LINK_VERIFIED_PUBLISH_PERMISSIONS_UNTESTED';
+  const pilot=published.some(r=>r.source==='meta_graph_api'&&r.permalink&&['facebook','instagram'].every(platform=>published.some(k=>k.source==='meta_graph_api'&&k.content_id===r.content_id&&k.platform===platform&&k.permalink&&k.target_id===(platform==='facebook'?'1402024242991896':'17841415827906266'))));
+  const auto=identity&&s.schedule_requested===true&&pilot;
+  const scheduled=jobs.filter(j=>j.approved===true&&j.queue_enabled&&!records[j.id]&&Date.parse(j.scheduled_at_local)>Date.now()).sort((a,b)=>Date.parse(a.scheduled_at_local)-Date.parse(b.scheduled_at_local));
+  line('Facebook / Instagram',identity?'Identità e collegamento verificati nell’ultima diagnosi':'Collegamento non verificato attualmente');
+  line('Autenticazione',s.authentication||'NON VERIFICATA');
+  line('Ultima diagnosi',s.checked_at_utc+(fresh?'':' · OBSOLETA: non prova lo stato attuale'));
+  line('Configurazione mancante',(s.missing_configuration||[]).join(', ')||'Nessuna segnalata');
+  for(const audience of ['privati','aziende']){
+   const j=jobs.filter(j=>j.audience===audience);line(audience==='privati'?'Privati':'Aziende',j.filter(j=>j.approved===true).length+' invii approvati · '+j.filter(j=>j.approved!==true).length+' invii in bozza');
+  }
+  line('Post verificati nel registro',published.length);
+  line('Tentativi incerti / corrispondenze da esaminare',values.filter(r=>r.status!=='PUBLISHED').length);
+  line('Automazione',auto&&scheduled.length?'Abilitata secondo diagnosi recente':'Sospesa o senza contenuti futuri approvati');
+  line('Prossimo invio',auto&&scheduled[0]?scheduled[0].scheduled_at_local:'Nessuno confermato');
+  line('Ultima pubblicazione registrata',published.map(r=>r.at_utc).filter(Boolean).sort().at(-1)||'Nessuna');
+  for(const r of published)if(/^https:\/\/(www\.)?(facebook|instagram)\.com\//.test(r.permalink||''))link(r.permalink,r.content_id+' · '+r.platform+' ↗');
+  link(base+'auto-feed/review/#calendario-30-giorni','Revisiona calendario di 30 giorni ↗');
+  try{const audit=await get(base+'auto-feed/operational-audit.json');line('Landing territoriali',audit.territory.healthy_landings+' / '+audit.territory.total+' rispondono HTTP 200 · verifica '+audit.checked_at_utc);line('Profili territoriali',audit.territory.verified_pairs+' coppie verificate');line('CRM',audit.crm.status)}catch(_){line('Audit territoriale / CRM','Non disponibile')}
+ }catch(e){body.textContent='Diagnosi non disponibile: '+e.message+'. Nessuna operatività confermata.'}
+ const a=document.createElement('a');a.href='https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/actions/workflows/case247-b2b-meta.yml';a.textContent='Apri GitHub Actions · Test / Pubblicazione ↗';a.className='btn';panel.append(a);
 })();

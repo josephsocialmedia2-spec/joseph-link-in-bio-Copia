@@ -1,0 +1,283 @@
+{
+  "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
+  "territory": {
+    "total": 41,
+    "healthy_landings": 41,
+    "verified_pairs": 0,
+    "checks": [
+      {
+        "id": "avigliana",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "almese",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "rubiana",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "villar-dora",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "caprie",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "condove",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "sant-ambrogio-di-torino",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "chiusa-di-san-michele",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "vaie",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "san-didero",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "borgone-susa",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "bussoleno",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "chianocco",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "susa",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "mompantero",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "san-giorio-di-susa",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "villar-focchiardo",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "venaus",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "giaglione",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "gravere",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "exilles",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "salbertrand",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "oulx",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "sauze-d-oulx",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "cesana-torinese",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "claviere",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "novalesa",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "moncenisio",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "pragelato",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "bardonecchia",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "chiomonte",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "sant-antonino-di-susa",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "rivoli",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "giaveno",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "grugliasco",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "torino",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "moncalieri",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "collegno",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "pianezza",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "borgaro-torinese",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      },
+      {
+        "id": "valgioie",
+        "http_status": 200,
+        "facebook_configured": false,
+        "instagram_configured": false
+      }
+    ]
+  },
+  "crm": {
+    "status": "BLOCCATO: endpoint attivo; raccolta disabilitata, informativa in bozza e antispam non configurato",
+    "endpoint_http_status": 200,
+    "intake_enabled": false,
+    "notice_version": "DRAFT-2026-11-02",
+    "turnstile_configured": false
+  },
+  "meta": {
+    "status": "NOT_VERIFIED",
+    "browser_github_authenticated": false,
+    "compromised_token_reused": false
+  },
+  "remaining": [
+    "Credenziale Meta nuova e verifica permessi",
+    "Confronto remoto dei post e recupero 009/011/012",
+    "Test reale dei due canali e scheduler",
+    "Approvazione testi e immagini del calendario",
+    "Rilascio informativa e antispam CRM",
+    "Verifica/creazione profili territoriali"
+  ],
+  "local_validation": {
+    "publisher_tests_passed": 23,
+    "territory_tests_passed": 8,
+    "workflow_yaml": "PASS",
+    "javascript_syntax": "PASS",
+    "approved_jpeg_files_present": 24
+  }
+}
