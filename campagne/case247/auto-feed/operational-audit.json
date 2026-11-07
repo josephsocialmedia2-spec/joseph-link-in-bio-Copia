@@ -263,7 +263,20 @@
   "meta": {
     "status": "NOT_VERIFIED",
     "browser_github_authenticated": false,
-    "compromised_token_reused": false
+    "compromised_token_reused": false,
+    "missing_secret_confirmed_by_workflow": "META_PAGE_ACCESS_TOKEN",
+    "workflow_run_id": 42390702317,
+    "workflow_preflight": "BLOCKED_MISSING_CREDENTIAL",
+    "approved_media_remote_checks_passed": 24,
+    "new_posts_published": 0,
+    "explorer_selected_permissions": [
+      "pages_show_list",
+      "instagram_basic",
+      "pages_read_engagement",
+      "pages_manage_posts"
+    ],
+    "explorer_instagram_content_publish_selected": false,
+    "github_login_blocker": "AUTOMATIC_APPROVAL_REVIEW_REQUIRES_EXPLICIT_LOGIN_AUTHORIZATION"
   },
   "remaining": [
     "Credenziale Meta nuova e verifica permessi",
@@ -279,5 +292,6 @@
     "workflow_yaml": "PASS",
     "javascript_syntax": "PASS",
     "approved_jpeg_files_present": 24
-  }
+  },
+  "implementation_commit": "bba6db1a8353329abe9191ed96565b8a58ed7cbf"
 }
