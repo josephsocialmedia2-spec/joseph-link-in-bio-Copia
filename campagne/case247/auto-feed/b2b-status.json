@@ -1,6 +1,6 @@
 {
-  "checked_at_utc": "2026-11-06T09:54:33.144722+00:00",
-  "approved_jobs": 8,
+  "checked_at_utc": "2026-11-07T16:19:32.350475+00:00",
+  "approved_jobs": 24,
   "eligible_jobs": 0,
   "missing_configuration": [
     "META_PAGE_ACCESS_TOKEN"
@@ -33,5 +33,32 @@
   },
   "queue_enabled": false,
   "schedule_requested": false,
-  "authentication": "NOT_VERIFIED"
+  "authentication": "NOT_VERIFIED",
+  "pending_jobs": 120,
+  "media_checks": {
+    "CASE247-001-facebook": "AVAILABLE",
+    "CASE247-001-instagram": "AVAILABLE",
+    "CASE247-002-facebook": "AVAILABLE",
+    "CASE247-002-instagram": "AVAILABLE",
+    "CASE247-003-facebook": "AVAILABLE",
+    "CASE247-003-instagram": "AVAILABLE",
+    "CASE247-004-facebook": "AVAILABLE",
+    "CASE247-004-instagram": "AVAILABLE",
+    "CASE247-005-facebook": "AVAILABLE",
+    "CASE247-005-instagram": "AVAILABLE",
+    "CASE247-006-facebook": "AVAILABLE",
+    "CASE247-006-instagram": "AVAILABLE",
+    "CASE247-007-facebook": "AVAILABLE",
+    "CASE247-007-instagram": "AVAILABLE",
+    "CASE247-008-facebook": "AVAILABLE",
+    "CASE247-008-instagram": "AVAILABLE",
+    "CASE247-009-facebook": "AVAILABLE",
+    "CASE247-009-instagram": "AVAILABLE",
+    "CASE247-010-facebook": "AVAILABLE",
+    "CASE247-010-instagram": "AVAILABLE",
+    "CASE247-011-facebook": "AVAILABLE",
+    "CASE247-011-instagram": "AVAILABLE",
+    "CASE247-012-facebook": "AVAILABLE",
+    "CASE247-012-instagram": "AVAILABLE"
+  }
 }
