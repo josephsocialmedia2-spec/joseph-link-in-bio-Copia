@@ -1,10 +1,10 @@
 {
-  "checked_at_utc": "2026-11-08T08:41:22.746405+00:00",
+  "checked_at_utc": "2026-11-08T08:46:20.555021+00:00",
   "approved_jobs": 24,
   "eligible_jobs": 0,
   "missing_configuration": [],
   "mode": "due",
-  "dry_run": false,
+  "dry_run": true,
   "records": {
     "CASE247-010-facebook": {
       "status": "PUBLISHED",
@@ -31,7 +31,7 @@
   },
   "queue_enabled": false,
   "schedule_requested": false,
-  "authentication": "Page token identity mismatch",
+  "authentication": "ACCOUNT_LINK_VERIFIED_PUBLISH_PERMISSIONS_UNTESTED",
   "pending_jobs": 120,
   "media_checks": {
     "CASE247-001-facebook": "AVAILABLE",
