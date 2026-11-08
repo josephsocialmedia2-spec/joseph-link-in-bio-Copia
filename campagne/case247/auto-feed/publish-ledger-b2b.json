@@ -28,9 +28,9 @@
       "platform": "facebook",
       "content_id": "CASE247-009",
       "target_id": "1402024242991896",
-      "status": "ATTEMPTED_VERIFY_BEFORE_RETRY",
-      "at_utc": "2026-11-08T08:52:20.183437+00:00",
-      "external_post_id": null
+      "status": "PUBLISHED_UNVERIFIED",
+      "at_utc": "2026-11-08T08:52:24.766017+00:00",
+      "external_post_id": "1402024242991896_122102235825539346"
     }
   }
 }
