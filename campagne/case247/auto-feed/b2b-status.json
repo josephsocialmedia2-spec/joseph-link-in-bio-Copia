@@ -1,5 +1,5 @@
 {
-  "checked_at_utc": "2026-11-08T08:52:26.805389+00:00",
+  "checked_at_utc": "2026-11-08T08:52:29.887348+00:00",
   "approved_jobs": 24,
   "eligible_jobs": 2,
   "missing_configuration": [],
@@ -37,6 +37,15 @@
       "at_utc": "2026-11-08T08:52:24.766017+00:00",
       "external_post_id": "1402024242991896_122102235825539346",
       "permalink": "https://www.facebook.com/122095104621539346/posts/122102235825539346"
+    },
+    "CASE247-009-instagram": {
+      "source": "meta_graph_api",
+      "platform": "instagram",
+      "content_id": "CASE247-009",
+      "target_id": "17841415827906266",
+      "status": "ATTEMPTED_VERIFY_BEFORE_RETRY",
+      "at_utc": "2026-11-08T08:52:28.416124+00:00",
+      "external_post_id": null
     }
   },
   "queue_enabled": false,
