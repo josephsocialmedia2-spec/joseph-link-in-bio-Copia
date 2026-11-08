@@ -44,6 +44,8 @@ jobs:
         run: |
           python -m py_compile scripts/case247_b2b_publish.py
           python scripts/test_case247_b2b_publish.py
+      - name: Preflight mode summary (without credentials)
+        run: echo "Event=${{ github.event_name }}; dry_run=${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.dry_run == true) }}; mode=${{ inputs.mode || 'due' }}"
       - name: Validate configuration and process approved B2B queue
         env:
           GH_TOKEN: ${{ github.token }}
@@ -51,7 +53,7 @@ jobs:
           META_FACEBOOK_PAGE_ID: ${{ vars.META_FACEBOOK_PAGE_ID || '1402024242991896' }}
           META_INSTAGRAM_USER_ID: ${{ vars.META_INSTAGRAM_USER_ID || '17841415827906266' }}
           META_GRAPH_VERSION: ${{ vars.META_GRAPH_VERSION || 'v26.0' }}
-          DRY_RUN: ${{ github.event_name == 'push' && 'true' || inputs.dry_run && 'true' || 'false' }}
+          DRY_RUN: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.dry_run == true) }}
           CASE247_B2B_SCHEDULE: ${{ vars.CASE247_B2B_SCHEDULE }}
           PUBLISH_MODE: ${{ inputs.mode || 'due' }}
           CONTENT_ID: ${{ inputs.content_id }}
