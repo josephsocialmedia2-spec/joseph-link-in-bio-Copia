@@ -18,12 +18,18 @@ def call(url,method="GET",data=None,token=None,gh=False):
  try:
   with urllib.request.urlopen(urllib.request.Request(url,data=data,headers=h,method=method),timeout=30) as r:return json.load(r)
  except urllib.error.HTTPError as e:
-  code=None
+  details=""
   if not gh:
-   try:code=json.loads(e.read()).get("error",{}).get("code")
-   except (ValueError,AttributeError):pass
-  reason=" TOKEN_EXPIRED_OR_INVALID" if code==190 else ""
-  raise RuntimeError(("GitHub" if gh else "Meta")+" API HTTP "+str(e.code)+reason) from None
+   try:
+    meta_error=json.loads(e.read()).get("error",{})
+    code=meta_error.get("code")
+    subcode=meta_error.get("error_subcode")
+    if isinstance(code,int):details+=" META_CODE="+str(code)
+    if isinstance(subcode,int):details+=" META_SUBCODE="+str(subcode)
+    if code==190:details+=" TOKEN_EXPIRED_OR_INVALID"
+   except (ValueError,AttributeError,TypeError):pass
+  # Never log Meta messages, request URLs, tokens, or request bodies.
+  raise RuntimeError(("GitHub" if gh else "Meta")+" API HTTP "+str(e.code)+details) from None
  except (urllib.error.URLError,TimeoutError,socket.timeout):
   raise RuntimeError(("GitHub" if gh else "Meta")+" NETWORK_ERROR_VERIFY_BEFORE_RETRY") from None
 def read(path):
