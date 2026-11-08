@@ -1,0 +1,30 @@
+name: CASE247 Instagram media diagnostic (no publication)
+on:
+  push:
+    branches: [main]
+    paths:
+      - scripts/case247_instagram_probe.py
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: case247-instagram-probe
+  cancel-in-progress: false
+jobs:
+  instagram-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify existing IG media and attempt unpublished container
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GH_TOKEN: ${{ github.token }}
+          META_PAGE_ACCESS_TOKEN: ${{ secrets.META_PAGE_ACCESS_TOKEN }}
+          META_FACEBOOK_PAGE_ID: '1402024242991896'
+          META_INSTAGRAM_USER_ID: '17841415827906266'
+          META_GRAPH_VERSION: 'v26.0'
+        run: python scripts/case247_instagram_probe.py
