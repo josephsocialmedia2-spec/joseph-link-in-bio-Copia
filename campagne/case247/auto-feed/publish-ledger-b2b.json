@@ -22,6 +22,15 @@
       "verified_at_utc": "2026-11-04T11:03:28.798Z",
       "permalink": "https://www.instagram.com/p/DfUTZRBm1Xe/",
       "external_post_id": "17890385271623640"
+    },
+    "CASE247-009-facebook": {
+      "source": "meta_graph_api",
+      "platform": "facebook",
+      "content_id": "CASE247-009",
+      "target_id": "1402024242991896",
+      "status": "ATTEMPTED_VERIFY_BEFORE_RETRY",
+      "at_utc": "2026-11-08T08:52:20.183437+00:00",
+      "external_post_id": null
     }
   }
 }
