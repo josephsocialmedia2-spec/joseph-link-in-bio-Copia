@@ -136,7 +136,7 @@ var chosen=selected(),front=chosen.slice(0,4),back=chosen.slice(4,8);
 $('front-houses').innerHTML=front.map(itemCard).join('')+Array.from({length:4-front.length},blank).join('');
 $('back-houses').innerHTML=back.map(itemCard).join('')+Array.from({length:4-back.length},blank).join('');
 $('print').disabled=!chosen.length;
-$('status').textContent=chosen.length+' immobili selezionati su '+catalog.length+' residenziali compatibili. '+(chosen.length>=8?'A5 completo (8 annunci).':chosen.length>=4?'Fronte completo; retro con '+back.length+' annunci.':'Seleziona almeno 4 annunci per completare il fronte.')+' Fonte: '+(updated||'data non disponibile')+'.';
+$('status').textContent=chosen.length+' immobili selezionati su '+catalog.length+' residenziali compatibili. '+(chosen.length>=8?'A5 completo (8 annunci).':chosen.length>=4?'Fronte completo; retro con '+back.length+' annunci.':'Seleziona almeno 4 annunci per completare il fronte.')+' Fonte: '+(updated||'data non disponibile')+'.'+(chosen.some(function(x){return x.town_id==='avigliana'})?'':' Al momento nessun immobile approvato nel comune di Avigliana: sono mostrate le proposte dei comuni vicini.');
 $('valuation-qr').src=BASE+encodeURIComponent(VALUATION);
 }
 function choices(){
