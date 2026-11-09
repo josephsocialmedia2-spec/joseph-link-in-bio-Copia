@@ -3,7 +3,7 @@
 <meta name="theme-color" content="#101827"><meta name="robots" content="noindex,nofollow">
 <title>CASE247 — Regia revisione 60 grafiche</title>
 <style>
-:root{color-scheme:dark;--bg:#0c1422;--panel:#152235;--line:#33455d;--txt:#f0f6fc;--muted:#b5c6d9;--gold:#f1c665;--ok:#197744;--bad:#b52b35}
+:root{color-scheme:dark;--bg:#0c1422;--panel:#152235;--line:#33455d;--txt:#f0f6fc;--muted:#b5c6d9;--gold:#1587E3;--ok:#197744;--bad:#b52b35}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);font:15px/1.5 system-ui,Segoe UI,sans-serif;color:var(--txt)}
 a{color:#9fd0ff}button,select,input{font:inherit}button{cursor:pointer;border:0;border-radius:9px;padding:10px 14px;font-weight:760;color:#fff;background:#395471}
 button:disabled{cursor:wait;opacity:.6}button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
@@ -58,7 +58,7 @@ const PORTRAIT=BASE+"assets/joseph-malafronte.webp";
 const WHATSAPP="393713708294";
 function whatsappLink(item){const category=item.content_id.endsWith("-AZIENDE")?"AZIENDA":"CASA";const message=`Buongiorno Joseph, ${category} ${item.listing_id}.\nImmobile: ${item.listing_title} (${item.town})\nPrezzo: ${item.price_label||"Non indicato"}\nFotografia: ${item.image_url}\nScheda: ${item.listing_url}\nVorrei ricevere maggiori informazioni.`;return "https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(message)}
 const KEY="case247-gallery-review-v3";
-const GRAPHIC_VERSION="portrait-title-fixed-20261109-v2";
+const GRAPHIC_VERSION="official-brand-title-20261109-v3";
 const state={entries:[],byId:{},votes:{},previews:{},filters:{filter:"all",aud:"all",search:""},busy:new Set()};
 // Store regenerated image bytes in IndexedDB rather than localStorage (which is too small for 60 JPEGs).
 let dbPromise;
@@ -217,7 +217,7 @@ async function buildVariant(item,n){
  // All pixels originate from source listing photo or existing published graphic, plus the authorized Joseph portrait.
  const canvas=document.createElement("canvas");canvas.width=1080;canvas.height=1350;
  const ctx=canvas.getContext("2d",{alpha:false});const type=n%5;
- const navy=["#10213a","#092e43","#12213b","#162740","#0a273a"][type];
+ const navy=["#082C58","#061A36","#082C58","#102F54","#061A36"][type];
  ctx.fillStyle=navy;ctx.fillRect(0,0,1080,1350);
  let source;
  try{source=await loadImg(item.image_url)}catch{source=await loadImg(imageUrl(item))}
@@ -231,7 +231,7 @@ async function buildVariant(item,n){
  if(type===3){ctx.fillStyle=navy;ctx.fillRect(0,785,1080,565)}
  if(type===4){ctx.fillStyle="rgba(7,21,40,.92)";ctx.fillRect(0,840,1080,510)}
  if(type===0){ctx.fillStyle=navy;ctx.fillRect(0,800,1080,550)}
- const gold="#f0c667",white="#f9fbff";
+ const gold="#1587E3",white="#FFFFFF";
  rounded(ctx,32,33,1016,94,18,"rgba(8,30,55,.96)");
  ctx.textBaseline="alphabetic";ctx.font="bold 39px Arial,sans-serif";ctx.fillStyle=white;
  ctx.fillText("CASE IN PUBBLICITÀ 24/7",57,94);
@@ -245,14 +245,14 @@ async function buildVariant(item,n){
   const x=type===3?794:58,y=type===1?474:525,s=235;
   ctx.save();ctx.beginPath();ctx.arc(x+s/2,y+s/2,s/2,0,Math.PI*2);ctx.clip();
   cover(ctx,presenter,x,y,s,s,.5,.2);ctx.restore();
-  ctx.strokeStyle=gold;ctx.lineWidth=8;ctx.beginPath();ctx.arc(x+s/2,y+s/2,s/2,0,Math.PI*2);ctx.stroke();
+  ctx.strokeStyle="#59B9F6";ctx.lineWidth=8;ctx.beginPath();ctx.arc(x+s/2,y+s/2,s/2,0,Math.PI*2);ctx.stroke();
  }catch(e){throw Error("Foto del presentatore non disponibile: "+e.message)}
- rounded(ctx,54,1256,972,63,13,gold);ctx.fillStyle="#11233a";ctx.font="bold 29px Arial,sans-serif";
+ rounded(ctx,54,1256,972,63,13,"#00BA66");ctx.fillStyle="#FFFFFF";ctx.font="bold 29px Arial,sans-serif";
  ctx.fillText("WHATSAPP · 371 370 8294",87,1298);
  // Price is always drawn from verified catalog metadata, never invented.
  const pricetxt=item.price_label||"PREZZO NON INDICATO";
  rounded(ctx,435,1072,590,112,22,gold);
- ctx.fillStyle="#11233a";
+ ctx.fillStyle="#FFFFFF";
  let psize=pricetxt.length<14?69:39;
  ctx.font="bold "+psize+"px Arial,sans-serif";
  ctx.fillText(pricetxt,460,1148,550);
