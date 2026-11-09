@@ -1,5 +1,5 @@
 {
-  "checked_at_utc": "2026-11-09T04:38:12.262294+00:00",
+  "checked_at_utc": "2026-11-09T05:08:26.152931+00:00",
   "approved_jobs": 24,
   "eligible_jobs": 0,
   "missing_configuration": [],
@@ -43,9 +43,15 @@
       "platform": "instagram",
       "content_id": "CASE247-009",
       "target_id": "17841415827906266",
-      "status": "ATTEMPTED_VERIFY_BEFORE_RETRY",
+      "status": "PUBLISHED",
       "at_utc": "2026-11-08T08:52:28.416124+00:00",
-      "external_post_id": null
+      "external_post_id": "18136225579773801",
+      "recovery_at_utc": "2026-11-09T04:57:53.949543+00:00",
+      "recovery_note": "Explicitly approved CASE247-009 one-shot after previous HTTP 400 and remote account history check",
+      "container_id": "18152185465527597",
+      "published_at_utc": "2026-11-09T04:58:01.839950+00:00",
+      "permalink": "https://www.instagram.com/p/DfghrqqFNrP/",
+      "verified_at_utc": "2026-11-09T04:58:03.071264+00:00"
     }
   },
   "queue_enabled": false,
