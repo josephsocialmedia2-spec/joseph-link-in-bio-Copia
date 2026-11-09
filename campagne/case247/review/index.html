@@ -46,7 +46,7 @@ dialog::backdrop{background:#000d}dialog img{width:100%;max-height:77vh;object-f
 <select id="aud"><option value="all">Privati + aziende</option><option value="privati">Privati</option><option value="aziende">Aziende</option></select>
 <input id="search" placeholder="Cerca immobile, data, comune" aria-label="Cerca">
 <button id="export" class="export">Esporta esiti</button><button id="download" class="download">Scarica grafiche OK</button><button id="flyer" class="flyer" disabled>Scarica volantino A5 fronte/retro (PDF)</button><small id="flyerHelp" class="flyer-help">Disponibile dopo l’approvazione di tutte le grafiche non eliminate. Versione Natale automatica dal 1° dicembre 2026.</small></div></header>
-<main><p class="notice"><b>Come funziona:</b> premi <b>OK</b> per approvare oppure <b>SCARTA</b> per creare subito una nuova variante grafica dello stesso immobile, con la tua foto. Ripeti SCARTA quante volte vuoi fino a OK. Le nuove varianti sono prodotte e salvate in questo browser; le scelte rimangono su questo dispositivo; non avviano pubblicazioni social né aggiornano il calendario GitHub. Per trasferire le approvazioni usa «Esporta esiti». <b>Volantino:</b> al termine delle approvazioni puoi scaricare il PDF A5 fronte/retro con immobili non eliminati, fotografia autentica, QR code e tua immagine. Dal 1° dicembre viene applicata soltanto la cornice natalizia, senza cambiare il layout.</p>
+<main><p class="notice"><b>Come funziona:</b> premi <b>OK</b> per approvare oppure <b>SCARTA</b> per creare subito una nuova variante grafica dello stesso immobile, con la tua foto. Ripeti SCARTA quante volte vuoi fino a OK. Le nuove varianti sono prodotte e salvate in questo browser; le scelte rimangono su questo dispositivo; non avviano pubblicazioni social né aggiornano il calendario GitHub. Per trasferire le approvazioni usa «Esporta esiti». <b>Volantino:</b> al termine delle approvazioni puoi scaricare il PDF A5 fronte/retro con 4 schede per facciata, caratteristiche, QR alle schede originali e tua fotografia sui bordi. Dal 1° dicembre viene applicata soltanto la cornice natalizia, senza cambiare il layout.</p>
 <div id="alert" role="status" aria-live="polite"></div><div class="gallery" id="gallery"></div></main>
 <dialog id="lightbox"><div class="top"><strong id="dlgTitle"></strong><button id="close">Chiudi</button></div><img id="dlgImg" alt="Anteprima grande"></dialog>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -156,7 +156,7 @@ function draw(){
  const reviewsComplete=state.entries.length===60&&summary.pending===0&&summary.scarta===0&&summary.ok>0;
  const flyerButton=el("flyer");flyerButton.disabled=!reviewsComplete||state.busy.size>0;flyerButton.classList.toggle("ready",reviewsComplete);
  el("flyerHelp").textContent=reviewsComplete
-   ? "Pronto: "+summary.ok+" grafiche OK, "+summary.eliminata+" eliminate; immobili ripetuti deduplicati. PDF A5 fronte/retro. Tema Natale dal 1° dicembre."
+   ? "Pronto: "+summary.ok+" grafiche OK, "+summary.eliminata+" eliminate; immobili ripetuti deduplicati. PDF A5: 4 immobili per facciata. QR agli annunci. Natale dal 1° dicembre."
    : "Completa "+(summary.pending+summary.scarta)+" approvazioni (le grafiche eliminate non bloccano). Il volantino esclude tutti gli immobili eliminati.";
  const needle=state.filters.search.toLocaleLowerCase("it").trim();
  const selected=state.entries.filter(item=>{
@@ -361,101 +361,156 @@ function flyerQrData(value){
   return canvas.toDataURL("image/png");
  }finally{wrap.remove()}
 }
+
 function flyerHeader(pdf,christmas,back=false){
- pdf.setFillColor(8,44,88);pdf.rect(0,0,148,30,"F");
+ pdf.setFillColor(8,44,88);pdf.rect(0,0,148,29,"F");
  pdf.setFillColor(21,135,227);pdf.rect(0,0,148,2.5,"F");
- pdf.setTextColor(255,255,255);pdf.setFont("helvetica","bold");pdf.setFontSize(17);
- pdf.text("CASE IN PUBBLICITA 24/7",8,12);
- pdf.setFontSize(8.3);pdf.setFont("helvetica","normal");
- pdf.text(back?"ANNUNCI E CONTATTI - VALLE DI SUSA":"LE PROPOSTE IMMOBILIARI DEL TERRITORIO",8,20);
+ pdf.setTextColor(255,255,255);pdf.setFont("helvetica","bold");pdf.setFontSize(16);
+ pdf.text("CASE IN PUBBLICITA 24/7",7,11);
+ pdf.setFontSize(8.8);pdf.setFont("helvetica","normal");
+ pdf.text(back?"AVIGLIANA E DINTORNI - IMMOBILI E CONTATTI":"LE MIGLIORI PROPOSTE AD AVIGLIANA E DINTORNI",7,20);
  if(christmas){
-  // Fixed decorations only: same card positions and photo boxes as the standard flyer.
-  pdf.setFillColor(176,24,42);pdf.roundedRect(90,19.5,51,8,2,2,"F");
-  pdf.setTextColor(255,255,255);pdf.setFont("helvetica","bold");pdf.setFontSize(8.6);
-  pdf.text("SPECIALE NATALE",115.5,25,{align:"center"});
-  pdf.setDrawColor(255,255,255);pdf.setLineWidth(.7);
-  [[137,7],[130,10],[140,12]].forEach(([x,y])=>{pdf.line(x-1.8,y,x+1.8,y);pdf.line(x,y-1.8,x,y+1.8)});
+  pdf.setFillColor(170,31,49);pdf.roundedRect(99,22,42,5,1.2,1.2,"F");
+  pdf.setTextColor(255,255,255);pdf.setFontSize(7.2);pdf.setFont("helvetica","bold");
+  pdf.text("SPECIALE NATALE",120,25.8,{align:"center"});
+  pdf.setDrawColor(255,255,255);pdf.setLineWidth(.4);
+  [[136,8],[131,12],[140,15]].forEach(([x,y])=>{pdf.line(x-1.3,y,x+1.3,y);pdf.line(x,y-1.3,x,y+1.3)});
  }
 }
-function flyerCard(pdf,item,photo,qr,x,y){
- const w=64,h=68;
+function fitFlyerTitle(pdf,title,maxWidth){
+ for(const size of [8.0,7.5,7.0,6.5,6.0,5.5]){
+  pdf.setFont("helvetica","bold");pdf.setFontSize(size);
+  const lines=pdf.splitTextToSize(title,maxWidth);
+  if(lines.length<=3)return {lines,size};
+ }
+ throw Error("Titolo troppo lungo per la scheda: "+title);
+}
+function flyerFeatures(listing){
+ if(!listing)return ["Caratteristiche e dettagli: consulta il QR"];
+ const tokens=[],description=String(listing.description||"").toLowerCase();
+ const add=(label,cond)=>{if(cond&&!tokens.includes(label))tokens.push(label)};
+ const surface=Number(listing.surface);
+ add(Math.round(surface)+" mq",Number.isFinite(surface)&&surface>0);
+ const rooms=Number(listing.rooms);
+ add(rooms+" locali",Number.isFinite(rooms)&&rooms>0);
+ const baths=Number(listing.baths);
+ add(baths+" bagni",Number.isFinite(baths)&&baths>0);
+ const explicit=[
+  ["Ascensore",/\bascensore\b/],["Ultimo piano",/ultimo piano/],
+  ["Due camere",/\bdue camere\b|\b2 camere\b/],
+  ["Tre camere",/\btre camere\b|\b3 camere\b/],
+  ["Balcone",/\bbalcon[ei]\b/],["Terrazzo",/\bterrazz[oa]\b/],
+  ["Giardino",/\bgiardin[oa]\b/],["Cantina",/\bcantina\b/],
+  ["Box auto",/\bbox\b|\bautorimessa\b/],
+  ["Riscald. autonomo",/riscaldamento autonomo/],
+  ["Arredato",/\barredat[oa]\b/],["Corte esclusiva",/corte esclusiva/],
+  ["Vista panoramica",/vista panoramica/],
+  ["Piscina",/\bpiscina\b/],
+ ];
+ for(const [label,re] of explicit)add(label,re.test(description));
+ return tokens.length?tokens.slice(0,4):["Dettagli e caratteristiche nella scheda QR"];
+}
+function flyerCard(pdf,item,photo,qr,listing,x,y){
+ const w=64,h=66;
  pdf.setFillColor(244,250,255);pdf.setDrawColor(180,209,232);pdf.roundedRect(x,y,w,h,2,2,"FD");
- pdf.addImage(photo,"JPEG",x+1.5,y+1.5,w-3,32);
- pdf.setTextColor(8,44,88);pdf.setFont("helvetica","bold");pdf.setFontSize(7.5);
- const title=naturalTitle(item.listing_title,item.town);
- const lines=pdf.splitTextToSize(title,w-4).slice(0,2);
- pdf.text(lines,x+2.2,y+38);
- pdf.setFontSize(7.5);pdf.setFont("helvetica","normal");pdf.text(item.town,x+2.2,y+50);
- pdf.setTextColor(21,94,155);pdf.setFont("helvetica","bold");pdf.setFontSize(10.2);
- pdf.text(item.price_label||"Prezzo su richiesta",x+2.2,y+59,{maxWidth:45});
- pdf.addImage(qr,"PNG",x+w-17,y+h-17,15,15);
+ pdf.addImage(photo,"JPEG",x+1.4,y+1.4,w-2.8,25);
+ // Municipality is always visible above the protected text area.
+ pdf.setFillColor(8,44,88);pdf.rect(x+1.4,y+23.7,w-2.8,3.5,"F");
+ pdf.setFont("helvetica","bold");pdf.setTextColor(255,255,255);pdf.setFontSize(6.2);
+ pdf.text(item.town.toLocaleUpperCase("it"),x+2.5,y+26.3,{maxWidth:w-5});
+ const heading=fitFlyerTitle(pdf,naturalTitle(item.listing_title,item.town),w-4.2);
+ pdf.setFont("helvetica","bold");pdf.setFontSize(heading.size);pdf.setTextColor(8,44,88);
+ const lineH=heading.size*.36;
+ pdf.text(heading.lines,x+2,y+31,{lineHeightFactor:1.03});
+ const featureList=flyerFeatures(listing);
+ pdf.setFont("helvetica","normal");pdf.setFontSize(6.1);pdf.setTextColor(35,67,103);
+ const features=featureList.join("  |  ");
+ const lines=pdf.splitTextToSize(features,w-18).slice(0,2);
+ pdf.text(lines,x+2,y+48,{lineHeightFactor:1.03});
+ pdf.setFont("helvetica","bold");pdf.setFontSize(9.2);pdf.setTextColor(8,44,88);
+ const priceText=item.price_label||"Prezzo su richiesta";
+ pdf.text(priceText,x+2,y+61,{maxWidth:44});
+ // QR ALWAYS links to actual property listing, not WhatsApp.
+ pdf.addImage(qr,"PNG",x+w-17.2,y+h-17.5,15.5,15.5);
 }
-function flyerFooter(pdf,christmas){
- pdf.setFillColor(8,44,88);pdf.rect(0,176,148,34,"F");
- pdf.setTextColor(255,255,255);pdf.setFont("helvetica","bold");pdf.setFontSize(11);
- pdf.text("VUOI VENDERE CASA?",8,186);pdf.setFontSize(8.4);pdf.setFont("helvetica","normal");
- pdf.text("Richiedi una valutazione e scopri la visibilita 24/7",8,193);
- pdf.setFillColor(0,186,102);pdf.roundedRect(8,197,132,9,2,2,"F");
- pdf.setTextColor(255,255,255);pdf.setFontSize(12);pdf.setFont("helvetica","bold");
- pdf.text("WHATSAPP 371 370 8294",74,203.3,{align:"center"});
+function flyerFooter(pdf,portrait,qr,christmas){
+ pdf.setFillColor(8,44,88);pdf.rect(0,171,148,39,"F");
+ pdf.setFillColor(21,135,227);pdf.rect(0,171,148,1.4,"F");
+ // The person's portrait is a discreet signature inside the LEFT EDGE, outside property cards.
+ pdf.setFillColor(255,255,255);pdf.circle(20,191,15.7,"F");
+ pdf.addImage(portrait,"PNG",5.2,176.2,29.6,29.6);
+ pdf.setFont("helvetica","bold");pdf.setTextColor(255,255,255);pdf.setFontSize(10.1);
+ pdf.text("RICHIEDI UNA VALUTAZIONE GRATUITA",37,183,{maxWidth:102});
+ pdf.setFont("helvetica","normal");pdf.setFontSize(8);
+ pdf.text("Contattami per vendere casa",37,189.5);
+ pdf.setFillColor(0,186,102);pdf.roundedRect(37,195,87,10.2,2.3,2.3,"F");
+ pdf.setFont("helvetica","bold");pdf.setFontSize(11);pdf.setTextColor(255,255,255);
+ pdf.text("371 370 8294",80.5,202.4,{align:"center"});
+ pdf.addImage(qr,"PNG",128,190.2,15,15);
+ pdf.setFontSize(5.5);pdf.setFont("helvetica","normal");
+ pdf.text("Case in Pubblicita 24/7",37,208.3);
  if(christmas){
-  pdf.setDrawColor(176,24,42);pdf.setLineWidth(.65);pdf.line(0,175.5,148,175.5);
+  pdf.setDrawColor(170,31,49);pdf.setLineWidth(.65);pdf.line(0,171,148,171);
  }
 }
-function flyerBackContact(pdf,portrait,qr,christmas){
- pdf.setFillColor(244,250,255);pdf.setDrawColor(21,135,227);
- pdf.roundedRect(7,107,134,98,4,4,"FD");
- pdf.setTextColor(8,44,88);pdf.setFontSize(13);pdf.setFont("helvetica","bold");
- pdf.text("LA TUA CASA MERITA VISIBILITA",12,118,{maxWidth:125});
- pdf.addImage(portrait,"PNG",11,127,37,37);
- pdf.setTextColor(8,44,88);pdf.setFontSize(12);pdf.text("JOSEPH",54,132);
- pdf.setFontSize(8);pdf.setFont("helvetica","normal");pdf.text("Digital Strategist immobiliare",54,138);
- pdf.text("Hai un immobile da vendere?",54,147);
- pdf.text("Scopri come valorizzarlo.",54,153);
- pdf.setFillColor(0,186,102);pdf.roundedRect(12,170,124,14,3,3,"F");
- pdf.setTextColor(255,255,255);pdf.setFontSize(13);pdf.setFont("helvetica","bold");
- pdf.text("371 370 8294",74,179.8,{align:"center"});
- pdf.addImage(qr,"PNG",109,134,25,25);
- pdf.setTextColor(8,44,88);pdf.setFont("helvetica","normal");pdf.setFontSize(6.8);
- pdf.text("Scansiona il QR per contattarci",107,164,{align:"center",maxWidth:65});
- pdf.text("Case in Pubblicita 24/7 - Comunicazione immobiliare",12,192);
- pdf.text("Annunci e mediazione: professionisti abilitati La Sacra Immobiliare",12,198);
- if(christmas){
-  pdf.setFillColor(176,24,42);pdf.roundedRect(11,201,126,3.2,1,1,"F");
- }
+async function photoForFlyer(item){
+ // Prefer the verified original listing photograph: no presenter, typography, overlays or photo manipulation.
+ let img,whole=true;
+ try{img=await loadFlyerImage(item.image_url)}catch{img=await loadFlyerImage(snapshot(item));whole=false}
+ const canvas=document.createElement("canvas");canvas.width=680;canvas.height=400;
+ const ctx=canvas.getContext("2d");
+ let sx=0,sy=0,sw=img.naturalWidth,sh=img.naturalHeight;
+ if(!whole){sx=img.naturalWidth*.06;sy=img.naturalHeight*.245;sw=img.naturalWidth*.88;sh=img.naturalHeight*.31}
+ const ratio=680/400,original=sw/sh;
+ if(original>ratio){const crop=sh*ratio;sx+=(sw-crop)/2;sw=crop}
+ else{const crop=sw/ratio;sy+=(sh-crop)/2;sh=crop}
+ ctx.drawImage(img,sx,sy,sw,sh,0,0,680,400);
+ return canvas.toDataURL("image/jpeg",.89);
 }
 async function downloadFlyerA5(){
  const pending=state.entries.filter(i=>!["ok","eliminata"].includes(vote(i).status));
- if(state.entries.length!==60||pending.length)throw Error("Prima approva tutte le grafiche non eliminate ("+pending.length+" ancora da valutare).");
+ if(state.entries.length!==60||pending.length)throw Error("Approva prima le "+pending.length+" grafiche non eliminate.");
  const eligible=eligibleFlyerItems();
  if(!eligible.length)throw Error("Nessun immobile approvato disponibile.");
- if(!window.jspdf?.jsPDF)throw Error("Generatore PDF non disponibile: controlla la connessione e riprova.");
- const christmas=isChristmasFlyer(),pdf=new window.jspdf.jsPDF({orientation:"portrait",unit:"mm",format:"a5",compress:true});
- speak("Creo volantino A5 fronte/retro per "+eligible.length+" immobili approvati; nessun escluso.");
+ if(!window.jspdf?.jsPDF)throw Error("Generatore PDF non disponibile. Ricarica la pagina e riprova.");
+ const cRes=await fetch(BASE+"immobili/catalogo.json",{cache:"no-store"});
+ if(!cRes.ok)throw Error("Catalogo non disponibile");
+ const catalog=await cRes.json(),byId=new Map(catalog.items.map(x=>[String(x.id),x]));
+ const christmas=isChristmasFlyer();
+ const pdf=new window.jspdf.jsPDF({orientation:"portrait",unit:"mm",format:"a5",compress:true});
  const portrait=await portraitForFlyer();
- const genericQr=flyerQrData("https://wa.me/393713708294?text="+encodeURIComponent("Buongiorno, vorrei maggiori informazioni."));
+ const contactQr=flyerQrData("https://wa.me/393713708294?text="+encodeURIComponent("Buongiorno, vorrei richiedere una valutazione gratuita del mio immobile."));
+ speak("Preparo A5 fronte/retro, 4 immobili per facciata, QR delle schede originali...");
  const cache=new Map();
- for(let k=0;k<eligible.length;k++){
-  const item=eligible[k];cache.set(item.content_id,{photo:await photoForFlyer(item),qr:flyerQrData(whatsappLink(item))});
+ for(const item of eligible){
+  const listing=byId.get(String(item.listing_id));
+  if(!listing||listing.url!==item.listing_url)throw Error("Scheda immobile non riconciliata: "+item.listing_title);
+  cache.set(item.content_id,{photo:await photoForFlyer(item),qr:flyerQrData(item.listing_url),listing});
  }
- for(let offset=0;offset<eligible.length;offset+=6){
+ const slots=[[8,33],[76,33],[8,102],[76,102]];
+ // Every physical sheet has EXACTLY 2 A5 sides; each side reserves 4 property cards.
+ for(let offset=0;offset<eligible.length;offset+=8){
   if(offset)pdf.addPage("a5","portrait");
   flyerHeader(pdf,christmas,false);
-  const first=eligible.slice(offset,offset+4);
-  const slots=[[8,34],[76,34],[8,105],[76,105]];
-  first.forEach((item,i)=>flyerCard(pdf,item,cache.get(item.content_id).photo,cache.get(item.content_id).qr,...slots[i]));
-  flyerFooter(pdf,christmas);
-  pdf.addPage("a5","portrait");flyerHeader(pdf,christmas,true);
-  const second=eligible.slice(offset+4,offset+6);
-  second.forEach((item,i)=>flyerCard(pdf,item,cache.get(item.content_id).photo,cache.get(item.content_id).qr,i===0?8:76,35));
-  flyerBackContact(pdf,portrait,genericQr,christmas);
+  eligible.slice(offset,offset+4).forEach((item,i)=>{
+    const data=cache.get(item.content_id);
+    flyerCard(pdf,item,data.photo,data.qr,data.listing,...slots[i]);
+  });
+  flyerFooter(pdf,portrait,contactQr,christmas);
+  pdf.addPage("a5","portrait");
+  flyerHeader(pdf,christmas,true);
+  eligible.slice(offset+4,offset+8).forEach((item,i)=>{
+    const data=cache.get(item.content_id);
+    flyerCard(pdf,item,data.photo,data.qr,data.listing,...slots[i]);
+  });
+  flyerFooter(pdf,portrait,contactQr,christmas);
  }
+ const sheets=Math.ceil(eligible.length/8),pages=pdf.getNumberOfPages();
+ if(pages!==sheets*2)throw Error("Numero pagine fronte/retro non valido");
  const date=new Date().toISOString().slice(0,10);
- const edition=christmas?"NATALE":"STANDARD";
- pdf.save("CASE247_Volantino_A5_Fronte_Retro_"+edition+"_"+date+".pdf");
- speak("PDF A5 fronte/retro generato: "+Math.ceil(eligible.length/6)+" fogli con "+eligible.length+" immobili unici approvati. "+(christmas?"Tema Natale attivo.":"Tema Natale automatico dal 1 dicembre."));
+ pdf.save("CASE247_Volantino_A5_Fronte_Retro_"+(christmas?"NATALE":"STANDARD")+"_"+date+".pdf");
+ speak("PDF A5 generato: "+sheets+" fogli, "+pages+" facciate, 4 schede per facciata, "+eligible.length+" immobili unici approvati. QR verso annunci originali. "+(christmas?"Tema Natale attivo.":"Tema Natale dal 1 dicembre."));
 }
-
 function exportVotes(){
  const output={project:"Case in Pubblicità 24/7",exported_at:new Date().toISOString(),scope:"BROWSER_LOCAL_REVIEW_ONLY",meta_publish:false,items:state.entries.map(item=>({content_id:item.content_id,listing_id:item.listing_id,source_url:item.listing_url,status:vote(item).status,exclude_from_calendar:vote(item).status==="eliminata",removed_at:vote(item).removed_at||null,variant:vote(item).attempts+1,generated_variants:vote(item).attempts||0,reviewed_at:vote(item).reviewed_at||null}))};
  const blob=new Blob([JSON.stringify(output,null,2)],{type:"application/json"});const a=document.createElement("a");const href=URL.createObjectURL(blob);a.href=href;a.download="case247-approvazioni-grafiche.json";a.click();setTimeout(()=>URL.revokeObjectURL(href),1000)
