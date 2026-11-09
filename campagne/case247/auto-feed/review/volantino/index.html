@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CASE247 · Volantino automatico A5 · Avigliana</title>
+<style>
+:root{font:15px/1.45 system-ui,-apple-system,Arial,sans-serif;color:#ecf5ff;background:#081a32;--blue:#006fb9;--deep:#063765}
+*{box-sizing:border-box}body{margin:0}button,input,select{font:inherit}a{color:#9bdfff}button{cursor:pointer;border:0;border-radius:9px;padding:10px 14px;font-weight:750;background:#147ed0;color:#fff}button:disabled{opacity:.45;cursor:not-allowed}
+header{background:#0b3055;padding:20px max(16px,calc((100vw - 1200px)/2));border-bottom:1px solid #315877}
+header h1{margin:6px 0 3px;font-size:clamp(24px,3vw,34px)}header p{margin:0;color:#cae0f0}.wrap{max-width:1240px;margin:auto;padding:22px 18px 70px}
+.tools{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:18px 0}.tools>*{max-width:100%}
+fieldset{border:1px solid #477092;border-radius:12px;padding:15px;margin:0 0 15px;background:#0e2d4c}
+legend{padding:0 8px;font-weight:800}.warning{border-left:4px solid #e6a74d;background:#3e311c;padding:10px 13px;border-radius:6px;color:#fff5d8}
+#status{font-weight:700;color:#c2edff}.selectors{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:13px}
+.choice{background:#112d4d;border:1px solid #375f81;border-radius:12px;overflow:hidden;display:grid;grid-template-columns:85px minmax(0,1fr)}
+.choice img{width:85px;height:100%;min-height:140px;object-fit:cover}.choice .inside{padding:10px}.choice .inside strong{font-size:13px;display:block;line-height:1.25}.choice small{display:block;color:#c1dced;margin:4px 0}.choice button{padding:7px 11px;font-size:12px;margin-top:6px}
+.choice.chosen{border:2px solid #6aca96;background:#13415a}.choice .flag{color:#ffd591}
+.controls{display:flex;gap:9px;flex-wrap:wrap;align-items:center}.controls input{background:#163b5d;border:1px solid #51789b;color:white;padding:10px 12px;border-radius:8px;min-width:220px}
+#preview{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;padding:24px 0;background:#10243e;border-radius:16px;margin:18px 0}
+.sheet{position:relative;width:148mm;height:210mm;flex:0 0 148mm;background:white;color:#0a2d4e;overflow:hidden;box-shadow:0 14px 40px #0007;font-family:Arial,Helvetica,sans-serif}
+.sheet:before{content:"";position:absolute;top:0;left:0;right:0;height:4mm;background:#0576bf}
+.sheet .top{padding:7mm 7mm 1.7mm;display:flex;justify-content:space-between;gap:5mm;align-items:flex-start}
+.brand{font-size:16pt;line-height:1;font-weight:900;letter-spacing:-.5pt;color:#063565}.brand span{color:#077fcb}.brand em{font-style:normal;background:#0879c6;color:white;border-radius:2mm;padding:1px 3px}
+.kicker{text-align:right;font-weight:800;font-size:7.5pt;color:#3179a6;letter-spacing:.08em}
+.sheet h2{margin:0 7mm 3mm;font-size:11pt;font-weight:800}
+.sheet .underline{height:1px;background:#bad9ea;margin:0 7mm 3.2mm}
+.house-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3.1mm;padding:0 7mm}
+.house{height:75.4mm;border:1px solid #c9ddea;border-radius:2.2mm;overflow:hidden;background:#fff;position:relative}
+.house .photo{width:100%;height:36.4mm;object-fit:cover;background:#d5e8f5;display:block}
+.house .town{position:absolute;top:2mm;left:2mm;padding:1.1mm 2.2mm;border-radius:1mm;background:#065588;color:white;font-size:7.1pt;font-weight:900;max-width:90%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.house .content{padding:1.8mm 2.5mm;min-height:35mm}
+.house .name{font-weight:800;font-size:9pt;line-height:1.14;height:9mm;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.house .meta{margin:1mm 0;color:#45637b;font-size:7pt;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.house .price{color:#0678ba;font-weight:900;font-size:12pt}
+.house .qrcode{width:17mm;height:17mm;position:absolute;right:2.6mm;bottom:1.8mm;background:white;border:1px solid #b2d5eb;padding:.5mm}
+.house .qrtext{font-size:5pt;position:absolute;right:2.6mm;bottom:19.3mm;text-transform:uppercase;letter-spacing:.04em}
+.house.empty{border:1.5px dashed #c3d7e5;display:flex;justify-content:center;align-items:center;color:#6685a0;font-size:8.5pt;text-align:center;padding:7mm}
+.sheet .footer-band{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(115deg,#063968,#0b7cc4);color:white;height:25mm;padding:3.6mm 7mm;display:flex;align-items:center;gap:4mm}
+.footer-band .selling{flex:1;min-width:0}.selling strong{display:block;font-size:12.3pt;line-height:1.05}.selling span{font-size:8pt}.footer-band .number{font-size:12.5pt;font-weight:900;white-space:nowrap}
+.framed-person{position:relative;width:24mm;height:24mm;flex:0 0 24mm;border:2px solid white;border-radius:50%;overflow:hidden;background:#d7e6f1}
+.framed-person img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
+.sheet .side-person{position:absolute;right:-5mm;bottom:24mm;width:24mm;height:34mm;border:2mm solid white;border-radius:11mm 0 0 11mm;overflow:hidden;z-index:4;box-shadow:0 1mm 2mm #2345}
+.sheet .side-person img{width:100%;height:100%;object-fit:cover}
+.back .house-grid{padding-top:1mm}.back .house{height:72mm}.back .house .photo{height:34mm}
+.back .cta{position:absolute;bottom:0;left:0;right:0;height:34mm;padding:4mm 33mm 3mm 7mm;color:white;background:linear-gradient(115deg,#063968,#0d82cb)}
+.back .cta strong{display:block;font-size:15pt;line-height:1.05}.back .cta p{font-size:8.3pt;line-height:1.25;margin:2mm 0 1mm}.back .cta .cta-number{font-size:12pt;font-weight:900}
+.back .portrait-edge{position:absolute;right:0;bottom:0;width:31mm;height:41mm;overflow:hidden;border-left:2mm solid white;border-top:2mm solid white;border-radius:9mm 0 0 0;z-index:4;background:#c5d5e5}
+.back .portrait-edge img{width:100%;height:100%;object-fit:cover;object-position:center 24%}
+.back .valuation-qr{position:absolute;left:7mm;bottom:37mm;width:19mm;height:19mm;border:1mm solid #fff;background:#fff;z-index:3}
+.back .cta .disclosure{font-size:5.5pt;opacity:.88;margin-top:1mm}
+.back .layout-note{position:absolute;bottom:37mm;left:29mm;max-width:104mm;font-size:7pt;color:#275578}
+.sheet .folio{position:absolute;right:7mm;bottom:26mm;color:#5187af;font-size:5.5pt}
+.back .folio{bottom:35.5mm}
+.description{color:#b8d7ed;font-size:13px}
+@page{size:A5 portrait;margin:0}
+@media print{
+html,body{width:148mm;height:auto;margin:0!important;padding:0!important;background:white}
+header,.wrap>.tools,.wrap>fieldset,.wrap>.warning,.wrap>#status,.wrap>h2,.wrap>.description,#editor,.no-print{display:none!important}
+.wrap{padding:0;margin:0;max-width:none}.sheet{box-shadow:none!important;margin:0!important;width:148mm!important;height:210mm!important;flex:none!important;break-after:page;page-break-after:always}
+#preview{display:block!important;background:white!important;padding:0!important;margin:0!important;border-radius:0!important}
+*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+}
+@media(max-width:680px){.sheet{transform:scale(.72);transform-origin:top left;margin-right:-41.4mm;margin-bottom:-58.8mm}#preview{justify-content:flex-start;padding:12px}.tools{align-items:stretch}.tools button{flex:1}}
+</style>
+</head>
+<body>
+<header><a href="../">← Torna alla pagina approvazioni</a><h1>Generatore volantino A5 · Avigliana e dintorni</h1><p>Approva gli immobili: l'anteprima fronte-retro si compone automaticamente. Stampa in A5 o salva come PDF.</p></header>
+<div class="wrap">
+<div class="warning">Le scelte effettuate qui sono salvate <strong>in questo browser</strong>. Il catalogo GitHub è la fonte delle schede; le pubblicazioni Meta e le approvazioni centralizzate non vengono modificate. Prima della stampa verifica prezzi, disponibilità, utilizzo delle immagini e dati commerciali.</div>
+<div class="tools">
+<button id="print" disabled>Stampa / salva PDF A5 fronte-retro</button>
+<button id="export">Esporta selezione JSON</button>
+<button id="restore">Importa selezione JSON</button>
+<input id="file" type="file" accept="application/json,.json" hidden>
+<button id="clear" style="background:#476987">Azzera selezione locale</button>
+</div>
+<p id="status" role="status">Caricamento catalogo…</p>
+<div id="editor">
+<fieldset><legend>Immobili del territorio</legend><p class="description">Precedenza ad Avigliana; poi Sant'Ambrogio, Villar Dora, Caprie e Rubiana. Solo categoria residenziale e annunci non indicati come affitto. Seleziona massimo 8 immobili. Le caratteristiche mancanti non vengono inventate.</p><div class="controls"><input id="search" placeholder="Cerca comune o immobile" aria-label="Cerca immobile"><label><input id="auto" type="checkbox" checked> Ordina automaticamente per territorio</label></div><div class="selectors" id="choices"></div></fieldset>
+</div>
+<h2>Anteprima di stampa · 2 facciate A5</h2>
+<div class="description">Le pagine qui sotto sono in dimensione A5. Il pulsante apre la finestra di stampa del browser: scegli «Salva come PDF» e attiva «Grafica di sfondo» per mantenere i colori. Il sistema non stampa in autonomia.</div>
+<div id="preview">
+<section class="sheet front" aria-label="Fronte A5">
+<div class="top"><div class="brand">Case in<br><span>Pubblicità <em>24/7</em></span></div><div class="kicker">LE PROPOSTE IMMOBILIARI<br>AVIGLIANA E DINTORNI</div></div>
+<h2>Scopri gli immobili del territorio</h2><div class="underline"></div>
+<div class="house-grid" id="front-houses"></div>
+<div class="side-person"><img id="front-person" src="../../../../../assets/joseph-malafronte.webp" alt="Ritratto Joseph"></div>
+<div class="footer-band"><div class="selling"><strong>VUOI VENDERE CASA?</strong><span>Richiedi una valutazione gratuita del tuo immobile</span></div><div class="number">371 370 8294</div></div>
+<span class="folio">1 / 2</span>
+</section>
+<section class="sheet back" aria-label="Retro A5">
+<div class="top"><div class="brand">Case in<br><span>Pubblicità <em>24/7</em></span></div><div class="kicker">ANNUNCI E INFORMAZIONI<br>SCANSIONA I QR CODE</div></div>
+<h2>Altre opportunità nei comuni vicini</h2><div class="underline"></div>
+<div class="house-grid" id="back-houses"></div>
+<img class="valuation-qr" id="valuation-qr" alt="QR code per richiedere valutazione">
+<div class="layout-note">Per conoscere la disponibilità aggiornata, consulta la scheda originale.</div>
+<div class="cta"><strong>VUOI VENDERE CASA?</strong><p>Richiedi una valutazione gratuita e scopri come presentare il tuo immobile sul mercato.</p><div class="cta-number">WhatsApp 371 370 8294</div><div class="disclosure">Comunicazione: Case in Pubblicità 24/7 · Intermediazione: La Sacra Immobiliare.</div></div>
+<div class="portrait-edge"><img src="../../../../../assets/joseph-malafronte.webp" alt="Joseph Malafronte"></div><span class="folio">2 / 2</span>
+</section>
+</div>
+</div>
+<script>
+(function(){
+'use strict';
+var CATALOG='../../../../../immobili/catalogo.json';
+var DRAFTS='../../../territorio/bozze.json';
+var STORAGE='case247-flyer-avigliana-v1';
+var BASE='https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=0&data=';
+var VALUATION='https://wa.me/393713708294?text='+encodeURIComponent('Buongiorno, desidero richiedere una valutazione gratuita del mio immobile ad Avigliana e dintorni.');
+var rank=['avigliana','sant-ambrogio-di-torino','villar-dora','caprie','rubiana','almese','condove','chiusa-di-san-michele','vaie','sant-antonino-di-susa'];
+var catalog=[],approved=new Set(),remoteApproved=new Set(),saved=null,auto=true,updated='';
+var $=function(id){return document.getElementById(id)};
+var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+var price=function(p){return Number.isFinite(Number(p))&&p!==null&&p!==''?'€ '+new Intl.NumberFormat('it-IT',{maximumFractionDigits:0}).format(p):'Prezzo su richiesta'};
+var order=function(x){var i=rank.indexOf(x.town_id);return i===-1?500:i};
+var validURL=function(s){try{var u=new URL(s);return u.protocol==='https:'?u.href:''}catch(e){return ''}};
+function snapshot(){try{localStorage.setItem(STORAGE,JSON.stringify({ids:Array.from(approved),updated:new Date().toISOString()}))}catch(e){$('status').textContent='Memoria browser non disponibile: esporta la selezione JSON.'}}
+function imgTag(url,extra){return '<img '+(extra||'')+' src="'+esc(validURL(url))+'" alt="Immagine da catalogo">'}
+function itemCard(x){
+var label=String(x.title||'Immobile').trim().replace(/\s+/g,' ');
+var meta=[x.surface?x.surface+' m²':'',x.rooms?x.rooms+' locali':'',x.baths?x.baths+' bagni':''].filter(Boolean).join(' · ');
+var u=validURL(x.url),photo=validURL(x.image);
+return '<article class="house">'+imgTag(photo,'class="photo"')+
+'<div class="town">'+esc(x.municipality||'Territorio')+'</div><div class="content">'+
+'<div class="name">'+esc(label)+'</div><div class="meta">'+esc(meta||'Dettagli nella scheda')+'</div><div class="price">'+esc(price(x.price))+'</div></div>'+
+'<div class="qrtext">Scheda immobile</div><img class="qrcode" src="'+esc(BASE+encodeURIComponent(u))+'" alt="QR scheda immobile"></article>'
+}
+function blank(){return '<div class="house empty">Spazio disponibile per un altro immobile approvato</div>'}
+function selected(){var arr=catalog.filter(function(x){return approved.has(String(x.id))});if(auto)arr.sort(function(a,b){return order(a)-order(b)||String(a.title).localeCompare(String(b.title),'it')});return arr.slice(0,8)}
+function render(){
+var chosen=selected(),front=chosen.slice(0,4),back=chosen.slice(4,8);
+$('front-houses').innerHTML=front.map(itemCard).join('')+Array.from({length:4-front.length},blank).join('');
+$('back-houses').innerHTML=back.map(itemCard).join('')+Array.from({length:4-back.length},blank).join('');
+$('print').disabled=!chosen.length;
+$('status').textContent=chosen.length+' immobili selezionati su '+catalog.length+' residenziali compatibili. '+(chosen.length>=8?'A5 completo (8 annunci).':chosen.length>=4?'Fronte completo; retro con '+back.length+' annunci.':'Seleziona almeno 4 annunci per completare il fronte.')+' Fonte: '+(updated||'data non disponibile')+'.';
+$('valuation-qr').src=BASE+encodeURIComponent(VALUATION);
+}
+function choices(){
+var q=$('search').value.toLocaleLowerCase('it').trim();
+var shown=catalog.filter(function(x){return (String(x.title)+' '+String(x.municipality)).toLocaleLowerCase('it').includes(q)});
+shown.sort(function(a,b){return order(a)-order(b)||String(a.title).localeCompare(String(b.title),'it')});
+$('choices').innerHTML=shown.map(function(x){
+var y=approved.has(String(x.id)),alert=/chatgpt|generated|ai[-_]?image/i.test(x.image||'')?'Immagine da verificare · ':'';
+return '<article class="choice '+(y?'chosen':'')+'">'+imgTag(x.image)+
+'<div class="inside"><small>'+esc(x.municipality||'Località da verificare')+'</small><strong>'+esc(x.title)+'</strong><small>'+esc(price(x.price))+'</small>'+
+'<small class="flag">'+alert+'Verificare prezzo e disponibilità</small>'+
+'<button type="button" data-id="'+esc(x.id)+'">'+(y?'✓ Inserito · rimuovi':'Approva per volantino')+'</button></div></article>'
+}).join('')||'<p>Nessun immobile trovato per questa ricerca.</p>';
+$('choices').querySelectorAll('button[data-id]').forEach(function(b){b.addEventListener('click',function(){
+var id=b.getAttribute('data-id');
+if(approved.has(id))approved.delete(id);
+else if(approved.size>=8){alert('Massimo 8 immobili nel volantino. Rimuovine uno prima di aggiungerne altri.');return}
+else approved.add(id);
+snapshot();choices();render();
+})});
+}
+async function init(){
+try{
+var results=await Promise.all([fetch(CATALOG,{cache:'no-store'}),fetch(DRAFTS,{cache:'no-store'})]);
+if(!results[0].ok)throw Error('Catalogo non raggiungibile');
+var data=await results[0].json();var draft=results[1].ok?await results[1].json():{drafts:[]};
+var included=new Set((draft.drafts||[]).filter(function(x){return x.approved===true}).map(function(x){return String(x.listing_id)}));
+catalog=(data.items||[]).filter(function(x){
+return x.category==='Residenziale'&&x.location_status==='VERIFICATO_FONTE'&&
+rank.includes(x.town_id)&&validURL(x.url)&&validURL(x.image)&&
+!/affitto|locazione|affittasi/i.test(String(x.title||''));
+});
+updated=data.last_success_at?new Date(data.last_success_at).toLocaleString('it-IT'):'non indicata';
+remoteApproved=included;
+try{saved=JSON.parse(localStorage.getItem(STORAGE)||'null')}catch(e){saved=null}
+approved=new Set((saved&&Array.isArray(saved.ids)?saved.ids:[]).filter(function(id){return catalog.some(function(x){return String(x.id)===String(id)})}));
+remoteApproved.forEach(function(id){if(catalog.some(function(x){return String(x.id)===id}))approved.add(id)});
+render();choices();
+}catch(e){$('status').textContent='Errore: '+e.message+'. Ricarica la pagina. Nessun annuncio dimostrativo viene usato.'}
+}
+$('auto').addEventListener('change',function(){auto=this.checked;render()});
+$('search').addEventListener('input',choices);
+$('print').addEventListener('click',function(){window.print()});
+$('clear').addEventListener('click',function(){if(!confirm('Azzerare gli immobili selezionati in questo browser?'))return;approved=new Set(Array.from(remoteApproved));snapshot();render();choices()});
+$('export').addEventListener('click',function(){var blob=new Blob([JSON.stringify({project:'Case in Pubblicità 24/7',territory:'Avigliana',version:1,ids:Array.from(approved),exported_at:new Date().toISOString()},null,2)],{type:'application/json'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='case247-volantino-avigliana-approvazioni.json';a.click();setTimeout(function(){URL.revokeObjectURL(a.href)},1500)});
+$('restore').addEventListener('click',function(){$('file').click()});
+$('file').addEventListener('change',async function(){var file=this.files[0];if(!file)return;try{var o=JSON.parse(await file.text());if(!Array.isArray(o.ids)||o.project!=='Case in Pubblicità 24/7')throw Error('File selezione non valido');approved=new Set(o.ids.map(String).filter(function(id){return catalog.some(function(x){return String(x.id)===id})}).slice(0,8));remoteApproved.forEach(function(id){approved.add(id)});snapshot();render();choices();}catch(e){alert(e.message)}this.value=''});
+init();
+})();
+</script></body></html>
