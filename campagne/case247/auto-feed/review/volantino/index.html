@@ -105,7 +105,7 @@ header,.wrap>.tools,.wrap>fieldset,.wrap>.warning,.wrap>#status,.wrap>h2,.wrap>.
 'use strict';
 var CATALOG='../../../../../immobili/catalogo.json';
 var DRAFTS='../../../territorio/bozze.json';
-var APPROVALS='../../../territorio/approvazioni-grafiche-2026-11-09.json';
+var APPROVALS='../../../territorio/approvazioni.json';
 var STORAGE='case247-flyer-avigliana-v1';
 var BASE='https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=0&data=';
 var VALUATION='https://wa.me/393713708294?text='+encodeURIComponent('Buongiorno, desidero richiedere una valutazione gratuita del mio immobile ad Avigliana e dintorni.');
@@ -169,7 +169,7 @@ return x.category==='Residenziale'&&x.location_status==='VERIFICATO_FONTE'&&
 rank.includes(x.town_id)&&validURL(x.url)&&validURL(x.image)&&
 !/affitto|locazione|affittasi/i.test(String(x.title||''))&& !/^\s*terreno\b/i.test(String(x.title||''));
 });
-updated=data.last_success_at?new Date(data.last_success_at).toLocaleString('it-IT'):'non indicata';
+updated=data.last_success_at?new Date(data.last_success_at).toLocaleString('it-IT',{timeZone:'Europe/Rome'}):'non indicata';
 try{saved=JSON.parse(localStorage.getItem(STORAGE)||'null')}catch(e){saved=null}
 applyStatuses(saved&&Array.isArray(saved.reviewItems)&&saved.reviewItems.length?saved.reviewItems:reviews.items);
 included.forEach(function(id){if(!rejected.has(id))remoteApproved.add(id)});
