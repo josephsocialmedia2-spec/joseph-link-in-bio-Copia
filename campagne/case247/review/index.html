@@ -49,6 +49,7 @@ const ROOT=BASE+"campagne/case247/editorial-queue/2026-11-10_2026-12-09/";
 const PHOTOS=ROOT+"FONTI_IMMAGINI.json";
 const PORTRAIT=BASE+"assets/joseph-malafronte.webp";
 const KEY="case247-gallery-review-v3";
+const GRAPHIC_VERSION="prezzi-reali-20261109";
 const state={entries:[],byId:{},votes:{},previews:{},filters:{filter:"all",aud:"all",search:""},busy:new Set()};
 // Store regenerated image bytes in IndexedDB rather than localStorage (which is too small for 60 JPEGs).
 let dbPromise;
@@ -96,14 +97,18 @@ function validItem(entry){
 async function fetchData(){
  const r=await fetch(PHOTOS,{cache:"no-cache"});if(!r.ok)throw Error("Impossibile caricare le fonti: "+r.status);
  const data=await r.json();
+ if(data.used.some(x=>!x.price_label))throw Error("Prezzi non ancora aggiornati nel catalogo: riprova.");
  if(data.count!==60||!Array.isArray(data.used)||data.used.length!==60)throw Error("Inventario incoerente: attese 60 grafiche");
  if(data.used.some(x=>!validItem(x)))throw Error("Inventario immagini non sicuro");
  state.entries=data.used;state.byId=Object.fromEntries(data.used.map(x=>[x.content_id,x]));await restorePreviews();
+ // Drop old price-less local drafts; preserve approval statuses but display newly regenerated priced images.
+ for(const item of state.entries){if(state.votes[item.content_id]?.graphic_version!==GRAPHIC_VERSION){delete state.previews[item.content_id];if(state.votes[item.content_id]){state.votes[item.content_id].attempts=0;state.votes[item.content_id].graphic_version=GRAPHIC_VERSION;}}}
+ persist();
  const ids=new Set(state.entries.map(x=>x.content_id));
  if(ids.size!==60)throw Error("ID duplicati nell'inventario");
  draw();
 }
-function imageUrl(item){return BASE+item.rendered_jpeg}
+function imageUrl(item){return BASE+item.rendered_jpeg+"?v="+GRAPHIC_VERSION}
 function snapshot(item){return state.previews[item.content_id]||imageUrl(item)}
 function draw(){
  const summary={ok:0,pending:0,scarta:0,eliminata:0,attempts:0};
@@ -129,7 +134,7 @@ function draw(){
   const body=document.createElement("div");body.className="info";
   const title=document.createElement("strong");title.textContent=item.listing_title;
   const detail=document.createElement("div");detail.className="details";
-  detail.textContent=dateFrom(item.content_id)+" · "+item.town+" · Variante "+(v.attempts+1);
+  detail.textContent=dateFrom(item.content_id)+" · "+item.town+" · Variante "+(v.attempts+1)+" · "+(item.price_label||"PREZZO NON INDICATO");
   const buttons=document.createElement("div");buttons.className="actions";
   const ok=document.createElement("button");ok.className="ok";ok.textContent=state.busy.has(item.content_id)?"CREAZIONE…":"✓ OK";ok.disabled=state.busy.has(item.content_id);ok.onclick=()=>approve(item);
   const reject=document.createElement("button");reject.className="reject";reject.textContent="✕ SCARTA";reject.disabled=state.busy.has(item.content_id);reject.onclick=()=>regenerate(item);
@@ -212,6 +217,13 @@ async function buildVariant(item,n){
  }catch(e){throw Error("Foto del presentatore non disponibile: "+e.message)}
  rounded(ctx,54,1256,972,63,13,gold);ctx.fillStyle="#11233a";ctx.font="bold 29px Arial,sans-serif";
  ctx.fillText("JOSEPH · SCOPRI L'IMMOBILE NEL POST",87,1298);
+ // Price is always drawn from verified catalog metadata, never invented.
+ const pricetxt=item.price_label||"PREZZO NON INDICATO";
+ rounded(ctx,435,1072,590,112,22,gold);
+ ctx.fillStyle="#11233a";
+ let psize=pricetxt.length<14?69:39;
+ ctx.font="bold "+psize+"px Arial,sans-serif";
+ ctx.fillText(pricetxt,460,1148,550);
  ctx.font="19px Arial,sans-serif";ctx.fillStyle="#cbd8e7";ctx.fillText("Foto da catalogo La Sacra · Ricostruzione grafica, non visita documentata",54,1236);
  return canvas.toDataURL("image/jpeg",.91);
 }
@@ -224,7 +236,7 @@ async function regenerate(item){
   const next=v.attempts+1;
   // Always create a new graphic before changing the saved decision.
   const newPreview=await buildVariant(item,next);
-  await storePreview(id,newPreview);state.previews[id]=newPreview;v.attempts=next;v.status="pending";v.reviewed_at=null;
+  await storePreview(id,newPreview);state.previews[id]=newPreview;v.attempts=next;v.status="pending";v.graphic_version=GRAPHIC_VERSION;v.reviewed_at=null;
   state.votes[id]=v;persist();speak("Nuova grafica creata (variante "+(next+1)+"). Scegli OK oppure SCARTA ancora.");
  }catch(e){v.status="scarta";state.votes[id]=v;persist();speak("Rigenerazione non riuscita: "+e.message+". Usa «Riprova generazione».")}
  finally{state.busy.delete(id);draw()}
