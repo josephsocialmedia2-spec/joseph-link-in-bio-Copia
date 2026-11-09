@@ -38,9 +38,11 @@
       "platform": "instagram",
       "content_id": "CASE247-009",
       "target_id": "17841415827906266",
-      "status": "ATTEMPTED_VERIFY_BEFORE_RETRY",
+      "status": "RECOVERY_20261109_ATTEMPTED_VERIFY_BEFORE_RETRY",
       "at_utc": "2026-11-08T08:52:28.416124+00:00",
-      "external_post_id": null
+      "external_post_id": null,
+      "recovery_at_utc": "2026-11-09T04:57:53.949543+00:00",
+      "recovery_note": "Explicitly approved CASE247-009 one-shot after previous HTTP 400 and remote account history check"
     }
   }
 }
