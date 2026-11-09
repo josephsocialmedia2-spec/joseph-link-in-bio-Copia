@@ -1,0 +1,35 @@
+name: CASE247 Instagram CASE247-009 single approved publish
+on:
+  push:
+    branches: [main]
+    paths:
+      - scripts/case247_instagram_009_once.py
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: case247-b2b-meta-publisher
+  cancel-in-progress: false
+jobs:
+  publish-single-post:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify Python syntax and no-duplicates tests
+        run: |
+          python -m py_compile scripts/case247_instagram_009_once.py scripts/case247_b2b_publish.py
+          python scripts/test_case247_b2b_publish.py
+      - name: Publish only approved CASE247-009 Instagram and verify permalink
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GH_TOKEN: ${{ github.token }}
+          META_PAGE_ACCESS_TOKEN: ${{ secrets.META_PAGE_ACCESS_TOKEN }}
+          META_FACEBOOK_PAGE_ID: '1402024242991896'
+          META_INSTAGRAM_USER_ID: '17841415827906266'
+          META_GRAPH_VERSION: 'v26.0'
+        run: python scripts/case247_instagram_009_once.py
