@@ -98,8 +98,9 @@ def render(item,listing,photo):
   d.text((56,ty),line,font=titlefont,fill=white)
   ty+=titlefont.size+7
  # Footer CTA and photographer distinction.
- d.rounded_rectangle((300,1265,1031,1331),radius=19,fill=gold)
- d.text((335,1282),"SCOPRI L'IMMOBILE NEL POST",font=font(28,True),fill=deep)
+ d.rounded_rectangle((300,1253,1031,1335),radius=19,fill=gold)
+ d.text((333,1263),"WHATSAPP 371 370 8294",font=font(34,True),fill=deep)
+ d.text((335,1304),"SCRIVI CASA + CODICE IMMOBILE",font=font(19,True),fill=deep)
  # Photo presenter, deliberately placed as composited inset, not on-site portrayal.
  if not PORTRAIT.is_file():raise RuntimeError("Joseph portrait asset unavailable")
  subject=ImageOps.exif_transpose(Image.open(PORTRAIT)).convert("RGB")
