@@ -3,7 +3,7 @@
 Do not claim photos are documentary unless source verifies it. No invented houses, no Meta posting.
 """
 from pathlib import Path
-from PIL import Image, ImageDraw, ImageFont, ImageOps
+from PIL import Image, ImageDraw, ImageFont, ImageOps, ImageFilter
 from urllib.request import Request, urlopen
 from urllib.parse import urlparse, parse_qsl, urlencode, urlunparse
 from io import BytesIO
@@ -13,6 +13,7 @@ ROOT=Path("campagne/case247/editorial-queue/2026-11-10_2026-12-09")
 Q=ROOT/"queue.json"
 CATALOG=Path("immobili/catalogo.json")
 OUT=ROOT/"assets"
+PORTRAIT=Path("assets/joseph-malafronte.webp")
 REG="/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 BOLD="/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 
@@ -59,6 +60,24 @@ def get_photo(url):
  if im.width<400 or im.height<300:raise RuntimeError("Image resolution too low")
  return ImageOps.exif_transpose(im).convert("RGB")
 
+def add_presenter(image):
+ # Explicit photographic inset: do not pretend the presenter was photographed at the property.
+ if not PORTRAIT.is_file():raise RuntimeError("Existing authorized Joseph portrait missing")
+ source=ImageOps.exif_transpose(Image.open(PORTRAIT)).convert("RGB")
+ inset=ImageOps.fit(source,(282,282),method=Image.Resampling.LANCZOS,centering=(0.5,0.22))
+ alpha=Image.new("L",(282,282),0)
+ mask=ImageDraw.Draw(alpha)
+ mask.ellipse((8,8,274,274),fill=255)
+ alpha=alpha.filter(ImageFilter.GaussianBlur(3))
+ subject=inset.convert("RGBA")
+ subject.putalpha(alpha)
+ x,y=49,470
+ border=ImageDraw.Draw(image)
+ border.ellipse((x-9,y-9,x+291,y+291),fill=(13,29,51),outline=(239,193,90),width=7)
+ image.paste(subject,(x,y),subject)
+ border.rounded_rectangle((344,707,862,771),radius=12,fill=(13,29,51),outline=(239,193,90),width=2)
+ border.text((365,721),"JOSEPH · DIGITAL STRATEGIST",font=font(26,True),fill=(255,255,255))
+
 def render(item,listing,photo):
  navy=(13,29,51);gold=(239,193,90);white=(255,255,255)
  img=Image.new("RGB",(1080,1350),navy)
@@ -66,6 +85,7 @@ def render(item,listing,photo):
  # Preserve the source photograph without fabricating its contents; crop only to fit.
  frame=ImageOps.fit(photo,(1080,790),method=Image.Resampling.LANCZOS,centering=(0.5,0.5))
  img.paste(frame,(0,0))
+ add_presenter(img)
  d.rectangle((0,0,1080,14),fill=gold)
  d.rounded_rectangle((38,35,995,112),radius=13,fill=(14,39,70))
  d.text((66,54),"CASE IN PUBBLICITÀ 24/7",font=font(36,True),fill=white)
@@ -118,6 +138,6 @@ def main():
   key=listing["image"]
   render(job,listing,cache[key])
   used.append({"content_id":job["content_id"],"listing_id":listing["id"],"town":listing["municipality"],"listing_title":listing["title"],"listing_url":listing["url"],"image_url":key,"rendered_jpeg":job["media_jpeg"],"verified_from_catalog_at":catalog["last_success_at"],"disclaimer":"Immagine ripresa dal catalogo La Sacra, non verificata indipendentemente come fotografia documentale"})
- (ROOT/"FONTI_IMMAGINI.json").write_text(json.dumps({"source":"https://lasacraimmobiliare.it","catalog_snapshot_at":catalog["last_success_at"],"media_type":"original listing images, not generative recreation","count":len(used),"used":used},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
- print("RENDERED_60_SOURCE_BASED_JPEGS_DRAFT_ONLY")
+ (ROOT/"FONTI_IMMAGINI.json").write_text(json.dumps({"source":"https://lasacraimmobiliare.it","catalog_snapshot_at":catalog["last_success_at"],"media_type":"original listing images with clearly distinguished presenter portrait overlay, no generative recreation","presenter_asset":str(PORTRAIT),"count":len(used),"used":used},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+ print("RENDERED_60_SOURCE_BASED_JPEGS_WITH_JOSEPH_PORTRAIT_DRAFT_ONLY")
 if __name__=="__main__":main()
