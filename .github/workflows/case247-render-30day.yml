@@ -37,7 +37,7 @@ jobs:
           set -euo pipefail
           git config user.name 'case247-graphics-bot'
           git config user.email 'case247-graphics-bot@users.noreply.github.com'
-          git add campagne/case247/editorial-queue/2026-11-10_2026-12-09/assets/*.jpg
+          git add campagne/case247/editorial-queue/2026-11-10_2026-12-09/assets/*.jpg campagne/case247/editorial-queue/2026-11-10_2026-12-09/FONTI_IMMAGINI.json
           if ! git diff --cached --quiet; then
             git commit -m 'CASE247: 60 draft JPEG graphics for new calendar, no Meta publication'
             pushed=0
