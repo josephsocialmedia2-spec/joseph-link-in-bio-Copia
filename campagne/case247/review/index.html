@@ -56,7 +56,7 @@ const ROOT=BASE+"campagne/case247/editorial-queue/2026-11-10_2026-12-09/";
 const PHOTOS=ROOT+"FONTI_IMMAGINI.json";
 const PORTRAIT=BASE+"assets/joseph-malafronte.webp";
 const WHATSAPP="393713708294";
-function whatsappLink(item){const category=item.content_id.endsWith("-AZIENDE")?"AZIENDA":"CASA";const message=`Buongiorno Joseph, ${category} ${item.listing_id}. Vorrei informazioni su ${item.listing_title} (${item.town}). Annuncio: ${item.listing_url}`;return "https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(message)}
+function whatsappLink(item){const category=item.content_id.endsWith("-AZIENDE")?"AZIENDA":"CASA";const message=`Buongiorno Joseph, ${category} ${item.listing_id}.\nImmobile: ${item.listing_title} (${item.town})\nPrezzo: ${item.price_label||"Non indicato"}\nFotografia: ${item.image_url}\nScheda: ${item.listing_url}\nVorrei ricevere maggiori informazioni.`;return "https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(message)}
 const KEY="case247-gallery-review-v3";
 const GRAPHIC_VERSION="whatsapp-3713708294-20261109";
 const state={entries:[],byId:{},votes:{},previews:{},filters:{filter:"all",aud:"all",search:""},busy:new Set()};
