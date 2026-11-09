@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Approved B2B Meta image publisher. Fail closed and prevent automatic duplicates."""
+# Preflight verification trigger: 2026-11-09; push mode is always DRY_RUN=true.
 import os,json,base64,datetime as dt,urllib.request,urllib.parse,urllib.error,time,socket
 from zoneinfo import ZoneInfo
 from pathlib import Path
