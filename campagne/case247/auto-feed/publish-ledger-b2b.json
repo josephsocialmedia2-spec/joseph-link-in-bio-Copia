@@ -38,13 +38,15 @@
       "platform": "instagram",
       "content_id": "CASE247-009",
       "target_id": "17841415827906266",
-      "status": "PUBLISHED_UNVERIFIED",
+      "status": "PUBLISHED",
       "at_utc": "2026-11-08T08:52:28.416124+00:00",
       "external_post_id": "18136225579773801",
       "recovery_at_utc": "2026-11-09T04:57:53.949543+00:00",
       "recovery_note": "Explicitly approved CASE247-009 one-shot after previous HTTP 400 and remote account history check",
       "container_id": "18152185465527597",
-      "published_at_utc": "2026-11-09T04:58:01.839950+00:00"
+      "published_at_utc": "2026-11-09T04:58:01.839950+00:00",
+      "permalink": "https://www.instagram.com/p/DfghrqqFNrP/",
+      "verified_at_utc": "2026-11-09T04:58:03.071264+00:00"
     }
   }
 }
