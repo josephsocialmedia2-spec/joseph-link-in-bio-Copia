@@ -11,7 +11,7 @@ header{position:sticky;top:0;z-index:4;background:#101c2ef7;border-bottom:1px so
 h1{font-size:clamp(22px,3vw,31px);margin:0;color:var(--gold)}header p{margin:5px 0 12px;color:var(--muted)}.wa-central{display:inline-block;background:#0b7043;color:#fff;border-radius:10px;padding:7px 12px;font-weight:850;text-decoration:none;margin-bottom:11px}
 .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}.stat{padding:9px 12px;border:1px solid #33455d;border-radius:11px;background:#1d2c41}.stat b{font-size:24px;display:block}.stat small{color:var(--muted)}
 .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}.toolbar>*{padding:9px 11px;background:#1d2c41;border:1px solid var(--line);border-radius:9px;color:var(--txt)}
-.toolbar .export{background:#315a7c}.toolbar .download{background:#6a5326;color:#fff}
+.toolbar .export{background:#315a7c}.toolbar .download{background:#315a7c;color:#fff}.toolbar .flyer{background:#0074c1;border:2px solid #59b9f6;color:#fff}.toolbar .flyer:disabled{background:#253c57;opacity:.6;cursor:not-allowed}.toolbar .flyer.ready{background:#00a35b;border-color:#75e8a9}.flyer-help{font-size:12px;color:#b5c6d9;flex-basis:100%}
 main{max-width:1520px;margin:auto;padding:18px}.notice{background:#1d2c41;border-left:4px solid var(--gold);padding:10px 14px;border-radius:8px;margin-bottom:18px;color:var(--muted)}
 .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:17px}
 article{overflow:hidden;background:var(--panel);border:1px solid var(--line);border-radius:13px}
@@ -45,10 +45,12 @@ dialog::backdrop{background:#000d}dialog img{width:100%;max-height:77vh;object-f
 <div class="toolbar"><select id="filter"><option value="all">Tutte le grafiche</option><option value="pending">Da valutare</option><option value="ok">OK</option><option value="scarta">Scartate / Da rifare</option><option value="eliminata">Eliminati (recuperabili)</option></select>
 <select id="aud"><option value="all">Privati + aziende</option><option value="privati">Privati</option><option value="aziende">Aziende</option></select>
 <input id="search" placeholder="Cerca immobile, data, comune" aria-label="Cerca">
-<button id="export" class="export">Esporta esiti</button><button id="download" class="download">Scarica grafiche OK</button></div></header>
-<main><p class="notice"><b>Come funziona:</b> premi <b>OK</b> per approvare oppure <b>SCARTA</b> per creare subito una nuova variante grafica dello stesso immobile, con la tua foto. Ripeti SCARTA quante volte vuoi fino a OK. Le nuove varianti sono prodotte e salvate in questo browser; le scelte rimangono su questo dispositivo; non avviano pubblicazioni social né aggiornano il calendario GitHub. Per trasferire le approvazioni usa «Esporta esiti».</p>
+<button id="export" class="export">Esporta esiti</button><button id="download" class="download">Scarica grafiche OK</button><button id="flyer" class="flyer" disabled>Scarica volantino A5 fronte/retro (PDF)</button><small id="flyerHelp" class="flyer-help">Disponibile dopo l’approvazione di tutte le grafiche non eliminate. Versione Natale automatica dal 1° dicembre 2026.</small></div></header>
+<main><p class="notice"><b>Come funziona:</b> premi <b>OK</b> per approvare oppure <b>SCARTA</b> per creare subito una nuova variante grafica dello stesso immobile, con la tua foto. Ripeti SCARTA quante volte vuoi fino a OK. Le nuove varianti sono prodotte e salvate in questo browser; le scelte rimangono su questo dispositivo; non avviano pubblicazioni social né aggiornano il calendario GitHub. Per trasferire le approvazioni usa «Esporta esiti». <b>Volantino:</b> al termine delle approvazioni puoi scaricare il PDF A5 fronte/retro con immobili non eliminati, fotografia autentica, QR code e tua immagine. Dal 1° dicembre viene applicata soltanto la cornice natalizia, senza cambiare il layout.</p>
 <div id="alert" role="status" aria-live="polite"></div><div class="gallery" id="gallery"></div></main>
 <dialog id="lightbox"><div class="top"><strong id="dlgTitle"></strong><button id="close">Chiudi</button></div><img id="dlgImg" alt="Anteprima grande"></dialog>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
 "use strict";
 const BASE="/joseph-link-in-bio-Copia/";
@@ -69,6 +71,8 @@ function whatsappLink(item){
 }
 const KEY="case247-gallery-review-v3";
 const GRAPHIC_VERSION="official-brand-title-20261109-v3";
+const CHRISTMAS_START=Date.parse("2026-12-01T00:00:00+01:00");
+const APPROVALS_IMPORTED=ROOT+"approvazioni-importate-2026-11-09.json";
 const state={entries:[],byId:{},votes:{},previews:{},filters:{filter:"all",aud:"all",search:""},busy:new Set()};
 // Store regenerated image bytes in IndexedDB rather than localStorage (which is too small for 60 JPEGs).
 let dbPromise;
@@ -119,7 +123,22 @@ async function fetchData(){
  if(data.used.some(x=>!x.price_label))throw Error("Prezzi non ancora aggiornati nel catalogo: riprova.");
  if(data.count!==60||!Array.isArray(data.used)||data.used.length!==60)throw Error("Inventario incoerente: attese 60 grafiche");
  if(data.used.some(x=>!validItem(x)))throw Error("Inventario immagini non sicuro");
- state.entries=data.used;state.byId=Object.fromEntries(data.used.map(x=>[x.content_id,x]));await restorePreviews();
+ state.entries=data.used;state.byId=Object.fromEntries(data.used.map(x=>[x.content_id,x]));
+ // Restore verified approvals from the last imported owner export only on browsers without a local decision.
+ try{
+   const a=await fetch(APPROVALS_IMPORTED,{cache:"no-cache"});
+   if(a.ok){
+     const audit=await a.json();
+     if(audit.verified_items===60 && audit.approved_count===36 && audit.excluded_count===24){
+       for(const item of audit.items||[]){
+         if(!state.votes[item.content_id] && item.listing_id===state.byId[item.content_id]?.listing_id && ["ok","eliminata"].includes(item.status)){
+           state.votes[item.content_id]={status:item.status,attempts:0,graphic_version:GRAPHIC_VERSION,reviewed_at:null,removed_at:item.status==="eliminata"?audit.source_exported_at:null};
+         }
+       }
+     }
+   }
+ }catch(e){console.warn("Approval audit not reachable",e)}
+ await restorePreviews();
  // Drop old price-less local drafts; preserve approval statuses but display newly regenerated priced images.
  for(const item of state.entries){if(state.votes[item.content_id]?.graphic_version!==GRAPHIC_VERSION){delete state.previews[item.content_id];if(state.votes[item.content_id]){state.votes[item.content_id].attempts=0;state.votes[item.content_id].graphic_version=GRAPHIC_VERSION;}}}
  persist();
@@ -134,6 +153,11 @@ function draw(){
  for(const item of state.entries){const v=vote(item);summary[v.status]=(summary[v.status]||0)+1;summary.attempts+=v.attempts||0}
  el("nAll").textContent=state.entries.length;el("nOk").textContent=summary.ok;
  el("nPending").textContent=summary.pending;el("nDiscard").textContent=summary.scarta;el("nAttempts").textContent=summary.attempts;el("nDeleted").textContent=summary.eliminata;
+ const reviewsComplete=state.entries.length===60&&summary.pending===0&&summary.scarta===0&&summary.ok>0;
+ const flyerButton=el("flyer");flyerButton.disabled=!reviewsComplete||state.busy.size>0;flyerButton.classList.toggle("ready",reviewsComplete);
+ el("flyerHelp").textContent=reviewsComplete
+   ? "Pronto: "+summary.ok+" grafiche OK, "+summary.eliminata+" eliminate; immobili ripetuti deduplicati. PDF A5 fronte/retro. Tema Natale dal 1° dicembre."
+   : "Completa "+(summary.pending+summary.scarta)+" approvazioni (le grafiche eliminate non bloccano). Il volantino esclude tutti gli immobili eliminati.";
  const needle=state.filters.search.toLocaleLowerCase("it").trim();
  const selected=state.entries.filter(item=>{
   const v=vote(item);
@@ -288,6 +312,150 @@ async function downloadOne(item){
  document.body.append(a);a.click();a.remove()}catch(e){speak(e.message)}
 }
 function preview(item){el("dlgTitle").textContent=item.listing_title;el("dlgImg").src=snapshot(item);el("lightbox").showModal()}
+
+/* A5 double-sided flyer — one identical structured layout for ordinary and Christmas editions.
+   Christmas starts 2026-12-01; no source property imagery is altered. */
+function isChristmasFlyer(){return Date.now()>=CHRISTMAS_START}
+function eligibleFlyerItems(){
+ const excluded=new Set(state.entries.filter(i=>vote(i).status==="eliminata").map(i=>String(i.listing_id)));
+ const seen=new Set();
+ return state.entries.filter(i=>{
+   if(vote(i).status!=="ok"||excluded.has(String(i.listing_id))||seen.has(String(i.listing_id)))return false;
+   seen.add(String(i.listing_id));return true;
+ }).sort((a,b)=>Number(a.town!=="Avigliana")-Number(b.town!=="Avigliana")||a.town.localeCompare(b.town,"it"));
+}
+function loadFlyerImage(src){
+ return new Promise((resolve,reject)=>{
+  const im=new Image();im.crossOrigin="anonymous";
+  im.onload=()=>resolve(im);im.onerror=()=>reject(Error("Immagine non disponibile: "+src));
+  im.src=src;
+ });
+}
+async function photoForFlyer(item){
+ const img=await loadFlyerImage(snapshot(item));
+ const canvas=document.createElement("canvas");canvas.width=680;canvas.height=440;
+ const ctx=canvas.getContext("2d");
+ // The supplied CASE247 JPG is 1080x1350. Select only authentic property photo region,
+ // avoiding the presenter portrait, title and prices that belong to the social poster.
+ const sx=img.naturalWidth*0.06, sy=img.naturalHeight*0.245;
+ const sw=img.naturalWidth*0.88,sh=img.naturalHeight*0.31;
+ ctx.drawImage(img,sx,sy,sw,sh,0,0,680,440);
+ return canvas.toDataURL("image/jpeg",0.87);
+}
+async function portraitForFlyer(){
+ const img=await loadFlyerImage(PORTRAIT);
+ const c=document.createElement("canvas");c.width=300;c.height=300;
+ const ctx=c.getContext("2d");const size=Math.min(img.naturalWidth,img.naturalHeight);
+ const sx=(img.naturalWidth-size)/2,sy=Math.max(0,(img.naturalHeight-size)*.16);
+ ctx.drawImage(img,sx,sy,size,size,0,0,300,300);
+ return c.toDataURL("image/png");
+}
+function flyerQrData(value){
+ if(typeof QRCode==="undefined")throw Error("Libreria QR non caricata. Ricarica la pagina e riprova.");
+ const wrap=document.createElement("div");wrap.style.cssText="position:fixed;left:-300px;top:-300px";
+ document.body.append(wrap);
+ try{
+  new QRCode(wrap,{text:value,width:160,height:160,colorDark:"#082C58",colorLight:"#FFFFFF",correctLevel:QRCode.CorrectLevel.M});
+  const canvas=wrap.querySelector("canvas");
+  if(!canvas)throw Error("QR non generato");
+  return canvas.toDataURL("image/png");
+ }finally{wrap.remove()}
+}
+function flyerHeader(pdf,christmas,back=false){
+ pdf.setFillColor(8,44,88);pdf.rect(0,0,148,30,"F");
+ pdf.setFillColor(21,135,227);pdf.rect(0,0,148,2.5,"F");
+ pdf.setTextColor(255,255,255);pdf.setFont("helvetica","bold");pdf.setFontSize(17);
+ pdf.text("CASE IN PUBBLICITA 24/7",8,12);
+ pdf.setFontSize(8.3);pdf.setFont("helvetica","normal");
+ pdf.text(back?"ANNUNCI E CONTATTI - VALLE DI SUSA":"LE PROPOSTE IMMOBILIARI DEL TERRITORIO",8,20);
+ if(christmas){
+  // Fixed decorations only: same card positions and photo boxes as the standard flyer.
+  pdf.setFillColor(176,24,42);pdf.roundedRect(90,19.5,51,8,2,2,"F");
+  pdf.setTextColor(255,255,255);pdf.setFont("helvetica","bold");pdf.setFontSize(8.6);
+  pdf.text("SPECIALE NATALE",115.5,25,{align:"center"});
+  pdf.setDrawColor(255,255,255);pdf.setLineWidth(.7);
+  [[137,7],[130,10],[140,12]].forEach(([x,y])=>{pdf.line(x-1.8,y,x+1.8,y);pdf.line(x,y-1.8,x,y+1.8)});
+ }
+}
+function flyerCard(pdf,item,photo,qr,x,y){
+ const w=64,h=68;
+ pdf.setFillColor(244,250,255);pdf.setDrawColor(180,209,232);pdf.roundedRect(x,y,w,h,2,2,"FD");
+ pdf.addImage(photo,"JPEG",x+1.5,y+1.5,w-3,32);
+ pdf.setTextColor(8,44,88);pdf.setFont("helvetica","bold");pdf.setFontSize(7.5);
+ const title=naturalTitle(item.listing_title,item.town);
+ const lines=pdf.splitTextToSize(title,w-4).slice(0,2);
+ pdf.text(lines,x+2.2,y+38);
+ pdf.setFontSize(7.5);pdf.setFont("helvetica","normal");pdf.text(item.town,x+2.2,y+50);
+ pdf.setTextColor(21,94,155);pdf.setFont("helvetica","bold");pdf.setFontSize(10.2);
+ pdf.text(item.price_label||"Prezzo su richiesta",x+2.2,y+59,{maxWidth:45});
+ pdf.addImage(qr,"PNG",x+w-17,y+h-17,15,15);
+}
+function flyerFooter(pdf,christmas){
+ pdf.setFillColor(8,44,88);pdf.rect(0,176,148,34,"F");
+ pdf.setTextColor(255,255,255);pdf.setFont("helvetica","bold");pdf.setFontSize(11);
+ pdf.text("VUOI VENDERE CASA?",8,186);pdf.setFontSize(8.4);pdf.setFont("helvetica","normal");
+ pdf.text("Richiedi una valutazione e scopri la visibilita 24/7",8,193);
+ pdf.setFillColor(0,186,102);pdf.roundedRect(8,197,132,9,2,2,"F");
+ pdf.setTextColor(255,255,255);pdf.setFontSize(12);pdf.setFont("helvetica","bold");
+ pdf.text("WHATSAPP 371 370 8294",74,203.3,{align:"center"});
+ if(christmas){
+  pdf.setDrawColor(176,24,42);pdf.setLineWidth(.65);pdf.line(0,175.5,148,175.5);
+ }
+}
+function flyerBackContact(pdf,portrait,qr,christmas){
+ pdf.setFillColor(244,250,255);pdf.setDrawColor(21,135,227);
+ pdf.roundedRect(7,107,134,98,4,4,"FD");
+ pdf.setTextColor(8,44,88);pdf.setFontSize(13);pdf.setFont("helvetica","bold");
+ pdf.text("LA TUA CASA MERITA VISIBILITA",12,118,{maxWidth:125});
+ pdf.addImage(portrait,"PNG",11,127,37,37);
+ pdf.setTextColor(8,44,88);pdf.setFontSize(12);pdf.text("JOSEPH",54,132);
+ pdf.setFontSize(8);pdf.setFont("helvetica","normal");pdf.text("Digital Strategist immobiliare",54,138);
+ pdf.text("Hai un immobile da vendere?",54,147);
+ pdf.text("Scopri come valorizzarlo.",54,153);
+ pdf.setFillColor(0,186,102);pdf.roundedRect(12,170,124,14,3,3,"F");
+ pdf.setTextColor(255,255,255);pdf.setFontSize(13);pdf.setFont("helvetica","bold");
+ pdf.text("371 370 8294",74,179.8,{align:"center"});
+ pdf.addImage(qr,"PNG",109,134,25,25);
+ pdf.setTextColor(8,44,88);pdf.setFont("helvetica","normal");pdf.setFontSize(6.8);
+ pdf.text("Scansiona il QR per contattarci",107,164,{align:"center",maxWidth:65});
+ pdf.text("Case in Pubblicita 24/7 - Comunicazione immobiliare",12,192);
+ pdf.text("Annunci e mediazione: professionisti abilitati La Sacra Immobiliare",12,198);
+ if(christmas){
+  pdf.setFillColor(176,24,42);pdf.roundedRect(11,201,126,3.2,1,1,"F");
+ }
+}
+async function downloadFlyerA5(){
+ const pending=state.entries.filter(i=>!["ok","eliminata"].includes(vote(i).status));
+ if(state.entries.length!==60||pending.length)throw Error("Prima approva tutte le grafiche non eliminate ("+pending.length+" ancora da valutare).");
+ const eligible=eligibleFlyerItems();
+ if(!eligible.length)throw Error("Nessun immobile approvato disponibile.");
+ if(!window.jspdf?.jsPDF)throw Error("Generatore PDF non disponibile: controlla la connessione e riprova.");
+ const christmas=isChristmasFlyer(),pdf=new window.jspdf.jsPDF({orientation:"portrait",unit:"mm",format:"a5",compress:true});
+ speak("Creo volantino A5 fronte/retro per "+eligible.length+" immobili approvati; nessun escluso.");
+ const portrait=await portraitForFlyer();
+ const genericQr=flyerQrData("https://wa.me/393713708294?text="+encodeURIComponent("Buongiorno, vorrei maggiori informazioni."));
+ const cache=new Map();
+ for(let k=0;k<eligible.length;k++){
+  const item=eligible[k];cache.set(item.content_id,{photo:await photoForFlyer(item),qr:flyerQrData(whatsappLink(item))});
+ }
+ for(let offset=0;offset<eligible.length;offset+=6){
+  if(offset)pdf.addPage("a5","portrait");
+  flyerHeader(pdf,christmas,false);
+  const first=eligible.slice(offset,offset+4);
+  const slots=[[8,34],[76,34],[8,105],[76,105]];
+  first.forEach((item,i)=>flyerCard(pdf,item,cache.get(item.content_id).photo,cache.get(item.content_id).qr,...slots[i]));
+  flyerFooter(pdf,christmas);
+  pdf.addPage("a5","portrait");flyerHeader(pdf,christmas,true);
+  const second=eligible.slice(offset+4,offset+6);
+  second.forEach((item,i)=>flyerCard(pdf,item,cache.get(item.content_id).photo,cache.get(item.content_id).qr,i===0?8:76,35));
+  flyerBackContact(pdf,portrait,genericQr,christmas);
+ }
+ const date=new Date().toISOString().slice(0,10);
+ const edition=christmas?"NATALE":"STANDARD";
+ pdf.save("CASE247_Volantino_A5_Fronte_Retro_"+edition+"_"+date+".pdf");
+ speak("PDF A5 fronte/retro generato: "+Math.ceil(eligible.length/6)+" fogli con "+eligible.length+" immobili unici approvati. "+(christmas?"Tema Natale attivo.":"Tema Natale automatico dal 1 dicembre."));
+}
+
 function exportVotes(){
  const output={project:"Case in Pubblicità 24/7",exported_at:new Date().toISOString(),scope:"BROWSER_LOCAL_REVIEW_ONLY",meta_publish:false,items:state.entries.map(item=>({content_id:item.content_id,listing_id:item.listing_id,source_url:item.listing_url,status:vote(item).status,exclude_from_calendar:vote(item).status==="eliminata",removed_at:vote(item).removed_at||null,variant:vote(item).attempts+1,generated_variants:vote(item).attempts||0,reviewed_at:vote(item).reviewed_at||null}))};
  const blob=new Blob([JSON.stringify(output,null,2)],{type:"application/json"});const a=document.createElement("a");const href=URL.createObjectURL(blob);a.href=href;a.download="case247-approvazioni-grafiche.json";a.click();setTimeout(()=>URL.revokeObjectURL(href),1000)
@@ -296,6 +464,12 @@ el("filter").onchange=e=>{state.filters.filter=e.target.value;draw()};
 el("aud").onchange=e=>{state.filters.aud=e.target.value;draw()};
 el("search").oninput=e=>{state.filters.search=e.target.value;draw()};
 el("export").onclick=exportVotes;
+el("flyer").onclick=async()=>{
+ if(el("flyer").disabled)return;
+ el("flyer").disabled=true;speak("Impagino il volantino PDF A5 fronte/retro...");
+ try{await downloadFlyerA5()}catch(e){speak("Volantino non generato: "+e.message)}
+ finally{draw()}
+};
 el("download").onclick=async()=>{const done=state.entries.filter(x=>vote(x).status==="ok");if(!done.length)return speak("Nessuna grafica ancora approvata.");for(const item of done){await downloadOne(item);await new Promise(r=>setTimeout(r,150))}speak("Avviato download delle "+done.length+" grafiche OK. Il browser potrebbe richiedere autorizzazione ai download multipli.")};
 el("close").onclick=()=>el("lightbox").close();
 fetchData().catch(e=>speak("Errore caricamento: "+e.message));
