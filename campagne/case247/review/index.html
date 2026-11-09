@@ -145,15 +145,18 @@ function draw(){
 }
 function approve(item){if(vote(item).status==="eliminata")return;if(state.busy.has(item.content_id)){speak("La nuova variante è ancora in preparazione.");return;}const v=vote(item);v.status="ok";v.reviewed_at=new Date().toISOString();state.votes[item.content_id]=v;persist();draw();speak("OK REGISTRATO — "+item.listing_title+". Variante "+(v.attempts+1)+".")}
 function remove(item){
- if(state.busy.has(item.content_id)){speak("Completa prima la rigenerazione in corso.");return;}
- if(!confirm("Eliminare dalla galleria di lavoro "+item.listing_title+"? Non sarà più da approvare, rigenerare o pubblicare. Potrai ripristinarlo dal filtro Eliminati."))return;
- const v=vote(item);v.status="eliminata";v.removed_at=new Date().toISOString();v.reviewed_at=null;
- state.votes[item.content_id]=v;persist();draw();speak("IMMOBILE ESCLUSO: "+item.listing_title+". Nessuna nuova variante sarà generata.");
+ const linked=state.entries.filter(other=>other.listing_id===item.listing_id);
+ if(linked.some(other=>state.busy.has(other.content_id))){speak("Completa prima le rigenerazioni in corso dell'immobile.");return;}
+ if(!confirm("ESCLUDERE l’immobile "+item.listing_title+"? Verranno tolte dalla galleria TUTTE le "+linked.length+" grafiche che lo utilizzano. Non sarà più trattato o rigenerato. Potrai ripristinarlo dal filtro Eliminati."))return;
+ const date=new Date().toISOString();
+ for(const linkedItem of linked){const v=vote(linkedItem);v.status="eliminata";v.removed_at=date;v.reviewed_at=null;state.votes[linkedItem.content_id]=v}
+ persist();draw();speak("IMMOBILE ESCLUSO DA "+linked.length+" GRAFICHE: "+item.listing_title+". Nessuna nuova variante sarà generata.");
 }
 function restore(item){
- if(state.busy.has(item.content_id))return;
- const v=vote(item);v.status="pending";v.removed_at=null;v.reviewed_at=null;
- state.votes[item.content_id]=v;persist();draw();speak("Immobile ripristinato: "+item.listing_title);
+ const linked=state.entries.filter(other=>other.listing_id===item.listing_id);
+ if(linked.some(other=>state.busy.has(other.content_id)))return;
+ for(const linkedItem of linked){const v=vote(linkedItem);if(v.status==="eliminata"){v.status="pending";v.removed_at=null;v.reviewed_at=null;state.votes[linkedItem.content_id]=v}}
+ persist();draw();speak("Immobile ripristinato in "+linked.length+" grafiche: "+item.listing_title);
 }
 function loadImg(src){
  return new Promise((resolve,reject)=>{const img=new Image();img.crossOrigin="anonymous";img.onload=()=>resolve(img);img.onerror=()=>reject(Error("Foto non raggiungibile: "+src));img.src=src});
