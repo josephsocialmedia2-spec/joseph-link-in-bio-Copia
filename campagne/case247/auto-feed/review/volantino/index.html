@@ -66,7 +66,7 @@ header,.wrap>.tools,.wrap>fieldset,.wrap>.warning,.wrap>#status,.wrap>h2,.wrap>.
 <body>
 <header><a href="../">← Torna alla pagina approvazioni</a><h1>Generatore volantino A5 · Avigliana e dintorni</h1><p>Approva gli immobili: l'anteprima fronte-retro si compone automaticamente. Stampa in A5 o salva come PDF.</p></header>
 <div class="wrap">
-<div class="warning">Le scelte effettuate qui sono salvate <strong>in questo browser</strong>. Il catalogo GitHub è la fonte delle schede; le pubblicazioni Meta e le approvazioni centralizzate non vengono modificate. Prima della stampa verifica prezzi, disponibilità, utilizzo delle immagini e dati commerciali.</div>
+<div class="warning">Le scelte precedenti OK/ELIMINA sono importate dal file approvazioni del 9 novembre. Le nuove modifiche sono salvate <strong>in questo browser</strong>. Le pubblicazioni Meta e le approvazioni centralizzate non vengono modificate. Prima della stampa verifica prezzi, disponibilità, utilizzo delle immagini e dati commerciali.</div>
 <div class="tools">
 <button id="print" disabled>Stampa / salva PDF A5 fronte-retro</button>
 <button id="export">Esporta selezione JSON</button>
@@ -76,7 +76,7 @@ header,.wrap>.tools,.wrap>fieldset,.wrap>.warning,.wrap>#status,.wrap>h2,.wrap>.
 </div>
 <p id="status" role="status">Caricamento catalogo…</p>
 <div id="editor">
-<fieldset><legend>Immobili del territorio</legend><p class="description">Precedenza ad Avigliana; poi Sant'Ambrogio, Villar Dora, Caprie e Rubiana. Solo categoria residenziale e annunci non indicati come affitto. Seleziona massimo 8 immobili. Le caratteristiche mancanti non vengono inventate.</p><div class="controls"><input id="search" placeholder="Cerca comune o immobile" aria-label="Cerca immobile"><label><input id="auto" type="checkbox" checked> Ordina automaticamente per territorio</label></div><div class="selectors" id="choices"></div></fieldset>
+<fieldset><legend>Immobili del territorio</legend><p class="description">Precedenza ad Avigliana; poi Sant'Ambrogio, Villar Dora, Caprie e Rubiana. Gli immobili marcati ELIMINA nel file approvazioni non sono disponibili. Solo categoria residenziale e annunci non indicati come affitto. Seleziona massimo 8 immobili. Le caratteristiche mancanti non vengono inventate.</p><div class="controls"><input id="search" placeholder="Cerca comune o immobile" aria-label="Cerca immobile"><label><input id="auto" type="checkbox" checked> Ordina automaticamente per territorio</label></div><div class="selectors" id="choices"></div></fieldset>
 </div>
 <h2>Anteprima di stampa · 2 facciate A5</h2>
 <div class="description">Le pagine qui sotto sono in dimensione A5. Il pulsante apre la finestra di stampa del browser: scegli «Salva come PDF» e attiva «Grafica di sfondo» per mantenere i colori. Il sistema non stampa in autonomia.</div>
@@ -105,17 +105,18 @@ header,.wrap>.tools,.wrap>fieldset,.wrap>.warning,.wrap>#status,.wrap>h2,.wrap>.
 'use strict';
 var CATALOG='../../../../../immobili/catalogo.json';
 var DRAFTS='../../../territorio/bozze.json';
+var APPROVALS='../../../territorio/approvazioni-grafiche-2026-11-09.json';
 var STORAGE='case247-flyer-avigliana-v1';
 var BASE='https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=0&data=';
 var VALUATION='https://wa.me/393713708294?text='+encodeURIComponent('Buongiorno, desidero richiedere una valutazione gratuita del mio immobile ad Avigliana e dintorni.');
 var rank=['avigliana','sant-ambrogio-di-torino','villar-dora','caprie','rubiana','almese','condove','chiusa-di-san-michele','vaie','sant-antonino-di-susa'];
-var catalog=[],approved=new Set(),remoteApproved=new Set(),saved=null,auto=true,updated='';
+var catalog=[],catalogAll=[],approved=new Set(),remoteApproved=new Set(),rejected=new Set(),reviewItems=[],saved=null,auto=true,updated='';
 var $=function(id){return document.getElementById(id)};
 var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
 var price=function(p){return Number.isFinite(Number(p))&&p!==null&&p!==''?'€ '+new Intl.NumberFormat('it-IT',{maximumFractionDigits:0}).format(p):'Prezzo su richiesta'};
 var order=function(x){var i=rank.indexOf(x.town_id);return i===-1?500:i};
 var validURL=function(s){try{var u=new URL(s);return u.protocol==='https:'?u.href:''}catch(e){return ''}};
-function snapshot(){try{localStorage.setItem(STORAGE,JSON.stringify({ids:Array.from(approved),updated:new Date().toISOString()}))}catch(e){$('status').textContent='Memoria browser non disponibile: esporta la selezione JSON.'}}
+function snapshot(){try{localStorage.setItem(STORAGE,JSON.stringify({ids:Array.from(approved),reviewItems:reviewItems,updated:new Date().toISOString()}))}catch(e){$('status').textContent='Memoria browser non disponibile: esporta la selezione JSON.'}}
 function imgTag(url,extra){return '<img '+(extra||'')+' src="'+esc(validURL(url))+'" alt="Immagine da catalogo">'}
 function itemCard(x){
 var label=String(x.title||'Immobile').trim().replace(/\s+/g,' ');
@@ -127,6 +128,7 @@ return '<article class="house">'+imgTag(photo,'class="photo"')+
 '<div class="qrtext">Scheda immobile</div><img class="qrcode" src="'+esc(BASE+encodeURIComponent(u))+'" alt="QR scheda immobile"></article>'
 }
 function blank(){return '<div class="house empty">Spazio disponibile per un altro immobile approvato</div>'}
+function applyStatuses(items){reviewItems=items||[];remoteApproved=new Set();rejected=new Set();var grouped={};reviewItems.forEach(function(v){if(v&&v.listing_id){var id=String(v.listing_id);(grouped[id]||(grouped[id]=[])).push(v.status)}});Object.keys(grouped).forEach(function(id){var st=grouped[id];if(st.includes('eliminata'))rejected.add(id);else if(st.includes('ok'))remoteApproved.add(id)});catalog=catalogAll.filter(function(x){return !rejected.has(String(x.id))})}
 function selected(){var arr=catalog.filter(function(x){return approved.has(String(x.id))});if(auto)arr.sort(function(a,b){return order(a)-order(b)||String(a.title).localeCompare(String(b.title),'it')});return arr.slice(0,8)}
 function render(){
 var chosen=selected(),front=chosen.slice(0,4),back=chosen.slice(4,8);
@@ -157,18 +159,19 @@ snapshot();choices();render();
 }
 async function init(){
 try{
-var results=await Promise.all([fetch(CATALOG,{cache:'no-store'}),fetch(DRAFTS,{cache:'no-store'})]);
+var results=await Promise.all([fetch(CATALOG,{cache:'no-store'}),fetch(DRAFTS,{cache:'no-store'}),fetch(APPROVALS,{cache:'no-store'})]);
 if(!results[0].ok)throw Error('Catalogo non raggiungibile');
-var data=await results[0].json();var draft=results[1].ok?await results[1].json():{drafts:[]};
+var data=await results[0].json();var draft=results[1].ok?await results[1].json():{drafts:[]};var reviews=results[2].ok?await results[2].json():{items:[]};
 var included=new Set((draft.drafts||[]).filter(function(x){return x.approved===true}).map(function(x){return String(x.listing_id)}));
-catalog=(data.items||[]).filter(function(x){
+catalogAll=(data.items||[]).filter(function(x){
 return x.category==='Residenziale'&&x.location_status==='VERIFICATO_FONTE'&&
 rank.includes(x.town_id)&&validURL(x.url)&&validURL(x.image)&&
 !/affitto|locazione|affittasi/i.test(String(x.title||''));
 });
 updated=data.last_success_at?new Date(data.last_success_at).toLocaleString('it-IT'):'non indicata';
-remoteApproved=included;
 try{saved=JSON.parse(localStorage.getItem(STORAGE)||'null')}catch(e){saved=null}
+applyStatuses(saved&&Array.isArray(saved.reviewItems)&&saved.reviewItems.length?saved.reviewItems:reviews.items);
+included.forEach(function(id){if(!rejected.has(id))remoteApproved.add(id)});
 approved=new Set((saved&&Array.isArray(saved.ids)?saved.ids:[]).filter(function(id){return catalog.some(function(x){return String(x.id)===String(id)})}));
 remoteApproved.forEach(function(id){if(catalog.some(function(x){return String(x.id)===id}))approved.add(id)});
 render();choices();
@@ -180,7 +183,7 @@ $('print').addEventListener('click',function(){window.print()});
 $('clear').addEventListener('click',function(){if(!confirm('Azzerare gli immobili selezionati in questo browser?'))return;approved=new Set(Array.from(remoteApproved));snapshot();render();choices()});
 $('export').addEventListener('click',function(){var blob=new Blob([JSON.stringify({project:'Case in Pubblicità 24/7',territory:'Avigliana',version:1,ids:Array.from(approved),exported_at:new Date().toISOString()},null,2)],{type:'application/json'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='case247-volantino-avigliana-approvazioni.json';a.click();setTimeout(function(){URL.revokeObjectURL(a.href)},1500)});
 $('restore').addEventListener('click',function(){$('file').click()});
-$('file').addEventListener('change',async function(){var file=this.files[0];if(!file)return;try{var o=JSON.parse(await file.text());if(!Array.isArray(o.ids)||o.project!=='Case in Pubblicità 24/7')throw Error('File selezione non valido');approved=new Set(o.ids.map(String).filter(function(id){return catalog.some(function(x){return String(x.id)===id})}).slice(0,8));remoteApproved.forEach(function(id){approved.add(id)});snapshot();render();choices();}catch(e){alert(e.message)}this.value=''});
+$('file').addEventListener('change',async function(){var file=this.files[0];if(!file)return;try{var o=JSON.parse(await file.text());if(o.project!=='Case in Pubblicità 24/7')throw Error('File selezione non valido');if(Array.isArray(o.items)){applyStatuses(o.items);approved=new Set(Array.from(remoteApproved).filter(function(id){return catalog.some(function(x){return String(x.id)===id})}).slice(0,8));}else if(Array.isArray(o.ids)){approved=new Set(o.ids.map(String).filter(function(id){return catalog.some(function(x){return String(x.id)===id})}).slice(0,8));remoteApproved.forEach(function(id){if(approved.size<8)approved.add(id)})}else throw Error('Formato non riconosciuto');snapshot();render();choices();}catch(e){alert(e.message)}this.value=''});
 init();
 })();
 </script></body></html>
