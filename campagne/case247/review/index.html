@@ -58,7 +58,7 @@ const PORTRAIT=BASE+"assets/joseph-malafronte.webp";
 const WHATSAPP="393713708294";
 function whatsappLink(item){const category=item.content_id.endsWith("-AZIENDE")?"AZIENDA":"CASA";const message=`Buongiorno Joseph, ${category} ${item.listing_id}.\nImmobile: ${item.listing_title} (${item.town})\nPrezzo: ${item.price_label||"Non indicato"}\nFotografia: ${item.image_url}\nScheda: ${item.listing_url}\nVorrei ricevere maggiori informazioni.`;return "https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(message)}
 const KEY="case247-gallery-review-v3";
-const GRAPHIC_VERSION="whatsapp-3713708294-20261109";
+const GRAPHIC_VERSION="portrait-title-fixed-20261109-v2";
 const state={entries:[],byId:{},votes:{},previews:{},filters:{filter:"all",aud:"all",search:""},busy:new Set()};
 // Store regenerated image bytes in IndexedDB rather than localStorage (which is too small for 60 JPEGs).
 let dbPromise;
