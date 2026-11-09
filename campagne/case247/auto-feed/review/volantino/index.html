@@ -172,18 +172,18 @@ updated=data.last_success_at?new Date(data.last_success_at).toLocaleString('it-I
 try{saved=JSON.parse(localStorage.getItem(STORAGE)||'null')}catch(e){saved=null}
 applyStatuses(saved&&Array.isArray(saved.reviewItems)&&saved.reviewItems.length?saved.reviewItems:reviews.items);
 included.forEach(function(id){if(!rejected.has(id))remoteApproved.add(id)});
-approved=new Set((saved&&Array.isArray(saved.ids)?saved.ids:[]).filter(function(id){return catalog.some(function(x){return String(x.id)===String(id)})}));
-remoteApproved.forEach(function(id){if(catalog.some(function(x){return String(x.id)===id}))approved.add(id)});
+var defaultIDs=catalog.filter(function(x){return remoteApproved.has(String(x.id))}).sort(function(a,b){return order(a)-order(b)||String(a.title).localeCompare(String(b.title),'it')}).slice(0,8).map(function(x){return String(x.id)});
+approved=new Set((saved&&Array.isArray(saved.ids)?saved.ids:defaultIDs).map(String).filter(function(id){return catalog.some(function(x){return String(x.id)===id})}).slice(0,8));
 render();choices();
 }catch(e){$('status').textContent='Errore: '+e.message+'. Ricarica la pagina. Nessun annuncio dimostrativo viene usato.'}
 }
 $('auto').addEventListener('change',function(){auto=this.checked;render()});
 $('search').addEventListener('input',choices);
 $('print').addEventListener('click',function(){window.print()});
-$('clear').addEventListener('click',function(){if(!confirm('Azzerare gli immobili selezionati in questo browser?'))return;approved=new Set(Array.from(remoteApproved));snapshot();render();choices()});
+$('clear').addEventListener('click',function(){if(!confirm('Azzerare gli immobili selezionati in questo browser?'))return;approved=new Set();snapshot();render();choices()});
 $('export').addEventListener('click',function(){var blob=new Blob([JSON.stringify({project:'Case in Pubblicità 24/7',territory:'Avigliana',version:1,ids:Array.from(approved),exported_at:new Date().toISOString()},null,2)],{type:'application/json'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='case247-volantino-avigliana-approvazioni.json';a.click();setTimeout(function(){URL.revokeObjectURL(a.href)},1500)});
 $('restore').addEventListener('click',function(){$('file').click()});
-$('file').addEventListener('change',async function(){var file=this.files[0];if(!file)return;try{var o=JSON.parse(await file.text());if(o.project!=='Case in Pubblicità 24/7')throw Error('File selezione non valido');if(Array.isArray(o.items)){applyStatuses(o.items);approved=new Set(Array.from(remoteApproved).filter(function(id){return catalog.some(function(x){return String(x.id)===id})}).slice(0,8));}else if(Array.isArray(o.ids)){approved=new Set(o.ids.map(String).filter(function(id){return catalog.some(function(x){return String(x.id)===id})}).slice(0,8));remoteApproved.forEach(function(id){if(approved.size<8)approved.add(id)})}else throw Error('Formato non riconosciuto');snapshot();render();choices();}catch(e){alert(e.message)}this.value=''});
+$('file').addEventListener('change',async function(){var file=this.files[0];if(!file)return;try{var o=JSON.parse(await file.text());if(o.project!=='Case in Pubblicità 24/7')throw Error('File selezione non valido');if(Array.isArray(o.items)){applyStatuses(o.items);approved=new Set(catalog.filter(function(x){return remoteApproved.has(String(x.id))}).sort(function(a,b){return order(a)-order(b)||String(a.title).localeCompare(String(b.title),'it')}).slice(0,8).map(function(x){return String(x.id)}));}else if(Array.isArray(o.ids)){approved=new Set(o.ids.map(String).filter(function(id){return catalog.some(function(x){return String(x.id)===id})}).slice(0,8));}else throw Error('Formato non riconosciuto');snapshot();render();choices();}catch(e){alert(e.message)}this.value=''});
 init();
 })();
 </script></body></html>
