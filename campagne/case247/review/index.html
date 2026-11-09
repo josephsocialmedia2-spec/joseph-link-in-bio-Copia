@@ -26,6 +26,13 @@ article.is-deleted{opacity:.75;border-color:#a73b55}
 article.is-deleted .visual{filter:grayscale(1)}
 article.is-deleted .actions .ok,article.is-deleted .actions .reject{display:none}
 .flag.eliminata{background:#831843}
+article.is-approved{border:3px solid #16a34a;box-shadow:0 0 0 2px #16a34a33}
+.flag.ok{background:#16844d;font-size:14px;padding:10px 14px}
+.approval-check{position:absolute;inset:auto 12px 12px auto;background:#16844df0;color:white;font-size:18px;font-weight:900;padding:10px 15px;border:3px solid #fff;border-radius:15px;box-shadow:0 4px 15px #0008}
+.actions .ok.approved{background:#0c6639;outline:3px solid #7be3a6;outline-offset:-3px}
+.approval-row{display:flex;align-items:center;gap:9px;margin:5px 0;color:#b5c6d9;font-size:13px}
+.approval-row input{width:23px;height:23px;accent-color:#16a34a;cursor:pointer}
+.approval-row:has(input:checked){color:#74f4aa;font-weight:800}
 .links{display:flex;justify-content:space-between;gap:9px;margin-top:10px;font-size:12px;flex-wrap:wrap}
 #alert{margin:10px 0;color:var(--gold);font-weight:700}
 dialog{border:none;border-radius:13px;background:#152235;color:var(--txt);width:min(96vw,870px);max-height:96vh;padding:12px}
@@ -124,19 +131,27 @@ function draw(){
  });
  const g=el("gallery");g.replaceChildren();
  for(const item of selected){
-  const v=vote(item),card=document.createElement("article"),vis=document.createElement("div");if(v.status==="eliminata")card.className="is-deleted";
+  const v=vote(item),card=document.createElement("article"),vis=document.createElement("div");if(v.status==="eliminata")card.className="is-deleted";if(v.status==="ok")card.classList.add("is-approved");
   vis.className="visual";const img=document.createElement("img");img.loading="lazy";img.alt=item.listing_title+" ("+item.town+")";img.src=snapshot(item);
   img.onerror=()=>{img.alt="Anteprima non disponibile — riprova";};
   vis.append(img);
   const aud=document.createElement("span");aud.className="audience";aud.textContent=item.content_id.endsWith("PRIVATI")?"PRIVATI":"AZIENDE";
   const badge=document.createElement("span");badge.className="flag "+v.status;badge.textContent=v.status==="ok"?"OK":v.status==="scarta"?"DA RIFARE":v.status==="eliminata"?"ELIMINATA":"DA VALUTARE";
-  vis.append(aud,badge);vis.onclick=()=>preview(item);card.append(vis);
+  vis.append(aud,badge);
+  if(v.status==="ok"){const check=document.createElement("div");check.className="approval-check";check.textContent="✓ APPROVATA";vis.append(check)}
+  vis.onclick=()=>preview(item);card.append(vis);
   const body=document.createElement("div");body.className="info";
   const title=document.createElement("strong");title.textContent=item.listing_title;
   const detail=document.createElement("div");detail.className="details";
   detail.textContent=dateFrom(item.content_id)+" · "+item.town+" · Variante "+(v.attempts+1)+" · "+(item.price_label||"PREZZO NON INDICATO");
+  const toggleRow=document.createElement("label");toggleRow.className="approval-row";
+  const input=document.createElement("input");input.type="checkbox";input.checked=v.status==="ok";input.disabled=v.status==="eliminata"||state.busy.has(item.content_id);
+  input.setAttribute("aria-label","Approva grafica "+item.listing_title);
+  input.onchange=()=>input.checked?approve(item):unapprove(item);
+  const checkLabel=document.createElement("span");checkLabel.textContent=v.status==="ok"?"✓ CHECK REGISTRATO":"Spunta per approvare";
+  toggleRow.append(input,checkLabel);
   const buttons=document.createElement("div");buttons.className="actions";
-  const ok=document.createElement("button");ok.className="ok";ok.textContent=state.busy.has(item.content_id)?"CREAZIONE…":"✓ OK";ok.disabled=state.busy.has(item.content_id);ok.onclick=()=>approve(item);
+  const ok=document.createElement("button");ok.className="ok";ok.textContent=state.busy.has(item.content_id)?"CREAZIONE…":v.status==="ok"?"✓ APPROVATA":"✓ OK";ok.classList.toggle("approved",v.status==="ok");ok.disabled=state.busy.has(item.content_id);ok.onclick=()=>approve(item);
   const reject=document.createElement("button");reject.className="reject";reject.textContent="✕ SCARTA";reject.disabled=state.busy.has(item.content_id);reject.onclick=()=>regenerate(item);
   buttons.append(ok,reject);
   if(v.status==="scarta"){const retry=document.createElement("button");retry.className="retry";retry.textContent="Riprova generazione";retry.onclick=()=>regenerate(item);buttons.append(retry);}
@@ -144,11 +159,25 @@ function draw(){
   const links=document.createElement("div");links.className="links";
   const listing=document.createElement("a");listing.href=item.listing_url;listing.target="_blank";listing.rel="noopener noreferrer";listing.textContent="Annuncio La Sacra";
   const save=document.createElement("a");save.href="#";save.textContent="Salva JPG";save.onclick=e=>{e.preventDefault();downloadOne(item)};
-  links.append(listing,save);body.append(title,detail,buttons,links);card.append(body);g.append(card);
+  links.append(listing,save);body.append(title,detail,toggleRow,buttons,links);card.append(body);g.append(card);
  }
  if(!selected.length){const p=document.createElement("p");p.textContent="Nessuna grafica con questi filtri.";g.append(p)}
 }
-function approve(item){if(vote(item).status==="eliminata")return;if(state.busy.has(item.content_id)){speak("La nuova variante è ancora in preparazione.");return;}const v=vote(item);v.status="ok";v.reviewed_at=new Date().toISOString();state.votes[item.content_id]=v;persist();draw();speak("OK REGISTRATO — "+item.listing_title+". Variante "+(v.attempts+1)+".")}
+function approve(item){
+ if(vote(item).status==="eliminata")return;
+ if(state.busy.has(item.content_id)){speak("Attendi la nuova variante prima di approvare.");return;}
+ const v=vote(item);
+ v.status="ok";v.graphic_version=GRAPHIC_VERSION;v.reviewed_at=new Date().toISOString();
+ state.votes[item.content_id]=v;
+ persist();draw();
+ speak("✓ GRAFICA APPROVATA E SALVATA — "+item.listing_title+" · Variante "+(v.attempts+1));
+}
+function unapprove(item){
+ if(state.busy.has(item.content_id))return;
+ const v=vote(item);if(v.status!=="ok")return;
+ v.status="pending";v.reviewed_at=null;state.votes[item.content_id]=v;
+ persist();draw();speak("Approvazione revocata — "+item.listing_title);
+}
 function remove(item){
  const linked=state.entries.filter(other=>other.listing_id===item.listing_id);
  if(linked.some(other=>state.busy.has(other.content_id))){speak("Completa prima le rigenerazioni in corso dell'immobile.");return;}
