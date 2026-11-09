@@ -33,7 +33,7 @@ dialog::backdrop{background:#000d}dialog img{width:100%;max-height:77vh;object-f
 <select id="aud"><option value="all">Privati + aziende</option><option value="privati">Privati</option><option value="aziende">Aziende</option></select>
 <input id="search" placeholder="Cerca immobile, data, comune" aria-label="Cerca">
 <button id="export" class="export">Esporta esiti</button><button id="download" class="download">Scarica grafiche OK</button></div></header>
-<main><p class="notice"><b>Come funziona:</b> premi <b>OK</b> per approvare oppure <b>SCARTA</b> per creare subito una nuova variante grafica dello stesso immobile, con la tua foto. Ripeti SCARTA quante volte vuoi fino a OK. Le nuove varianti sono prodotte nel browser e le scelte rimangono su questo dispositivo; non avviano pubblicazioni social né aggiornano il calendario GitHub. Per trasferire le approvazioni usa «Esporta esiti».</p>
+<main><p class="notice"><b>Come funziona:</b> premi <b>OK</b> per approvare oppure <b>SCARTA</b> per creare subito una nuova variante grafica dello stesso immobile, con la tua foto. Ripeti SCARTA quante volte vuoi fino a OK. Le nuove varianti sono prodotte e salvate in questo browser; le scelte rimangono su questo dispositivo; non avviano pubblicazioni social né aggiornano il calendario GitHub. Per trasferire le approvazioni usa «Esporta esiti».</p>
 <div id="alert" role="status" aria-live="polite"></div><div class="gallery" id="gallery"></div></main>
 <dialog id="lightbox"><div class="top"><strong id="dlgTitle"></strong><button id="close">Chiudi</button></div><img id="dlgImg" alt="Anteprima grande"></dialog>
 <script>
@@ -43,7 +43,35 @@ const ROOT=BASE+"campagne/case247/editorial-queue/2026-11-10_2026-12-09/";
 const PHOTOS=ROOT+"FONTI_IMMAGINI.json";
 const PORTRAIT=BASE+"assets/joseph-malafronte.webp";
 const KEY="case247-gallery-review-v3";
-const state={entries:[],byId:{},votes:{},filters:{filter:"all",aud:"all",search:""},busy:new Set()};
+const state={entries:[],byId:{},votes:{},previews:{},filters:{filter:"all",aud:"all",search:""},busy:new Set()};
+// Store regenerated image bytes in IndexedDB rather than localStorage (which is too small for 60 JPEGs).
+let dbPromise;
+function previewDb(){
+ if(!("indexedDB" in window))return Promise.resolve(null);
+ if(!dbPromise)dbPromise=new Promise(resolve=>{
+   const request=indexedDB.open("case247-review-previews",1);
+   request.onupgradeneeded=()=>request.result.createObjectStore("images");
+   request.onsuccess=()=>resolve(request.result);
+   request.onerror=()=>resolve(null);
+ });
+ return dbPromise;
+}
+async function storePreview(id,url){
+ const db=await previewDb();if(!db)throw Error("Archiviazione immagini non disponibile in questo browser");
+ return new Promise((resolve,reject)=>{
+  const tx=db.transaction("images","readwrite");tx.objectStore("images").put(url,id);
+  tx.oncomplete=()=>resolve();tx.onerror=()=>reject(Error("Salvataggio JPEG fallito"));
+ });
+}
+async function restorePreviews(){
+ const db=await previewDb();if(!db)return;
+ await Promise.all(state.entries.filter(item=>(state.votes[item.content_id]?.attempts||0)>0).map(item=>new Promise(resolve=>{
+  const tx=db.transaction("images","readonly");
+  const request=tx.objectStore("images").get(item.content_id);
+  request.onsuccess=()=>{if(typeof request.result==="string")state.previews[item.content_id]=request.result;resolve()};
+  request.onerror=()=>resolve();
+ })));
+}
 const el=id=>document.getElementById(id);
 function speak(s){el("alert").textContent=s}
 function initial(){try{return JSON.parse(localStorage.getItem(KEY)||"{}")}catch{return {}}}
@@ -64,13 +92,13 @@ async function fetchData(){
  const data=await r.json();
  if(data.count!==60||!Array.isArray(data.used)||data.used.length!==60)throw Error("Inventario incoerente: attese 60 grafiche");
  if(data.used.some(x=>!validItem(x)))throw Error("Inventario immagini non sicuro");
- state.entries=data.used;state.byId=Object.fromEntries(data.used.map(x=>[x.content_id,x]));
+ state.entries=data.used;state.byId=Object.fromEntries(data.used.map(x=>[x.content_id,x]));await restorePreviews();
  const ids=new Set(state.entries.map(x=>x.content_id));
  if(ids.size!==60)throw Error("ID duplicati nell'inventario");
  draw();
 }
 function imageUrl(item){return BASE+item.rendered_jpeg}
-function snapshot(item){const v=vote(item);return v.attempts>0&&v.preview?v.preview:imageUrl(item)}
+function snapshot(item){return state.previews[item.content_id]||imageUrl(item)}
 function draw(){
  const summary={ok:0,pending:0,scarta:0,attempts:0};
  for(const item of state.entries){const v=vote(item);summary[v.status]=(summary[v.status]||0)+1;summary.attempts+=v.attempts||0}
@@ -174,7 +202,7 @@ async function regenerate(item){
   const next=v.attempts+1;
   // Always create a new graphic before changing the saved decision.
   const newPreview=await buildVariant(item,next);
-  v.attempts=next;v.status="pending";v.preview=newPreview;v.reviewed_at=null;
+  await storePreview(id,newPreview);state.previews[id]=newPreview;v.attempts=next;v.status="pending";v.reviewed_at=null;
   state.votes[id]=v;persist();speak("Nuova grafica creata (variante "+(next+1)+"). Scegli OK oppure SCARTA ancora.");
  }catch(e){v.status="scarta";state.votes[id]=v;persist();speak("Rigenerazione non riuscita: "+e.message+". Usa «Riprova generazione».")}
  finally{state.busy.delete(id);draw()}
