@@ -1,7 +1,8 @@
 {
   "source": "https://lasacraimmobiliare.it",
   "catalog_snapshot_at": "2026-11-08T11:22:26.665807+00:00",
-  "media_type": "original listing images, not generative recreation",
+  "media_type": "original listing images with clearly distinguished presenter portrait overlay, no generative recreation",
+  "presenter_asset": "assets/joseph-malafronte.webp",
   "count": 60,
   "used": [
     {
