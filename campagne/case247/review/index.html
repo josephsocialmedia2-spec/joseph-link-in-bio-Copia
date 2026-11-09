@@ -41,7 +41,7 @@ dialog::backdrop{background:#000d}dialog img{width:100%;max-height:77vh;object-f
 @media(max-width:440px){.gallery{grid-template-columns:1fr 1fr}.stat b{font-size:20px}}
 </style></head><body>
 <header><h1>CASE IN PUBBLICITÀ 24/7 · REVISIONE GRAFICHE</h1><p>60 grafiche La Sacra + ritratto Joseph · 10 novembre – 9 dicembre 2026 · Una scelta per ciascuna grafica</p>
-<a class="wa-central" target="_blank" rel="noopener noreferrer" href="https://wa.me/393713708294?text=Buongiorno%20Joseph%2C%20scrivo%20da%20Case%20in%20Pubblicit%C3%A0%2024%2F7.%20Vorrei%20informazioni.">WHATSAPP DIRETTO · 371 370 8294</a><div class="stats"><div class="stat"><b id="nAll">60</b><small>Totali</small></div><div class="stat"><b id="nOk">0</b><small>OK</small></div><div class="stat"><b id="nPending">60</b><small>Da valutare</small></div><div class="stat"><b id="nDiscard">0</b><small>Da rifare</small></div><div class="stat"><b id="nAttempts">0</b><small>Rigenerazioni</small></div><div class="stat"><b id="nDeleted">0</b><small>Eliminati</small></div></div>
+<a class="wa-central" target="_blank" rel="noopener noreferrer" href="https://wa.me/393713708294?text=Buongiorno%2C%20vorrei%20maggiori%20informazioni.">WHATSAPP DIRETTO · 371 370 8294</a><div class="stats"><div class="stat"><b id="nAll">60</b><small>Totali</small></div><div class="stat"><b id="nOk">0</b><small>OK</small></div><div class="stat"><b id="nPending">60</b><small>Da valutare</small></div><div class="stat"><b id="nDiscard">0</b><small>Da rifare</small></div><div class="stat"><b id="nAttempts">0</b><small>Rigenerazioni</small></div><div class="stat"><b id="nDeleted">0</b><small>Eliminati</small></div></div>
 <div class="toolbar"><select id="filter"><option value="all">Tutte le grafiche</option><option value="pending">Da valutare</option><option value="ok">OK</option><option value="scarta">Scartate / Da rifare</option><option value="eliminata">Eliminati (recuperabili)</option></select>
 <select id="aud"><option value="all">Privati + aziende</option><option value="privati">Privati</option><option value="aziende">Aziende</option></select>
 <input id="search" placeholder="Cerca immobile, data, comune" aria-label="Cerca">
@@ -56,7 +56,17 @@ const ROOT=BASE+"campagne/case247/editorial-queue/2026-11-10_2026-12-09/";
 const PHOTOS=ROOT+"FONTI_IMMAGINI.json";
 const PORTRAIT=BASE+"assets/joseph-malafronte.webp";
 const WHATSAPP="393713708294";
-function whatsappLink(item){const message=`Buongiorno, vorrei maggiori informazioni riguardo a: ${item.listing_title}.\nLocalità: ${item.town}\nPrezzo: ${item.price_label||"Non indicato"}\nFoto immobile: ${item.image_url}\nAnnuncio: ${item.listing_url}`;return "https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(message)}
+function naturalTitle(title,town){
+ let t=String(title||"immobile").trim().toLocaleLowerCase("it");
+ t=t.charAt(0).toLocaleUpperCase("it")+t.slice(1);
+ const place=String(town||"").trim();
+ if(place){const pos=t.toLocaleLowerCase("it").indexOf(place.toLocaleLowerCase("it"));if(pos>=0)t=t.slice(0,pos)+place+t.slice(pos+place.length)}
+ return t;
+}
+function whatsappLink(item){
+ const message="Buongiorno, vorrei maggiori informazioni riguardo a: "+naturalTitle(item.listing_title,item.town)+".";
+ return "https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(message);
+}
 const KEY="case247-gallery-review-v3";
 const GRAPHIC_VERSION="official-brand-title-20261109-v3";
 const state={entries:[],byId:{},votes:{},previews:{},filters:{filter:"all",aud:"all",search:""},busy:new Set()};
