@@ -76,7 +76,7 @@ header,.wrap>.tools,.wrap>fieldset,.wrap>.warning,.wrap>#status,.wrap>h2,.wrap>.
 </div>
 <p id="status" role="status">Caricamento catalogo…</p>
 <div id="editor">
-<fieldset><legend>Immobili del territorio</legend><p class="description">Precedenza ad Avigliana; poi Sant'Ambrogio, Villar Dora, Caprie e Rubiana. Gli immobili marcati ELIMINA nel file approvazioni non sono disponibili. Solo categoria residenziale e annunci non indicati come affitto. Seleziona massimo 8 immobili. Le caratteristiche mancanti non vengono inventate.</p><div class="controls"><input id="search" placeholder="Cerca comune o immobile" aria-label="Cerca immobile"><label><input id="auto" type="checkbox" checked> Ordina automaticamente per territorio</label></div><div class="selectors" id="choices"></div></fieldset>
+<fieldset><legend>Immobili del territorio</legend><p class="description">Precedenza ad Avigliana; poi Sant'Ambrogio, Villar Dora, Caprie e Rubiana. Gli immobili marcati ELIMINA nel file approvazioni non sono disponibili. Solo abitazioni residenziali, escludendo annunci indicati come affitto e terreni. Seleziona massimo 8 immobili. Le caratteristiche mancanti non vengono inventate.</p><div class="controls"><input id="search" placeholder="Cerca comune o immobile" aria-label="Cerca immobile"><label><input id="auto" type="checkbox" checked> Ordina automaticamente per territorio</label></div><div class="selectors" id="choices"></div></fieldset>
 </div>
 <h2>Anteprima di stampa · 2 facciate A5</h2>
 <div class="description">Le pagine qui sotto sono in dimensione A5. Il pulsante apre la finestra di stampa del browser: scegli «Salva come PDF» e attiva «Grafica di sfondo» per mantenere i colori. Il sistema non stampa in autonomia.</div>
@@ -129,7 +129,8 @@ return '<article class="house">'+imgTag(photo,'class="photo"')+
 }
 function blank(){return '<div class="house empty">Spazio disponibile per un altro immobile approvato</div>'}
 function applyStatuses(items){reviewItems=items||[];remoteApproved=new Set();rejected=new Set();var grouped={};reviewItems.forEach(function(v){if(v&&v.listing_id){var id=String(v.listing_id);(grouped[id]||(grouped[id]=[])).push(v.status)}});Object.keys(grouped).forEach(function(id){var st=grouped[id];if(st.includes('eliminata'))rejected.add(id);else if(st.includes('ok'))remoteApproved.add(id)});catalog=catalogAll.filter(function(x){return !rejected.has(String(x.id))})}
-function selected(){var arr=catalog.filter(function(x){return approved.has(String(x.id))});if(auto)arr.sort(function(a,b){return order(a)-order(b)||String(a.title).localeCompare(String(b.title),'it')});return arr.slice(0,8)}
+function diversified(items){var groups={};rank.forEach(function(t){groups[t]=[]});items.forEach(function(x){(groups[x.town_id]||(groups[x.town_id]=[])).push(x)});rank.forEach(function(t){groups[t].sort(function(a,b){return String(a.title).localeCompare(String(b.title),'it')})});var result=[],more=true;while(more){more=false;rank.forEach(function(t){if(groups[t].length){result.push(groups[t].shift());more=true}})}return result}
+function selected(){var arr=catalog.filter(function(x){return approved.has(String(x.id))});return (auto?diversified(arr):arr).slice(0,8)}
 function render(){
 var chosen=selected(),front=chosen.slice(0,4),back=chosen.slice(4,8);
 $('front-houses').innerHTML=front.map(itemCard).join('')+Array.from({length:4-front.length},blank).join('');
@@ -166,13 +167,13 @@ var included=new Set((draft.drafts||[]).filter(function(x){return x.approved===t
 catalogAll=(data.items||[]).filter(function(x){
 return x.category==='Residenziale'&&x.location_status==='VERIFICATO_FONTE'&&
 rank.includes(x.town_id)&&validURL(x.url)&&validURL(x.image)&&
-!/affitto|locazione|affittasi/i.test(String(x.title||''));
+!/affitto|locazione|affittasi/i.test(String(x.title||''))&& !/^\s*terreno\b/i.test(String(x.title||''));
 });
 updated=data.last_success_at?new Date(data.last_success_at).toLocaleString('it-IT'):'non indicata';
 try{saved=JSON.parse(localStorage.getItem(STORAGE)||'null')}catch(e){saved=null}
 applyStatuses(saved&&Array.isArray(saved.reviewItems)&&saved.reviewItems.length?saved.reviewItems:reviews.items);
 included.forEach(function(id){if(!rejected.has(id))remoteApproved.add(id)});
-var defaultIDs=catalog.filter(function(x){return remoteApproved.has(String(x.id))}).sort(function(a,b){return order(a)-order(b)||String(a.title).localeCompare(String(b.title),'it')}).slice(0,8).map(function(x){return String(x.id)});
+var defaultIDs=diversified(catalog.filter(function(x){return remoteApproved.has(String(x.id))})).slice(0,8).map(function(x){return String(x.id)});
 approved=new Set((saved&&Array.isArray(saved.ids)?saved.ids:defaultIDs).map(String).filter(function(id){return catalog.some(function(x){return String(x.id)===id})}).slice(0,8));
 render();choices();
 }catch(e){$('status').textContent='Errore: '+e.message+'. Ricarica la pagina. Nessun annuncio dimostrativo viene usato.'}
@@ -183,7 +184,7 @@ $('print').addEventListener('click',function(){window.print()});
 $('clear').addEventListener('click',function(){if(!confirm('Azzerare gli immobili selezionati in questo browser?'))return;approved=new Set();snapshot();render();choices()});
 $('export').addEventListener('click',function(){var blob=new Blob([JSON.stringify({project:'Case in Pubblicità 24/7',territory:'Avigliana',version:1,ids:Array.from(approved),exported_at:new Date().toISOString()},null,2)],{type:'application/json'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='case247-volantino-avigliana-approvazioni.json';a.click();setTimeout(function(){URL.revokeObjectURL(a.href)},1500)});
 $('restore').addEventListener('click',function(){$('file').click()});
-$('file').addEventListener('change',async function(){var file=this.files[0];if(!file)return;try{var o=JSON.parse(await file.text());if(o.project!=='Case in Pubblicità 24/7')throw Error('File selezione non valido');if(Array.isArray(o.items)){applyStatuses(o.items);approved=new Set(catalog.filter(function(x){return remoteApproved.has(String(x.id))}).sort(function(a,b){return order(a)-order(b)||String(a.title).localeCompare(String(b.title),'it')}).slice(0,8).map(function(x){return String(x.id)}));}else if(Array.isArray(o.ids)){approved=new Set(o.ids.map(String).filter(function(id){return catalog.some(function(x){return String(x.id)===id})}).slice(0,8));}else throw Error('Formato non riconosciuto');snapshot();render();choices();}catch(e){alert(e.message)}this.value=''});
+$('file').addEventListener('change',async function(){var file=this.files[0];if(!file)return;try{var o=JSON.parse(await file.text());if(o.project!=='Case in Pubblicità 24/7')throw Error('File selezione non valido');if(Array.isArray(o.items)){applyStatuses(o.items);approved=new Set(diversified(catalog.filter(function(x){return remoteApproved.has(String(x.id))})).slice(0,8).map(function(x){return String(x.id)}));}else if(Array.isArray(o.ids)){approved=new Set(o.ids.map(String).filter(function(id){return catalog.some(function(x){return String(x.id)===id})}).slice(0,8));}else throw Error('Formato non riconosciuto');snapshot();render();choices();}catch(e){alert(e.message)}this.value=''});
 init();
 })();
 </script></body></html>
