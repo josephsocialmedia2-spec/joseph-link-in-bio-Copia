@@ -71,25 +71,25 @@ def fit_headline(draw,text,max_w,max_lines):
  return font(31,True),wrap(draw,text,max_w,font(31,True))[:max_lines]
 
 def render(item,listing,photo):
- # Approved 2026-11-09 blue-and-gold real-property layout, using only sourced listing photo.
- navy=(11,29,56); deep=(6,22,43);gold=(242,195,82);white=(255,255,255)
+ # Enforce official Case247 brand.json navy/cobalt/sky/white, with WhatsApp green CTA.
+ navy=(8,44,88); deep=(6,26,54);cobalt=(21,135,227);sky=(89,185,246);green=(0,186,102);white=(255,255,255)
  img=Image.new("RGB",(1080,1350),navy);d=ImageDraw.Draw(img)
  frame=ImageOps.fit(photo,(1080,785),method=Image.Resampling.LANCZOS,centering=(0.5,0.5))
  img.paste(frame,(0,310))
  # Structured masthead, location and real listing title.
  d.rectangle((0,0,1080,310),fill=navy)
- d.polygon([(0,0),(1080,0),(1080,12),(0,168)],fill=gold)
- d.rounded_rectangle((40,33,1040,119),radius=17,fill=(21,63,110))
+ d.polygon([(0,0),(1080,0),(1080,12),(0,168)],fill=cobalt)
+ d.rounded_rectangle((40,33,1040,119),radius=17,fill=cobalt)
  d.text((65,51),"CASE IN PUBBLICITÀ 24/7",font=font(42,True),fill=white)
- d.text((65,140),"AVIGLIANA · VALLE DI SUSA",font=font(27,True),fill=gold)
+ d.text((65,140),"AVIGLIANA · VALLE DI SUSA",font=font(27,True),fill=cobalt)
  town=listing.get("municipality") or "Località da verificare"
- d.rounded_rectangle((45,187,1035,252),radius=22,fill=deep,outline=gold,width=3)
+ d.rounded_rectangle((45,187,1035,252),radius=22,fill=deep,outline=sky,width=3)
  locfont=font(36,True)
  d.text((64,202),town.upper(),font=locfont,fill=white)
- d.text((62,270),"IMMOBILE DAL CATALOGO LA SACRA",font=font(24,True),fill=(224,237,248))
+ d.text((62,270),"IMMOBILE DAL CATALOGO LA SACRA",font=font(24,True),fill=white)
  # A clear gradient-style navy lower panel, not a synthetic replacement property.
  d.rectangle((0,1080,1080,1350),fill=navy)
- d.rectangle((0,1080,1080,1089),fill=gold)
+ d.rectangle((0,1080,1080,1089),fill=cobalt)
  # Title is in a dedicated full-width protected navy panel; no image elements may cover it.
  title=str(listing.get("title") or item["title"]).strip()
  titlefont,lines=fit_headline(d,title,960,2)
@@ -98,9 +98,9 @@ def render(item,listing,photo):
   d.text((56,ty),line,font=titlefont,fill=white)
   ty+=titlefont.size+7
  # Footer CTA and photographer distinction.
- d.rounded_rectangle((300,1253,1031,1335),radius=19,fill=gold)
- d.text((333,1263),"WHATSAPP 371 370 8294",font=font(34,True),fill=deep)
- d.text((335,1304),"SCRIVI CASA + CODICE IMMOBILE",font=font(19,True),fill=deep)
+ d.rounded_rectangle((300,1253,1031,1335),radius=19,fill=green)
+ d.text((333,1263),"WHATSAPP 371 370 8294",font=font(34,True),fill=white)
+ d.text((335,1304),"SCRIVI CASA + CODICE IMMOBILE",font=font(19,True),fill=white)
  # Photo presenter, deliberately placed as composited inset, not on-site portrayal.
  if not PORTRAIT.is_file():raise RuntimeError("Joseph portrait asset unavailable")
  subject=ImageOps.exif_transpose(Image.open(PORTRAIT)).convert("RGB")
@@ -112,9 +112,9 @@ def render(item,listing,photo):
  # Portrait must stay wholly ABOVE the title band (title starts at y=1106).
  x,y=45,792
  assert y+238 < 1080, "Presenter must never overlap the text panel"
- d.ellipse((x-8,y-8,x+238,y+238),fill=deep,outline=gold,width=7)
+ d.ellipse((x-8,y-8,x+238,y+238),fill=deep,outline=sky,width=7)
  img.paste(rgba,(x,y),rgba)
- d.rounded_rectangle((276,1032,626,1078),radius=14,fill=deep,outline=gold,width=2)
+ d.rounded_rectangle((276,1032,626,1078),radius=14,fill=deep,outline=sky,width=2)
  d.text((290,1044),"JOSEPH · DIGITAL STRATEGIST",font=font(19,True),fill=white)
  # High-contrast 100%-sourced price badge prominent over the photo.
  label=money(listing.get("price"))
@@ -123,8 +123,8 @@ def render(item,listing,photo):
  label_w=d.textbbox((0,0),label,font=pf)[2]
  bx1,bx2=420,1030
  by1,by2=907,1033
- d.rounded_rectangle((bx1,by1,bx2,by2),radius=29,fill=gold,outline=deep,width=5)
- d.text(((bx1+bx2-label_w)/2,by1+(by2-by1-price_size)/2-8),label,font=pf,fill=deep)
+ d.rounded_rectangle((bx1,by1,bx2,by2),radius=29,fill=cobalt,outline=deep,width=5)
+ d.text(((bx1+bx2-label_w)/2,by1+(by2-by1-price_size)/2-8),label,font=pf,fill=white)
  # Do not invent price or locality. No sales-contract statement or fake physical visit.
  output=OUT/(item["content_id"]+".jpg")
  img.save(output,"JPEG",quality=92,optimize=True,subsampling=0)
