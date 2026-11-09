@@ -60,52 +60,71 @@ def get_photo(url):
  if im.width<400 or im.height<300:raise RuntimeError("Image resolution too low")
  return ImageOps.exif_transpose(im).convert("RGB")
 
-def add_presenter(image):
- # Explicit photographic inset: do not pretend the presenter was photographed at the property.
- if not PORTRAIT.is_file():raise RuntimeError("Existing authorized Joseph portrait missing")
- source=ImageOps.exif_transpose(Image.open(PORTRAIT)).convert("RGB")
- inset=ImageOps.fit(source,(282,282),method=Image.Resampling.LANCZOS,centering=(0.5,0.22))
- alpha=Image.new("L",(282,282),0)
- mask=ImageDraw.Draw(alpha)
- mask.ellipse((8,8,274,274),fill=255)
- alpha=alpha.filter(ImageFilter.GaussianBlur(3))
- subject=inset.convert("RGBA")
- subject.putalpha(alpha)
- x,y=49,470
- border=ImageDraw.Draw(image)
- border.ellipse((x-9,y-9,x+291,y+291),fill=(13,29,51),outline=(239,193,90),width=7)
- image.paste(subject,(x,y),subject)
- border.rounded_rectangle((344,707,862,771),radius=12,fill=(13,29,51),outline=(239,193,90),width=2)
- border.text((365,721),"JOSEPH · DIGITAL STRATEGIST",font=font(26,True),fill=(255,255,255))
+def money(price):
+ if not isinstance(price,(int,float)) or price<=0:return "PREZZO NON INDICATO"
+ return "€ "+f"{price:,.0f}".replace(",",".")
+
+def fit_headline(draw,text,max_w,max_lines):
+ for size in (55,51,47,43,39,35,31):
+  f=font(size,True);ln=wrap(draw,text,max_w,f)
+  if len(ln)<=max_lines:return f,ln
+ return font(31,True),wrap(draw,text,max_w,font(31,True))[:max_lines]
 
 def render(item,listing,photo):
- navy=(13,29,51);gold=(239,193,90);white=(255,255,255)
- img=Image.new("RGB",(1080,1350),navy)
- d=ImageDraw.Draw(img)
- # Preserve the source photograph without fabricating its contents; crop only to fit.
- frame=ImageOps.fit(photo,(1080,790),method=Image.Resampling.LANCZOS,centering=(0.5,0.5))
- img.paste(frame,(0,0))
- add_presenter(img)
- d.rectangle((0,0,1080,14),fill=gold)
- d.rounded_rectangle((38,35,995,112),radius=13,fill=(14,39,70))
- d.text((66,54),"CASE IN PUBBLICITÀ 24/7",font=font(36,True),fill=white)
- d.rectangle((0,785,1080,1350),fill=navy)
- d.rectangle((62,827,170,835),fill=gold)
- d.text((62,858),"AVIGLIANA E VALLE DI SUSA",font=font(29,True),fill=gold)
- title=item["title"]
- typ=font(54,True);blocks=wrap(d,title,950,typ)
- if len(blocks)>3:typ=font(43,True);blocks=wrap(d,title,950,typ)
- y=930
- for block in blocks[:4]:
-  d.text((62,y),block,font=typ,fill=white)
-  y+=67 if typ.size==54 else 55
- line="FOTO DA ANNUNCIO: "+(listing.get("municipality") or "Zona da verificare").upper()
- d.text((62,1151),line,font=font(25,True),fill=(206,222,236))
- d.text((62,1202),"FONTE: IMMOBILIARE LA SACRA",font=font(24),fill=(206,222,236))
- d.rounded_rectangle((62,1251,1018,1324),radius=12,fill=gold)
- d.text((94,1272),"SCOPRI L'ANNUNCIO · LINK NEL POST",font=font(30,True),fill=navy)
+ # Approved 2026-11-09 blue-and-gold real-property layout, using only sourced listing photo.
+ navy=(11,29,56); deep=(6,22,43);gold=(242,195,82);white=(255,255,255)
+ img=Image.new("RGB",(1080,1350),navy);d=ImageDraw.Draw(img)
+ frame=ImageOps.fit(photo,(1080,785),method=Image.Resampling.LANCZOS,centering=(0.5,0.5))
+ img.paste(frame,(0,310))
+ # Structured masthead, location and real listing title.
+ d.rectangle((0,0,1080,310),fill=navy)
+ d.polygon([(0,0),(1080,0),(1080,12),(0,168)],fill=gold)
+ d.rounded_rectangle((40,33,1040,119),radius=17,fill=(21,63,110))
+ d.text((65,51),"CASE IN PUBBLICITÀ 24/7",font=font(42,True),fill=white)
+ d.text((65,140),"AVIGLIANA · VALLE DI SUSA",font=font(27,True),fill=gold)
+ town=listing.get("municipality") or "Località da verificare"
+ d.rounded_rectangle((45,187,1035,252),radius=22,fill=deep,outline=gold,width=3)
+ locfont=font(36,True)
+ d.text((64,202),town.upper(),font=locfont,fill=white)
+ d.text((62,270),"IMMOBILE DAL CATALOGO LA SACRA",font=font(24,True),fill=(224,237,248))
+ # A clear gradient-style navy lower panel, not a synthetic replacement property.
+ d.rectangle((0,1080,1080,1350),fill=navy)
+ d.rectangle((0,1080,1080,1089),fill=gold)
+ # Readable listing name.
+ title=str(listing.get("title") or item["title"]).strip()
+ titlefont,lines=fit_headline(d,title,960,2)
+ ty=1106
+ for line in lines:
+  d.text((56,ty),line,font=titlefont,fill=white)
+  ty+=titlefont.size+7
+ # Footer CTA and photographer distinction.
+ d.rounded_rectangle((300,1265,1031,1331),radius=19,fill=gold)
+ d.text((335,1282),"SCOPRI L'IMMOBILE NEL POST",font=font(28,True),fill=deep)
+ # Photo presenter, deliberately placed as composited inset, not on-site portrayal.
+ if not PORTRAIT.is_file():raise RuntimeError("Joseph portrait asset unavailable")
+ subject=ImageOps.exif_transpose(Image.open(PORTRAIT)).convert("RGB")
+ inset=ImageOps.fit(subject,(230,230),method=Image.Resampling.LANCZOS,centering=(0.5,0.26))
+ mask=Image.new("L",(230,230),0)
+ ImageDraw.Draw(mask).ellipse((4,4,226,226),fill=255)
+ mask=mask.filter(ImageFilter.GaussianBlur(2))
+ rgba=inset.convert("RGBA");rgba.putalpha(mask)
+ x,y=45,938
+ d.ellipse((x-8,y-8,x+238,y+238),fill=deep,outline=gold,width=7)
+ img.paste(rgba,(x,y),rgba)
+ d.rounded_rectangle((276,1032,626,1078),radius=14,fill=deep,outline=gold,width=2)
+ d.text((290,1044),"JOSEPH · DIGITAL STRATEGIST",font=font(19,True),fill=white)
+ # High-contrast 100%-sourced price badge prominent over the photo.
+ label=money(listing.get("price"))
+ price_size=80 if len(label)<14 else 46
+ pf=font(price_size,True)
+ label_w=d.textbbox((0,0),label,font=pf)[2]
+ bx1,bx2=420,1030
+ by1,by2=907,1033
+ d.rounded_rectangle((bx1,by1,bx2,by2),radius=29,fill=gold,outline=deep,width=5)
+ d.text(((bx1+bx2-label_w)/2,by1+(by2-by1-price_size)/2-8),label,font=pf,fill=deep)
+ # Do not invent price or locality. No sales-contract statement or fake physical visit.
  output=OUT/(item["content_id"]+".jpg")
- img.save(output,"JPEG",quality=90,optimize=True,subsampling=0)
+ img.save(output,"JPEG",quality=92,optimize=True,subsampling=0)
  if output.stat().st_size<25000:raise RuntimeError("Output JPEG too small")
 
 def main():
@@ -137,7 +156,7 @@ def main():
   a=job["audience"];pool=usable[a];listing=pool[count[a]%len(pool)];count[a]+=1
   key=listing["image"]
   render(job,listing,cache[key])
-  used.append({"content_id":job["content_id"],"listing_id":listing["id"],"town":listing["municipality"],"listing_title":listing["title"],"listing_url":listing["url"],"image_url":key,"rendered_jpeg":job["media_jpeg"],"verified_from_catalog_at":catalog["last_success_at"],"disclaimer":"Immagine ripresa dal catalogo La Sacra, non verificata indipendentemente come fotografia documentale"})
+  used.append({"content_id":job["content_id"],"listing_id":listing["id"],"town":listing["municipality"],"listing_title":listing["title"],"listing_url":listing["url"],"price":listing.get("price"),"price_label":money(listing.get("price")),"image_url":key,"rendered_jpeg":job["media_jpeg"],"verified_from_catalog_at":catalog["last_success_at"],"disclaimer":"Immagine ripresa dal catalogo La Sacra, non verificata indipendentemente come fotografia documentale"})
  (ROOT/"FONTI_IMMAGINI.json").write_text(json.dumps({"source":"https://lasacraimmobiliare.it","catalog_snapshot_at":catalog["last_success_at"],"media_type":"original listing images with clearly distinguished presenter portrait overlay, no generative recreation","presenter_asset":str(PORTRAIT),"count":len(used),"used":used},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
- print("RENDERED_60_SOURCE_BASED_JPEGS_WITH_JOSEPH_PORTRAIT_DRAFT_ONLY")
+ print("RENDERED_60_REAL_LA_SACRA_LISTING_JPEGS_WITH_SOURCE_PRICES_AND_JOSEPH_DRAFT_ONLY")
 if __name__=="__main__":main()
