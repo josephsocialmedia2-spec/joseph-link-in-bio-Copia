@@ -1,0 +1,627 @@
+{
+  "project": "Case in Pubblicità 24/7",
+  "imported_from_user_file": "case247-approvazioni-grafiche.json",
+  "source_exported_at": "2026-11-09T11:20:25.354Z",
+  "source_scope": "BROWSER_LOCAL_REVIEW_ONLY",
+  "verified_items": 60,
+  "approved_count": 36,
+  "excluded_count": 24,
+  "excluded_listing_ids": [
+    "10886810075463",
+    "11025377689927",
+    "10552816369991",
+    "10716674720071"
+  ],
+  "week_schedule": {
+    "metricool_brand_id": 7844901,
+    "active_slots": 6,
+    "excluded_drafts": 6,
+    "platforms": [
+      "facebook",
+      "instagram"
+    ],
+    "note": "All active slots are approved; excluded slots remain draft and autoPublish false."
+  },
+  "items": [
+    {
+      "content_id": "CASE247-2026-11-10-PRIVATI",
+      "listing_id": "10886810075463",
+      "status": "eliminata",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/chalet-ad-avigliana",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/avigliana/",
+      "excluded_from_calendar": true,
+      "metricool_week_status": "EXCLUDED_DRAFT_NOT_AUTO_PUBLISHED"
+    },
+    {
+      "content_id": "CASE247-2026-11-10-AZIENDE",
+      "listing_id": "11025377689927",
+      "status": "eliminata",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/attivita-bar-ristorante-ad-avigliana",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/avigliana/",
+      "excluded_from_calendar": true,
+      "metricool_week_status": "EXCLUDED_DRAFT_NOT_AUTO_PUBLISHED"
+    },
+    {
+      "content_id": "CASE247-2026-11-11-PRIVATI",
+      "listing_id": "10552816369991",
+      "status": "eliminata",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-in-affitto-a-caprie-con-mansarda-e-box-doppio",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/caprie/",
+      "excluded_from_calendar": true,
+      "metricool_week_status": "EXCLUDED_DRAFT_NOT_AUTO_PUBLISHED"
+    },
+    {
+      "content_id": "CASE247-2026-11-11-AZIENDE",
+      "listing_id": "10716674720071",
+      "status": "eliminata",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/cessione-attivita-alimentare-storica-a-sant-ambrogio-di-torino",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": true,
+      "metricool_week_status": "EXCLUDED_DRAFT_NOT_AUTO_PUBLISHED"
+    },
+    {
+      "content_id": "CASE247-2026-11-12-PRIVATI",
+      "listing_id": "10552768561479",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-in-vendita-a-caprie-ultimo-piano-con-ascensore",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/caprie/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "SCHEDULED_ACTIVE_METRICOOL"
+    },
+    {
+      "content_id": "CASE247-2026-11-12-AZIENDE",
+      "listing_id": "10549582070087",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "SCHEDULED_ACTIVE_METRICOOL"
+    },
+    {
+      "content_id": "CASE247-2026-11-13-PRIVATI",
+      "listing_id": "10640300179783",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-4-locali-arredato-in-affitto-a-sant-ambrogio",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "SCHEDULED_ACTIVE_METRICOOL"
+    },
+    {
+      "content_id": "CASE247-2026-11-13-AZIENDE",
+      "listing_id": "11025377689927",
+      "status": "eliminata",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/attivita-bar-ristorante-ad-avigliana",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/avigliana/",
+      "excluded_from_calendar": true,
+      "metricool_week_status": "EXCLUDED_DRAFT_NOT_AUTO_PUBLISHED"
+    },
+    {
+      "content_id": "CASE247-2026-11-14-PRIVATI",
+      "listing_id": "10552805753159",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-in-vendita-a-sant-ambrogio-di-torino-appena-ribassato",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "SCHEDULED_ACTIVE_METRICOOL"
+    },
+    {
+      "content_id": "CASE247-2026-11-14-AZIENDE",
+      "listing_id": "10716674720071",
+      "status": "eliminata",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/cessione-attivita-alimentare-storica-a-sant-ambrogio-di-torino",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": true,
+      "metricool_week_status": "EXCLUDED_DRAFT_NOT_AUTO_PUBLISHED"
+    },
+    {
+      "content_id": "CASE247-2026-11-15-PRIVATI",
+      "listing_id": "10552748212551",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-in-vendita-a-sant-ambrogio-di-torino-in-piazza-del-comune",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "SCHEDULED_ACTIVE_METRICOOL"
+    },
+    {
+      "content_id": "CASE247-2026-11-15-AZIENDE",
+      "listing_id": "10549582070087",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "SCHEDULED_ACTIVE_METRICOOL"
+    },
+    {
+      "content_id": "CASE247-2026-11-16-PRIVATI",
+      "listing_id": "10564873093447",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/bilocale-in-affitto-a-santambrogio-di-torino-con-box-e-posto-auto",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-16-AZIENDE",
+      "listing_id": "11025377689927",
+      "status": "eliminata",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/attivita-bar-ristorante-ad-avigliana",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/avigliana/",
+      "excluded_from_calendar": true,
+      "metricool_week_status": "EXCLUDED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-17-PRIVATI",
+      "listing_id": "10552459985223",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/bilocale-in-vendita-a-sant-ambrogio",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-17-AZIENDE",
+      "listing_id": "10716674720071",
+      "status": "eliminata",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/cessione-attivita-alimentare-storica-a-sant-ambrogio-di-torino",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": true,
+      "metricool_week_status": "EXCLUDED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-18-PRIVATI",
+      "listing_id": "10724689871175",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/bilocale-in-vendita-a-sant-ambrogio-disponibile-subito",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-18-AZIENDE",
+      "listing_id": "10549582070087",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-19-PRIVATI",
+      "listing_id": "10552683856199",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/casa-in-vendita-a-sant-ambrogio-con-doppia-esposizione-e-riscaldamento-autonomo",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-19-AZIENDE",
+      "listing_id": "11025377689927",
+      "status": "eliminata",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/attivita-bar-ristorante-ad-avigliana",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/avigliana/",
+      "excluded_from_calendar": true,
+      "metricool_week_status": "EXCLUDED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-20-PRIVATI",
+      "listing_id": "10577002398023",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/casa-indipendente-in-vendita-a-santambrogio-di-torino-con-terrazzo-e-giardino",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-20-AZIENDE",
+      "listing_id": "10716674720071",
+      "status": "eliminata",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/cessione-attivita-alimentare-storica-a-sant-ambrogio-di-torino",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": true,
+      "metricool_week_status": "EXCLUDED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-21-PRIVATI",
+      "listing_id": "10555043021127",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/casa-semindipendente-in-affitto-a-sant-ambrogio-con-corte-esclusiva",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-21-AZIENDE",
+      "listing_id": "10549582070087",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-22-PRIVATI",
+      "listing_id": "10555969765703",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/porzione-di-villa-in-vendita-a-sant-ambrogio-con-giardino-e-piscina",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-22-AZIENDE",
+      "listing_id": "11025377689927",
+      "status": "eliminata",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/attivita-bar-ristorante-ad-avigliana",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/avigliana/",
+      "excluded_from_calendar": true,
+      "metricool_week_status": "EXCLUDED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-23-PRIVATI",
+      "listing_id": "10564780753223",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/terreno-agricolo-in-vendita-a-sant-ambrogio-di-torino-di-circa-2-000-mq",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-23-AZIENDE",
+      "listing_id": "10716674720071",
+      "status": "eliminata",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/cessione-attivita-alimentare-storica-a-sant-ambrogio-di-torino",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": true,
+      "metricool_week_status": "EXCLUDED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-24-PRIVATI",
+      "listing_id": "10549571617095",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/terreno-edificabile-in-vendita-a-sant-ambrogio-di-torino-di-10-000-mq",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-24-AZIENDE",
+      "listing_id": "10549582070087",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-25-PRIVATI",
+      "listing_id": "10596910858567",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-in-vendita-a-villar-dora-libero-subito-con-cortile-privato",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/villar-dora/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-25-AZIENDE",
+      "listing_id": "11025377689927",
+      "status": "eliminata",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/attivita-bar-ristorante-ad-avigliana",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/avigliana/",
+      "excluded_from_calendar": true,
+      "metricool_week_status": "EXCLUDED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-26-PRIVATI",
+      "listing_id": "10886810075463",
+      "status": "eliminata",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/chalet-ad-avigliana",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/avigliana/",
+      "excluded_from_calendar": true,
+      "metricool_week_status": "EXCLUDED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-26-AZIENDE",
+      "listing_id": "10716674720071",
+      "status": "eliminata",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/cessione-attivita-alimentare-storica-a-sant-ambrogio-di-torino",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": true,
+      "metricool_week_status": "EXCLUDED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-27-PRIVATI",
+      "listing_id": "10552816369991",
+      "status": "eliminata",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-in-affitto-a-caprie-con-mansarda-e-box-doppio",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/caprie/",
+      "excluded_from_calendar": true,
+      "metricool_week_status": "EXCLUDED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-27-AZIENDE",
+      "listing_id": "10549582070087",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-28-PRIVATI",
+      "listing_id": "10552768561479",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-in-vendita-a-caprie-ultimo-piano-con-ascensore",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/caprie/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-28-AZIENDE",
+      "listing_id": "11025377689927",
+      "status": "eliminata",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/attivita-bar-ristorante-ad-avigliana",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/avigliana/",
+      "excluded_from_calendar": true,
+      "metricool_week_status": "EXCLUDED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-29-PRIVATI",
+      "listing_id": "10640300179783",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-4-locali-arredato-in-affitto-a-sant-ambrogio",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-29-AZIENDE",
+      "listing_id": "10716674720071",
+      "status": "eliminata",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/cessione-attivita-alimentare-storica-a-sant-ambrogio-di-torino",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": true,
+      "metricool_week_status": "EXCLUDED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-30-PRIVATI",
+      "listing_id": "10552805753159",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-in-vendita-a-sant-ambrogio-di-torino-appena-ribassato",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-11-30-AZIENDE",
+      "listing_id": "10549582070087",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-12-01-PRIVATI",
+      "listing_id": "10552748212551",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/appartamento-in-vendita-a-sant-ambrogio-di-torino-in-piazza-del-comune",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-12-01-AZIENDE",
+      "listing_id": "11025377689927",
+      "status": "eliminata",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/attivita-bar-ristorante-ad-avigliana",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/avigliana/",
+      "excluded_from_calendar": true,
+      "metricool_week_status": "EXCLUDED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-12-02-PRIVATI",
+      "listing_id": "10564873093447",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/bilocale-in-affitto-a-santambrogio-di-torino-con-box-e-posto-auto",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-12-02-AZIENDE",
+      "listing_id": "10716674720071",
+      "status": "eliminata",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/cessione-attivita-alimentare-storica-a-sant-ambrogio-di-torino",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": true,
+      "metricool_week_status": "EXCLUDED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-12-03-PRIVATI",
+      "listing_id": "10552459985223",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/bilocale-in-vendita-a-sant-ambrogio",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-12-03-AZIENDE",
+      "listing_id": "10549582070087",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-12-04-PRIVATI",
+      "listing_id": "10724689871175",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/bilocale-in-vendita-a-sant-ambrogio-disponibile-subito",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-12-04-AZIENDE",
+      "listing_id": "11025377689927",
+      "status": "eliminata",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/attivita-bar-ristorante-ad-avigliana",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/avigliana/",
+      "excluded_from_calendar": true,
+      "metricool_week_status": "EXCLUDED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-12-05-PRIVATI",
+      "listing_id": "10552683856199",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/casa-in-vendita-a-sant-ambrogio-con-doppia-esposizione-e-riscaldamento-autonomo",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-12-05-AZIENDE",
+      "listing_id": "10716674720071",
+      "status": "eliminata",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/cessione-attivita-alimentare-storica-a-sant-ambrogio-di-torino",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": true,
+      "metricool_week_status": "EXCLUDED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-12-06-PRIVATI",
+      "listing_id": "10577002398023",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/casa-indipendente-in-vendita-a-santambrogio-di-torino-con-terrazzo-e-giardino",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-12-06-AZIENDE",
+      "listing_id": "10549582070087",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-12-07-PRIVATI",
+      "listing_id": "10555043021127",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/casa-semindipendente-in-affitto-a-sant-ambrogio-con-corte-esclusiva",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-12-07-AZIENDE",
+      "listing_id": "11025377689927",
+      "status": "eliminata",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/attivita-bar-ristorante-ad-avigliana",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/avigliana/",
+      "excluded_from_calendar": true,
+      "metricool_week_status": "EXCLUDED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-12-08-PRIVATI",
+      "listing_id": "10555969765703",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/porzione-di-villa-in-vendita-a-sant-ambrogio-con-giardino-e-piscina",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-12-08-AZIENDE",
+      "listing_id": "10716674720071",
+      "status": "eliminata",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/cessione-attivita-alimentare-storica-a-sant-ambrogio-di-torino",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": true,
+      "metricool_week_status": "EXCLUDED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-12-09-PRIVATI",
+      "listing_id": "10564780753223",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/terreno-agricolo-in-vendita-a-sant-ambrogio-di-torino-di-circa-2-000-mq",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    },
+    {
+      "content_id": "CASE247-2026-12-09-AZIENDE",
+      "listing_id": "10549582070087",
+      "status": "ok",
+      "variant": 1,
+      "source_url": "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "excluded_from_calendar": false,
+      "metricool_week_status": "APPROVED_NOT_SCHEDULED"
+    }
+  ]
+}
