@@ -6,7 +6,7 @@
 **Totale:** 60 grafiche JPEG 1080×1350, 60 testi, 120 uscite pianificate  
 **Stato:** BOZZE — pubblicazione Meta DISATTIVATA in attesa di approvazione editoriale.
 
-Le grafiche sono bozze creative illustrate: non raffigurano immobili specifici disponibili sul mercato. Nessuna promessa di vendita o intermediazione.
+Le grafiche sono composizioni basate su immagini originali degli annunci presenti nel catalogo pubblico di Immobiliare La Sacra, riferite a Avigliana e ai comuni limitrofi. Per ogni post è registrato l'annuncio di origine e il comune verificato. Le disponibilità effettive e le condizioni degli immobili vanno sempre riconfermate; non sono fotografie documentali verificate indipendentemente. Nessuna promessa di vendita o intermediazione.\n\n**Tracciamento delle fonti:** [FONTI_IMMAGINI.json](FONTI_IMMAGINI.json).
 
 | Data | 10:00 · Privati | 17:00 · Aziende |
 |---|---|---|
