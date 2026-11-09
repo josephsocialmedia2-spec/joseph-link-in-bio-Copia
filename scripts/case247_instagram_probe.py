@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Safe one-shot Instagram diagnostic: checks existing post then creates an UNPUBLISHED media container."""
+"""Safe one-shot Instagram diagnostic: checks existing post then creates an UNPUBLISHED media container. Token retest 2026-11-09."""
 import json,os,urllib.parse
 from pathlib import Path
 import case247_b2b_publish as pub
