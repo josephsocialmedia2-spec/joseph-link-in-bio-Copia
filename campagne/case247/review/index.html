@@ -8,7 +8,7 @@
 a{color:#9fd0ff}button,select,input{font:inherit}button{cursor:pointer;border:0;border-radius:9px;padding:10px 14px;font-weight:760;color:#fff;background:#395471}
 button:disabled{cursor:wait;opacity:.6}button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 header{position:sticky;top:0;z-index:4;background:#101c2ef7;border-bottom:1px solid var(--line);padding:16px max(18px,calc((100vw - 1520px)/2))}
-h1{font-size:clamp(22px,3vw,31px);margin:0;color:var(--gold)}header p{margin:5px 0 12px;color:var(--muted)}
+h1{font-size:clamp(22px,3vw,31px);margin:0;color:var(--gold)}header p{margin:5px 0 12px;color:var(--muted)}.wa-central{display:inline-block;background:#0b7043;color:#fff;border-radius:10px;padding:7px 12px;font-weight:850;text-decoration:none;margin-bottom:11px}
 .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}.stat{padding:9px 12px;border:1px solid #33455d;border-radius:11px;background:#1d2c41}.stat b{font-size:24px;display:block}.stat small{color:var(--muted)}
 .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}.toolbar>*{padding:9px 11px;background:#1d2c41;border:1px solid var(--line);border-radius:9px;color:var(--txt)}
 .toolbar .export{background:#315a7c}.toolbar .download{background:#6a5326;color:#fff}
@@ -41,7 +41,7 @@ dialog::backdrop{background:#000d}dialog img{width:100%;max-height:77vh;object-f
 @media(max-width:440px){.gallery{grid-template-columns:1fr 1fr}.stat b{font-size:20px}}
 </style></head><body>
 <header><h1>CASE IN PUBBLICITÀ 24/7 · REVISIONE GRAFICHE</h1><p>60 grafiche La Sacra + ritratto Joseph · 10 novembre – 9 dicembre 2026 · Una scelta per ciascuna grafica</p>
-<div class="stats"><div class="stat"><b id="nAll">60</b><small>Totali</small></div><div class="stat"><b id="nOk">0</b><small>OK</small></div><div class="stat"><b id="nPending">60</b><small>Da valutare</small></div><div class="stat"><b id="nDiscard">0</b><small>Da rifare</small></div><div class="stat"><b id="nAttempts">0</b><small>Rigenerazioni</small></div><div class="stat"><b id="nDeleted">0</b><small>Eliminati</small></div></div>
+<a class="wa-central" target="_blank" rel="noopener noreferrer" href="https://wa.me/393713708294?text=Buongiorno%20Joseph%2C%20scrivo%20da%20Case%20in%20Pubblicit%C3%A0%2024%2F7.%20Vorrei%20informazioni.">WHATSAPP DIRETTO · 371 370 8294</a><div class="stats"><div class="stat"><b id="nAll">60</b><small>Totali</small></div><div class="stat"><b id="nOk">0</b><small>OK</small></div><div class="stat"><b id="nPending">60</b><small>Da valutare</small></div><div class="stat"><b id="nDiscard">0</b><small>Da rifare</small></div><div class="stat"><b id="nAttempts">0</b><small>Rigenerazioni</small></div><div class="stat"><b id="nDeleted">0</b><small>Eliminati</small></div></div>
 <div class="toolbar"><select id="filter"><option value="all">Tutte le grafiche</option><option value="pending">Da valutare</option><option value="ok">OK</option><option value="scarta">Scartate / Da rifare</option><option value="eliminata">Eliminati (recuperabili)</option></select>
 <select id="aud"><option value="all">Privati + aziende</option><option value="privati">Privati</option><option value="aziende">Aziende</option></select>
 <input id="search" placeholder="Cerca immobile, data, comune" aria-label="Cerca">
@@ -55,8 +55,10 @@ const BASE="/joseph-link-in-bio-Copia/";
 const ROOT=BASE+"campagne/case247/editorial-queue/2026-11-10_2026-12-09/";
 const PHOTOS=ROOT+"FONTI_IMMAGINI.json";
 const PORTRAIT=BASE+"assets/joseph-malafronte.webp";
+const WHATSAPP="393713708294";
+function whatsappLink(item){const category=item.content_id.endsWith("-AZIENDE")?"AZIENDA":"CASA";const message=`Buongiorno Joseph, ${category} ${item.listing_id}. Vorrei informazioni su ${item.listing_title} (${item.town}). Annuncio: ${item.listing_url}`;return "https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(message)}
 const KEY="case247-gallery-review-v3";
-const GRAPHIC_VERSION="prezzi-reali-20261109";
+const GRAPHIC_VERSION="whatsapp-3713708294-20261109";
 const state={entries:[],byId:{},votes:{},previews:{},filters:{filter:"all",aud:"all",search:""},busy:new Set()};
 // Store regenerated image bytes in IndexedDB rather than localStorage (which is too small for 60 JPEGs).
 let dbPromise;
@@ -159,7 +161,8 @@ function draw(){
   const links=document.createElement("div");links.className="links";
   const listing=document.createElement("a");listing.href=item.listing_url;listing.target="_blank";listing.rel="noopener noreferrer";listing.textContent="Annuncio La Sacra";
   const save=document.createElement("a");save.href="#";save.textContent="Salva JPG";save.onclick=e=>{e.preventDefault();downloadOne(item)};
-  links.append(listing,save);body.append(title,detail,toggleRow,buttons,links);card.append(body);g.append(card);
+  const contact=document.createElement("a");contact.href=whatsappLink(item);contact.target="_blank";contact.rel="noopener noreferrer";contact.textContent="WhatsApp 371 370 8294";
+  links.append(listing,contact,save);body.append(title,detail,toggleRow,buttons,links);card.append(body);g.append(card);
  }
  if(!selected.length){const p=document.createElement("p");p.textContent="Nessuna grafica con questi filtri.";g.append(p)}
 }
@@ -245,7 +248,7 @@ async function buildVariant(item,n){
   ctx.strokeStyle=gold;ctx.lineWidth=8;ctx.beginPath();ctx.arc(x+s/2,y+s/2,s/2,0,Math.PI*2);ctx.stroke();
  }catch(e){throw Error("Foto del presentatore non disponibile: "+e.message)}
  rounded(ctx,54,1256,972,63,13,gold);ctx.fillStyle="#11233a";ctx.font="bold 29px Arial,sans-serif";
- ctx.fillText("JOSEPH · SCOPRI L'IMMOBILE NEL POST",87,1298);
+ ctx.fillText("WHATSAPP · 371 370 8294",87,1298);
  // Price is always drawn from verified catalog metadata, never invented.
  const pricetxt=item.price_label||"PREZZO NON INDICATO";
  rounded(ctx,435,1072,590,112,22,gold);
