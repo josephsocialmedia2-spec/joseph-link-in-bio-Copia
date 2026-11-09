@@ -90,7 +90,7 @@ def render(item,listing,photo):
  # A clear gradient-style navy lower panel, not a synthetic replacement property.
  d.rectangle((0,1080,1080,1350),fill=navy)
  d.rectangle((0,1080,1080,1089),fill=gold)
- # Readable listing name.
+ # Title is in a dedicated full-width protected navy panel; no image elements may cover it.
  title=str(listing.get("title") or item["title"]).strip()
  titlefont,lines=fit_headline(d,title,960,2)
  ty=1106
@@ -109,7 +109,9 @@ def render(item,listing,photo):
  ImageDraw.Draw(mask).ellipse((4,4,226,226),fill=255)
  mask=mask.filter(ImageFilter.GaussianBlur(2))
  rgba=inset.convert("RGBA");rgba.putalpha(mask)
- x,y=45,938
+ # Portrait must stay wholly ABOVE the title band (title starts at y=1106).
+ x,y=45,792
+ assert y+238 < 1080, "Presenter must never overlap the text panel"
  d.ellipse((x-8,y-8,x+238,y+238),fill=deep,outline=gold,width=7)
  img.paste(rgba,(x,y),rgba)
  d.rounded_rectangle((276,1032,626,1078),radius=14,fill=deep,outline=gold,width=2)
