@@ -5,7 +5,7 @@ Do not claim photos are documentary unless source verifies it. No invented house
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 from urllib.request import Request, urlopen
-from urllib.parse import urlparse
+from urllib.parse import urlparse, parse_qsl, urlencode, urlunparse
 from io import BytesIO
 import json, re, hashlib
 
@@ -46,11 +46,15 @@ def candidates(items,audience):
  return selected
 
 def get_photo(url):
- req=Request(url,headers={"User-Agent":"Mozilla/5.0 Case247-Editorial-Renderer/1.0"})
- with urlopen(req,timeout=45) as response:
+ # Shopify image transformations are served from the same listing source; lower byte size prevents CDN read timeouts.
+ parsed=urlparse(url)
+ params=dict(parse_qsl(parsed.query));params["width"]="1200"
+ optimized=urlunparse(parsed._replace(query=urlencode(params)))
+ req=Request(optimized,headers={"User-Agent":"Mozilla/5.0","Accept":"image/avif,image/webp,image/*"})
+ with urlopen(req,timeout=18) as response:
   if response.status!=200:raise RuntimeError("Image source unavailable HTTP "+str(response.status))
-  data=response.read(14000001)
- if len(data)>14000000:raise RuntimeError("Image oversized")
+  data=response.read(6000001)
+ if len(data)>6000000:raise RuntimeError("Image oversized")
  im=Image.open(BytesIO(data));im.load()
  if im.width<400 or im.height<300:raise RuntimeError("Image resolution too low")
  return ImageOps.exif_transpose(im).convert("RGB")
@@ -96,12 +100,22 @@ def main():
  if any(not v for v in pools.values()):raise RuntimeError("Missing verified source listing JPG photos")
  print("VERIFIED_SOURCE_PHOTOS",json.dumps({a:len(v) for a,v in pools.items()}))
  OUT.mkdir(parents=True,exist_ok=True)
- cache={};used=[]
- count={"privati":0,"aziende":0}
+ cache={};usable={}
+ for audience,pool in pools.items():
+  usable[audience]=[]
+  for listing in pool:
+   key=listing["image"]
+   try:
+    cache[key]=get_photo(key)
+    usable[audience].append(listing)
+    print("PHOTO_OK",audience,listing["id"],cache[key].size,flush=True)
+   except Exception as e:
+    print("PHOTO_SKIP_UNAVAILABLE",audience,listing["id"],type(e).__name__,flush=True)
+  if not usable[audience]:raise RuntimeError("No accessible actual listing photos for "+audience)
+ used=[];count={"privati":0,"aziende":0}
  for job in unique.values():
-  a=job["audience"];pool=pools[a];listing=pool[count[a]%len(pool)];count[a]+=1
+  a=job["audience"];pool=usable[a];listing=pool[count[a]%len(pool)];count[a]+=1
   key=listing["image"]
-  if key not in cache:cache[key]=get_photo(key)
   render(job,listing,cache[key])
   used.append({"content_id":job["content_id"],"listing_id":listing["id"],"town":listing["municipality"],"listing_title":listing["title"],"listing_url":listing["url"],"image_url":key,"rendered_jpeg":job["media_jpeg"],"verified_from_catalog_at":catalog["last_success_at"],"disclaimer":"Immagine ripresa dal catalogo La Sacra, non verificata indipendentemente come fotografia documentale"})
  (ROOT/"FONTI_IMMAGINI.json").write_text(json.dumps({"source":"https://lasacraimmobiliare.it","catalog_snapshot_at":catalog["last_success_at"],"media_type":"original listing images, not generative recreation","count":len(used),"used":used},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
