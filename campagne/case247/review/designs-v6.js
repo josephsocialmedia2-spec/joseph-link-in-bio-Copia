@@ -198,6 +198,7 @@ async function render(item,styleId,settings={}){
  ]);
  const c=document.createElement("canvas");c.width=W;c.height=H;const ctx=c.getContext("2d",{alpha:false});
  LAYOUTS[model-1](ctx,item,img,portrait,pano);
+ if(pano&&[1,2,6].includes(model))text(ctx,PANORAMA_CREDIT,552,1305,12,"#b4d5e8",false,480);
  return c.toDataURL("image/jpeg",.93);
 }
 global.CASE247_MODELS=Object.freeze({options:OPTIONS,render,version:"editorial-six-20261110-v1",panoramaCredit:PANORAMA_CREDIT});
