@@ -45,8 +45,8 @@ dialog::backdrop{background:#000d}dialog img{width:100%;max-height:77vh;object-f
 <div class="toolbar"><select id="filter"><option value="all">Tutte le grafiche</option><option value="pending">Da valutare</option><option value="ok">OK</option><option value="scarta">Scartate / Da rifare</option><option value="eliminata">Eliminati (recuperabili)</option></select>
 <select id="aud"><option value="all">Privati + aziende</option><option value="privati">Privati</option><option value="aziende">Aziende</option></select>
 <input id="search" placeholder="Cerca immobile, data, comune" aria-label="Cerca">
-<button id="export" class="export">Esporta esiti</button><button id="download" class="download">Scarica grafiche OK</button><button id="flyer" class="flyer" disabled>Scarica volantino A5 fronte/retro (PDF)</button><small id="flyerHelp" class="flyer-help">Disponibile dopo l’approvazione di tutte le grafiche non eliminate. Versione Natale automatica dal 1° dicembre 2026.</small></div></header>
-<main><p class="notice"><b>Come funziona:</b> premi <b>OK</b> per approvare oppure <b>SCARTA</b> per creare subito una nuova variante grafica dello stesso immobile, con la tua foto. Ripeti SCARTA quante volte vuoi fino a OK. Le nuove varianti sono prodotte e salvate in questo browser; le scelte rimangono su questo dispositivo; non avviano pubblicazioni social né aggiornano il calendario GitHub. Per trasferire le approvazioni usa «Esporta esiti». <b>Volantino:</b> al termine delle approvazioni puoi scaricare il PDF A5 fronte/retro con 4 schede per facciata, caratteristiche, QR alle schede originali e tua fotografia sui bordi. Dal 1° dicembre viene applicata soltanto la cornice natalizia, senza cambiare il layout.</p>
+<button id="export" class="export">Esporta esiti</button><button id="download" class="download">Scarica grafiche OK</button><button id="flyer" class="flyer" disabled>Apri opuscolo A4 pieghevole (8 immobili)</button><small id="flyerHelp" class="flyer-help">Disponibile dopo l’approvazione di tutte le grafiche non eliminate. Versione Natale automatica dal 1° dicembre 2026.</small></div></header>
+<main><p class="notice"><b>Come funziona:</b> premi <b>OK</b> per approvare oppure <b>SCARTA</b> per creare subito una nuova variante grafica dello stesso immobile, con la tua foto. Ripeti SCARTA quante volte vuoi fino a OK. Le nuove varianti sono prodotte e salvate in questo browser; le scelte rimangono su questo dispositivo; non avviano pubblicazioni social né aggiornano il calendario GitHub. Per trasferire le approvazioni usa «Esporta esiti». <b>Opuscolo:</b> apri il generatore A4 orizzontale pieghevole: copertina, retro e 8 proposte selezionabili; verifica obbligatoriamente i dati APE prima della distribuzione.</p>
 <div id="alert" role="status" aria-live="polite"></div><div class="gallery" id="gallery"></div></main>
 <dialog id="lightbox"><div class="top"><strong id="dlgTitle"></strong><button id="close">Chiudi</button></div><img id="dlgImg" alt="Anteprima grande"></dialog>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -156,7 +156,7 @@ function draw(){
  const reviewsComplete=state.entries.length===60&&summary.pending===0&&summary.scarta===0&&summary.ok>0;
  const flyerButton=el("flyer");flyerButton.disabled=!reviewsComplete||state.busy.size>0;flyerButton.classList.toggle("ready",reviewsComplete);
  el("flyerHelp").textContent=reviewsComplete
-   ? "Pronto: "+summary.ok+" grafiche OK, "+summary.eliminata+" eliminate; immobili ripetuti deduplicati. PDF A5: 4 immobili per facciata. QR agli annunci. Natale dal 1° dicembre."
+   ? "Pronto: "+summary.ok+" grafiche OK, "+summary.eliminata+" eliminate; immobili ripetuti deduplicati. Opuscolo A4 orizzontale: copertina, retro e 8 immobili approvati con QR e verifica APE."
    : "Completa "+(summary.pending+summary.scarta)+" approvazioni (le grafiche eliminate non bloccano). Il volantino esclude tutti gli immobili eliminati.";
  const needle=state.filters.search.toLocaleLowerCase("it").trim();
  const selected=state.entries.filter(item=>{
@@ -519,12 +519,7 @@ el("filter").onchange=e=>{state.filters.filter=e.target.value;draw()};
 el("aud").onchange=e=>{state.filters.aud=e.target.value;draw()};
 el("search").oninput=e=>{state.filters.search=e.target.value;draw()};
 el("export").onclick=exportVotes;
-el("flyer").onclick=async()=>{
- if(el("flyer").disabled)return;
- el("flyer").disabled=true;speak("Impagino il volantino PDF A5 fronte/retro...");
- try{await downloadFlyerA5()}catch(e){speak("Volantino non generato: "+e.message)}
- finally{draw()}
-};
+el("flyer").onclick=()=>{ window.location.href=BASE+"campagne/case247/opuscolo/"; };
 el("download").onclick=async()=>{const done=state.entries.filter(x=>vote(x).status==="ok");if(!done.length)return speak("Nessuna grafica ancora approvata.");for(const item of done){await downloadOne(item);await new Promise(r=>setTimeout(r,150))}speak("Avviato download delle "+done.length+" grafiche OK. Il browser potrebbe richiedere autorizzazione ai download multipli.")};
 el("close").onclick=()=>el("lightbox").close();
 fetchData().catch(e=>speak("Errore caricamento: "+e.message));
