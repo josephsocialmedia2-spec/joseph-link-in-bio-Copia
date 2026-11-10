@@ -1,0 +1,34 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><title>OCME E2E - test integrazione</title><style>body{font:14px system-ui;background:#f2f6fa;padding:20px}#result{padding:18px;background:white;border:1px solid #ccc;border-radius:8px}#frame{width:100%;height:550px;border:1px solid #ccc}li{margin:7px 0}.ok{color:#13764f}.bad{color:#ba2828}</style></head><body><h1>Test funzionale OCME</h1><p>Scenario: un file TXT → Organizzazione → Comprensione → Schema → PAV → Palazzo → Esposizione → ripresa → archivio.</p><p id="status">Preparazione…</p><ol id="result"></ol><iframe id="frame" src="../index.html?test=20261110" title="OCME in test"></iframe><script>
+(async function(){
+const out=document.getElementById('result'),status=document.getElementById('status'),frame=document.getElementById('frame'),prior=localStorage.getItem('ocme-unified-current');let id=null,passed=0,failed=0;
+function log(ok,msg){const li=document.createElement('li');li.className=ok?'ok':'bad';li.textContent=(ok?'✓ ':'✕ ')+msg;out.append(li);if(ok)passed++;else failed++}
+function wait(fn,ms=18000){const start=Date.now();return new Promise((resolve,reject)=>{const check=()=>{try{if(fn())return resolve(true)}catch(e){}if(Date.now()-start>ms)return reject(Error('timeout: '+String(fn).slice(0,70)));setTimeout(check,130)};check()})}
+function input(id,text){let el=d.getElementById(id);if(!el)throw Error('Campo assente: '+id);el.value=text;el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}))}
+function click(id){let el=d.getElementById(id);if(!el)throw Error('Pulsante assente: '+id);el.click()}
+let d;
+try{
+await wait(()=>frame.contentDocument?.getElementById('newFile'));d=frame.contentDocument;
+await wait(()=>d.getElementById('create')?.disabled===false);
+const file=new File(['TEOREMA DEL COSENO\nUn triangolo ha lati a, b, c e angolo gamma.\nc² = a² + b² - 2ab cos gamma\nPer trovare un lato quando sono noti due lati e l angolo compreso si applica il teorema del coseno.\nLa formula permette di calcolare il terzo lato.\nESEMPIO\nSe a=3 e b=4 e angolo compreso 90 gradi, c=5.'],'carnot-test.txt',{type:'text/plain'});
+let dt=new DataTransfer();dt.items.add(file);d.getElementById('newFile').files=dt.files;input('newTopic','TEOREMA TEST AUTOMATICO');input('newSubject','Matematica');click('create');
+await wait(()=>!d.getElementById('organize').hidden);log(true,'Un solo caricamento ha creato la sessione');
+input('syllabus','Teorema del coseno\nLati e angoli\nApplicazione');input('prerequisites','Trigonometria e triangoli');input('goal','Ricostruire formula e risolvere un esercizio');input('schedule','Giorno 1 comprensione\nGiorno 2 richiamo e prova');click('completeOrganize');
+await wait(()=>!d.getElementById('comprehend').hidden);log(true,'Organizzazione trasferita alla Comprensione');
+let original=d.getElementById('originalPage').textContent;log(original.includes('triangolo')&&original.includes('coseno'),'Testo originale disponibile senza nuovo caricamento');
+input('coreIdea','Il teorema collega lati e angolo compreso');input('ownExplanation','Il teorema del coseno permette di trovare la lunghezza del terzo lato quando si conoscono due lati e il loro angolo compreso.');d.querySelectorAll('[data-formula][data-field="checked"]').forEach(x=>{x.checked=true;x.dispatchEvent(new Event('change',{bubbles:true}))});click('toCascade');
+await wait(()=>!d.getElementById('cascade').hidden);click('makeOutline');input('schemaReview','Ho controllato la gerarchia e le formule con il testo');click('approveSchema');
+await wait(()=>!d.getElementById('memorize').hidden);log(d.querySelectorAll('[data-scene]').length>0,'Schema trasformato automaticamente in schede di memoria');
+d.querySelectorAll('[data-scene]').forEach((x,i)=>{x.value='Una scena esagerata numero '+i+' con oggetti in movimento';x.dispatchEvent(new Event('input',{bubbles:true}))});click('toPalace');
+await wait(()=>!d.getElementById('palace').hidden);log(true,'PAV trasferite al Palazzo senza ricopiare il documento');
+const count=d.querySelectorAll('.locusItem').length;input('lociInput',Array.from({length:Math.max(10,count)},(_,i)=>'Locus distinto '+(i+1)).join('\n'));click('applyLoci');click('beginRecall');
+await wait(()=>!!d.getElementById('revealAnswer'));for(let i=0;i<count;i++){let txt=d.getElementById('recallAnswer');if(!txt)throw Error('Quiz interrotto alla scheda '+i);txt.value='Conosco il concetto';click('revealAnswer');await wait(()=>!!d.getElementById('correctRecall'));click('correctRecall')}
+click('toExpose');await wait(()=>!d.getElementById('expose').hidden);log(true,'Richiamo completato e accesso all’Esposizione');
+input('examAnswer','Enuncio il teorema del coseno, descrivo lati e angolo, la formula e le condizioni di utilizzo, poi applico ad un triangolo.');input('reference','Formula e ipotesi verificate contro il materiale originale.');input('exercise','a=3, b=4, angolo di 90 gradi: c=5');input('feedback','Nessun errore nel test procedurale');input('examResult','pass');click('submitExam');await wait(()=>!d.getElementById('verify').hidden);log(d.getElementById('examHistory').textContent.includes('pass'),'Prova registrata nel progetto');
+d.querySelector('[data-view="archive"]').click();await wait(()=>d.querySelectorAll('.numberCard').length===100);log(true,'Archivio numerico unico 00–99 disponibile');
+click('switch');await wait(()=>!![...d.querySelectorAll('.projectItem strong')].find(x=>x.textContent.includes('TEOREMA TEST AUTOMATICO')));id=[...d.querySelectorAll('.projectItem')].find(x=>x.textContent.includes('TEOREMA TEST AUTOMATICO')).querySelector('[data-openproject]').dataset.openproject;frame.contentWindow.location.reload();
+await wait(()=>frame.contentDocument?.querySelector('#activeProject')?.textContent.includes('TEOREMA TEST AUTOMATICO'),18000);d=frame.contentDocument;log(d.getElementById('newFile').files.length===0&&d.getElementById('activeProject').textContent.includes('TEOREMA TEST AUTOMATICO'),'Riapertura: progetto persistente senza richiedere nuovo file');
+d.querySelector('[data-view="comprehend"]').click();await wait(()=>d.getElementById('originalPage').textContent.includes('triangolo'));log(true,'Riapertura: testo originale preservato');
+} catch(e){log(false,'ERRORE E2E: '+e.message)}
+finally{if(id){try{const request=indexedDB.open('ocme-study-v3');request.onsuccess=()=>{const db=request.result,tx=db.transaction(['projects','files'],'readwrite');tx.objectStore('projects').delete(id);tx.objectStore('files').delete(id);tx.oncomplete=()=>db.close()}}catch(e){}}if(prior)localStorage.setItem('ocme-unified-current',prior);else localStorage.removeItem('ocme-unified-current');status.textContent=passed+' test superati · '+failed+' errori';document.title='OCME TEST: '+passed+' superati / '+failed+' errori'}
+})();
+</script></body></html>
