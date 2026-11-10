@@ -219,6 +219,7 @@ function draw(){
   const generateBtn=document.createElement("button");generateBtn.className="regenerate-model";generateBtn.textContent="RIGENERA CON QUESTO MODELLO";
   generateBtn.disabled=v.status==="eliminata"||state.busy.has(item.content_id);generateBtn.onclick=()=>regenerate(item);
   controls.append(compareBtn,previewBtn,generateBtn);
+  if(Array.isArray(v.history)&&v.history.length){const historyBtn=document.createElement("button");historyBtn.textContent="STORICO · RIPRISTINA ("+v.history.length+")";historyBtn.style.gridColumn="span 2";historyBtn.disabled=state.busy.has(item.content_id);historyBtn.onclick=()=>restoreArchived(item);controls.append(historyBtn)}
   const modelNote=document.createElement("div");modelNote.className="model-caption";
   modelNote.textContent="Scelta indipendente dalle rigenerazioni · Le approvazioni e le vecchie immagini sono conservate.";
   modelBox.append(modelLabel,modelSelect,controls,modelNote);
@@ -335,6 +336,42 @@ async function compareSix(item){
   }catch(e){tile.textContent="Anteprima "+model.id+" non disponibile: "+e.message}
  }
 }
+
+async function restoreArchived(item){
+ const v=vote(item),history=Array.isArray(v.history)?v.history:[];
+ if(!history.length){speak("Nessuna grafica precedente archiviata.");return}
+ const dlg=el("compareDlg"),grid=el("compareGrid");
+ el("compareTitle").textContent="STORICO VERSIONI · "+item.listing_title;grid.replaceChildren();
+ dlg.showModal();
+ for(let i=history.length-1;i>=0;i--){
+  const h=history[i],tile=document.createElement("div");tile.className="compare-tile";
+  const name=document.createElement("b");name.textContent="Archiviata "+(h.saved_at||"")+" · "+(h.status||"");
+  const img=document.createElement("img");
+  if(h.url)img.src=h.url;
+  else if(h.preview_key){
+   const db=await previewDb();
+   if(db){img.alt="Versione archiviata";const tx=db.transaction("images","readonly");const req=tx.objectStore("images").get(h.preview_key);req.onsuccess=()=>img.src=req.result||""}
+  }
+  const restore=document.createElement("button");restore.textContent="RIPRISTINA QUESTA VERSIONE";
+  restore.onclick=async()=>{
+   if(state.busy.has(item.content_id))return;
+   if(!confirm("Ripristinare la grafica precedente? La versione attuale verrà archiviata prima del ripristino."))return;
+   try{
+    let uri=h.url;
+    if(h.preview_key){const db=await previewDb();uri=await new Promise((res,rej)=>{if(!db)return rej(Error("Archivio non disponibile"));const req=db.transaction("images","readonly").objectStore("images").get(h.preview_key);req.onsuccess=()=>res(req.result);req.onerror=()=>rej(Error("Non recuperabile"))})}
+    if(!uri)throw Error("Immagine archiviata non più disponibile");
+    await archiveGraphic(item,v);
+    if(uri.startsWith("data:")){await storePreview(item.content_id,uri);state.previews[item.content_id]=uri}
+    else{delete state.previews[item.content_id];const db=await previewDb();if(db)await new Promise((resolve,reject)=>{const tx=db.transaction("images","readwrite");tx.objectStore("images").delete(item.content_id);tx.oncomplete=resolve;tx.onerror=reject})}
+    v.model_id=h.model_id||null;v.graphic_version=h.graphic_version||GRAPHIC_VERSION;v.status=h.status==="ok"?"ok":"pending";
+    v.reviewed_at=v.status==="ok"?new Date().toISOString():null;
+    state.votes[item.content_id]=v;persist();dlg.close();draw();speak("Grafica precedente ripristinata. Nessun post programmato è stato modificato.");
+   }catch(e){speak("Ripristino non eseguito: "+e.message)}
+  };
+  tile.append(name,img,restore);grid.append(tile);
+ }
+}
+
 async function regenerate(item){
  if(vote(item).status==="eliminata")return;
  const id=item.content_id;if(state.busy.has(id))return;
@@ -348,7 +385,7 @@ async function regenerate(item){
   await archiveGraphic(item,v);
   await storePreview(id,newPreview);state.previews[id]=newPreview;v.attempts=next;v.status="pending";v.model_id=chosen;v.graphic_version=MODEL_VERSION;v.reviewed_at=null;
   state.votes[id]=v;persist();speak("Nuova grafica creata con MODELLO "+String(chosen).padStart(2,"0")+" (tentativo "+next+"). La precedente è archiviata. Ora scegli OK oppure SCARTA.");
- }catch(e){v.status="scarta";state.votes[id]=v;persist();speak("Rigenerazione non riuscita: "+e.message+". Usa «Riprova generazione».")}
+ }catch(e){speak("Rigenerazione non riuscita: "+e.message+". La precedente grafica e la sua approvazione sono rimaste invariate; puoi riprovare.")}
  finally{state.busy.delete(id);draw()}
 }
 async function downloadOne(item){
