@@ -63,8 +63,8 @@ dialog::backdrop{background:#000d}dialog img{width:100%;max-height:77vh;object-f
 <div class="toolbar"><select id="filter"><option value="all">Tutte le grafiche</option><option value="pending">Da valutare</option><option value="ok">OK</option><option value="scarta">Scartate / Da rifare</option><option value="eliminata">Eliminati (recuperabili)</option></select>
 <select id="aud"><option value="all">Privati + aziende</option><option value="privati">Privati</option><option value="aziende">Aziende</option></select>
 <input id="search" placeholder="Cerca immobile, data, comune" aria-label="Cerca">
-<a href="/joseph-link-in-bio-Copia/gestione/volantini/" class="export" style="text-decoration:none;border-radius:9px;font-weight:800">Volantino A4 · 18 immobili</a><button id="export" class="export">Esporta esiti</button><button id="download" class="download">Scarica grafiche OK</button><button id="flyer" class="flyer" disabled>Apri opuscolo A4 pieghevole (8 immobili)</button><small id="flyerHelp" class="flyer-help">Disponibile dopo l’approvazione di tutte le grafiche non eliminate. Versione Natale automatica dal 1° dicembre 2026.</small></div></header>
-<main><p class="notice"><b>Come funziona:</b> premi <b>OK</b> per approvare oppure <b>SCARTA</b> per creare subito una nuova variante grafica dello stesso immobile, con la tua foto. Ripeti SCARTA quante volte vuoi fino a OK. Le nuove varianti sono prodotte e salvate in questo browser; le scelte rimangono su questo dispositivo; non avviano pubblicazioni social né aggiornano il calendario GitHub. Per trasferire le approvazioni usa «Esporta esiti». <b>Opuscolo:</b> apri il generatore A4 orizzontale pieghevole: copertina, retro e 8 proposte selezionabili; verifica obbligatoriamente i dati APE prima della distribuzione.</p>
+<a href="/joseph-link-in-bio-Copia/gestione/volantini/" class="export" style="text-decoration:none;border-radius:9px;font-weight:800">Volantino A4 · 18 immobili</a><button id="showModels" class="export" style="background:#087ab8">VEDI LE 6 NUOVE GRAFICHE</button><button id="export" class="export">Esporta esiti</button><button id="download" class="download">Scarica grafiche OK</button><button id="flyer" class="flyer" disabled>Apri opuscolo A4 pieghevole (8 immobili)</button><small id="flyerHelp" class="flyer-help">Disponibile dopo l’approvazione di tutte le grafiche non eliminate. Versione Natale automatica dal 1° dicembre 2026.</small></div></header>
+<main><p class="notice"><b>NUOVI MODELLI 01–06:</b> puoi confrontarli immediatamente e rigenerare singole schede. Le immagini approvate in precedenza restano archiviate; il calendario Meta/Metricool non viene aggiornato da questa pagina. <b>Nuovi post programmati:</b> sostituzione soltanto dopo approvazione e controllo sull’asset remoto.</p><p class="notice"><b>Come funziona:</b> premi <b>OK</b> per approvare oppure <b>SCARTA</b> per creare subito una nuova variante grafica dello stesso immobile, con la tua foto. Ripeti SCARTA quante volte vuoi fino a OK. Le nuove varianti sono prodotte e salvate in questo browser; le scelte rimangono su questo dispositivo; non avviano pubblicazioni social né aggiornano il calendario GitHub. Per trasferire le approvazioni usa «Esporta esiti». <b>Opuscolo:</b> apri il generatore A4 orizzontale pieghevole: copertina, retro e 8 proposte selezionabili; verifica obbligatoriamente i dati APE prima della distribuzione.</p>
 <div id="alert" role="status" aria-live="polite"></div><div class="gallery" id="gallery"></div></main>
 <dialog id="lightbox"><div class="top"><strong id="dlgTitle"></strong><button id="close">Chiudi</button></div><img id="dlgImg" alt="Anteprima grande"></dialog>
 <dialog id="compareDlg"><div class="top"><strong id="compareTitle">Confronto sei grafiche</strong><button id="closeCompare">Chiudi confronto</button></div><p class="compare-lead">Le sei proposte sono bozze: seleziona un modello e premi «Rigenera con questo modello» per sottoporlo all’approvazione. Gli OK precedenti non vengono sovrascritti dalla sola anteprima.</p><div id="compareGrid" class="compare-grid"></div></dialog>
@@ -224,6 +224,9 @@ function draw(){
   modelNote.textContent="Scelta indipendente dalle rigenerazioni · Le approvazioni e le vecchie immagini sono conservate.";
   modelBox.append(modelLabel,modelSelect,controls,modelNote);
 
+
+  const mismatch=/\b(AFFITTO|LOCAZIONE)\b/i.test(item.listing_title)&&Number(item.price)>10000;
+  if(mismatch){const warning=document.createElement("p");warning.className="model-caption";warning.style.color="#ffd49a";warning.textContent="VERIFICA PRIMA DI APPROVARE: annuncio di locazione con prezzo elevato. Controlla prezzo, canone e contratto sul sito La Sacra.";modelBox.append(warning)}
   const toggleRow=document.createElement("label");toggleRow.className="approval-row";
   const input=document.createElement("input");input.type="checkbox";input.checked=v.status==="ok";input.disabled=v.status==="eliminata"||state.busy.has(item.content_id);
   input.setAttribute("aria-label","Approva grafica "+item.listing_title);
@@ -246,6 +249,7 @@ function draw(){
 }
 function approve(item){
  if(vote(item).status==="eliminata")return;
+ if(/\b(AFFITTO|LOCAZIONE)\b/i.test(item.listing_title)&&Number(item.price)>10000){speak("Approvazione bloccata: verifica canone/contratto dell’annuncio in locazione prima di procedere.");return;}
  if(state.busy.has(item.content_id)){speak("Attendi la nuova variante prima di approvare.");return;}
  const v=vote(item);
  v.status="ok";v.graphic_version=GRAPHIC_VERSION;v.reviewed_at=new Date().toISOString();
@@ -599,6 +603,7 @@ function exportVotes(){
 el("filter").onchange=e=>{state.filters.filter=e.target.value;draw()};
 el("aud").onchange=e=>{state.filters.aud=e.target.value;draw()};
 el("search").oninput=e=>{state.filters.search=e.target.value;draw()};
+el("showModels").onclick=()=>{const item=state.entries.find(x=>x.town==="Avigliana"&&vote(x).status!=="eliminata")||state.entries.find(x=>vote(x).status!=="eliminata");if(item)compareSix(item);else speak("Nessuna scheda disponibile per il confronto.")};
 el("export").onclick=exportVotes;
 el("flyer").onclick=()=>{ window.location.href=BASE+"campagne/case247/opuscolo/"; };
 el("download").onclick=async()=>{const done=state.entries.filter(x=>vote(x).status==="ok");if(!done.length)return speak("Nessuna grafica ancora approvata.");for(const item of done){await downloadOne(item);await new Promise(r=>setTimeout(r,150))}speak("Avviato download delle "+done.length+" grafiche OK. Il browser potrebbe richiedere autorizzazione ai download multipli.")};
