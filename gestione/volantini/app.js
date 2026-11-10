@@ -17,7 +17,13 @@ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const validUrl=v=>{try{let u=new URL(v);return u.protocol==='https:'&&['lasacraimmobiliare.it','www.lasacraimmobiliare.it'].includes(u.hostname)&&/^\/products\/[a-z0-9-]+\/?$/.test(u.pathname)}catch{return false}};
 const canonical=v=>{try{let u=new URL(v);u.search='';u.hash='';return u.href.replace(/\/$/,'')}catch{return ''}};
 const sourcePhoto=v=>typeof v==='string'&&(/^(data:image\/(jpeg|png|webp);base64,)/.test(v)||/^https:\/\/(cdn\.shopify\.com|lasacraimmobiliare\.it)\//.test(v));
-const money=v=>v===null||v===undefined||v===''?'Prezzo da verificare':new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(Number(v));
+const PHOTO_FALLBACK='data:image/svg+xml;charset=utf-8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760"><rect width="1200" height="760" fill="#e0eef7"/><path d="M350 400 600 180 850 400M430 370V575H770V370" stroke="#125f93" stroke-width="30" fill="none"/><text x="600" y="680" font-family="Arial" font-size="48" font-weight="bold" fill="#124667" text-anchor="middle">FOTO NON DISPONIBILE</text></svg>');
+function normalizedPrice(v){if(v===null||v===undefined||String(v).trim()==='')return null;if(typeof v==='number')return Number.isFinite(v)&&v>0?v:null;const raw=String(v).trim().replace(/[^\d,.]/g,'');if(!raw)return null;const s=raw.includes(',')?raw.replace(/\./g,'').replace(',','.'):raw.replace(/\.(?=\d{3}(?:\.|$))/g,'');const n=Number(s);return Number.isFinite(n)&&n>0?n:null}
+function normalizedEnergy(v){const s=String(v??'').trim().toUpperCase().replace(/\s+/g,'');return /^(A[1-4]|[B-G])$/.test(s)?s:''}
+function normalizedEp(v){const raw=String(v??'').replace(/\s*kwh.*/i,'').trim().replace(/\s/g,'').replace('.',',');return /^\d+(?:,\d+)?$/.test(raw)&&Number(raw.replace(',','.'))>=0?raw:''}
+function bindImageFallback(){document.querySelectorAll('#cards img.photo').forEach(img=>{if(!img.getAttribute('src'))img.src=PHOTO_FALLBACK;img.addEventListener('error',()=>{if(!img.src.startsWith('data:image/svg+xml')){img.src=PHOTO_FALLBACK;img.closest('.slot')?.classList.add('fallback-photo')}},{once:true})})}
+
+const money=v=>normalizedPrice(v)===null?'In fase di definizione':new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(normalizedPrice(v));
 let state={style:0,properties:Array(18).fill(null),campaign:null,portrait:null};
 let external=null,chosen=-1,zoom=0,catalog=[],importing=false;
 try{let x=JSON.parse(localStorage.getItem(KEY)||'null');if(x&&Array.isArray(x.properties)&&x.properties.length===18)state={...state,...x};}catch(e){}
@@ -25,18 +31,18 @@ function status(s,level=''){let el=$('status');el.textContent=s;el.className='st
 function persist(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){status('Spazio del browser insufficiente: esporta il progetto JSON.','warn')}}
 const fmt=x=>x?.trim?.()||'';
 const imgStatus=x=>/ChatGPT|Immagine.?ChatGPT/i.test(x||'')?'illustrazione_sito':'da_verificare';
-const clean=(p)=>({title:p?.title||'',city:p?.city||'',price:p?.price??null,energy:p?.energy||'',ep:p?.ep||'',url:p?.url||'',img:p?.img||'',contract:p?.contract||'Da verificare',photoType:p?.photoType||'da_verificare',checked:!!p?.checked});
+const clean=(p)=>({title:p?.title||'',city:p?.city||'',price:normalizedPrice(p?.price),energy:normalizedEnergy(p?.energy),ep:normalizedEp(p?.ep),url:p?.url||'',img:p?.img||'',contract:p?.contract||'Da verificare',photoType:p?.photoType||'da_verificare',checked:!!p?.checked});
 async function getCatalog(){try{let r=await fetch(ROOT+'immobili/catalogo.json',{cache:'no-store'});if(!r.ok)throw Error('catalogo non accessibile');let d=await r.json();catalog=Array.isArray(d.items)?d.items:[];return catalog}catch(e){status('Catalogo non accessibile: gli URL possono essere inseriti manualmente. '+e.message);return []}}
 function fromCatalog(c,i=-1){return clean({title:i>=0?SEED_NAMES[i]:(c.title||'').toLowerCase().replace(/^\w/u,m=>m.toUpperCase()),city:c.municipality||cities[i]||'',price:(c.contract==='Affitto'||i===13||i===14)?null:c.price??null,energy:i>=0?SEED_ENERGY[i]:'',ep:i>=0?SEED_EP[i]:'',url:c.url,img:c.image,contract:c.contract||'Da verificare',photoType:imgStatus(c.image)})}
 function initSeed(){if(state.properties.some(x=>x?.title))return;state.properties=SEED_SLUGS.map((slug,i)=>{let url='https://lasacraimmobiliare.it/products/'+slug;let c=catalog.find(x=>canonical(x.url)===canonical(url));return c?fromCatalog(c,i):clean({title:SEED_NAMES[i],url,city:cities[i],energy:SEED_ENERGY[i],ep:SEED_EP[i]})});persist()}
 function drawThemes(){let t=$('themes');t.innerHTML=STYLES.map((x,i)=>'<button class="theme-choice '+(state.style===i?'active':'')+'" data-theme="'+i+'"><span class="theme-sample" style="'+(i===2?'background:linear-gradient(180deg,#081426 30%,#152a3f 30%);border-color:#e0bf79':i===1?'background:linear-gradient(180deg,#e1eff9 30%,white 30%)':i===4?'background:linear-gradient(180deg,#010e22 30%,#081728 30%)':'')+'"><i></i><i></i><i></i></span><span><strong>'+esc(x.label)+'</strong><small>'+esc(x.desc)+'</small></span></button>').join('');
 t.querySelectorAll('button').forEach(b=>b.onclick=()=>{state.style=Number(b.dataset.theme);persist();render()});$('currentTheme').textContent=STYLES[state.style]?.label||'Modello 1'}
-function ensureQR(host,url){if(!host||!url)return;host.dataset.targetUrl=url;if(!window.QRCode){host.textContent='QR non disponibile';return}try{host.innerHTML='';new window.QRCode(host,{text:url,width:256,height:256,colorDark:'#00162a',colorLight:'#fff',correctLevel:window.QRCode.CorrectLevel.L})}catch(e){host.textContent='QR non disponibile'}}
-function qrsAreReady(){return [...$('cards').querySelectorAll('.slot[data-idx]')].every(el=>{let p=state.properties[Number(el.dataset.idx)];return !p?.title||(validUrl(p.url)&&el.querySelector('.qr')?.dataset.targetUrl===canonical(p.url)&&!!el.querySelector('.qr canvas,.qr img'))})&&$('whatsappQR').dataset.targetUrl===WA&&!!$('whatsappQR').querySelector('canvas,img')}
+function ensureQR(host,url){if(!host||!url)return;host.dataset.targetUrl=url;host._qrModel=null;if(!window.QRCode){host.textContent='QR non disponibile';return}try{host.innerHTML='';const qr=new window.QRCode(host,{text:url,width:256,height:256,colorDark:'#000000',colorLight:'#ffffff',correctLevel:window.QRCode.CorrectLevel.L});host._qrModel=qr._oQRCode||null}catch(e){host.textContent='QR non disponibile'}}
+function qrsAreReady(){return [...$('cards').querySelectorAll('.slot[data-idx]')].every(el=>{let p=state.properties[Number(el.dataset.idx)];return !p?.title||(validUrl(p.url)&&el.querySelector('.qr')?.dataset.targetUrl===canonical(p.url)&&!!el.querySelector('.qr')?._qrModel&&!!el.querySelector('.qr canvas,.qr img'))})&&$('whatsappQR').dataset.targetUrl===WA&&!!$('whatsappQR')._qrModel}
 function card(p,i){
 const xy='style="left:'+(6+(i%6)*186)+'px;top:'+(6+Math.floor(i/6)*179)+'px"';
 if(!p?.title)return '<div class="slot empty" '+xy+' tabindex="0" data-idx="'+i+'" draggable="true">+ Inserisci immobile<br>'+String(i+1).padStart(2,'0')+'</div>';
-const img=sourcePhoto(p.img)?p.img:'';
+const img=sourcePhoto(p.img)?p.img:PHOTO_FALLBACK;
 const price=money(p.price);
 const apeClass=/^(A[1-4]|[B-G])$/i.test(p.energy||'')?p.energy.toLowerCase().replace(/[1-4]/g,''):'unknown';
 const placeIcon='<svg class="place-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C7.6 2 4 5.6 4 10c0 5.6 8 12 8 12s8-6.4 8-12c0-4.4-3.6-8-8-8zm0 11.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4z"/></svg>';
@@ -51,18 +57,18 @@ return '<article class="slot" '+xy+' tabindex="0" role="button" draggable="true"
 function render(){drawThemes();$('flyer').className='t-'+STYLES[Math.min(5,Math.max(0,state.style))].id;$('cards').innerHTML=state.properties.map(card).join('');
 $('cards').querySelectorAll('.slot').forEach(el=>{let i=Number(el.dataset.idx);if(state.properties[i]?.url&&validUrl(state.properties[i].url))ensureQR($('qr-'+i),canonical(state.properties[i].url));
 el.onclick=()=>openEditor(i);el.onkeydown=e=>{if(e.key==='Enter')openEditor(i)};el.ondragstart=e=>{e.dataTransfer.setData('text/plain',String(i))};el.ondragover=e=>e.preventDefault();el.ondrop=e=>{e.preventDefault();let f=Number(e.dataTransfer.getData('text/plain'));if(Number.isInteger(f)&&f>=0&&f<18){[state.properties[f],state.properties[i]]=[state.properties[i],state.properties[f]];persist();render()}}});
-$('whatsappQR').innerHTML='';ensureQR($('whatsappQR'),WA);
-if(state.portrait){$('portrait').src=state.portrait;$('portrait').alt='Fotografia originale di Joseph Malafronte'}else{$('portrait').removeAttribute('src');$('portrait').alt='Carica la fotografia originale di Joseph dalla colonna sinistra'}
+$('whatsappQR').innerHTML='';ensureQR($('whatsappQR'),WA);bindImageFallback();
+const portraitImg=state.portrait||window.CASE247_DEFAULT_PORTRAIT;if(portraitImg){$('portrait').src=portraitImg;$('portrait').alt='Fotografia originale di Joseph Malafronte'}else{$('portrait').removeAttribute('src');$('portrait').alt='Carica la fotografia originale di Joseph dalla colonna sinistra'}
 drawCampaign();check();fit()}
 function fit(){let host=$('previewBox'),scale=Math.min(1.5,Math.max(.18,(host.clientWidth-18)/1122+zoom));$('flyer').style.transform='scale('+scale+')';$('scaler').style.width=1122*scale+'px';$('scaler').style.height=794*scale+'px'}
 window.addEventListener('resize',fit);$('zoomPlus').onclick=()=>{zoom+=.1;fit()};$('zoomMinus').onclick=()=>{zoom-=.1;fit()};
 function count(){return state.properties.filter(p=>p?.title).length}
-function getIssues(){let issues=[];state.properties.forEach((p,i)=>{if(!p?.title){issues.push('Scheda '+(i+1)+' vuota');return}if(!validUrl(p.url))issues.push('URL '+(i+1));if(!p.city)issues.push('Comune '+(i+1));if(!/^(A[1-4]|[B-G])$/i.test(p.energy||''))issues.push('Classe APE '+(i+1));if(!/^\d+(?:[,.]\d+)?$/.test(p.ep||''))issues.push('EPgl '+(i+1));if(!Number.isFinite(Number(p.price))||p.price===null)issues.push('Prezzo/contratto '+(i+1));if(p.photoType!=='foto_originale')issues.push('Foto da verificare '+(i+1));if(!p.checked)issues.push('APE e disponibilità da confermare '+(i+1))});return issues}
+function getIssues(){let issues=[];state.properties.forEach((p,i)=>{if(!p?.title){issues.push('Scheda '+(i+1)+' vuota');return}if(!validUrl(p.url))issues.push('URL '+(i+1));if(!p.city)issues.push('Comune '+(i+1));if(!/^(A[1-4]|[B-G])$/i.test(p.energy||''))issues.push('Classe APE '+(i+1));if(!/^\d+(?:[,.]\d+)?$/.test(p.ep||''))issues.push('EPgl '+(i+1));if(normalizedPrice(p.price)===null)issues.push('Prezzo/contratto '+(i+1));if(p.photoType!=='foto_originale')issues.push('Foto da verificare '+(i+1));if(!p.checked)issues.push('APE e disponibilità da confermare '+(i+1))});return issues}
 function check(){const problems=getIssues(),filled=count(),valid=state.properties.filter(p=>p?.title&&validUrl(p.url)).length;$('checks').innerHTML='<b>'+filled+'/18</b> immobili · <b>'+valid+'/18</b> link valida struttura · <b>'+problems.length+'</b> controlli aperti'+(qrsAreReady()?' · QR generati':' · QR non pronti')+'<br><small>Esportazione commerciale: '+(problems.length?'NON AUTORIZZATA':'da approvare dopo controllo APE originale')+'</small>';if(problems.length)status('BOZZA DI REVISIONE — '+problems.slice(0,5).join('; ')+(problems.length>5?' …':'')+'.','warn');else status('Schede formalmente complete: controllare comunque i documenti e la disponibilità prima della diffusione.','good')}
 function openEditor(i){chosen=i;let p=clean(state.properties[i]);$('slotHeading').textContent='Scheda '+(i+1)+' su 18';$('eTitle').value=p.title;$('eCity').value=p.city;$('ePrice').value=p.price??'';$('eEnergy').value=p.energy;$('eEp').value=p.ep;$('eUrl').value=p.url;$('eContract').value=p.contract;$('ePhotoType').value=p.photoType;$('ePhoto').value='';$('eChecked').checked=!!p.checked;$('modalError').textContent='';$('modal').showModal()}
 $('closeModal').onclick=()=>$('modal').close();
 const getDataImage=file=>new Promise((resolve,reject)=>{const rd=new FileReader();rd.onload=()=>{const img=new Image();img.onload=()=>{let cn=document.createElement('canvas'),k=Math.min(1,760/img.width,550/img.height);cn.width=Math.max(1,img.width*k);cn.height=Math.max(1,img.height*k);cn.getContext('2d').drawImage(img,0,0,cn.width,cn.height);resolve(cn.toDataURL('image/jpeg',.7))};img.onerror=reject;img.src=rd.result};rd.onerror=reject;rd.readAsDataURL(file)});
-$('saveSlot').onclick=async()=>{let p=clean(state.properties[chosen]);p.title=fmt($('eTitle').value);p.city=fmt($('eCity').value);p.price=$('ePrice').value.trim()?Number($('ePrice').value.replace(',','.')):null;p.energy=fmt($('eEnergy').value).toUpperCase();p.ep=fmt($('eEp').value);p.url=canonical(fmt($('eUrl').value));p.contract=$('eContract').value;p.photoType=$('ePhotoType').value;p.checked=$('eChecked').checked;
+$('saveSlot').onclick=async()=>{let p=clean(state.properties[chosen]);p.title=fmt($('eTitle').value);p.city=fmt($('eCity').value);p.price=normalizedPrice($('ePrice').value);p.energy=normalizedEnergy($('eEnergy').value);p.ep=normalizedEp($('eEp').value);p.url=canonical(fmt($('eUrl').value));p.contract=$('eContract').value;p.photoType=$('ePhotoType').value;p.checked=$('eChecked').checked;
 if(!p.title||!validUrl(p.url)){$('modalError').textContent='Titolo e URL diretto La Sacra sono obbligatori.';return}
 const file=$('ePhoto').files[0];if(file){try{p.img=await getDataImage(file);p.photoType='foto_originale'}catch(e){$('modalError').textContent='Foto non leggibile.';return}}
 if(state.properties.some((x,j)=>j!==chosen&&x?.url===p.url)){$('modalError').textContent='Annuncio già presente in un’altra posizione.';return}
@@ -92,6 +98,45 @@ $('exportJSON').onclick=()=>download(JSON.stringify({...state,savedAt:new Date()
 $('importJSON').onchange=async e=>{try{let p=JSON.parse(await e.target.files[0].text());if(!Array.isArray(p.properties)||p.properties.length!==18)throw Error('Il progetto deve contenere esattamente 18 posizioni');state={...state,style:Math.max(0,Math.min(5,Number(p.style)||0)),properties:p.properties.map(p=>p?clean(p):null),campaign:p.campaign||null,portrait:p.portrait||null};persist();render();drawHolidays();status('Progetto importato. Verificare QR e dati.','good')}catch(err){status('File progetto non valido: '+err.message)}finally{e.target.value=''}};
 $('restore').onclick=()=>{if(!confirm('Reimpostare le 18 schede predefinite?'))return;state.properties=Array(18).fill(null);initSeed();render()};
 $('print').onclick=()=>{if(!window.confirm('Stampare una BOZZA per revisione? Le schede potrebbero contenere dati energetici incompleti.'))return;document.body.classList.toggle('no-outer',!external||external.file.type==='application/pdf');window.print()};
+
+/* Vettorializza i QR all'ultimo passaggio PDF: moduli neri puri, sfondo bianco
+   e quiet zone 4 moduli. Niente URL abbreviati o link intermedi. */
+function drawQRVector(pdfPage,host,documentWidth,documentHeight,pdfLib){
+  const model=host?._qrModel;
+  if(!model||typeof model.getModuleCount!=='function'||typeof model.isDark!=='function')throw new Error('QR vettoriale non disponibile: '+(host?.id||'ignoto'));
+  const fr=$('flyer').getBoundingClientRect(), box=host.getBoundingClientRect();
+  const x=(box.left-fr.left)/fr.width*documentWidth;
+  const y=documentHeight-(box.bottom-fr.top)/fr.height*documentHeight;
+  const width=box.width/fr.width*documentWidth;
+  const height=box.height/fr.height*documentHeight;
+  const size=Math.min(width,height),n=model.getModuleCount();
+  const unit=size/(n+8),x0=x+(width-size)/2,y0=y+(height-size)/2;
+  pdfPage.drawRectangle({x:x0,y:y0,width:size,height:size,color:pdfLib.rgb(1,1,1)});
+  const black=pdfLib.rgb(0,0,0);
+  for(let row=0;row<n;row++){
+    let start=-1;
+    for(let col=0;col<=n;col++){
+      const isBlack=col<n&&model.isDark(row,col);
+      if(isBlack&&start<0)start=col;
+      if(!isBlack&&start>=0){
+        pdfPage.drawRectangle({x:x0+(start+4)*unit,y:y0+(n-row+3)*unit,width:(col-start)*unit,height:unit,color:black});
+        start=-1;
+      }
+    }
+  }
+}
+function applyQRVectorLayer(pdfPage,W,H){
+  const slots=[...document.querySelectorAll('#cards .slot[data-idx]')].filter(el=>state.properties[Number(el.dataset.idx)]?.title);
+  if(slots.length!==18)throw Error('Sono richieste 18 schede complete per il collaudo dei 19 QR');
+  for(const slot of slots){
+    const p=state.properties[Number(slot.dataset.idx)],q=slot.querySelector('.qr');
+    if(!q||q.dataset.targetUrl!==canonical(p.url))throw Error('QR non associato alla scheda '+(Number(slot.dataset.idx)+1));
+    drawQRVector(pdfPage,q,W,H,window.PDFLib);
+  }
+  if($('whatsappQR').dataset.targetUrl!==WA)throw Error('URL WhatsApp non corretto');
+  drawQRVector(pdfPage,$('whatsappQR'),W,H,window.PDFLib);
+  return 19;
+}
 async function outputPDF(){if(!window.PDFLib||!window.html2canvas){throw Error('Librerie PDF non disponibili: controlla la connessione e ricarica la pagina.')}
 if(!qrsAreReady())throw Error('Non tutti i QR sono stati generati: ricarica e verifica la libreria QR.');
 const {PDFDocument}=window.PDFLib,doc=await PDFDocument.create(),W=841.89,H=595.28;
@@ -99,8 +144,8 @@ if(external){let page=doc.addPage([W,H]),bytes=await external.file.arrayBuffer()
 if(external.file.type==='application/pdf'){let [embedded]=await doc.embedPdf(bytes,[0]);let k=Math.min(W/embedded.width,H/embedded.height);page.drawPage(embedded,{x:(W-embedded.width*k)/2,y:(H-embedded.height*k)/2,width:embedded.width*k,height:embedded.height*k})}
 else{image=external.file.type==='image/png'?await doc.embedPng(bytes):await doc.embedJpg(bytes);let k=Math.min(W/image.width,H/image.height);page.drawImage(image,{x:(W-image.width*k)/2,y:(H-image.height*k)/2,width:image.width*k,height:image.height*k})}}
 const poster=await window.html2canvas($('flyer'),{scale:2,useCORS:true,allowTaint:false,backgroundColor:'#ffffff',width:1122,height:794,onclone:d=>{let f=d.getElementById('flyer');f.style.transform='none';f.style.left='0';f.style.top='0'}});
-const png=await doc.embedPng(poster.toDataURL('image/png'));doc.addPage([W,H]).drawImage(png,{x:0,y:0,width:W,height:H});
-let bytes=await doc.save();download(new Blob([bytes],{type:'application/pdf'}),'CASE247_A4_volantino_'+(external?'fronte_retro':'solo_interno')+'_BOZZA.pdf','application/pdf')}
-$('pdf').onclick=async()=>{if(!confirm('Generare una BOZZA di revisione? È obbligatorio verificare classe, indici APE, disponibilità, foto e URL prima della stampa commerciale.'))return;let b=$('pdf');b.disabled=true;b.textContent='Produzione PDF…';try{await outputPDF();status('PDF BOZZA generato: aprilo e controlla foto e QR prima di stampare.','good')}catch(e){status('Impossibile produrre PDF: '+e.message+'; usa la stampa della sola facciata interna.')}finally{b.disabled=false;b.textContent='Scarica PDF A4 fronte-retro'}};
+const png=await doc.embedPng(poster.toDataURL('image/png'));const finalPage=doc.addPage([W,H]);finalPage.drawImage(png,{x:0,y:0,width:W,height:H});const verifiedQR=applyQRVectorLayer(finalPage,W,H);
+let bytes=await doc.save();download(new Blob([bytes],{type:'application/pdf'}),'CASE247_A4_volantino_'+(external?'fronte_retro':'solo_interno')+'_BOZZA.pdf','application/pdf');return verifiedQR}
+$('pdf').onclick=async()=>{if(!confirm('Generare una BOZZA di revisione? È obbligatorio verificare classe, indici APE, disponibilità, foto e URL prima della stampa commerciale.'))return;let b=$('pdf');b.disabled=true;b.textContent='Produzione PDF…';try{const n=await outputPDF();status('PDF BOZZA con '+n+' QR vettoriali generato. Prima della diffusione verifica il PDF, i dati APE e una stampa fisica al 100%.','good')}catch(e){status('Impossibile produrre PDF: '+e.message+'; usa la stampa della sola facciata interna.')}finally{b.disabled=false;b.textContent='Scarica PDF A4 fronte-retro'}};
 (async()=>{await getCatalog();initSeed();render();drawHolidays();status('Studio Volantini caricato. Per riprodurre il tuo volto originale usa la funzione Foto; le 18 schede sono modificabili.','good')})();
 })();

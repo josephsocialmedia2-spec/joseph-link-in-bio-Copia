@@ -271,11 +271,26 @@ hr{border:0;border-top:1px solid #315978;margin:15px 0}
 #flyer .theme-photo-credit{display:none}
 @media print{#flyer{box-shadow:none!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}}
 
+
+/* QR in card: circa 18,3 mm sul foglio A4, con matrice vettoriale nel PDF */
+#flyer .slot .qr{width:69px;height:69px;right:3px;bottom:3px;padding:1px;background:#fff}
+#flyer .slot .qr canvas,#flyer .slot .qr img{width:67px!important;height:67px!important}
+#flyer .slot .stitle{right:70px;font-size:11px}
+#flyer .slot .loc{right:72px}
+#flyer .slot .price{right:73px}
+#flyer .slot .ape{right:73px;font-size:8.8px}
+#flyer .flyer-foot .wa .qr{width:70px;height:70px}
+#flyer .flyer-foot .wa .qr img,#flyer .flyer-foot .wa .qr canvas{width:66px!important;height:66px!important}
+#flyer .slot.fallback-photo::after{
+  content:"FOTO DA INSERIRE";position:absolute;top:57px;left:5px;right:5px;
+  background:rgba(4,47,78,.88);color:#fff;text-align:center;font-size:9px;padding:3px;
+}
 </style>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
-<script defer src="app.js?v=20261110-premium-r2"></script>
+<script defer src="portrait-default.js?v=20261110-r3"></script>
+<script defer src="app.js?v=20261110-r3"></script>
 </head><body>
 <header><div><b>⌂ CASE IN PUBBLICITÀ <em>24/7</em></b><small>Studio Volantini · 18 immobili · A4 orizzontale</small></div><a href="../">Torna alla regia centrale</a></header>
 <div class="layout">
