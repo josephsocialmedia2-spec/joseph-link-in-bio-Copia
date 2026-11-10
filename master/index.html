@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Case in Pubblicità 24/7 | Landing Master · Tutti i paesi</title>
+<meta name="description" content="Un solo punto di accesso a 41 landing immobiliari comunali, annunci, richieste di visita e valutazioni di Case in Pubblicità 24/7.">
+<meta name="theme-color" content="#082c58">
+<style>
+:root{--navy:#082c58;--night:#061a36;--blue:#1587e3;--sky:#59b9f6;--line:#d8e6f3;--ink:#182e49;--wa:#00ba66;color:var(--ink);background:#f4f8fc;font:16px/1.48 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0}a{color:inherit;text-decoration:none}button,input,select{font:inherit}button{cursor:pointer}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #ffbd40;outline-offset:3px}
+.wrap{max-width:1260px;margin:auto;padding:0 20px}
+.top{background:var(--night);color:white;border-bottom:3px solid var(--blue)}
+.top .wrap{min-height:82px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.logo{font-size:19px;font-weight:900;line-height:1.12;letter-spacing:-.5px}.logo span{color:var(--sky)}.logo small{font-size:10px;color:#b9cfdf;display:block;font-weight:600;letter-spacing:.1em;margin-top:4px}
+nav{display:flex;gap:16px;align-items:center;flex-wrap:wrap;font-size:13px;font-weight:700}nav a:hover{color:#7ed3ff}
+.hero{background:linear-gradient(115deg,#061a36 2%,#082c58 60%,#1678bf);color:white;padding:58px 0 64px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:520px;height:520px;border:1px solid #ffffff2a;border-radius:50%;right:-130px;bottom:-350px;box-shadow:0 0 0 90px #ffffff08,0 0 0 180px #ffffff05;pointer-events:none}
+.eyebrow{color:#86d6ff;text-transform:uppercase;font-weight:900;font-size:12px;letter-spacing:.14em}
+h1{font-size:clamp(34px,5vw,60px);line-height:1.07;letter-spacing:-2px;margin:14px 0 17px;max-width:850px}h1 span{color:#8ad5ff}
+.lead{font-size:18px;max-width:720px;color:#d9eafb;margin:0 0 28px}
+.actions{display:flex;gap:12px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:10px;min-height:48px;padding:12px 20px;font-weight:850;background:var(--blue);color:white;border:1px solid transparent}.btn:hover{filter:brightness(1.1)}.btn.white{background:white;color:var(--navy)}.btn.wa{background:#089f58;color:white}.btn.outline{background:transparent;border-color:#91b5d1;color:white}
+.stats{display:flex;gap:32px;margin-top:30px;flex-wrap:wrap}.stat b{font-size:30px;display:block}.stat span{font-size:12px;color:#c6e0f3}
+section.module{padding:48px 0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;flex-wrap:wrap;margin-bottom:20px}
+h2{font-size:clamp(25px,3.5vw,36px);letter-spacing:-1px;margin:0 0 5px}p.sub{margin:0;color:#60748c}
+.finder{display:flex;gap:12px;flex-wrap:wrap;background:white;border:1px solid var(--line);border-radius:15px;padding:15px;margin-bottom:16px;box-shadow:0 6px 24px #082c5808}
+.finder input{flex:2 1 260px;min-width:170px}.finder select{flex:1 1 170px}.finder input,.finder select{padding:14px;border:1px solid #bdcfe1;border-radius:9px;background:white;color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.town{display:block;background:white;border:1px solid #d6e5f1;border-radius:13px;padding:18px;min-height:139px;transition:transform .15s,box-shadow .15s}.town:hover{transform:translateY(-2px);box-shadow:0 7px 24px #082c5815}
+.town b{display:block;font-size:17px;margin-bottom:8px}.town small{display:block;color:#6c8198;font-size:12px;margin:4px 0}.town .go{color:#1179c2;font-size:13px;font-weight:900;margin-top:10px;display:block}
+.filters-note{font-size:13px;color:#5c7891;margin:8px 0 18px}
+.featured{background:#eaf3fb}.properties{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.property{background:#fff;border:1px solid #d4e2ee;border-radius:13px;overflow:hidden;display:flex;flex-direction:column}
+.property img{width:100%;height:168px;object-fit:cover;background:#dbeafa}
+.property .body{padding:15px;display:flex;flex-direction:column;gap:8px;flex:1}
+.property small{color:#2876ad;font-weight:800;text-transform:uppercase}.property b{font-size:15px;line-height:1.23;min-height:39px}.price{font-size:23px;color:#0c8250;font-weight:900}
+.property .body a{margin-top:auto;color:#0873c0;font-weight:900;font-size:14px}
+.service-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.service{background:white;border:1px solid var(--line);padding:24px;border-radius:14px}.service .number{font-size:12px;color:#1685cb;font-weight:900}.service h3{margin:7px 0;font-size:20px}.service p{color:#5d7187;margin:0 0 15px}.service a{color:#056bb3;font-weight:850}
+.bottom{background:#061a36;color:white;padding:28px 0}.bottom .wrap{display:flex;justify-content:space-between;gap:22px;align-items:center;flex-wrap:wrap}.bottom small{color:#adc9de;max-width:730px}
+.empty{padding:20px;border-radius:10px;background:#fff4dd;color:#60421c}
+@media(max-width:1050px){.grid,.properties{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){.grid,.properties,.service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.top .wrap{padding:18px;display:block}nav{margin-top:17px}h1{letter-spacing:-1px}.hero{padding:42px 0}.stats{gap:18px}}
+@media(max-width:440px){.grid,.properties,.service-grid{grid-template-columns:1fr}.town{min-height:unset}}
+</style></head><body>
+<header class="top"><div class="wrap"><a class="logo" href="./">CASE IN<br><span>PUBBLICITÀ 24/7</span><small>LANDING MASTER · REGIA TERRITORIALE</small></a>
+<nav aria-label="Navigazione"><a href="#paesi">Tutti i paesi</a><a href="#immobili">Ultimi immobili</a><a href="#servizi">Servizi</a><a href="../gestione/">Regia di gestione</a></nav></div></header>
+<main><section class="hero"><div class="wrap"><div class="eyebrow">Una regia · 41 territori · un solo catalogo</div>
+<h1>La casa giusta parte dal <span>territorio giusto.</span></h1>
+<p class="lead">Seleziona il tuo comune, scopri gli immobili disponibili e contattaci per organizzare una visita. Vuoi vendere? Richiedi una valutazione preliminare gratuita del tuo immobile.</p>
+<div class="actions"><a class="btn white" href="#paesi">Scegli il tuo paese</a><a class="btn" href="#immobili">Vedi gli immobili</a><a class="btn wa" href="https://wa.me/393713708294?text=Buongiorno%2C%20vorrei%20richiedere%20una%20valutazione%20gratuita%20del%20mio%20immobile.">Valutazione gratuita</a></div>
+<div class="stats"><div class="stat"><b id="town-count">41</b><span>Landing comunali</span></div><div class="stat"><b id="home-count">—</b><span>Annunci nel catalogo</span></div><div class="stat"><b>24/7</b><span>Accesso alle informazioni</span></div></div>
+</div></section>
+<section class="module" id="paesi"><div class="wrap"><div class="section-head"><div><div class="eyebrow">Ricerca locale</div><h2>Trova la pagina del tuo comune</h2><p class="sub">Ogni pagina territoriale mostra gli immobili associati a quel comune.</p></div></div>
+<div class="finder"><input id="search" type="search" placeholder="Cerca Avigliana, Condove, Almese…" aria-label="Cerca un comune"><select id="scope" aria-label="Filtra comuni"><option value="all">Tutti i comuni</option><option value="with">Comuni con annunci</option><option value="empty">Comuni senza annunci nel catalogo</option></select></div>
+<div class="filters-note" id="town-status" role="status">Caricamento elenco comuni…</div><div class="grid" id="town-grid"></div></div></section>
+<section class="module featured" id="immobili"><div class="wrap"><div class="section-head"><div><div class="eyebrow">Dati dal catalogo La Sacra Immobiliare</div><h2>Proposte immobiliari recenti</h2><p class="sub">Prezzi, disponibilità e caratteristiche da verificare nella scheda originale.</p></div><a class="btn" href="../immobili/">Catalogo completo</a></div><div class="properties" id="property-grid"><p>Caricamento annunci…</p></div></div></section>
+<section class="module" id="servizi"><div class="wrap"><div class="section-head"><div><div class="eyebrow">Contatti e consulenze</div><h2>Come possiamo aiutarti?</h2></div></div>
+<div class="service-grid">
+<article class="service"><div class="number">01 · PER CHI COMPRA</div><h3>Prenota una visita</h3><p>Scrivi quale immobile ti interessa per ricevere informazioni o richiedere un appuntamento.</p><a href="https://wa.me/393713708294?text=Buongiorno%2C%20vorrei%20prenotare%20una%20visita%20a%20un%20immobile.">Richiedi appuntamento →</a></article>
+<article class="service"><div class="number">02 · PER CHI VENDE</div><h3>Valutazione gratuita</h3><p>Hai deciso di vendere? Lascia i dati essenziali e richiedi un primo confronto sul tuo immobile.</p><a href="https://lasacraimmobiliare.it/pages/valuta-il-tuo-immobile-gratis-immobiliare-la-sacra-contatti">Richiedi valutazione →</a></article>
+<article class="service"><div class="number">03 · PER IL FINANZIAMENTO</div><h3>Calcola la rata</h3><p>Simula una rata indicativa. Per la consulenza creditizia richiedi informazioni sulla disponibilità del professionista.</p><a href="https://economiapertutti.bancaditalia.it/strumenti/calcolatori/calcolatore-della-rata-del-mutuo/">Apri il calcolatore →</a></article>
+</div></div></section></main>
+<footer class="bottom"><div class="wrap"><div><b>CASE IN PUBBLICITÀ 24/7</b><br><small>Comunicazione e marketing immobiliare. Mediazione, negoziazione e incarichi sono gestiti dai professionisti abilitati del partner La Sacra Immobiliare. Le pagine social territoriali non sono automaticamente operative.</small></div><a class="btn wa" href="https://wa.me/393713708294">WhatsApp 371 370 8294</a></div></footer>
+<script>
+(()=>{'use strict';const ROOT='/joseph-link-in-bio-Copia/';let towns=[],items=[];
+const $=id=>document.getElementById(id),money=n=>typeof n==='number'&&n>0?'€ '+new Intl.NumberFormat('it-IT',{maximumFractionDigits:0}).format(n):'Prezzo da verificare';
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const local=it=>it.town_id&&it.location_status==='VERIFICATO_FONTE';
+const countFor=id=>items.filter(it=>local(it)&&it.town_id===id).length;
+function drawTowns(){const needle=$('search').value.toLocaleLowerCase('it').trim(),scope=$('scope').value;const filtered=towns.filter(t=>{const count=countFor(t.id);return (t.name.toLocaleLowerCase('it').includes(needle)||t.id.includes(needle))&&(scope==='all'||(scope==='with'&&count)||(scope==='empty'&&!count))});$('town-status').textContent=filtered.length+' comuni visualizzati su '+towns.length+'. Le disponibilità possono cambiare.';
+$('town-grid').innerHTML=filtered.length?filtered.map(t=>'<a class="town" href="'+esc(t.landing_url||ROOT+'paesi/'+encodeURIComponent(t.id)+'/')+'"><b>'+esc(t.name)+'</b><small>'+countFor(t.id)+' annunci associati nel catalogo corrente</small><span class="go">Apri la landing del comune →</span></a>').join(''):'<div class="empty">Nessun comune corrispondente. Modifica la ricerca.</div>'}
+function drawProperties(){const ordered=items.filter(it=>local(it)&&it.image&&it.url&&!/terreno/i.test(it.title||'')).sort((a,b)=>Date.parse(b.published_at||0)-Date.parse(a.published_at||0)).slice(0,8);
+$('property-grid').innerHTML=ordered.length?ordered.map(it=>'<article class="property"><img src="'+esc(it.image)+'" alt="Immagine catalogo immobile" loading="lazy"><div class="body"><small>'+esc(it.municipality)+'</small><b>'+esc(it.title)+'</b><div class="price">'+money(it.price)+'</div><a target="_blank" rel="noopener noreferrer" href="'+esc(it.url)+'">Apri scheda originale →</a></div></article>').join(''):'<p class="empty">Nessun annuncio verificato disponibile.</p>'}
+async function load(){try{const [t,c]=await Promise.all([fetch(ROOT+'config/case247-territorio.json',{cache:'no-store'}),fetch(ROOT+'immobili/catalogo.json',{cache:'no-store'})]);if(!t.ok||!c.ok)throw Error('Catalogo e territori non raggiungibili');const tr=await t.json(),cr=await c.json();towns=Array.isArray(tr.towns)?tr.towns:[];items=Array.isArray(cr.items)?cr.items:[];$('town-count').textContent=towns.length;$('home-count').textContent=items.length;drawTowns();drawProperties()}catch(e){$('town-status').textContent='Impossibile caricare la lista comuni: '+e.message;$('town-grid').innerHTML='<a class="town" href="../paesi/">Apri il portale dei paesi →</a>';$('property-grid').innerHTML='<p class="empty">Catalogo temporaneamente non disponibile. <a href="../immobili/">Apri la pagina immobili</a>.</p>'}}
+$('search').addEventListener('input',drawTowns);$('scope').addEventListener('change',drawTowns);load();
+})();
+</script></body></html>
