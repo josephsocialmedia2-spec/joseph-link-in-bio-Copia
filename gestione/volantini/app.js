@@ -98,6 +98,45 @@ $('exportJSON').onclick=()=>download(JSON.stringify({...state,savedAt:new Date()
 $('importJSON').onchange=async e=>{try{let p=JSON.parse(await e.target.files[0].text());if(!Array.isArray(p.properties)||p.properties.length!==18)throw Error('Il progetto deve contenere esattamente 18 posizioni');state={...state,style:Math.max(0,Math.min(5,Number(p.style)||0)),properties:p.properties.map(p=>p?clean(p):null),campaign:p.campaign||null,portrait:p.portrait||null};persist();render();drawHolidays();status('Progetto importato. Verificare QR e dati.','good')}catch(err){status('File progetto non valido: '+err.message)}finally{e.target.value=''}};
 $('restore').onclick=()=>{if(!confirm('Reimpostare le 18 schede predefinite?'))return;state.properties=Array(18).fill(null);initSeed();render()};
 $('print').onclick=()=>{if(!window.confirm('Stampare una BOZZA per revisione? Le schede potrebbero contenere dati energetici incompleti.'))return;document.body.classList.toggle('no-outer',!external||external.file.type==='application/pdf');window.print()};
+
+/* Vettorializza i QR all'ultimo passaggio PDF: moduli neri puri, sfondo bianco
+   e quiet zone 4 moduli. Niente URL abbreviati o link intermedi. */
+function drawQRVector(pdfPage,host,documentWidth,documentHeight,pdfLib){
+  const model=host?._qrModel;
+  if(!model||typeof model.getModuleCount!=='function'||typeof model.isDark!=='function')throw new Error('QR vettoriale non disponibile: '+(host?.id||'ignoto'));
+  const fr=$('flyer').getBoundingClientRect(), box=host.getBoundingClientRect();
+  const x=(box.left-fr.left)/fr.width*documentWidth;
+  const y=documentHeight-(box.bottom-fr.top)/fr.height*documentHeight;
+  const width=box.width/fr.width*documentWidth;
+  const height=box.height/fr.height*documentHeight;
+  const size=Math.min(width,height),n=model.getModuleCount();
+  const unit=size/(n+8),x0=x+(width-size)/2,y0=y+(height-size)/2;
+  pdfPage.drawRectangle({x:x0,y:y0,width:size,height:size,color:pdfLib.rgb(1,1,1)});
+  const black=pdfLib.rgb(0,0,0);
+  for(let row=0;row<n;row++){
+    let start=-1;
+    for(let col=0;col<=n;col++){
+      const isBlack=col<n&&model.isDark(row,col);
+      if(isBlack&&start<0)start=col;
+      if(!isBlack&&start>=0){
+        pdfPage.drawRectangle({x:x0+(start+4)*unit,y:y0+(n-row+3)*unit,width:(col-start)*unit,height:unit,color:black});
+        start=-1;
+      }
+    }
+  }
+}
+function applyQRVectorLayer(pdfPage,W,H){
+  const slots=[...document.querySelectorAll('#cards .slot[data-idx]')].filter(el=>state.properties[Number(el.dataset.idx)]?.title);
+  if(slots.length!==18)throw Error('Sono richieste 18 schede complete per il collaudo dei 19 QR');
+  for(const slot of slots){
+    const p=state.properties[Number(slot.dataset.idx)],q=slot.querySelector('.qr');
+    if(!q||q.dataset.targetUrl!==canonical(p.url))throw Error('QR non associato alla scheda '+(Number(slot.dataset.idx)+1));
+    drawQRVector(pdfPage,q,W,H,window.PDFLib);
+  }
+  if($('whatsappQR').dataset.targetUrl!==WA)throw Error('URL WhatsApp non corretto');
+  drawQRVector(pdfPage,$('whatsappQR'),W,H,window.PDFLib);
+  return 19;
+}
 async function outputPDF(){if(!window.PDFLib||!window.html2canvas){throw Error('Librerie PDF non disponibili: controlla la connessione e ricarica la pagina.')}
 if(!qrsAreReady())throw Error('Non tutti i QR sono stati generati: ricarica e verifica la libreria QR.');
 const {PDFDocument}=window.PDFLib,doc=await PDFDocument.create(),W=841.89,H=595.28;
@@ -105,8 +144,8 @@ if(external){let page=doc.addPage([W,H]),bytes=await external.file.arrayBuffer()
 if(external.file.type==='application/pdf'){let [embedded]=await doc.embedPdf(bytes,[0]);let k=Math.min(W/embedded.width,H/embedded.height);page.drawPage(embedded,{x:(W-embedded.width*k)/2,y:(H-embedded.height*k)/2,width:embedded.width*k,height:embedded.height*k})}
 else{image=external.file.type==='image/png'?await doc.embedPng(bytes):await doc.embedJpg(bytes);let k=Math.min(W/image.width,H/image.height);page.drawImage(image,{x:(W-image.width*k)/2,y:(H-image.height*k)/2,width:image.width*k,height:image.height*k})}}
 const poster=await window.html2canvas($('flyer'),{scale:2,useCORS:true,allowTaint:false,backgroundColor:'#ffffff',width:1122,height:794,onclone:d=>{let f=d.getElementById('flyer');f.style.transform='none';f.style.left='0';f.style.top='0'}});
-const png=await doc.embedPng(poster.toDataURL('image/png'));doc.addPage([W,H]).drawImage(png,{x:0,y:0,width:W,height:H});
-let bytes=await doc.save();download(new Blob([bytes],{type:'application/pdf'}),'CASE247_A4_volantino_'+(external?'fronte_retro':'solo_interno')+'_BOZZA.pdf','application/pdf')}
-$('pdf').onclick=async()=>{if(!confirm('Generare una BOZZA di revisione? È obbligatorio verificare classe, indici APE, disponibilità, foto e URL prima della stampa commerciale.'))return;let b=$('pdf');b.disabled=true;b.textContent='Produzione PDF…';try{await outputPDF();status('PDF BOZZA generato: aprilo e controlla foto e QR prima di stampare.','good')}catch(e){status('Impossibile produrre PDF: '+e.message+'; usa la stampa della sola facciata interna.')}finally{b.disabled=false;b.textContent='Scarica PDF A4 fronte-retro'}};
+const png=await doc.embedPng(poster.toDataURL('image/png'));const finalPage=doc.addPage([W,H]);finalPage.drawImage(png,{x:0,y:0,width:W,height:H});const verifiedQR=applyQRVectorLayer(finalPage,W,H);
+let bytes=await doc.save();download(new Blob([bytes],{type:'application/pdf'}),'CASE247_A4_volantino_'+(external?'fronte_retro':'solo_interno')+'_BOZZA.pdf','application/pdf');return verifiedQR}
+$('pdf').onclick=async()=>{if(!confirm('Generare una BOZZA di revisione? È obbligatorio verificare classe, indici APE, disponibilità, foto e URL prima della stampa commerciale.'))return;let b=$('pdf');b.disabled=true;b.textContent='Produzione PDF…';try{const n=await outputPDF();status('PDF BOZZA con '+n+' QR vettoriali generato. Prima della diffusione verifica il PDF, i dati APE e una stampa fisica al 100%.','good')}catch(e){status('Impossibile produrre PDF: '+e.message+'; usa la stampa della sola facciata interna.')}finally{b.disabled=false;b.textContent='Scarica PDF A4 fronte-retro'}};
 (async()=>{await getCatalog();initSeed();render();drawHolidays();status('Studio Volantini caricato. Per riprodurre il tuo volto originale usa la funzione Foto; le 18 schede sono modificabili.','good')})();
 })();
