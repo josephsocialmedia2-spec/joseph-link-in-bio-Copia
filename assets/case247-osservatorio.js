@@ -1,0 +1,38 @@
+(()=>{"use strict";
+const ROOT="/joseph-link-in-bio-Copia/", $=id=>document.getElementById(id);
+const slug=location.pathname.match(/\/paesi\/([^/]+)\/acquisizione\/?$/)?.[1];
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const search=q=>"https://www.google.com/search?q="+encodeURIComponent(q);
+const maps=q=>"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q);
+let town=null,records=[];
+const storage=()=>"case247-osservatorio-"+slug+"-v1";
+const key=s=>String(s).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]/g,"");
+function field(row,...aliases){const n={};Object.entries(row).forEach(([k,v])=>n[key(k)]=v);for(const name of aliases){const v=n[key(name)];if(v!=null&&String(v).trim())return String(v).trim()}return""}
+function number(v){let s=String(v||"").replace(/[€\s]/g,"");if(s.includes(",")&&s.includes("."))s=s.replace(/\./g,"").replace(",",".");else if(s.includes(","))s=s.replace(",",".");else if(/^\d{1,3}(\.\d{3})+$/.test(s))s=s.replace(/\./g,"");const n=Number(s);return Number.isFinite(n)&&n>0?n:null}
+function normalize(o){const url=field(o,"link","url","annuncio","linkannuncio");const title=field(o,"titolo","immobile","tipologia","title");const address=field(o,"via","indirizzo","address");const comune=field(o,"comune","citta","localita");if(comune&&key(comune)!==key(town.name))return null;const price=number(field(o,"prezzo","price","prezzo euro"));const mq=number(field(o,"mq","superficie","surface"));
+if(!title&&!url)return null;return{id:url||[title,address,mq].join("|"),url,title,address,price,mq,rooms:field(o,"locali","stanze","rooms"),source:field(o,"fonte","portale","agenzia"),date:field(o,"data","data scraping","rilevato il")||new Date().toISOString().slice(0,10),note:field(o,"note","osservazioni")}}
+function parseCSV(t){let rows=[],row=[],s="",quote=false;const first=t.split(/\r?\n/,1)[0];const sep=(first.match(/;/g)||[]).length>(first.match(/,/g)||[]).length?";":",";
+for(let i=0;i<t.length;i++){const ch=t[i];if(ch==='"'){if(quote&&t[i+1]==='"'){s+='"';i++}else quote=!quote}else if(!quote&&(ch===sep||ch==="\n")){row.push(s);s="";if(ch==="\n"){rows.push(row);row=[]}}else if(ch!=="\r")s+=ch}
+row.push(s);if(row.some(x=>x.trim()))rows.push(row);
+const header=rows.shift()||[];return rows.filter(r=>r.some(x=>x.trim())).map(r=>Object.fromEntries(header.map((x,i)=>[x,r[i]||""])))}
+function store(){try{localStorage.setItem(storage(),JSON.stringify(records))}catch(e){status("Memoria locale piena. Esporta il CSV.","bad")}}
+function status(text,cls){$("status").textContent=text;$("status").className=cls||""}
+const euro=n=>n!=null?new Intl.NumberFormat("it-IT",{style:"currency",currency:"EUR",maximumFractionDigits:0}).format(n):"—";
+function draw(){let text=$("filter").value.toLowerCase();const view=records.filter(r=>(r.title+" "+r.address+" "+r.source).toLowerCase().includes(text));$("total").textContent=records.length;const changes=records.filter(r=>r.prevPrice&&r.price&&r.prevPrice!==r.price);$("changes").textContent=changes.length;const ratios=records.filter(r=>r.price&&r.mq).map(r=>r.price/r.mq);$("average").textContent=ratios.length?euro(Math.round(ratios.reduce((a,b)=>a+b,0)/ratios.length)):"—";
+$("rows").innerHTML=view.length?view.slice(0,500).map(r=>'<tr><td>'+esc(r.date)+'</td><td>'+esc(r.title)+'</td><td>'+esc(r.address)+'</td><td>'+euro(r.price)+'</td><td>'+esc(r.mq||"—")+'</td><td>'+esc(r.rooms||"—")+'</td><td>'+esc(r.source||"—")+'</td><td>'+(r.prevPrice&&r.price!==r.prevPrice?euro(r.price-r.prevPrice):"—")+'</td><td>'+(r.url&&/^https?:\/\//.test(r.url)?'<a target="_blank" rel="noopener noreferrer" href="'+esc(r.url)+'">Apri</a>':"—")+'</td></tr>').join(""):'<tr><td colspan="9">Nessun annuncio nel campione. Importa un file CSV o Excel.</td></tr>'}
+async function importFile(file){if(!file)return;let data=[];if(/\.xlsx?$/i.test(file.name)){if(typeof XLSX==="undefined")throw Error("Lettore Excel non disponibile: salva il file come CSV.");const b=XLSX.read(await file.arrayBuffer(),{type:"array"});data=XLSX.utils.sheet_to_json(b.Sheets[b.SheetNames[0]],{defval:""});}else{data=parseCSV((await file.text()).replace(/^\uFEFF/,""))}
+if(!data.length)throw Error("Il file è vuoto o non contiene righe leggibili");
+let added=0,updated=0,ignored=0;const index=new Map(records.map((r,i)=>[r.id,i]));for(const obj of data){const r=normalize(obj);if(!r){ignored++;continue}const i=index.get(r.id);if(i===undefined){index.set(r.id,records.length);records.push(r);added++}else{const old=records[i];records[i]={...old,...r,prevPrice:old.price&&r.price!==old.price?old.price:old.prevPrice};updated++}}
+store();draw();status("Importati "+added+" nuovi annunci; "+updated+" aggiornati; "+ignored+" scartati per comune diverso o dati insufficienti.")}
+function exportCSV(){const headings=["Data","Titolo","Via","Comune","Prezzo","MQ","Locali","Fonte","Link","Prezzo precedente"];const content=[headings,...records.map(r=>[r.date,r.title,r.address,town.name,r.price||"",r.mq||"",r.rooms,r.source,r.url,r.prevPrice||""])].map(row=>row.map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(";")).join("\r\n");const url=URL.createObjectURL(new Blob(["\uFEFF"+content],{type:"text/csv;charset=utf-8"}));const a=document.createElement("a");a.href=url;a.download="osservatorio-"+slug+".csv";a.click();setTimeout(()=>URL.revokeObjectURL(url),3000)}
+function setSources(){const p=town.name+" Torino";const sources=[["Agenzie su Google Maps",maps("agenzie immobiliari "+p)],["Agenzie su Google",search("agenzie immobiliari "+p)],["Immobiliare.it",search("site:immobiliare.it "+p+" vendita")],["Idealista",search("site:idealista.it "+p+" vendita")],["Casa.it",search("site:casa.it "+p+" immobiliare")],["Subito.it",search("site:subito.it "+p+" casa vendita")],["Privati venditori",search('"privato vende casa" "'+town.name+'"')],["Ribassi di prezzo",search('"ribassato" "'+town.name+'" immobili")]];
+$("sources").innerHTML=sources.map(([label,url])=>'<a target="_blank" rel="noopener noreferrer" href="'+esc(url)+'">'+esc(label)+' ↗</a>').join("");$("scraper").href=search("Instant Data Scraper Chrome Web Store");
+$("sale").href=town.landing_url||ROOT+"paesi/"+slug+"/";
+$("valuation").href="https://wa.me/393713708294?text="+encodeURIComponent("Buongiorno, desidero una valutazione gratuita per un immobile a "+town.name+".");
+$("name").textContent=town.name;$("name2").textContent=town.name;document.title="Osservatorio Immobiliare "+town.name+" | CASE247";}
+async function init(){if(!slug)throw Error("Indirizzo del comune non valido");const r=await fetch(ROOT+"config/case247-territorio.json",{cache:"no-store"});if(!r.ok)throw Error("Configurazione del territorio non raggiungibile");const j=await r.json();town=(j.towns||[]).find(t=>t.id===slug);if(!town)throw Error("Comune non censito");setSources();try{records=JSON.parse(localStorage.getItem(storage())||"[]");if(!Array.isArray(records))records=[]}catch(e){records=[]}draw();status("Osservatorio "+town.name+" pronto. Importa CSV/Excel per creare lo storico locale.")}
+$("upload").addEventListener("change",async e=>{try{await importFile(e.target.files?.[0])}catch(err){status("Errore: "+err.message,"bad")}finally{e.target.value=""}});
+$("filter").addEventListener("input",draw);$("export").addEventListener("click",exportCSV);
+$("clear").addEventListener("click",()=>{if(!confirm("Cancellare tutti i dati LOCALI di "+town.name+"?"))return;records=[];store();draw();status("Archivio locale azzerato.")});
+init().catch(e=>status("Errore avvio: "+e.message,"bad"));
+})();
