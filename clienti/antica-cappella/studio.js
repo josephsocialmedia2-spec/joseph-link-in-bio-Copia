@@ -116,7 +116,7 @@ function download(name,content,type){const blob=new Blob([content],{type}),url=U
 function exportCsv(){if(!drafts.length)return;const cols=['date','time','timezone','platform','imageFilename','imageTitle','description','caption','status'];const lines=[cols.join(';'),...drafts.map(d=>cols.map(c=>csvCell(d[c])).join(';'))];download('antica-cappella-piano-social.csv','\uFEFF'+lines.join('\r\n'),'text/csv;charset=utf-8');say('CSV esportato. Le immagini non sono incluse nel CSV.');}
 function exportJson(){if(!drafts.length)return;download('antica-cappella-piano-social.json',JSON.stringify({version:1,client:'antica-cappella',generatedAt:new Date().toISOString(),publicationStatus:'DRAFT_ONLY',note:'Nessun post inviato a Meta; immagini conservate solo nel browser.',drafts},null,2),'application/json');say('JSON esportato. Le immagini non sono incluse nel file.');}
 function setup(){
- $('startDate').value=new Intl.DateTimeFormat('en-CA',{timeZone:TZ,year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+ $('startDate').value=new Intl.DateTimeFormat('sv-SE',{timeZone:TZ,year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
  $('photoInput').addEventListener('change',async e=>{await importFiles(e.target.files);e.target.value='';});
  const drop=$('dropzone');drop.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('dragover');});drop.addEventListener('dragleave',()=>drop.classList.remove('dragover'));drop.addEventListener('drop',async e=>{e.preventDefault();drop.classList.remove('dragover');await importFiles(e.dataTransfer.files);});
  $('generate').onclick=generateDrafts;$('exportCsv').onclick=exportCsv;$('exportJson').onclick=exportJson;
