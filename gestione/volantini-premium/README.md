@@ -19,7 +19,7 @@ Applicazione web **statica** in HTML, CSS e JavaScript pensata per GitHub Pages.
 
 ## Installazione nel progetto GitHub esistente
 
-1. Nel repository `josephsocialmedia2-spec/joseph-link-in-bio-Copia`, crea **una nuova cartella** `gestione/volantini-premium/`. Non sovrascrivere immediatamente `gestione/volantini/` già operativo.
+1. Nel repository `josephsocialmedia2-spec/joseph-link-in-bio-Copia`, crea **una nuova cartella** `gestione/volantini-premium/`. Questo è lo Studio Volantini A4 attivo.
 2. Carica tutti i file di questo pacchetto all'interno della nuova cartella mantenendo le sottocartelle `assets/` e `test/`.
 3. Apri `https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/volantini-premium/`.
 4. Il pulsante `Dal catalogo` legge `/joseph-link-in-bio-Copia/immobili/catalogo.json` dallo stesso dominio GitHub Pages. Per importare URL non contenuti nel catalogo, è previsto un tentativo su `/products/<slug>.js`; questo **può fallire per CORS**. Se fallisce, la scheda viene creata come `DA COMPILARE` e va completata manualmente. Il codice non aggira restrizioni CORS.
@@ -81,4 +81,7 @@ I test comprendono URL autorizzati, normalizzazione prezzi e valori energetici, 
 5. Il layout è una ricostruzione editoriale premium ispirata ai modelli forniti, non una copia pixel-perfect di un'immagine raster. Permette di cambiare i dati senza rigenerare le immagini.
 ## Versione integrata su GitHub Pages
 
-La versione pubblicata usa il ritratto JPEG originale già presente in `../volantini/portrait-default.js` per non duplicare una risorsa binaria. Per qualità di stampa, caricare dalla UI il PNG scontornato ad alta risoluzione fornito dall'utente. Il segnaposto panoramico è dichiaratamente illustrativo e non può essere usato per la distribuzione commerciale. L'editor precedente `/gestione/volantini/` non è stato modificato.
+La versione pubblicata utilizza il ritratto JPEG predefinito incluso in `./portrait-default.js`. Per qualità di stampa, caricare dalla UI il PNG scontornato ad alta risoluzione fornito dall'utente. Il segnaposto panoramico è dichiaratamente illustrativo e non può essere usato per la distribuzione commerciale. La precedente versione A4 è stata rimossa dal sito. Il Premium è l'unico editor A4 mantenuto.
+
+
+Nota: i comandi di pianificazione festività presenti nella versione precedente non sono ancora inclusi nello Studio Premium.
