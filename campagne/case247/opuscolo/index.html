@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case in Pubblicità 24/7 — Opuscolo A4 pieghevole</title>
+<style>
+:root{font-family:Arial,Helvetica,sans-serif;background:#0b203e;color:#f2f8ff}*{box-sizing:border-box}
+body{margin:0}header{padding:20px 24px;background:#082c58;border-bottom:3px solid #1587e3}header h1{margin:4px 0}header p{margin:4px 0;color:#bedaf0}
+a{color:#83d6ff}.tools{display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:18px 24px;background:#102c4f}
+button{cursor:pointer;background:#1686d8;color:white;font-weight:700;border:none;border-radius:7px;padding:12px 17px}button:disabled{background:#53677b;cursor:not-allowed}
+#status{padding:12px 24px;font-weight:700}#warn{margin:8px 24px;background:#58401e;border-left:4px solid #f1b64c;padding:12px}
+#catalog{margin:15px 24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:9px}
+.option{display:flex;gap:10px;background:#173958;padding:9px;border:1px solid #376d91;border-radius:8px;align-items:center;font-size:13px}
+.option img{height:65px;width:80px;object-fit:cover;border-radius:5px}.option strong{display:block;line-height:1.2}.option small{color:#b7d9ef}
+.option input{height:23px;width:23px}
+#preview{display:grid;gap:25px;justify-items:center;padding:24px 8px}
+.spread{width:297mm;height:210mm;background:white;color:#082c58;display:flex;box-shadow:0 8px 30px #0008;position:relative;overflow:hidden}
+.spread:after{content:"";position:absolute;left:50%;top:0;bottom:0;border-left:1px dashed #a8bacb;pointer-events:none}
+.page{width:50%;height:100%;position:relative;overflow:hidden}
+.brand{font-size:17pt;font-weight:900;line-height:1.1;letter-spacing:-.4pt}.brand b{color:#1587e3}.brand small{display:block;font-size:7pt;letter-spacing:1.5pt;margin-top:2mm;color:#a5dfff}
+.dark{background:linear-gradient(145deg,#061a36,#082c58 70%,#1266aa);color:white}
+.cover{background:#082c58;color:white}.cover .hero{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cover .shade{position:absolute;inset:0;background:linear-gradient(180deg,#082c58 0%,#082c58c7 38%,#082c5814 72%,#082c58dd 100%)}
+.cover .c-text{position:relative;padding:14mm 10mm}.cover h2{font-size:22pt;line-height:1.12;margin:24mm 0 3mm}.cover p{font-size:13pt;margin:0}
+.cover .edition{font-size:9pt;text-transform:uppercase;letter-spacing:1.5pt;margin-top:4mm}
+.cover .contact{position:absolute;bottom:13mm;left:10mm;right:10mm;border-radius:5mm;background:#06864b;color:white;padding:6mm;font-size:14pt;font-weight:900}
+.backcover{padding:14mm 10mm}.backcover h2{font-size:22pt;line-height:1.05;margin-top:22mm}.backcover p{font-size:11pt;line-height:1.38}
+.services{display:grid;grid-template-columns:1fr 1fr;gap:3mm;margin-top:7mm}
+.service{border:1px solid #63b3ee;border-radius:3mm;padding:4mm;font-size:10pt;min-height:17mm;background:#103e70;font-weight:700}
+.qrrow{display:flex;gap:3mm;justify-content:space-between;position:absolute;left:7mm;right:7mm;bottom:13mm}
+.qritem{text-align:center;width:26mm;background:white;padding:1mm;border-radius:2mm;color:#082c58}
+.qritem img{width:22mm;height:22mm;display:block;margin:auto}.qritem span{font-size:6.5pt;font-weight:800;display:block;min-height:7mm}
+.backcover .fine{font-size:7pt;position:absolute;bottom:4mm;left:10mm;right:10mm;color:#d6e4f3}
+.listpage{padding:7mm 7mm 4mm}.listpage .listhead{border-bottom:2px solid #1686d8;padding-bottom:3mm;margin-bottom:3mm}
+.listpage .brand{font-size:13pt}.listpage h2{font-size:17pt;margin:3mm 0 0}
+.listgrid{display:grid;grid-template-rows:repeat(4,1fr);gap:2.4mm;height:165mm}
+.property{display:grid;grid-template-columns:53mm 1fr;border:1px solid #c5d9e9;border-radius:2mm;overflow:hidden;min-width:0;background:#fff}
+.property>img{width:53mm;height:100%;object-fit:cover}
+.property .copy{padding:2.8mm;min-width:0;position:relative}
+.property .town{color:#1587e3;font-size:8pt;font-weight:900;text-transform:uppercase}
+.property .title{font-size:10pt;line-height:1.08;font-weight:900;margin:1.5mm 0;overflow-wrap:anywhere}
+.property .price{font-size:12pt;color:#138649;font-weight:900}
+.property .energy{font-size:7.5pt;background:#e7f1f8;padding:1mm 2mm;margin-top:1mm;display:inline-block}
+.property .qr{position:absolute;right:2mm;bottom:2mm;width:14mm;height:14mm;background:white}
+.property .hint{font-size:6pt;position:absolute;bottom:3mm;left:2.8mm;right:18mm;color:#42657c}
+.note{font-size:6.3pt;position:absolute;bottom:2mm;left:7mm;right:7mm;color:#4c6881}
+@page{size:A4 landscape;margin:0}
+@media print{html,body{background:white!important;margin:0!important}header,.tools,#status,#warn,#catalog,.editorhelp{display:none!important}#preview{display:block;padding:0;margin:0}.spread{box-shadow:none;width:297mm;height:210mm;break-after:page;page-break-after:always}*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}}
+@media screen and (max-width:1200px){.spread{zoom:.72}}@media screen and (max-width:760px){.spread{zoom:.45}}
+</style></head>
+<body>
+<header><a href="../review/">← Torna alle grafiche</a><h1>Opuscolo A4 orizzontale · 4 facciate A5</h1><p>Copertina e retro all’esterno, otto immobili reali nelle due pagine interne.</p></header>
+<div class="tools"><button id="print" disabled>Stampa / Salva opuscolo PDF A4</button><button id="auto">Seleziona 8 proposte approvate</button><span>Formato: A4 orizzontale · fronte/retro · ribaltamento lato corto</span></div>
+<div id="status">Caricamento immobili e approvazioni…</div>
+<div id="warn">La classe energetica è visualizzata soltanto se espressamente dichiarata nei dati dell'annuncio. «APE da verificare» NON è una classe energetica: ottenere l'APE prima della stampa per distribuzione. Prezzi e disponibilità vanno sempre riconfermati.</div>
+<div class="editorhelp" style="padding:5px 24px">Seleziona gli otto immobili da inserire. Sono esclusi quelli eliminati nella revisione del 9 novembre. Gli otto immobili vanno mostrati solo con fotografie e dati della fonte, non con esempi grafici inventati.</div>
+<div id="catalog"></div>
+<div id="preview">
+<div class="spread" aria-label="Esterno, retro a sinistra e copertina a destra">
+<section class="page dark backcover">
+<div class="brand">CASE IN<br>PUBBLICITÀ <b>24/7</b><small>MARKETING IMMOBILIARE</small></div>
+<h2>Vuoi vendere<br>o comprare casa?</h2><p>Avigliana e Valle di Susa.<br>Una strategia digitale per dare visibilità agli immobili.</p>
+<div class="services"><div class="service">Valutazione gratuita del tuo immobile</div><div class="service">Consulente creditizio su appuntamento*</div><div class="service">Notaio su appuntamento*</div><div class="service">Promozione immobiliare 24/7</div></div>
+<div class="qrrow" id="action-qr"></div>
+<div class="fine">*Disponibilità professionisti da confermare. Comunicazione: Case in Pubblicità 24/7. Intermediazione: professionisti abilitati.</div>
+</section>
+<section class="page cover"><img id="hero" class="hero" alt="Fotografia immobile dal catalogo"><div class="shade"></div><div class="c-text"><div class="brand">CASE IN<br>PUBBLICITÀ <b>24/7</b><small>AVIGLIANA · VALLE DI SUSA</small></div><div class="edition">Edizione novembre 2026</div><h2>ULTIME NOVITÀ<br>IMMOBILIARI</h2><p>Avigliana e dintorni</p></div><div class="contact">Valutazione gratuita della tua casa<br>WhatsApp 371 370 8294</div></section>
+</div>
+<div class="spread" aria-label="Interno, otto immobili su due facciate">
+<section class="page listpage"><div class="listhead"><div class="brand">CASE IN PUBBLICITÀ <b>24/7</b></div><h2>Le ultime novità</h2></div><div id="houses-left" class="listgrid"></div><div class="note">Informazioni e prezzi da verificare con l'agenzia. QR sulle fotografie: apri la scheda dell'immobile.</div></section>
+<section class="page listpage"><div class="listhead"><div class="brand">AVIGLIANA E DINTORNI</div><h2>Nuove proposte</h2></div><div id="houses-right" class="listgrid"></div><div class="note">Classe energetica e dati APE devono essere verificati sulla documentazione originale prima di stampare.</div></section>
+</div></div>
+<script>
+(()=>{'use strict';
+const ROOT='/joseph-link-in-bio-Copia/';
+const URLS={catalog:ROOT+'immobili/catalogo.json',approvals:ROOT+'campagne/case247/territorio/approvazioni.json'};
+const QR='https://api.qrserver.com/v1/create-qr-code/?size=280x280&margin=1&data=';
+const WA='https://wa.me/393713708294?text=';
+const ACTIONS=[
+ ['PRENDI UN APPUNTAMENTO',WA+encodeURIComponent('Buongiorno, vorrei prenotare una visita a un immobile.')],
+ ['CALCOLATORE MUTUO','https://economiapertutti.bancaditalia.it/strumenti/calcolatori/calcolatore-della-rata-del-mutuo/'],
+ ['VALUTA CASA','https://lasacraimmobiliare.it/pages/valuta-il-tuo-immobile-gratis-immobiliare-la-sacra-contatti'],
+ ['VAI AL SITO',location.origin+ROOT]
+];
+const $=id=>document.getElementById(id);const safe=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=n=>typeof n==='number'&&n>0?'€ '+new Intl.NumberFormat('it-IT',{maximumFractionDigits:0}).format(n):'Prezzo da verificare';
+let catalog=[],selected=new Set(),allowed=new Set(),excluded=new Set();
+function classEnergy(x){
+ const str=String(x.description||'');
+ const match=str.match(/(?:classe\s+energetica|classe\s+APE)\s*[:\-]?\s*(A4|A3|A2|A1|[B-G])\b/i);
+ return match?'Classe energetica '+match[1].toUpperCase():'APE da verificare';
+}
+function usable(x){return x&&x.id&&x.image&&x.url&&x.municipality&&x.town_id&&x.category==='Residenziale'&&x.price>0&&!excluded.has(String(x.id))&&allowed.has(String(x.id))&&!/affitto|locazione|terreno|commerciale|attivit[aà]/i.test(x.title+' '+x.contract);}
+function score(x){const m={'avigliana':0,'villar-dora':1,'caprie':2,'sant-ambrogio-di-torino':3,'rubiana':4,'almese':5};return (m[x.town_id]??80)*1000-(Date.parse(x.published_at)||0)/1e12;}
+function card(x){const title=String(x.title).replace(/\s+/g,' ').trim(),src=safe(x.image),url=safe(QR+encodeURIComponent(x.url));
+return '<article class="property"><img loading="eager" crossorigin="anonymous" src="'+src+'" alt="Immobile da catalogo"><div class="copy"><div class="town">'+safe(x.municipality)+'</div><div class="title">'+safe(title)+'</div><div class="price">'+money(x.price)+'</div><div class="energy">'+safe(classEnergy(x))+'</div><div class="hint">Scansiona il QR per dettagli e visite</div><img class="qr" src="'+url+'" alt="QR della scheda dell’immobile"></div></article>';}
+function render(){let rows=catalog.filter(x=>selected.has(String(x.id)));$('houses-left').innerHTML=rows.slice(0,4).map(card).join('');$('houses-right').innerHTML=rows.slice(4,8).map(card).join('');$('hero').src=rows[0]?.image||'';$('print').disabled=rows.length!==8;
+let missing=rows.filter(x=>classEnergy(x)==='APE da verificare').length;
+$('status').textContent=rows.length+'/8 immobili selezionati. '+missing+' classi energetiche non documentate nel catalogo. '+(rows.length===8?'Impaginazione A4 pronta; verifica APE e fotografie prima della distribuzione.':'Seleziona esattamente 8 immobili per stampare.');
+}
+function selector(){let rows=catalog.map(x=>'<label class="option"><input type="checkbox" data-id="'+safe(x.id)+'" '+(selected.has(String(x.id))?'checked':'')+'><img src="'+safe(x.image)+'" alt=""><span><strong>'+safe(x.title)+'</strong><small>'+safe(x.municipality)+' · '+money(x.price)+' · '+safe(classEnergy(x))+'</small></span></label>').join('');$('catalog').innerHTML=rows;document.querySelectorAll('#catalog input').forEach(el=>el.onchange=()=>{if(el.checked&&selected.size>=8){el.checked=false;alert('Massimo 8 immobili');return}if(el.checked)selected.add(el.dataset.id);else selected.delete(el.dataset.id);localStorage.setItem('case247-booklet-a4-ids',JSON.stringify([...selected]));render()});}
+function autoselect(){selected=new Set(catalog.slice(0,8).map(x=>String(x.id)));localStorage.setItem('case247-booklet-a4-ids',JSON.stringify([...selected]));selector();render()}
+async function init(){try{const [a,b]=await Promise.all([fetch(URLS.catalog,{cache:'no-store'}),fetch(URLS.approvals,{cache:'no-store'})]);if(!a.ok||!b.ok)throw Error('Catalogo o approvazioni non disponibili');const cs=await a.json(),ap=await b.json();const grouped={};for(const x of ap.items||[]){if(!x.listing_id)continue;(grouped[String(x.listing_id)]??=[]).push(x.status)}
+for(const [id,states] of Object.entries(grouped)){if(states.includes('eliminata'))excluded.add(id);else if(states.includes('ok'))allowed.add(id)}
+catalog=(cs.items||[]).filter(usable).sort((a,b)=>score(a)-score(b));if(!catalog.length)throw Error('Nessun immobile approvato disponibile');
+let saved=[];try{saved=JSON.parse(localStorage.getItem('case247-booklet-a4-ids')||'[]')}catch(e){};selected=new Set(saved.filter(id=>catalog.some(x=>String(x.id)===String(id))));if(selected.size===0)selected=new Set(catalog.slice(0,8).map(x=>String(x.id)));
+$('action-qr').innerHTML=ACTIONS.map(([name,url])=>'<div class="qritem"><span>'+safe(name)+'</span><img src="'+safe(QR+encodeURIComponent(url))+'" alt="QR '+safe(name)+'"></div>').join('');
+selector();render();$('auto').onclick=autoselect;$('print').onclick=()=>{if(selected.size!==8)return;const missing=catalog.filter(x=>selected.has(String(x.id))&&classEnergy(x)==='APE da verificare');if(missing.length){const ok=confirm('ATTENZIONE: '+missing.length+' annunci non hanno una classe APE verificata. Il PDF sarà una BOZZA e non va distribuito fino alla verifica. Continuare?');if(!ok)return;}window.print();};}
+catch(e){$('status').textContent='Errore caricamento: '+e.message;}}
+init();
+})();
+</script></body></html>
