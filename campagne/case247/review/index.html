@@ -39,18 +39,38 @@ dialog{border:none;border-radius:13px;background:#152235;color:var(--txt);width:
 dialog::backdrop{background:#000d}dialog img{width:100%;max-height:77vh;object-fit:contain}dialog .top{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:4px 5px 10px}
 @media(max-width:760px){header{position:relative}.stats{grid-template-columns:repeat(3,1fr)}.gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.info{padding:9px}.info strong{font-size:13px}.actions{gap:5px}.actions button{padding:9px 4px;font-size:13px}.details{font-size:11px}}
 @media(max-width:440px){.gallery{grid-template-columns:1fr 1fr}.stat b{font-size:20px}}
+
+/* Selezione modello non distruttiva — gli esiti preesistenti non si azzerano */
+.model-box{border:1px solid #45668c;background:#0d2d4e;border-radius:10px;padding:9px;margin-top:11px;display:grid;gap:7px}
+.model-box label{font-size:12px;font-weight:800;color:#cce7ff}.model-box select{width:100%;border-radius:7px;border:1px solid #79b9e8;background:#10263e;color:#fff;padding:9px}
+.model-buttons{display:grid;grid-template-columns:1fr 1fr;gap:7px}.model-buttons button{padding:9px 5px;font-size:12px;background:#236995}.model-buttons button.regenerate-model{grid-column:span 2;background:#0b75b6;font-size:13px}
+.model-caption{color:#c3dbed;font-size:11px;line-height:1.4}
+#compareDlg{width:min(96vw,1350px);max-height:94vh;overflow:auto;background:#111f33}
+.compare-lead{margin:5px 0 13px;color:#c1d9ed;font-size:13px}
+.compare-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.compare-tile{border:1px solid #527395;border-radius:12px;padding:10px;background:#1d3049}
+.compare-tile img{display:block;width:100%;height:auto;max-height:none;aspect-ratio:4/5;object-fit:contain;background:#091529;border-radius:8px}
+.compare-tile b{display:block;padding:8px 0;font-size:14px}
+.compare-tile button{width:100%;background:#176cab;font-size:13px}
+.compare-tile.current{border-color:#45c38b}
+.compare-tile p{margin:5px 0;color:#c4d7e8;font-size:12px}
+.compare-tile.loading{text-align:center;min-height:170px;padding:40px 8px}
+@media(max-width:850px){.compare-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:510px){.compare-grid{grid-template-columns:1fr 1fr;gap:6px}.compare-tile{padding:5px}.compare-tile button{font-size:11px}.model-buttons{grid-template-columns:1fr}.model-buttons button.regenerate-model{grid-column:auto}}
 </style></head><body>
 <header><h1>CASE IN PUBBLICITÀ 24/7 · REVISIONE GRAFICHE</h1><p>60 grafiche La Sacra + ritratto Joseph · 10 novembre – 9 dicembre 2026 · Una scelta per ciascuna grafica</p>
 <a class="wa-central" target="_blank" rel="noopener noreferrer" href="https://wa.me/393713708294?text=Buongiorno%2C%20vorrei%20maggiori%20informazioni.">WHATSAPP DIRETTO · 371 370 8294</a><div class="stats"><div class="stat"><b id="nAll">60</b><small>Totali</small></div><div class="stat"><b id="nOk">0</b><small>OK</small></div><div class="stat"><b id="nPending">60</b><small>Da valutare</small></div><div class="stat"><b id="nDiscard">0</b><small>Da rifare</small></div><div class="stat"><b id="nAttempts">0</b><small>Rigenerazioni</small></div><div class="stat"><b id="nDeleted">0</b><small>Eliminati</small></div></div>
 <div class="toolbar"><select id="filter"><option value="all">Tutte le grafiche</option><option value="pending">Da valutare</option><option value="ok">OK</option><option value="scarta">Scartate / Da rifare</option><option value="eliminata">Eliminati (recuperabili)</option></select>
 <select id="aud"><option value="all">Privati + aziende</option><option value="privati">Privati</option><option value="aziende">Aziende</option></select>
 <input id="search" placeholder="Cerca immobile, data, comune" aria-label="Cerca">
-<button id="export" class="export">Esporta esiti</button><button id="download" class="download">Scarica grafiche OK</button><button id="flyer" class="flyer" disabled>Apri opuscolo A4 pieghevole (8 immobili)</button><small id="flyerHelp" class="flyer-help">Disponibile dopo l’approvazione di tutte le grafiche non eliminate. Versione Natale automatica dal 1° dicembre 2026.</small></div></header>
-<main><p class="notice"><b>Come funziona:</b> premi <b>OK</b> per approvare oppure <b>SCARTA</b> per creare subito una nuova variante grafica dello stesso immobile, con la tua foto. Ripeti SCARTA quante volte vuoi fino a OK. Le nuove varianti sono prodotte e salvate in questo browser; le scelte rimangono su questo dispositivo; non avviano pubblicazioni social né aggiornano il calendario GitHub. Per trasferire le approvazioni usa «Esporta esiti». <b>Opuscolo:</b> apri il generatore A4 orizzontale pieghevole: copertina, retro e 8 proposte selezionabili; verifica obbligatoriamente i dati APE prima della distribuzione.</p>
+<a href="/joseph-link-in-bio-Copia/gestione/volantini/" class="export" style="text-decoration:none;border-radius:9px;font-weight:800">Volantino A4 · 18 immobili</a><button id="showModels" class="export" style="background:#087ab8">VEDI LE 6 NUOVE GRAFICHE</button><button id="export" class="export">Esporta esiti</button><button id="download" class="download">Scarica grafiche OK</button><button id="flyer" class="flyer" disabled>Apri opuscolo A4 pieghevole (8 immobili)</button><small id="flyerHelp" class="flyer-help">Disponibile dopo l’approvazione di tutte le grafiche non eliminate. Versione Natale automatica dal 1° dicembre 2026.</small></div></header>
+<main><p class="notice"><b>NUOVI MODELLI 01–06:</b> puoi confrontarli immediatamente e rigenerare singole schede. Le immagini approvate in precedenza restano archiviate; il calendario Meta/Metricool non viene aggiornato da questa pagina. <b>Nuovi post programmati:</b> sostituzione soltanto dopo approvazione e controllo sull’asset remoto.</p><p class="notice"><b>Come funziona:</b> premi <b>OK</b> per approvare oppure <b>SCARTA</b> per creare subito una nuova variante grafica dello stesso immobile, con la tua foto. Ripeti SCARTA quante volte vuoi fino a OK. Le nuove varianti sono prodotte e salvate in questo browser; le scelte rimangono su questo dispositivo; non avviano pubblicazioni social né aggiornano il calendario GitHub. Per trasferire le approvazioni usa «Esporta esiti». <b>Opuscolo:</b> apri il generatore A4 orizzontale pieghevole: copertina, retro e 8 proposte selezionabili; verifica obbligatoriamente i dati APE prima della distribuzione.</p>
 <div id="alert" role="status" aria-live="polite"></div><div class="gallery" id="gallery"></div></main>
 <dialog id="lightbox"><div class="top"><strong id="dlgTitle"></strong><button id="close">Chiudi</button></div><img id="dlgImg" alt="Anteprima grande"></dialog>
+<dialog id="compareDlg"><div class="top"><strong id="compareTitle">Confronto sei grafiche</strong><button id="closeCompare">Chiudi confronto</button></div><p class="compare-lead">Le sei proposte sono bozze: seleziona un modello e premi «Rigenera con questo modello» per sottoporlo all’approvazione. Gli OK precedenti non vengono sovrascritti dalla sola anteprima.</p><div id="compareGrid" class="compare-grid"></div></dialog>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="./designs-v6.js?v=20261110-six-v1"></script>
 <script>
 "use strict";
 const BASE="/joseph-link-in-bio-Copia/";
@@ -70,7 +90,13 @@ function whatsappLink(item){
  return "https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(message);
 }
 const KEY="case247-gallery-review-v3";
-const GRAPHIC_VERSION="official-brand-title-20261109-v3";
+const GRAPHIC_VERSION="official-brand-title-20261109-v3"; // archivio legacy: non alterare voti o JPEG vecchi
+const MODEL_VERSION="editorial-six-20261110-v1";
+const CHOICE_KEY="case247-model-choice-v1";
+let modelChoices={};try{modelChoices=JSON.parse(localStorage.getItem(CHOICE_KEY)||"{}")}catch{modelChoices={}}
+const selectModel=item=>Number(modelChoices[item.content_id]||1);
+function setModelChoice(item,n){if(![1,2,3,4,5,6].includes(Number(n)))return;modelChoices[item.content_id]=Number(n);try{localStorage.setItem(CHOICE_KEY,JSON.stringify(modelChoices))}catch(e){speak("Impossibile salvare la scelta del modello")}}
+
 const CHRISTMAS_START=Date.parse("2026-12-01T00:00:00+01:00");
 const APPROVALS_IMPORTED=ROOT+"approvazioni-importate-2026-11-09.json";
 const state={entries:[],byId:{},votes:{},previews:{},filters:{filter:"all",aud:"all",search:""},busy:new Set()};
@@ -139,8 +165,7 @@ async function fetchData(){
    }
  }catch(e){console.warn("Approval audit not reachable",e)}
  await restorePreviews();
- // Drop old price-less local drafts; preserve approval statuses but display newly regenerated priced images.
- for(const item of state.entries){if(state.votes[item.content_id]?.graphic_version!==GRAPHIC_VERSION){delete state.previews[item.content_id];if(state.votes[item.content_id]){state.votes[item.content_id].attempts=0;state.votes[item.content_id].graphic_version=GRAPHIC_VERSION;}}}
+ // IMPORTANTE: nessuna migrazione distruttiva. Manteniamo approvazioni, tentativi e anteprime preesistenti.
  persist();
  const ids=new Set(state.entries.map(x=>x.content_id));
  if(ids.size!==60)throw Error("ID duplicati nell'inventario");
@@ -179,7 +204,29 @@ function draw(){
   const body=document.createElement("div");body.className="info";
   const title=document.createElement("strong");title.textContent=item.listing_title;
   const detail=document.createElement("div");detail.className="details";
-  detail.textContent=dateFrom(item.content_id)+" · "+item.town+" · Variante "+(v.attempts+1)+" · "+(item.price_label||"PREZZO NON INDICATO");
+  detail.textContent=dateFrom(item.content_id)+" · "+item.town+" · "+(v.model_id?"Modello "+String(v.model_id).padStart(2,"0"):"Grafica storica")+" · "+(item.price_label||"PREZZO NON INDICATO");
+
+  // Il modello selezionato non cambia la grafica approvata finché l'utente non rigenera.
+  const modelBox=document.createElement("div");modelBox.className="model-box";
+  const modelLabel=document.createElement("label");modelLabel.textContent="MODELLO GRAFICO · 01—06";
+  const modelSelect=document.createElement("select");modelSelect.setAttribute("aria-label","Modello per "+item.listing_title);
+  for(const m of CASE247_MODELS.options){const opt=document.createElement("option");opt.value=m.id;opt.textContent=String(m.id).padStart(2,"0")+" · "+m.title;modelSelect.append(opt)}
+  modelSelect.value=String(selectModel(item));modelSelect.disabled=state.busy.has(item.content_id)||v.status==="eliminata";
+  modelSelect.onchange=()=>{setModelChoice(item,modelSelect.value);speak("Modello "+modelSelect.value+" selezionato per "+item.listing_title+". Il contenuto approvato resta invariato finché non rigeneri.")};
+  const controls=document.createElement("div");controls.className="model-buttons";
+  const compareBtn=document.createElement("button");compareBtn.textContent="CONFRONTA 6";compareBtn.disabled=v.status==="eliminata"||state.busy.has(item.content_id);compareBtn.onclick=()=>compareSix(item);
+  const previewBtn=document.createElement("button");previewBtn.textContent="ANTEPRIMA";previewBtn.disabled=v.status==="eliminata"||state.busy.has(item.content_id);previewBtn.onclick=()=>showModelPreview(item,selectModel(item));
+  const generateBtn=document.createElement("button");generateBtn.className="regenerate-model";generateBtn.textContent="RIGENERA CON QUESTO MODELLO";
+  generateBtn.disabled=v.status==="eliminata"||state.busy.has(item.content_id);generateBtn.onclick=()=>regenerate(item);
+  controls.append(compareBtn,previewBtn,generateBtn);
+  if(Array.isArray(v.history)&&v.history.length){const historyBtn=document.createElement("button");historyBtn.textContent="STORICO · RIPRISTINA ("+v.history.length+")";historyBtn.style.gridColumn="span 2";historyBtn.disabled=state.busy.has(item.content_id);historyBtn.onclick=()=>restoreArchived(item);controls.append(historyBtn)}
+  const modelNote=document.createElement("div");modelNote.className="model-caption";
+  modelNote.textContent="Scelta indipendente dalle rigenerazioni · Le approvazioni e le vecchie immagini sono conservate.";
+  modelBox.append(modelLabel,modelSelect,controls,modelNote);
+
+
+  const mismatch=/\b(AFFITTO|LOCAZIONE)\b/i.test(item.listing_title)&&Number(item.price)>10000;
+  if(mismatch){const warning=document.createElement("p");warning.className="model-caption";warning.style.color="#ffd49a";warning.textContent="VERIFICA PRIMA DI APPROVARE: annuncio di locazione con prezzo elevato. Controlla prezzo, canone e contratto sul sito La Sacra.";modelBox.append(warning)}
   const toggleRow=document.createElement("label");toggleRow.className="approval-row";
   const input=document.createElement("input");input.type="checkbox";input.checked=v.status==="ok";input.disabled=v.status==="eliminata"||state.busy.has(item.content_id);
   input.setAttribute("aria-label","Approva grafica "+item.listing_title);
@@ -196,12 +243,13 @@ function draw(){
   const listing=document.createElement("a");listing.href=item.listing_url;listing.target="_blank";listing.rel="noopener noreferrer";listing.textContent="Annuncio La Sacra";
   const save=document.createElement("a");save.href="#";save.textContent="Salva JPG";save.onclick=e=>{e.preventDefault();downloadOne(item)};
   const contact=document.createElement("a");contact.href=whatsappLink(item);contact.target="_blank";contact.rel="noopener noreferrer";contact.textContent="WhatsApp 371 370 8294";
-  links.append(listing,contact,save);body.append(title,detail,toggleRow,buttons,links);card.append(body);g.append(card);
+  links.append(listing,contact,save);body.append(title,detail,modelBox,toggleRow,buttons,links);card.append(body);g.append(card);
  }
  if(!selected.length){const p=document.createElement("p");p.textContent="Nessuna grafica con questi filtri.";g.append(p)}
 }
 function approve(item){
  if(vote(item).status==="eliminata")return;
+ if(/\b(AFFITTO|LOCAZIONE)\b/i.test(item.listing_title)&&Number(item.price)>10000){speak("Approvazione bloccata: verifica canone/contratto dell’annuncio in locazione prima di procedere.");return;}
  if(state.busy.has(item.content_id)){speak("Attendi la nuova variante prima di approvare.");return;}
  const v=vote(item);
  v.status="ok";v.graphic_version=GRAPHIC_VERSION;v.reviewed_at=new Date().toISOString();
@@ -247,52 +295,87 @@ function multiline(ctx,text,x,y,width,font,lineHeight,maxLines){
  if(row)lines.push(row);
  lines.slice(0,maxLines).forEach((line,i)=>ctx.fillText(line,x,y+i*lineHeight));
 }
-async function buildVariant(item,n){
- // All pixels originate from source listing photo or existing published graphic, plus the authorized Joseph portrait.
- const canvas=document.createElement("canvas");canvas.width=1080;canvas.height=1350;
- const ctx=canvas.getContext("2d",{alpha:false});const type=n%5;
- const navy=["#082C58","#061A36","#082C58","#102F54","#061A36"][type];
- ctx.fillStyle=navy;ctx.fillRect(0,0,1080,1350);
- let source;
- try{source=await loadImg(item.image_url)}catch{source=await loadImg(imageUrl(item))}
- const focus=[.5,.35,.7,.42,.6][type];
- if(type===0||type===3)cover(ctx,source,0,0,1080,840,focus,.45);
- else if(type===1)cover(ctx,source,0,0,1080,1020,focus,.5);
- else cover(ctx,source,0,80,1080,850,focus,.5);
- // Strong lower-third differs by variant; creative changes are real canvas re-rendering.
- if(type===1){ctx.fillStyle="rgba(8,24,45,.91)";ctx.fillRect(0,740,1080,610)}
- if(type===2){ctx.fillStyle=navy;ctx.fillRect(0,0,1080,115);ctx.fillRect(0,865,1080,485)}
- if(type===3){ctx.fillStyle=navy;ctx.fillRect(0,785,1080,565)}
- if(type===4){ctx.fillStyle="rgba(7,21,40,.92)";ctx.fillRect(0,840,1080,510)}
- if(type===0){ctx.fillStyle=navy;ctx.fillRect(0,800,1080,550)}
- const gold="#1587E3",white="#FFFFFF";
- rounded(ctx,32,33,1016,94,18,"rgba(8,30,55,.96)");
- ctx.textBaseline="alphabetic";ctx.font="bold 39px Arial,sans-serif";ctx.fillStyle=white;
- ctx.fillText("CASE IN PUBBLICITÀ 24/7",57,94);
- const bannerY=type===1?775:865;
- ctx.fillStyle=gold;ctx.font="bold 29px Arial,sans-serif";ctx.fillText(item.town.toLocaleUpperCase("it"),54,bannerY);
- ctx.fillStyle=white;ctx.font="bold 45px Arial,sans-serif";
- multiline(ctx,item.listing_title,54,bannerY+73,940,"bold 45px Arial,sans-serif",55,3);
- // Presenter inset is intentionally separate from actual listing photo.
- try{
-  const presenter=await loadImg(PORTRAIT);
-  const x=type===3?794:58,y=type===1?474:525,s=235;
-  ctx.save();ctx.beginPath();ctx.arc(x+s/2,y+s/2,s/2,0,Math.PI*2);ctx.clip();
-  cover(ctx,presenter,x,y,s,s,.5,.2);ctx.restore();
-  ctx.strokeStyle="#59B9F6";ctx.lineWidth=8;ctx.beginPath();ctx.arc(x+s/2,y+s/2,s/2,0,Math.PI*2);ctx.stroke();
- }catch(e){throw Error("Foto del presentatore non disponibile: "+e.message)}
- rounded(ctx,54,1256,972,63,13,"#00BA66");ctx.fillStyle="#FFFFFF";ctx.font="bold 29px Arial,sans-serif";
- ctx.fillText("WHATSAPP · 371 370 8294",87,1298);
- // Price is always drawn from verified catalog metadata, never invented.
- const pricetxt=item.price_label||"PREZZO NON INDICATO";
- rounded(ctx,435,1072,590,112,22,gold);
- ctx.fillStyle="#FFFFFF";
- let psize=pricetxt.length<14?69:39;
- ctx.font="bold "+psize+"px Arial,sans-serif";
- ctx.fillText(pricetxt,460,1148,550);
- ctx.font="19px Arial,sans-serif";ctx.fillStyle="#cbd8e7";ctx.fillText("Foto da catalogo La Sacra · Ricostruzione grafica, non visita documentata",54,1236);
- return canvas.toDataURL("image/jpeg",.91);
+async function buildVariant(item,styleId){
+ if(!window.CASE247_MODELS)throw Error("Motore sei grafiche non caricato");
+ return CASE247_MODELS.render(item,Number(styleId),{portraitUrl:PORTRAIT});
 }
+async function archiveGraphic(item,v){
+ // Archivia SEMPRE la grafica già salvata, soprattutto quando è approvata.
+ const old=snapshot(item),record={saved_at:new Date().toISOString(),status:v.status,model_id:v.model_id||null,graphic_version:v.graphic_version||GRAPHIC_VERSION};
+ if(typeof old==="string"&&old.startsWith("data:")){
+  const key="archive:"+item.content_id+":"+Date.now();
+  await storePreview(key,old);record.preview_key=key;
+ }else record.url=old;
+ v.history=Array.isArray(v.history)?v.history:[];v.history.push(record);
+}
+async function showModelPreview(item,styleId){
+ const dlg=el("compareDlg"),grid=el("compareGrid");grid.replaceChildren();el("compareTitle").textContent="Anteprima · "+item.listing_title;
+ const current=document.createElement("div");current.className="compare-tile current";current.innerHTML="<b>Grafica salvata attualmente</b>";
+ const oldImage=document.createElement("img");oldImage.alt="Grafica conservata";oldImage.src=snapshot(item);current.append(oldImage);grid.append(current);
+ const pending=document.createElement("div");pending.className="compare-tile loading";pending.textContent="Preparo l’anteprima con la foto autentica…";grid.append(pending);
+ dlg.showModal();
+ try{
+  const url=await buildVariant(item,styleId);pending.className="compare-tile";pending.textContent="";
+  const title=document.createElement("b");title.textContent=String(styleId).padStart(2,"0")+" · "+CASE247_MODELS.options[styleId-1].title+" · BOZZA";
+  const img=document.createElement("img");img.src=url;img.alt="Nuovo modello "+styleId;
+  const button=document.createElement("button");button.textContent="Scegli e rigenera";button.onclick=()=>{setModelChoice(item,styleId);dlg.close();regenerate(item)};
+  pending.append(title,img,button);
+ }catch(e){pending.textContent="Errore anteprima: "+e.message}
+}
+async function compareSix(item){
+ const dlg=el("compareDlg"),grid=el("compareGrid");
+ el("compareTitle").textContent="SEI VERSIONI · "+item.listing_title;grid.replaceChildren();dlg.showModal();
+ for(const model of CASE247_MODELS.options){
+  const tile=document.createElement("div");tile.className="compare-tile loading";tile.textContent="Modello "+String(model.id).padStart(2,"0")+" in preparazione…";grid.append(tile);
+  try{
+   const url=await buildVariant(item,model.id);
+   if(!dlg.open)return;
+   tile.className="compare-tile";tile.textContent="";
+   const name=document.createElement("b");name.textContent=String(model.id).padStart(2,"0")+" · "+model.title;
+   const img=document.createElement("img");img.src=url;img.alt="Anteprima modello "+model.id;
+   const note=document.createElement("p");note.textContent=model.note;
+   const button=document.createElement("button");button.textContent="SCEGLI IL MODELLO "+String(model.id).padStart(2,"0");
+   button.onclick=()=>{setModelChoice(item,model.id);dlg.close();draw();speak("Hai scelto "+model.title+". Premi «RIGENERA CON QUESTO MODELLO» nella scheda per creare la versione da approvare.")};
+   tile.append(name,img,note,button);
+  }catch(e){tile.textContent="Anteprima "+model.id+" non disponibile: "+e.message}
+ }
+}
+
+async function restoreArchived(item){
+ const v=vote(item),history=Array.isArray(v.history)?v.history:[];
+ if(!history.length){speak("Nessuna grafica precedente archiviata.");return}
+ const dlg=el("compareDlg"),grid=el("compareGrid");
+ el("compareTitle").textContent="STORICO VERSIONI · "+item.listing_title;grid.replaceChildren();
+ dlg.showModal();
+ for(let i=history.length-1;i>=0;i--){
+  const h=history[i],tile=document.createElement("div");tile.className="compare-tile";
+  const name=document.createElement("b");name.textContent="Archiviata "+(h.saved_at||"")+" · "+(h.status||"");
+  const img=document.createElement("img");
+  if(h.url)img.src=h.url;
+  else if(h.preview_key){
+   const db=await previewDb();
+   if(db){img.alt="Versione archiviata";const tx=db.transaction("images","readonly");const req=tx.objectStore("images").get(h.preview_key);req.onsuccess=()=>img.src=req.result||""}
+  }
+  const restore=document.createElement("button");restore.textContent="RIPRISTINA QUESTA VERSIONE";
+  restore.onclick=async()=>{
+   if(state.busy.has(item.content_id))return;
+   if(!confirm("Ripristinare la grafica precedente? La versione attuale verrà archiviata prima del ripristino."))return;
+   try{
+    let uri=h.url;
+    if(h.preview_key){const db=await previewDb();uri=await new Promise((res,rej)=>{if(!db)return rej(Error("Archivio non disponibile"));const req=db.transaction("images","readonly").objectStore("images").get(h.preview_key);req.onsuccess=()=>res(req.result);req.onerror=()=>rej(Error("Non recuperabile"))})}
+    if(!uri)throw Error("Immagine archiviata non più disponibile");
+    await archiveGraphic(item,v);
+    if(uri.startsWith("data:")){await storePreview(item.content_id,uri);state.previews[item.content_id]=uri}
+    else{delete state.previews[item.content_id];const db=await previewDb();if(db)await new Promise((resolve,reject)=>{const tx=db.transaction("images","readwrite");tx.objectStore("images").delete(item.content_id);tx.oncomplete=resolve;tx.onerror=reject})}
+    v.model_id=h.model_id||null;v.graphic_version=h.graphic_version||GRAPHIC_VERSION;v.status=h.status==="ok"?"ok":"pending";
+    v.reviewed_at=v.status==="ok"?new Date().toISOString():null;
+    state.votes[item.content_id]=v;persist();dlg.close();draw();speak("Grafica precedente ripristinata. Nessun post programmato è stato modificato.");
+   }catch(e){speak("Ripristino non eseguito: "+e.message)}
+  };
+  tile.append(name,img,restore);grid.append(tile);
+ }
+}
+
 async function regenerate(item){
  if(vote(item).status==="eliminata")return;
  const id=item.content_id;if(state.busy.has(id))return;
@@ -301,10 +384,12 @@ async function regenerate(item){
  try{
   const next=v.attempts+1;
   // Always create a new graphic before changing the saved decision.
-  const newPreview=await buildVariant(item,next);
-  await storePreview(id,newPreview);state.previews[id]=newPreview;v.attempts=next;v.status="pending";v.graphic_version=GRAPHIC_VERSION;v.reviewed_at=null;
-  state.votes[id]=v;persist();speak("Nuova grafica creata (variante "+(next+1)+"). Scegli OK oppure SCARTA ancora.");
- }catch(e){v.status="scarta";state.votes[id]=v;persist();speak("Rigenerazione non riuscita: "+e.message+". Usa «Riprova generazione».")}
+  const chosen=selectModel(item);
+  const newPreview=await buildVariant(item,chosen);
+  await archiveGraphic(item,v);
+  await storePreview(id,newPreview);state.previews[id]=newPreview;v.attempts=next;v.status="pending";v.model_id=chosen;v.graphic_version=MODEL_VERSION;v.reviewed_at=null;
+  state.votes[id]=v;persist();speak("Nuova grafica creata con MODELLO "+String(chosen).padStart(2,"0")+" (tentativo "+next+"). La precedente è archiviata. Ora scegli OK oppure SCARTA.");
+ }catch(e){speak("Rigenerazione non riuscita: "+e.message+". La precedente grafica e la sua approvazione sono rimaste invariate; puoi riprovare.")}
  finally{state.busy.delete(id);draw()}
 }
 async function downloadOne(item){
@@ -512,15 +597,17 @@ async function downloadFlyerA5(){
  speak("PDF A5 generato: "+sheets+" fogli, "+pages+" facciate, 4 schede per facciata, "+eligible.length+" immobili unici approvati. QR verso annunci originali. "+(christmas?"Tema Natale attivo.":"Tema Natale dal 1 dicembre."));
 }
 function exportVotes(){
- const output={project:"Case in Pubblicità 24/7",exported_at:new Date().toISOString(),scope:"BROWSER_LOCAL_REVIEW_ONLY",meta_publish:false,items:state.entries.map(item=>({content_id:item.content_id,listing_id:item.listing_id,source_url:item.listing_url,status:vote(item).status,exclude_from_calendar:vote(item).status==="eliminata",removed_at:vote(item).removed_at||null,variant:vote(item).attempts+1,generated_variants:vote(item).attempts||0,reviewed_at:vote(item).reviewed_at||null}))};
+ const output={project:"Case in Pubblicità 24/7",exported_at:new Date().toISOString(),scope:"BROWSER_LOCAL_REVIEW_ONLY",meta_publish:false,items:state.entries.map(item=>({content_id:item.content_id,listing_id:item.listing_id,source_url:item.listing_url,status:vote(item).status,exclude_from_calendar:vote(item).status==="eliminata",removed_at:vote(item).removed_at||null,variant:vote(item).attempts+1,model_id:vote(item).model_id||null,history_count:vote(item).history?.length||0,generated_variants:vote(item).attempts||0,reviewed_at:vote(item).reviewed_at||null}))};
  const blob=new Blob([JSON.stringify(output,null,2)],{type:"application/json"});const a=document.createElement("a");const href=URL.createObjectURL(blob);a.href=href;a.download="case247-approvazioni-grafiche.json";a.click();setTimeout(()=>URL.revokeObjectURL(href),1000)
 }
 el("filter").onchange=e=>{state.filters.filter=e.target.value;draw()};
 el("aud").onchange=e=>{state.filters.aud=e.target.value;draw()};
 el("search").oninput=e=>{state.filters.search=e.target.value;draw()};
+el("showModels").onclick=()=>{const item=state.entries.find(x=>x.town==="Avigliana"&&vote(x).status!=="eliminata")||state.entries.find(x=>vote(x).status!=="eliminata");if(item)compareSix(item);else speak("Nessuna scheda disponibile per il confronto.")};
 el("export").onclick=exportVotes;
 el("flyer").onclick=()=>{ window.location.href=BASE+"campagne/case247/opuscolo/"; };
 el("download").onclick=async()=>{const done=state.entries.filter(x=>vote(x).status==="ok");if(!done.length)return speak("Nessuna grafica ancora approvata.");for(const item of done){await downloadOne(item);await new Promise(r=>setTimeout(r,150))}speak("Avviato download delle "+done.length+" grafiche OK. Il browser potrebbe richiedere autorizzazione ai download multipli.")};
 el("close").onclick=()=>el("lightbox").close();
+el("closeCompare").onclick=()=>el("compareDlg").close();
 fetchData().catch(e=>speak("Errore caricamento: "+e.message));
 </script></body></html>
