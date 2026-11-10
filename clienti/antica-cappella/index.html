@@ -1,1 +1,97 @@
-<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Antica Cappella · Open Social Scheduler</title><link rel="stylesheet" href="./style.css"><script src="./app.js" defer></script></head><body><aside><a href="../../gestione/" class="brand">CASE IN PUBBLICITÀ <b>24/7</b></a><p class="eyebrow">AREA CLIENTI</p><h2>Antica Cappella</h2><p>Ristorante · Avigliana</p><nav aria-label="Scheduler"><a href="#connessioni">Connessioni</a><a href="#calendario">Calendario</a><a href="#archivio">Archivio contenuti</a></nav><a href="../../gestione/">← Torna alla Regia</a></aside><main><header><div><p class="eyebrow">OPEN SOCIAL SCHEDULER</p><h1>La regia di Antica Cappella</h1><p>Facebook e Instagram, calendario e contenuti del ristorante.</p></div><button id="logout" hidden>Esci</button></header><p id="message" role="status" aria-live="polite">Accedi per caricare i dati esistenti.</p><section id="login"><h2>Accesso riservato</h2><p>Usa l’account del precedente scheduler. Le autorizzazioni social rimangono conservate.</p><form id="loginForm"><label>Email<input id="email" type="email" autocomplete="username" required></label><label>Password<input id="password" type="password" autocomplete="current-password" required></label><button>Accedi</button></form></section><div id="workspace" hidden><section class="summary"><div><small>CLIENTE</small><strong>Antica Cappella</strong></div><div><small>PROGRAMMAZIONE ESISTENTE</small><strong id="program">—</strong></div><button id="reload">Aggiorna dati</button></section><section id="connessioni"><h2>Connessioni social</h2><p>I badge riportano lo stato registrato. La data dell’ultima verifica è indicata su ogni canale.</p><div id="channels" class="grid"></div></section><section id="calendario"><div class="section-head"><h2>Calendario</h2><label>Mese<input type="month" id="month"></label></div><p>Orari italiani · programmazione originale conservata.</p><div id="calendar" class="table-wrap"></div></section><section id="archivio"><h2>Archivio contenuti</h2><p>Contenuti esistenti, senza cancellazioni o riprogrammazioni.</p><div id="items" class="grid"></div><button id="more" hidden>Carica altri contenuti</button></section></div><footer>Area dedicata ad Antica Cappella · collegata alla Regia Case in Pubblicità 24/7</footer></main></body></html>
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="Studio editoriale Antica Cappella: archivio fotografico, copy personalizzati e piano Facebook e Instagram.">
+  <title>Antica Cappella · Regia social</title>
+  <link rel="stylesheet" href="./style.css?v=20261110-studio">
+  <script src="./studio.js?v=20261110-studio" defer></script>
+</head>
+<body class="studio-page">
+  <aside>
+    <a href="../../gestione/" class="brand">CASE IN PUBBLICITÀ <b>24/7</b></a>
+    <p class="eyebrow">CLIENTE · RISTORAZIONE</p>
+    <h2>Antica Cappella</h2><p>Avigliana · Ristorante dal 1883</p>
+    <nav aria-label="Regia social">
+      <a href="#panoramica">Panoramica</a>
+      <a href="#foto">Fotografie</a>
+      <a href="#programmazione">Piano editoriale</a>
+      <a href="#collegamenti">Facebook e Instagram</a>
+    </nav>
+    <a href="../../gestione/">← Regia centrale</a>
+  </aside>
+  <main>
+    <header class="studio-hero">
+      <div>
+        <p class="eyebrow">STUDIO SOCIAL · ACCESSO DIRETTO</p>
+        <h1>La regia di Antica Cappella</h1>
+        <p>Un solo archivio fotografico. Tre contenuti al giorno su Facebook e tre su Instagram, con didascalie differenziate e invito a prenotare.</p>
+      </div>
+      <a class="action call" href="tel:+390119311155">Prenotazioni · 011 931 1155</a>
+    </header>
+    <p id="message" role="status" aria-live="polite">Studio aperto senza codice. Nessun post viene pubblicato senza autorizzazione.</p>
+    <section id="panoramica">
+      <div class="section-head"><h2>Panoramica operativa</h2><span class="small-badge">Bozze · non pubblicate</span></div>
+      <div class="metric-grid">
+        <div class="metric"><small>FOTO NELL'ARCHIVIO LOCALE</small><strong id="photoCount">0</strong></div>
+        <div class="metric"><small>POST AL GIORNO</small><strong>3 FB + 3 IG</strong></div>
+        <div class="metric"><small>BOZZE GENERATE</small><strong id="draftCount">0</strong></div>
+        <div class="metric"><small>PRENOTAZIONI TRACCIATE</small><strong>Da configurare</strong></div>
+      </div>
+      <p class="notice">Le fotografie importate sono salvate <strong>solo su questo browser</strong>, non sui server e non su GitHub. Esporta il piano per conservarne una copia. Per inviare davvero i post a Meta occorrono account autorizzati e un servizio di pubblicazione attivo.</p>
+    </section>
+    <section id="foto">
+      <div class="section-head"><div><h2>Archivio fotografico</h2><p>Carica le tue foto, scegli l'argomento e descrivi ciò che si vede. Le caption verranno costruite sui dettagli reali, senza inventare piatti o offerte.</p></div></div>
+      <label for="photoInput" class="dropzone" id="dropzone">
+        <strong>Seleziona o trascina qui le fotografie</strong>
+        <span>JPG, PNG o WEBP · più immagini contemporaneamente · conservazione locale</span>
+        <input id="photoInput" type="file" accept="image/jpeg,image/png,image/webp" multiple>
+      </label>
+      <div id="gallery" class="photo-grid" aria-live="polite"><p>Non hai ancora caricato fotografie.</p></div>
+    </section>
+    <section id="programmazione">
+      <div class="section-head"><div><h2>Piano editoriale</h2><p>Ogni fascia oraria genera un post per Facebook e uno per Instagram. Le due piattaforme ricevono testi differenti.</p></div></div>
+      <div class="schedule-tools">
+        <label>Data di inizio <input id="startDate" type="date" required></label>
+        <label>Durata <select id="days"><option value="1">1 giorno</option><option value="7" selected>7 giorni</option><option value="14">14 giorni</option><option value="30">30 giorni</option></select></label>
+        <button id="generate" type="button">Genera bozze</button>
+        <button id="exportCsv" type="button" class="secondary" disabled>Esporta CSV</button>
+        <button id="exportJson" type="button" class="secondary" disabled>Esporta JSON</button>
+      </div>
+      <p class="notice">Orari proposti: <strong>10:00 · 16:00 · 20:00</strong> (Europe/Rome). Sono orari editoriali modificabili in fase di pubblicazione, non post già programmati su Meta. Prima dell'utilizzo controlla fotografie, nomi dei piatti, eventi e disponibilità.</p>
+      <p id="planStatus" class="plan-status">Carica almeno una fotografia descritta, poi genera le bozze.</p>
+      <div class="table-wrap">
+        <table class="draft-table">
+          <thead><tr><th>Quando</th><th>Canale</th><th>Fotografia</th><th>Caption · modificabile</th><th>Stato</th></tr></thead>
+          <tbody id="draftRows"></tbody>
+        </table>
+      </div>
+    </section>
+    <section id="collegamenti">
+      <h2>Facebook, Instagram e pubblicazione</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>Facebook</h3><span class="badge warning">Collegamento live non verificato</span>
+          <p>3 bozze al giorno. Ogni testo usa un taglio editoriale adatto a Facebook e include l'invito alla prenotazione.</p>
+          <a class="action secondary" href="https://business.facebook.com/" target="_blank" rel="noopener noreferrer">Apri Meta Business Suite</a>
+        </article>
+        <article class="card">
+          <h3>Instagram</h3><span class="badge warning">Collegamento live non verificato</span>
+          <p>3 bozze al giorno con caption specifiche per Instagram e hashtag territoriali. La pubblicazione richiede un account idoneo e autorizzato.</p>
+          <a class="action secondary" href="https://www.instagram.com/anticacappellaristorante/" target="_blank" rel="noopener noreferrer">Apri profilo indicato</a>
+        </article>
+      </div>
+      <p>Le integrazioni del precedente scheduler non sono state rimosse. La verifica dei token e l'associazione delle pagine restano nella <a href="./gestione-meta.html">gestione Meta protetta</a>. Non inserire mai password o token nei file pubblici di GitHub.</p>
+    </section>
+    <section class="strategy">
+      <h2>Obiettivo commerciale</h2>
+      <p>Mettere in evidenza cucina, ambienti, eventi e tradizione del ristorante, trasformando l'interesse in telefonate al <a href="tel:+390119311155"><strong>011 931 1155</strong></a>. Il contributo professionale è dichiarato senza sovrapporlo alla comunicazione del locale.</p>
+      <p><strong>Strategia e comunicazione digitale:</strong> Joseph Malafronte · Digital Strategist.</p>
+      <p><a href="https://www.anticacappella.it/" target="_blank" rel="noopener noreferrer">Sito del ristorante</a> · Via Lino Maritano 10, Avigliana (TO).</p>
+    </section>
+    <footer>Antica Cappella · Regia editoriale curata da Joseph Malafronte, Digital Strategist · Generazione di bozze, non pubblicazione automatica.</footer>
+  </main>
+</body>
+</html>
