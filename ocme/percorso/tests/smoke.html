@@ -8,7 +8,7 @@ function click(id){let el=d.getElementById(id);if(!el)throw Error('Pulsante asse
 let d;
 try{
 await wait(()=>frame.contentDocument?.getElementById('newFile'));d=frame.contentDocument;
-await wait(()=>d.getElementById('create')?.disabled===false);
+await wait(()=>d.body.dataset.ocmeReady==='1');
 const file=new File(['TEOREMA DEL COSENO\nUn triangolo ha lati a, b, c e angolo gamma.\nc² = a² + b² - 2ab cos gamma\nPer trovare un lato quando sono noti due lati e l angolo compreso si applica il teorema del coseno.\nLa formula permette di calcolare il terzo lato.\nESEMPIO\nSe a=3 e b=4 e angolo compreso 90 gradi, c=5.'],'carnot-test.txt',{type:'text/plain'});
 let dt=new DataTransfer();dt.items.add(file);d.getElementById('newFile').files=dt.files;input('newTopic','TEOREMA TEST AUTOMATICO');input('newSubject','Matematica');click('create');
 await wait(()=>!d.getElementById('organize').hidden);log(true,'Un solo caricamento ha creato la sessione');
