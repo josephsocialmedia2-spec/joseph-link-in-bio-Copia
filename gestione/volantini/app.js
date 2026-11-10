@@ -31,11 +31,23 @@ function fromCatalog(c,i=-1){return clean({title:i>=0?SEED_NAMES[i]:(c.title||''
 function initSeed(){if(state.properties.some(x=>x?.title))return;state.properties=SEED_SLUGS.map((slug,i)=>{let url='https://lasacraimmobiliare.it/products/'+slug;let c=catalog.find(x=>canonical(x.url)===canonical(url));return c?fromCatalog(c,i):clean({title:SEED_NAMES[i],url,city:cities[i],energy:SEED_ENERGY[i],ep:SEED_EP[i]})});persist()}
 function drawThemes(){let t=$('themes');t.innerHTML=STYLES.map((x,i)=>'<button class="theme-choice '+(state.style===i?'active':'')+'" data-theme="'+i+'"><span class="theme-sample" style="'+(i===2?'background:linear-gradient(180deg,#081426 30%,#152a3f 30%);border-color:#e0bf79':i===1?'background:linear-gradient(180deg,#e1eff9 30%,white 30%)':i===4?'background:linear-gradient(180deg,#010e22 30%,#081728 30%)':'')+'"><i></i><i></i><i></i></span><span><strong>'+esc(x.label)+'</strong><small>'+esc(x.desc)+'</small></span></button>').join('');
 t.querySelectorAll('button').forEach(b=>b.onclick=()=>{state.style=Number(b.dataset.theme);persist();render()});$('currentTheme').textContent=STYLES[state.style]?.label||'Modello 1'}
-function ensureQR(host,url){if(!host||!url)return;if(!window.QRCode){host.textContent='QR non disponibile';return}try{new window.QRCode(host,{text:url,width:256,height:256,colorDark:'#00162a',colorLight:'#fff',correctLevel:window.QRCode.CorrectLevel.L})}catch(e){host.textContent='QR non disponibile'}}
-function qrsAreReady(){return [...$('cards').querySelectorAll('.slot[data-idx]')].filter(el=>state.properties[Number(el.dataset.idx)]?.url).every(el=>el.querySelector('.qr canvas,.qr img'))&&!!$('whatsappQR').querySelector('canvas,img')}
-function card(p,i){if(!p?.title)return '<div class="slot empty" tabindex="0" data-idx="'+i+'" draggable="true">+ Inserisci immobile<br>'+String(i+1).padStart(2,'0')+'</div>';
-let img=sourcePhoto(p.img)?p.img:'',l=money(p.price),note=p.photoType==='illustrazione_sito'?' · immagine illustrativa':'';
-return '<article class="slot" tabindex="0" role="button" draggable="true" data-idx="'+i+'" aria-label="Modifica immobile '+(i+1)+'"><img class="photo" alt="" crossorigin="anonymous" src="'+esc(img)+'"><div class="stitle">'+esc(p.title)+'</div><div class="loc">⌖ '+esc(p.city||'Località da verificare')+'</div><div class="price '+(p.price===null?'long':'')+'">'+esc(l)+'</div><div class="ape"><b>Classe '+esc(p.energy||'da verificare')+'</b><br>EPgl,nren '+esc(p.ep||'da verificare')+'</div><div class="qr" id="qr-'+i+'"></div></article>'}
+function ensureQR(host,url){if(!host||!url)return;host.dataset.targetUrl=url;if(!window.QRCode){host.textContent='QR non disponibile';return}try{host.innerHTML='';new window.QRCode(host,{text:url,width:256,height:256,colorDark:'#00162a',colorLight:'#fff',correctLevel:window.QRCode.CorrectLevel.L})}catch(e){host.textContent='QR non disponibile'}}
+function qrsAreReady(){return [...$('cards').querySelectorAll('.slot[data-idx]')].every(el=>{let p=state.properties[Number(el.dataset.idx)];return !p?.title||(validUrl(p.url)&&el.querySelector('.qr')?.dataset.targetUrl===canonical(p.url)&&!!el.querySelector('.qr canvas,.qr img'))})&&$('whatsappQR').dataset.targetUrl===WA&&!!$('whatsappQR').querySelector('canvas,img')}
+function card(p,i){
+const xy='style="left:'+(6+(i%6)*186)+'px;top:'+(6+Math.floor(i/6)*179)+'px"';
+if(!p?.title)return '<div class="slot empty" '+xy+' tabindex="0" data-idx="'+i+'" draggable="true">+ Inserisci immobile<br>'+String(i+1).padStart(2,'0')+'</div>';
+const img=sourcePhoto(p.img)?p.img:'';
+const price=money(p.price);
+const apeClass=/^(A[1-4]|[B-G])$/i.test(p.energy||'')?p.energy.toLowerCase().replace(/[1-4]/g,''):'unknown';
+const placeIcon='<svg class="place-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C7.6 2 4 5.6 4 10c0 5.6 8 12 8 12s8-6.4 8-12c0-4.4-3.6-8-8-8zm0 11.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4z"/></svg>';
+return '<article class="slot" '+xy+' tabindex="0" role="button" draggable="true" data-idx="'+i+'" aria-label="Modifica immobile '+(i+1)+'">'+
+  '<img class="photo" alt="Foto: '+esc(p.title)+'" crossorigin="anonymous" src="'+esc(img)+'">'+
+  '<div class="stitle">'+esc(p.title)+'</div>'+
+  '<div class="loc">'+placeIcon+'<span class="loc-name">'+esc(p.city||'Località da verificare')+'</span></div>'+
+  '<div class="price badge-price '+(p.price===null?'long':'')+'" title="Prezzo dall’annuncio">'+esc(price)+'</div>'+
+  '<div class="ape badge-energy ape-'+esc(apeClass)+'"><b>Classe '+esc(p.energy||'da verificare')+'</b><br>EPgl,nren '+esc(p.ep||'da verificare')+'</div>'+
+  '<div class="qr" id="qr-'+i+'" aria-label="QR diretto alla scheda immobile '+(i+1)+'"></div></article>';
+}
 function render(){drawThemes();$('flyer').className='t-'+STYLES[Math.min(5,Math.max(0,state.style))].id;$('cards').innerHTML=state.properties.map(card).join('');
 $('cards').querySelectorAll('.slot').forEach(el=>{let i=Number(el.dataset.idx);if(state.properties[i]?.url&&validUrl(state.properties[i].url))ensureQR($('qr-'+i),canonical(state.properties[i].url));
 el.onclick=()=>openEditor(i);el.onkeydown=e=>{if(e.key==='Enter')openEditor(i)};el.ondragstart=e=>{e.dataTransfer.setData('text/plain',String(i))};el.ondragover=e=>e.preventDefault();el.ondrop=e=>{e.preventDefault();let f=Number(e.dataTransfer.getData('text/plain'));if(Number.isInteger(f)&&f>=0&&f<18){[state.properties[f],state.properties[i]]=[state.properties[i],state.properties[f]];persist();render()}}});
