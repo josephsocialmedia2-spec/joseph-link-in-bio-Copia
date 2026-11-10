@@ -75,11 +75,206 @@ hr{border:0;border-top:1px solid #315978;margin:15px 0}
 @media(max-width:1320px){.layout{grid-template-columns:238px minmax(0,1fr)}.layout>.pane:last-child{grid-column:1/-1}}
 @media(max-width:800px){.layout{display:block}.layout>.pane{margin-bottom:12px}header b{font-size:15px}.twocol{grid-template-columns:1fr}.twocol label.wide{grid-column:span 1}}
 @media print{@page{size:A4 landscape;margin:0}body{background:white!important}header,.layout>aside,.no-print,.tools,.stat,.pane h2,.help,.control{display:none!important}.layout{display:block!important;padding:0!important}.layout>.pane{background:white!important;padding:0!important;border:0!important;box-shadow:none!important}#previewBox{padding:0!important;overflow:visible!important}#scaler{width:297mm!important;height:210mm!important}#flyer{transform:scale(1)!important;position:relative!important;width:297mm!important;height:210mm!important;break-after:page!important}#externalPage.printable{display:block!important;break-before:page!important;width:297mm!important;height:210mm!important}#externalPage img{width:297mm;height:210mm;object-fit:contain}}
+
+/* CASE247 · PREMIUM LAYERED FLYER — 6 varianti — 297 × 210 mm */
+#flyer{
+  --paper:#f3faff;--card:#fff;--ink:#092545;--light:#ebf8ff;
+  --badge1:var(--c2);--badge2:var(--c1);
+  background:var(--paper);
+  isolation:isolate;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact
+}
+#flyer .flyer-head{
+  height:163px;position:relative;isolation:isolate;
+  background-image:
+    linear-gradient(90deg,rgba(2,30,64,.98) 0%,rgba(3,42,85,.93) 42%,rgba(3,72,121,.34) 67%,rgba(3,36,71,.72) 100%),
+    url("https://upload.wikimedia.org/wikipedia/commons/6/6f/Lago_Grande_di_Avigliana_%281%29.jpg");
+  background-repeat:no-repeat;background-position:center,center 48%;
+  background-size:cover,cover;
+  box-shadow:inset 0 -10px 0 #0b7ccc;
+}
+#flyer .flyer-head::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(ellipse at 69% 26%,transparent 3%,rgba(2,27,56,.14) 80%);
+  z-index:0;pointer-events:none
+}
+#flyer .flyer-head:after{
+  content:"";position:absolute;top:0;right:235px;bottom:0;width:240px;
+  background:linear-gradient(90deg,transparent,rgba(10,129,210,.18) 55%,rgba(2,20,49,.35));
+  z-index:0;pointer-events:none
+}
+#flyer .head-waves{
+  width:1122px;height:163px;position:absolute;inset:0;
+  pointer-events:none;z-index:1
+}
+#flyer .head-waves path{fill:none;stroke:var(--gold);stroke-width:3;opacity:.86}
+#flyer .brand{
+  z-index:5;display:flex;align-items:center;gap:13px;
+  font-size:26px;letter-spacing:-.65px;max-width:780px;
+  text-shadow:0 2px 5px rgba(0,24,49,.85)
+}
+#flyer .brand-mark{width:54px;height:52px;flex-shrink:0;filter:drop-shadow(0 2px 3px #0a2b58)}
+#flyer .brand-mark path,#flyer .brand-mark rect{fill:none;stroke:#fff;stroke-width:3.4;stroke-linejoin:round;stroke-linecap:round}
+#flyer .brand small{font-size:13px;line-height:1.2;max-width:580px}
+#flyer .flyer-head h1{
+  z-index:3;left:20px;bottom:29px;max-width:825px;
+  font-size:38px;color:#fff;text-shadow:0 3px 4px rgba(0,18,47,.85)
+}
+#flyer .flyer-head h1 span{
+  display:inline-block;vertical-align:middle;
+  font-size:72px;line-height:.87;padding:6px 12px;
+  color:#fff;background:linear-gradient(128deg,var(--c2),var(--c1));
+  border:2px solid rgba(158,224,255,.85);border-radius:13px;
+  text-shadow:0 4px 4px #082852;
+}
+#flyer .flyer-head p{
+  z-index:3;left:24px;bottom:8px;font-size:15px;
+  padding:2px 10px;background:linear-gradient(90deg,rgba(3,38,81,.88),transparent);
+  border-left:4px solid var(--gold);
+}
+#flyer .joseph{
+  right:10px;top:0;width:260px;height:161px;
+  padding:0 3px 0 0;gap:2px;z-index:8;
+  background:linear-gradient(95deg,transparent 8%,rgba(2,30,65,.72) 90%);
+}
+#flyer .joseph img{
+  width:135px;height:157px;object-fit:cover;object-position:center 18%;
+  align-self:flex-end;border-radius:36px 36px 0 0;border:0;
+  box-shadow:-4px 0 10px rgba(0,20,48,.35);
+}
+#flyer .joseph .name{
+  align-self:center;color:#fff;font-size:19px;
+  text-align:center;letter-spacing:-.3px;
+}
+#flyer .joseph .name small{
+  border-top:2px solid var(--gold);padding-top:7px;
+  font-size:12px;color:#e1f8ff;font-style:italic;
+}
+#flyer .flyer-body{
+  position:relative;display:block;padding:0;margin:0;
+  height:543px;background:
+    linear-gradient(150deg,var(--paper),#e7f3fb 45%,var(--paper));
+}
+#flyer .slot{
+  position:absolute;width:180px;height:173px;
+  overflow:hidden;background:var(--card);color:var(--ink);
+  border:1.3px solid var(--border);
+  box-shadow:0 2px 3px #001d3930;
+  border-radius:12px;
+}
+#flyer .slot::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:5px;
+  background:linear-gradient(90deg,var(--c1),var(--gold),var(--c2));
+  z-index:2;pointer-events:none
+}
+#flyer .slot .photo{
+  position:absolute;top:4px;left:4px;width:170px;height:78px;
+  border-radius:8px 8px 4px 4px;object-fit:cover;
+  background:linear-gradient(130deg,#e3f4fd,#bed9e9)
+}
+#flyer .slot .stitle{
+  position:absolute;top:82px;left:4px;right:4px;height:32px;
+  font-weight:850;font-size:11.8px;line-height:1.08;
+  overflow:hidden;padding:4px 4px 0;
+}
+#flyer .slot .loc{
+  position:absolute;top:115px;left:7px;right:4px;height:18px;
+  display:flex;align-items:center;gap:3px;min-width:0;
+  margin:0;padding:0;color:var(--c2);
+  font-size:10.5px;font-weight:700;
+}
+#flyer .slot .loc .place-icon{width:12px;height:12px;flex:none;fill:var(--c2)}
+#flyer .slot .loc .loc-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#flyer .slot .price{
+  position:absolute;top:136px;bottom:auto;
+  height:23px;left:6px;right:59px;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;border-radius:7px;
+  background:linear-gradient(115deg,var(--badge1),var(--badge2));
+  color:white;text-shadow:0 1px 1px #00324b;
+  font-size:14px;font-weight:900;font-style:italic;
+  white-space:nowrap;box-shadow:inset 0 1px 1px #ffffff5c;
+}
+#flyer .slot .price.long{font-size:8.5px;padding:0 1px;text-align:center;white-space:normal}
+#flyer .slot .ape{
+  position:absolute;bottom:5px;left:8px;right:59px;
+  line-height:1.16;font-size:9.4px;letter-spacing:-.2px;
+  color:inherit;white-space:nowrap
+}
+#flyer .slot .ape b{font-size:9.7px}
+#flyer .slot .ape b:before{
+  content:"";display:inline-block;
+  width:9px;height:8px;margin-right:4px;
+  border-radius:0 5px 5px 0;
+  background:#e8a51b
+}
+#flyer .slot .ape.ape-g b:before{background:#c93139}
+#flyer .slot .ape.ape-a b:before,#flyer .slot .ape.ape-b b:before,#flyer .slot .ape.ape-c b:before{background:#55a83f}
+#flyer .slot .qr{
+  position:absolute;right:4px;bottom:4px;
+  height:53px;width:53px;padding:2px;background:white;
+  box-shadow:0 0 0 1px rgba(37,89,129,.22);border-radius:4px
+}
+#flyer .slot .qr img,#flyer .slot .qr canvas{width:49px!important;height:49px!important}
+#flyer .slot.empty{display:flex;align-items:center;justify-content:center}
+#flyer .flyer-foot{
+  height:88px;position:relative;isolation:isolate;
+  background:linear-gradient(106deg,var(--c1) 0%,var(--c2) 65%,var(--c1) 100%);
+  border-top:4px solid var(--gold);
+  padding:7px 14px 13px;gap:14px
+}
+#flyer .flyer-foot::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(135deg,transparent 40%,#ffffff17 57%,transparent 79%);
+  pointer-events:none;z-index:-1
+}
+#flyer .flyer-foot .meta{max-width:52%;position:relative}
+#flyer .flyer-foot .meta strong{font-size:22px;font-style:italic;letter-spacing:-.4px}
+#flyer .flyer-foot .wa{gap:13px}
+#flyer .flyer-foot .wa strong{
+  display:inline-block;color:#052e56;
+  background:#fff;padding:1px 9px;border-radius:15px;
+  font-size:25px;letter-spacing:.2px;
+}
+#flyer .flyer-foot .fine{bottom:2px;font-size:8px}
+#flyer.t-editorial{--paper:#f4fbff;--card:#fff;--ink:#071e35;--badge1:#0075ba;--badge2:#0c3d65}
+#flyer.t-editorial .flyer-head{
+  background-image:linear-gradient(90deg,rgba(243,250,255,.98) 0%,rgba(231,245,255,.96) 46%,rgba(34,113,175,.46) 72%,rgba(6,40,81,.77) 100%),
+  url("https://upload.wikimedia.org/wikipedia/commons/6/6f/Lago_Grande_di_Avigliana_%281%29.jpg")
+}
+#flyer.t-editorial .brand,#flyer.t-editorial .brand small,#flyer.t-editorial .flyer-head h1{color:#082d55;text-shadow:none}
+#flyer.t-editorial .brand-mark path,#flyer.t-editorial .brand-mark rect{stroke:#0b447e}
+#flyer.t-editorial .flyer-head h1 span{color:white}
+#flyer.t-editorial .flyer-body{background:#fff}
+#flyer.t-gold{--paper:#07172a;--card:#0e2746;--ink:#fff;--badge1:#aa7d27;--badge2:#0d3553}
+#flyer.t-gold .flyer-head{background-image:linear-gradient(90deg,rgba(2,10,26,.98) 0%,rgba(8,20,39,.94) 48%,rgba(10,40,66,.61) 75%,rgba(4,21,42,.94) 100%),url("https://upload.wikimedia.org/wikipedia/commons/6/6f/Lago_Grande_di_Avigliana_%281%29.jpg")}
+#flyer.t-gold .slot{background:var(--card);color:var(--ink);box-shadow:0 2px 4px #0006}
+#flyer.t-gold .slot .loc{color:#efd08c}
+#flyer.t-gold .slot .loc svg{fill:#efd08c}
+#flyer.t-gold .flyer-body{background:linear-gradient(130deg,#060e21,#142a45)}
+#flyer.t-impact{--paper:#e8f7ff;--card:#fff;--ink:#062b54;--badge1:#009bed;--badge2:#02477b}
+#flyer.t-impact .flyer-head{background-image:linear-gradient(90deg,rgba(1,31,91,.97) 0%,rgba(0,91,181,.80) 50%,rgba(0,104,190,.26) 74%,rgba(1,30,78,.80) 100%),url("https://upload.wikimedia.org/wikipedia/commons/6/6f/Lago_Grande_di_Avigliana_%281%29.jpg")}
+#flyer.t-impact .slot{border-width:2px;box-shadow:0 3px 2px #0765ab30}
+#flyer.t-midnight{--paper:#061123;--card:#0c1e35;--ink:#f3f8ff;--badge1:#00b3ff;--badge2:#093367}
+#flyer.t-midnight .flyer-head{background-image:linear-gradient(90deg,rgba(1,8,21,.99) 0%,rgba(2,19,43,.94) 49%,rgba(1,30,61,.50) 74%,rgba(0,10,29,.90) 100%),url("https://upload.wikimedia.org/wikipedia/commons/6/6f/Lago_Grande_di_Avigliana_%281%29.jpg")}
+#flyer.t-midnight .flyer-body{background:linear-gradient(130deg,#071226,#051529)}
+#flyer.t-midnight .slot{background:var(--card);color:var(--ink)}
+#flyer.t-midnight .slot .loc{color:#a5e3ff}
+#flyer.t-midnight .slot .loc svg{fill:#a5e3ff}
+#flyer.t-signature{--paper:#f0fbff;--card:#fff;--ink:#092447;--badge1:#00b5e5;--badge2:#0a4787}
+#flyer.t-signature .flyer-head{background-image:linear-gradient(90deg,rgba(2,32,74,.96) 0%,rgba(4,69,120,.79) 51%,rgba(5,124,178,.29) 76%,rgba(2,44,81,.70) 100%),url("https://upload.wikimedia.org/wikipedia/commons/6/6f/Lago_Grande_di_Avigliana_%281%29.jpg")}
+#flyer.t-signature .joseph{width:310px}
+#flyer.t-signature .joseph img{width:165px}
+#flyer.t-signature .brand{font-size:25px}
+#flyer.t-signature .flyer-head h1{font-size:34px}
+#flyer .theme-photo-credit{display:none}
+@media print{#flyer{box-shadow:none!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}}
+
 </style>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
-<script defer src="app.js?v=20261110-r1"></script>
+<script defer src="app.js?v=20261110-premium-r2"></script>
 </head><body>
 <header><div><b>⌂ CASE IN PUBBLICITÀ <em>24/7</em></b><small>Studio Volantini · 18 immobili · A4 orizzontale</small></div><a href="../">Torna alla regia centrale</a></header>
 <div class="layout">
@@ -92,12 +287,15 @@ hr{border:0;border-top:1px solid #315978;margin:15px 0}
 <main class="pane"><div class="control no-print" style="align-items:center;justify-content:space-between"><h2 style="margin:0">Anteprima interna modificabile</h2><span class="badge" id="currentTheme">Modello 1</span></div>
 <div class="tools no-print"><button id="zoomMinus">− Zoom</button><button id="zoomPlus">+ Zoom</button><button id="print" class="primary">Stampa bozza</button><button id="pdf" class="good">Scarica PDF A4 fronte-retro</button></div>
 <div id="previewBox"><div id="scaler"><div id="flyer" class="t-cobalto">
-<section class="flyer-head"><div class="brand">⌂ CASE IN PUBBLICITÀ <em>24/7</em><small>Avigliana e territorio circostante · Portafoglio La Sacra Immobiliare</small></div><h1><span>18</span> IMMOBILI IN EVIDENZA</h1><p id="tagline">Opportunità immobiliari presentate con visibilità 24/7.</p><div class="joseph"><img id="portrait" alt="Fotografia di Joseph Malafronte"><div class="name">Joseph<br>Malafronte<small>Digital Strategist</small></div></div><div class="holiday-banner" id="holidayBanner" hidden></div></section>
+<section class="flyer-head" aria-label="Intestazione Case in Pubblicità 24/7 con panorama di Avigliana">
+<svg class="head-waves" viewBox="0 0 1122 163" aria-hidden="true"><path d="M0 117 Q185 69 380 94 T775 89 T1122 85"/><path d="M0 149 Q170 118 372 128 T777 117 T1122 108" opacity=".5"/></svg>
+<div class="brand"><svg class="brand-mark" viewBox="0 0 56 56" aria-hidden="true"><path d="M4 29 28 6 52 29 M12 25 V51 H44 V25"/><rect x="24" y="29" width="9" height="10"/><rect x="35" y="29" width="6" height="7"/></svg><div>CASE IN PUBBLICITÀ <em>24/7</em><small>Avigliana e territorio circostante · Portafoglio La Sacra Immobiliare</small></div></div>
+<h1><span>18</span> IMMOBILI IN EVIDENZA</h1><p id="tagline">Opportunità immobiliari presentate con visibilità 24/7.</p><div class="joseph"><img id="portrait" alt="Fotografia originale di Joseph Malafronte"><div class="name">Joseph<br>Malafronte<small>Digital Strategist</small></div></div><div class="holiday-banner" id="holidayBanner" hidden></div></section>
 <div class="flyer-body" id="cards"></div>
-<footer class="flyer-foot"><div class="meta"><strong>Joseph Malafronte</strong><div>Digital Strategist · Partner commerciale di Immobiliare La Sacra</div><div>Agenzia: Piazza del Comune XXV Aprile, 1 · Sant'Ambrogio di Torino (TO)</div></div><div class="wa"><div>Contattami su WhatsApp<br><strong>371 370 8294</strong></div><div class="qr" id="whatsappQR"></div></div><div class="fine">CASE IN PUBBLICITÀ 24/7 · Solo marketing e pubblicità · Mediazione riservata a professionisti abilitati · Verificare APE prima della distribuzione</div></footer>
+<footer class="flyer-foot"><div class="meta"><strong>Joseph Malafronte</strong><div>Digital Strategist · Partner commerciale di Immobiliare La Sacra</div><div>Agenzia: Piazza del Comune XXV Aprile, 1 · Sant'Ambrogio di Torino (TO)</div></div><div class="wa"><div>Contattami su WhatsApp<br><strong>371 370 8294</strong></div><div class="qr" id="whatsappQR"></div></div><div class="fine">CASE IN PUBBLICITÀ 24/7 · Solo marketing e pubblicità · Mediazione riservata a professionisti abilitati · Verificare APE prima della distribuzione · Panorama: Tournasol7 / CC BY 4.0</div></footer>
 </div></div></div>
 <div class="tools no-print"><button id="clearSlot">Svuota la scheda selezionata</button><button id="restore">Ripristina 18 esempi</button><button id="save">Salva il progetto</button><button id="exportJSON">Esporta JSON</button><label style="flex:1">Carica progetto JSON<input type="file" id="importJSON" accept="application/json"></label></div>
-<div id="status" class="stat warn" role="status">Verificare i dati prima della stampa.</div><p class="muted help">Clicca una scheda per modificarla; trascina le schede per riordinarle. Ogni scheda usa il proprio URL La Sacra. Il QR WhatsApp è indipendente.</p></main>
+<div id="status" class="stat warn" role="status">Verificare i dati prima della stampa.</div><p class="muted help">Panorama di Avigliana: <a href="https://commons.wikimedia.org/wiki/File:Lago_Grande_di_Avigliana_(1).jpg" target="_blank" rel="noopener noreferrer">Tournasol7 / CC BY 4.0</a>. Clicca una scheda per modificarla; trascina le schede per riordinarle. Ogni scheda usa il proprio URL La Sacra. Il QR WhatsApp è indipendente.</p></main>
 <aside class="pane"><h2>4 · Campagne festività religiose</h2><p class="muted">Prepara una variante del volantino 30 giorni prima della ricorrenza. I pulsanti non pubblicano automaticamente sui social.</p><div class="holidays" id="holidays"></div><div class="stat" id="holidayInfo">Nessuna campagna selezionata.</div><div class="control"><button id="ics">Scarica promemoria calendario</button><button id="noHoliday">Rimuovi tema festivo</button></div><hr><h2>5 · Controlli per la pubblicazione</h2><div class="stat" id="checks">Preparazione…</div><div class="muted">I dati energetici devono essere verificati sugli attestati APE originali. Un URL e un QR corretti non provano la disponibilità dell'immobile.</div><hr><h2>Formato di stampa</h2><p class="muted">Una facciata interna con 18 annunci, una facciata esterna caricata manualmente. Due pagine PDF corrispondono a un solo foglio fisico A4 fronte-retro.</p></aside></div>
 <dialog id="modal"><div class="control" style="justify-content:space-between"><h2 id="slotHeading">Scheda immobile</h2><button id="closeModal">✕ Chiudi</button></div><div class="twocol">
 <label class="wide">Titolo<input id="eTitle"></label><label>Comune<input id="eCity"></label><label>Prezzo in €<input id="ePrice" inputmode="decimal"></label>
