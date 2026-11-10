@@ -51,11 +51,11 @@ textarea{min-height:85px;resize:vertical}label{font-size:12px;color:#d6efff;disp
 .slot .photo{display:block;width:100%;height:83px;object-fit:cover;background:#e5eff7}
 .slot .stitle{height:32px;overflow:hidden;font-size:12px;font-weight:850;padding:4px 6px 0;line-height:1.04}
 .slot .loc{padding:0 6px;font-size:10.5px;color:#1461a5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.slot .price{position:absolute;bottom:34px;left:5px;right:57px;background:linear-gradient(120deg,var(--c2),var(--c1));border-radius:6px;color:#fff;text-align:center;font-size:15px;font-style:italic;font-weight:900;padding:2px}
+.slot .price{position:absolute;bottom:34px;left:5px;right:62px;background:linear-gradient(120deg,var(--c2),var(--c1));border-radius:6px;color:#fff;text-align:center;font-size:15px;font-style:italic;font-weight:900;padding:2px}
 .slot .price.long{font-size:9px;padding:6px 2px}
 .slot .ape{position:absolute;bottom:5px;left:7px;line-height:1.2;font-size:10.2px}
-.slot .qr{position:absolute;right:4px;bottom:4px;width:49px;height:49px;background:white;padding:1px;border-radius:1px}
-.slot .qr img,.slot .qr canvas{width:47px!important;height:47px!important}
+.slot .qr{position:absolute;right:4px;bottom:4px;width:55px;height:55px;background:white;padding:1px;border-radius:1px}
+.slot .qr img,.slot .qr canvas{width:53px!important;height:53px!important}
 .slot.empty{display:flex;align-items:center;justify-content:center;color:#366182;font-weight:700;font-size:13px;text-align:center}
 .flyer-foot{height:88px;padding:9px 17px 12px;position:relative;background:linear-gradient(110deg,var(--c1),var(--c2) 68%,var(--c1));color:white;display:flex;justify-content:space-between;gap:20px}
 .flyer-foot strong{font-size:22px}.flyer-foot .meta{font-size:12px;line-height:1.5;max-width:52%}.flyer-foot .wa{font-size:15px;font-weight:700;display:flex;gap:10px;align-items:center}
@@ -103,7 +103,7 @@ hr{border:0;border-top:1px solid #315978;margin:15px 0}
 <label class="wide">Titolo<input id="eTitle"></label><label>Comune<input id="eCity"></label><label>Prezzo in €<input id="ePrice" inputmode="decimal"></label>
 <label>Classe energetica<input id="eEnergy" placeholder="A4 ... G"></label><label>EPgl,nren (kWh/m² anno)<input id="eEp"></label><label class="wide">URL annuncio La Sacra<input id="eUrl"></label><label>Contratto<select id="eContract"><option>Vendita</option><option>Affitto</option><option>Da verificare</option></select></label>
 <label>Fonte fotografia<select id="ePhotoType"><option value="foto_originale">Fotografia originale</option><option value="illustrazione_sito">Immagine illustrativa sul sito</option><option value="da_verificare">Da verificare</option></select></label>
-<label class="wide">Sostituisci fotografia<input id="ePhoto" type="file" accept="image/*"></label>
+<label class="wide">Sostituisci fotografia<input id="ePhoto" type="file" accept="image/*"></label><label class="wide"><input type="checkbox" id="eChecked" style="width:auto;margin-right:8px">Confermo di avere verificato APE originale, disponibilità e dati dell’annuncio prima della diffusione</label>
 </div><div class="control"><button class="primary" id="saveSlot">Salva e genera QR</button><button class="danger" id="deleteSlot">Elimina scheda</button></div><div id="modalError" class="muted"></div></dialog>
 <div id="externalPage"></div>
 </body></html>
