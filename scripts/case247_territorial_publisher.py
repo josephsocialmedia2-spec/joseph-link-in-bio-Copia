@@ -18,7 +18,7 @@ import urllib.parse
 import urllib.request
 from zoneinfo import ZoneInfo
 
-from case247_territorial_engine import ROOT, OUT, read_json, atomic_write, TZ
+from case247_territorial_engine import ROOT, OUT, read_json, atomic_write, TZ, listed_available, valid_picture
 
 GRAPH = "https://graph.facebook.com/v26.0"
 LEDGER = OUT / "publish-ledger.json"
@@ -131,6 +131,14 @@ def run(live=False,max_per_run=10):
         print("No verified current-day plan, nothing sent")
         return
     all_towns=read_json(CONFIG)["towns"]
+    latest_catalog=read_json(ROOT / "immobili/catalogo.json", {})
+    catalog_by_id={str(p["id"]):p for p in latest_catalog.get("items",[])}
+    checked_at=latest_catalog.get("last_success_at")
+    if not checked_at:
+        raise SystemExit("No successful catalog read; refusing all publisher sends")
+    source_age=now.astimezone(dt.timezone.utc)-dt.datetime.fromisoformat(checked_at.replace("Z","+00:00"))
+    if source_age > dt.timedelta(hours=36):
+        raise SystemExit("Catalog older than 36h; refusing publication")
     by_id={t["id"]:t for t in all_towns}
     if live:
         credentials=json.loads(os.environ["CASE247_TERRITORIAL_ACCOUNTS_JSON"])
@@ -147,6 +155,15 @@ def run(live=False,max_per_run=10):
         key=f"{item['date']}:{item['type']}:{item.get('listing_id',item.get('graphic_id'))}"
         if key in entries:  # includes INTENT and errors: NEVER blindly retry
             continue
+        if item["type"]=="IMMOBILE":
+            current=catalog_by_id.get(item["listing_id"])
+            if (not current or not listed_available(current) or not valid_picture(current.get("image"))
+                or current.get("image") != item["media_url"]
+                or current.get("price") != item.get("price")
+                or current.get("title") != item.get("title")
+                or current.get("url") != item.get("source_url")):
+                print(f"BLOCKED_CATALOG_CHANGED {key}: waiting for next reconciliation")
+                continue
         acct=account_for(item,credentials,by_id) if live else None
         if live and not acct:
             print(f"BLOCKED_CHANNEL {item['town_id']}/{item['network']}")
