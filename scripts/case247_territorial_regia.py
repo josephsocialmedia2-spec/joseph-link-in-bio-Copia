@@ -44,7 +44,7 @@ def plan(catalog, territory, media, coordinates, day, existing=None):
     existing = existing or []
     towns = territory.get("towns",[])
     town_coords = coordinates.get("towns",{})
-    slots = [("facebook" if day.toordinal()%2 == 0 else "instagram", "instagram" if day.toordinal()%2 == 0 else "facebook")]
+    starting_network = "facebook" if day.toordinal() % 2 == 0 else "instagram"
     accounts = []
     for town in towns:
         for network in ("facebook","instagram"):
@@ -64,7 +64,7 @@ def plan(catalog, territory, media, coordinates, day, existing=None):
         if source is None:
             blocked.append({"id":ident,"reason":"PROPERTY_COORDINATES_REQUIRED_FOR_STRICT_20KM"});continue
         options=[]
-        preferred = slots[0][0]
+        preferred = starting_network if len(assigned) % 2 == 0 else ("instagram" if starting_network == "facebook" else "facebook")
         for town, network in accounts:
             dest=coord(town_coords.get(town["id"]))
             if dest is None: continue
