@@ -48,12 +48,12 @@ button.primary{background:linear-gradient(150deg,#008ccf,#07589f);border-color:#
 .card{position:relative;min-width:0;min-height:0;overflow:hidden;background:var(--card);color:var(--ink);border:1px solid var(--edge);border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,.08);cursor:pointer}
 .card::before{content:"";position:absolute;z-index:2;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--navy),var(--gold),var(--cyan))}
 .card .property-photo{position:absolute;top:4px;left:4px;right:4px;width:calc(100% - 8px);height:72px;object-fit:cover;border-radius:8px 8px 5px 5px;background:#d3e9f6}
-.card .property-title{position:absolute;top:78px;left:6px;right:70px;height:32px;overflow:hidden;font-size:9.3px;font-weight:900;line-height:1.08;overflow-wrap:anywhere;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3}
-.card .property-city{position:absolute;top:111px;left:6px;right:73px;height:15px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;color:var(--cyan);font-size:10px;font-weight:800}
+.card .property-title{position:absolute;top:78px;left:6px;right:76px;height:32px;overflow:hidden;font-size:9.3px;font-weight:900;line-height:1.08;overflow-wrap:anywhere;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3}
+.card .property-city{position:absolute;top:111px;left:6px;right:76px;height:15px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;color:var(--cyan);font-size:10px;font-weight:800}
 .card .property-city::before{content:"● ";font-size:10px}
-.card .price-badge{position:absolute;top:130px;left:5px;right:73px;height:22px;display:flex;align-items:center;justify-content:center;border-radius:8px;color:white;font-size:13.5px;font-weight:900;font-style:italic;background:linear-gradient(110deg,var(--cyan),var(--navy));white-space:nowrap;overflow:hidden;padding:0 2px;text-shadow:0 1px #002b5f}
+.card .price-badge{position:absolute;top:128px;left:5px;right:76px;height:21px;display:flex;align-items:center;justify-content:center;border-radius:8px;color:white;font-size:13.5px;font-weight:900;font-style:italic;background:linear-gradient(110deg,var(--cyan),var(--navy));white-space:nowrap;overflow:hidden;padding:0 2px;text-shadow:0 1px #002b5f}
 .card .price-badge.is-unknown{white-space:normal;line-height:1.05;font-size:8.7px;text-align:center}
-.card .energy{position:absolute;bottom:3px;left:8px;right:75px;white-space:nowrap;overflow:hidden;font-size:7px;line-height:1.16}
+.card .energy{position:absolute;bottom:1px;left:8px;right:76px;white-space:nowrap;overflow:hidden;font-size:7px;line-height:1.16}
 .card .energy .class::before{content:"";display:inline-block;width:8px;height:7px;background:#d7a321;margin-right:3px;border-radius:1px 4px 4px 1px}
 .card .energy.energy-f .class::before,.card .energy.energy-g .class::before{background:#d55641}
 .card .energy.energy-a .class::before,.card .energy.energy-b .class::before,.card .energy.energy-c .class::before{background:#4c9e5b}
