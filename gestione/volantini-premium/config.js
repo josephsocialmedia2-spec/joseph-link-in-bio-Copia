@@ -13,7 +13,7 @@ window.CASE247_CONFIG = Object.freeze({
   allowedHostnames: ['lasacraimmobiliare.it', 'www.lasacraimmobiliare.it'],
   imageFallback: './assets/foto-non-disponibile.svg',
   panoramaFallback: './assets/territorio-placeholder.svg',
-  portraitFallback: './assets/joseph-scontornato.png',
+  portraitFallback: '/joseph-link-in-bio-Copia/assets/joseph-malafronte.webp',
   // Inserire nel progetto un panorama fotografico originale e autorizzato, poi aggiornare qui:
   panoramaReal: '',
   outputName: 'CASE247_volantino_premium_A4.pdf',
