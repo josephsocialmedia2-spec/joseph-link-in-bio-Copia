@@ -36,6 +36,33 @@
       distanceKm(+town.lat,+town.lon,lat,lon) <= MAX_RADIUS_KM + 1e-9
     ));
   }
+
+  // Add only actual, provider-verified territorial social accounts.
+  // This single shared script powers all 41 town landings.
+  async function renderVerifiedSocialLinks(){
+    if(!townId)return;
+    const subtitle=root.querySelector('.sub');
+    if(!subtitle)return;
+    try{
+      const api='https://qmeftxsdfeyqozwoivzo.supabase.co/functions/v1/case247-public-territory-social?town_id='+encodeURIComponent(townId);
+      const response=await fetch(api,{cache:'no-cache'});
+      if(!response.ok)return;
+      const data=await response.json();
+      if(!data.verified||!data.facebook_url||!data.instagram_url)return;
+      const fb=new URL(data.facebook_url),ig=new URL(data.instagram_url);
+      if(!['facebook.com','www.facebook.com'].includes(fb.hostname.toLowerCase()))return;
+      if(!['instagram.com','www.instagram.com'].includes(ig.hostname.toLowerCase()))return;
+      const nav=element('nav','town-social-links');
+      nav.setAttribute('aria-label','Social ufficiali del territorio');
+      const lead=element('strong','', 'Segui Case in Pubblicità 24/7 · '+(root.dataset.townName||townId));
+      const facebook=element('a','town-social-facebook','Facebook '+(root.dataset.townName||townId));
+      facebook.href=fb.href;facebook.target='_blank';facebook.rel='noopener noreferrer';
+      const instagram=element('a','town-social-instagram','Instagram '+(root.dataset.townName||townId));
+      instagram.href=ig.href;instagram.target='_blank';instagram.rel='noopener noreferrer';
+      nav.append(lead,facebook,instagram);
+      subtitle.insertAdjacentElement('afterend',nav);
+    }catch(_){/* No verified links available: do not display placeholders. */}
+  }
   function setMode(value) {
     mode = value; page = 1;
     root.querySelectorAll('[data-mode]').forEach(button => {
@@ -117,6 +144,7 @@
       button.onclick = () => { page = n; render(); $('#result-count').scrollIntoView({block: 'start'}); }; pages.append(button);
     }
   }
+  if(townId)renderVerifiedSocialLinks();
   root.querySelectorAll('[data-mode]').forEach(button => button.onclick = () => setMode(button.dataset.mode));
   for (const selector of ['#property-search', '#property-budget', '#property-type', '#property-sort']) $(selector).addEventListener('input', () => { page = 1; render(); });
   $('#reset-filters').onclick = () => { $('#property-search').value = ''; $('#property-budget').value = '0'; $('#property-type').value = ''; $('#property-sort').value = 'recent'; setMode('all'); };

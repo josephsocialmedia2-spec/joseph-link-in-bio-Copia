@@ -6,3 +6,14 @@ body{margin:0}#case-preview .nav-link{font:inherit;color:#526563;text-decoration
 #case247-territorio th,#case247-territorio td{padding:12px;border-bottom:1px solid #dce7e0;vertical-align:top}
 
 #case-preview .territorial-section{margin:28px 0 42px}#case-preview .territorial-section>h2{font-size:26px;margin-bottom:20px}#case-preview .location{font-size:13px;color:var(--muted)}
+
+
+/* CASE247 town social links are inserted only after Meta-provider verification. */
+.town-social-links{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:16px 0;
+ padding:12px 14px;background:#f0f8f5;border:1px solid #b7d8ce;border-radius:10px}
+.town-social-links strong{flex-basis:100%;color:#17483a;font-size:14px}
+.town-social-links a{display:inline-flex;padding:8px 12px;border-radius:7px;
+ background:#17567b;color:#fff;text-decoration:none;font-size:13px;font-weight:700}
+.town-social-links a:hover,.town-social-links a:focus-visible{background:#0a3b61;text-decoration:underline}
+.town-social-links a.town-social-instagram{background:#783c88}
+.town-social-links a.town-social-instagram:hover,.town-social-links a.town-social-instagram:focus-visible{background:#582967}

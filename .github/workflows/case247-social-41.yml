@@ -8,6 +8,9 @@ on:
       - gestione/territori/**
       - gestione/index.html
       - immobili/catalogo.js
+      - immobili/catalogo.css
+      - supabase/functions/case247-public-territory-social/**
+      - scripts/test_case247_public_social_links.py
       - scripts/test_case247_social_41.py
       - .github/workflows/case247-social-41.yml
   push:
@@ -19,6 +22,9 @@ on:
       - gestione/territori/**
       - gestione/index.html
       - immobili/catalogo.js
+      - immobili/catalogo.css
+      - supabase/functions/case247-public-territory-social/**
+      - scripts/test_case247_public_social_links.py
       - scripts/test_case247_social_41.py
   workflow_dispatch:
 permissions:
@@ -39,8 +45,10 @@ jobs:
         run: python -m unittest discover -s scripts -p test_case247_social_41.py -v
       - name: Preserve Avigliana OAuth pilot and no-send safety checks
         run: python -m unittest discover -s scripts -p test_case247_avigliana_pilot.py -v
-      - name: Verify shared 20km landing catalog JS
-        run: node --check immobili/catalogo.js
+      - name: Verify public links safety and shared 20km landing catalog JS
+        run: |
+          python -m unittest discover -s scripts -p test_case247_public_social_links.py -v
+          node --check immobili/catalogo.js
       - name: No unsafe social sends in onboarding Edge Function
         run: |
           if grep -E -q '/photos|/media_publish|setTimeout.*publish' supabase/functions/case247-territory-connect/index.ts; then
