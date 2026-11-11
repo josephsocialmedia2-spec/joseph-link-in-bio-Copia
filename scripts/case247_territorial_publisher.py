@@ -130,6 +130,14 @@ def run(live=False,max_per_run=10):
     if not plan or plan.get("date")!=now.date().isoformat():
         print("No verified current-day plan, nothing sent")
         return
+    # External Metricool central calendar must be checked recently or the
+    # uniqueness promise cannot be honored across both scheduling systems.
+    central=read_json(OUT / "metricool-central-reservations.json", {})
+    checked=central.get("checked_at")
+    if live and (not checked or (now.date()-dt.date.fromisoformat(checked)).days > 1):
+        raise SystemExit("Metricool central calendar reconciliation is stale; live blocked")
+    central_reserved = {r.get("url") for r in central.get("reservations", {}).get(now.date().isoformat(), [])
+                        if r.get("url")}
     all_towns=read_json(CONFIG)["towns"]
     latest_catalog=read_json(ROOT / "immobili/catalogo.json", {})
     catalog_by_id={str(p["id"]):p for p in latest_catalog.get("items",[])}
@@ -154,6 +162,9 @@ def run(live=False,max_per_run=10):
             continue
         key=f"{item['date']}:{item['type']}:{item.get('listing_id',item.get('graphic_id'))}"
         if key in entries:  # includes INTENT and errors: NEVER blindly retry
+            continue
+        if item.get("source_url") in central_reserved:
+            print(f"BLOCKED_METRICOOL_RESERVED {key}")
             continue
         if item["type"]=="IMMOBILE":
             current=catalog_by_id.get(item["listing_id"])
