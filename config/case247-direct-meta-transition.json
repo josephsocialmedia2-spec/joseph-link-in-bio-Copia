@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "provider": "META_GRAPH_API_DIRECT",
+  "mode": "FROZEN_LEGACY_SNAPSHOT",
+  "snapshot_date": "2026-11-11",
+  "verified_through": "2027-02-28",
+  "last_legacy_publish_day": "2026-12-09",
+  "expected_legacy_posts": 32,
+  "no_new_metricool_scheduling": "REQUIRED_OPERATIONAL_POLICY",
+  "migration_status": "TECHNICAL_READY_CHANNEL_AUTH_PENDING",
+  "notes": "Legacy reservations captured on 2026-11-11 from the existing central Metricool brand 7844901 (32 auto-publish items, no future items in checked period after 2026-12-09). The app's publisher uses this frozen snapshot, not Metricool. Do not add new Metricool schedules after this capture. Existing Meta connections and content must not be deleted. Live publishing remains disabled until verified territorial accounts and credentials are present."
+}

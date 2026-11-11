@@ -17,6 +17,7 @@ import unicodedata
 import urllib.parse
 import urllib.request
 from zoneinfo import ZoneInfo
+from case247_legacy_transition import load_reservations
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "config/case247-territorio.json"
@@ -357,12 +358,12 @@ def main():
     prev_fingerprints = read_json(OUT / "catalog-fingerprints.json", {})
     changes = normalize_changes(catalog["items"], prev_fingerprints)
     past_assignments = read_json(OUT / "previous-assignments.json", {})
-    central = read_json(OUT / "metricool-central-reservations.json", {})
-    reserved = {p.get("url") for p in central.get("reservations", {}).get(day, []) if p.get("url")}
+    # Import the frozen legacy overlap ONCE; never contact Metricool in daily jobs.
+    reserved = load_reservations(dt.date.fromisoformat(day), ROOT, OUT)
     plan = make_plan(day, catalog["items"], towns, geo, manifest["entries"],
                      past_assignments, reserved_urls=reserved)
-    plan["existing_central_metricool_reservations"] = len(reserved)
-    plan["metricool_reservations_checked_at"] = central.get("checked_at")
+    plan["legacy_central_reservations_excluded"] = len(reserved)
+    plan["publisher"] = "META_GRAPH_API_DIRECT"
     plan["generated_at"] = dt.datetime.now(dt.timezone.utc).isoformat()
     plan["source_snapshot_at"] = catalog["last_success_at"]
     plan["catalog_count"] = len(catalog["items"])
