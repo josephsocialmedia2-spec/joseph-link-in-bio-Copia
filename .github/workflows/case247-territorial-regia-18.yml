@@ -1,7 +1,7 @@
 name: CASE247 - Regia territoriale verifica ore 18
 on:
   schedule:
-    - cron: '0 17 * * *' # 18:00 Europe/Rome in winter, overridden by TZ below if supported
+    - cron: '0 18 * * *' # 18:00 Europe/Rome
       timezone: Europe/Rome
   workflow_dispatch:
 permissions:
