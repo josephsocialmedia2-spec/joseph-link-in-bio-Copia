@@ -1,51 +1,56 @@
-# CASE IN PUBBLICITÀ 24/7 — Diario operativo reale
+# Case in Pubblicità 24/7 — Dietro le quinte della PUBBLICITÀ
 
-## Obiettivo
-Raccontare con fotografie, brevi video e screenshot **autentici** il lavoro quotidiano necessario a costruire e distribuire le campagne immobiliari ad Avigliana. Non è una campagna di annunci o immagini promozionali finte: è il dietro le quinte operativo.
+**Ambito esclusivo:** progettazione, produzione, pubblicazione, distribuzione e misurazione della pubblicità immobiliare locale ad Avigliana.
 
-## Regole di produzione
-- Solo foto e video del lavoro effettivamente svolto, screenshot acquisiti dai software in uso. Vietati rendering o screenshot sintetici presentati come reali.
-- Prima della pubblicazione oscurare numeri, indirizzi privati, dati proprietari, conversazioni, nomi di contatti, importi e risultati riservati; richiedere autorizzazione per persone riconoscibili, locali e materiali non propri.
-- Non simulare chiamate, appuntamenti, moduli compilati, messaggi, richieste di amicizia, pubblicazioni, conversioni o vendite. Per i test, indicare chiaramente **TEST**.
-- Documentare l'orario effettivo e lo stato operativo, distinguendo bozza / in revisione / programmato / pubblicato.
-- Fotografare lo schermo **a fuoco** e riprendere la scena attorno (mano, mouse, tastiera, fogli, telefono); per leggibilità, abbinare screenshot reali censurati.
-- I contenuti del branch non sono approvati per la pubblicazione automatica. Pubblicazione solo dopo verifica delle immagini, dati e consensi.
-- Ruolo: marketing, comunicazione e pubblicità; non presentare Joseph come mediatore abilitato o come responsabile della compravendita.
+**Non mostrare:** lavoro dell'agenzia, telefonate d'agenzia, sopralluoghi commerciali, appuntamenti di mediazione, trattative, provvigioni, acquisizione incarichi o attività attribuibili a un mediatore immobiliare.
 
-## Sequenza editoriale di 7 giorni (adattare le date alle attività effettive)
+**Formato:** fotografia originale + Reel verticale 9:16 (10–25 secondi come formato iniziale da testare) + 2–3 Stories, ogni giorno **solo se l'azione è realmente avvenuta**. Ogni video mostra schermo, mano al lavoro, tasti, carta, QR e risultato verificabile. Non usare immagini generate per far credere che sia stato svolto un lavoro.
 
-| Giorno | Azione documentata | Foto/video da realizzare | Testo suggerito per il post | Stories (2-3) |
+## Settimana 1: contenuti pubblicitari documentati
+
+| Giorno | Focus | Riprese obbligatorie | Hook Reel | Testo sintetico in prima persona |
 |---|---|---|---|---|
-| 1 | **Giornata in agenzia: telefonate e organizzazione** | Foto laterale di postazione durante chiamata consentita, appunti, agenda e CRM oscurato; 5-8 secondi della scrivania al lavoro | "Oggi in agenzia: telefonate, appunti e organizzazione dei prossimi passaggi. Prima di una pubblicazione c'è un lavoro concreto di coordinamento." | Arrivo in ufficio; blocco chiamate senza dati; lista attività |
-| 2 | **Costruzione dei flyer** | Mano sul mouse mentre impagina; prova A4 orizzontale, fronte/retro, revisione dati immobile e APE, QR code realmente funzionante; stampa di prova | "Oggi lavoro sui flyer di Avigliana. Impaginazione, fotografie, controllo dei dati e QR code: ogni materiale passa da una verifica prima della stampa." | Layout sul monitor; prova di stampa; verifica QR |
-| 3 | **Programmazione e pubblicazione oraria** | Calendario editoriale reale, ora visibile, post in bozza/approvato/pubblicato, schermata piattaforma con dati sensibili nascosti; screenshot per ogni slot documentato | "Oggi sto controllando le pubblicazioni programmate. Ogni contenuto ha un orario, un formato e uno stato da verificare. Programmare non significa dare per pubblicato." | Coda contenuti; slot orario; conferma effettiva solo se visibile |
-| 4 | **Preparazione e consegna flyer sul territorio** | Pile di volantini realmente stampati, conteggio, borsa e itinerario; consegna presso esercizio autorizzato, senza ritrarre persone senza consenso | "Oggi i materiali escono dal computer e arrivano sul territorio di Avigliana. Organizzo le consegne e registro dove i flyer vengono effettivamente distribuiti." | Materiali pronti; percorso; consegna autorizzata |
-| 5 | **Costruzione della rete locale e richieste di amicizia** | Schermata della propria attività Facebook con nominativi oscurati, ricerca locale e log dei contatti; nessun invio automatico massivo | "Oggi lavoro anche sulle relazioni locali. Cerco di far conoscere il progetto con contatti pertinenti e rispettosi, non con richieste indiscriminate." | Ricerca territoriale; messaggio introduttivo; monitoraggio contatti |
-| 6 | **Compilazione del form e gestione dei contatti** | Ripresa del modulo pubblico mentre viene testato (scritta TEST) oppure acquisizione autorizzata di una reale richiesta, con dati personali oscurati; CRM di smistamento | "Oggi verifico il percorso dal contenuto al modulo di contatto: compilazione, ricezione e presa in carico della richiesta. Ogni passaggio deve funzionare, non solo essere bello da vedere." | Apertura form; invio di test/realmente autorizzato; conferma ricezione |
-| 7 | **Controllo in agenzia: risposte, risultati e lavoro da fare** | Calendario, registro delle pubblicazioni, richieste effettivamente ricevute e riepilogo metriche reali; eventuali telefonate autorizzate | "Chiudo la settimana controllando cosa è stato pubblicato, quali richieste sono arrivate e quali attività restano aperte. Questo è il lavoro quotidiano dietro Case in Pubblicità 24/7." | Controllo report; telefonate/follow-up; attività della settimana successiva |
+| 1 | **Produzione grafiche** | Monitor con Canva/editor realmente usato, foto immobile autorizzate, confronto varianti, correzioni e cartella esportazioni | "Come nasce una grafica pubblicitaria?" | "Oggi sto preparando le grafiche degli immobili da promuovere ad Avigliana: layout, foto, testi e controllo di leggibilità." |
+| 2 | **Flyer e QR** | Flyer A4 orizzontale in lavorazione, controllo dei dati tecnici e APE se previsti, QR individuale testato, stampa di prova, rifiniture | "Dallo schermo alla carta" | "Ogni flyer passa dalla verifica dei dati e dei QR prima di essere stampato." |
+| 3 | **Pubblicazioni orarie** | Dashboard reale, calendario degli slot, revisione 'Da valutare' / 'OK', programmazione e conferma effettiva dell'esito | "Cosa succede prima di un post programmato?" | "Controllo ora, formato, grafica e stato di pubblicazione. Una coda programmata non significa automaticamente post pubblicato." |
+| 4 | **Distribuzione pubblicitaria fisica** | Pacchi di flyer, conteggio, borsa, percorso ad Avigliana, punto di deposito/consegna con autorizzazione | "La pubblicità esce dal computer" | "Oggi porto i materiali pubblicitari nei punti concordati del territorio, collegando carta e landing tramite QR." |
+| 5 | **Pubblicità nei gruppi locali** | Gruppi Facebook pertinenti, regole del gruppo, bozza di contenuto utile, pubblicazione consentita se effettiva | "Promozione locale senza spam" | "Preparo contenuti utili e pertinenti per i gruppi del territorio, nel rispetto delle regole di ogni comunità." |
+| 6 | **Rete e interazioni social** | Postazione social, ricerca territoriale, risposte e richieste di amicizia pertinenti e non massive; dati anonimizzati | "La visibilità si costruisce anche nelle conversazioni" | "Dedico tempo alle relazioni e alle domande delle persone, senza inviare richieste indiscriminate." |
+| 7 | **Landing, form e monitoraggio** | Landing reale, form provato con dati di test marcati TEST oppure richieste reali oscurate e autorizzate; dashboard con risultati verificati | "Dal contenuto alla richiesta di informazioni" | "Verifico che il percorso dalla pubblicità al modulo di contatto funzioni e controllo i dati della campagna." |
 
-## Formati
-- Feed Facebook/Instagram: foto autentica 4:5 (1080×1350), con eventuale carosello di 3-5 scatti della stessa attività.
-- Stories: 9:16 (1080×1920), 2-3 aggiornamenti brevi e fotografici.
-- Video breve: 6-15 secondi di un gesto reale (stampa, click confermato, consegna, controllo).
-- Caption: **prima persona, descrittiva, senza promettere vendite**. Una CTA discreta, se necessaria: "Segui il dietro le quinte di Case in Pubblicità 24/7".
+## Regia minima del Reel
+- 0–2s: titolo/gesto visivo immediato, no intro di logo.
+- 2–8s: attività vera da vicino (mano, monitor leggibile, carta, telefono).
+- 8–18s: verifica dello stato o del risultato (es. 'Bozza', 'Approvato', 'Pubblicato', 'TEST').
+- 18–25s: sintesi parlata in prima persona e indicazione `Case in Pubblicità 24/7 · Avigliana`.
+- Inserire il tag **Avigliana** quando pertinente; il geotag **non garantisce** la diffusione prioritaria a chi vive lì.
+- Usare voce originale o audio con diritti adatti a contenuti commerciali. Non affidarsi a 'canzoni del momento' se mancano le licenze.
 
-## Naming e archivio
-Percorso previsto per il caricamento successivo dei file originali:
-`campagne/case247/dietro-le-quinte/assets/g01-agenzia/`
-`campagne/case247/dietro-le-quinte/assets/g02-flyer/`
-`campagne/case247/dietro-le-quinte/assets/g03-orari/`
-`campagne/case247/dietro-le-quinte/assets/g04-consegna/`
-`campagne/case247/dietro-le-quinte/assets/g05-rete-locale/`
-`campagne/case247/dietro-le-quinte/assets/g06-form/`
-`campagne/case247/dietro-le-quinte/assets/g07-report/`
+## Distribuzione organica e contatti
+- Pubblicare sul feed/Reels Facebook e Instagram secondo gli slot effettivamente confermati dalle piattaforme. Differenziare leggermente le caption.
+- Condividere in gruppi Facebook locali **solo** quando regolamenti e amministratori lo consentono; alternare diario tecnico e contenuti utili, senza promozioni ripetitive.
+- Interagire per 15 minuti al giorno, rispondendo a domande concrete su pubblicità, foto, QR, pubblicazione, form. Evitare pratiche automatizzate di richiesta amicizia, spam in DM e commenti copia-incolla.
+- Separare l'attività di marketing dalla mediazione immobiliare, svolta esclusivamente dagli abilitati.
 
-Nome file: `2026-11-11_g01_agenzia_01.jpg` oppure `YYYY-MM-DD_g03_pubblicazione_HHMM.png`. Conservare originale e copia redatta/anonimizzata; mai caricare in un repository pubblico gli originali contenenti dati personali o clienti.
+## Custodia foto e screenshot
+Cartelle previste:
+- `assets/g01-grafiche/`
+- `assets/g02-flyer/`
+- `assets/g03-pubblicazioni-orarie/`
+- `assets/g04-distribuzione/`
+- `assets/g05-gruppi-locali/`
+- `assets/g06-interazioni/`
+- `assets/g07-form-e-report/`
 
-## Checklist prima della pubblicazione
-- [ ] L'azione documentata è davvero avvenuta
-- [ ] Lo stato del software è descritto correttamente
-- [ ] Niente dati personali o conversazioni visibili
-- [ ] Autorizzazioni per volti e luoghi verificate
-- [ ] Fotografia nitida e coerente con il copy
-- [ ] Versione finale approvata
+Nomi file: `YYYY-MM-DD_gNN_soggetto_01.jpg` per foto; `YYYY-MM-DD_gNN_orario_HHMM.png` per screenshot. Conservare originali non pubblici in archivio sicuro; caricare nel repository pubblico **solo copie prive di dati personali**.
+
+## Checklist approvazione
+- [ ] Ripresa originale di attività realmente svolta
+- [ ] Nessuna intermediazione/attività d'agenzia rappresentata
+- [ ] Nomi, cellulari, email, lead e conversazioni oscurati
+- [ ] Stato pubblicazione e numeri reali, non inventati
+- [ ] Posizione e QR funzionanti se inseriti
+- [ ] Consensi per persone/luoghi ottenuti
+- [ ] Materiale approvato prima della diffusione automatica
+
+**Branch di lavoro:** `feature/case247-dietro-le-quinte`. Nessun contenuto del branch deve essere pubblicato automaticamente senza approvazione.
