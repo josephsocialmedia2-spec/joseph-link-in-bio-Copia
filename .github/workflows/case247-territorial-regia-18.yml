@@ -1,0 +1,38 @@
+name: CASE247 - Regia territoriale verifica ore 18
+on:
+  schedule:
+    - cron: '0 17 * * *' # 18:00 Europe/Rome in winter, overridden by TZ below if supported
+      timezone: Europe/Rome
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: case247-territorial-reconciliation
+  cancel-in-progress: false
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate territorial planner
+        run: python -m unittest discover -s scripts -p test_case247_territorial_regia.py
+      - name: Synchronize catalogue from La Sacra
+        run: python scripts/sync_sacra_catalog.py
+      - name: Rebuild territorial daily plan (no publishing without verified accounts)
+        run: python scripts/case247_territorial_regia.py
+      - name: Save reconciliation output safely
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'case247-territory-bot'
+          git config user.email 'case247-territory-bot@users.noreply.github.com'
+          git add immobili/catalogo.json campagne/case247/territorio/regia-plan.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'CASE247: verifica territoriale giornaliera delle 18'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
