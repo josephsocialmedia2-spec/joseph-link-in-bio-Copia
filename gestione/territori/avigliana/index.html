@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>CASE247 · Collegamento Meta Avigliana</title>
+<link rel="stylesheet" href="../../../case247-design.css?v=20261103-unified">
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#0b1521;color:#eaf2f9}
+*{box-sizing:border-box}body{margin:0;background:#0b1521;color:#eaf2f9;font-size:15px;line-height:1.55}a{color:#91d9fa}
+main{max-width:1060px;margin:0 auto;padding:28px 18px 80px}
+h1{font-size:clamp(26px,4vw,40px);margin:12px 0 6px}h2{font-size:21px;margin-top:0}
+.eyebrow{font-size:12px;letter-spacing:.09em;color:#6be9c3;text-transform:uppercase;font-weight:800}
+.panel{background:#14273a;border:1px solid #304e63;border-radius:14px;padding:20px;margin-top:18px}
+.flex{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.counts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.metric{padding:13px;background:#102030;border-radius:10px;border:1px solid #30465a}
+.metric strong{font-size:27px;display:block}.metric small{color:#a7bbcb}
+label{display:block;font-weight:700;margin:10px 0 4px;font-size:13px}
+input,select{color:#f0f5f9;background:#091826;border:1px solid #547088;border-radius:8px;padding:10px;min-height:42px;min-width:220px}
+button,.btn{display:inline-flex;border:1px solid #46728c;border-radius:8px;padding:11px 14px;color:white;background:#22445d;cursor:pointer;font:inherit;text-decoration:none;font-weight:700}
+button.primary{background:#48d0af;color:#063124;border-color:#48d0af}
+button:disabled{opacity:.5;cursor:not-allowed}
+.notice{padding:12px 14px;background:#233344;border-left:3px solid #f2c276;border-radius:5px}
+.ok{color:#7bedd0}.muted{color:#a3b7c7}.danger{color:#ffb1b1}
+.pre{white-space:pre-wrap;overflow-wrap:anywhere}
+.result{background:#0e1e2d;border:1px solid #365268;border-radius:10px;padding:12px;margin-top:12px}
+small{font-size:12px}#auth-panel input{max-width:350px}
+</style>
+</head>
+<body class="case247-unified">
+<main>
+<nav class="flex"><a href="../../">Regia centrale</a><span>·</span><a href="../../../paesi/avigliana/" id="landing-nav">Landing Avigliana</a></nav>
+<p class="eyebrow">CASE IN PUBBLICITÀ 24/7 · PILOTA TERRITORIALE</p>
+<h1>Avigliana — collega Facebook e Instagram</h1>
+<p class="muted">Usa esclusivamente l'app Meta già sviluppata. Nessun nuovo abbonamento e nessuna nuova app. La verifica non pubblica annunci.</p>
+<div class="counts">
+<div class="metric"><strong>1</strong><small>Landing territoriale</small></div>
+<div class="metric"><strong id="fb-count">0</strong><small>Facebook verificati</small></div>
+<div class="metric"><strong id="ig-count">0</strong><small>Instagram verificati</small></div>
+<div class="metric"><strong>20 km</strong><small>Raggio massimo immobili</small></div>
+</div>
+<section class="panel" id="auth-panel">
+<h2>1. Accedi alla Regia</h2>
+<p class="muted" id="auth-status">Controllo della sessione amministratore…</p>
+<form id="login-form" class="flex" autocomplete="on">
+<div><label for="email">Email amministratore</label><input id="email" type="email" autocomplete="username" required></div>
+<div><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required></div>
+<div style="padding-top:25px"><button class="primary" type="submit">Accedi</button></div>
+</form>
+<div class="flex"><button id="logout" type="button" hidden>Esci</button><a href="../../canali-case247/">Apri anche la Regia social esistente</a></div>
+</section>
+<section class="panel">
+<h2>2. Verifica gli account Meta di Avigliana</h2>
+<p>Il controllo usa l'autorizzazione Meta esistente. Mostra soltanto eventuali Pagine il cui nome contiene «Avigliana». Non considera la pagina centrale come pagina territoriale.</p>
+<div class="flex">
+<button id="check-pages" class="primary" disabled>Verifica Pagine e Instagram autorizzati</button>
+<button id="reauthorize" disabled>Autorizza l'app Meta esistente</button>
+</div>
+<p class="notice">Per usare un account territoriale, la Pagina Facebook deve essere accessibile e il profilo Instagram professionale deve essere realmente collegato alla stessa Pagina. Se non compaiono, configura i collegamenti in <a href="https://business.facebook.com/" target="_blank" rel="noopener noreferrer">Meta Business Suite</a> e ripeti l'autorizzazione.</p>
+<div id="pages" aria-live="polite"></div>
+</section>
+<section class="panel">
+<h2>3. Stato del collegamento territoriale</h2>
+<p id="current" class="pre muted">Account territoriali non ancora verificati.</p>
+<button id="refresh" disabled>Aggiorna stato</button>
+<p class="notice">Anche dopo la verifica degli ID, lo scheduler rimane spento. Il primo post sarà inviato solo dopo il controllo dei permessi effettivi di pubblicazione e della coda, con registrazione dell'esito Meta.</p>
+</section>
+<section class="panel">
+<h2>4. Immobili pertinenti ad Avigliana</h2>
+<p class="muted">Il catalogo include sia gli immobili ad Avigliana sia quelli dei comuni entro il raggio massimo verificato dal motore territoriale.</p>
+<div class="flex">
+<a class="btn" href="../../../paesi/avigliana/" id="landing-link">Apri landing Avigliana</a>
+<a class="btn" href="../../../immobili/">Apri catalogo immobili</a>
+</div>
+<p id="catalog-check" class="muted">Lettura catalogo in corso…</p>
+</section>
+<footer class="muted" style="margin-top:20px;font-size:12px">CASE247 — marketing e pubblicità immobiliare. La mediazione è riservata ai professionisti abilitati. Le credenziali Meta non vengono memorizzate nel browser né nel repository.</footer>
+</main>
+<script type="module">
+import {createClient} from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+const PROJECT="qmeftxsdfeyqozwoivzo";
+const KEY="sb_publishable_KNgvCUxECyBFtd5MUrwDYg_BI5Z6Nsy";
+const client=createClient("https://"+PROJECT+".supabase.co",KEY);
+const endpoint="https://"+PROJECT+".supabase.co/functions/v1/case247-territory-connect";
+const oauth="https://"+PROJECT+".supabase.co/functions/v1/case247-meta-callback?action=start";
+const el=id=>document.getElementById(id);
+const busy={value:false};
+let session=null;
+async function call(path,options={}){
+  const r=await fetch(endpoint+(path||""),{
+    method:options.method||"GET",
+    headers:{"authorization":"Bearer "+session.access_token,"apikey":KEY,
+      ...(options.method?{"content-type":"application/json"}:{})},
+    ...(options.body?{body:JSON.stringify(options.body)}:{})
+  });
+  const data=await r.json().catch(()=>({}));
+  if(!r.ok)throw Error(data.error||"HTTP_"+r.status);
+  return data;
+}
+function log(id,message,type="muted"){const e=el(id);e.textContent=String(message);e.className="pre "+type}
+async function loadStatus(){
+ if(!session)return;
+ try{
+   const data=await call("?action=status");
+   const fb=data.accounts.find(x=>x.platform==="facebook");
+   const ig=data.accounts.find(x=>x.platform==="instagram");
+   el("fb-count").textContent=fb?"1":"0";
+   el("ig-count").textContent=ig?"1":"0";
+   log("current",!fb?"Nessun collegamento territoriale verificato. Lo scheduler è disattivato.":
+      "Facebook: "+fb.public_url+" ("+fb.status+")\nInstagram: "+(ig?.public_url||"Non verificato")+"\nUltimo controllo: "+fb.verified_at+"\nPubblicazione automatica: NON ATTIVA",fb&&ig?"ok":"muted");
+ }catch(e){log("current","Errore verifica archivio: "+e.message,"danger")}
+}
+async function checkLogin(){
+ const {data:{session:s}}=await client.auth.getSession();
+ session=s;
+ const logged=!!session;
+ el("login-form").hidden=logged;
+ el("logout").hidden=!logged;
+ for(const id of ["check-pages","refresh","reauthorize"])el(id).disabled=!logged;
+ log("auth-status",logged?"Sessione amministratore disponibile. Premi «Verifica Pagine».":"Accedi con le credenziali della Regia CASE247.",logged?"ok":"muted");
+ if(logged)await loadStatus();
+}
+el("login-form").addEventListener("submit",async(event)=>{
+ event.preventDefault();
+ const email=el("email").value.trim(),password=el("password").value;
+ const {error}=await client.auth.signInWithPassword({email,password});
+ el("password").value="";
+ if(error){log("auth-status","Accesso non riuscito: "+error.message,"danger");return}
+ await checkLogin();
+});
+el("logout").addEventListener("click",async()=>{await client.auth.signOut();session=null;await checkLogin()});
+el("refresh").addEventListener("click",loadStatus);
+el("reauthorize").addEventListener("click",async()=>{
+ if(!session)return;
+ try{
+   const r=await fetch(oauth,{headers:{"authorization":"Bearer "+session.access_token,"apikey":KEY}});
+   const data=await r.json();
+   if(!r.ok||!data.authorization_url)throw Error(data.error||"OAuth non disponibile");
+   window.location.assign(data.authorization_url);
+ }catch(e){log("auth-status","Autorizzazione non avviata: "+e.message,"danger")}
+});
+el("check-pages").addEventListener("click",async()=>{
+ if(!session||busy.value)return;
+ busy.value=true;
+ el("check-pages").disabled=true;
+ const root=el("pages");root.replaceChildren();
+ try{
+  const d=await call("?action=pages");
+  const info=document.createElement("p");
+  info.textContent="Pagine Avigliana visibili: "+d.matching_pages.length+". Permessi Facebook: "+(d.facebook_permissions_granted?"OK":"incompleti")+". Instagram: "+(d.instagram_permissions_granted?"OK":"incompleti")+".";
+  root.append(info);
+  if(d.missing_permissions.length){const p=document.createElement("p");p.className="danger";p.textContent="Permessi mancanti: "+d.missing_permissions.join(", ");root.append(p)}
+  if(!d.matching_pages.length){const p=document.createElement("p");p.className="notice";p.textContent="Nessuna Pagina Avigliana autorizzata nell'app Meta. Se esiste, concedi l'accesso alla stessa app; altrimenti crea una Pagina reale e un Instagram professionale collegato.";root.append(p)}
+  for(const pg of d.matching_pages){
+    const card=document.createElement("div");card.className="result";
+    const h=document.createElement("strong");h.textContent=pg.page_name+" · "+pg.page_id;card.append(h);
+    const p=document.createElement("p");p.textContent=pg.instagram?"Instagram: @"+pg.instagram.username:"Instagram professionale NON collegato";card.append(p);
+    const can=pg.can_create_content&&pg.instagram&&pg.instagram.username.toLowerCase().includes("avigliana")&&d.facebook_permissions_granted&&d.instagram_permissions_granted;
+    const button=document.createElement("button");button.textContent="Verifica e collega questa coppia";button.className="primary";button.disabled=!can;
+    button.addEventListener("click",async()=>{
+      button.disabled=true;
+      try{
+        const resp=await call("",{method:"POST",body:{town_id:"avigliana",page_id:pg.page_id}});
+        const result=document.createElement("p");result.className="ok";result.textContent="Identità Meta verificata: Facebook "+resp.page_id+" e Instagram "+resp.instagram_username+". Pubblicazione ancora disattivata.";card.append(result);
+        await loadStatus();
+      }catch(e){const p=document.createElement("p");p.className="danger";p.textContent="Collegamento non completato: "+e.message;card.append(p);button.disabled=false}
+    });card.append(button);root.append(card);
+  }
+ }catch(e){const p=document.createElement("p");p.className="danger";p.textContent="Verifica Meta non riuscita: "+e.message+". Se è richiesta una nuova autorizzazione usa l'app Meta esistente.";root.append(p)}
+ finally{busy.value=false;el("check-pages").disabled=false}
+});
+(async()=>{
+ try{
+  const r=await fetch("../../../immobili/catalogo.json",{cache:"no-store"}),json=await r.json();
+  const items=(json.items||[]).filter(x=>x.town_id==="avigliana"&&x.location_status==="VERIFICATO_FONTE");
+  log("catalog-check","Annunci con comune Avigliana verificato: "+items.length+". La distribuzione entro 20 km è calcolata dalla Regia territoriale.");
+ }catch{log("catalog-check","Catalogo non disponibile in questo momento.","danger")}
+ await checkLogin();
+})();
+</script>
+</body>
+</html>

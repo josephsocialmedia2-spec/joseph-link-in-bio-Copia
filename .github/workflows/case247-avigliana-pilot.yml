@@ -1,0 +1,37 @@
+name: CASE247 · Pilota Avigliana verifica collegamenti Meta
+on:
+  pull_request:
+    paths:
+      - supabase/functions/case247-territory-connect/**
+      - config/case247-territorio.json
+      - gestione/territori/avigliana/**
+      - gestione/index.html
+      - scripts/test_case247_avigliana_pilot.py
+      - .github/workflows/case247-avigliana-pilot.yml
+  push:
+    branches: [main]
+    paths:
+      - supabase/functions/case247-territory-connect/**
+      - config/case247-territorio.json
+      - gestione/territori/avigliana/**
+      - gestione/index.html
+      - scripts/test_case247_avigliana_pilot.py
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Avigliana secure connection static tests
+        run: python -m unittest discover -s scripts -p test_case247_avigliana_pilot.py -v
+      - name: Verify backend is limited to account discovery and linking
+        run: |
+          if grep -E -q '/media_publish|/photos|CASE247_TERRITORIAL_LIVE=true' supabase/functions/case247-territory-connect/index.ts; then
+            echo 'Pilot connector must not publish'; exit 1
+          fi
