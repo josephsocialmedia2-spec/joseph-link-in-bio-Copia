@@ -61,6 +61,17 @@
         "project": "qmeftxsdfeyqozwoivzo",
         "backend_function": "case247-territory-connect",
         "publishing_enabled": false
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Avigliana",
+        "instagram_suggested_username": "case247_avigliana",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=avigliana",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -100,6 +111,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Almese",
+        "instagram_suggested_username": "case247_almese",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=almese",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -139,6 +161,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Rubiana",
+        "instagram_suggested_username": "case247_rubiana",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=rubiana",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -178,6 +211,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Villar Dora",
+        "instagram_suggested_username": "case247_villardora",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=villar-dora",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -217,6 +261,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Caprie",
+        "instagram_suggested_username": "case247_caprie",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=caprie",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -256,6 +311,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Condove",
+        "instagram_suggested_username": "case247_condove",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=condove",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -297,6 +363,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Sant’Ambrogio di Torino",
+        "instagram_suggested_username": "case247_santambrogioditorino",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=sant-ambrogio-di-torino",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -336,6 +413,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Chiusa di San Michele",
+        "instagram_suggested_username": "case247_chiusadisanmichele",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=chiusa-di-san-michele",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -375,6 +463,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Vaie",
+        "instagram_suggested_username": "case247_vaie",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=vaie",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -414,6 +513,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - San Didero",
+        "instagram_suggested_username": "case247_sandidero",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=san-didero",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -453,6 +563,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Borgone Susa",
+        "instagram_suggested_username": "case247_borgonesusa",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=borgone-susa",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -492,6 +613,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Bussoleno",
+        "instagram_suggested_username": "case247_bussoleno",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=bussoleno",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -531,6 +663,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Chianocco",
+        "instagram_suggested_username": "case247_chianocco",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=chianocco",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -570,6 +713,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Susa",
+        "instagram_suggested_username": "case247_susa",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=susa",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -609,6 +763,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Mompantero",
+        "instagram_suggested_username": "case247_mompantero",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=mompantero",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -648,6 +813,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - San Giorio di Susa",
+        "instagram_suggested_username": "case247_sangioriodisusa",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=san-giorio-di-susa",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -687,6 +863,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Villar Focchiardo",
+        "instagram_suggested_username": "case247_villarfocchiardo",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=villar-focchiardo",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -726,6 +913,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Venaus",
+        "instagram_suggested_username": "case247_venaus",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=venaus",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -765,6 +963,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Giaglione",
+        "instagram_suggested_username": "case247_giaglione",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=giaglione",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -804,6 +1013,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Gravere",
+        "instagram_suggested_username": "case247_gravere",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=gravere",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -843,6 +1063,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Exilles",
+        "instagram_suggested_username": "case247_exilles",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=exilles",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -882,6 +1113,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Salbertrand",
+        "instagram_suggested_username": "case247_salbertrand",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=salbertrand",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -921,6 +1163,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Oulx",
+        "instagram_suggested_username": "case247_oulx",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=oulx",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -960,6 +1213,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Sauze d’Oulx",
+        "instagram_suggested_username": "case247_sauzedoulx",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=sauze-d-oulx",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -999,6 +1263,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Cesana Torinese",
+        "instagram_suggested_username": "case247_cesanatorinese",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=cesana-torinese",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -1038,6 +1313,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Claviere",
+        "instagram_suggested_username": "case247_claviere",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=claviere",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -1077,6 +1363,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Novalesa",
+        "instagram_suggested_username": "case247_novalesa",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=novalesa",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -1116,6 +1413,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Moncenisio",
+        "instagram_suggested_username": "case247_moncenisio",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=moncenisio",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -1155,6 +1463,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Pragelato",
+        "instagram_suggested_username": "case247_pragelato",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=pragelato",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -1194,6 +1513,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Bardonecchia",
+        "instagram_suggested_username": "case247_bardonecchia",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=bardonecchia",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -1233,6 +1563,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Chiomonte",
+        "instagram_suggested_username": "case247_chiomonte",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=chiomonte",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -1274,6 +1615,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Sant’Antonino di Susa",
+        "instagram_suggested_username": "case247_santantoninodisusa",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=sant-antonino-di-susa",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -1313,6 +1665,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Rivoli",
+        "instagram_suggested_username": "case247_rivoli",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=rivoli",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -1352,6 +1715,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Giaveno",
+        "instagram_suggested_username": "case247_giaveno",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=giaveno",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -1391,6 +1765,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Grugliasco",
+        "instagram_suggested_username": "case247_grugliasco",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=grugliasco",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -1430,6 +1815,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Torino",
+        "instagram_suggested_username": "case247_torino",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=torino",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -1469,6 +1865,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Moncalieri",
+        "instagram_suggested_username": "case247_moncalieri",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=moncalieri",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -1508,6 +1915,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Collegno",
+        "instagram_suggested_username": "case247_collegno",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=collegno",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -1547,6 +1965,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Pianezza",
+        "instagram_suggested_username": "case247_pianezza",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=pianezza",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -1587,6 +2016,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Borgaro Torinese",
+        "instagram_suggested_username": "case247_borgarotorinese",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=borgaro-torinese",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     },
     {
@@ -1626,6 +2066,17 @@
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Valgioie",
+        "instagram_suggested_username": "case247_valgioie",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=valgioie",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 20,
+        "publishing_enabled": false
       }
     }
   ]
