@@ -126,7 +126,7 @@ def run(live=False,max_per_run=10):
     if live and not os.getenv("GITHUB_ACTIONS"):
         raise SystemExit("Live allowed only in controlled GitHub Actions")
     now=dt.datetime.now(TZ)
-    plan=read_json(PLAN)
+    plan=read_json(OUT / "plans" / (now.date().isoformat() + ".json"))
     if not plan or plan.get("date")!=now.date().isoformat():
         print("No verified current-day plan, nothing sent")
         return
