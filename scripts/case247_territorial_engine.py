@@ -284,6 +284,7 @@ def main():
                                       for p in catalog["items"])
     plan["geocoded_town_count"] = len(geo)
     atomic_write(OUT / "latest-plan.json", plan)
+    atomic_write(OUT / "plans" / (day + ".json"), plan)
     atomic_write(OUT / "catalog-fingerprints.json", changes["after"])
     atomic_write(OUT / "previous-assignments.json",
                  {x["listing_id"]: {"town_id": x["town_id"], "network": x["network"]}
