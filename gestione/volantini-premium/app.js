@@ -111,7 +111,8 @@
     if(footerLogo.src!==laSacraLogo)footerLogo.src=laSacraLogo;
     $('portraitSign').innerHTML=esc(staff.name)+'<small>'+esc(staff.role)+'</small>';
     $('staffFooterName').textContent=staff.name+' · '+staff.role;
-    $('staffFooterPartner').textContent=staff.brand==='lasacra'?'Immobiliare La Sacra · Team territoriale':'Partner commerciale di Immobiliare La Sacra';
+    $('staffFooterPartner').textContent=staff.brand==='lasacra'?'Immobiliare La Sacra · promozione in collaborazione con Case in Pubblicità 24/7':'Partner commerciale di Immobiliare La Sacra';
+    $('flyer').querySelector('.brand-partner').textContent=staff.brand==='lasacra'?'Case in Pubblicità 24/7 · partner commerciale di Immobiliare La Sacra':'Selezione immobili dal portafoglio La Sacra Immobiliare';
     $('staffCta').textContent='Contatta '+staff.name+' su WhatsApp';
     $('staffPhone').textContent=staff.displayPhone;
     $('staffHint').textContent=staff.brand==='lasacra'?'Logo La Sacra · Nessun ritratto · WhatsApp '+staff.displayPhone:'Foto Joseph · Case in Pubblicità 24/7 · WhatsApp '+staff.displayPhone;
