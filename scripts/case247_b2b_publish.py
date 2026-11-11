@@ -108,9 +108,8 @@ def load_queues():
   for job in combined["jobs"]:
    cap=job.get("caption")
    if not isinstance(cap,str):raise RuntimeError("Missing caption")
-   if link not in cap:
-    intro=cfg["instagram_cta"] if job.get("platform")=="instagram" else cfg["facebook_cta"]
-    job["caption"]=cap.rstrip()+"\n\n"+intro+"\n"+link
+   if job.get("queue_enabled") is True and job.get("approved") is True and link not in cap:
+    raise RuntimeError("Flyer CTA missing from approved copy: update and re-approve before publishing")
  combined["meta_enabled"]=any(j["queue_enabled"] for j in combined["jobs"])
  combined["no_automatic_meta_publish"]=not combined["meta_enabled"]
  return combined
