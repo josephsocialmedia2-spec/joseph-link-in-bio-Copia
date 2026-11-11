@@ -12,6 +12,19 @@ import xml.etree.ElementTree as ET
 ROOT=Path(__file__).resolve().parents[2]
 HOME=ROOT/"campagne"/"case247"/"auto-feed"
 BANK=ROOT/"campagne"/"case247"/"photo-bank"
+FLYER_CONFIG=ROOT/"branding"/"flyer-cta.json"
+def brochure_cta(caption):
+    """Opt-in flyer CTA; never advertise a form before privacy release."""
+    try:
+        cfg=json.loads(FLYER_CONFIG.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return caption
+    url=cfg.get("landing_url","")
+    if cfg.get("enabled") is not True or not url.startswith("https://josephsocialmedia2-spec.github.io/"):
+        return caption
+    if url in caption:return caption
+    return caption.rstrip()+"\n\n"+cfg["facebook_cta"]+"\n"+url+"\nSu Instagram trovi il link anche nella bio."
+
 TZ=ZoneInfo("Europe/Rome")
 FONT="/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 BOLD="/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
@@ -263,7 +276,7 @@ def main():
     attribution="Foto: "+chosen["photo"]["credit"]+"; licenza "+chosen["photo"]["license"]+"; fonte "+chosen["photo"]["origin"]
     capsule={"date":date.isoformat(),"brand":manifest["brand"],"format":manifest["format"],
              "candidate":selected,"selection_mode":route,"selected_at_rome":dt.datetime.now(TZ).isoformat(),
-             "scheduled_at_rome":date.isoformat()+"T10:00:00","caption":manifest["caption"]+"\n\n"+attribution,
+             "scheduled_at_rome":date.isoformat()+"T10:00:00","caption":brochure_cta(manifest["caption"]+"\n\n"+attribution),
              "files":["campagne/case247/auto-feed/ready/"+date.isoformat()+"/"+p for p in files],
              "source_photo":chosen["photo"],"state":"QUEUED_NOT_PUBLISHED",
              "meta_publish_enabled":False,"external_post_id":None}

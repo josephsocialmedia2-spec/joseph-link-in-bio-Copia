@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Richiedi il volantino immobiliare di Case in Pubblicità 24/7 per Avigliana e comuni limitrofi.">
+<title>Scarica il volantino | Case in Pubblicità 24/7</title>
+<style>
+:root{font:16px/1.55 system-ui,Arial,sans-serif;background:#f3f7fb;color:#102c48}*{box-sizing:border-box}
+[hidden]{display:none!important}body{margin:0}header{background:linear-gradient(115deg,#092b51,#1263a6);color:white;padding:30px 20px}
+.wrap{max-width:680px;margin:auto}h1{font-size:clamp(27px,4vw,38px);margin:12px 0 8px}
+main{max-width:680px;margin:24px auto;padding:0 16px 50px}
+.card{background:white;border:1px solid #d5e4ef;padding:24px;border-radius:16px;box-shadow:0 12px 30px #0a254511}
+form{display:grid;gap:14px}label{display:grid;gap:6px;font-weight:650}input{border:1px solid #a7bed1;padding:12px;border-radius:8px;font:inherit;width:100%}
+button,.btn{display:inline-block;border:0;background:#1264a6;color:#fff;border-radius:9px;padding:13px 18px;font:inherit;font-weight:750;text-decoration:none;cursor:pointer}
+button:disabled{background:#8099ac;cursor:not-allowed}.check{display:flex;align-items:flex-start;gap:9px;font-weight:400}.check input{width:auto;margin:5px 0}
+.muted{color:#576f83;font-size:14px}.status{background:#eaf2fa;padding:13px;border-radius:9px;margin:14px 0}
+.status.bad{background:#fff1e6;color:#633d17}.success{padding:14px;border:1px solid #90c5a3;border-radius:12px;margin-top:16px}
+a{color:#0860a4}footer{color:#5a7083;text-align:center;padding:20px 10px}
+</style></head>
+<body><header><div class="wrap"><a style="color:#e4f5ff" href="../../../">CASE IN PUBBLICITÀ 24/7</a><h1>Volantino immobiliare aggiornato</h1>
+<p>Avigliana e comuni limitrofi. Un solo collegamento, edizione aggiornata periodicamente.</p></div></header>
+<main><section class="card"><h2>Richiedi il PDF gratuito</h2>
+<p>Inserisci i tuoi recapiti per registrare la richiesta. Il download si attiva dopo la registrazione riuscita.</p>
+<div class="status" id="status" role="status" aria-live="polite">Verifica disponibilità del modulo…</div>
+<form id="leadForm" hidden autocomplete="on">
+<label>Nome *<input name="nome" required maxlength="100" autocomplete="given-name"></label>
+<label>Cognome *<input name="cognome" required maxlength="100" autocomplete="family-name"></label>
+<label>Telefono *<input name="telefono" required type="tel" inputmode="tel" autocomplete="tel" maxlength="25" placeholder="+39 333 123 4567"></label>
+<label style="display:none" aria-hidden="true">Non compilare<input name="trap" tabindex="-1" autocomplete="off"></label>
+<label class="check"><input name="informativa_letta" type="checkbox" required><span>Ho letto l'<a href="../privacy-richieste-immobili/" target="_blank" rel="noopener">informativa privacy</a> per la gestione della richiesta. I dati non autorizzano automaticamente messaggi pubblicitari.</span></label>
+<div id="challenge"></div>
+<button id="submit" type="submit">Conferma e scarica il PDF</button>
+<p class="muted">Nessun consenso marketing preselezionato o obbligatorio. Nome, cognome e telefono vengono trattati solo per la richiesta, secondo l'informativa approvata.</p>
+</form>
+<div id="success" class="success" hidden><h3>Richiesta registrata</h3><p>Il volantino è pronto:</p><a id="download" class="btn" target="_blank" rel="noopener noreferrer" href="#">Apri e scarica il PDF</a></div>
+</section></main>
+<footer>Joseph Malafronte · Digital Strategist · Case in Pubblicità 24/7<br>Marketing e comunicazione immobiliare, non mediazione.</footer>
+<script>
+(()=>{
+ const ENDPOINT="https://qmeftxsdfeyqozwoivzo.supabase.co/functions/v1/case247-flyer-download";
+ const form=document.getElementById("leadForm"),status=document.getElementById("status"),success=document.getElementById("success");
+ let enabled=false,version="",widget=null,siteKey="";
+ const origin=new URLSearchParams(location.search).get("src")||"sito";
+ const source=["facebook","instagram","messenger","sito"].includes(origin)?origin:"altro";
+ function feedback(msg,bad=false){status.textContent=msg;status.className="status"+(bad?" bad":"")}
+ function addTurnstile(){const script=document.createElement("script");script.src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";script.async=true;script.defer=true;
+ script.onload=()=>{widget=turnstile.render("#challenge",{sitekey:siteKey})};document.head.appendChild(script)}
+ async function init(){try{const r=await fetch(ENDPOINT,{cache:"no-store"});const d=await r.json();enabled=r.ok&&d.enabled===true;
+ if(!enabled||!d.notice_version||!d.turnstile_site_key){feedback("La richiesta del volantino non è ancora attiva. È in corso la verifica privacy e tecnica.",true);return}
+ version=d.notice_version;siteKey=d.turnstile_site_key;form.hidden=false;feedback("Modulo disponibile: compila i tre campi per ricevere il link.");addTurnstile();
+ }catch{feedback("Servizio temporaneamente non disponibile. Riprovare più tardi.",true)}}
+ form.addEventListener("submit",async e=>{e.preventDefault();if(!enabled)return;
+ const btn=document.getElementById("submit"),f=new FormData(form);
+ let token="";try{token=turnstile.getResponse(widget)}catch{}
+ if(!token){feedback("Completa la verifica antispam.",true);return}
+ btn.disabled=true;feedback("Registrazione in corso...");
+ try{const payload={nome:String(f.get("nome")||"").trim(),cognome:String(f.get("cognome")||"").trim(),
+ telefono:String(f.get("telefono")||"").trim(),origine:source,submission_key:crypto.randomUUID(),
+ informativa_letta:f.has("informativa_letta"),informativa_versione:version,trap:String(f.get("trap")||""),turnstile_token:token};
+ const r=await fetch(ENDPOINT,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(payload)});
+ const d=await r.json();if(!r.ok||d.ok!==true||!/^https:\/\/drive\.google\.com\/file\/d\//.test(d.download_url||""))throw Error("Registrazione non completata. Il download non è stato autorizzato.");
+ const link=document.getElementById("download");link.href=d.download_url;form.hidden=true;success.hidden=false;feedback("Richiesta ricevuta correttamente.");
+ }catch(err){feedback(err.message||"Errore temporaneo.",true);try{turnstile.reset(widget)}catch{}}
+ finally{btn.disabled=false}});
+ init();
+})();
+</script></body></html>

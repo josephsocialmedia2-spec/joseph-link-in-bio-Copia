@@ -1,0 +1,35 @@
+name: CASE247 Flyer Lead Gate QA
+on:
+  pull_request:
+    paths:
+      - 'branding/flyer-cta.json'
+      - 'supabase/functions/case247-flyer-download/**'
+      - 'supabase/schema/case247_flyer_leads.sql'
+      - 'campagne/case247/volantino/**'
+      - 'campagne/case247/auto_feed.py'
+      - 'scripts/case247_b2b_publish.py'
+      - 'scripts/case247_apply_flyer_cta.py'
+      - 'tests/test_case247_flyer_cta.py'
+      - 'campagne/social-engine/social_engine/**'
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Validate Python files
+        run: |
+          python -m py_compile campagne/case247/auto_feed.py scripts/case247_b2b_publish.py scripts/case247_apply_flyer_cta.py campagne/social-engine/social_engine/caption_engine.py campagne/social-engine/social_engine/publisher.py
+          python tests/test_case247_flyer_cta.py
+      - name: Verify privacy default
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          f=json.loads(Path("branding/flyer-cta.json").read_text())
+          assert f["enabled"] is False, "Cannot activate brochure gate before privacy release"
+          assert Path("campagne/case247/volantino/index.html").exists()
+          PY

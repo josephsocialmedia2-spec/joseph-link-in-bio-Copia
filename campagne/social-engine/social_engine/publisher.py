@@ -12,6 +12,7 @@ import time
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError
+from pathlib import Path
 from .branding import verify_brand_archive, validate_copy, BrandViolation
 from .github_release import GitHubReleaseStaging
 
@@ -81,6 +82,16 @@ def _release_items(release):
         raise BrandViolation("At least one slide lacks positive brand visual QA")
     captions = {ch: _request(assets[f"caption_{ch}.txt"], raw=True).decode("utf-8")
                 for ch in CHANNELS}
+    # A live flyer funnel is mandatory only after legal and technical release.
+    config_file = Path(__file__).resolve().parents[3] / "branding" / "flyer-cta.json"
+    if config_file.is_file():
+        flyer = json.loads(config_file.read_text(encoding="utf-8"))
+        if flyer.get("enabled") is True:
+            link = flyer.get("landing_url", "")
+            if not link.startswith("https://josephsocialmedia2-spec.github.io/"):
+                raise BrandViolation("Unverified flyer URL")
+            if any(link not in cap for cap in captions.values()):
+                raise BrandViolation("Missing flyer lead form in approved caption; review and re-approve before publication")
     for cap in captions.values():
         validate_copy(cap)
     return {"image_urls": [assets[f"carousel_{i:02d}.jpg"] for i in range(1, 6)],
