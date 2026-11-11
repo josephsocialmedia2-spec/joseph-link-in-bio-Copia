@@ -48,12 +48,19 @@
         "status": "DA_COLLEGARE",
         "reason": "Nessun brand territoriale rilevato; disponibilità del piano da verificare."
       },
-      "operational_status": "DA_VERIFICARE",
-      "blocker": "Autenticazione Facebook necessaria per censire le risorse esistenti e verificare controllo completo e collegamento Instagram.",
+      "operational_status": "PILOTA_IN_VERIFICA_META",
+      "blocker": "Pagina Facebook Avigliana e account Instagram professionale non ancora identificati tramite sessione amministratore Meta. Collegamento possibile dalla Regia pilota: richiede selezione/autorizzazione del titolare.",
       "bio": "Immobili a Avigliana. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
       "landing_check": {
         "checked_at_utc": "2026-11-07T16:17:50.486843+00:00",
         "http_status": 200
+      },
+      "meta_pilot": {
+        "status": "BACKEND_DEPLOYED_PENDING_OWNER_AUTHORIZATION",
+        "connection_page": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/avigliana/",
+        "project": "qmeftxsdfeyqozwoivzo",
+        "backend_function": "case247-territory-connect",
+        "publishing_enabled": false
       }
     },
     {
