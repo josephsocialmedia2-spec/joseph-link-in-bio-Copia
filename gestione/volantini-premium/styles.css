@@ -48,12 +48,12 @@ button.primary{background:linear-gradient(150deg,#008ccf,#07589f);border-color:#
 .card{position:relative;min-width:0;min-height:0;overflow:hidden;background:var(--card);color:var(--ink);border:1px solid var(--edge);border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,.08);cursor:pointer}
 .card::before{content:"";position:absolute;z-index:2;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--navy),var(--gold),var(--cyan))}
 .card .property-photo{position:absolute;top:4px;left:4px;right:4px;width:calc(100% - 8px);height:72px;object-fit:cover;border-radius:8px 8px 5px 5px;background:#d3e9f6}
-.card .property-title{position:absolute;top:78px;left:6px;right:70px;height:30px;overflow:hidden;font-size:11.3px;font-weight:900;line-height:1.05}
+.card .property-title{position:absolute;top:78px;left:6px;right:70px;height:32px;overflow:hidden;font-size:9.3px;font-weight:900;line-height:1.08;overflow-wrap:anywhere;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3}
 .card .property-city{position:absolute;top:111px;left:6px;right:73px;height:15px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;color:var(--cyan);font-size:10px;font-weight:800}
 .card .property-city::before{content:"● ";font-size:10px}
 .card .price-badge{position:absolute;top:130px;left:5px;right:73px;height:22px;display:flex;align-items:center;justify-content:center;border-radius:8px;color:white;font-size:13.5px;font-weight:900;font-style:italic;background:linear-gradient(110deg,var(--cyan),var(--navy));white-space:nowrap;overflow:hidden;padding:0 2px;text-shadow:0 1px #002b5f}
 .card .price-badge.is-unknown{white-space:normal;line-height:1.05;font-size:8.7px;text-align:center}
-.card .energy{position:absolute;bottom:3px;left:8px;right:75px;white-space:nowrap;overflow:hidden;font-size:9px;line-height:1.13}
+.card .energy{position:absolute;bottom:3px;left:8px;right:75px;white-space:nowrap;overflow:hidden;font-size:7px;line-height:1.16}
 .card .energy .class::before{content:"";display:inline-block;width:8px;height:7px;background:#d7a321;margin-right:3px;border-radius:1px 4px 4px 1px}
 .card .energy.energy-f .class::before,.card .energy.energy-g .class::before{background:#d55641}
 .card .energy.energy-a .class::before,.card .energy.energy-b .class::before,.card .energy.energy-c .class::before{background:#4c9e5b}
@@ -68,7 +68,7 @@ button.primary{background:linear-gradient(150deg,#008ccf,#07589f);border-color:#
 .board-item svg{width:32px;height:32px;flex:none;stroke:#fff;stroke-width:2;stroke-linejoin:round;fill:none}
 .board-item strong{display:block;color:#fff;font-weight:950;font-size:12px}
 .contact-band{height:64px;display:flex;align-items:center;justify-content:space-between;padding:4px 86px 5px 15px;gap:18px;background:linear-gradient(115deg,#001f42dd,#0070b3ac)}
-.partner-copy{display:grid;gap:3px;max-width:60%;font-size:10px}.partner-copy strong{font-size:15px;font-style:italic}.partner-copy small{font-size:9px}
+.contact-identity{display:flex;align-items:center;gap:10px;min-width:0;flex:1}.footer-portrait{display:block;flex:0 0 52px;width:52px;height:52px;border-radius:50%;border:2px solid #eaf8ff;object-fit:cover;object-position:50% 22%;background:#d7eaf3;box-shadow:0 2px 9px #001a3a80}.partner-copy{display:grid;gap:3px;min-width:0;max-width:none;font-size:10px}.partner-copy strong{font-size:15px;font-style:italic}.partner-copy small{font-size:9px}
 .contact-cta{display:grid;gap:3px;text-align:right;white-space:nowrap}.contact-cta b{font-size:12px}.contact-cta strong{font-size:19px;background:#fff;color:#073b73;border-radius:13px;padding:2px 12px}
 .qr-whatsapp{position:absolute;right:12px;bottom:9px;width:68px;height:68px;background:white;border:2px solid white;border-radius:6px;display:grid;place-items:center;z-index:8}
 /* Varianti: cambiano token e composizione, non posizionamento dei dati o loro URL. */
