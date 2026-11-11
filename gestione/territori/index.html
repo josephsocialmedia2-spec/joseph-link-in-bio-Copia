@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>CASE247 · Regia social 41 territori</title>
+<link rel="stylesheet" href="../../case247-design.css?v=20261103-unified">
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:dark;background:#091725;color:#e9f3f8}
+*{box-sizing:border-box}body{margin:0;background:#091725;color:#e9f3f8;line-height:1.5}a{color:#8fd3fb}main{max-width:1260px;padding:26px 18px 70px;margin:auto}
+header{margin-bottom:24px}h1{font-size:clamp(24px,4vw,38px);margin:4px 0 7px}h2{font-size:21px;margin:0 0 8px}
+p{margin:8px 0;color:#b6cad6}small{color:#b6cad6}.kicker{color:#5addb8;font-size:12px;text-transform:uppercase;letter-spacing:.09em;font-weight:800}
+.panel{background:#112637;border:1px solid #325268;border-radius:14px;padding:17px;margin-bottom:18px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:11px}
+.metric{background:#0d2030;border:1px solid #2e4d62;border-radius:10px;padding:13px}.metric b{font-size:29px;display:block;line-height:1.3}.metric span{color:#aec0cc;font-size:12px}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:14px 0}
+button,.btn{border:1px solid #46788e;background:#214558;color:white;padding:10px 13px;border-radius:9px;font:inherit;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+button.primary{background:#4de1b6;border-color:#4de1b6;color:#073022}button:disabled{opacity:.46;cursor:not-allowed}
+input{border:1px solid #44687e;background:#061622;border-radius:7px;color:white;padding:11px;font:inherit;max-width:100%;min-width:230px}
+table{border-collapse:collapse;width:100%;font-size:13px}thead th{color:#9cbacd;text-align:left;font-size:12px;position:sticky;top:0;background:#102435}
+th,td{border-bottom:1px solid #2a455b;padding:10px 8px;vertical-align:middle}
+.table-scroll{overflow:auto;max-height:65vh;overscroll-behavior:contain}
+td:first-child{font-weight:700;min-width:155px}
+td:nth-child(2),td:nth-child(3){min-width:110px}
+.state{display:inline-flex;padding:4px 7px;background:#263b4a;border-radius:7px;font-size:11px}
+.verified{background:#123b31;color:#78efc8}.pending{color:#f1d09c}.info{font-size:12px}.notice{border-left:3px solid #f1c16b;padding:10px 12px;background:#26333e;border-radius:5px}
+.mini{font-size:12px;padding:7px 9px}#result{white-space:pre-wrap;overflow-wrap:anywhere}
+@media(max-width:720px){.table-scroll{max-height:none}table{min-width:830px}}
+</style>
+</head><body class="case247-unified"><main>
+<header><nav><a href="../">Regia centrale</a> · <a href="../../paesi/">41 landing</a> · <a href="./avigliana/">Pilota Avigliana</a></nav>
+<p class="kicker">Case in Pubblicità 24/7 · Pannello operativo</p>
+<h1>Rete social — 41 comuni</h1>
+<p>Una sola app Meta, 41 landing territoriali, 41 Pagine Facebook e 41 profili Instagram professionali previsti. Programmazione diretta Meta, senza Metricool.</p></header>
+<section class="cards" aria-label="Stato della rete">
+<div class="metric"><b id="towns-count">41</b><span>Landing predisposte</span></div>
+<div class="metric"><b id="fb-count">0</b><span>Facebook verificati</span></div>
+<div class="metric"><b id="ig-count">0</b><span>Instagram verificati</span></div>
+<div class="metric"><b id="live-count">0</b><span>Account territoriali abilitati all'invio</span></div>
+</section>
+<section class="panel"><h2>Autorizzazione amministratore</h2>
+<p id="session-state">Verifica sessione…</p>
+<form id="signin" class="controls">
+<input id="email" aria-label="Email" type="email" autocomplete="username" placeholder="Email amministratore" required>
+<input id="password" aria-label="Password" type="password" autocomplete="current-password" placeholder="Password" required>
+<button type="submit">Accedi</button>
+</form>
+<div class="controls"><button id="signout" hidden>Esci</button><button class="primary" id="scan" disabled>Scansiona e collega tutte le coppie autorizzate</button>
+<button id="refresh" disabled>Aggiorna stato</button>
+<a class="btn" href="../canali-case247/">Gestione Meta esistente</a></div>
+<p class="notice info">La scansione collega solo coppie realmente autorizzate dalla tua app Meta, con Page Facebook e Instagram professionale collegati. Non crea account, non cambia permessi, non invia pubblicazioni. Se Meta non è stato autorizzato, usa «Autorizza Meta» nella gestione esistente.</p>
+<p id="result" aria-live="polite" class="info"></p></section>
+<section class="panel"><h2>Elenco di tutti i territori</h2>
+<p>Gli handle Instagram sono <strong>proposte di nome</strong>, non account già creati. La colonna Stato è basata esclusivamente su verifiche Meta memorizzate nel registro protetto.</p>
+<div class="controls"><input id="search" placeholder="Filtra per comune..." aria-label="Filtra comuni"><span id="visible-counter" class="info"></span></div>
+<div class="table-scroll"><table><thead><tr><th>Comune e landing</th><th>Facebook</th><th>Instagram</th><th>Nome Instagram suggerito</th><th>Verifica</th></tr></thead><tbody id="town-rows"></tbody></table></div>
+</section>
+<section class="panel"><h2>Pubblicazione automatica</h2><p>Il motore immobiliare individua annunci entro 20 km, limita ogni immobile a un'uscita giornaliera complessiva e verifica il catalogo alle 18:00. <strong>Non attiviamo il live finché i canali non sono realmente autorizzati e collegati al dispatcher.</strong></p>
+<p id="live-status" class="notice">Stato: nessun account territoriale abilitato alla pubblicazione.</p></section>
+<footer class="info" style="color:#acc2ce">CASE247 svolge marketing e pubblicità, non intermediazione immobiliare. Eventuali nuove Pagine e account devono essere creati e autorizzati mediante le procedure ufficiali Meta.</footer>
+</main>
+<script type="module">
+import {createClient} from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+const BASE="https://qmeftxsdfeyqozwoivzo.supabase.co";
+const KEY="sb_publishable_KNgvCUxECyBFtd5MUrwDYg_BI5Z6Nsy";
+const client=createClient(BASE,KEY),api=BASE+"/functions/v1/case247-territory-connect";
+const E=id=>document.getElementById(id);
+let session=null,setup=null,accounts=[];
+const sel={};
+function status(town,network){
+ const a=accounts.find(a=>a.town_id===town&&a.platform===network);
+ return a&&a.status==="VERIFIED_PENDING_DISPATCH"?["Verificato","verified"]:["Non collegato","pending"];
+}
+function cell(text,kind){
+ const s=document.createElement("span");s.className="state "+kind;s.textContent=text;return s;
+}
+function draw(){
+ if(!setup)return;
+ const needle=E("search").value.trim().toLowerCase();
+ const container=E("town-rows");container.replaceChildren();
+ let count=0;
+ for(const town of setup.towns){
+   if(needle&&!town.name.toLowerCase().includes(needle)&&!town.town_id.includes(needle))continue;
+   count++;
+   const tr=document.createElement("tr");
+   const name=document.createElement("td");
+   const a=document.createElement("a");a.href=town.landing_url;a.textContent=town.name;a.target="_blank";a.rel="noopener";name.append(a);tr.append(name);
+   for(const net of ["facebook","instagram"]){const td=document.createElement("td");const [t,s]=status(town.town_id,net);td.append(cell(t,s));tr.append(td)}
+   const proposed=document.createElement("td");proposed.textContent="@"+town.instagram.suggested_username;tr.append(proposed);
+   const operation=document.createElement("td");const btn=document.createElement("button");btn.className="mini";
+   btn.textContent="Verifica coppia";btn.disabled=!session;btn.addEventListener("click",()=>checkTown(town,btn));
+   operation.append(btn);tr.append(operation);container.append(tr);
+ }
+ E("visible-counter").textContent=count+" comuni visibili";
+ E("fb-count").textContent=accounts.filter(a=>a.platform==="facebook"&&a.status==="VERIFIED_PENDING_DISPATCH").length;
+ E("ig-count").textContent=accounts.filter(a=>a.platform==="instagram"&&a.status==="VERIFIED_PENDING_DISPATCH").length;
+ E("live-count").textContent=accounts.filter(a=>a.publishing_enabled).length;
+ E("live-status").textContent=accounts.some(a=>a.publishing_enabled)?"Controlla i canali abilitati e le ricevute Meta":"Stato: collegamenti in preparazione; nessun canale territoriale autorizzato all'invio.";
+}
+async function request(path,opts={}){
+ if(!session)throw Error("ACCESSO_RICHIESTO");
+ const r=await fetch(api+path,{method:opts.method||"GET",headers:{"authorization":"Bearer "+session.access_token,apikey:KEY,...(opts.method?{"content-type":"application/json"}:{})},
+ ...(opts.body?{body:JSON.stringify(opts.body)}:{})});
+ const data=await r.json().catch(()=>({}));
+ if(!r.ok)throw Error(data.error||"HTTP_"+r.status);
+ return data;
+}
+async function refresh(){
+ try{const d=await request("?action=status&town_id=all");accounts=d.accounts||[];draw();E("result").textContent="Ultimo aggiornamento registro territoriale completato."}
+ catch(e){E("result").textContent="Verifica non riuscita: "+e.message}
+}
+async function checkTown(town,button){
+ button.disabled=true;
+ try{
+  const q=await request("?action=pages&town_id="+encodeURIComponent(town.town_id));
+  if(!q.matching_pages?.length){E("result").textContent=town.name+": nessuna Pagina Facebook con nome territoriale esatto è autorizzata nell'app. Crea/collega la coppia tramite Meta Business Suite, poi ripeti il controllo.";return}
+  const eligible=q.matching_pages.filter(p=>p.can_create_content&&p.instagram&&q.facebook_permissions_granted&&q.instagram_permissions_granted);
+  if(eligible.length!==1){E("result").textContent=town.name+": risorsa assente, permessi insufficienti o più Pagine possibili. Verifica nella Regia social.";return}
+  const resp=await request("",{method:"POST",body:{town_id:town.town_id,page_id:eligible[0].page_id}});
+  E("result").textContent=town.name+": Facebook "+resp.page_id+" e Instagram @"+resp.instagram_username+" verificati. Pubblicazione live non ancora attiva.";
+  await refresh();
+ }catch(e){E("result").textContent=town.name+": "+e.message}
+ finally{button.disabled=false}
+}
+async function auth(){
+ const {data:{session:s}}=await client.auth.getSession();session=s;
+ E("signin").hidden=!!session;E("signout").hidden=!session;
+ E("scan").disabled=E("refresh").disabled=!session;
+ E("session-state").textContent=session?"Sessione rilevata. Autorizzazione amministratore verificata dal backend a ogni richiesta.":"Accedi per controllare gli account Meta già autorizzati.";
+ if(session)await refresh();else{accounts=[];draw()}
+}
+E("signin").addEventListener("submit",async e=>{
+ e.preventDefault();const email=E("email").value.trim(),password=E("password").value;
+ const {error}=await client.auth.signInWithPassword({email,password});E("password").value="";
+ if(error){E("session-state").textContent="Accesso non riuscito: "+error.message;return}
+ await auth();
+});
+E("signout").addEventListener("click",async()=>{await client.auth.signOut();await auth()});
+E("refresh").addEventListener("click",refresh);
+E("search").addEventListener("input",draw);
+E("scan").addEventListener("click",async()=>{
+ E("scan").disabled=true;
+ E("result").textContent="Verifica delle Pagine realmente autorizzate dall'app Meta...";
+ try{
+  const r=await request("",{method:"POST",body:{mode:"scan"}});
+  const counts={};
+  for(const b of r.blocked||[])counts[b.reason]=(counts[b.reason]||0)+1;
+  E("result").textContent="Verificati: "+r.linked.length+" comuni su "+r.scanned_towns+"; senza collegamento completo: "+r.blocked.length+". Motivi: "+JSON.stringify(counts)+". Nessuna pubblicazione inviata.";
+  const d=await request("?action=status&town_id=all");accounts=d.accounts||[];draw();
+ }catch(e){E("result").textContent="Scansione sospesa: "+e.message+". Nessuna pubblicazione eseguita."}
+ finally{E("scan").disabled=false}
+});
+(async()=>{
+ try{
+  const r=await fetch("../../config/case247-territorial-social-setup.json",{cache:"no-store"});
+  if(!r.ok)throw Error("CONFIG_NOT_FOUND");
+  setup=await r.json();
+  if(setup.territorial_landing_count!==41||setup.towns.length!==41)throw Error("TOWNS_CONFIG_INVALID");
+  E("towns-count").textContent=setup.towns.length;draw();
+  await auth();
+ }catch(e){E("result").textContent="Impossibile caricare elenco territori: "+e.message}
+})();
+</script></body></html>
