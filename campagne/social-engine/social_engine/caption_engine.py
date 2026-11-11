@@ -40,6 +40,16 @@ def attach_mandatory_cta(caption: str, policy: dict | None = None) -> str:
                       "dalla richiesta e non serve per scaricare la guida.")
     if disclaimer not in caption:
         missing.append(disclaimer)
+    # Optional flyer request, enabled only after the GDPR and functional gate checks.
+    flyer_file = CONVERSION_CONFIG.parent / "flyer-cta.json"
+    if flyer_file.is_file():
+        flyer = json.loads(flyer_file.read_text(encoding="utf-8"))
+        if flyer.get("enabled") is True:
+            link = flyer.get("landing_url", "")
+            if not link.startswith("https://josephsocialmedia2-spec.github.io/"):
+                raise BrandViolation("Invalid flyer landing URL")
+            if link not in caption:
+                missing.extend([flyer["facebook_cta"], link])
     return caption.strip() + ("\n\n" + "\n".join(missing) if missing else "")
 
 
