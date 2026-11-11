@@ -41,10 +41,11 @@
     page.drawRectangle({x:0,y:0,width:W,height:H,color:pdf.rgb(1,1,1)});
     draw((W-ww)/2,(H-hh)/2,ww,hh);
   }
-  async function exportPdf({flyer, properties, externalFile=null,externalPage=1,watermark=true, filename}){
+  async function exportPdf({flyer, properties, externalFile=null,externalPage=1,watermark=true, filename,whatsappUrl,autoDownload=true}){
     if(!global.PDFLib||!global.html2canvas||!global.CASE247_QR)throw Error('Librerie PDF/QR non disponibili. Serve una connessione Internet o le librerie JS locali.');
     if(!flyer)throw Error('Anteprima non trovata');
-    const urls=global.CASE247_QR.verifyAssociations(properties,`https://wa.me/39${global.CASE247_CONFIG.phone}?text=${encodeURIComponent(global.CASE247_CONFIG.whatsappText)}`);
+    const urlWhatsApp=whatsappUrl||`https://wa.me/39${global.CASE247_CONFIG.phone}?text=${encodeURIComponent(global.CASE247_CONFIG.whatsappText)}`;
+    const urls=global.CASE247_QR.verifyAssociations(properties,urlWhatsApp);
     if(urls.length)throw Error(urls.join('; '));
     if(!(await waitAllImages(flyer)))throw Error('Una o più immagini non sono state caricate. Attendi o sostituiscile.');
     const {PDFDocument,rgb,degrees,StandardFonts}=global.PDFLib;
@@ -79,8 +80,8 @@
     const waNode=flyer.querySelector('[data-qr-id="whatsapp"]');
     if(!waNode)throw Error('QR WhatsApp non trovato');
     report.push(global.CASE247_QR.drawPdf(page,waNode,'whatsapp',flyer,W,H,global.PDFLib));
-    const bytes=await pdf.save();download(bytes,filename||global.CASE247_CONFIG.outputName);
-    return {pdfBytes:bytes.length, pages:pdf.getPageCount(),qrCount:report.length,
+    const bytes=await pdf.save();if(autoDownload)download(bytes,filename||global.CASE247_CONFIG.outputName);
+    return {bytes, pdfBytes:bytes.length, pages:pdf.getPageCount(),qrCount:report.length,
       minModuleMm:Math.min(...report.map(x=>x.moduleMm)),qrs:report};
   }
   global.CASE247_PDF = {exportPdf,waitForImg};
