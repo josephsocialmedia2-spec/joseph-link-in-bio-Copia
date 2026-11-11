@@ -249,6 +249,85 @@ def make_plan(day, items, towns, geo, graphics, previous=None):
         "channel_blocker": "Territorial FB/IG accounts must be verified and connected first.",
     }
 
+def repair_future_today(day, items, towns, geo, old_plan, now_hour=18):
+    """Repair only not-yet-published slots following the 18:00 source refresh.
+    Never reuse today's assigned listing or the subsequent scheduled listing.
+    """
+    if not old_plan or old_plan.get("date") != day:
+        return None, {"updated":0,"removed":0,"replaced":0}
+    lookup = {str(p["id"]):p for p in items}
+    town_map = {t["id"]:t for t in towns}
+    assignments = list(old_plan.get("assignments", []))
+    original_listing_ids = {a["listing_id"] for a in assignments
+                            if a.get("type") == "IMMOBILE"}
+    changes = {"updated":0,"removed":0,"replaced":0}
+    repaired = []
+    valid_candidates = [p for p in items if listed_available(p) and valid_picture(p.get("image"))
+                        and str(p["id"]) not in original_listing_ids]
+    for index, a in enumerate(assignments):
+        if a.get("type") != "IMMOBILE":
+            repaired.append(a)
+            continue
+        hour = int(a.get("time", "00:00").split(":")[0])
+        if hour <= now_hour:
+            repaired.append(a)  # Past post: record must remain immutable.
+            continue
+        listing = lookup.get(a["listing_id"])
+        dest = town_map.get(a["town_id"])
+        still_eligible = (listing is not None and listed_available(listing)
+                          and valid_picture(listing.get("image")) and dest is not None
+                          and any(t["id"] == a["town_id"] for t,_ in eligible_towns(listing,towns,geo)))
+        if still_eligible:
+            refreshed = dict(a)
+            new_price, new_media = listing.get("price"), listing.get("image")
+            if (new_price != a.get("price") or new_media != a.get("media_url")
+                    or listing.get("title") != a.get("title")):
+                refreshed["title"] = listing["title"]
+                refreshed["price"] = new_price
+                refreshed["media_url"] = new_media
+                refreshed["source_url"] = listing["url"]
+                refreshed["caption"] = (
+                    listing["title"] + "\n\n"
+                    + (f"Prezzo indicato: {new_price:,.0f} EUR\n".replace(",", ".")
+                       if new_price else "")
+                    + f"Dettagli e disponibilità: {listing['url']}\n"
+                    + f"Immobili del territorio: {dest['landing_url']}\n"
+                    + "Case in Pubblicità 24/7 · Comunicazione pubblicitaria. "
+                      "La mediazione immobiliare è svolta dai professionisti abilitati."
+                )
+                changes["updated"] += 1
+            repaired.append(refreshed)
+            continue
+        changes["removed"] += 1
+        # Never pick next scheduled listing, even if the removed one was replaced.
+        next_listing = next((future["listing_id"] for future in assignments[index + 1:]
+                             if future.get("type") == "IMMOBILE"), None)
+        options = [p for p in valid_candidates if str(p["id"]) != next_listing and
+                   any(t["id"] == a["town_id"] for t,_ in eligible_towns(p,towns,geo))]
+        if not options:
+            continue  # Unfilled slot is safer than a duplicate or nonlocal post.
+        options.sort(key=lambda p: hash_order(str(p["id"]),day))
+        substitute = options[0]
+        valid_candidates.remove(substitute)
+        updated = dict(a)
+        updated.update(listing_id=str(substitute["id"]), title=substitute["title"],
+                       price=substitute.get("price"), media_url=substitute["image"],
+                       source_url=substitute["url"], source_town_id=substitute["town_id"],
+                       caption=substitute["title"] + "\n\n"
+                           + f"Dettagli e disponibilità: {substitute['url']}\n"
+                           + f"Immobili del territorio: {dest['landing_url']}\n"
+                           + "Case in Pubblicità 24/7 · Comunicazione pubblicitaria; "
+                             "intermediazione a cura di professionisti abilitati.")
+        updated["distance_upper_bound_km"] = next(km for t,km in eligible_towns(substitute,towns,geo)
+                                                  if t["id"] == a["town_id"])
+        repaired.append(updated)
+        changes["replaced"] += 1
+    old_plan["assignments"] = repaired
+    old_plan["unique_listings_planned"] = sum(a["type"] == "IMMOBILE" for a in repaired)
+    old_plan["graphic_posts_planned"] = sum(a["type"] == "DIETRO_LE_QUINTE" for a in repaired)
+    old_plan["ready_for_provider"] = sum(a.get("status") == "READY_TO_SUBMIT" for a in repaired)
+    return old_plan,changes
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--day", help="Planned day, YYYY-MM-DD (default: next local day)")
@@ -283,6 +362,13 @@ def main():
     plan["verified_town_count"] = sum(p.get("location_status") == "VERIFICATO_FONTE"
                                       for p in catalog["items"])
     plan["geocoded_town_count"] = len(geo)
+    # Repair today's remaining slots before scheduling the next day. This is
+    # crucial when an announcement was removed before the 20:00 local slot.
+    todays_file = OUT / "plans" / (today.isoformat() + ".json")
+    todays_plan, repairs = repair_future_today(today.isoformat(),catalog["items"],towns,geo,
+                                               read_json(todays_file))
+    if todays_plan:
+        atomic_write(todays_file,todays_plan)
     atomic_write(OUT / "latest-plan.json", plan)
     atomic_write(OUT / "plans" / (day + ".json"), plan)
     atomic_write(OUT / "catalog-fingerprints.json", changes["after"])
@@ -294,7 +380,8 @@ def main():
         "added_ids": changes["added_ids"], "removed_ids": changes["removed_ids"],
         "changed_ids": changes["changed_ids"],
         "live_updates_performed": 0,
-        "reason": "No territorial channel credentials verified; no live provider mutations",
+        "todays_future_plan_repairs": repairs,
+        "reason": "Updated local future queue; no external provider edit was made",
         "action": "Rebuild next-day plan; removed properties excluded automatically",
     })
     print(f"DAY {day} | listings={plan['catalog_count']} verified={plan['verified_town_count']} "
