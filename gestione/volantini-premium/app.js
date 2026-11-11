@@ -106,7 +106,9 @@
     $('templateName').textContent=(CFG.templates.find(t=>t.id===model.theme)?.name||model.theme)+' · '+staff.name;
     showStaff();
     const logo=$('agencyLogo'),footerLogo=$('footerAgencyLogo');
-    logo.src=CFG.agencyLogo;footerLogo.src=CFG.agencyLogo;
+    const laSacraLogo=global.CASE247_LA_SACRA_LOGO||CFG.agencyLogo;
+    if(logo.src!==laSacraLogo)logo.src=laSacraLogo;
+    if(footerLogo.src!==laSacraLogo)footerLogo.src=laSacraLogo;
     $('portraitSign').innerHTML=esc(staff.name)+'<small>'+esc(staff.role)+'</small>';
     $('staffFooterName').textContent=staff.name+' · '+staff.role;
     $('staffFooterPartner').textContent=staff.brand==='lasacra'?'Immobiliare La Sacra · Team territoriale':'Partner commerciale di Immobiliare La Sacra';
