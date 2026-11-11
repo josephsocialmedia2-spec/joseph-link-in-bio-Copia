@@ -4,18 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Studio Volantini Premium · CASE IN PUBBLICITÀ 24/7</title>
-<link rel="stylesheet" href="./styles.css?v=20261111-photo-type-r2">
+<title>Studio Volantini · Joseph, Cristian, Ylenia</title>
+<link rel="stylesheet" href="./styles.css?v=20261111-tre-referenti-v1">
 <!-- Librerie client-side, versioni fissate: installare copie locali per produzione offline. -->
 <script defer src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
-<script defer src="./config.js?v=20261111-photo-type-r1"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script defer src="./config.js?v=20261111-tre-referenti-v1"></script>
+<script defer src="./branding-logo.js?v=20261111-tre-referenti-v1"></script>
 <script defer src="./core.js"></script>
 <script defer src="./qr.js"></script>
-<script defer src="./pdf-engine.js"></script>
+<script defer src="./pdf-engine.js?v=20261111-tre-referenti-v1"></script>
 <script defer src="./portrait-default.js"></script>
-<script defer src="./app.js?v=20261111-photo-type-r1"></script>
+<script defer src="./app.js?v=20261111-tre-referenti-v1"></script>
 </head>
 <body>
 <header class="workspace-head no-print">
@@ -24,6 +26,16 @@
 </header>
 <div class="studio no-print">
   <aside class="panel left-panel">
+    <h2>00 · Seleziona il referente</h2>
+    <p class="hint">Una sola selezione di 18 annunci. Cambiano soltanto logo, referente e QR WhatsApp.</p>
+    <div id="staffPicker" class="staff-picker" role="group" aria-label="Referenti del volantino">
+      <button type="button" data-staff="joseph">Joseph · Case in Pubblicità 24/7</button>
+      <button type="button" data-staff="cristian">Cristian · Immobiliare La Sacra</button>
+      <button type="button" data-staff="ylenia">Ylenia · Immobiliare La Sacra</button>
+    </div>
+    <button id="generateAll" class="primary" type="button">Genera tutti e 3 i volantini (ZIP)</button>
+    <p class="hint" id="staffHint">Le versioni Cristian e Ylenia non mostrano ritratti.</p>
+    <hr>
     <h2>01 · Modello premium</h2><p class="hint">Seleziona una grafica. I dati immobiliari e i QR rimangono invariati.</p>
     <div id="templatePicker" class="template-picker" aria-label="Selezione template"></div>
     <hr>
@@ -33,7 +45,7 @@
     <div class="action-row"><button id="addManual">+ Scheda manuale</button><button id="clearAll">Svuota le 18 posizioni</button></div>
     <hr>
     <h2>03 · Materiale grafico</h2>
-    <label>Fotografia di Joseph (preferibile PNG trasparente)<input id="portraitInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
+    <label>Fotografia di Joseph (preferibile PNG trasparente; non usata per Cristian e Ylenia)<input id="portraitInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
     <label>Panorama reale di Avigliana (JPG/PNG)<input id="panoramaInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
     <label>Facciata esterna da abbinare (PDF/JPG/PNG)<input id="outerInput" type="file" accept="application/pdf,image/png,image/jpeg"></label>
     <label>Pagina esterna se PDF multipagina<input id="outerPage" type="number" min="1" step="1" value="1"></label>
@@ -41,7 +53,7 @@
   </aside>
   <main class="panel preview-panel">
     <div class="preview-toolbar"><div><h2>Anteprima interna A4 orizzontale</h2><small id="templateName">Modello 01</small></div>
-      <div class="action-row"><button id="saveProject">Salva dati</button><button id="downloadProject">Esporta JSON</button><button id="exportPdf" class="primary">Genera PDF</button></div>
+      <div class="action-row"><button id="saveProject">Salva dati</button><button id="downloadProject">Esporta JSON</button><button id="exportPdf" class="primary">Genera PDF referente selezionato</button></div>
     </div>
     <div id="previewViewport"><div id="previewSizer">
       <section id="flyer" class="theme-cobalto" aria-label="Volantino interno A4 landscape">
@@ -49,13 +61,14 @@
           <div class="hero-panorama" id="heroPanorama"></div>
           <svg class="wave-overlay" aria-hidden="true" viewBox="0 0 1122 150" preserveAspectRatio="none"><path class="wave1" d="M0 107 C220 57 430 160 645 108 S951 35 1122 96"/><path class="wave2" d="M0 137 Q270 86 493 131 T1122 116"/></svg>
           <div class="flyer-logo">
+            <img id="agencyLogo" class="agency-brand-logo" src="" alt="Logo ufficiale Immobiliare La Sacra">
             <svg class="house-logo" viewBox="0 0 56 56" aria-hidden="true"><path d="M5 30 28 8 51 30M14 27V51H44V27"/><path d="M25 35h8v16m5-16h7"/></svg>
             <div><div class="brand-title">CASE IN PUBBLICITÀ <span>24/7</span></div><div class="brand-subtitle">Avigliana e territorio circostante</div><div class="brand-partner">Selezione immobili dal portafoglio La Sacra Immobiliare</div></div>
           </div>
           <div class="headline"><strong>18</strong><span>IMMOBILI<br>IN EVIDENZA</span></div>
           <p class="hero-tagline">Opportunità immobiliari presentate con visibilità 24/7</p>
-          <img id="portrait" class="portrait" alt="Joseph Malafronte">
-          <div class="portrait-sign">Joseph<br>Malafronte<small>Digital Strategist</small></div>
+          <img id="portrait" class="portrait" alt="Joseph">
+          <div id="portraitSign" class="portrait-sign">Joseph<small>Digital Strategist</small></div>
         </div>
         <div class="listing-grid" id="listingGrid" aria-label="18 schede immobiliari"></div>
         <footer class="flyer-footer">
@@ -65,9 +78,13 @@
             <div class="board-item"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 17 13 7l7 5 9-4M3 22l7 6 7-5 6 2 6-7M10 16l7 7"/></svg><div>Assistenza nel<strong>processo pubblicitario</strong></div></div>
           </div>
           <div class="contact-band">
-            <div class="contact-identity"><img id="footerPortrait" class="footer-portrait" src="/joseph-link-in-bio-Copia/assets/joseph-malafronte.webp" alt="Fotografia di Joseph Malafronte"><div class="partner-copy"><strong>Joseph Malafronte · Digital Strategist</strong><span>Partner commerciale di Immobiliare La Sacra</span><small>Piazza del Comune XXV Aprile, 1 · 10057 Sant’Ambrogio di Torino (TO)</small></div></div>
-            <div class="contact-cta"><b>Scrivi VENDO su WhatsApp</b><strong>371 370 8294</strong></div>
-            <div id="waQr" class="qr-box qr-whatsapp" aria-label="QR WhatsApp Joseph Malafronte"></div>
+            <div class="contact-identity">
+              <img id="footerPortrait" class="footer-portrait" src="/joseph-link-in-bio-Copia/assets/joseph-malafronte.webp" alt="Fotografia di Joseph">
+              <img id="footerAgencyLogo" class="footer-agency-logo" src="" alt="Immobiliare La Sacra">
+              <div class="partner-copy"><strong id="staffFooterName">Joseph · Digital Strategist</strong><span id="staffFooterPartner">Partner commerciale di Immobiliare La Sacra</span><small>Piazza del Comune XXV Aprile, 1 · 10057 Sant’Ambrogio di Torino (TO)</small></div>
+            </div>
+            <div class="contact-cta"><b id="staffCta">Scrivi VENDO su WhatsApp</b><strong id="staffPhone">371 370 8294</strong></div>
+            <div id="waQr" class="qr-box qr-whatsapp" aria-label="QR WhatsApp referente selezionato"></div>
           </div>
         </footer>
       </section>

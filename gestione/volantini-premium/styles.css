@@ -99,6 +99,38 @@ button.primary{background:linear-gradient(150deg,#008ccf,#07589f);border-color:#
 .edit-grid input[type="checkbox"]{width:auto}.form-error{min-height:1em;color:#ffd4aa}
 @media(max-width:1170px){.studio{grid-template-columns:1fr}.template-picker{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:600px){.studio{padding:8px}.template-picker{grid-template-columns:repeat(2,minmax(0,1fr))}.workspace-head{padding:10px}.workspace-brand b{font-size:13px}.top-link{font-size:11px}.edit-grid{grid-template-columns:1fr}.edit-grid .wide{grid-column:auto}}
+
+/* Tre volantini dalla stessa griglia: Joseph (CASE247), Cristian e Ylenia (La Sacra). */
+.staff-picker{display:grid;gap:6px;margin:12px 0}
+.staff-picker button{text-align:left;background:#0a2947;border:1px solid #527a9c;border-radius:9px;padding:11px 13px}
+.staff-picker button[aria-pressed="true"]{background:#085d97;border-color:#7ce1ff;box-shadow:inset 0 0 0 1px #a6eeff}
+#generateAll{display:block;width:100%;margin:12px 0;font-size:13px}
+.agency-brand-logo,.footer-agency-logo{display:none}
+#flyer.profile-lasacra .agency-brand-logo{
+ display:block;position:relative;width:320px;height:62px;object-fit:contain;object-position:center;
+ background:#ffffff;border:2px solid #ffffff;border-radius:10px;padding:4px 7px;
+ box-shadow:0 2px 12px #07275155;
+}
+#flyer.profile-lasacra .flyer-logo{top:7px;left:20px;gap:0}
+#flyer.profile-lasacra .flyer-logo .house-logo,
+#flyer.profile-lasacra .flyer-logo .brand-title,
+#flyer.profile-lasacra .flyer-logo .brand-subtitle{display:none}
+#flyer.profile-lasacra .flyer-logo .brand-partner{display:block;position:absolute;top:64px;left:7px;font-size:11px;color:#fff;white-space:nowrap;text-shadow:0 1px 3px #001a33}
+#flyer.profile-lasacra .flyer-header .portrait,
+#flyer.profile-lasacra .footer-portrait{display:none!important}
+#flyer.profile-lasacra .portrait-sign{right:17px;top:26px;min-width:125px;font-size:26px}
+#flyer.profile-lasacra .footer-agency-logo{
+ display:block;flex:none;width:170px;height:50px;object-fit:contain;
+ object-position:center;background:#ffffff;border-radius:7px;padding:3px;
+ border:1px solid #d1e5f4;
+}
+#flyer.profile-lasacra .contact-identity{gap:12px}
+#flyer.profile-lasacra .partner-copy{font-size:10px}
+#flyer.profile-lasacra .partner-copy strong{font-size:16px}
+#flyer.profile-lasacra .brand-partner{font-weight:700}
+#flyer.profile-lasacra .contact-band{gap:11px}
+#flyer.profile-lasacra .contact-cta strong{font-size:19px}
+
 @page{size:A4 landscape;margin:0}
 @media print{
   body{background:#fff!important}
