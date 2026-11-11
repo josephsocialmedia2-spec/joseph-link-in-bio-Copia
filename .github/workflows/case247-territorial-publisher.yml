@@ -2,6 +2,14 @@ name: CASE247 Territorial Meta publisher · verified channels only
 on:
   schedule:
     - cron: "*/15 * * * *"
+  pull_request:
+    paths:
+      - scripts/case247_legacy_transition.py
+      - scripts/test_case247_legacy_transition.py
+      - config/case247-direct-meta-transition.json
+      - scripts/case247_territorial_publisher.py
+      - scripts/case247_territorial_engine.py
+      - .github/workflows/case247-territorial-publisher.yml
   workflow_dispatch:
     inputs:
       dry_run:
@@ -14,6 +22,9 @@ on:
       - feature/case247-regia-territoriale-20km-20261111
     paths:
       - scripts/case247_territorial_publisher.py
+      - scripts/case247_legacy_transition.py
+      - scripts/test_case247_legacy_transition.py
+      - config/case247-direct-meta-transition.json
       - .github/workflows/case247-territorial-publisher.yml
 permissions:
   contents: write
@@ -31,8 +42,9 @@ jobs:
           python-version: "3.12"
       - name: Verify syntax without credentials
         run: |
-          python -m py_compile scripts/case247_territorial_publisher.py
+          python -m py_compile scripts/case247_territorial_publisher.py scripts/case247_territorial_engine.py scripts/case247_legacy_transition.py
           python -m unittest discover -s scripts -p test_case247_territorial_engine.py -v
+          python -m unittest discover -s scripts -p test_case247_legacy_transition.py -v
 
   publish:
     needs: syntax-test
