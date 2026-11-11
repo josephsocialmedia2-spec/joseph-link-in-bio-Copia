@@ -52,11 +52,10 @@ jobs:
           python -m unittest discover -s scripts -p test_case247_guided_meta_creation.py -v
           python - <<'PY'
           from pathlib import Path
-          import re
           src=Path("gestione/territori/index.html").read_text()
-          matches=re.findall(r'<script type="module">([\\s\\S]*?)</script>',src)
-          assert len(matches)==1, "Expect exactly one onboarding module"
-          Path("/tmp/case247-guided-meta-creation.mjs").write_text(matches[0])
+          assert src.count('<script type="module">')==1, "Expect exactly one onboarding module"
+          module=src.split('<script type="module">',1)[1].split('</script>',1)[0]
+          Path("/tmp/case247-guided-meta-creation.mjs").write_text(module)
           PY
           node --check /tmp/case247-guided-meta-creation.mjs
       - name: Verify public links safety and shared 20km landing catalog JS
