@@ -80,7 +80,8 @@ async function validatePair(page:any,t:any,fbPerm:boolean,igPerm:boolean){
  const detail=await graph(encodeURIComponent(String(page.id)),String(page.access_token),{fields:"id,name,instagram_business_account{id,username}"});
  if(String(detail.id)!==String(page.id))throw Error("PAGE_IDENTITY_MISMATCH");
  const ig=detail.instagram_business_account;
- if(!ig?.id||!ig?.username||!igMatch(ig.username,t))throw Error("INSTAGRAM_TERRITORY_NOT_MATCHED");
+ if(!ig?.id||!ig?.username)throw Error("INSTAGRAM_PROFESSIONAL_NOT_LINKED");
+ if(!igMatch(ig.username,t))throw Error("INSTAGRAM_TERRITORY_NOT_MATCHED");
  const igDetails=await graph(encodeURIComponent(String(ig.id)),String(page.access_token),{fields:"id,username,account_type"});
  if(String(igDetails.id)!==String(ig.id)||!["BUSINESS","MEDIA_CREATOR"].includes(String(igDetails.account_type)))throw Error("INSTAGRAM_ACCOUNT_NOT_VERIFIED");
  return {page,ig};
