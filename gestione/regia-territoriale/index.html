@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CASE247 · Regia Territoriale 24/7</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+:root{color-scheme:dark;--bg:#071626;--panel:#142b42;--edge:#315574;--light:#eaf5ff;--muted:#b4c7d8;--mint:#77ddc5;--gold:#ffcf88}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--light);font:15px/1.6 system-ui,Segoe UI,Arial,sans-serif}
+main{max-width:1300px;padding:20px 20px 80px;margin:auto}
+header{background:linear-gradient(120deg,#0f2947,#102c41);border-bottom:1px solid var(--edge);padding:24px max(20px,calc((100vw - 1260px)/2))}
+h1{font-size:clamp(23px,3vw,38px);line-height:1.2;margin:4px 0 8px}
+h2{font-size:19px;margin:0 0 14px}a{color:#a6dfff}p{margin:5px 0 12px}
+.small{font-size:13px;color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.card{padding:18px;border:1px solid var(--edge);background:var(--panel);border-radius:12px}.value{font-size:30px;font-weight:800;letter-spacing:-.03em}
+section{margin-top:22px}.warn{color:var(--gold)}.ok{color:var(--mint)}
+table{border-collapse:collapse;width:100%;font-size:13px}td,th{text-align:left;border-bottom:1px solid var(--edge);padding:10px}th{color:var(--muted)}
+.badge{font-size:11px;padding:3px 8px;border:1px solid var(--edge);border-radius:20px;white-space:nowrap}
+input,select{padding:10px;border:1px solid var(--edge);background:#0c2137;color:white;border-radius:8px;max-width:100%;width:260px}
+.controls{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0}
+.scroll{overflow-x:auto}button{cursor:pointer;background:#265b79;color:white;padding:9px 12px;border:1px solid #5687a3;border-radius:8px}
+footer{margin-top:30px;color:var(--muted);font-size:12px}
+</style>
+</head><body>
+<header>
+<a href="../">← Dashboard centrale</a>
+<h1>CASE247 · Regia Territoriale 24/7</h1>
+<p class="small">Distribuzione degli immobili entro 20 km · controllo delle 18:00 · una sola uscita giornaliera per immobile nell'intera rete FB/IG</p>
+</header>
+<main>
+<div id="note" class="card warn" role="status">Caricamento delle configurazioni verificabili…</div>
+<section class="grid" id="stats"></section>
+<section class="card">
+<h2>41 landing e rispettivi canali social</h2>
+<p class="small">Un URL o il nome di una pagina non dimostrano che l'account sia collegato al sistema di pubblicazione.</p>
+<div class="controls"><input id="search" placeholder="Cerca comune" aria-label="Cerca comune"><select id="connected"><option value="all">Tutti i canali</option><option value="active">Con canali collegati</option><option value="missing">Da collegare</option></select></div>
+<div class="scroll"><table><thead><tr><th>Comune</th><th>Landing</th><th>Facebook</th><th>Instagram</th><th>Proposte assegnate</th></tr></thead><tbody id="towns"></tbody></table></div>
+</section>
+<section class="card">
+<h2>Ultima rotazione disponibile</h2>
+<p id="freshness" class="small">Nessun piano generato ancora.</p>
+<div class="controls"><select id="type"><option value="all">Immobili e grafiche</option><option value="IMMOBILE">Solo immobili</option><option value="DIETRO_LE_QUINTE">Solo Dietro le quinte</option></select><select id="status"><option value="all">Qualsiasi stato</option><option value="READY_TO_SUBMIT">Pronto (connessione verificata)</option><option value="BLOCKED_CHANNEL_NOT_CONNECTED">Account non collegato</option></select></div>
+<div class="scroll"><table><thead><tr><th>Ora</th><th>Tipo / Contenuto</th><th>Comune</th><th>Canale</th><th>Stato</th></tr></thead><tbody id="queue"></tbody></table></div>
+</section>
+<section class="card">
+<h2>Controllo catalogo delle 18:00</h2>
+<div id="changes" class="small">Il registro sarà compilato al primo controllo effettivo.</div>
+</section>
+<footer>Fonte: configurazione territoriale e report reali nel repository GitHub. Questa pagina visualizza gli stati, non invia contenuti a Meta e non crea nuovi profili.</footer>
+</main>
+<script>
+(function(){
+"use strict";
+const base="/joseph-link-in-bio-Copia/";
+const source=base+"config/case247-territorio.json";
+const planUrl=base+"campagne/case247/regia-territoriale/latest-plan.json";
+const reconcileUrl=base+"campagne/case247/regia-territoriale/reconciliation.json";
+const $=id=>document.getElementById(id);
+const escape=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let towns=[],plan=null;
+async function get(url){const r=await fetch(url+"?t="+Date.now(),{cache:"no-store"});if(!r.ok)throw new Error("HTTP "+r.status);return r.json();}
+function active(t,n){const c=t.channels?.[n]||{};return t.auto_publish===true&&c.status==="ACTIVE_VERIFIED"&&!!c.provider_id&&!!c.url;}
+function stats(){
+const slots=plan?.assignments||[];
+const nums=[
+["Landing presenti",towns.length],
+["Pagine Facebook connesse",towns.filter(t=>active(t,"facebook")).length],
+["Profili Instagram connessi",towns.filter(t=>active(t,"instagram")).length],
+["Immobili assegnati",plan?.unique_listings_planned??"–"],
+["Proposte invio attivo",plan?.ready_for_provider??"–"],
+["Grafiche assegnate",plan?.graphic_posts_planned??"–"]
+];
+$("stats").innerHTML=nums.map(([title,value])=>'<div class="card"><div class="value">'+escape(value)+'</div><div class="small">'+escape(title)+'</div></div>').join("");
+}
+function channel(t,n){const c=t.channels?.[n]||{};if(active(t,n))return '<span class="ok">Collegato</span>';return '<span class="warn">Da collegare</span>';}
+function renderTowns(){
+const filter=$("search").value.trim().toLocaleLowerCase("it"),conn=$("connected").value;
+const data=towns.filter(t=>t.name.toLocaleLowerCase("it").includes(filter)).filter(t=>{
+const yes=active(t,"facebook")||active(t,"instagram");
+return conn==="all"||(conn==="active"&&yes)||(conn==="missing"&&!yes);
+});
+$("towns").innerHTML=data.map(t=>'<tr><td>'+escape(t.name)+'</td><td><a href="'+escape(t.landing_url)+'" target="_blank" rel="noopener">Apri</a></td><td>'+channel(t,"facebook")+'</td><td>'+channel(t,"instagram")+'</td><td>'+(plan?.assignments||[]).filter(x=>x.town_id===t.id).length+'</td></tr>').join("")||'<tr><td colspan="5">Nessun comune con questi filtri</td></tr>';
+}
+function renderQueue(){
+const entries=plan?.assignments||[];
+const t=$("type").value,s=$("status").value;
+const subset=entries.filter(x=>(t==="all"||x.type===t)&&(s==="all"||x.status===s)).slice(0,300);
+$("queue").innerHTML=subset.map(x=>'<tr><td>'+escape(x.time)+'</td><td>'+escape(x.title||x.topic||x.graphic_id)+'</td><td>'+escape(x.town)+'</td><td>'+escape(x.network)+'</td><td><span class="badge">'+escape(x.status)+'</span></td></tr>').join("")||'<tr><td colspan="5">Nessuna assegnazione verificata</td></tr>';
+$("freshness").textContent=plan?'Data pianificata: '+plan.date+' · Generato: '+plan.generated_at+' · Fonte catalogo: '+plan.source_snapshot_at:'Il piano non è ancora presente sul sito. Nessuna pubblicazione può essere dedotta da questo pannello.';
+}
+async function init(){
+try{towns=(await get(source)).towns||[]}catch(e){$("note").textContent="Configurazione territoriale non accessibile: "+e.message;return;}
+try{plan=await get(planUrl)}catch(e){plan=null;}
+let recon=null;try{recon=await get(reconcileUrl)}catch(e){}
+if(recon)$("changes").textContent="Ultimo controllo: "+recon.checked_at+
+" · Nuovi: "+recon.added_ids.length+" · Rimossi: "+recon.removed_ids.length+
+" · Modificati: "+recon.changed_ids.length+" · Aggiornamenti live confermati: "+recon.live_updates_performed+
+" · "+recon.reason;
+$("note").textContent=plan?"Piano editoriale caricato. Lo stato di ciascuna proposta è indicato sotto.":"Landing verificate nella configurazione; motore ancora senza un piano pubblico generato. Gli account social non collegati restano bloccati.";
+stats();renderTowns();renderQueue();
+}
+$("search").addEventListener("input",renderTowns);
+$("connected").addEventListener("change",renderTowns);
+$("type").addEventListener("change",renderQueue);
+$("status").addEventListener("change",renderQueue);
+init();
+})();
+</script></body></html>

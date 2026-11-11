@@ -33,6 +33,21 @@ def normalize(product):
     variants = product.get('variants') or []
     prices = {float(v['price']) for v in variants if v.get('price') is not None}
     price = next(iter(prices)) if len(prices) == 1 and next(iter(prices)) > 0 else None
+    tags = product.get('tags') or []
+    if isinstance(tags, str):
+        tags = [x.strip() for x in tags.split(',') if x.strip()]
+    availability = [v.get('available') for v in variants]
+    availability_status = ('AVAILABLE' if True in availability
+                           else 'SOLD_OUT' if availability and all(v is False for v in availability)
+                           else 'UNKNOWN')
+    # A storefront may show a listing without offering a transaction;
+    # absence of an explicit availability flag must not be treated as AVAILABLE.
+    combined_status = (title + ' ' + ' '.join(tags)).casefold()
+    if any(w in combined_status for w in ('venduto', 'in trattativa', 'riservato', 'non disponibile')):
+        availability_status = 'ON_HOLD'
+    original_images = [i.get('src') for i in product.get('images', []) if i.get('src')]
+    approved_originals = [src for src in original_images if not re.search(
+        r'chatgpt|dall.?e|midjourney|stable.?diffusion', src, re.I)]
     title_lower = title.lower()
     commercial = any(w in title_lower for w in ('attivit', 'capannone', 'negozio', 'magazzino', 'ufficio', 'commerciale'))
     contract = 'Affitto' if any(w in title_lower for w in ('affitto', 'locazione')) else 'Vendita' if 'vendita' in title_lower else 'Da verificare'
@@ -42,8 +57,10 @@ def normalize(product):
         return float(match.group(1).replace(',', '.')) if match else None
     return {
         'id': str(product['id']), 'title': title, 'price': price,
+        'availability_status': availability_status, 'tags': tags,
+        'images_fingerprint': __import__('hashlib').sha256(json.dumps(original_images).encode()).hexdigest(),
         'url': f"{SOURCE}/products/{product['handle']}",
-        'image': next((i['src'] for i in product.get('images', []) if i.get('src')), ''),
+        'image': approved_originals[0] if approved_originals else '',
         'description': description, 'category': 'Impresa' if commercial else 'Residenziale',
         'contract': contract, 'surface': number(r'\bsuperficie\s+(?:commerciale\s+)?(?:di\s+)?(\d+(?:[.,]\d+)?)\s*(?:mq\b|m²|metri quadrati)'),
         'rooms': number(r'\b(\d+)\s+locali\b'), 'baths': number(r'\b(\d+)\s+bagn[oi]\b'),
@@ -79,7 +96,7 @@ def synchronize(snapshot=None):
             raise RuntimeError('Inventory unexpectedly fell by more than 50%; manual review required')
     before = {p['id']: p for p in previous}
     after = {p['id']: p for p in items}
-    changes = {'removed_ids': sorted(before.keys() - after.keys()), 'added_ids': sorted(after.keys() - before.keys()), 'changed_ids': [key for key in before.keys() & after.keys() if any(before[key].get(field) != after[key].get(field) for field in ('price', 'title', 'description', 'image', 'url', 'contract'))]}
+    changes = {'removed_ids': sorted(before.keys() - after.keys()), 'added_ids': sorted(after.keys() - before.keys()), 'changed_ids': [key for key in before.keys() & after.keys() if any(before[key].get(field) != after[key].get(field) for field in ('price', 'title', 'description', 'image', 'images_fingerprint', 'availability_status', 'tags', 'url', 'contract'))]}
     payload = {'changes': changes, 'source': SOURCE, 'last_success_at': dt.datetime.now(dt.timezone.utc).isoformat(), 'count': len(items), 'items': items}
     output.parent.mkdir(parents=True, exist_ok=True)
     temp = output.with_suffix('.tmp')

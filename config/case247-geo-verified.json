@@ -1,0 +1,575 @@
+{
+  "source": "OpenStreetMap Nominatim",
+  "towns": {
+    "avigliana": {
+      "lat": 45.0779435,
+      "lon": 7.3983904,
+      "bbox": [
+        45.043086,
+        45.1018699,
+        7.3482088,
+        7.434399
+      ],
+      "osm_type": "relation",
+      "osm_id": 44097,
+      "display_name": "Avigliana, Torino, Piemonte, 10051, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "almese": {
+      "lat": 45.1168763,
+      "lon": 7.39455,
+      "bbox": [
+        45.0993341,
+        45.1404947,
+        7.3853305,
+        7.4554912
+      ],
+      "osm_type": "relation",
+      "osm_id": 44219,
+      "display_name": "Almese, Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "rubiana": {
+      "lat": 45.1379458,
+      "lon": 7.3848302,
+      "bbox": [
+        45.1267126,
+        45.1852644,
+        7.3322767,
+        7.4194692
+      ],
+      "osm_type": "relation",
+      "osm_id": 44310,
+      "display_name": "Rubiana, Unione Montana Alpi Graie, Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "villar-dora": {
+      "lat": 45.114646,
+      "lon": 7.383515,
+      "bbox": [
+        45.0971482,
+        45.1395802,
+        7.3513016,
+        7.3936838
+      ],
+      "osm_type": "relation",
+      "osm_id": 44218,
+      "display_name": "Villar Dora, Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "caprie": {
+      "lat": 45.118845,
+      "lon": 7.331914,
+      "bbox": [
+        45.1054677,
+        45.1735496,
+        7.3129728,
+        7.3718069
+      ],
+      "osm_type": "relation",
+      "osm_id": 44245,
+      "display_name": "Caprie, Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "condove": {
+      "lat": 45.1174186,
+      "lon": 7.3094552,
+      "bbox": [
+        45.1075274,
+        45.1976344,
+        7.2036832,
+        7.3343623
+      ],
+      "osm_type": "relation",
+      "osm_id": 44244,
+      "display_name": "Condove, Torino, Piemonte, 10055, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "sant-ambrogio-di-torino": {
+      "lat": 45.099445,
+      "lon": 7.362315,
+      "bbox": [
+        45.0835035,
+        45.1114943,
+        7.3374218,
+        7.390034
+      ],
+      "osm_type": "relation",
+      "osm_id": 44184,
+      "display_name": "Sant'Ambrogio di Torino, Torino, Piemonte, 10057, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "chiusa-di-san-michele": {
+      "lat": 45.1039129,
+      "lon": 7.326972,
+      "bbox": [
+        45.0789329,
+        45.1109197,
+        7.3038573,
+        7.3429327
+      ],
+      "osm_type": "relation",
+      "osm_id": 44156,
+      "display_name": "Chiusa di San Michele, Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "vaie": {
+      "lat": 45.095798,
+      "lon": 7.2935019,
+      "bbox": [
+        45.0784804,
+        45.1133911,
+        7.2781054,
+        7.3094694
+      ],
+      "osm_type": "relation",
+      "osm_id": 44158,
+      "display_name": "Vaie, Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "san-didero": {
+      "lat": 45.1353087,
+      "lon": 7.2129198,
+      "bbox": [
+        45.1222132,
+        45.1462415,
+        7.20438,
+        7.2344631
+      ],
+      "osm_type": "relation",
+      "osm_id": 44265,
+      "display_name": "San Didero, Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "bussoleno": {
+      "lat": 45.1392706,
+      "lon": 7.1477166,
+      "bbox": [
+        45.0623807,
+        45.1876797,
+        7.0944431,
+        7.1683266
+      ],
+      "osm_type": "relation",
+      "osm_id": 44134,
+      "display_name": "Bussoleno, Torino, Piemonte, 10053, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "chianocco": {
+      "lat": 45.1486267,
+      "lon": 7.1681539,
+      "bbox": [
+        45.1307573,
+        45.1945696,
+        7.1410437,
+        7.2032554
+      ],
+      "osm_type": "relation",
+      "osm_id": 44293,
+      "display_name": "Chianocco, Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "susa": {
+      "lat": 45.1383808,
+      "lon": 7.0493387,
+      "bbox": [
+        45.1240904,
+        45.1453299,
+        7.031235,
+        7.1268982
+      ],
+      "osm_type": "relation",
+      "osm_id": 44287,
+      "display_name": "Susa, Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "mompantero": {
+      "lat": 45.1420677,
+      "lon": 7.0644111,
+      "bbox": [
+        45.1396188,
+        45.2033398,
+        7.022389,
+        7.1317917
+      ],
+      "osm_type": "relation",
+      "osm_id": 44319,
+      "display_name": "Mompantero, Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "san-giorio-di-susa": {
+      "lat": 45.1279823,
+      "lon": 7.1779846,
+      "bbox": [
+        45.0475586,
+        45.1324761,
+        7.144036,
+        7.2129643
+      ],
+      "osm_type": "relation",
+      "osm_id": 44091,
+      "display_name": "San Giorio di Susa, Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "villar-focchiardo": {
+      "lat": 45.1113887,
+      "lon": 7.2247248,
+      "bbox": [
+        45.0482136,
+        45.122367,
+        7.1665317,
+        7.2568128
+      ],
+      "osm_type": "relation",
+      "osm_id": 44154,
+      "display_name": "Villar Focchiardo, Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "venaus": {
+      "lat": 45.1549096,
+      "lon": 7.0125697,
+      "bbox": [
+        45.1453115,
+        45.1979032,
+        6.9429575,
+        7.032856
+      ],
+      "osm_type": "relation",
+      "osm_id": 44372,
+      "display_name": "Venaus, Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "giaglione": {
+      "lat": 45.1402386,
+      "lon": 7.0147562,
+      "bbox": [
+        45.1291171,
+        45.1712625,
+        6.8841425,
+        7.0385367
+      ],
+      "osm_type": "relation",
+      "osm_id": 44299,
+      "display_name": "Giaglione, Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "gravere": {
+      "lat": 45.1061354,
+      "lon": 7.0274329,
+      "bbox": [
+        45.0758698,
+        45.1362784,
+        7.0040221,
+        7.0533997
+      ],
+      "osm_type": "relation",
+      "osm_id": 44152,
+      "display_name": "Gravere, Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "exilles": {
+      "lat": 45.0973834,
+      "lon": 6.9290646,
+      "bbox": [
+        45.0603018,
+        45.1448228,
+        6.848008,
+        6.9707513
+      ],
+      "osm_type": "relation",
+      "osm_id": 44125,
+      "display_name": "Exilles, Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "salbertrand": {
+      "lat": 45.07204,
+      "lon": 6.883205,
+      "bbox": [
+        45.0374011,
+        45.1116791,
+        6.8373772,
+        6.9371202
+      ],
+      "osm_type": "relation",
+      "osm_id": 44116,
+      "display_name": "Salbertrand, Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "oulx": {
+      "lat": 45.0330519,
+      "lon": 6.83251,
+      "bbox": [
+        44.9868739,
+        45.1138916,
+        6.7034463,
+        6.9176943
+      ],
+      "osm_type": "relation",
+      "osm_id": 43955,
+      "display_name": "Oulx, Torino, Piemonte, 10056, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "sauze-d-oulx": {
+      "lat": 45.0270271,
+      "lon": 6.8583464,
+      "bbox": [
+        44.9932994,
+        45.0400038,
+        6.8375554,
+        6.9037348
+      ],
+      "osm_type": "relation",
+      "osm_id": 44028,
+      "display_name": "Sauze d'Oulx, Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "cesana-torinese": {
+      "lat": 44.9524431,
+      "lon": 6.7906727,
+      "bbox": [
+        44.8432822,
+        45.0144817,
+        6.7373504,
+        6.9314224
+      ],
+      "osm_type": "relation",
+      "osm_id": 43801,
+      "display_name": "Cesana Torinese, Torino, Piemonte, 10054, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "claviere": {
+      "lat": 44.9387991,
+      "lon": 6.7502942,
+      "bbox": [
+        44.9133215,
+        44.948071,
+        6.743659,
+        6.7656257
+      ],
+      "osm_type": "relation",
+      "osm_id": 43802,
+      "display_name": "Claviere, Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "novalesa": {
+      "lat": 45.1896401,
+      "lon": 7.0154982,
+      "bbox": [
+        45.1693535,
+        45.2257281,
+        6.986571,
+        7.0771709
+      ],
+      "osm_type": "relation",
+      "osm_id": 44437,
+      "display_name": "Novalesa, Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "moncenisio": {
+      "lat": 45.2052852,
+      "lon": 6.9824996,
+      "bbox": [
+        45.1935895,
+        45.2198477,
+        6.9606471,
+        7.0052178
+      ],
+      "osm_type": "relation",
+      "osm_id": 44436,
+      "display_name": "Moncenisio, Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "pragelato": {
+      "lat": 44.9814858,
+      "lon": 6.9391604,
+      "bbox": [
+        44.8983723,
+        45.0646038,
+        6.8710147,
+        6.9941732
+      ],
+      "osm_type": "relation",
+      "osm_id": 43811,
+      "display_name": "Pragelato, Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "bardonecchia": {
+      "lat": 45.078339,
+      "lon": 6.703205,
+      "bbox": [
+        45.0195363,
+        45.159765,
+        6.6272658,
+        6.8554769
+      ],
+      "osm_type": "relation",
+      "osm_id": 44251,
+      "display_name": "Bardonecchia, Torino, Piemonte, 10052, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "chiomonte": {
+      "lat": 45.119542,
+      "lon": 6.985306,
+      "bbox": [
+        45.0696153,
+        45.1364825,
+        6.9470236,
+        7.0201477
+      ],
+      "osm_type": "relation",
+      "osm_id": 44149,
+      "display_name": "Chiomonte, Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "sant-antonino-di-susa": {
+      "lat": 45.1070733,
+      "lon": 7.2735862,
+      "bbox": [
+        45.0753362,
+        45.112699,
+        7.2457266,
+        7.2841284
+      ],
+      "osm_type": "relation",
+      "osm_id": 44157,
+      "display_name": "Sant'Antonino di Susa, Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "rivoli": {
+      "lat": 45.0697151,
+      "lon": 7.5176764,
+      "bbox": [
+        45.0390531,
+        45.0959378,
+        7.4761095,
+        7.5798488
+      ],
+      "osm_type": "relation",
+      "osm_id": 44071,
+      "display_name": "Rivoli, Torino, Piemonte, 10098, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "grugliasco": {
+      "lat": 45.068046,
+      "lon": 7.57762,
+      "bbox": [
+        45.0337465,
+        45.0711444,
+        7.5547231,
+        7.6253047
+      ],
+      "osm_type": "relation",
+      "osm_id": 44143,
+      "display_name": "Grugliasco, Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "moncalieri": {
+      "lat": 45.0004614,
+      "lon": 7.6847543,
+      "bbox": [
+        44.9279336,
+        45.0311638,
+        7.6480188,
+        7.7571117
+      ],
+      "osm_type": "relation",
+      "osm_id": 43843,
+      "display_name": "Moncalieri, Torino, Piemonte, 10024, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "collegno": {
+      "lat": 45.0775473,
+      "lon": 7.5724262,
+      "bbox": [
+        45.069177,
+        45.1201829,
+        7.554694,
+        7.6228767
+      ],
+      "osm_type": "relation",
+      "osm_id": 44144,
+      "display_name": "Collegno, Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "pianezza": {
+      "lat": 45.105847,
+      "lon": 7.543418,
+      "bbox": [
+        45.0881191,
+        45.1362415,
+        7.5143343,
+        7.6073707
+      ],
+      "osm_type": "relation",
+      "osm_id": 44200,
+      "display_name": "Pianezza, Torino, Piemonte, 10044, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "borgaro-torinese": {
+      "lat": 45.1521446,
+      "lon": 7.6579731,
+      "bbox": [
+        45.1245815,
+        45.1646165,
+        7.6372585,
+        7.6938779
+      ],
+      "osm_type": "relation",
+      "osm_id": 44307,
+      "display_name": "Borgaro Torinese, Torino, Piemonte, 10071, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "valgioie": {
+      "lat": 45.0762363,
+      "lon": 7.3408936,
+      "bbox": [
+        45.0602039,
+        45.0907467,
+        7.3047733,
+        7.360418
+      ],
+      "osm_type": "relation",
+      "osm_id": 44145,
+      "display_name": "Valgioie, Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    }
+  }
+}

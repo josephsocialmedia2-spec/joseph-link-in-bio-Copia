@@ -1,0 +1,107 @@
+name: CASE247 Regia territoriale 20km · verifica 18:00
+on:
+  push:
+    branches:
+      - main
+      - feature/case247-regia-territoriale-20km-20261111
+    paths:
+      - scripts/case247_territorial_engine.py
+      - scripts/test_case247_territorial_engine.py
+      - scripts/sync_sacra_catalog.py
+      - .github/workflows/case247-territorial-regia.yml
+  workflow_dispatch:
+    inputs:
+      geocode:
+        description: "Aggiorna la geolocalizzazione verificabile"
+        type: boolean
+        default: true
+  schedule:
+    # GitHub Actions cron is UTC; both times cover 18:00 Rome after DST changes.
+    - cron: "0 16,17 * * *"
+permissions:
+  contents: write
+concurrency:
+  group: case247-territorial-regia
+  cancel-in-progress: false
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Python syntax
+        run: python -m py_compile scripts/case247_territorial_engine.py scripts/sync_sacra_catalog.py
+      - name: Geofence and duplicate-safety suite
+        run: python -m unittest discover -s scripts -p test_case247_territorial_engine.py -v
+
+  nightly-reconcile:
+    needs: unit-tests
+    if: >
+      github.ref == 'refs/heads/main' &&
+      (github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'schedule'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run only at 18:00 local Italian time
+        id: local
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          HOUR=$(TZ=Europe/Rome date +%H)
+          if [[ "$EVENT_NAME" == "schedule" && "$HOUR" != "18" ]]; then
+            echo "active=false" >> "$GITHUB_OUTPUT"
+            echo "Skip: current hour in Rome is $HOUR"
+          else
+            echo "active=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Synchronize live La Sacra catalog
+        if: steps.local.outputs.active == 'true'
+        run: python scripts/sync_sacra_catalog.py
+      - name: Rebuild 41-town drafts
+        if: steps.local.outputs.active == 'true'
+        run: python scripts/build_territorial_drafts.py
+      - name: Reconcile and prepare next-day territorial rotation
+        if: steps.local.outputs.active == 'true'
+        env:
+          GEOCODE: ${{ inputs.geocode }}
+        run: |
+          if [[ "$GEOCODE" == "false" ]]; then
+            python scripts/case247_territorial_engine.py
+          else
+            python scripts/case247_territorial_engine.py --geocode
+          fi
+      - name: Validate output integrity
+        if: steps.local.outputs.active == 'true'
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          x=json.loads(Path('campagne/case247/regia-territoriale/latest-plan.json').read_text())
+          a=[p for p in x['assignments'] if p['type']=='IMMOBILE']
+          assert len({p['listing_id'] for p in a})==len(a)
+          assert all(p['distance_upper_bound_km'] <= 20 for p in a)
+          print('Verified', len(a), 'unique scheduled candidates', 'ready for provider', x['ready_for_provider'])
+          PY
+      - name: Commit audited catalog and scheduling plans
+        if: steps.local.outputs.active == 'true'
+        run: |
+          git config user.name case247-territorial-bot
+          git config user.email case247-territorial-bot@users.noreply.github.com
+          git add immobili/catalogo.json config/case247-geo-verified.json campagne/case247/territorio/bozze.json campagne/case247/regia-territoriale/
+          if ! git diff --cached --quiet; then
+            git commit -m "CASE247: riconciliazione territoriale delle 18"
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
+

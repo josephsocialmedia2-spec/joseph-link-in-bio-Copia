@@ -1,0 +1,57 @@
+name: CASE247 Territorial Meta publisher · verified channels only
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Simula senza inviare a Meta (predefinito)"
+        type: boolean
+        default: true
+  push:
+    branches:
+      - main
+      - feature/case247-regia-territoriale-20km-20261111
+    paths:
+      - scripts/case247_territorial_publisher.py
+      - .github/workflows/case247-territorial-publisher.yml
+permissions:
+  contents: write
+concurrency:
+  group: case247-territorial-publisher
+  cancel-in-progress: false
+
+jobs:
+  syntax-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify syntax without credentials
+        run: |
+          python -m py_compile scripts/case247_territorial_publisher.py
+          python -m unittest discover -s scripts -p test_case247_territorial_engine.py -v
+
+  publish:
+    needs: syntax-test
+    if: >
+      github.ref == 'refs/heads/main' &&
+      vars.CASE247_TERRITORIAL_LIVE == 'true' &&
+      (github.event_name == 'schedule' ||
+      (github.event_name == 'workflow_dispatch' && inputs.dry_run == false))
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Publish due verified territorial posts only
+        env:
+          CASE247_TERRITORIAL_LIVE: "true"
+          CASE247_TERRITORIAL_ACCOUNTS_JSON: ${{ secrets.CASE247_TERRITORIAL_ACCOUNTS_JSON }}
+        run: python scripts/case247_territorial_publisher.py --live --max-per-run 10
