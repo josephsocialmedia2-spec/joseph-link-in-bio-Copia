@@ -18,7 +18,7 @@ const handler=withSupabase({auth:"none"},async(req,ctx)=>{
   const siteKey=Deno.env.get("CASE247_TURNSTILE_SITE_KEY")||"";
   const secret=Deno.env.get("CASE247_TURNSTILE_SECRET_KEY")||"";
   const pdf=Deno.env.get("CASE247_FLYER_DOWNLOAD_URL")||"";
-  const expected=new RegExp("^https://drive\\.google\\.com/file/d/"+FILE_ID+"/view(?:[?].*)?$");
+  const expected=new RegExp("^https://drive\.google\.com/file/d/"+FILE_ID+"/view(?:[?].*)?$");
   const active=Boolean(!settings.error&&s?.intake_enabled&&s.controller_confirmed&&s.privacy_notice_approved&&s.anti_bot_verified&&
     !String(s.notice_version).startsWith("DRAFT")&&Deno.env.get("CASE247_LEGAL_RELEASE_APPROVED")==="true"&&
     Deno.env.get("CASE247_FLYER_GATE_ENABLED")==="true"&&siteKey&&secret&&expected.test(pdf));
@@ -31,9 +31,9 @@ const handler=withSupabase({auth:"none"},async(req,ctx)=>{
   if(Object.keys(body).length>12)return response(422,{error:"EXCESS_FIELDS"},origin);
   const nome=clean(body.nome,100),cognome=clean(body.cognome,100),telefono=clean(body.telefono,25);
   const origine=clean(body.origine,20),key=clean(body.submission_key,36),versione=clean(body.informativa_versione,120);
-  const validName=(s:string)=>/^[\\p{L}][\\p{L}\\p{M} .'-]{1,99}$/u.test(s);
-  if(clean(body.trap,120)||!validName(nome)||!validName(cognome)||!/^\\+?[0-9 ()-]{9,25}$/.test(telefono)||
-    telefono.replace(/\\D/g,"").length<9||!["facebook","instagram","messenger","sito","altro"].includes(origine)||
+  const validName=(s:string)=>/^[\p{L}][\p{L}\p{M} .'-]{1,99}$/u.test(s);
+  if(clean(body.trap,120)||!validName(nome)||!validName(cognome)||!/^\+?[0-9 ()-]{9,25}$/.test(telefono)||
+    telefono.replace(/\D/g,"").length<9||!["facebook","instagram","messenger","sito","altro"].includes(origine)||
     !/^[a-f0-9-]{36}$/i.test(key)||body.informativa_letta!==true||versione!==s.notice_version)
       return response(422,{error:"INVALID_FIELDS"},origin);
   const challenge=clean(body.turnstile_token,2050);
