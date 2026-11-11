@@ -5,14 +5,17 @@
   const CFG=global.CASE247_CONFIG,Core=global.CASE247_CORE,QR=global.CASE247_QR,PDF=global.CASE247_PDF;
   const $=id=>document.getElementById(id);
   const KEY='case247-premium-studio-v2';
-  const whatsapp=`https://wa.me/39${CFG.phone}?text=${encodeURIComponent(CFG.whatsappText)}`;
+  const PROFILES=CFG.profiles;
+  function activeProfile(){return PROFILES[model.profile]||PROFILES.joseph;}
+  function whatsappFor(profile){return 'https://wa.me/39'+profile.phone+'?text='+encodeURIComponent(profile.whatsappText||'VENDO');}
   const blank=()=>Array.from({length:18},()=>null);
-  const model={theme:'cobalto',properties:blank(),portrait:(CFG.portraitFallback||global.CASE247_DEFAULT_PORTRAIT),panorama:CFG.panoramaReal||CFG.panoramaFallback};
+  const model={profile:'joseph',theme:'cobalto',properties:blank(),portrait:(CFG.portraitFallback||global.CASE247_DEFAULT_PORTRAIT),panorama:CFG.panoramaReal||CFG.panoramaFallback};
   let external=null,selected=-1,catalog=null,loading=false;
   try{
     const old=JSON.parse(localStorage.getItem(KEY)||'null');
     if(old&&Array.isArray(old.properties)&&old.properties.length===18){
       model.theme=CFG.templates.some(t=>t.id===old.theme)?old.theme:'cobalto';
+      model.profile=PROFILES[old.profile]?old.profile:'joseph';
       model.properties=old.properties.map(p=>p?Core.makeEntry(p):null);
       // Immagini utente base64 recuperabili dal browser se disponibili.
       model.portrait=old.portrait||model.portrait;model.panorama=old.panorama||model.panorama;
@@ -26,6 +29,12 @@
     const scale=Math.min(1.3,available/1122);
     $('flyer').style.transform=`scale(${scale})`;
     $('previewSizer').style.width=`${1122*scale}px`;$('previewSizer').style.height=`${794*scale}px`;
+  }
+  function showStaff(){
+    for(const button of document.querySelectorAll('#staffPicker [data-staff]')){
+      button.setAttribute('aria-pressed',String(button.dataset.staff===model.profile));
+      button.onclick=()=>{model.profile=button.dataset.staff;save();render();setStatus('Referente selezionato: '+activeProfile().name+'. Stessi 18 immobili, contatto e QR dedicati.','good');};
+    }
   }
   function showThemes(){
     $('templatePicker').replaceChildren();
@@ -92,8 +101,18 @@
     return issues;
   }
   function render(){
-    $('flyer').className=`theme-${model.theme}`;
-    $('templateName').textContent=CFG.templates.find(t=>t.id===model.theme)?.name||model.theme;
+    const staff=activeProfile();
+    $('flyer').className=`theme-${model.theme} profile-${staff.brand}`;
+    $('templateName').textContent=(CFG.templates.find(t=>t.id===model.theme)?.name||model.theme)+' · '+staff.name;
+    showStaff();
+    const logo=$('agencyLogo'),footerLogo=$('footerAgencyLogo');
+    logo.src=CFG.agencyLogo;footerLogo.src=CFG.agencyLogo;
+    $('portraitSign').innerHTML=esc(staff.name)+'<small>'+esc(staff.role)+'</small>';
+    $('staffFooterName').textContent=staff.name+' · '+staff.role;
+    $('staffFooterPartner').textContent=staff.brand==='lasacra'?'Immobiliare La Sacra · Team territoriale':'Partner commerciale di Immobiliare La Sacra';
+    $('staffCta').textContent='Contatta '+staff.name+' su WhatsApp';
+    $('staffPhone').textContent=staff.displayPhone;
+    $('staffHint').textContent=staff.brand==='lasacra'?'Logo La Sacra · Nessun ritratto · WhatsApp '+staff.displayPhone:'Foto Joseph · Case in Pubblicità 24/7 · WhatsApp '+staff.displayPhone;
     const portrait=$('portrait');
     portrait.onerror=()=>{portrait.onerror=null;portrait.src=CFG.portraitFallback;};
     portrait.src=model.portrait||CFG.portraitFallback;
@@ -102,7 +121,7 @@
     $('heroPanorama').style.backgroundImage=`linear-gradient(90deg, rgba(0,33,70,.18), rgba(0,41,78,.03)), url(${JSON.stringify(model.panorama)})`;
     const grid=$('listingGrid');grid.replaceChildren();
     for(let i=0;i<18;i++)grid.append(makeCard(model.properties[i],i));
-    const wa=$('waQr');QR.paint(wa,'whatsapp',whatsapp);
+    const wa=$('waQr');QR.paint(wa,'whatsapp',whatsappFor(staff));
     showPreflight();resizePreview();
   }
   async function loadCatalog(force=false){
@@ -185,18 +204,55 @@
     try{
       const issues=showPreflight();
       if(model.properties.some(x=>!x?.title)||model.properties.some(x=>!x?.url))throw Error('Per creare 19 QR occorrono 18 schede con URL diretti.');
-      const qrProblems=QR.verifyAssociations(model.properties,whatsapp);
+      const qrProblems=QR.verifyAssociations(model.properties,whatsappFor(activeProfile()));
       if(qrProblems.length)throw Error(qrProblems.join(' · '));
       const proof=issues.length>0;
       if(proof&&!confirm(`Sono aperte ${issues.length} verifiche. Generare solo un PDF BOZZA non distribuibile?`))return;
       const result=await PDF.exportPdf({flyer:$('flyer'),properties:model.properties,externalFile:external,
-        externalPage:Number($('outerPage').value)||1,watermark:proof});
+        externalPage:Number($('outerPage').value)||1,watermark:proof,whatsappUrl:whatsappFor(activeProfile()),filename:'Volantino_A4_'+activeProfile().name+'.pdf'});
       const q=Math.round(result.minModuleMm*100)/100;
       setStatus(`PDF esportato: ${result.pages} pagine, ${result.qrCount} QR vettoriali. Modulo minimo ${q} mm. ${proof?'BOZZA — NON DISTRIBUIRE.':'Verificare comunque la stampa su carta.'}`,'good');
     }catch(e){setStatus('Esportazione interrotta: '+e.message,'warn');console.error(e);}finally{loading=false;$('exportPdf').disabled=false;}
   }
+  
+  function downloadBlob(blob,name){
+    const href=URL.createObjectURL(blob),a=document.createElement('a');a.href=href;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(href),30000);
+  }
+  async function exportAll(){
+    if(loading)return;loading=true;
+    const buttons=[$('exportPdf'),$('generateAll')];buttons.forEach(b=>b.disabled=true);
+    const saved=model.profile;
+    try{
+      if(!window.JSZip)throw Error('Libreria ZIP non disponibile: verifica la connessione.');
+      const issues=showPreflight();
+      if(model.properties.some(p=>!p?.title||!p?.url))throw Error('Servono 18 annunci con URL validi, uno per scheda.');
+      if(issues.length&&!confirm('Sono aperti '+issues.length+' controlli. Generare solo tre bozze con filigrana NON DISTRIBUIRE?'))return;
+      const zip=new JSZip();
+      const summary=[];
+      for(const id of ['joseph','cristian','ylenia']){
+        model.profile=id;render();
+        // Un frame garantisce che il motore PDF catturi il modello aggiornato, non quello precedente.
+        await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+        const who=activeProfile(),number=whatsappFor(who);
+        const errors=QR.verifyAssociations(model.properties,number);
+        if(errors.length)throw Error('QR '+who.name+': '+errors.join(', '));
+        setStatus('Genero volantino di '+who.name+'…');
+        const result=await PDF.exportPdf({flyer:$('flyer'),properties:model.properties,whatsappUrl:number,
+          externalFile:external,externalPage:Number($('outerPage').value)||1,watermark:issues.length>0,
+          autoDownload:false,filename:'Volantino_'+who.name+'.pdf'});
+        if(result.qrCount!==19)throw Error('QR incompleti per '+who.name);
+        zip.file('Volantino_'+who.name+'_A4.pdf',result.bytes);
+        summary.push(who.name+' ('+result.qrCount+' QR)');
+      }
+      const blob=await zip.generateAsync({type:'blob',compression:'DEFLATE',compressionOptions:{level:5}});
+      downloadBlob(blob,'Volantini_A4_Joseph_Cristian_Ylenia.zip');
+      setStatus('ZIP creato: '+summary.join(' · ')+'. '+(issues.length?'BOZZE: verificare dati e APE prima della distribuzione.':'Verificare scansione QR e stampa al 100%.'),'good');
+    }catch(e){setStatus('Generazione dei 3 volantini interrotta: '+e.message,'warn');console.error(e);}
+    finally{model.profile=saved;render();loading=false;buttons.forEach(b=>b.disabled=false);}
+  }
+
   function init(){
-    showThemes();render();
+    showStaff();showThemes();render();
     window.addEventListener('resize',resizePreview);
     $('addUrls').onclick=async()=>{if(loading)return;loading=true;try{
       const urls=$('listingUrls').value.split(/\s+/).map(x=>x.trim()).filter(Boolean);
@@ -216,6 +272,7 @@
     $('saveProject').onclick=()=>{save();setStatus('Progetto salvato nel browser.','good')};
     $('downloadProject').onclick=()=>jsonDownload({...model,savedAt:new Date().toISOString()},'CASE247_studio_volantini.json');
     $('exportPdf').onclick=exportPdf;
+    $('generateAll').onclick=exportAll;
     setStatus('Editor pronto. Le immagini mancanti saranno sostituite con segnaposto dichiarati.');
   }
   document.addEventListener('DOMContentLoaded',init);
