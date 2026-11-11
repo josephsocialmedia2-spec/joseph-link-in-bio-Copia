@@ -54,3 +54,34 @@ Nomi file: `YYYY-MM-DD_gNN_soggetto_01.jpg` per foto; `YYYY-MM-DD_gNN_orario_HHM
 - [ ] Materiale approvato prima della diffusione automatica
 
 **Branch di lavoro:** `feature/case247-dietro-le-quinte`. Nessun contenuto del branch deve essere pubblicato automaticamente senza approvazione.
+
+
+## Estensione del progetto — 60 grafiche e percorso completo (11 novembre 2026)
+
+La sequenza editoriale passa da 7 attività dietro le quinte a **10 fasi del percorso pubblicitario e dell'acquisto**, rappresentate in 6 creatività ciascuna (60 template per immobile). Tutte le immagini effettive di un immobile devono provenire da foto autentiche autorizzate; non usare immagini IA di case inventate come fotografie di annunci reali.
+
+1. Progetto del flyer, scelta e trattamento delle fotografie autorizzate, prezzi, classe APE, QR.
+2. Stampa di prova A4/A5 fronte/retro e verifica fisica del QR su carta.
+3. Distribuzione autorizzata nel territorio di Avigliana e registrazione dei punti di consegna.
+4. Il volantino nella buca delle lettere: **simulazione narrativa**, salvo foto originali con permesso.
+5. Scansione QR con smartphone: il QR porta direttamente a WhatsApp `371 370 8294`; il click non prova una richiesta effettiva.
+6. Compilazione del form o richiesta di contatto con smistamento al mediatore abilitato.
+7. Visita dell'immobile condotta dall'agente abilitato, se concretamente concordata.
+8. Eventuale incontro con consulente del credito abilitato, se il cliente lo richiede.
+9. Eventuale richiesta, approvazione ed erogazione del mutuo, di competenza della banca.
+10. Eventuale stipula e firma dell'atto notarile, di competenza del notaio.
+
+**File del branch**
+- `funnel-60.json` — matrice di 60 varianti, soglie di qualità, responsabilità e CTA
+- `templates-svg/CASE247-F01-V01.svg` ... `templates-svg/CASE247-F10-V06.svg` — 60 template SVG **editabili** con spazio per foto immobili originali; sono bozze, non fotografie né output pubblicati
+- `automazione-caroselli.json` — regole dell'automazione quotidiana e calendario
+- Lo Studio Volantini ufficiale già esistente è `gestione/volantini-premium/`; usarlo, senza crearne un doppione
+
+**Stato realistico**
+- Lo scheletro grafico delle 60 creatività esiste, ma non c'è una serie verificata di 60 fotografie originali autorizzate di un unico immobile di Avigliana; i 60 JPG del precedente calendario sono distribuiti tra immobili diversi e diversi asset di Avigliana sono stati esclusi
+- Sono state realizzate separatamente **60 bozze fotografiche illustrative in JPG**, più progetti di stampa in A4/A5, nel materiale scaricabile della conversazione; non risultano caricati in questo branch come JPG
+- Nessuna stampa fisica o distribuzione è stata effettuata da questo software
+- Nessuna visita, consulenza creditizia, erogazione del mutuo o stipula viene rappresentata come avvenuta senza documentazione
+- Non autopubblicare le bozze prive di foto attendibili o di approvazioni
+
+**Regole di disponibilità al cliente:** il QR può aprire WhatsApp immediatamente. È corretto proporre una richiesta di informazioni o di visita, ma il relativo appuntamento richiede la conferma del professionista abilitato. La banca e il notaio gestiscono autonomamente le proprie fasi; il Digital Strategist pubblicizza e documenta il processo, non svolge mediazione né erogazione del credito.
