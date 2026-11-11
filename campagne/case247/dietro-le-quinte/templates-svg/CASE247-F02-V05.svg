@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071C36"/><stop offset="1" stop-color="#114A86"/></linearGradient><pattern id="grid" width="68" height="68" patternUnits="userSpaceOnUse"><path d="M68 0H0V68" fill="none" stroke="#FFFFFF" stroke-opacity=".06" stroke-width="2"/></pattern></defs>
+<rect width="1080" height="1350" fill="url(#bg)"/><rect width="1080" height="1350" fill="url(#grid)"/>
+<rect x="45" y="48" width="612" height="82" rx="19" fill="#04182C"/><text x="72" y="100" font-family="Arial,sans-serif" font-weight="700" font-size="35" fill="#FFFFFF">CASE IN PUBBLICITÀ <tspan fill="#F9C553">24/7</tspan></text>
+<rect x="722" y="49" width="309" height="80" rx="16" fill="#193D62"/><text x="741" y="97" font-family="Arial,sans-serif" font-size="23" fill="#F9C553" font-weight="700">BOZZA - NON PUBBLICARE</text>
+<rect x="58" y="194" width="964" height="594" rx="42" fill="#123A64" stroke="#F9C553" stroke-width="5"/>
+<circle cx="538" cy="410" r="135" fill="#315D83" fill-opacity=".5"/><path d="M465 470l55-65 47 47 50-60 75 97H390z" fill="#F9C553" fill-opacity=".42"/>
+<text x="540" y="613" text-anchor="middle" font-family="Arial,sans-serif" font-size="39" font-weight="700" fill="#FFFFFF">FOTO IMMOBILE</text>
+<text x="540" y="667" text-anchor="middle" font-family="Arial,sans-serif" font-size="29" fill="#D6E6F5">autorizzata da inserire</text>
+<rect x="57" y="838" width="270" height="69" rx="17" fill="#062540"/><text x="79" y="882" font-size="31" font-family="Arial,sans-serif" font-weight="700" fill="#F9C553">FASE 02 / 10</text>
+<text x="61" y="986" font-family="Arial,sans-serif" font-size="51" font-weight="700" fill="#F9C553">STAMPA FLYER</text>
+<text x="61" y="1081" font-family="Arial,sans-serif" font-size="56" font-weight="700" fill="#FFFFFF">Test QR</text>
+<line x1="61" y1="1132" x2="1022" y2="1132" stroke="#FFFFFF" stroke-width="5"/>
+<text x="61" y="1201" font-family="Arial,sans-serif" font-size="30" font-weight="700" fill="#FFFFFF">WhatsApp 371 370 8294 · Avigliana</text>
+<text x="61" y="1288" font-family="Arial,sans-serif" font-size="24" fill="#BBD5EB">Ricostruzione illustrativa · non prova attività realmente svolte</text>
+</svg>

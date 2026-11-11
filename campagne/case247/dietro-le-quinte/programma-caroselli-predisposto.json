@@ -1,0 +1,284 @@
+{
+  "title": "CASE247 Caroselli campagne immagini",
+  "brandId": "7844901",
+  "source_checked": "Metricool 2026-11-11",
+  "existing_scheduled_items": 36,
+  "existing_drafts": 4,
+  "existing_autopublish_configured": 32,
+  "keep_existing_posts": true,
+  "source_branch": "feature/case247-dietro-le-quinte",
+  "live_scheduling": false,
+  "reason": "I 60 file JPG non sono ancora caricati nel repository e non sono disponibili tramite URL pubblici validi; non programmare URL inesistenti.",
+  "plan": [
+    {
+      "date": "2026-11-12",
+      "time": "13:30",
+      "timezone": "Europe/Rome",
+      "theme": "Progetto del volantino",
+      "assets": [
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F01_SCENA_01_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F01_SCENA_02_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F01_SCENA_03_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F01_SCENA_04_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F01_SCENA_05_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F01_SCENA_06_DIVERSA.jpg"
+      ],
+      "socialNetworks": [
+        "facebook",
+        "instagram"
+      ],
+      "type": "CAROUSEL",
+      "label": "Ricostruzione illustrativa generata con IA",
+      "metricool_status": "NOT_SCHEDULED_MEDIA_MISSING",
+      "require": [
+        "files uploaded to public HTTPS",
+        "AI label in post",
+        "human approval of claims and QR destinations"
+      ],
+      "proposed_only": true
+    },
+    {
+      "date": "2026-11-13",
+      "time": "13:30",
+      "timezone": "Europe/Rome",
+      "theme": "Stampa e controllo",
+      "assets": [
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F02_SCENA_01_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F02_SCENA_02_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F02_SCENA_03_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F02_SCENA_04_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F02_SCENA_05_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F02_SCENA_06_DIVERSA.jpg"
+      ],
+      "socialNetworks": [
+        "facebook",
+        "instagram"
+      ],
+      "type": "CAROUSEL",
+      "label": "Ricostruzione illustrativa generata con IA",
+      "metricool_status": "NOT_SCHEDULED_MEDIA_MISSING",
+      "require": [
+        "files uploaded to public HTTPS",
+        "AI label in post",
+        "human approval of claims and QR destinations"
+      ],
+      "proposed_only": true
+    },
+    {
+      "date": "2026-11-14",
+      "time": "13:30",
+      "timezone": "Europe/Rome",
+      "theme": "Distribuzione sul territorio",
+      "assets": [
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F03_SCENA_01_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F03_SCENA_02_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F03_SCENA_03_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F03_SCENA_04_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F03_SCENA_05_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F03_SCENA_06_DIVERSA.jpg"
+      ],
+      "socialNetworks": [
+        "facebook",
+        "instagram"
+      ],
+      "type": "CAROUSEL",
+      "label": "Ricostruzione illustrativa generata con IA",
+      "metricool_status": "NOT_SCHEDULED_MEDIA_MISSING",
+      "require": [
+        "files uploaded to public HTTPS",
+        "AI label in post",
+        "human approval of claims and QR destinations"
+      ],
+      "proposed_only": true
+    },
+    {
+      "date": "2026-11-15",
+      "time": "13:30",
+      "timezone": "Europe/Rome",
+      "theme": "Volantino nella cassetta postale",
+      "assets": [
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F04_SCENA_01_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F04_SCENA_02_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F04_SCENA_03_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F04_SCENA_04_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F04_SCENA_05_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F04_SCENA_06_DIVERSA.jpg"
+      ],
+      "socialNetworks": [
+        "facebook",
+        "instagram"
+      ],
+      "type": "CAROUSEL",
+      "label": "Ricostruzione illustrativa generata con IA",
+      "metricool_status": "NOT_SCHEDULED_MEDIA_MISSING",
+      "require": [
+        "files uploaded to public HTTPS",
+        "AI label in post",
+        "human approval of claims and QR destinations"
+      ],
+      "proposed_only": true
+    },
+    {
+      "date": "2026-11-16",
+      "time": "13:30",
+      "timezone": "Europe/Rome",
+      "theme": "Scansione QR e contatto",
+      "assets": [
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F05_SCENA_01_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F05_SCENA_02_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F05_SCENA_03_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F05_SCENA_04_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F05_SCENA_05_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F05_SCENA_06_DIVERSA.jpg"
+      ],
+      "socialNetworks": [
+        "facebook",
+        "instagram"
+      ],
+      "type": "CAROUSEL",
+      "label": "Ricostruzione illustrativa generata con IA",
+      "metricool_status": "NOT_SCHEDULED_MEDIA_MISSING",
+      "require": [
+        "files uploaded to public HTTPS",
+        "AI label in post",
+        "human approval of claims and QR destinations"
+      ],
+      "proposed_only": true
+    },
+    {
+      "date": "2026-11-17",
+      "time": "13:30",
+      "timezone": "Europe/Rome",
+      "theme": "Richiesta e appuntamento",
+      "assets": [
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F06_SCENA_01_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F06_SCENA_02_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F06_SCENA_03_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F06_SCENA_04_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F06_SCENA_05_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F06_SCENA_06_DIVERSA.jpg"
+      ],
+      "socialNetworks": [
+        "facebook",
+        "instagram"
+      ],
+      "type": "CAROUSEL",
+      "label": "Ricostruzione illustrativa generata con IA",
+      "metricool_status": "NOT_SCHEDULED_MEDIA_MISSING",
+      "require": [
+        "files uploaded to public HTTPS",
+        "AI label in post",
+        "human approval of claims and QR destinations"
+      ],
+      "proposed_only": true
+    },
+    {
+      "date": "2026-11-18",
+      "time": "13:30",
+      "timezone": "Europe/Rome",
+      "theme": "Visita con professionista abilitato",
+      "assets": [
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F07_SCENA_01_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F07_SCENA_02_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F07_SCENA_03_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F07_SCENA_04_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F07_SCENA_05_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F07_SCENA_06_DIVERSA.jpg"
+      ],
+      "socialNetworks": [
+        "facebook",
+        "instagram"
+      ],
+      "type": "CAROUSEL",
+      "label": "Ricostruzione illustrativa generata con IA",
+      "metricool_status": "NOT_SCHEDULED_MEDIA_MISSING",
+      "require": [
+        "files uploaded to public HTTPS",
+        "AI label in post",
+        "human approval of claims and QR destinations"
+      ],
+      "proposed_only": true
+    },
+    {
+      "date": "2026-11-19",
+      "time": "13:30",
+      "timezone": "Europe/Rome",
+      "theme": "Consulenza del credito",
+      "assets": [
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F08_SCENA_01_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F08_SCENA_02_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F08_SCENA_03_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F08_SCENA_04_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F08_SCENA_05_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F08_SCENA_06_DIVERSA.jpg"
+      ],
+      "socialNetworks": [
+        "facebook",
+        "instagram"
+      ],
+      "type": "CAROUSEL",
+      "label": "Ricostruzione illustrativa generata con IA",
+      "metricool_status": "NOT_SCHEDULED_MEDIA_MISSING",
+      "require": [
+        "files uploaded to public HTTPS",
+        "AI label in post",
+        "human approval of claims and QR destinations"
+      ],
+      "proposed_only": true
+    },
+    {
+      "date": "2026-11-20",
+      "time": "13:30",
+      "timezone": "Europe/Rome",
+      "theme": "Mutuo: istruttoria ed erogazione",
+      "assets": [
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F09_SCENA_01_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F09_SCENA_02_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F09_SCENA_03_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F09_SCENA_04_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F09_SCENA_05_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F09_SCENA_06_DIVERSA.jpg"
+      ],
+      "socialNetworks": [
+        "facebook",
+        "instagram"
+      ],
+      "type": "CAROUSEL",
+      "label": "Ricostruzione illustrativa generata con IA",
+      "metricool_status": "NOT_SCHEDULED_MEDIA_MISSING",
+      "require": [
+        "files uploaded to public HTTPS",
+        "AI label in post",
+        "human approval of claims and QR destinations"
+      ],
+      "proposed_only": true
+    },
+    {
+      "date": "2026-11-21",
+      "time": "13:30",
+      "timezone": "Europe/Rome",
+      "theme": "Notaio e firma",
+      "assets": [
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F10_SCENA_01_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F10_SCENA_02_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F10_SCENA_03_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F10_SCENA_04_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F10_SCENA_05_DIVERSA.jpg",
+        "campagne/case247/dietro-le-quinte/assets/CASE247_F10_SCENA_06_DIVERSA.jpg"
+      ],
+      "socialNetworks": [
+        "facebook",
+        "instagram"
+      ],
+      "type": "CAROUSEL",
+      "label": "Ricostruzione illustrativa generata con IA",
+      "metricool_status": "NOT_SCHEDULED_MEDIA_MISSING",
+      "require": [
+        "files uploaded to public HTTPS",
+        "AI label in post",
+        "human approval of claims and QR destinations"
+      ],
+      "proposed_only": true
+    }
+  ]
+}
