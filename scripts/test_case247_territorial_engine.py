@@ -6,7 +6,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from case247_territorial_engine import (
     distance_km, eligible_towns, make_plan, normalize_changes,
-    PROPERTY_SLOTS, GRAPHIC_SLOTS,
+    PROPERTY_SLOTS, GRAPHIC_SLOTS, repair_future_today,
 )
 
 def town(tid, active=True):
@@ -91,6 +91,37 @@ class EngineTests(unittest.TestCase):
         self.assertEqual(delta["removed_ids"],["2"])
         self.assertEqual(delta["added_ids"],["3"])
         self.assertEqual(delta["changed_ids"],["1"])
+
+    def test_18pm_removal_does_not_reuse_next_listing(self):
+        removed = listing(1)
+        nxt = listing(2)
+        candidate = listing(3)
+        today = {"date":self.day,"assignments":[
+            {"type":"IMMOBILE","listing_id":"1","town_id":"vaie","town":"vaie",
+             "network":"facebook","date":self.day,"time":"20:00",
+             "media_url":removed["image"],"title":removed["title"],"price":removed["price"]},
+            {"type":"IMMOBILE","listing_id":"2","town_id":"vaie","town":"vaie",
+             "network":"instagram","date":self.day,"time":"20:00",
+             "media_url":nxt["image"],"title":nxt["title"],"price":nxt["price"]},
+        ]}
+        fixed,counts = repair_future_today(self.day,[nxt,candidate],self.towns,self.geo,today)
+        self.assertEqual(counts["replaced"],1)
+        self.assertEqual([p["listing_id"] for p in fixed["assignments"]],["3","2"])
+        self.assertLessEqual(fixed["assignments"][0]["distance_upper_bound_km"],20)
+
+    def test_18pm_price_change_updates_future_post_only(self):
+        old = listing(1)
+        future={"date":self.day,"assignments":[
+            {"type":"IMMOBILE","listing_id":"1","town_id":"vaie","town":"vaie",
+             "network":"facebook","date":self.day,"time":"20:00",
+             "media_url":old["image"],"title":old["title"],"price":old["price"],
+             "caption":"old price"},
+        ]}
+        edited=listing(1);edited["price"]=46000
+        fixed,counts=repair_future_today(self.day,[edited],self.towns,self.geo,future)
+        self.assertEqual(counts["updated"],1)
+        self.assertEqual(fixed["assignments"][0]["price"],46000)
+        self.assertIn("46.000",fixed["assignments"][0]["caption"])
 
     def test_same_day_result_is_deterministic(self):
         data = [listing(i) for i in range(1,7)]
