@@ -19,6 +19,7 @@ import urllib.request
 from zoneinfo import ZoneInfo
 
 from case247_territorial_engine import ROOT, OUT, read_json, atomic_write, TZ, listed_available, valid_picture
+from case247_legacy_transition import load_reservations, canonical_listing_url
 
 GRAPH = "https://graph.facebook.com/v26.0"
 LEDGER = OUT / "publish-ledger.json"
@@ -130,14 +131,12 @@ def run(live=False,max_per_run=10):
     if not plan or plan.get("date")!=now.date().isoformat():
         print("No verified current-day plan, nothing sent")
         return
-    # External Metricool central calendar must be checked recently or the
-    # uniqueness promise cannot be honored across both scheduling systems.
-    central=read_json(OUT / "metricool-central-reservations.json", {})
-    checked=central.get("checked_at")
-    if live and (not checked or (now.date()-dt.date.fromisoformat(checked)).days > 1):
-        raise SystemExit("Metricool central calendar reconciliation is stale; live blocked")
-    central_reserved = {r.get("url") for r in central.get("reservations", {}).get(now.date().isoformat(), [])
-                        if r.get("url")}
+    # Once-only migration snapshot: protects legacy posts without any recurring
+    # Metricool API, quota or subscription. Invalid snapshot fails closed.
+    try:
+        central_reserved = load_reservations(now.date(), ROOT, OUT)
+    except (OSError, ValueError, KeyError, TypeError, json.JSONDecodeError) as error:
+        raise SystemExit("Direct Meta legacy-overlap safety configuration invalid") from error
     all_towns=read_json(CONFIG)["towns"]
     latest_catalog=read_json(ROOT / "immobili/catalogo.json", {})
     catalog_by_id={str(p["id"]):p for p in latest_catalog.get("items",[])}
@@ -163,8 +162,8 @@ def run(live=False,max_per_run=10):
         key=f"{item['date']}:{item['type']}:{item.get('listing_id',item.get('graphic_id'))}"
         if key in entries:  # includes INTENT and errors: NEVER blindly retry
             continue
-        if item.get("source_url") in central_reserved:
-            print(f"BLOCKED_METRICOOL_RESERVED {key}")
+        if canonical_listing_url(item.get("source_url")) in central_reserved:
+            print(f"BLOCKED_LEGACY_CENTRAL_RESERVED {key}")
             continue
         if item["type"]=="IMMOBILE":
             current=catalog_by_id.get(item["listing_id"])
