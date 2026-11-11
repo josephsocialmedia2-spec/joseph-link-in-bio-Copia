@@ -12,6 +12,7 @@ on:
       - supabase/functions/case247-public-territory-social/**
       - scripts/test_case247_public_social_links.py
       - scripts/test_case247_social_41.py
+      - scripts/test_case247_guided_meta_creation.py
       - .github/workflows/case247-social-41.yml
   push:
     branches: [main]
@@ -26,6 +27,7 @@ on:
       - supabase/functions/case247-public-territory-social/**
       - scripts/test_case247_public_social_links.py
       - scripts/test_case247_social_41.py
+      - scripts/test_case247_guided_meta_creation.py
   workflow_dispatch:
 permissions:
   contents: read
@@ -45,6 +47,18 @@ jobs:
         run: python -m unittest discover -s scripts -p test_case247_social_41.py -v
       - name: Preserve Avigliana OAuth pilot and no-send safety checks
         run: python -m unittest discover -s scripts -p test_case247_avigliana_pilot.py -v
+      - name: Test official Meta creation guide and check embedded JavaScript
+        run: |
+          python -m unittest discover -s scripts -p test_case247_guided_meta_creation.py -v
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          src=Path("gestione/territori/index.html").read_text()
+          matches=re.findall(r'<script type="module">([\\s\\S]*?)</script>',src)
+          assert len(matches)==1, "Expect exactly one onboarding module"
+          Path("/tmp/case247-guided-meta-creation.mjs").write_text(matches[0])
+          PY
+          node --check /tmp/case247-guided-meta-creation.mjs
       - name: Verify public links safety and shared 20km landing catalog JS
         run: |
           python -m unittest discover -s scripts -p test_case247_public_social_links.py -v
