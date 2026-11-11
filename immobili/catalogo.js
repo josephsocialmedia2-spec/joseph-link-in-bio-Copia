@@ -9,6 +9,33 @@
   const money = new Intl.NumberFormat('it-IT', {style: 'currency', currency: 'EUR', maximumFractionDigits: 0});
   const fold = text => String(text || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
   const grid = $('#property-grid');
+
+  // Town landing scope is deliberately conservative: every corner of the source
+  // municipality's verified bounding box must be within 20 km of this landing's
+  // town centre. Do not publish unverifiable or out-of-radius ads here.
+  const MAX_RADIUS_KM = 20;
+  function distanceKm(aLat,aLon,bLat,bLon){
+    const rad = Math.PI / 180;
+    const p1 = aLat * rad, p2 = bLat * rad;
+    const h = Math.sin((bLat - aLat) * rad / 2) ** 2
+      + Math.cos(p1)*Math.cos(p2)*Math.sin((bLon - aLon) * rad / 2) ** 2;
+    return 6371.0088 * 2 * Math.asin(Math.min(1,Math.sqrt(Math.max(0,h))));
+  }
+  function hasVerifiedGeo(geo){
+    return geo && Number.isFinite(+geo.lat) && Number.isFinite(+geo.lon)
+      && Array.isArray(geo.bbox) && geo.bbox.length === 4
+      && geo.bbox.every(x => Number.isFinite(+x))
+      && +geo.bbox[0] <= +geo.bbox[1] && +geo.bbox[2] <= +geo.bbox[3];
+  }
+  function localRadiusEligible(item, town, geo){
+    if(item.location_status !== 'VERIFICATO_FONTE' || !item.town_id) return false;
+    const source = geo[item.town_id];
+    if(!hasVerifiedGeo(source) || !hasVerifiedGeo(town)) return false;
+    const [south,north,west,east] = source.bbox.map(Number);
+    return [south,north].every(lat => [west,east].every(lon =>
+      distanceKm(+town.lat,+town.lon,lat,lon) <= MAX_RADIUS_KM + 1e-9
+    ));
+  }
   function setMode(value) {
     mode = value; page = 1;
     root.querySelectorAll('[data-mode]').forEach(button => {
@@ -70,7 +97,7 @@
       const other = list.filter(i => !(i.location_status === 'VERIFICATO_FONTE' && i.town_id === townId));
       for (const [title, items, empty] of [
         ['Immobili a ' + root.dataset.townName, local, 'Nessun immobile con comune verificato disponibile per questo paese e questi filtri. Qui sotto trovi gli altri annunci.'],
-        ['Altri immobili disponibili', other, 'Nessun altro immobile corrisponde ai filtri selezionati.']
+        ['Immobili dei comuni vicini entro 20 km', other, 'Nessun altro immobile entro 20 km corrisponde ai filtri selezionati.']
       ]) {
         const section = element('section', 'territorial-section');
         section.append(element('h2', '', title));
@@ -93,11 +120,28 @@
   root.querySelectorAll('[data-mode]').forEach(button => button.onclick = () => setMode(button.dataset.mode));
   for (const selector of ['#property-search', '#property-budget', '#property-type', '#property-sort']) $(selector).addEventListener('input', () => { page = 1; render(); });
   $('#reset-filters').onclick = () => { $('#property-search').value = ''; $('#property-budget').value = '0'; $('#property-type').value = ''; $('#property-sort').value = 'recent'; setMode('all'); };
-  fetch(root.dataset.feed, {cache: 'no-cache'}).then(response => { if (!response.ok) throw new Error('HTTP ' + response.status); return response.json(); }).then(payload => {
+  Promise.all([
+    fetch(root.dataset.feed, {cache: 'no-cache'}).then(response => {
+      if(!response.ok) throw new Error('Catalog HTTP ' + response.status);
+      return response.json();
+    }),
+    townId ? fetch(new URL('../../config/case247-geo-verified.json', location.href),{cache:'no-cache'}).then(response=>{
+      if(!response.ok)throw new Error('Geografia territoriale HTTP '+response.status);
+      return response.json();
+    }) : Promise.resolve(null)
+  ]).then(([payload,geography])=>{
     if (!Array.isArray(payload.items)) throw new Error('Invalid inventory');
     data = [...new Map(payload.items.map(i => [i.id || i.url, i])).values()];
+    if(townId){
+      const geo=geography?.towns||{};
+      const center=geo[townId];
+      if(!hasVerifiedGeo(center))throw new Error('Coordinate del comune non verificate');
+      data=data.filter(item=>localRadiusEligible(item,center,geo));
+      const subtitle=root.querySelector('.sub');
+      if(subtitle)subtitle.textContent='Prima gli immobili di '+(root.dataset.townName||'questo paese')+', poi gli annunci dei comuni vicini ammessi entro 20 km dalla località. Distanza verificata in modo prudente con i confini comunali disponibili.';
+    }
     const date = new Date(payload.last_success_at);
-    $('#catalog-status').textContent = 'Ultimo aggiornamento riuscito: ' + date.toLocaleString('it-IT', {timeZone: 'Europe/Rome', dateStyle: 'short', timeStyle: 'short'}) + ' · Fonte: La Sacra Immobiliare';
+    $('#catalog-status').textContent = (townId?'Catalogo territoriale entro 20 km · ':'') + 'Ultimo aggiornamento riuscito: ' + date.toLocaleString('it-IT', {timeZone: 'Europe/Rome', dateStyle: 'short', timeStyle: 'short'}) + ' · Fonte: La Sacra Immobiliare';
     if (Date.now() - date.getTime() > 48 * 3600 * 1000) $('#catalog-status').textContent += ' · Aggiornamento in ritardo: verifica la disponibilità sul sito del partner.';
     render();
   }).catch(() => { $('#catalog-status').textContent = 'Catalogo momentaneamente non disponibile. Consulta tutti gli immobili sul sito La Sacra.'; grid.replaceChildren(); const link = element('a', '', 'Apri il catalogo La Sacra ↗'); link.href = 'https://lasacraimmobiliare.it/collections/all'; grid.append(link); });
