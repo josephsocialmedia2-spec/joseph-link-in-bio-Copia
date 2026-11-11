@@ -1,0 +1,1039 @@
+{
+  "schema_version": 1,
+  "generated_from": "config/case247-territorio.json",
+  "generated_date": "2026-11-11",
+  "purpose": "Preparazione delle 41 coppie territoriali: solo nomi e contenuti PROPOSTI. Non attesta la creazione di pagine o account su Meta.",
+  "meta_app_existing": "1639756567549382",
+  "territorial_landing_count": 41,
+  "desired_facebook_pages": 41,
+  "desired_instagram_professional_accounts": 41,
+  "distribution_radius_km": 20,
+  "mode": "ONBOARDING_NOT_PUBLISHING",
+  "towns": [
+    {
+      "town_id": "avigliana",
+      "name": "Avigliana",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/avigliana/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Avigliana",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_avigliana",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Avigliana e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "almese",
+      "name": "Almese",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/almese/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Almese",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_almese",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Almese e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "rubiana",
+      "name": "Rubiana",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/rubiana/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Rubiana",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_rubiana",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Rubiana e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "villar-dora",
+      "name": "Villar Dora",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/villar-dora/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Villar Dora",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_villardora",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Villar Dora e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "caprie",
+      "name": "Caprie",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/caprie/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Caprie",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_caprie",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Caprie e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "condove",
+      "name": "Condove",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/condove/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Condove",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_condove",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Condove e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "sant-ambrogio-di-torino",
+      "name": "Sant’Ambrogio di Torino",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Sant’Ambrogio di Torino",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_santambrogioditorino",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Sant’Ambrogio di Torino e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "chiusa-di-san-michele",
+      "name": "Chiusa di San Michele",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/chiusa-di-san-michele/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Chiusa di San Michele",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_chiusadisanmichele",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Chiusa di San Michele e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "vaie",
+      "name": "Vaie",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/vaie/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Vaie",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_vaie",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Vaie e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "san-didero",
+      "name": "San Didero",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/san-didero/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - San Didero",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_sandidero",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a San Didero e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "borgone-susa",
+      "name": "Borgone Susa",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/borgone-susa/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Borgone Susa",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_borgonesusa",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Borgone Susa e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "bussoleno",
+      "name": "Bussoleno",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/bussoleno/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Bussoleno",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_bussoleno",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Bussoleno e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "chianocco",
+      "name": "Chianocco",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/chianocco/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Chianocco",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_chianocco",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Chianocco e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "susa",
+      "name": "Susa",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/susa/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Susa",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_susa",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Susa e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "mompantero",
+      "name": "Mompantero",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/mompantero/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Mompantero",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_mompantero",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Mompantero e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "san-giorio-di-susa",
+      "name": "San Giorio di Susa",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/san-giorio-di-susa/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - San Giorio di Susa",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_sangioriodisusa",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a San Giorio di Susa e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "villar-focchiardo",
+      "name": "Villar Focchiardo",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/villar-focchiardo/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Villar Focchiardo",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_villarfocchiardo",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Villar Focchiardo e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "venaus",
+      "name": "Venaus",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/venaus/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Venaus",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_venaus",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Venaus e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "giaglione",
+      "name": "Giaglione",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/giaglione/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Giaglione",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_giaglione",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Giaglione e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "gravere",
+      "name": "Gravere",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/gravere/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Gravere",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_gravere",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Gravere e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "exilles",
+      "name": "Exilles",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/exilles/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Exilles",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_exilles",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Exilles e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "salbertrand",
+      "name": "Salbertrand",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/salbertrand/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Salbertrand",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_salbertrand",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Salbertrand e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "oulx",
+      "name": "Oulx",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/oulx/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Oulx",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_oulx",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Oulx e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "sauze-d-oulx",
+      "name": "Sauze d’Oulx",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sauze-d-oulx/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Sauze d’Oulx",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_sauzedoulx",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Sauze d’Oulx e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "cesana-torinese",
+      "name": "Cesana Torinese",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/cesana-torinese/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Cesana Torinese",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_cesanatorinese",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Cesana Torinese e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "claviere",
+      "name": "Claviere",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/claviere/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Claviere",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_claviere",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Claviere e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "novalesa",
+      "name": "Novalesa",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/novalesa/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Novalesa",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_novalesa",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Novalesa e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "moncenisio",
+      "name": "Moncenisio",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/moncenisio/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Moncenisio",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_moncenisio",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Moncenisio e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "pragelato",
+      "name": "Pragelato",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/pragelato/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Pragelato",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_pragelato",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Pragelato e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "bardonecchia",
+      "name": "Bardonecchia",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/bardonecchia/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Bardonecchia",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_bardonecchia",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Bardonecchia e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "chiomonte",
+      "name": "Chiomonte",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/chiomonte/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Chiomonte",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_chiomonte",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Chiomonte e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "sant-antonino-di-susa",
+      "name": "Sant’Antonino di Susa",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-antonino-di-susa/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Sant’Antonino di Susa",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_santantoninodisusa",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Sant’Antonino di Susa e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "rivoli",
+      "name": "Rivoli",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/rivoli/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Rivoli",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_rivoli",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Rivoli e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "giaveno",
+      "name": "Giaveno",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/giaveno/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Giaveno",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_giaveno",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Giaveno e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "grugliasco",
+      "name": "Grugliasco",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/grugliasco/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Grugliasco",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_grugliasco",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Grugliasco e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "torino",
+      "name": "Torino",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/torino/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Torino",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_torino",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Torino e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "moncalieri",
+      "name": "Moncalieri",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/moncalieri/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Moncalieri",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_moncalieri",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Moncalieri e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "collegno",
+      "name": "Collegno",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/collegno/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Collegno",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_collegno",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Collegno e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "pianezza",
+      "name": "Pianezza",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/pianezza/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Pianezza",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_pianezza",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Pianezza e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "borgaro-torinese",
+      "name": "Borgaro Torinese",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/borgaro-torinese/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Borgaro Torinese",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_borgarotorinese",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Borgaro Torinese e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    },
+    {
+      "town_id": "valgioie",
+      "name": "Valgioie",
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/valgioie/",
+      "facebook": {
+        "planned_name": "Case in Pubblicità 24/7 - Valgioie",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "instagram": {
+        "suggested_username": "case247_valgioie",
+        "account_type": "BUSINESS",
+        "status": "NOT_VERIFIED",
+        "url": null,
+        "provider_id": null
+      },
+      "identity": {
+        "bio": "Immobili in pubblicità a Valgioie e nei comuni entro 20 km. Case in Pubblicità 24/7: marketing e comunicazione immobiliare. Mediazione svolta da professionisti abilitati.",
+        "contact_whatsapp": "+39 371 370 8294",
+        "has_verified_physical_office": false
+      },
+      "owner_meta_auth_required": true,
+      "publishing_enabled": false
+    }
+  ]
+}
