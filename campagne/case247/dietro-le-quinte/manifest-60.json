@@ -1,0 +1,974 @@
+{
+  "project": "Case in Pubblicità 24/7",
+  "scope": "Diario pubblicitario con fasi illustrative, non attività documentate",
+  "created_at": "2026-11-11",
+  "total": 60,
+  "expected_format": "jpg",
+  "expected_width": 1080,
+  "expected_height": 1350,
+  "publish_gate": "Only schedule after exact published JPG URL responds 200, approval, copyright/privacy/QR check, and label AI; never turn pre-existing rejected listing images into active posts",
+  "whatsapp": "https://wa.me/393713708294",
+  "assets_in_repo": false,
+  "entries": [
+    {
+      "id": "CASE247_F01_SCENA_01",
+      "phase": 1,
+      "scene": 1,
+      "topic": "Progetto del volantino",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F01_SCENA_01_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F01_SCENA_02",
+      "phase": 1,
+      "scene": 2,
+      "topic": "Progetto del volantino",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F01_SCENA_02_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F01_SCENA_03",
+      "phase": 1,
+      "scene": 3,
+      "topic": "Progetto del volantino",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F01_SCENA_03_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F01_SCENA_04",
+      "phase": 1,
+      "scene": 4,
+      "topic": "Progetto del volantino",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F01_SCENA_04_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F01_SCENA_05",
+      "phase": 1,
+      "scene": 5,
+      "topic": "Progetto del volantino",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F01_SCENA_05_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F01_SCENA_06",
+      "phase": 1,
+      "scene": 6,
+      "topic": "Progetto del volantino",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F01_SCENA_06_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F02_SCENA_01",
+      "phase": 2,
+      "scene": 1,
+      "topic": "Stampa e controllo",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F02_SCENA_01_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F02_SCENA_02",
+      "phase": 2,
+      "scene": 2,
+      "topic": "Stampa e controllo",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F02_SCENA_02_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F02_SCENA_03",
+      "phase": 2,
+      "scene": 3,
+      "topic": "Stampa e controllo",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F02_SCENA_03_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F02_SCENA_04",
+      "phase": 2,
+      "scene": 4,
+      "topic": "Stampa e controllo",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F02_SCENA_04_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F02_SCENA_05",
+      "phase": 2,
+      "scene": 5,
+      "topic": "Stampa e controllo",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F02_SCENA_05_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F02_SCENA_06",
+      "phase": 2,
+      "scene": 6,
+      "topic": "Stampa e controllo",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F02_SCENA_06_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F03_SCENA_01",
+      "phase": 3,
+      "scene": 1,
+      "topic": "Distribuzione sul territorio",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F03_SCENA_01_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F03_SCENA_02",
+      "phase": 3,
+      "scene": 2,
+      "topic": "Distribuzione sul territorio",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F03_SCENA_02_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F03_SCENA_03",
+      "phase": 3,
+      "scene": 3,
+      "topic": "Distribuzione sul territorio",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F03_SCENA_03_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F03_SCENA_04",
+      "phase": 3,
+      "scene": 4,
+      "topic": "Distribuzione sul territorio",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F03_SCENA_04_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F03_SCENA_05",
+      "phase": 3,
+      "scene": 5,
+      "topic": "Distribuzione sul territorio",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F03_SCENA_05_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F03_SCENA_06",
+      "phase": 3,
+      "scene": 6,
+      "topic": "Distribuzione sul territorio",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F03_SCENA_06_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F04_SCENA_01",
+      "phase": 4,
+      "scene": 1,
+      "topic": "Volantino nella cassetta postale",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F04_SCENA_01_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F04_SCENA_02",
+      "phase": 4,
+      "scene": 2,
+      "topic": "Volantino nella cassetta postale",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F04_SCENA_02_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F04_SCENA_03",
+      "phase": 4,
+      "scene": 3,
+      "topic": "Volantino nella cassetta postale",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F04_SCENA_03_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F04_SCENA_04",
+      "phase": 4,
+      "scene": 4,
+      "topic": "Volantino nella cassetta postale",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F04_SCENA_04_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F04_SCENA_05",
+      "phase": 4,
+      "scene": 5,
+      "topic": "Volantino nella cassetta postale",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F04_SCENA_05_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F04_SCENA_06",
+      "phase": 4,
+      "scene": 6,
+      "topic": "Volantino nella cassetta postale",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F04_SCENA_06_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F05_SCENA_01",
+      "phase": 5,
+      "scene": 1,
+      "topic": "Scansione QR e contatto",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F05_SCENA_01_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F05_SCENA_02",
+      "phase": 5,
+      "scene": 2,
+      "topic": "Scansione QR e contatto",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F05_SCENA_02_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F05_SCENA_03",
+      "phase": 5,
+      "scene": 3,
+      "topic": "Scansione QR e contatto",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F05_SCENA_03_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F05_SCENA_04",
+      "phase": 5,
+      "scene": 4,
+      "topic": "Scansione QR e contatto",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F05_SCENA_04_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F05_SCENA_05",
+      "phase": 5,
+      "scene": 5,
+      "topic": "Scansione QR e contatto",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F05_SCENA_05_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F05_SCENA_06",
+      "phase": 5,
+      "scene": 6,
+      "topic": "Scansione QR e contatto",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F05_SCENA_06_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F06_SCENA_01",
+      "phase": 6,
+      "scene": 1,
+      "topic": "Richiesta e appuntamento",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F06_SCENA_01_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F06_SCENA_02",
+      "phase": 6,
+      "scene": 2,
+      "topic": "Richiesta e appuntamento",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F06_SCENA_02_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F06_SCENA_03",
+      "phase": 6,
+      "scene": 3,
+      "topic": "Richiesta e appuntamento",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F06_SCENA_03_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F06_SCENA_04",
+      "phase": 6,
+      "scene": 4,
+      "topic": "Richiesta e appuntamento",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F06_SCENA_04_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F06_SCENA_05",
+      "phase": 6,
+      "scene": 5,
+      "topic": "Richiesta e appuntamento",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F06_SCENA_05_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F06_SCENA_06",
+      "phase": 6,
+      "scene": 6,
+      "topic": "Richiesta e appuntamento",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F06_SCENA_06_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F07_SCENA_01",
+      "phase": 7,
+      "scene": 1,
+      "topic": "Visita con professionista abilitato",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F07_SCENA_01_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F07_SCENA_02",
+      "phase": 7,
+      "scene": 2,
+      "topic": "Visita con professionista abilitato",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F07_SCENA_02_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F07_SCENA_03",
+      "phase": 7,
+      "scene": 3,
+      "topic": "Visita con professionista abilitato",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F07_SCENA_03_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F07_SCENA_04",
+      "phase": 7,
+      "scene": 4,
+      "topic": "Visita con professionista abilitato",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F07_SCENA_04_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F07_SCENA_05",
+      "phase": 7,
+      "scene": 5,
+      "topic": "Visita con professionista abilitato",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F07_SCENA_05_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F07_SCENA_06",
+      "phase": 7,
+      "scene": 6,
+      "topic": "Visita con professionista abilitato",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F07_SCENA_06_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F08_SCENA_01",
+      "phase": 8,
+      "scene": 1,
+      "topic": "Consulenza del credito",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F08_SCENA_01_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F08_SCENA_02",
+      "phase": 8,
+      "scene": 2,
+      "topic": "Consulenza del credito",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F08_SCENA_02_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F08_SCENA_03",
+      "phase": 8,
+      "scene": 3,
+      "topic": "Consulenza del credito",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F08_SCENA_03_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F08_SCENA_04",
+      "phase": 8,
+      "scene": 4,
+      "topic": "Consulenza del credito",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F08_SCENA_04_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F08_SCENA_05",
+      "phase": 8,
+      "scene": 5,
+      "topic": "Consulenza del credito",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F08_SCENA_05_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F08_SCENA_06",
+      "phase": 8,
+      "scene": 6,
+      "topic": "Consulenza del credito",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F08_SCENA_06_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F09_SCENA_01",
+      "phase": 9,
+      "scene": 1,
+      "topic": "Mutuo: istruttoria ed erogazione",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F09_SCENA_01_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F09_SCENA_02",
+      "phase": 9,
+      "scene": 2,
+      "topic": "Mutuo: istruttoria ed erogazione",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F09_SCENA_02_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F09_SCENA_03",
+      "phase": 9,
+      "scene": 3,
+      "topic": "Mutuo: istruttoria ed erogazione",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F09_SCENA_03_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F09_SCENA_04",
+      "phase": 9,
+      "scene": 4,
+      "topic": "Mutuo: istruttoria ed erogazione",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F09_SCENA_04_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F09_SCENA_05",
+      "phase": 9,
+      "scene": 5,
+      "topic": "Mutuo: istruttoria ed erogazione",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F09_SCENA_05_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F09_SCENA_06",
+      "phase": 9,
+      "scene": 6,
+      "topic": "Mutuo: istruttoria ed erogazione",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F09_SCENA_06_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F10_SCENA_01",
+      "phase": 10,
+      "scene": 1,
+      "topic": "Notaio e firma",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F10_SCENA_01_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F10_SCENA_02",
+      "phase": 10,
+      "scene": 2,
+      "topic": "Notaio e firma",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F10_SCENA_02_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F10_SCENA_03",
+      "phase": 10,
+      "scene": 3,
+      "topic": "Notaio e firma",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F10_SCENA_03_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F10_SCENA_04",
+      "phase": 10,
+      "scene": 4,
+      "topic": "Notaio e firma",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F10_SCENA_04_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F10_SCENA_05",
+      "phase": 10,
+      "scene": 5,
+      "topic": "Notaio e firma",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F10_SCENA_05_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    },
+    {
+      "id": "CASE247_F10_SCENA_06",
+      "phase": 10,
+      "scene": 6,
+      "topic": "Notaio e firma",
+      "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F10_SCENA_06_DIVERSA.jpg",
+      "status": "ASSET_NOT_UPLOADED",
+      "ai_generated": true,
+      "requires_fact_check": true,
+      "approval": "PENDING",
+      "date": null,
+      "channels": [
+        "facebook",
+        "instagram"
+      ]
+    }
+  ]
+}
