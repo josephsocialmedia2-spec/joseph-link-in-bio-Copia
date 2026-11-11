@@ -21,9 +21,9 @@
   "automation": {
     "task_title": "CASE247 · Regia caroselli",
     "start_date": "2026-11-12",
-    "daily_local_time": "08:00 circa",
+    "daily_local_time": "11:00 circa",
     "desired_gap_local_time": "13:30",
-    "schedule_strategy": "Ricontrolla calendario ogni giorno; inserisci se libero, non sovrascrivere contenuti esistenti",
+    "schedule_strategy": "Dopo la generazione GitHub delle 04:15 e l'accodamento 09:45, ricontrolla Metricool e prova a programmare entro lo slot libero delle 13:30",
     "save_new_content_only_with_media": true,
     "publication_intent": "AUTOPUBLISH_IF_VALID_MEDIA",
     "prevent_duplicates": true
