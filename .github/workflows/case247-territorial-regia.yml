@@ -104,3 +104,27 @@ jobs:
             git rebase origin/main
             git push origin HEAD:main
           fi
+
+  integration-preview:
+    needs: unit-tests
+    if: github.ref != 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Fetch actual public catalog into isolated runner
+        run: python scripts/sync_sacra_catalog.py
+      - name: Build actual territorial preview with conservative geocoding
+        run: python scripts/case247_territorial_engine.py --geocode --max-geocodes 41
+      - name: Save preview report without publishing or committing
+        uses: actions/upload-artifact@v4
+        with:
+          name: case247-territorial-preview
+          path: |
+            campagne/case247/regia-territoriale/latest-plan.json
+            campagne/case247/regia-territoriale/reconciliation.json
+            config/case247-geo-verified.json
+          if-no-files-found: error
