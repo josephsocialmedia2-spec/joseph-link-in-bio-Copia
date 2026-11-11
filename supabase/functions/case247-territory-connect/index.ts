@@ -63,6 +63,36 @@ async function pages(token:string) {
   throw Error("META_ACCOUNT_PAGINATION_LIMIT");
 }
 
+
+/** Canonical territory names; descriptions are proposed, not existing accounts. */
+const TOWNS=[{"id":"avigliana","name":"Avigliana","ig":"case247_avigliana"},{"id":"almese","name":"Almese","ig":"case247_almese"},{"id":"rubiana","name":"Rubiana","ig":"case247_rubiana"},{"id":"villar-dora","name":"Villar Dora","ig":"case247_villardora"},{"id":"caprie","name":"Caprie","ig":"case247_caprie"},{"id":"condove","name":"Condove","ig":"case247_condove"},{"id":"sant-ambrogio-di-torino","name":"Sant’Ambrogio di Torino","ig":"case247_santambrogioditorino"},{"id":"chiusa-di-san-michele","name":"Chiusa di San Michele","ig":"case247_chiusadisanmichele"},{"id":"vaie","name":"Vaie","ig":"case247_vaie"},{"id":"san-didero","name":"San Didero","ig":"case247_sandidero"},{"id":"borgone-susa","name":"Borgone Susa","ig":"case247_borgonesusa"},{"id":"bussoleno","name":"Bussoleno","ig":"case247_bussoleno"},{"id":"chianocco","name":"Chianocco","ig":"case247_chianocco"},{"id":"susa","name":"Susa","ig":"case247_susa"},{"id":"mompantero","name":"Mompantero","ig":"case247_mompantero"},{"id":"san-giorio-di-susa","name":"San Giorio di Susa","ig":"case247_sangioriodisusa"},{"id":"villar-focchiardo","name":"Villar Focchiardo","ig":"case247_villarfocchiardo"},{"id":"venaus","name":"Venaus","ig":"case247_venaus"},{"id":"giaglione","name":"Giaglione","ig":"case247_giaglione"},{"id":"gravere","name":"Gravere","ig":"case247_gravere"},{"id":"exilles","name":"Exilles","ig":"case247_exilles"},{"id":"salbertrand","name":"Salbertrand","ig":"case247_salbertrand"},{"id":"oulx","name":"Oulx","ig":"case247_oulx"},{"id":"sauze-d-oulx","name":"Sauze d’Oulx","ig":"case247_sauzedoulx"},{"id":"cesana-torinese","name":"Cesana Torinese","ig":"case247_cesanatorinese"},{"id":"claviere","name":"Claviere","ig":"case247_claviere"},{"id":"novalesa","name":"Novalesa","ig":"case247_novalesa"},{"id":"moncenisio","name":"Moncenisio","ig":"case247_moncenisio"},{"id":"pragelato","name":"Pragelato","ig":"case247_pragelato"},{"id":"bardonecchia","name":"Bardonecchia","ig":"case247_bardonecchia"},{"id":"chiomonte","name":"Chiomonte","ig":"case247_chiomonte"},{"id":"sant-antonino-di-susa","name":"Sant’Antonino di Susa","ig":"case247_santantoninodisusa"},{"id":"rivoli","name":"Rivoli","ig":"case247_rivoli"},{"id":"giaveno","name":"Giaveno","ig":"case247_giaveno"},{"id":"grugliasco","name":"Grugliasco","ig":"case247_grugliasco"},{"id":"torino","name":"Torino","ig":"case247_torino"},{"id":"moncalieri","name":"Moncalieri","ig":"case247_moncalieri"},{"id":"collegno","name":"Collegno","ig":"case247_collegno"},{"id":"pianezza","name":"Pianezza","ig":"case247_pianezza"},{"id":"borgaro-torinese","name":"Borgaro Torinese","ig":"case247_borgarotorinese"},{"id":"valgioie","name":"Valgioie","ig":"case247_valgioie"}];
+const TOWN_MAP=new Map(TOWNS.map(x=>[x.id,x]));
+const normalize=(s:string)=>String(s||"").normalize("NFKD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]/g,"");
+function pageMatch(name:string,t:any){return normalize(name)===normalize("Case in Pubblicità 24/7 - "+t.name)}
+function igMatch(handle:string,t:any){
+  const s=String(handle||"").toLowerCase(),tail=t.id.replace(/-/g,"");
+  return s===t.ig||s.endsWith("_"+tail)||s.endsWith("."+tail);
+}
+async function validatePair(page:any,t:any,fbPerm:boolean,igPerm:boolean){
+ if(!page||!pageMatch(page.name,t))throw Error("TERRITORIAL_PAGE_NOT_AUTHORIZED");
+ if(!fbPerm||!igPerm)throw Error("REQUIRED_PERMISSIONS_MISSING");
+ if(!page.access_token||!page.tasks?.includes("CREATE_CONTENT"))throw Error("FACEBOOK_CONTENT_TASK_MISSING");
+ const detail=await graph(encodeURIComponent(String(page.id)),String(page.access_token),{fields:"id,name,instagram_business_account{id,username}"});
+ if(String(detail.id)!==String(page.id))throw Error("PAGE_IDENTITY_MISMATCH");
+ const ig=detail.instagram_business_account;
+ if(!ig?.id||!ig?.username||!igMatch(ig.username,t))throw Error("INSTAGRAM_TERRITORY_NOT_MATCHED");
+ const igDetails=await graph(encodeURIComponent(String(ig.id)),String(page.access_token),{fields:"id,username,account_type"});
+ if(String(igDetails.id)!==String(ig.id)||!["BUSINESS","MEDIA_CREATOR"].includes(String(igDetails.account_type)))throw Error("INSTAGRAM_ACCOUNT_NOT_VERIFIED");
+ return {page,ig};
+}
+function verifiedRows(pair:any,t:any,adminId:string){
+ const when=new Date().toISOString();
+ return [
+ {town_id:t.id,platform:"facebook",provider_id:String(pair.page.id),page_id:String(pair.page.id),public_url:"https://www.facebook.com/"+encodeURIComponent(String(pair.page.id)),handle:null,verified_by:adminId,verified_at:when,updated_at:when,publishing_enabled:false,status:"VERIFIED_PENDING_DISPATCH"},
+ {town_id:t.id,platform:"instagram",provider_id:String(pair.ig.id),page_id:String(pair.page.id),public_url:"https://www.instagram.com/"+encodeURIComponent(String(pair.ig.username))+"/",handle:String(pair.ig.username),verified_by:adminId,verified_at:when,updated_at:when,publishing_enabled:false,status:"VERIFIED_PENDING_DISPATCH"}
+ ];
+}
+
 Deno.serve(async(req:Request)=>{
   if(req.method==="OPTIONS")return reply(200,{ok:true});
   if(!["GET","POST"].includes(req.method))return reply(405,{error:"METHOD_NOT_ALLOWED"});
@@ -80,14 +110,17 @@ Deno.serve(async(req:Request)=>{
 
   const url=new URL(req.url);
   const action=req.method==="GET"?(url.searchParams.get("action")||"status"):"verify";
+  const townId=url.searchParams.get("town_id")||"avigliana";
   if(req.method==="GET"&&action==="status"){
-    const {data,error}=await service.from("case247_territorial_meta_accounts")
-      .select("town_id,platform,provider_id,page_id,public_url,handle,verified_at,status,publishing_enabled")
-      .eq("town_id","avigliana").order("platform");
+    if(townId!=="all"&&!TOWN_MAP.has(townId))return reply(400,{error:"UNKNOWN_TOWN"});
+    let q=service.from("case247_territorial_meta_accounts")
+      .select("town_id,platform,provider_id,page_id,public_url,handle,verified_at,status,publishing_enabled");
+    if(townId!=="all")q=q.eq("town_id",townId);
+    const {data,error}=await q.order("town_id");
     if(error)return reply(503,{error:"TERRITORIAL_REGISTRY_UNAVAILABLE"});
-    return reply(200,{ok:true,town_id:"avigliana",accounts:data||[],publication_live:false});
+    return reply(200,{ok:true,town_id:townId,accounts:data||[],towns_configured:41,publication_live:false});
   }
-  if(req.method==="GET"&&action!=="pages")return reply(400,{error:"UNKNOWN_ACTION"});
+  if(req.method==="GET"&&(action!=="pages"||!TOWN_MAP.has(townId)))return reply(400,{error:"UNKNOWN_ACTION_OR_TOWN"});
   if(req.method==="POST"&&Number(req.headers.get("content-length")||"0")>5000)return reply(413,{error:"REQUEST_TOO_LARGE"});
 
   const {data:record,error:credsError}=await service.from("case247_meta_credentials")
@@ -107,18 +140,13 @@ Deno.serve(async(req:Request)=>{
     const igPermissions=instagramRequired.every(k=>granted.has(k));
 
     if(req.method==="GET"){
-      const candidates=allPages
-        .filter((pg:any)=>/avigliana/i.test(String(pg.name||"")))
-        .map((pg:any)=>({
-          page_id:String(pg.id||""),
-          page_name:String(pg.name||""),
-          can_create_content:Array.isArray(pg.tasks)&&pg.tasks.includes("CREATE_CONTENT"),
-          instagram:pg.instagram_business_account?{
-            id:String(pg.instagram_business_account.id||""),
-            username:String(pg.instagram_business_account.username||"")
-          }:null
-        }));
-      return reply(200,{ok:true,town_id:"avigliana",matching_pages:candidates,
+      const t=TOWN_MAP.get(townId);
+      const candidates=allPages.filter((p:any)=>pageMatch(String(p.name||""),t))
+        .map((p:any)=>({page_id:String(p.id),page_name:String(p.name||""),
+          can_create_content:!!p.tasks?.includes("CREATE_CONTENT"),
+          instagram:p.instagram_business_account?{id:String(p.instagram_business_account.id||""),
+            username:String(p.instagram_business_account.username||"")}:null}));
+      return reply(200,{ok:true,town_id:townId,matching_pages:candidates,
         facebook_permissions_granted:fbPermissions,instagram_permissions_granted:igPermissions,
         missing_permissions:[...facebookRequired,...instagramRequired].filter(k=>!granted.has(k)),
         authorization_action_required:!candidates.length||!fbPermissions||!igPermissions,
@@ -126,39 +154,39 @@ Deno.serve(async(req:Request)=>{
     }
     let body:any;
     try{body=await req.json()}catch{return reply(400,{error:"INVALID_JSON"})}
-    if(body?.town_id!=="avigliana"||typeof body?.page_id!=="string"||!/^\d{5,30}$/.test(body.page_id))
+    if(body?.mode==="scan"){
+      // Batch discover and verify existing Meta-owned accounts ONLY.
+      if(!fbPermissions||!igPermissions)return reply(409,{error:"REQUIRED_META_PERMISSIONS_MISSING"});
+      const linked:any[]=[],blocked:any[]=[],used=new Set<string>();
+      for(const t of TOWNS){
+        const candidates=allPages.filter((p:any)=>pageMatch(String(p.name||""),t));
+        if(candidates.length!==1){blocked.push({town_id:t.id,reason:candidates.length?"AMBIGUOUS_PAGE":"NO_MATCHING_PAGE"});continue}
+        const page=candidates[0];
+        if(used.has(String(page.id))){blocked.push({town_id:t.id,reason:"PAGE_ALREADY_ASSIGNED"});continue}
+        try{
+          const pair=await validatePair(page,t,fbPermissions,igPermissions);
+          const {error:e}=await service.from("case247_territorial_meta_accounts")
+            .upsert(verifiedRows(pair,t,user.id),{onConflict:"town_id,platform"});
+          if(e)throw Error("TERRITORIAL_REGISTRY_WRITE_FAILED");
+          used.add(String(page.id));
+          linked.push({town_id:t.id,page_id:String(page.id),instagram_id:String(pair.ig.id)});
+        }catch(e){blocked.push({town_id:t.id,reason:e instanceof Error?e.message:"VERIFY_FAILED"})}
+      }
+      return reply(200,{ok:true,scanned_towns:41,linked,blocked,
+        publishing_enabled:false,status:"VERIFIED_PENDING_DISPATCH"});
+    }
+    if(!TOWN_MAP.has(body?.town_id)||typeof body?.page_id!=="string"||!/^\\d{5,30}$/.test(body.page_id))
       return reply(400,{error:"INVALID_TERRITORY_OR_PAGE"});
-    const page=allPages.find((pg:any)=>String(pg.id)===body.page_id);
-    if(!page||!/avigliana/i.test(String(page.name||"")))return reply(409,{error:"AVIGLIANA_PAGE_NOT_AUTHORIZED"});
-    if(!fbPermissions||!igPermissions)return reply(409,{error:"REQUIRED_META_PERMISSIONS_MISSING"});
-    if(!page.access_token||!Array.isArray(page.tasks)||!page.tasks.includes("CREATE_CONTENT"))
-      return reply(409,{error:"FACEBOOK_CONTENT_TASK_MISSING"});
-    const pageDetails=await graph(encodeURIComponent(String(page.id)),String(page.access_token),
-      {fields:"id,name,instagram_business_account{id,username}"});
-    if(String(pageDetails.id)!==body.page_id)return reply(409,{error:"PAGE_IDENTITY_MISMATCH"});
-    const instagram=pageDetails.instagram_business_account;
-    if(!instagram?.id||!instagram.username)return reply(409,{error:"INSTAGRAM_PROFESSIONAL_NOT_LINKED"});
-    if(!/avigliana/i.test(String(instagram.username)))return reply(409,{error:"INSTAGRAM_NOT_TERRITORIAL"});
-    const igDetail=await graph(encodeURIComponent(String(instagram.id)),String(page.access_token),
-      {fields:"id,username,account_type"});
-    if(String(igDetail.id)!==String(instagram.id)||!["BUSINESS","MEDIA_CREATOR"].includes(String(igDetail.account_type)))
-      return reply(409,{error:"INSTAGRAM_ACCOUNT_NOT_VERIFIED"});
-    const when=new Date().toISOString();
-    const rows=[
-      {town_id:"avigliana",platform:"facebook",provider_id:String(page.id),page_id:String(page.id),
-       public_url:"https://www.facebook.com/"+encodeURIComponent(String(page.id)),
-       handle:null,verified_by:user.id,verified_at:when,updated_at:when,publishing_enabled:false,
-       status:"VERIFIED_PENDING_DISPATCH"},
-      {town_id:"avigliana",platform:"instagram",provider_id:String(instagram.id),page_id:String(page.id),
-       public_url:"https://www.instagram.com/"+encodeURIComponent(String(instagram.username))+"/",
-       handle:String(instagram.username),verified_by:user.id,verified_at:when,updated_at:when,publishing_enabled:false,
-       status:"VERIFIED_PENDING_DISPATCH"}
-    ];
+    const t=TOWN_MAP.get(body.town_id);
+    const page=allPages.find((p:any)=>String(p.id)===body.page_id);
+    let pair:any;
+    try{pair=await validatePair(page,t,fbPermissions,igPermissions)}
+    catch(e){return reply(409,{error:e instanceof Error?e.message:"ACCOUNT_VERIFICATION_FAILED"})}
     const {error:saveError}=await service.from("case247_territorial_meta_accounts")
-      .upsert(rows,{onConflict:"town_id,platform"});
+      .upsert(verifiedRows(pair,t,user.id),{onConflict:"town_id,platform"});
     if(saveError)return reply(503,{error:"TERRITORIAL_CONNECTION_SAVE_FAILED"});
-    return reply(200,{ok:true,town_id:"avigliana",page_id:String(page.id),
-      instagram_id:String(instagram.id),instagram_username:String(instagram.username),
+    return reply(200,{ok:true,town_id:t.id,page_id:String(pair.page.id),
+      instagram_id:String(pair.ig.id),instagram_username:String(pair.ig.username),
       status:"VERIFIED_PENDING_DISPATCH",publication_live:false});
   }catch(error){
     const name=error instanceof Error?error.message:"META_UNKNOWN_ERROR";
