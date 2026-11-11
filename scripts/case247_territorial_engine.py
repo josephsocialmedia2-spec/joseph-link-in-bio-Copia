@@ -160,10 +160,12 @@ def normalize_changes(items, old):
         "after": after,
     }
 
-def make_plan(day, items, towns, geo, graphics, previous=None):
+def make_plan(day, items, towns, geo, graphics, previous=None, reserved_urls=None):
     """Allocate each verified available listing ONCE across all territorial networks."""
     previous = previous or {}
-    sources = [p for p in items if listed_available(p) and valid_picture(p.get("image"))]
+    reserved_urls = set(reserved_urls or [])
+    sources = [p for p in items if listed_available(p) and valid_picture(p.get("image"))
+               and p.get("url") not in reserved_urls]
     sources.sort(key=lambda p: hash_order(p["id"], day))
     occupancy = {}  # (town, network) -> 0..3 property posts
     assignments, exclusions = [], {}
@@ -355,7 +357,12 @@ def main():
     prev_fingerprints = read_json(OUT / "catalog-fingerprints.json", {})
     changes = normalize_changes(catalog["items"], prev_fingerprints)
     past_assignments = read_json(OUT / "previous-assignments.json", {})
-    plan = make_plan(day, catalog["items"], towns, geo, manifest["entries"], past_assignments)
+    central = read_json(OUT / "metricool-central-reservations.json", {})
+    reserved = {p.get("url") for p in central.get("reservations", {}).get(day, []) if p.get("url")}
+    plan = make_plan(day, catalog["items"], towns, geo, manifest["entries"],
+                     past_assignments, reserved_urls=reserved)
+    plan["existing_central_metricool_reservations"] = len(reserved)
+    plan["metricool_reservations_checked_at"] = central.get("checked_at")
     plan["generated_at"] = dt.datetime.now(dt.timezone.utc).isoformat()
     plan["source_snapshot_at"] = catalog["last_success_at"]
     plan["catalog_count"] = len(catalog["items"])
