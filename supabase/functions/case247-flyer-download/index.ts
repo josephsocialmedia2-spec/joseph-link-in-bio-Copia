@@ -18,7 +18,7 @@ const handler=withSupabase({auth:"none"},async(req,ctx)=>{
   const siteKey=Deno.env.get("CASE247_TURNSTILE_SITE_KEY")||"";
   const secret=Deno.env.get("CASE247_TURNSTILE_SECRET_KEY")||"";
   const pdf=Deno.env.get("CASE247_FLYER_DOWNLOAD_URL")||"";
-  const expected=new RegExp("^https://drive\.google\.com/file/d/"+FILE_ID+"/view(?:[?].*)?$");
+  const expected=new RegExp("^https://drive\\\\.google\\\\.com/file/d/"+FILE_ID+"/view(?:[?].*)?$");
   const active=Boolean(!settings.error&&s?.intake_enabled&&s.controller_confirmed&&s.privacy_notice_approved&&s.anti_bot_verified&&
     !String(s.notice_version).startsWith("DRAFT")&&Deno.env.get("CASE247_LEGAL_RELEASE_APPROVED")==="true"&&
     Deno.env.get("CASE247_FLYER_GATE_ENABLED")==="true"&&siteKey&&secret&&expected.test(pdf));
