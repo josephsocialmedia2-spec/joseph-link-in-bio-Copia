@@ -105,37 +105,3 @@ jobs:
             git push origin HEAD:main
           fi
 
-  integration-preview:
-    needs: unit-tests
-    if: github.ref != 'refs/heads/main' && github.event_name == 'push'
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - name: Fetch actual public catalog into isolated runner
-        run: python scripts/sync_sacra_catalog.py
-      - name: Build actual territorial preview with conservative geocoding
-        run: python scripts/case247_territorial_engine.py --geocode --max-geocodes 41
-      - name: Save preview report without publishing or committing
-        uses: actions/upload-artifact@v4
-        with:
-          name: case247-territorial-preview
-          path: |
-            campagne/case247/regia-territoriale/latest-plan.json
-            campagne/case247/regia-territoriale/reconciliation.json
-            config/case247-geo-verified.json
-          if-no-files-found: error
-      - name: Persist verified preview to feature branch only
-        run: |
-          git config user.name case247-territorial-bot
-          git config user.email case247-territorial-bot@users.noreply.github.com
-          git add immobili/catalogo.json config/case247-geo-verified.json campagne/case247/regia-territoriale/
-          if ! git diff --cached --quiet; then
-            git commit -m "CASE247: seed 41-town geodata and first verified preview"
-            git fetch origin feature/case247-regia-territoriale-20km-20261111
-            git rebase origin/feature/case247-regia-territoriale-20km-20261111
-            git push origin HEAD:feature/case247-regia-territoriale-20km-20261111
-          fi
