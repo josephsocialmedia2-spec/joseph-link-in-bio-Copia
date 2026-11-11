@@ -27,7 +27,7 @@ on:
       - config/case247-direct-meta-transition.json
       - .github/workflows/case247-territorial-publisher.yml
 permissions:
-  contents: write
+  contents: read
 concurrency:
   group: case247-territorial-publisher
   cancel-in-progress: false
@@ -47,6 +47,8 @@ jobs:
           python -m unittest discover -s scripts -p test_case247_legacy_transition.py -v
 
   publish:
+    permissions:
+      contents: write
     needs: syntax-test
     if: >
       github.ref == 'refs/heads/main' &&
