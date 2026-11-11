@@ -7,7 +7,7 @@
   const KEY='case247-premium-studio-v2';
   const whatsapp=`https://wa.me/39${CFG.phone}?text=${encodeURIComponent(CFG.whatsappText)}`;
   const blank=()=>Array.from({length:18},()=>null);
-  const model={theme:'cobalto',properties:blank(),portrait:(global.CASE247_DEFAULT_PORTRAIT||CFG.portraitFallback),panorama:CFG.panoramaReal||CFG.panoramaFallback};
+  const model={theme:'cobalto',properties:blank(),portrait:(CFG.portraitFallback||global.CASE247_DEFAULT_PORTRAIT),panorama:CFG.panoramaReal||CFG.panoramaFallback};
   let external=null,selected=-1,catalog=null,loading=false;
   try{
     const old=JSON.parse(localStorage.getItem(KEY)||'null');
@@ -95,7 +95,10 @@
     $('flyer').className=`theme-${model.theme}`;
     $('templateName').textContent=CFG.templates.find(t=>t.id===model.theme)?.name||model.theme;
     const portrait=$('portrait');
-    portrait.src=model.portrait;
+    portrait.onerror=()=>{portrait.onerror=null;portrait.src=CFG.portraitFallback;};
+    portrait.src=model.portrait||CFG.portraitFallback;
+    const footerPortrait=$('footerPortrait');
+    if(footerPortrait){footerPortrait.onerror=()=>{footerPortrait.onerror=null;footerPortrait.src=CFG.portraitFallback;};footerPortrait.src=model.portrait||CFG.portraitFallback;}
     $('heroPanorama').style.backgroundImage=`linear-gradient(90deg, rgba(0,33,70,.18), rgba(0,41,78,.03)), url(${JSON.stringify(model.panorama)})`;
     const grid=$('listingGrid');grid.replaceChildren();
     for(let i=0;i<18;i++)grid.append(makeCard(model.properties[i],i));
