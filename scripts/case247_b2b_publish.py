@@ -96,6 +96,21 @@ def load_queues():
   for job in queue["jobs"]:
    job["queue_enabled"]=queue.get("meta_enabled") is True and queue.get("no_automatic_meta_publish") is False
    combined["jobs"].append(job)
+ # Add brochure CTA at publishing time. The live gate remains disabled pending GDPR approval.
+ try:
+  cfg,_=read("branding/flyer-cta.json")
+ except Exception as exc:
+  raise RuntimeError("Flyer CTA config cannot be verified") from exc
+ if cfg.get("enabled") is True:
+  link=cfg.get("landing_url","")
+  if not link.startswith("https://josephsocialmedia2-spec.github.io/"):
+   raise RuntimeError("Invalid flyer form URL")
+  for job in combined["jobs"]:
+   cap=job.get("caption")
+   if not isinstance(cap,str):raise RuntimeError("Missing caption")
+   if link not in cap:
+    intro=cfg["instagram_cta"] if job.get("platform")=="instagram" else cfg["facebook_cta"]
+    job["caption"]=cap.rstrip()+"\n\n"+intro+"\n"+link
  combined["meta_enabled"]=any(j["queue_enabled"] for j in combined["jobs"])
  combined["no_automatic_meta_publish"]=not combined["meta_enabled"]
  return combined
