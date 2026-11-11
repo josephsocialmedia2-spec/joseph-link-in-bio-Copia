@@ -1,0 +1,51 @@
+{
+  "project": "Case in Pubblicità 24/7",
+  "branch": "feature/case247-dietro-le-quinte",
+  "scope": "Solo pubblicità, nessun lavoro di agenzia",
+  "updated_at": "2026-11-11",
+  "platform": "Metricool",
+  "brand_id": "7844901",
+  "timezone": "Europe/Rome",
+  "existing_calendar_check": {
+    "from": "2026-11-11",
+    "to": "2026-12-11",
+    "observed_scheduled_count": 36,
+    "autopublish_configured": 32,
+    "drafts_not_automatic": 4,
+    "common_hours": [
+      "10:00",
+      "17:00"
+    ],
+    "note": "Conteggi ricavati da lettura Metricool corrente. PENDING non equivale a PUBLISHED."
+  },
+  "automation": {
+    "task_title": "CASE247 · Regia caroselli",
+    "start_date": "2026-11-12",
+    "daily_local_time": "08:00 circa",
+    "desired_gap_local_time": "13:30",
+    "schedule_strategy": "Ricontrolla calendario ogni giorno; inserisci se libero, non sovrascrivere contenuti esistenti",
+    "save_new_content_only_with_media": true,
+    "publication_intent": "AUTOPUBLISH_IF_VALID_MEDIA",
+    "prevent_duplicates": true
+  },
+  "themes": [
+    "Creazione grafiche",
+    "Costruzione flyer",
+    "Pubblicazioni orarie",
+    "Distribuzione flyer",
+    "Promozione gruppi locali",
+    "Rete e interazioni",
+    "Form e report"
+  ],
+  "media_policy": {
+    "generated_visuals_are": "RICOSTRUZIONI_IA_NON_FOTOGRAFIE_DOCUMENTALI",
+    "generated_visuals_published_to_repo": false,
+    "post_currently_scheduled": false,
+    "never_fake_results": true,
+    "no_private_data": true,
+    "instagram_is_ai_generated": true,
+    "local_groups_only_permitted_publications": true,
+    "mass_friend_requests": false
+  },
+  "note": "Il pacchetto grafico è stato generato come archivio locale della conversazione, non è ancora disponibile tramite URL pubblico per Metricool. Non programmare un post privo di media raggiungibili."
+}
