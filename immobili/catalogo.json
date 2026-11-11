@@ -2,69 +2,10 @@
   "changes": {
     "removed_ids": [],
     "added_ids": [],
-    "changed_ids": [
-      "11101300195655",
-      "10640300179783",
-      "10656178143559",
-      "10552683856199",
-      "10552842780999",
-      "11025377689927",
-      "11136591069511",
-      "10842427097415",
-      "10808056250695",
-      "10606151008583",
-      "10555069071687",
-      "11203075113287",
-      "10673635721543",
-      "10555970912583",
-      "10759305756999",
-      "11054442283335",
-      "10671726395719",
-      "10577000005959",
-      "10555969765703",
-      "10777477611847",
-      "10656553042247",
-      "10552816369991",
-      "10722889564487",
-      "10974704042311",
-      "10770991481159",
-      "10790750257479",
-      "10549582070087",
-      "10552805753159",
-      "11319895654727",
-      "11283256508743",
-      "10596910858567",
-      "10564873093447",
-      "10724689871175",
-      "10555043021127",
-      "10564780753223",
-      "10749440131399",
-      "10716674720071",
-      "10552768561479",
-      "11038271897927",
-      "10816074056007",
-      "11190682255687",
-      "10635981816135",
-      "10552748212551",
-      "10549571617095",
-      "10574285603143",
-      "10577002398023",
-      "10678173860167",
-      "10705715855687",
-      "10666264625479",
-      "10552459985223",
-      "11228888760647",
-      "10826816553287",
-      "10781715595591",
-      "10886810075463",
-      "10680937873735",
-      "10903112876359",
-      "11421589602631",
-      "11230406017351"
-    ]
+    "changed_ids": []
   },
   "source": "https://lasacraimmobiliare.it",
-  "last_success_at": "2026-11-11T15:09:29.034240+00:00",
+  "last_success_at": "2026-11-11T15:17:55.949603+00:00",
   "count": 58,
   "items": [
     {
@@ -83,11 +24,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-10-28T15:50:48+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "borgaro-torinese",
       "municipality": "Borgaro Torinese",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "Elegante appartamento al secondo piano di Borgaro"
+      "location_evidence": "Elegante appartamento al secondo piano di Borgaro",
+      "town_mentions": [
+        "borgaro-torinese"
+      ]
     },
     {
       "id": "11319895654727",
@@ -105,11 +49,12 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-10-12T10:22:42+02:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": null,
       "municipality": null,
       "location_status": "DA_VERIFICARE",
-      "location_evidence": null
+      "location_evidence": null,
+      "town_mentions": []
     },
     {
       "id": "11283256508743",
@@ -129,11 +74,12 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-10-06T09:50:21+02:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": null,
       "municipality": null,
       "location_status": "DA_VERIFICARE",
-      "location_evidence": null
+      "location_evidence": null,
+      "town_mentions": []
     },
     {
       "id": "11230406017351",
@@ -151,11 +97,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-09-27T20:59:41+02:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "sant-ambrogio-di-torino",
       "municipality": "Sant’Ambrogio di Torino",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "SANT'AMBROGIO IN PICCOLA PALAZZINA"
+      "location_evidence": "SANT'AMBROGIO IN PICCOLA PALAZZINA",
+      "town_mentions": [
+        "sant-ambrogio-di-torino"
+      ]
     },
     {
       "id": "11228888760647",
@@ -173,11 +122,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-09-27T12:59:18+02:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "grugliasco",
       "municipality": "Grugliasco",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "Novità a Grugliasco, in Via Don Caustico"
+      "location_evidence": "Novità a Grugliasco, in Via Don Caustico",
+      "town_mentions": [
+        "grugliasco"
+      ]
     },
     {
       "id": "11203075113287",
@@ -195,11 +147,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-09-22T11:54:31+02:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "valgioie",
       "municipality": "Valgioie",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "bilocale completamente ristrutturato a Valgioie"
+      "location_evidence": "bilocale completamente ristrutturato a Valgioie",
+      "town_mentions": [
+        "valgioie"
+      ]
     },
     {
       "id": "11190682255687",
@@ -217,11 +172,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-09-19T18:25:44+02:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "rivoli",
       "municipality": "Rivoli",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "A Rivoli proponiamo in cessione attività"
+      "location_evidence": "A Rivoli proponiamo in cessione attività",
+      "town_mentions": [
+        "rivoli"
+      ]
     },
     {
       "id": "11136591069511",
@@ -239,11 +197,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-09-09T16:37:33+02:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "avigliana",
       "municipality": "Avigliana",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "Attività commerciale consolidata ad Avigliana"
+      "location_evidence": "Attività commerciale consolidata ad Avigliana",
+      "town_mentions": [
+        "avigliana"
+      ]
     },
     {
       "id": "11101300195655",
@@ -261,11 +222,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-09-02T10:12:27+02:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "moncalieri",
       "municipality": "Moncalieri",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "Esclusiva proprietà a Moncalieri"
+      "location_evidence": "Esclusiva proprietà a Moncalieri",
+      "town_mentions": [
+        "moncalieri"
+      ]
     },
     {
       "id": "11054442283335",
@@ -283,11 +247,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-08-24T16:08:24+02:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": null,
       "municipality": null,
       "location_status": "DA_VERIFICARE",
-      "location_evidence": null
+      "location_evidence": null,
+      "town_mentions": [
+        "sant-ambrogio-di-torino"
+      ]
     },
     {
       "id": "11038271897927",
@@ -305,11 +272,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-08-21T10:30:26+02:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "sant-antonino-di-susa",
       "municipality": "Sant’Antonino di Susa",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "Affacciato sulla tranquilla Sant'Antonino di Susa, questo appartamento"
+      "location_evidence": "Affacciato sulla tranquilla Sant'Antonino di Susa, questo appartamento",
+      "town_mentions": [
+        "sant-antonino-di-susa"
+      ]
     },
     {
       "id": "11025377689927",
@@ -327,11 +297,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-08-19T10:03:53+02:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "avigliana",
       "municipality": "Avigliana",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "Cedesi attività bar ristorante ad Avigliana"
+      "location_evidence": "Cedesi attività bar ristorante ad Avigliana",
+      "town_mentions": [
+        "avigliana"
+      ]
     },
     {
       "id": "10974704042311",
@@ -349,11 +322,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-08-07T15:35:16+02:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "torino",
       "municipality": "Torino",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "alloggio nel cuore di Torino"
+      "location_evidence": "alloggio nel cuore di Torino",
+      "town_mentions": [
+        "torino"
+      ]
     },
     {
       "id": "10903112876359",
@@ -371,11 +347,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-07-13T09:32:03+02:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "grugliasco",
       "municipality": "Grugliasco",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "appartamento al secondo piano a Grugliasco"
+      "location_evidence": "appartamento al secondo piano a Grugliasco",
+      "town_mentions": [
+        "grugliasco"
+      ]
     },
     {
       "id": "10886810075463",
@@ -393,11 +372,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-07-02T15:50:19+02:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "avigliana",
       "municipality": "Avigliana",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "Affascinante chalet ad Avigliana"
+      "location_evidence": "Affascinante chalet ad Avigliana",
+      "town_mentions": [
+        "avigliana"
+      ]
     },
     {
       "id": "10842427097415",
@@ -415,11 +397,12 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-06-08T11:13:04+02:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": null,
       "municipality": null,
       "location_status": "DA_VERIFICARE",
-      "location_evidence": null
+      "location_evidence": null,
+      "town_mentions": []
     },
     {
       "id": "10826816553287",
@@ -439,11 +422,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-05-30T09:53:21+02:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "villar-dora",
       "municipality": "Villar Dora",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "Nel cuore di Villar Dora"
+      "location_evidence": "Nel cuore di Villar Dora",
+      "town_mentions": [
+        "villar-dora"
+      ]
     },
     {
       "id": "10816074056007",
@@ -463,11 +449,12 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-05-25T17:46:53+02:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "caprie",
       "municipality": "Caprie",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "A Caprie, in zona tranquilla"
+      "location_evidence": "A Caprie, in zona tranquilla",
+      "town_mentions": []
     },
     {
       "id": "10808056250695",
@@ -485,11 +472,14 @@
       "rooms": 4.0,
       "baths": null,
       "published_at": "2026-05-21T10:25:12+02:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "rivoli",
       "municipality": "Rivoli",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "Ampio appartamento di 4 locali a Rivoli"
+      "location_evidence": "Ampio appartamento di 4 locali a Rivoli",
+      "town_mentions": [
+        "rivoli"
+      ]
     },
     {
       "id": "10790750257479",
@@ -507,11 +497,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-05-09T19:10:23+02:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "rivoli",
       "municipality": "Rivoli",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "A Rivoli, in zona comoda e ben servita"
+      "location_evidence": "A Rivoli, in zona comoda e ben servita",
+      "town_mentions": [
+        "rivoli"
+      ]
     },
     {
       "id": "10781715595591",
@@ -529,11 +522,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-05-04T10:59:02+02:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "villar-dora",
       "municipality": "Villar Dora",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "L’immobile è situato nel centro di Villar Dora"
+      "location_evidence": "L’immobile è situato nel centro di Villar Dora",
+      "town_mentions": [
+        "villar-dora"
+      ]
     },
     {
       "id": "10777477611847",
@@ -553,11 +549,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-04-30T18:05:19+02:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "caprie",
       "municipality": "Caprie",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "A Caprie, nella tranquilla e soleggiata frazione Novaretto"
+      "location_evidence": "A Caprie, nella tranquilla e soleggiata frazione Novaretto",
+      "town_mentions": [
+        "caprie"
+      ]
     },
     {
       "id": "10770991481159",
@@ -575,11 +574,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-04-28T18:34:08+02:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "rubiana",
       "municipality": "Rubiana",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "in Via Roma a Rubiana"
+      "location_evidence": "in Via Roma a Rubiana",
+      "town_mentions": [
+        "rubiana"
+      ]
     },
     {
       "id": "10759305756999",
@@ -597,11 +599,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-04-22T18:05:37+02:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "rubiana",
       "municipality": "Rubiana",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "A Rubiana proponiamo in vendita"
+      "location_evidence": "A Rubiana proponiamo in vendita",
+      "town_mentions": [
+        "rubiana"
+      ]
     },
     {
       "id": "10749440131399",
@@ -619,11 +624,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-04-16T15:36:30+02:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": null,
       "municipality": null,
       "location_status": "DA_VERIFICARE",
-      "location_evidence": null
+      "location_evidence": null,
+      "town_mentions": [
+        "giaveno"
+      ]
     },
     {
       "id": "10656178143559",
@@ -641,11 +649,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-03-31T18:42:48+02:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": null,
       "municipality": null,
       "location_status": "DA_VERIFICARE",
-      "location_evidence": null
+      "location_evidence": null,
+      "town_mentions": [
+        "sant-ambrogio-di-torino"
+      ]
     },
     {
       "id": "10666264625479",
@@ -663,11 +674,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-03-31T18:40:40+02:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "pianezza",
       "municipality": "Pianezza",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "A Pianezza proponiamo in vendita"
+      "location_evidence": "A Pianezza proponiamo in vendita",
+      "town_mentions": [
+        "pianezza"
+      ]
     },
     {
       "id": "10724689871175",
@@ -687,11 +701,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-03-30T16:29:28+02:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "sant-ambrogio-di-torino",
       "municipality": "Sant’Ambrogio di Torino",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "Nel cuore di Sant’Ambrogio proponiamo in vendita"
+      "location_evidence": "Nel cuore di Sant’Ambrogio proponiamo in vendita",
+      "town_mentions": [
+        "sant-ambrogio-di-torino"
+      ]
     },
     {
       "id": "10671726395719",
@@ -709,11 +726,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-03-30T10:08:26+02:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "collegno",
       "municipality": "Collegno",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "COLLEGNO - A 200 metri da C.so Francia"
+      "location_evidence": "COLLEGNO - A 200 metri da C.so Francia",
+      "town_mentions": [
+        "collegno"
+      ]
     },
     {
       "id": "10722889564487",
@@ -734,11 +754,12 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-03-28T11:26:34+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": null,
       "municipality": null,
       "location_status": "DA_VERIFICARE",
-      "location_evidence": null
+      "location_evidence": null,
+      "town_mentions": []
     },
     {
       "id": "10716674720071",
@@ -756,11 +777,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-03-26T16:09:18+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "sant-ambrogio-di-torino",
       "municipality": "Sant’Ambrogio di Torino",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "A Sant’Ambrogio di Torino, in Via Umberto I"
+      "location_evidence": "A Sant’Ambrogio di Torino, in Via Umberto I",
+      "town_mentions": [
+        "sant-ambrogio-di-torino"
+      ]
     },
     {
       "id": "10705715855687",
@@ -778,11 +802,12 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-03-18T17:00:08+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": null,
       "municipality": null,
       "location_status": "DA_VERIFICARE",
-      "location_evidence": null
+      "location_evidence": null,
+      "town_mentions": []
     },
     {
       "id": "10680937873735",
@@ -800,11 +825,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-03-02T09:00:24+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "sant-ambrogio-di-torino",
       "municipality": "Sant’Ambrogio di Torino",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "A Sant’Ambrogio proponiamo in vendita"
+      "location_evidence": "A Sant’Ambrogio proponiamo in vendita",
+      "town_mentions": [
+        "sant-ambrogio-di-torino"
+      ]
     },
     {
       "id": "10678173860167",
@@ -824,11 +852,12 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-02-27T18:43:48+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": null,
       "municipality": null,
       "location_status": "DA_VERIFICARE",
-      "location_evidence": null
+      "location_evidence": null,
+      "town_mentions": []
     },
     {
       "id": "10673635721543",
@@ -846,11 +875,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-02-25T16:01:29+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "sant-ambrogio-di-torino",
       "municipality": "Sant’Ambrogio di Torino",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "negozio commerciale in posizione strategica a Sant’Ambrogio di Torino"
+      "location_evidence": "negozio commerciale in posizione strategica a Sant’Ambrogio di Torino",
+      "town_mentions": [
+        "sant-ambrogio-di-torino"
+      ]
     },
     {
       "id": "10656553042247",
@@ -868,11 +900,12 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-02-17T16:14:25+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": null,
       "municipality": null,
       "location_status": "DA_VERIFICARE",
-      "location_evidence": null
+      "location_evidence": null,
+      "town_mentions": []
     },
     {
       "id": "10640300179783",
@@ -890,11 +923,14 @@
       "rooms": 4.0,
       "baths": null,
       "published_at": "2026-02-07T11:13:22+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "sant-ambrogio-di-torino",
       "municipality": "Sant’Ambrogio di Torino",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "A Sant’Ambrogio proponiamo in affitto"
+      "location_evidence": "A Sant’Ambrogio proponiamo in affitto",
+      "town_mentions": [
+        "sant-ambrogio-di-torino"
+      ]
     },
     {
       "id": "10635981816135",
@@ -912,11 +948,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-02-04T08:50:53+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": null,
       "municipality": null,
       "location_status": "DA_VERIFICARE",
-      "location_evidence": null
+      "location_evidence": null,
+      "town_mentions": [
+        "sant-ambrogio-di-torino"
+      ]
     },
     {
       "id": "10606151008583",
@@ -937,11 +976,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-01-15T10:05:14+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": null,
       "municipality": null,
       "location_status": "DA_VERIFICARE",
-      "location_evidence": null
+      "location_evidence": null,
+      "town_mentions": [
+        "sant-ambrogio-di-torino"
+      ]
     },
     {
       "id": "10596910858567",
@@ -962,11 +1004,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-01-10T11:31:41+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "villar-dora",
       "municipality": "Villar Dora",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "A Villar Dora, Torino, proponiamo in vendita"
+      "location_evidence": "A Villar Dora, Torino, proponiamo in vendita",
+      "town_mentions": [
+        "villar-dora"
+      ]
     },
     {
       "id": "10577002398023",
@@ -987,11 +1032,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-01-02T10:04:54+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "sant-ambrogio-di-torino",
       "municipality": "Sant’Ambrogio di Torino",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "Nel centro di Sant'Ambrogio di Torino"
+      "location_evidence": "Nel centro di Sant'Ambrogio di Torino",
+      "town_mentions": [
+        "sant-ambrogio-di-torino"
+      ]
     },
     {
       "id": "10577000005959",
@@ -1012,11 +1060,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2026-01-02T09:57:12+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "sant-antonino-di-susa",
       "municipality": "Sant’Antonino di Susa",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "A Sant’Antonino di Susa, in Borgata Cresto"
+      "location_evidence": "A Sant’Antonino di Susa, in Borgata Cresto",
+      "town_mentions": [
+        "sant-antonino-di-susa"
+      ]
     },
     {
       "id": "10574285603143",
@@ -1037,11 +1088,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2025-12-30T17:36:59+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "sant-ambrogio-di-torino",
       "municipality": "Sant’Ambrogio di Torino",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "A Sant’Ambrogio di Torino, in zona tranquilla"
+      "location_evidence": "A Sant’Ambrogio di Torino, in zona tranquilla",
+      "town_mentions": [
+        "sant-ambrogio-di-torino"
+      ]
     },
     {
       "id": "10564873093447",
@@ -1062,11 +1116,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2025-12-23T18:16:32+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "sant-ambrogio-di-torino",
       "municipality": "Sant’Ambrogio di Torino",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "A Sant'Ambrogio di Torino, in zona comoda ai servizi"
+      "location_evidence": "A Sant'Ambrogio di Torino, in zona comoda ai servizi",
+      "town_mentions": [
+        "sant-ambrogio-di-torino"
+      ]
     },
     {
       "id": "10564780753223",
@@ -1087,11 +1144,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2025-12-23T16:58:53+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "sant-ambrogio-di-torino",
       "municipality": "Sant’Ambrogio di Torino",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "A Sant’Ambrogio di Torino, in posizione tranquilla"
+      "location_evidence": "A Sant’Ambrogio di Torino, in posizione tranquilla",
+      "town_mentions": [
+        "sant-ambrogio-di-torino"
+      ]
     },
     {
       "id": "10555970912583",
@@ -1112,11 +1172,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2025-12-18T09:45:42+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": null,
       "municipality": null,
       "location_status": "DA_VERIFICARE",
-      "location_evidence": null
+      "location_evidence": null,
+      "town_mentions": [
+        "avigliana"
+      ]
     },
     {
       "id": "10555969765703",
@@ -1137,11 +1200,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2025-12-18T09:42:13+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "sant-ambrogio-di-torino",
       "municipality": "Sant’Ambrogio di Torino",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "A Sant’Ambrogio, in posizione privilegiata"
+      "location_evidence": "A Sant’Ambrogio, in posizione privilegiata",
+      "town_mentions": [
+        "sant-ambrogio-di-torino"
+      ]
     },
     {
       "id": "10555069071687",
@@ -1162,11 +1228,12 @@
       "rooms": null,
       "baths": null,
       "published_at": "2025-12-17T17:33:13+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": null,
       "municipality": null,
       "location_status": "DA_VERIFICARE",
-      "location_evidence": null
+      "location_evidence": null,
+      "town_mentions": []
     },
     {
       "id": "10555043021127",
@@ -1187,11 +1254,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2025-12-17T17:18:10+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "sant-ambrogio-di-torino",
       "municipality": "Sant’Ambrogio di Torino",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "A Sant’Ambrogio, nel centro paese"
+      "location_evidence": "A Sant’Ambrogio, nel centro paese",
+      "town_mentions": [
+        "sant-ambrogio-di-torino"
+      ]
     },
     {
       "id": "10552842780999",
@@ -1212,11 +1282,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2025-12-16T17:37:44+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "torino",
       "municipality": "Torino",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "Nel cuore di Torino, in zona Via Onorato Vigliani"
+      "location_evidence": "Nel cuore di Torino, in zona Via Onorato Vigliani",
+      "town_mentions": [
+        "torino"
+      ]
     },
     {
       "id": "10552816369991",
@@ -1237,11 +1310,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2025-12-16T17:30:13+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "caprie",
       "municipality": "Caprie",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "A Caprie, proponiamo in affitto"
+      "location_evidence": "A Caprie, proponiamo in affitto",
+      "town_mentions": [
+        "caprie"
+      ]
     },
     {
       "id": "10552805753159",
@@ -1262,11 +1338,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2025-12-16T17:26:36+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "sant-ambrogio-di-torino",
       "municipality": "Sant’Ambrogio di Torino",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "Nel cuore di Sant’Ambrogio di Torino proponiamo in vendita"
+      "location_evidence": "Nel cuore di Sant’Ambrogio di Torino proponiamo in vendita",
+      "town_mentions": [
+        "sant-ambrogio-di-torino"
+      ]
     },
     {
       "id": "10552768561479",
@@ -1287,11 +1366,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2025-12-16T17:14:29+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "caprie",
       "municipality": "Caprie",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "A Caprie proponiamo in vendita"
+      "location_evidence": "A Caprie proponiamo in vendita",
+      "town_mentions": [
+        "caprie"
+      ]
     },
     {
       "id": "10552748212551",
@@ -1312,11 +1394,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2025-12-16T17:07:51+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "sant-ambrogio-di-torino",
       "municipality": "Sant’Ambrogio di Torino",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "A Sant’Ambrogio di Torino, in Piazza del Comune"
+      "location_evidence": "A Sant’Ambrogio di Torino, in Piazza del Comune",
+      "town_mentions": [
+        "sant-ambrogio-di-torino"
+      ]
     },
     {
       "id": "10552683856199",
@@ -1337,11 +1422,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2025-12-16T16:43:24+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "sant-ambrogio-di-torino",
       "municipality": "Sant’Ambrogio di Torino",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "Nel cuore di Sant’Ambrogio proponiamo in vendita"
+      "location_evidence": "Nel cuore di Sant’Ambrogio proponiamo in vendita",
+      "town_mentions": [
+        "sant-ambrogio-di-torino"
+      ]
     },
     {
       "id": "10552459985223",
@@ -1362,11 +1450,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2025-12-16T16:00:58+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "sant-ambrogio-di-torino",
       "municipality": "Sant’Ambrogio di Torino",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "Nel cuore di Sant’Ambrogio proponiamo in vendita"
+      "location_evidence": "Nel cuore di Sant’Ambrogio proponiamo in vendita",
+      "town_mentions": [
+        "sant-ambrogio-di-torino"
+      ]
     },
     {
       "id": "10549582070087",
@@ -1387,11 +1478,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2025-12-15T17:10:28+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "sant-ambrogio-di-torino",
       "municipality": "Sant’Ambrogio di Torino",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "A Sant’Ambrogio di Torino proponiamo in vendita"
+      "location_evidence": "A Sant’Ambrogio di Torino proponiamo in vendita",
+      "town_mentions": [
+        "sant-ambrogio-di-torino"
+      ]
     },
     {
       "id": "10549571617095",
@@ -1412,11 +1506,14 @@
       "rooms": null,
       "baths": null,
       "published_at": "2025-12-15T17:07:25+01:00",
-      "source_updated_at": "2026-11-11T16:09:28+01:00",
+      "source_updated_at": "2026-11-11T16:17:55+01:00",
       "town_id": "sant-ambrogio-di-torino",
       "municipality": "Sant’Ambrogio di Torino",
       "location_status": "VERIFICATO_FONTE",
-      "location_evidence": "A Sant’Ambrogio di Torino proponiamo in vendita"
+      "location_evidence": "A Sant’Ambrogio di Torino proponiamo in vendita",
+      "town_mentions": [
+        "sant-ambrogio-di-torino"
+      ]
     }
   ]
 }
