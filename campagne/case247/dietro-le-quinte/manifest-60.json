@@ -16,7 +16,7 @@
       "scene": 1,
       "topic": "Progetto del volantino",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F01_SCENA_01_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -24,7 +24,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1pDDIUWQ5O7-K_fm8wNrKp-tbpQPeV6cg/view?usp=drivesdk",
+      "drive_file_id": "1pDDIUWQ5O7-K_fm8wNrKp-tbpQPeV6cg",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F01_SCENA_02",
@@ -32,7 +35,7 @@
       "scene": 2,
       "topic": "Progetto del volantino",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F01_SCENA_02_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -40,7 +43,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1jeEXqKfjqWCw-b2tkX_VHNf8RJtLOqKA/view?usp=drivesdk",
+      "drive_file_id": "1jeEXqKfjqWCw-b2tkX_VHNf8RJtLOqKA",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F01_SCENA_03",
@@ -48,7 +54,7 @@
       "scene": 3,
       "topic": "Progetto del volantino",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F01_SCENA_03_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -56,7 +62,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1S7EXHERf6ikGidB0J-VGVlB1vDDB1veV/view?usp=drivesdk",
+      "drive_file_id": "1S7EXHERf6ikGidB0J-VGVlB1vDDB1veV",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F01_SCENA_04",
@@ -64,7 +73,7 @@
       "scene": 4,
       "topic": "Progetto del volantino",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F01_SCENA_04_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -72,7 +81,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1Dh122hh0Y6__YD2XXTlB1eT6QHhsUQvk/view?usp=drivesdk",
+      "drive_file_id": "1Dh122hh0Y6__YD2XXTlB1eT6QHhsUQvk",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F01_SCENA_05",
@@ -80,7 +92,7 @@
       "scene": 5,
       "topic": "Progetto del volantino",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F01_SCENA_05_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -88,7 +100,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/14auKaUXow2oss6U9Kj8qWPItDFAutIhZ/view?usp=drivesdk",
+      "drive_file_id": "14auKaUXow2oss6U9Kj8qWPItDFAutIhZ",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F01_SCENA_06",
@@ -96,7 +111,7 @@
       "scene": 6,
       "topic": "Progetto del volantino",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F01_SCENA_06_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -104,7 +119,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1g6D46ILfoiSl-KXIdO-6uvV5-ecpNVQy/view?usp=drivesdk",
+      "drive_file_id": "1g6D46ILfoiSl-KXIdO-6uvV5-ecpNVQy",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F02_SCENA_01",
@@ -112,7 +130,7 @@
       "scene": 1,
       "topic": "Stampa e controllo",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F02_SCENA_01_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -120,7 +138,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1eaP5FWIGLH0rqZQnE6cbUCJkYY5Tz2AK/view?usp=drivesdk",
+      "drive_file_id": "1eaP5FWIGLH0rqZQnE6cbUCJkYY5Tz2AK",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F02_SCENA_02",
@@ -128,7 +149,7 @@
       "scene": 2,
       "topic": "Stampa e controllo",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F02_SCENA_02_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -136,7 +157,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1ArOQDcHLZ8kSnKw233O7NHy8k9HZAXkt/view?usp=drivesdk",
+      "drive_file_id": "1ArOQDcHLZ8kSnKw233O7NHy8k9HZAXkt",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F02_SCENA_03",
@@ -144,7 +168,7 @@
       "scene": 3,
       "topic": "Stampa e controllo",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F02_SCENA_03_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -152,7 +176,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1Rwgv9PW7RW8FWVjE6zIZS2uUkBxHASZF/view?usp=drivesdk",
+      "drive_file_id": "1Rwgv9PW7RW8FWVjE6zIZS2uUkBxHASZF",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F02_SCENA_04",
@@ -160,7 +187,7 @@
       "scene": 4,
       "topic": "Stampa e controllo",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F02_SCENA_04_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -168,7 +195,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1hr-Vjki2rUe3JbC_s4ZZ0hMjd2aqMkyj/view?usp=drivesdk",
+      "drive_file_id": "1hr-Vjki2rUe3JbC_s4ZZ0hMjd2aqMkyj",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F02_SCENA_05",
@@ -176,7 +206,7 @@
       "scene": 5,
       "topic": "Stampa e controllo",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F02_SCENA_05_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -184,7 +214,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/11PQBDmeuJ3gC5ntA8XvcdrOyamJDo38L/view?usp=drivesdk",
+      "drive_file_id": "11PQBDmeuJ3gC5ntA8XvcdrOyamJDo38L",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F02_SCENA_06",
@@ -192,7 +225,7 @@
       "scene": 6,
       "topic": "Stampa e controllo",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F02_SCENA_06_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -200,7 +233,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1bJJVyXWiD27sPDxJWK1MwyMB-XFDl9mk/view?usp=drivesdk",
+      "drive_file_id": "1bJJVyXWiD27sPDxJWK1MwyMB-XFDl9mk",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F03_SCENA_01",
@@ -208,7 +244,7 @@
       "scene": 1,
       "topic": "Distribuzione sul territorio",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F03_SCENA_01_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -216,7 +252,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1lstN3Aby2QCr0wsbv8mh1MDVcHUnUtuo/view?usp=drivesdk",
+      "drive_file_id": "1lstN3Aby2QCr0wsbv8mh1MDVcHUnUtuo",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F03_SCENA_02",
@@ -224,7 +263,7 @@
       "scene": 2,
       "topic": "Distribuzione sul territorio",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F03_SCENA_02_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -232,7 +271,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1PnyoJeZ46SM4c3hHRxeruANSafYeXPff/view?usp=drivesdk",
+      "drive_file_id": "1PnyoJeZ46SM4c3hHRxeruANSafYeXPff",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F03_SCENA_03",
@@ -240,7 +282,7 @@
       "scene": 3,
       "topic": "Distribuzione sul territorio",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F03_SCENA_03_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -248,7 +290,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/18qcrUJYM9pJBvENdnZt6hpPD3nAXeqy_/view?usp=drivesdk",
+      "drive_file_id": "18qcrUJYM9pJBvENdnZt6hpPD3nAXeqy_",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F03_SCENA_04",
@@ -256,7 +301,7 @@
       "scene": 4,
       "topic": "Distribuzione sul territorio",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F03_SCENA_04_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -264,7 +309,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1XljVi1FxjRKtiZ46qM9FJF8AvV90PEfq/view?usp=drivesdk",
+      "drive_file_id": "1XljVi1FxjRKtiZ46qM9FJF8AvV90PEfq",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F03_SCENA_05",
@@ -272,7 +320,7 @@
       "scene": 5,
       "topic": "Distribuzione sul territorio",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F03_SCENA_05_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -280,7 +328,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1oC0sdmpIg0rhP4SDxQPSi-F4s88u8eF8/view?usp=drivesdk",
+      "drive_file_id": "1oC0sdmpIg0rhP4SDxQPSi-F4s88u8eF8",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F03_SCENA_06",
@@ -288,7 +339,7 @@
       "scene": 6,
       "topic": "Distribuzione sul territorio",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F03_SCENA_06_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -296,7 +347,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1MlEVox--LdANIN8de3tPXdz0zYMVFiSm/view?usp=drivesdk",
+      "drive_file_id": "1MlEVox--LdANIN8de3tPXdz0zYMVFiSm",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F04_SCENA_01",
@@ -304,7 +358,7 @@
       "scene": 1,
       "topic": "Volantino nella cassetta postale",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F04_SCENA_01_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -312,7 +366,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/12VyH_x2iNbeV4c2n7EgiCV7rIXBNyZSi/view?usp=drivesdk",
+      "drive_file_id": "12VyH_x2iNbeV4c2n7EgiCV7rIXBNyZSi",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F04_SCENA_02",
@@ -320,7 +377,7 @@
       "scene": 2,
       "topic": "Volantino nella cassetta postale",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F04_SCENA_02_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -328,7 +385,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1V1-9VSHTR_nJLFdkrfIrkxXccff2Q4u2/view?usp=drivesdk",
+      "drive_file_id": "1V1-9VSHTR_nJLFdkrfIrkxXccff2Q4u2",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F04_SCENA_03",
@@ -336,7 +396,7 @@
       "scene": 3,
       "topic": "Volantino nella cassetta postale",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F04_SCENA_03_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -344,7 +404,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1NuTSS6Nqg7qbLE5IQXhqwqAicHy0c38Z/view?usp=drivesdk",
+      "drive_file_id": "1NuTSS6Nqg7qbLE5IQXhqwqAicHy0c38Z",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F04_SCENA_04",
@@ -352,7 +415,7 @@
       "scene": 4,
       "topic": "Volantino nella cassetta postale",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F04_SCENA_04_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -360,7 +423,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1STmEWuyp2MaXXMQ7cvBrw-79XqzwyPx-/view?usp=drivesdk",
+      "drive_file_id": "1STmEWuyp2MaXXMQ7cvBrw-79XqzwyPx-",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F04_SCENA_05",
@@ -368,7 +434,7 @@
       "scene": 5,
       "topic": "Volantino nella cassetta postale",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F04_SCENA_05_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -376,7 +442,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1aN4WoCsmiwNmBn7jHL6Cgfxqjt2BJKrb/view?usp=drivesdk",
+      "drive_file_id": "1aN4WoCsmiwNmBn7jHL6Cgfxqjt2BJKrb",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F04_SCENA_06",
@@ -384,7 +453,7 @@
       "scene": 6,
       "topic": "Volantino nella cassetta postale",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F04_SCENA_06_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -392,7 +461,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/119yliCQAXl3_h-XGPXotX8hWnGbitOZn/view?usp=drivesdk",
+      "drive_file_id": "119yliCQAXl3_h-XGPXotX8hWnGbitOZn",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F05_SCENA_01",
@@ -400,7 +472,7 @@
       "scene": 1,
       "topic": "Scansione QR e contatto",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F05_SCENA_01_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -408,7 +480,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1hMv0GPGXU5soIotZG0EslLUUsaNaKcw1/view?usp=drivesdk",
+      "drive_file_id": "1hMv0GPGXU5soIotZG0EslLUUsaNaKcw1",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F05_SCENA_02",
@@ -416,7 +491,7 @@
       "scene": 2,
       "topic": "Scansione QR e contatto",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F05_SCENA_02_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -424,7 +499,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1sQj-dbnTd2L-kr-YRRmv7puFI8JLs9Ad/view?usp=drivesdk",
+      "drive_file_id": "1sQj-dbnTd2L-kr-YRRmv7puFI8JLs9Ad",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F05_SCENA_03",
@@ -432,7 +510,7 @@
       "scene": 3,
       "topic": "Scansione QR e contatto",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F05_SCENA_03_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -440,7 +518,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1xb2_Di7AFmHPeGlcvH_WBGEXk24BAcPZ/view?usp=drivesdk",
+      "drive_file_id": "1xb2_Di7AFmHPeGlcvH_WBGEXk24BAcPZ",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F05_SCENA_04",
@@ -448,7 +529,7 @@
       "scene": 4,
       "topic": "Scansione QR e contatto",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F05_SCENA_04_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -456,7 +537,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1QHGM2o3YfWobWVT4rIokoTQu5uRnkqNw/view?usp=drivesdk",
+      "drive_file_id": "1QHGM2o3YfWobWVT4rIokoTQu5uRnkqNw",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F05_SCENA_05",
@@ -464,7 +548,7 @@
       "scene": 5,
       "topic": "Scansione QR e contatto",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F05_SCENA_05_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -472,7 +556,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1Pe7a2rc70Uc3beQJowtmQoITmJeUFmuJ/view?usp=drivesdk",
+      "drive_file_id": "1Pe7a2rc70Uc3beQJowtmQoITmJeUFmuJ",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F05_SCENA_06",
@@ -480,7 +567,7 @@
       "scene": 6,
       "topic": "Scansione QR e contatto",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F05_SCENA_06_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -488,7 +575,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/18tPbvrm0hIAAYvbgH-D7ys4Gn39xxjkA/view?usp=drivesdk",
+      "drive_file_id": "18tPbvrm0hIAAYvbgH-D7ys4Gn39xxjkA",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F06_SCENA_01",
@@ -496,7 +586,7 @@
       "scene": 1,
       "topic": "Richiesta e appuntamento",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F06_SCENA_01_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -504,7 +594,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1Lx2jYpLV8Xq6qq41Ux53K5wyqNtEvqTL/view?usp=drivesdk",
+      "drive_file_id": "1Lx2jYpLV8Xq6qq41Ux53K5wyqNtEvqTL",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F06_SCENA_02",
@@ -512,7 +605,7 @@
       "scene": 2,
       "topic": "Richiesta e appuntamento",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F06_SCENA_02_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -520,7 +613,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/11TJK4eduH1HGZT7xF6j-J9MKTNuJJTKL/view?usp=drivesdk",
+      "drive_file_id": "11TJK4eduH1HGZT7xF6j-J9MKTNuJJTKL",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F06_SCENA_03",
@@ -528,7 +624,7 @@
       "scene": 3,
       "topic": "Richiesta e appuntamento",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F06_SCENA_03_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -536,7 +632,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1OZOhmzGyfTI6_HLj4sb6cRKvrRlXIU8A/view?usp=drivesdk",
+      "drive_file_id": "1OZOhmzGyfTI6_HLj4sb6cRKvrRlXIU8A",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F06_SCENA_04",
@@ -544,7 +643,7 @@
       "scene": 4,
       "topic": "Richiesta e appuntamento",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F06_SCENA_04_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -552,7 +651,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1iQGw5WrZmCJjIHjgWAVFbgR4d5jUijft/view?usp=drivesdk",
+      "drive_file_id": "1iQGw5WrZmCJjIHjgWAVFbgR4d5jUijft",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F06_SCENA_05",
@@ -560,7 +662,7 @@
       "scene": 5,
       "topic": "Richiesta e appuntamento",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F06_SCENA_05_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -568,7 +670,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1i1qqm1qCkWsJrQZ2Ob_4NY4xx3SGMBXY/view?usp=drivesdk",
+      "drive_file_id": "1i1qqm1qCkWsJrQZ2Ob_4NY4xx3SGMBXY",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F06_SCENA_06",
@@ -576,7 +681,7 @@
       "scene": 6,
       "topic": "Richiesta e appuntamento",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F06_SCENA_06_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -584,7 +689,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1J94iaJmiYFVebH_3t5vxbnSMsCs3Tbye/view?usp=drivesdk",
+      "drive_file_id": "1J94iaJmiYFVebH_3t5vxbnSMsCs3Tbye",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F07_SCENA_01",
@@ -592,7 +700,7 @@
       "scene": 1,
       "topic": "Visita con professionista abilitato",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F07_SCENA_01_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -600,7 +708,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1I9_lgnFiAiRTgg6Y_52t8R6-Xpac1Gw5/view?usp=drivesdk",
+      "drive_file_id": "1I9_lgnFiAiRTgg6Y_52t8R6-Xpac1Gw5",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F07_SCENA_02",
@@ -608,7 +719,7 @@
       "scene": 2,
       "topic": "Visita con professionista abilitato",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F07_SCENA_02_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -616,7 +727,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1zvj0y-Ge07DG3hb7vvJ555gbkvq1PEww/view?usp=drivesdk",
+      "drive_file_id": "1zvj0y-Ge07DG3hb7vvJ555gbkvq1PEww",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F07_SCENA_03",
@@ -624,7 +738,7 @@
       "scene": 3,
       "topic": "Visita con professionista abilitato",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F07_SCENA_03_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -632,7 +746,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1TLFtNoGgdQ7xE1WLZQW6txqo1-39pzyM/view?usp=drivesdk",
+      "drive_file_id": "1TLFtNoGgdQ7xE1WLZQW6txqo1-39pzyM",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F07_SCENA_04",
@@ -640,7 +757,7 @@
       "scene": 4,
       "topic": "Visita con professionista abilitato",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F07_SCENA_04_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -648,7 +765,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/13N_FPekZRGgvv31mvf1v8qpTmDn4PN0c/view?usp=drivesdk",
+      "drive_file_id": "13N_FPekZRGgvv31mvf1v8qpTmDn4PN0c",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F07_SCENA_05",
@@ -656,7 +776,7 @@
       "scene": 5,
       "topic": "Visita con professionista abilitato",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F07_SCENA_05_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -664,7 +784,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1pzBr_B3H4V3Nuek4aqCkHIfb-WrxCIUH/view?usp=drivesdk",
+      "drive_file_id": "1pzBr_B3H4V3Nuek4aqCkHIfb-WrxCIUH",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F07_SCENA_06",
@@ -672,7 +795,7 @@
       "scene": 6,
       "topic": "Visita con professionista abilitato",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F07_SCENA_06_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -680,7 +803,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1ruvK8o5y8pXfxMMpg5a6VFUYsR_CJoeN/view?usp=drivesdk",
+      "drive_file_id": "1ruvK8o5y8pXfxMMpg5a6VFUYsR_CJoeN",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F08_SCENA_01",
@@ -688,7 +814,7 @@
       "scene": 1,
       "topic": "Consulenza del credito",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F08_SCENA_01_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -696,7 +822,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/16vfex0QYP09nluWLE6xuUDksPbpfp1DK/view?usp=drivesdk",
+      "drive_file_id": "16vfex0QYP09nluWLE6xuUDksPbpfp1DK",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F08_SCENA_02",
@@ -704,7 +833,7 @@
       "scene": 2,
       "topic": "Consulenza del credito",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F08_SCENA_02_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -712,7 +841,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1Vi55jugq7WIf5CdUvue1vcKsACC1YvyQ/view?usp=drivesdk",
+      "drive_file_id": "1Vi55jugq7WIf5CdUvue1vcKsACC1YvyQ",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F08_SCENA_03",
@@ -720,7 +852,7 @@
       "scene": 3,
       "topic": "Consulenza del credito",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F08_SCENA_03_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -728,7 +860,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1JtjrQ_bXh3LcLUuIgEbt0q7H2uvY3tbW/view?usp=drivesdk",
+      "drive_file_id": "1JtjrQ_bXh3LcLUuIgEbt0q7H2uvY3tbW",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F08_SCENA_04",
@@ -736,7 +871,7 @@
       "scene": 4,
       "topic": "Consulenza del credito",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F08_SCENA_04_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -744,7 +879,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1ViZqVruuSK3SwngXmedR4M-BVOYcJ6k3/view?usp=drivesdk",
+      "drive_file_id": "1ViZqVruuSK3SwngXmedR4M-BVOYcJ6k3",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F08_SCENA_05",
@@ -752,7 +890,7 @@
       "scene": 5,
       "topic": "Consulenza del credito",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F08_SCENA_05_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -760,7 +898,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1OqhbJD183aVFtMkRdCcYNC7WDW-OhNSS/view?usp=drivesdk",
+      "drive_file_id": "1OqhbJD183aVFtMkRdCcYNC7WDW-OhNSS",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F08_SCENA_06",
@@ -768,7 +909,7 @@
       "scene": 6,
       "topic": "Consulenza del credito",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F08_SCENA_06_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -776,7 +917,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1oM8sc99j1da5TCxM-2tWUeG9l0cQPxti/view?usp=drivesdk",
+      "drive_file_id": "1oM8sc99j1da5TCxM-2tWUeG9l0cQPxti",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F09_SCENA_01",
@@ -784,7 +928,7 @@
       "scene": 1,
       "topic": "Mutuo: istruttoria ed erogazione",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F09_SCENA_01_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -792,7 +936,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1NHw06i6xDuhRD-MBnuXVcc6r-aS8fkh9/view?usp=drivesdk",
+      "drive_file_id": "1NHw06i6xDuhRD-MBnuXVcc6r-aS8fkh9",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F09_SCENA_02",
@@ -800,7 +947,7 @@
       "scene": 2,
       "topic": "Mutuo: istruttoria ed erogazione",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F09_SCENA_02_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -808,7 +955,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1Wcyc5XSHFiP3ZG7TFuMJmYyAEpjVF6H6/view?usp=drivesdk",
+      "drive_file_id": "1Wcyc5XSHFiP3ZG7TFuMJmYyAEpjVF6H6",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F09_SCENA_03",
@@ -816,7 +966,7 @@
       "scene": 3,
       "topic": "Mutuo: istruttoria ed erogazione",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F09_SCENA_03_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -824,7 +974,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1L1eBKqj1GBmXaPj571N0HSNHkEdKHxsH/view?usp=drivesdk",
+      "drive_file_id": "1L1eBKqj1GBmXaPj571N0HSNHkEdKHxsH",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F09_SCENA_04",
@@ -832,7 +985,7 @@
       "scene": 4,
       "topic": "Mutuo: istruttoria ed erogazione",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F09_SCENA_04_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -840,7 +993,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1jvnKDXwc14R6lRFbYbSGWUe5gIw9UTQ4/view?usp=drivesdk",
+      "drive_file_id": "1jvnKDXwc14R6lRFbYbSGWUe5gIw9UTQ4",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F09_SCENA_05",
@@ -848,7 +1004,7 @@
       "scene": 5,
       "topic": "Mutuo: istruttoria ed erogazione",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F09_SCENA_05_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -856,7 +1012,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1yjM9Gzi5v6QeLY6dbSdtGbayIgMZG8xZ/view?usp=drivesdk",
+      "drive_file_id": "1yjM9Gzi5v6QeLY6dbSdtGbayIgMZG8xZ",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F09_SCENA_06",
@@ -864,7 +1023,7 @@
       "scene": 6,
       "topic": "Mutuo: istruttoria ed erogazione",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F09_SCENA_06_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -872,7 +1031,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1laMKvxzyknLkxA-Z2lUioxzvpLZhXfNv/view?usp=drivesdk",
+      "drive_file_id": "1laMKvxzyknLkxA-Z2lUioxzvpLZhXfNv",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F10_SCENA_01",
@@ -880,7 +1042,7 @@
       "scene": 1,
       "topic": "Notaio e firma",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F10_SCENA_01_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -888,7 +1050,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1UeSbHyo2bp_iLSh0ZVp2RZ6FLLi1JQOe/view?usp=drivesdk",
+      "drive_file_id": "1UeSbHyo2bp_iLSh0ZVp2RZ6FLLi1JQOe",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F10_SCENA_02",
@@ -896,7 +1061,7 @@
       "scene": 2,
       "topic": "Notaio e firma",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F10_SCENA_02_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -904,7 +1069,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1tNoCmbfh8sjjCAjwkEgeVe7XDtaXIXSm/view?usp=drivesdk",
+      "drive_file_id": "1tNoCmbfh8sjjCAjwkEgeVe7XDtaXIXSm",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F10_SCENA_03",
@@ -912,7 +1080,7 @@
       "scene": 3,
       "topic": "Notaio e firma",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F10_SCENA_03_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -920,7 +1088,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1vsaspzuve-7JruEfBLx9IaGkyiqkcSdG/view?usp=drivesdk",
+      "drive_file_id": "1vsaspzuve-7JruEfBLx9IaGkyiqkcSdG",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F10_SCENA_04",
@@ -928,7 +1099,7 @@
       "scene": 4,
       "topic": "Notaio e firma",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F10_SCENA_04_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -936,7 +1107,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/124Qd1ff9k-S8GgVNiURcnC4b7Ry1S_Lp/view?usp=drivesdk",
+      "drive_file_id": "124Qd1ff9k-S8GgVNiURcnC4b7Ry1S_Lp",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F10_SCENA_05",
@@ -944,7 +1118,7 @@
       "scene": 5,
       "topic": "Notaio e firma",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F10_SCENA_05_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -952,7 +1126,10 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1h4j0q4zxDUNszKRgwSwzfxHRfXVgbJuf/view?usp=drivesdk",
+      "drive_file_id": "1h4j0q4zxDUNszKRgwSwzfxHRfXVgbJuf",
+      "drive_status": "UPLOADED_PRIVATE"
     },
     {
       "id": "CASE247_F10_SCENA_06",
@@ -960,7 +1137,7 @@
       "scene": 6,
       "topic": "Notaio e firma",
       "asset": "campagne/case247/dietro-le-quinte/assets/CASE247_F10_SCENA_06_DIVERSA.jpg",
-      "status": "ASSET_NOT_UPLOADED",
+      "status": "DRIVE_UPLOADED_GITHUB_JPG_NOT_UPLOADED",
       "ai_generated": true,
       "requires_fact_check": true,
       "approval": "PENDING",
@@ -968,7 +1145,14 @@
       "channels": [
         "facebook",
         "instagram"
-      ]
+      ],
+      "drive_url": "https://drive.google.com/file/d/1QyPCglw3cOKnCDVuIDySNOxBPdbonA1Y/view?usp=drivesdk",
+      "drive_file_id": "1QyPCglw3cOKnCDVuIDySNOxBPdbonA1Y",
+      "drive_status": "UPLOADED_PRIVATE"
     }
-  ]
+  ],
+  "assets_in_google_drive": true,
+  "drive_folder": "https://drive.google.com/drive/folders/1paulHf26fCTCido1CLd9gpKs8_vYzYlV",
+  "metricool_blocker": "Drive items are private; Metricool requires Anyone with the link before scheduled media can be imported",
+  "gitHub_asset_count": 0
 }
