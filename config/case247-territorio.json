@@ -1,5 +1,6 @@
 {
   "schema_version": 1,
+  "coverage_radius_km": 10,
   "brand": "Case in Pubblicità 24/7",
   "updated_at": "2026-11-07T16:17:50.486843+00:00",
   "model": "UNA_STRUTTURA_UNA_REGIA_UNA_PAGINA_PER_PAESE",
@@ -70,7 +71,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -120,7 +121,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -170,7 +171,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -220,7 +221,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -270,7 +271,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -320,7 +321,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -372,7 +373,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -422,7 +423,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -472,7 +473,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -522,7 +523,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -572,7 +573,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -622,7 +623,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -672,7 +673,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -722,7 +723,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -772,7 +773,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -822,7 +823,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -872,7 +873,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -922,7 +923,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -972,7 +973,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -1022,7 +1023,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -1072,7 +1073,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -1122,7 +1123,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -1172,7 +1173,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -1222,7 +1223,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -1272,7 +1273,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -1322,7 +1323,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -1372,7 +1373,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -1422,7 +1423,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -1472,7 +1473,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -1522,7 +1523,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -1572,7 +1573,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -1624,7 +1625,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -1674,7 +1675,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -1724,7 +1725,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -1774,7 +1775,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -1824,7 +1825,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -1874,7 +1875,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -1924,7 +1925,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -1974,7 +1975,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -2025,7 +2026,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     },
@@ -2075,7 +2076,7 @@
         "provider": "META_GRAPH_API_DIRECT",
         "meta_app_existing": "1639756567549382",
         "requires_official_meta_consent": true,
-        "radius_km": 20,
+        "radius_km": 10,
         "publishing_enabled": false
       }
     }
