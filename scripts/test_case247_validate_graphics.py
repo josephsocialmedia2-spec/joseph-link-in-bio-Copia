@@ -22,7 +22,7 @@ class ImageTests(unittest.TestCase):
     def test_wrong_dimensions_blocked(self):
         with tempfile.TemporaryDirectory() as directory:
             p=Path(directory)/"wrong.jpg"
-            Image.new("RGB",(10,10)).save(p,format="JPEG")
+            Image.effect_noise((100,100),100).convert("RGB").save(p,format="JPEG")
             _,reason=validate_image(p,1080,1350)
             self.assertEqual(reason,"IMAGE_FORMAT_OR_DIMENSIONS")
     def test_60_required(self):
