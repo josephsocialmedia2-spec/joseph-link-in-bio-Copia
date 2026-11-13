@@ -151,6 +151,7 @@ class EngineTests(unittest.TestCase):
         item = listing(1)
         self.graphics[0]["approval"] = "APPROVED"
         self.graphics[0]["requires_fact_check"] = False
+        self.graphics[0]["technical_status"] = "APPROVED"
         plan = make_plan(self.day,[item],self.towns,self.geo,self.graphics)
         self.assertEqual(plan["graphic_posts_planned"],1)
 
