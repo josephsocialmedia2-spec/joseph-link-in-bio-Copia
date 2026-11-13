@@ -18,7 +18,10 @@ import urllib.parse
 import urllib.request
 from zoneinfo import ZoneInfo
 
-from case247_territorial_engine import ROOT, OUT, read_json, atomic_write, TZ, listed_available, valid_picture
+from case247_territorial_engine import (
+    ROOT, OUT, GEO, RADIUS_KM, read_json, atomic_write, TZ,
+    listed_available, valid_picture, eligible_towns,
+)
 from case247_legacy_transition import load_reservations, canonical_listing_url
 
 GRAPH = "https://graph.facebook.com/v26.0"
@@ -121,6 +124,31 @@ def account_for(item, credentials, config_by_id):
         return None
     return acct
 
+def verified_ten_km_assignment(item, listing, towns, geo):
+    """Re-check the verified listing municipality before each provider send."""
+    if not listing or item.get("source_town_id") != listing.get("town_id"):
+        return False
+    match = next(
+        ((town, km) for town, km in eligible_towns(listing, towns, geo)
+         if town["id"] == item.get("town_id")),
+        None,
+    )
+    distance = item.get("distance_upper_bound_km")
+    return bool(
+        match and isinstance(distance, (int, float)) and not isinstance(distance, bool)
+        and 0 <= distance <= RADIUS_KM
+        and abs(distance - match[1]) <= 0.02
+    )
+
+
+def valid_plan_radius(plan):
+    """An obsolete 20 km plan must never be sent after a 10 km release."""
+    return (isinstance(plan, dict)
+            and isinstance(plan.get("max_distance_km"), (int, float))
+            and not isinstance(plan.get("max_distance_km"), bool)
+            and plan["max_distance_km"] == RADIUS_KM)
+
+
 def run(live=False,max_per_run=10):
     if live and os.getenv("CASE247_TERRITORIAL_LIVE")!="true":
         raise SystemExit("Live disabled by environment")
@@ -131,13 +159,19 @@ def run(live=False,max_per_run=10):
     if not plan or plan.get("date")!=now.date().isoformat():
         print("No verified current-day plan, nothing sent")
         return
+    if not valid_plan_radius(plan):
+        raise SystemExit("Daily plan radius is not 10 km; publishing blocked")
     # Once-only migration snapshot: protects legacy posts without any recurring
     # Metricool API, quota or subscription. Invalid snapshot fails closed.
     try:
         central_reserved = load_reservations(now.date(), ROOT, OUT)
     except (OSError, ValueError, KeyError, TypeError, json.JSONDecodeError) as error:
         raise SystemExit("Direct Meta legacy-overlap safety configuration invalid") from error
-    all_towns=read_json(CONFIG)["towns"]
+    config=read_json(CONFIG)
+    if not config or config.get("coverage_radius_km") != RADIUS_KM:
+        raise SystemExit("Configured territorial radius does not match 10 km policy")
+    all_towns=config["towns"]
+    geo=read_json(GEO, {}).get("towns", {})
     latest_catalog=read_json(ROOT / "immobili/catalogo.json", {})
     catalog_by_id={str(p["id"]):p for p in latest_catalog.get("items",[])}
     checked_at=latest_catalog.get("last_success_at")
@@ -173,6 +207,9 @@ def run(live=False,max_per_run=10):
                 or current.get("title") != item.get("title")
                 or current.get("url") != item.get("source_url")):
                 print(f"BLOCKED_CATALOG_CHANGED {key}: waiting for next reconciliation")
+                continue
+            if not verified_ten_km_assignment(item, current, all_towns, geo):
+                print(f"BLOCKED_10KM_GEOGRAPHY {key}")
                 continue
         acct=account_for(item,credentials,by_id) if live else None
         if live and not acct:
