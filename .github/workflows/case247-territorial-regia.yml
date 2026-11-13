@@ -8,6 +8,8 @@ on:
       - scripts/case247_territorial_engine.py
       - scripts/test_case247_territorial_engine.py
       - scripts/test_case247_territorial_publisher_policy.py
+      - scripts/case247_legacy_transition.py
+      - scripts/test_case247_legacy_transition.py
       - scripts/case247_quality_gate.py
       - scripts/test_case247_quality_gate.py
       - config/case247-territorio.json
