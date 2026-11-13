@@ -9,6 +9,8 @@ on:
       - config/case247-direct-meta-transition.json
       - scripts/case247_territorial_publisher.py
       - scripts/case247_territorial_engine.py
+      - scripts/test_case247_territorial_publisher_policy.py
+      - config/case247-territorio.json
       - .github/workflows/case247-territorial-publisher.yml
   workflow_dispatch:
     inputs:
@@ -19,7 +21,7 @@ on:
   push:
     branches:
       - main
-      - feature/case247-regia-territoriale-20km-20261111
+      - feature/case247-radius-10km-daily-safety-20261113
     paths:
       - scripts/case247_territorial_publisher.py
       - scripts/case247_legacy_transition.py
@@ -44,6 +46,7 @@ jobs:
         run: |
           python -m py_compile scripts/case247_territorial_publisher.py scripts/case247_territorial_engine.py scripts/case247_legacy_transition.py
           python -m unittest discover -s scripts -p test_case247_territorial_engine.py -v
+          python -m unittest discover -s scripts -p test_case247_territorial_publisher_policy.py -v
           python -m unittest discover -s scripts -p test_case247_legacy_transition.py -v
 
   publish:
