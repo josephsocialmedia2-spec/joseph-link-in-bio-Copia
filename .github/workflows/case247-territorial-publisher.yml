@@ -55,6 +55,7 @@ jobs:
           python -m unittest discover -s scripts -p test_case247_legacy_transition.py -v
           python -m unittest discover -s scripts -p test_case247_quality_gate.py -v
           python -m unittest discover -s scripts -p test_case247_publisher_safety.py -v
+          python scripts/case247_quality_gate.py
 
   publish:
     permissions:
