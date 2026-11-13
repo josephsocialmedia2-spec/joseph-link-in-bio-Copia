@@ -123,6 +123,26 @@ class EngineTests(unittest.TestCase):
         self.assertEqual(fixed["assignments"][0]["price"],46000)
         self.assertIn("46.000",fixed["assignments"][0]["caption"])
 
+    def test_legacy_url_query_does_not_bypass_reservation(self):
+        item = listing(1)
+        item["url"] = "https://www.lasacraimmobiliare.it/products/test-casa/?utm_medium=post"
+        self.assertEqual(make_plan(self.day,[item],self.towns,self.geo,self.graphics,
+                         reserved_urls={"https://lasacraimmobiliare.it/products/test-casa"})["unique_listings_planned"],0)
+
+    def test_pending_graphics_not_eligible(self):
+        item = listing(1)
+        self.graphics[0]["approval"] = "PENDING"
+        self.graphics[0]["requires_fact_check"] = True
+        plan = make_plan(self.day,[item],self.towns,self.geo,self.graphics)
+        self.assertEqual(plan["graphic_posts_planned"],0)
+
+    def test_approved_fact_checked_graphic_eligible(self):
+        item = listing(1)
+        self.graphics[0]["approval"] = "APPROVED"
+        self.graphics[0]["requires_fact_check"] = False
+        plan = make_plan(self.day,[item],self.towns,self.geo,self.graphics)
+        self.assertEqual(plan["graphic_posts_planned"],1)
+
     def test_same_day_result_is_deterministic(self):
         data = [listing(i) for i in range(1,7)]
         self.assertEqual(make_plan(self.day,data,self.towns,self.geo,self.graphics),
