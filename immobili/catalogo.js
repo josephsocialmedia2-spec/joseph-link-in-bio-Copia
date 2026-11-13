@@ -11,9 +11,9 @@
   const grid = $('#property-grid');
 
   // Town landing scope is deliberately conservative: every corner of the source
-  // municipality's verified bounding box must be within 20 km of this landing's
+  // municipality's verified bounding box must be within 10 km of this landing's
   // town centre. Do not publish unverifiable or out-of-radius ads here.
-  const MAX_RADIUS_KM = 20;
+  const MAX_RADIUS_KM = 10;
   function distanceKm(aLat,aLon,bLat,bLon){
     const rad = Math.PI / 180;
     const p1 = aLat * rad, p2 = bLat * rad;
@@ -124,7 +124,7 @@
       const other = list.filter(i => !(i.location_status === 'VERIFICATO_FONTE' && i.town_id === townId));
       for (const [title, items, empty] of [
         ['Immobili a ' + root.dataset.townName, local, 'Nessun immobile con comune verificato disponibile per questo paese e questi filtri. Qui sotto trovi gli altri annunci.'],
-        ['Immobili dei comuni vicini entro 20 km', other, 'Nessun altro immobile entro 20 km corrisponde ai filtri selezionati.']
+        ['Immobili dei comuni vicini entro 10 km', other, 'Nessun altro immobile entro 10 km corrisponde ai filtri selezionati.']
       ]) {
         const section = element('section', 'territorial-section');
         section.append(element('h2', '', title));
@@ -166,10 +166,10 @@
       if(!hasVerifiedGeo(center))throw new Error('Coordinate del comune non verificate');
       data=data.filter(item=>localRadiusEligible(item,center,geo));
       const subtitle=root.querySelector('.sub');
-      if(subtitle)subtitle.textContent='Prima gli immobili di '+(root.dataset.townName||'questo paese')+', poi gli annunci dei comuni vicini ammessi entro 20 km dalla località. Distanza verificata in modo prudente con i confini comunali disponibili.';
+      if(subtitle)subtitle.textContent='Prima gli immobili di '+(root.dataset.townName||'questo paese')+', poi gli annunci dei comuni vicini ammessi entro 10 km dalla località. Distanza verificata in modo prudente con i confini comunali disponibili.';
     }
     const date = new Date(payload.last_success_at);
-    $('#catalog-status').textContent = (townId?'Catalogo territoriale entro 20 km · ':'') + 'Ultimo aggiornamento riuscito: ' + date.toLocaleString('it-IT', {timeZone: 'Europe/Rome', dateStyle: 'short', timeStyle: 'short'}) + ' · Fonte: La Sacra Immobiliare';
+    $('#catalog-status').textContent = (townId?'Catalogo territoriale entro 10 km · ':'') + 'Ultimo aggiornamento riuscito: ' + date.toLocaleString('it-IT', {timeZone: 'Europe/Rome', dateStyle: 'short', timeStyle: 'short'}) + ' · Fonte: La Sacra Immobiliare';
     if (Date.now() - date.getTime() > 48 * 3600 * 1000) $('#catalog-status').textContent += ' · Aggiornamento in ritardo: verifica la disponibilità sul sito del partner.';
     render();
   }).catch(() => { $('#catalog-status').textContent = 'Catalogo momentaneamente non disponibile. Consulta tutti gli immobili sul sito La Sacra.'; grid.replaceChildren(); const link = element('a', '', 'Apri il catalogo La Sacra ↗'); link.href = 'https://lasacraimmobiliare.it/collections/all'; grid.append(link); });
