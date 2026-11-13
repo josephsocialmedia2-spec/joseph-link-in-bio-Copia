@@ -25,7 +25,7 @@ footer{margin-top:30px;color:var(--muted);font-size:12px}
 <header>
 <a href="../">← Dashboard centrale</a>
 <h1>CASE247 · Regia Territoriale 24/7</h1>
-<p class="small">Distribuzione degli immobili entro 20 km · controllo delle 18:00 · una sola uscita giornaliera per immobile nell'intera rete FB/IG</p>
+<p class="small">Distribuzione verificata entro 10 km · controlli alle 06:00 e 18:00 · una sola uscita al giorno per immobile nell'intera rete FB/IG</p>
 </header>
 <main>
 <div id="note" class="card warn" role="status">Caricamento delle configurazioni verificabili…</div>
@@ -37,7 +37,7 @@ footer{margin-top:30px;color:var(--muted);font-size:12px}
 <div class="scroll"><table><thead><tr><th>Comune</th><th>Landing</th><th>Facebook</th><th>Instagram</th><th>Proposte assegnate</th></tr></thead><tbody id="towns"></tbody></table></div>
 </section>
 <section class="card">
-<h2>Ultima rotazione disponibile</h2>
+<h2>Rotazione di oggi</h2>
 <p id="freshness" class="small">Nessun piano generato ancora.</p>
 <div class="controls"><select id="type"><option value="all">Immobili e grafiche</option><option value="IMMOBILE">Solo immobili</option><option value="DIETRO_LE_QUINTE">Solo Dietro le quinte</option></select><select id="status"><option value="all">Qualsiasi stato</option><option value="READY_TO_SUBMIT">Pronto (connessione verificata)</option><option value="BLOCKED_CHANNEL_NOT_CONNECTED">Account non collegato</option></select></div>
 <div class="scroll"><table><thead><tr><th>Ora</th><th>Tipo / Contenuto</th><th>Comune</th><th>Canale</th><th>Stato</th></tr></thead><tbody id="queue"></tbody></table></div>
@@ -57,13 +57,15 @@ const planUrl=base+"campagne/case247/regia-territoriale/latest-plan.json";
 const reconcileUrl=base+"campagne/case247/regia-territoriale/reconciliation.json";
 const $=id=>document.getElementById(id);
 const escape=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-let towns=[],plan=null;
+let towns=[],plan=null,lastPlan=null,todayKey="";
+const romeDay=()=>{const parts=new Intl.DateTimeFormat("en-GB",{timeZone:"Europe/Rome",day:"2-digit",month:"2-digit",year:"numeric"}).formatToParts(new Date());const read=k=>parts.find(p=>p.type===k)?.value;return [read("year"),read("month"),read("day")].join("-");};
 async function get(url){const r=await fetch(url+"?t="+Date.now(),{cache:"no-store"});if(!r.ok)throw new Error("HTTP "+r.status);return r.json();}
 function active(t,n){const c=t.channels?.[n]||{};return t.auto_publish===true&&c.status==="ACTIVE_VERIFIED"&&!!c.provider_id&&!!c.url;}
 function stats(){
 const slots=plan?.assignments||[];
 const nums=[
 ["Landing presenti",towns.length],
+["Raggio operativo","10 km"],
 ["Pagine Facebook connesse",towns.filter(t=>active(t,"facebook")).length],
 ["Profili Instagram connessi",towns.filter(t=>active(t,"instagram")).length],
 ["Immobili assegnati",plan?.unique_listings_planned??"–"],
@@ -86,17 +88,20 @@ const entries=plan?.assignments||[];
 const t=$("type").value,s=$("status").value;
 const subset=entries.filter(x=>(t==="all"||x.type===t)&&(s==="all"||x.status===s)).slice(0,300);
 $("queue").innerHTML=subset.map(x=>'<tr><td>'+escape(x.time)+'</td><td>'+escape(x.title||x.topic||x.graphic_id)+'</td><td>'+escape(x.town)+'</td><td>'+escape(x.network)+'</td><td><span class="badge">'+escape(x.status)+'</span></td></tr>').join("")||'<tr><td colspan="5">Nessuna assegnazione verificata</td></tr>';
-$("freshness").textContent=plan?'Data pianificata: '+plan.date+' · Generato: '+plan.generated_at+' · Fonte catalogo: '+plan.source_snapshot_at:'Il piano non è ancora presente sul sito. Nessuna pubblicazione può essere dedotta da questo pannello.';
+$("freshness").textContent=plan?"Data: "+plan.date+" · Generato: "+(plan.generated_at||"n/d")+" · Catalogo: "+(plan.source_snapshot_at||"n/d")+" · L’invio effettivo richiede una ricevuta Meta.":"Nessun piano territoriale di oggi ("+todayKey+"). Ultimo piano disponibile: "+(lastPlan?.date||"nessuno")+". Non considerare pianificate o pubblicate le attività di ieri o di domani.";
 }
 async function init(){
-try{towns=(await get(source)).towns||[]}catch(e){$("note").textContent="Configurazione territoriale non accessibile: "+e.message;return;}
-try{plan=await get(planUrl)}catch(e){plan=null;}
+try{const cfg=await get(source);towns=cfg.towns||[];if(cfg.coverage_radius_km!==10)throw new Error("Raggio operativo non coerente con 10 km");}catch(e){$("note").textContent="Configurazione territoriale non accessibile o non valida: "+e.message;return;}
+todayKey=romeDay();
+try{lastPlan=await get(planUrl)}catch(e){lastPlan=null;}
+try{plan=await get(base+"campagne/case247/regia-territoriale/plans/"+todayKey+".json");}catch(e){plan=lastPlan?.date===todayKey?lastPlan:null;}
+if(plan&&(plan.date!==todayKey||plan.max_distance_km!==10)){plan=null;$("note").textContent="Piano di oggi non conforme alla regola dei 10 km: nessun invio autorizzabile.";}
 let recon=null;try{recon=await get(reconcileUrl)}catch(e){}
 if(recon)$("changes").textContent="Ultimo controllo: "+recon.checked_at+
 " · Nuovi: "+recon.added_ids.length+" · Rimossi: "+recon.removed_ids.length+
 " · Modificati: "+recon.changed_ids.length+" · Aggiornamenti live confermati: "+recon.live_updates_performed+
 " · "+recon.reason;
-$("note").textContent=plan?"Piano editoriale caricato. Lo stato di ciascuna proposta è indicato sotto.":"Landing verificate nella configurazione; motore ancora senza un piano pubblico generato. Gli account social non collegati restano bloccati.";
+$("note").textContent=plan?"Piano di oggi "+todayKey+": "+plan.unique_listings_planned+" immobili, "+plan.graphic_posts_planned+" grafiche, "+plan.ready_for_provider+" contenuti pronti per il provider. Pronto non significa pubblicato.":"Nessun piano verificato per oggi ("+todayKey+"). La pagina non attribuisce pubblicazioni a una coda inesistente o scaduta; gli account non collegati restano bloccati.";
 stats();renderTowns();renderQueue();
 }
 $("search").addEventListener("input",renderTowns);
