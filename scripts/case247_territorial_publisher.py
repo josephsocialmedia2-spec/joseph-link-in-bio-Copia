@@ -18,7 +18,7 @@ import urllib.parse
 import urllib.request
 from zoneinfo import ZoneInfo
 
-from case247_territorial_engine import ROOT, OUT, read_json, atomic_write, TZ, listed_available, valid_picture
+from case247_territorial_engine import ROOT, OUT, read_json, atomic_write, TZ, listed_available, valid_picture, eligible_towns, GEO
 from case247_legacy_transition import load_reservations, canonical_listing_url
 
 GRAPH = "https://graph.facebook.com/v26.0"
@@ -174,6 +174,7 @@ def run(live=False,max_per_run=10):
     if source_age > dt.timedelta(hours=36):
         raise SystemExit("Catalog older than 36h; refusing publication")
     by_id={t["id"]:t for t in all_towns}
+    verified_geo=read_json(GEO, {"towns":{}}).get("towns",{})
     if live:
         credentials=json.loads(os.environ["CASE247_TERRITORIAL_ACCOUNTS_JSON"])
     else:
@@ -195,12 +196,21 @@ def run(live=False,max_per_run=10):
             continue
         if item["type"]=="IMMOBILE":
             current=catalog_by_id.get(item["listing_id"])
-            if (not current or not listed_available(current) or not valid_picture(current.get("image"))
+            # Re-evaluate the verified municipality AND its conservative 20km
+            # boundary against the freshest catalogue, just before submission.
+            valid_location = False
+            if current and current.get("location_status") == "VERIFICATO_FONTE":
+                valid_location = (
+                    current.get("town_id") == item.get("source_town_id")
+                    and any(t["id"] == item["town_id"] and km <= 20
+                            for t, km in eligible_towns(current, all_towns, verified_geo)))
+            if (not current or not valid_location or not listed_available(current)
+                or not valid_picture(current.get("image"))
                 or current.get("image") != item["media_url"]
                 or current.get("price") != item.get("price")
                 or current.get("title") != item.get("title")
                 or current.get("url") != item.get("source_url")):
-                print(f"BLOCKED_CATALOG_CHANGED {key}: waiting for next reconciliation")
+                print(f"BLOCKED_CATALOG_OR_LOCATION_CHANGED {key}: waiting for next reconciliation")
                 continue
         elif item["type"]=="DIETRO_LE_QUINTE":
             graphic=approved_graphics.get(str(item.get("graphic_id", "")))
