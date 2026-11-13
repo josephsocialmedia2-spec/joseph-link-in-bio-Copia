@@ -21,6 +21,7 @@ Questo documento descrive il codice reale e non certifica pubblicazioni future.
 - `scripts/case247_territorial_engine.py`: costruisce il piano del giorno successivo entro 20 km; gli URL vengono canonizzati prima del controllo delle prenotazioni; le immagini IA sono ammesse solo con `approval=APPROVED` e `requires_fact_check=false`.
 - `scripts/case247_legacy_transition.py`: importa le prenotazioni Metricool già esistenti; un record malformed/duplicato fallisce in sicurezza.
 - `scripts/case247_quality_gate.py`: genera `campagne/case247/regia-territoriale/health-report.json` con soli contatori e codici di anomalia.
+- `scripts/case247_schedule_guard.py`: mantiene la regia una sola volta al giorno dopo le 18:00 italiane anche quando il cron GitHub parte in ritardo; evita ricostruzioni ripetute nella stessa serata.
 - `scripts/case247_territorial_publisher.py`: verifica giorno, stato, catalogo aggiornato, disponibilità, prezzo, URL, foto, comune, distanza, identità Meta e idempotenza prima dell'invio; registra INTENT prima dell'API e PUBLISHED solo su risposta confermata.
 - `scripts/test_case247_*.py`: suite automatizzata di non regressione.
 
