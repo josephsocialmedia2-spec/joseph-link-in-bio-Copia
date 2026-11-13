@@ -59,18 +59,46 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Run only at 18:00 local Italian time
+      - name: Run once per Italian evening, even if GitHub cron is delayed
         id: local
         env:
           EVENT_NAME: ${{ github.event_name }}
         run: |
-          HOUR=$(TZ=Europe/Rome date +%H)
-          if [[ "$EVENT_NAME" == "schedule" && "$HOUR" != "18" ]]; then
-            echo "active=false" >> "$GITHUB_OUTPUT"
-            echo "Skip: current hour in Rome is $HOUR"
-          else
-            echo "active=true" >> "$GITHUB_OUTPUT"
-          fi
+          python - <<'PY'
+          import datetime as dt
+          import json
+          import os
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+
+          zone = ZoneInfo("Europe/Rome")
+          now = dt.datetime.now(zone)
+          next_day = (now.date() + dt.timedelta(days=1)).isoformat()
+          plan_file = Path("campagne/case247/regia-territoriale/plans") / (next_day + ".json")
+          active = True
+          reason = "manual_dispatch"
+          if os.environ.get("EVENT_NAME") == "schedule":
+              if now.hour < 18:
+                  active, reason = False, "before_18_rome"
+              elif plan_file.exists():
+                  try:
+                      plan = json.loads(plan_file.read_text(encoding="utf-8"))
+                      stamp = dt.datetime.fromisoformat(plan["generated_at"])
+                      if stamp.tzinfo is None:
+                          raise ValueError("Missing timezone in generated_at")
+                      if (plan.get("date") == next_day
+                              and stamp.astimezone(zone).date() == now.date()):
+                          active, reason = False, "already_reconciled_today"
+                      else:
+                          reason = "stale_plan_rebuild"
+                  except (OSError, KeyError, ValueError, TypeError, json.JSONDecodeError):
+                      reason = "invalid_plan_rebuild"
+              else:
+                  reason = "missing_plan_rebuild"
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+              output.write(f"active={str(active).lower()}\\n")
+          print(f"CASE247 evening reconcile active={active}, reason={reason}, next_day={next_day}")
+          PY
       - name: Synchronize live La Sacra catalog
         if: steps.local.outputs.active == 'true'
         run: python scripts/sync_sacra_catalog.py
