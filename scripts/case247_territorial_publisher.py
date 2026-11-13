@@ -113,13 +113,35 @@ def account_for(item, credentials, config_by_id):
         return None
     network=item["network"]
     public=town.get("channels",{}).get(network,{})
-    if public.get("status") != "ACTIVE_VERIFIED" or not public.get("provider_id") or not public.get("url"):
+    if (public.get("status") != "ACTIVE_VERIFIED" or not public.get("provider_id")
+        or not str(public.get("url", "")).startswith("https://")):
         return None
     acct=credentials.get(item["town_id"],{}).get(network,{})
-    provider_id=str(acct.get("page_id") if network=="facebook" else acct.get("ig_user_id") or "")
+    provider_id=str((acct.get("page_id") if network=="facebook" else acct.get("ig_user_id")) or "")
     if not provider_id or provider_id!=str(public["provider_id"]) or not acct.get("access_token"):
         return None
     return acct
+
+def verify_provider_identity(network, account):
+    """Verify the account named in the credential has current Meta API access.
+
+    A matching identifier in local JSON does not itself prove permission.
+    Do not reveal token values in logs or exception messages.
+    """
+    if network not in ("facebook", "instagram"):
+        raise RuntimeError("Unsupported territorial network")
+    provider_id = str(account.get("page_id") if network == "facebook"
+                      else account.get("ig_user_id") or "")
+    token = account.get("access_token")
+    if not provider_id or not token or not provider_id.isdigit():
+        raise RuntimeError("Meta provider credentials incomplete")
+    url = (f"{GRAPH}/{urllib.parse.quote(provider_id)}?"
+           + urllib.parse.urlencode({"fields": "id", "access_token": token}))
+    response = request(url)
+    if str(response.get("id", "")) != provider_id:
+        raise RuntimeError("Meta provider identity does not match authorized channel")
+    return True
+
 
 def run(live=False,max_per_run=10):
     if live and os.getenv("CASE247_TERRITORIAL_LIVE")!="true":
@@ -140,6 +162,11 @@ def run(live=False,max_per_run=10):
     all_towns=read_json(CONFIG)["towns"]
     latest_catalog=read_json(ROOT / "immobili/catalogo.json", {})
     catalog_by_id={str(p["id"]):p for p in latest_catalog.get("items",[])}
+    manifest=read_json(ROOT / "campagne/case247/dietro-le-quinte/manifest-60.json", {})
+    approved_graphics={str(g["id"]):g for g in manifest.get("entries", [])
+                       if g.get("approval")=="APPROVED"
+                       and g.get("requires_fact_check") is False
+                       and g.get("ai_generated") is True}
     checked_at=latest_catalog.get("last_success_at")
     if not checked_at:
         raise SystemExit("No successful catalog read; refusing all publisher sends")
@@ -154,6 +181,7 @@ def run(live=False,max_per_run=10):
     ledger=read_json(LEDGER, {"entries":{}})
     entries=ledger.setdefault("entries",{})
     done=0
+    verified_accounts=set()
     for item in plan["assignments"]:
         if done>=max_per_run:
             break
@@ -174,6 +202,14 @@ def run(live=False,max_per_run=10):
                 or current.get("url") != item.get("source_url")):
                 print(f"BLOCKED_CATALOG_CHANGED {key}: waiting for next reconciliation")
                 continue
+        elif item["type"]=="DIETRO_LE_QUINTE":
+            graphic=approved_graphics.get(str(item.get("graphic_id", "")))
+            if not graphic or graphic.get("public_image_url") != item.get("media_url"):
+                print(f"BLOCKED_UNAPPROVED_OR_CHANGED_GRAPHIC {key}")
+                continue
+        else:
+            print(f"BLOCKED_UNKNOWN_CONTENT_TYPE {key}")
+            continue
         acct=account_for(item,credentials,by_id) if live else None
         if live and not acct:
             print(f"BLOCKED_CHANNEL {item['town_id']}/{item['network']}")
@@ -184,6 +220,14 @@ def run(live=False,max_per_run=10):
         if not live:
             print(f"DRY_RUN {key} => {item['town_id']}/{item['network']}")
             continue
+        account_key=(item["town_id"],item["network"])
+        if account_key not in verified_accounts:
+            try:
+                verify_provider_identity(item["network"],acct)
+            except Exception:
+                print(f"BLOCKED_META_AUTHORIZATION {item['town_id']}/{item['network']}")
+                continue
+            verified_accounts.add(account_key)
         entries[key]={"status":"INTENT", "town_id":item["town_id"],"network":item["network"],
                       "time":now.isoformat(),"source_url":item.get("source_url","")}
         persist_ledger(ledger,commit=True)
