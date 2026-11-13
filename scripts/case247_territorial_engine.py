@@ -226,7 +226,7 @@ def make_plan(day, items, towns, geo, graphics, previous=None, reserved_urls=Non
             candidate = next((g for g in asset_entries if g.get("id") not in used_graphics
                               and g.get("public_image_url") and g.get("ai_generated") is True
                               and g.get("approval") == "APPROVED"
-                              and g.get("requires_fact_check") is False), None)
+                              and g.get("requires_fact_check") is False and g.get("technical_status") == "APPROVED"), None)
             if not candidate:
                 break
             used_graphics.add(candidate["id"])
