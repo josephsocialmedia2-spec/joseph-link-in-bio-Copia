@@ -23,6 +23,7 @@ from case247_territorial_engine import (
     listed_available, valid_picture, eligible_towns,
 )
 from case247_legacy_transition import load_reservations, canonical_listing_url
+from case247_supabase_meta_bridge import credentials_for_publisher, BridgeError
 
 GRAPH = "https://graph.facebook.com/v26.0"
 LEDGER = OUT / "publish-ledger.json"
@@ -209,7 +210,10 @@ def run(live=False,max_per_run=10):
     by_id={t["id"]:t for t in all_towns}
     verified_geo=read_json(GEO, {"towns":{}}).get("towns",{})
     if live:
-        credentials=json.loads(os.environ["CASE247_TERRITORIAL_ACCOUNTS_JSON"])
+        try:
+            credentials=credentials_for_publisher(config)
+        except BridgeError as error:
+            raise SystemExit("SUPABASE_META_BRIDGE_BLOCKED: "+str(error)) from None
     else:
         credentials={}
     ledger=read_json(LEDGER, {"entries":{}})
