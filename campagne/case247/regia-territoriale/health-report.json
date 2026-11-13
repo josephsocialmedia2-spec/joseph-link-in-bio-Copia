@@ -1,0 +1,19 @@
+{
+  "checked_at": "2026-11-13T06:54:19.178290+00:00",
+  "state": "BLOCKED_NO_VERIFIED_META_ACCOUNTS",
+  "problems": [],
+  "counts": {
+    "towns": 41,
+    "verified_channels": 0,
+    "invalid_activated_channels": 0,
+    "manifest_assets": 60,
+    "approved_assets": 0,
+    "unapproved_assets": 60,
+    "duplicate_assets": 0,
+    "invalid_image_urls": 0,
+    "missing_or_invalid_jpg": 0,
+    "planned_items": 37,
+    "planned_ready_items": 0
+  },
+  "policy": "No unpublished item is labelled PUBLISHED; never infer live authorization from config alone."
+}

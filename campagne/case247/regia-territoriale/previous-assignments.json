@@ -1,13 +1,17 @@
 {
-  "10724689871175": {
+  "10549582070087": {
     "town_id": "almese",
     "network": "facebook"
   },
-  "10552683856199": {
+  "10552768561479": {
+    "town_id": "almese",
+    "network": "instagram"
+  },
+  "10680937873735": {
     "town_id": "avigliana",
     "network": "facebook"
   },
-  "10886810075463": {
+  "11230406017351": {
     "town_id": "avigliana",
     "network": "instagram"
   },
@@ -15,140 +19,132 @@
     "town_id": "borgaro-torinese",
     "network": "facebook"
   },
-  "11228888760647": {
-    "town_id": "borgaro-torinese",
-    "network": "instagram"
-  },
-  "11136591069511": {
-    "town_id": "caprie",
-    "network": "facebook"
-  },
-  "10552768561479": {
-    "town_id": "caprie",
-    "network": "instagram"
-  },
-  "10555043021127": {
-    "town_id": "chianocco",
-    "network": "facebook"
-  },
   "10552816369991": {
-    "town_id": "chianocco",
+    "town_id": "caprie",
+    "network": "facebook"
+  },
+  "11038271897927": {
+    "town_id": "caprie",
     "network": "instagram"
   },
-  "11025377689927": {
+  "10673635721543": {
     "town_id": "chiusa-di-san-michele",
     "network": "facebook"
   },
-  "10549571617095": {
+  "10577002398023": {
     "town_id": "chiusa-di-san-michele",
     "network": "instagram"
   },
-  "10552748212551": {
+  "10666264625479": {
     "town_id": "collegno",
     "network": "facebook"
   },
-  "10671726395719": {
+  "10808056250695": {
     "town_id": "collegno",
     "network": "instagram"
   },
-  "11230406017351": {
+  "10596910858567": {
     "town_id": "condove",
     "network": "facebook"
   },
-  "10903112876359": {
-    "town_id": "grugliasco",
+  "11203075113287": {
+    "town_id": "condove",
+    "network": "instagram"
+  },
+  "10552459985223": {
+    "town_id": "giaveno",
     "network": "facebook"
   },
-  "10673635721543": {
-    "town_id": "grugliasco",
+  "10564873093447": {
+    "town_id": "giaveno",
     "network": "instagram"
+  },
+  "11228888760647": {
+    "town_id": "grugliasco",
+    "network": "facebook"
   },
   "11101300195655": {
     "town_id": "moncalieri",
     "network": "facebook"
   },
-  "10790750257479": {
-    "town_id": "moncalieri",
-    "network": "instagram"
-  },
-  "10666264625479": {
-    "town_id": "pianezza",
-    "network": "facebook"
-  },
-  "10549582070087": {
-    "town_id": "pianezza",
-    "network": "instagram"
-  },
   "11190682255687": {
+    "town_id": "pianezza",
+    "network": "facebook"
+  },
+  "10671726395719": {
+    "town_id": "pianezza",
+    "network": "instagram"
+  },
+  "10903112876359": {
     "town_id": "rivoli",
     "network": "facebook"
   },
-  "10808056250695": {
+  "10790750257479": {
     "town_id": "rivoli",
     "network": "instagram"
   },
-  "10770991481159": {
+  "10564780753223": {
     "town_id": "rubiana",
     "network": "facebook"
   },
-  "10759305756999": {
+  "10552683856199": {
     "town_id": "rubiana",
     "network": "instagram"
   },
-  "10640300179783": {
-    "town_id": "san-didero",
+  "10574285603143": {
+    "town_id": "sant-ambrogio-di-torino",
+    "network": "facebook"
+  },
+  "10724689871175": {
+    "town_id": "sant-ambrogio-di-torino",
+    "network": "instagram"
+  },
+  "10555969765703": {
+    "town_id": "sant-antonino-di-susa",
     "network": "facebook"
   },
   "10552805753159": {
-    "town_id": "san-giorio-di-susa",
-    "network": "facebook"
-  },
-  "10564780753223": {
-    "town_id": "san-giorio-di-susa",
+    "town_id": "sant-antonino-di-susa",
     "network": "instagram"
   },
   "10716674720071": {
-    "town_id": "sant-ambrogio-di-torino",
+    "town_id": "vaie",
     "network": "facebook"
   },
-  "10680937873735": {
-    "town_id": "sant-ambrogio-di-torino",
+  "10555043021127": {
+    "town_id": "vaie",
     "network": "instagram"
   },
-  "11038271897927": {
-    "town_id": "sant-antonino-di-susa",
+  "10549571617095": {
+    "town_id": "valgioie",
     "network": "facebook"
+  },
+  "10552748212551": {
+    "town_id": "valgioie",
+    "network": "instagram"
+  },
+  "10759305756999": {
+    "town_id": "villar-dora",
+    "network": "facebook"
+  },
+  "10886810075463": {
+    "town_id": "villar-dora",
+    "network": "instagram"
   },
   "10577000005959": {
-    "town_id": "sant-antonino-di-susa",
-    "network": "instagram"
-  },
-  "10552459985223": {
-    "town_id": "vaie",
-    "network": "facebook"
-  },
-  "10574285603143": {
-    "town_id": "vaie",
-    "network": "instagram"
-  },
-  "11203075113287": {
-    "town_id": "valgioie",
-    "network": "facebook"
-  },
-  "10555969765703": {
-    "town_id": "valgioie",
-    "network": "instagram"
-  },
-  "10596910858567": {
-    "town_id": "villar-dora",
-    "network": "facebook"
-  },
-  "10577002398023": {
-    "town_id": "villar-dora",
-    "network": "instagram"
-  },
-  "10564873093447": {
     "town_id": "villar-focchiardo",
+    "network": "instagram"
+  },
+  "11136591069511": {
+    "town_id": "avigliana",
+    "network": "facebook"
+  },
+  "11025377689927": {
+    "town_id": "avigliana",
+    "network": "instagram"
+  },
+  "10770991481159": {
+    "town_id": "villar-dora",
     "network": "facebook"
   }
 }

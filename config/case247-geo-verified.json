@@ -570,6 +570,51 @@
       "display_name": "Valgioie, Torino, Piemonte, Italia",
       "source": "OpenStreetMap Nominatim",
       "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "borgone-susa": {
+      "lat": 45.1230132,
+      "lon": 7.2409317,
+      "bbox": [
+        45.1118422,
+        45.1325018,
+        7.2157946,
+        7.2747184
+      ],
+      "osm_type": "relation",
+      "osm_id": 44250,
+      "display_name": "Borgone Susa, Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "giaveno": {
+      "lat": 45.0420053,
+      "lon": 7.3519942,
+      "bbox": [
+        44.9797716,
+        45.0715994,
+        7.2114836,
+        7.3842126
+      ],
+      "osm_type": "relation",
+      "osm_id": 43978,
+      "display_name": "Giaveno, Torino, Piemonte, 10094, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "torino": {
+      "lat": 45.0677551,
+      "lon": 7.6824892,
+      "bbox": [
+        45.0067924,
+        45.1402175,
+        7.5778348,
+        7.7733388
+      ],
+      "osm_type": "relation",
+      "osm_id": 43992,
+      "display_name": "Torino, Piemonte, Italia",
+      "source": "OpenStreetMap Nominatim",
+      "verified_scope": "MUNICIPALITY_BBOX_PROXY"
     }
   }
 }
