@@ -20,6 +20,29 @@ const reply=(status:number,content:Body,origin:string|null)=>
 const t=(s:unknown,max=150)=>typeof s==="string"?s.trim().slice(0,max):"";
 const sha256=async(v:string)=>Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256",new TextEncoder().encode(v)))).map(n=>n.toString(16).padStart(2,"0")).join("");
 const token=()=>{const a=crypto.getRandomValues(new Uint8Array(32));return Array.from(a,n=>n.toString(16).padStart(2,"0")).join("")};
+// Client IP is reduced to /24 (IPv4) or the first three /16 groups (IPv6)
+// before keyed HMAC. Only the HMAC reaches Supabase, not the source address.
+async function ipEvidence(req:Request):Promise<string>{
+ const pepper=Deno.env.get("CASE247_IP_HASH_PEPPER")||"";
+ if(pepper.length<32)throw Error("HASH_PEPPER_NOT_CONFIGURED");
+ const raw=(req.headers.get("cf-connecting-ip")||
+            req.headers.get("x-real-ip")||
+            req.headers.get("x-forwarded-for")||"").split(",")[0].trim();
+ let subnet="";
+ const parts=raw.split(".");
+ if(parts.length===4&&parts.every(x=>/^\d{1,3}$/.test(x)&&Number(x)<=255)){
+   subnet=parts.slice(0,3).join(".")+".0/24";
+ }else if(raw.includes(":")&&/^[0-9a-f:]+$/i.test(raw)&&raw.length<=45){
+   const chunks=raw.toLowerCase().split(":").filter(Boolean);
+   if(chunks.length<2)throw Error("CLIENT_IP_UNAVAILABLE");
+   subnet=chunks.slice(0,3).join(":")+"::/48";
+ }else throw Error("CLIENT_IP_UNAVAILABLE");
+ const key=await crypto.subtle.importKey("raw",new TextEncoder().encode(pepper),
+      {name:"HMAC",hash:"SHA-256"},false,["sign"]);
+ const proof=new Uint8Array(await crypto.subtle.sign("HMAC",key,new TextEncoder().encode(subnet)));
+ return Array.from(proof).map(n=>n.toString(16).padStart(2,"0")).join("");
+}
+
 const userOrigin=(req:Request)=>{
  const origin=req.headers.get("origin");
  return origin===ALLOWED_ORIGIN?origin:null;
@@ -82,6 +105,12 @@ const handler=withSupabase({auth:"none"},async(req,ctx)=>{
  if(!enabled)return reply(503,{error:"REQUEST_FORM_NOT_ACTIVATED",status:"DISABLED"},origin);
  if(Object.keys(payload).length>24)return reply(422,{error:"EXCESS_FIELDS"},origin);
  if(t(payload.trap,200))return reply(400,{error:"SPAM_BLOCKED"},origin);
+ let ipHash:string;
+ try{ipHash=await ipEvidence(req)}
+ catch{return reply(503,{error:"IP_SECURITY_GATE_UNAVAILABLE"},origin)}
+ const attempt=await admin.rpc("case247_claim_intake_slot",{p_ip_hash:ipHash});
+ if(attempt.error)return reply(503,{error:"RATE_LIMIT_BACKEND_UNAVAILABLE"},origin);
+ if(attempt.data!==true)return reply(429,{error:"TOO_MANY_REQUESTS"},origin);
  const challenge=t(payload.turnstile_token,2050);
  if(challenge.length<10)return reply(400,{error:"TURNSTILE_REQUIRED"},origin);
  const checkBody=new URLSearchParams({secret:turnstileSecret,response:challenge});
@@ -127,13 +156,19 @@ const handler=withSupabase({auth:"none"},async(req,ctx)=>{
   revoke_token_sha256:await sha256(secretToken),
   status:"PENDING_VERIFICATION"
  };
- const insert=await admin.from("case247_property_requests").insert(toInsert).select("id,status").single();
+ // One PostgreSQL transaction: evidence row is inserted BEFORE any contact data.
+ // A failed audit or failed request rolls back both rows.
+ const insert=await admin.rpc("case247_record_intake_request",{
+   p:{...toInsert,privacy_seen:true},p_ip_hash:ipHash
+ });
  if(insert.error){
   if(insert.error.code==="23505")return reply(409,{error:"REQUEST_ALREADY_SUBMITTED"},origin);
-  return reply(503,{error:"REQUEST_COULD_NOT_BE_SAVED"},origin);
+  return reply(503,{error:"REQUEST_OR_PRIVACY_AUDIT_NOT_SAVED"},origin);
  }
+ if(!insert.data?.request_id||insert.data?.status!=="PENDING_VERIFICATION")
+  return reply(503,{error:"REQUEST_AUDIT_RECEIPT_INVALID"},origin);
  // There is deliberately NO email or WhatsApp send in this function.
- return reply(201,{ok:true,request_id:insert.data.id,status:insert.data.status,
+ return reply(201,{ok:true,request_id:insert.data.request_id,status:insert.data.status,
   email_marketing_active:false,whatsapp_marketing_active:false,
   withdraw_url:ALLOWED_ORIGIN+"/joseph-link-in-bio-Copia/campagne/case247/revoca-consenso/?token="+secretToken},origin);
 });
