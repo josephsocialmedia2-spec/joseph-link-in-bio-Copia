@@ -19,7 +19,7 @@ def listing(pid, tid="vaie", available=True):
     return {"id": str(pid), "title": "CASA TEST", "town_id": tid,
             "location_status": "VERIFICATO_FONTE",
             "availability_status": "AVAILABLE" if available else "SOLD_OUT",
-            "image": "https://cdn.shopify.com/test.jpg", "url": "https://example.org/listing/"+str(pid),
+            "image": "https://cdn.shopify.com/test.jpg", "url": "https://lasacraimmobiliare.it/products/test-immobile-"+str(pid),
             "description": "", "price": 30000}
 
 def geo():
