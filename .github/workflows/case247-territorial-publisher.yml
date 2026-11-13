@@ -11,6 +11,8 @@ on:
       - scripts/case247_territorial_engine.py
       - scripts/case247_quality_gate.py
       - scripts/test_case247_quality_gate.py
+      - scripts/test_case247_territorial_publisher_policy.py
+      - config/case247-territorio.json
       - scripts/test_case247_publisher_safety.py
       - .github/workflows/case247-territorial-publisher.yml
   workflow_dispatch:
@@ -22,7 +24,7 @@ on:
   push:
     branches:
       - main
-      - feature/case247-regia-territoriale-20km-20261111
+      - feature/case247-10km-integrated-20261113
     paths:
       - scripts/case247_territorial_publisher.py
       - scripts/case247_legacy_transition.py
@@ -50,6 +52,7 @@ jobs:
           python -m unittest discover -s scripts -p test_case247_legacy_transition.py -v
           python -m unittest discover -s scripts -p test_case247_quality_gate.py -v
           python -m unittest discover -s scripts -p test_case247_publisher_safety.py -v
+          python -m unittest discover -s scripts -p test_case247_territorial_publisher_policy.py -v
 
   publish:
     permissions:
