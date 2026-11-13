@@ -6,7 +6,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from case247_territorial_engine import (
     distance_km, eligible_towns, make_plan, normalize_changes,
-    PROPERTY_SLOTS, GRAPHIC_SLOTS, repair_future_today,
+    PROPERTY_SLOTS, GRAPHIC_SLOTS, repair_future_today, RADIUS_KM,
 )
 
 def town(tid, active=True):
@@ -23,7 +23,7 @@ def listing(pid, tid="vaie", available=True):
             "description": "", "price": 30000}
 
 def geo():
-    # Vaie and Condove about ~7 km apart; other town far outside 20 km.
+    # Vaie and Condove about ~7 km apart; other town far outside 10 km.
     return {"vaie": {"lat":45.10, "lon":7.29, "bbox":[45.09,45.11,7.28,7.30]},
             "condove":{"lat":45.11,"lon":7.32,"bbox":[45.10,45.12,7.31,7.33]},
             "torino":{"lat":45.07,"lon":7.69,"bbox":[45.06,45.08,7.68,7.70]}}
@@ -36,9 +36,21 @@ class EngineTests(unittest.TestCase):
         self.geo = geo()
         self.day = "2026-11-12"
 
+    def test_radius_is_ten_km(self):
+        self.assertEqual(RADIUS_KM, 10.0)
+
+    def test_ten_km_boundary_fails_closed(self):
+        local = listing(99)
+        far = {"id":"near-but-over-limit","name":"Limit", "landing_url":"https://example.org/limit"}
+        far["channels"] = town("limit")["channels"]
+        far["auto_publish"] = True
+        geo_data = dict(self.geo)
+        geo_data["near-but-over-limit"] = {"lat":45.20,"lon":7.29,"bbox":[45.19,45.21,7.28,7.30]}
+        self.assertFalse(eligible_towns(local,[far],geo_data))
+
     def test_distance(self):
         self.assertAlmostEqual(distance_km(0,0,0,0), 0)
-        self.assertGreater(distance_km(45.10,7.29,45.07,7.69), 20)
+        self.assertGreater(distance_km(45.10,7.29,45.07,7.69), 10)
 
     def test_geofence_excludes_distant_town(self):
         eligible = eligible_towns(listing(1),self.towns,self.geo)
@@ -52,7 +64,7 @@ class EngineTests(unittest.TestCase):
         ads = [x for x in plan["assignments"] if x["type"] == "IMMOBILE"]
         self.assertEqual(len(ads),8)
         self.assertEqual(len({x["listing_id"] for x in ads}),8)
-        self.assertTrue(all(x["distance_upper_bound_km"]<=20 for x in ads))
+        self.assertTrue(all(x["distance_upper_bound_km"]<=10 for x in ads))
         self.assertTrue(all(x["time"] in PROPERTY_SLOTS for x in ads))
 
     def test_unavailable_and_unverified_never_scheduled(self):
