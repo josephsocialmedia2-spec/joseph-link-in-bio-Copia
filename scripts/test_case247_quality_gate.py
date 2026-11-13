@@ -8,7 +8,7 @@ from case247_quality_gate import inspect
 def base(root):
     asset = root / "assets" / "first.jpg"
     asset.parent.mkdir(parents=True, exist_ok=True)
-    asset.write_bytes(b"\\xff\\xd8\\xff" + b"0" * 256)
+    asset.write_bytes(b"\xff\xd8\xff" + b"0" * 256)
     config = {"towns": [{"id": "avigliana", "auto_publish": False,
                          "channels": {"facebook": {"status": "DA_VERIFICARE"},
                                       "instagram": {"status": "DA_VERIFICARE"}}}]}
