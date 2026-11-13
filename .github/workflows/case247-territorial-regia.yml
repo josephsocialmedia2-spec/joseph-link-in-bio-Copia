@@ -11,6 +11,8 @@ on:
       - scripts/test_case247_legacy_transition.py
       - scripts/case247_quality_gate.py
       - scripts/test_case247_quality_gate.py
+      - scripts/case247_schedule_guard.py
+      - scripts/test_case247_schedule_guard.py
       - scripts/sync_sacra_catalog.py
       - .github/workflows/case247-territorial-regia.yml
   workflow_dispatch:
@@ -43,6 +45,7 @@ jobs:
           python -m unittest discover -s scripts -p test_case247_territorial_engine.py -v
           python -m unittest discover -s scripts -p test_case247_legacy_transition.py -v
           python -m unittest discover -s scripts -p test_case247_quality_gate.py -v
+          python -m unittest discover -s scripts -p test_case247_schedule_guard.py -v
 
   nightly-reconcile:
     needs: unit-tests
@@ -59,46 +62,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Run once per Italian evening, even if GitHub cron is delayed
+      - name: Reconcile once per Italian evening, including delayed cron starts
         id: local
         env:
           EVENT_NAME: ${{ github.event_name }}
-        run: |
-          python - <<'PY'
-          import datetime as dt
-          import json
-          import os
-          from pathlib import Path
-          from zoneinfo import ZoneInfo
-
-          zone = ZoneInfo("Europe/Rome")
-          now = dt.datetime.now(zone)
-          next_day = (now.date() + dt.timedelta(days=1)).isoformat()
-          plan_file = Path("campagne/case247/regia-territoriale/plans") / (next_day + ".json")
-          active = True
-          reason = "manual_dispatch"
-          if os.environ.get("EVENT_NAME") == "schedule":
-              if now.hour < 18:
-                  active, reason = False, "before_18_rome"
-              elif plan_file.exists():
-                  try:
-                      plan = json.loads(plan_file.read_text(encoding="utf-8"))
-                      stamp = dt.datetime.fromisoformat(plan["generated_at"])
-                      if stamp.tzinfo is None:
-                          raise ValueError("Missing timezone in generated_at")
-                      if (plan.get("date") == next_day
-                              and stamp.astimezone(zone).date() == now.date()):
-                          active, reason = False, "already_reconciled_today"
-                      else:
-                          reason = "stale_plan_rebuild"
-                  except (OSError, KeyError, ValueError, TypeError, json.JSONDecodeError):
-                      reason = "invalid_plan_rebuild"
-              else:
-                  reason = "missing_plan_rebuild"
-          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
-              output.write(f"active={str(active).lower()}\\n")
-          print(f"CASE247 evening reconcile active={active}, reason={reason}, next_day={next_day}")
-          PY
+        run: python scripts/case247_schedule_guard.py
       - name: Synchronize live La Sacra catalog
         if: steps.local.outputs.active == 'true'
         run: python scripts/sync_sacra_catalog.py
