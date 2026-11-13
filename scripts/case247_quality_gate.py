@@ -34,7 +34,7 @@ def safe_image_path(relative):
     if not file.is_file() or file.stat().st_size < 128:
         return False
     with file.open("rb") as fp:
-        return fp.read(3) == b"\\xff\\xd8\\xff"
+        return fp.read(3) == b"\xff\xd8\xff"
 
 
 def inspect(config, manifest, plan, *, root=ROOT):
@@ -71,7 +71,7 @@ def inspect(config, manifest, plan, *, root=ROOT):
         if (not isinstance(location, str) or not file.is_relative_to(root.resolve())
                 or file.suffix.lower() not in (".jpg", ".jpeg")
                 or not file.is_file() or file.stat().st_size < 128
-                or file.open("rb").read(3) != b"\\xff\\xd8\\xff"):
+                or file.open("rb").read(3) != b"\xff\xd8\xff"):
             broken_assets += 1
         if entry.get("approval") == "APPROVED" and entry.get("requires_fact_check") is False:
             approved += 1
