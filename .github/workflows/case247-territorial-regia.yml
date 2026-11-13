@@ -1,12 +1,14 @@
-name: CASE247 Regia territoriale 20km · verifica 18:00
+name: CASE247 Regia territoriale 10km · verifica 06:00 e 18:00
 on:
   push:
     branches:
       - main
-      - feature/case247-regia-territoriale-20km-20261111
+      - feature/case247-radius-10km-daily-safety-20261113
     paths:
       - scripts/case247_territorial_engine.py
       - scripts/test_case247_territorial_engine.py
+      - config/case247-territorio.json
+      - scripts/test_case247_territorial_publisher_policy.py
       - scripts/sync_sacra_catalog.py
       - .github/workflows/case247-territorial-regia.yml
   workflow_dispatch:
@@ -16,8 +18,8 @@ on:
         type: boolean
         default: true
   schedule:
-    # GitHub Actions cron is UTC; both times cover 18:00 Rome after DST changes.
-    - cron: "0 16,17 * * *"
+    # GitHub Actions cron is UTC: paired hours cover 06:00 and 18:00 Rome across DST.
+    - cron: "0 5,6,16,17 * * *"
 permissions:
   contents: write
 concurrency:
@@ -35,14 +37,16 @@ jobs:
       - name: Python syntax
         run: python -m py_compile scripts/case247_territorial_engine.py scripts/sync_sacra_catalog.py
       - name: Geofence and duplicate-safety suite
-        run: python -m unittest discover -s scripts -p test_case247_territorial_engine.py -v
+        run: |
+          python -m unittest discover -s scripts -p test_case247_territorial_engine.py -v
+          python -m unittest discover -s scripts -p test_case247_territorial_publisher_policy.py -v
 
   nightly-reconcile:
     needs: unit-tests
     if: >
       github.ref == 'refs/heads/main' &&
       (github.event_name == 'workflow_dispatch' ||
-      (github.event_name == 'schedule'))
+      github.event_name == 'schedule' || github.event_name == 'push')
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -52,13 +56,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Run only at 18:00 local Italian time
+      - name: Run at 06:00/18:00 Rome or on an explicit main-branch update
         id: local
         env:
           EVENT_NAME: ${{ github.event_name }}
         run: |
           HOUR=$(TZ=Europe/Rome date +%H)
-          if [[ "$EVENT_NAME" == "schedule" && "$HOUR" != "18" ]]; then
+          if [[ "$EVENT_NAME" == "schedule" && "$HOUR" != "06" && "$HOUR" != "18" ]]; then
             echo "active=false" >> "$GITHUB_OUTPUT"
             echo "Skip: current hour in Rome is $HOUR"
           else
@@ -89,7 +93,8 @@ jobs:
           x=json.loads(Path('campagne/case247/regia-territoriale/latest-plan.json').read_text())
           a=[p for p in x['assignments'] if p['type']=='IMMOBILE']
           assert len({p['listing_id'] for p in a})==len(a)
-          assert all(p['distance_upper_bound_km'] <= 20 for p in a)
+          assert x['max_distance_km'] == 10
+          assert all(p['distance_upper_bound_km'] <= 10 for p in a)
           print('Verified', len(a), 'unique scheduled candidates', 'ready for provider', x['ready_for_provider'])
           PY
       - name: Commit audited catalog and scheduling plans
