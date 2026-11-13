@@ -83,8 +83,34 @@ async function pages(token:string){
   throw Error("META_PAGE_LIST_TRUNCATED");
 }
 async function refreshIfNeeded(service:any,record:any,token:string){
-  const expiry=record.token_expires_at?Date.parse(record.token_expires_at):NaN;
-  if(!Number.isFinite(expiry))throw Error("META_TOKEN_EXPIRY_UNKNOWN");
+  let expiry=record.token_expires_at?Date.parse(record.token_expires_at):NaN;
+  if(!Number.isFinite(expiry)){
+    // Legacy OAuth may omit the expiry. Ask Meta's official debug_token endpoint:
+    // never treat a missing local timestamp as proof of an unlimited token.
+    const id=env("CASE247_META_APP_ID"),secret=env("CASE247_META_APP_SECRET");
+    if(!id||!secret)throw Error("META_TOKEN_EXPIRY_UNKNOWN");
+    try{
+      const u=new URL(GRAPH+"debug_token");
+      u.searchParams.set("input_token",token);
+      const checked=await fetch(u,{headers:{authorization:"Bearer "+id+"|"+secret},
+        signal:AbortSignal.timeout(14000),cache:"no-store"});
+      const result=await checked.json().catch(()=>({}));
+      const data=result.data||{};
+      if(!checked.ok||data.is_valid!==true||String(data.app_id)!==id)
+        throw Error("META_TOKEN_DEBUG_VALIDATION_FAILED");
+      if(!Number.isFinite(Number(data.expires_at))||Number(data.expires_at)<1)
+        throw Error("META_TOKEN_EXPIRY_UNVERIFIABLE");
+      expiry=Number(data.expires_at)*1000;
+      if(expiry<=Date.now())throw Error("META_TOKEN_EXPIRED_REAUTH_REQUIRED");
+      const updated=await service.from("case247_meta_credentials").update({
+        token_expires_at:new Date(expiry).toISOString(),updated_at:new Date().toISOString()
+      }).eq("singleton",true).eq("encrypted_token",record.encrypted_token);
+      if(updated.error)throw Error("META_EXPIRY_PERSISTENCE_FAILED");
+    }catch(error){
+      if(error instanceof Error&&error.message.startsWith("META_"))throw error;
+      throw Error("META_TOKEN_EXPIRY_UNKNOWN");
+    }
+  }
   const remaining=expiry-Date.now();
   let fresh=token,notice="VALID";
   if(remaining<7*86400000){
