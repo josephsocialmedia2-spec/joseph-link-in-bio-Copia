@@ -35,7 +35,10 @@ jobs:
       - name: Python syntax
         run: python -m py_compile scripts/case247_territorial_engine.py scripts/sync_sacra_catalog.py
       - name: Geofence and duplicate-safety suite
-        run: python -m unittest discover -s scripts -p test_case247_territorial_engine.py -v
+        run: |
+          python -m unittest discover -s scripts -p test_case247_territorial_engine.py -v
+          python -m unittest discover -s scripts -p test_case247_legacy_transition.py -v
+          python -m unittest discover -s scripts -p test_case247_quality_gate.py -v
 
   nightly-reconcile:
     needs: unit-tests
@@ -80,6 +83,9 @@ jobs:
           else
             python scripts/case247_territorial_engine.py --geocode
           fi
+      - name: Audit CASE247 media, reservations, account safety
+        if: steps.local.outputs.active == 'true'
+        run: python scripts/case247_quality_gate.py
       - name: Validate output integrity
         if: steps.local.outputs.active == 'true'
         run: |
