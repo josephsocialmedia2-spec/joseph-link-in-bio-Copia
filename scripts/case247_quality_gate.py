@@ -24,12 +24,12 @@ REPORT = OUT / "health-report.json"
 LOCAL_TZ = ZoneInfo("Europe/Rome")
 
 
-def safe_image_path(relative):
+def safe_image_path(relative, *, root=ROOT):
     """Check a repository-backed JPG without trusting user-controlled paths."""
     if not isinstance(relative, str) or relative.startswith("/"):
         return False
-    file = (ROOT / relative).resolve()
-    if not file.is_relative_to(ROOT.resolve()) or file.suffix.lower() not in (".jpg", ".jpeg"):
+    file = (root / relative).resolve()
+    if not file.is_relative_to(root.resolve()) or file.suffix.lower() not in (".jpg", ".jpeg"):
         return False
     if not file.is_file() or file.stat().st_size < 128:
         return False
@@ -66,12 +66,7 @@ def inspect(config, manifest, plan, *, root=ROOT):
                 or not parsed.path.startswith("/joseph-link-in-bio-Copia/")
                 or not valid_picture(url)):
             bad_urls += 1
-        location = entry.get("asset")
-        file = (root / location).resolve() if isinstance(location, str) else root
-        if (not isinstance(location, str) or not file.is_relative_to(root.resolve())
-                or file.suffix.lower() not in (".jpg", ".jpeg")
-                or not file.is_file() or file.stat().st_size < 128
-                or file.open("rb").read(3) != b"\xff\xd8\xff"):
+        if not safe_image_path(entry.get("asset"), root=root):
             broken_assets += 1
         if entry.get("approval") == "APPROVED" and entry.get("requires_fact_check") is False:
             approved += 1
