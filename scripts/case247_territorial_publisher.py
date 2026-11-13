@@ -199,7 +199,7 @@ def run(live=False,max_per_run=10):
     manifest=read_json(ROOT / "campagne/case247/dietro-le-quinte/manifest-60.json", {})
     approved_graphics={str(g["id"]):g for g in manifest.get("entries", [])
                        if g.get("approval")=="APPROVED"
-                       and g.get("requires_fact_check") is False
+                       and g.get("requires_fact_check") is False and g.get("technical_status") == "APPROVED"
                        and g.get("ai_generated") is True}
     checked_at=latest_catalog.get("last_success_at")
     if not checked_at:
