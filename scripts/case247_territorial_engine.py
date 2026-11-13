@@ -17,7 +17,7 @@ import unicodedata
 import urllib.parse
 import urllib.request
 from zoneinfo import ZoneInfo
-from case247_legacy_transition import load_reservations
+from case247_legacy_transition import load_reservations, canonical_listing_url
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "config/case247-territorio.json"
@@ -166,7 +166,8 @@ def make_plan(day, items, towns, geo, graphics, previous=None, reserved_urls=Non
     previous = previous or {}
     reserved_urls = set(reserved_urls or [])
     sources = [p for p in items if listed_available(p) and valid_picture(p.get("image"))
-               and p.get("url") not in reserved_urls]
+               and canonical_listing_url(p.get("url")) not in reserved_urls
+               and canonical_listing_url(p.get("url"))]
     sources.sort(key=lambda p: hash_order(p["id"], day))
     occupancy = {}  # (town, network) -> 0..3 property posts
     assignments, exclusions = [], {}
@@ -220,8 +221,12 @@ def make_plan(day, items, towns, geo, graphics, previous=None, reserved_urls=Non
     for tid, network in used_channels:
         town = next(t for t in towns if t["id"] == tid)
         for slot in GRAPHIC_SLOTS:
+            # Asset selection is automatic ONLY after a one-time editorial fact check.
+            # PENDING or unchecked AI images must never enter an unattended queue.
             candidate = next((g for g in asset_entries if g.get("id") not in used_graphics
-                              and g.get("public_image_url") and g.get("ai_generated") is True), None)
+                              and g.get("public_image_url") and g.get("ai_generated") is True
+                              and g.get("approval") == "APPROVED"
+                              and g.get("requires_fact_check") is False), None)
             if not candidate:
                 break
             used_graphics.add(candidate["id"])
