@@ -66,6 +66,7 @@ footer{background:#051D37;color:#C3D9EB;padding:30px 0}footer a{color:#B7E6FF}
 <label class="option"><input type="checkbox" name="privacy_seen" required><span>Ho letto l'<a href="../privacy-richieste-immobili/" target="_blank" rel="noopener">informativa sul trattamento dei dati</a> relativa alla gestione della mia richiesta. La scelta di ricevere pubblicità è separata e facoltativa.</span></label>
 </div>
 <p class="fine">Le opzioni non sono preselezionate. Una richiesta non equivale a verifica del recapito: gli aggiornamenti promozionali saranno possibili solo dopo controlli indipendenti dei canali e attivazione dei servizi autorizzati.</p></fieldset>
+<div aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden"><label>Non compilare questo campo<input type="text" name="trap" tabindex="-1" autocomplete="off"></label></div>
 <div id="captchaHost"></div>
 <div class="actions"><button class="btn btn-primary" type="submit" id="submit" disabled>Invia la richiesta volontaria</button>
 <a class="btn btn-whatsapp" href="https://wa.me/393713708294?text=Buongiorno%2C%20desidero%20informazioni%20sui%20servizi%20immobiliari%20CASE%20IN%20PUBBLICIT%C3%80%2024%2F7." target="_blank" rel="noopener">Scrivici tu su WhatsApp</a></div>
@@ -75,7 +76,7 @@ footer{background:#051D37;color:#C3D9EB;padding:30px 0}footer a{color:#B7E6FF}
 <div class="trust"><div><strong>Scelta libera</strong>Non chiediamo il consenso marketing per rispondere alla tua domanda.</div><div><strong>Canali separati</strong>Email e WhatsApp hanno due autorizzazioni distinte.</div><div><strong>Revoca</strong>Potrai interrompere gli aggiornamenti mediante un collegamento di revoca o una richiesta diretta.</div></div>
 <p class="fine">Non acquistiamo liste di contatti e non inviamo offerte ai numeri o alle email presenti negli annunci pubblici. Il servizio di intermediazione immobiliare, quando necessario, è svolto esclusivamente da soggetti abilitati.</p>
 </section></main>
-<footer><div class="wrap"><strong>CASE IN PUBBLICITÀ 24/7</strong><p>Titolare del trattamento: <strong>Joseph Malafronte (persona fisica)</strong>. Informativa in revisione; raccolta e invii promozionali non attivi.</p><p>Informazioni: <a href="mailto:caseinpubblicita@gmail.com">caseinpubblicita@gmail.com</a> · WhatsApp <a href="https://wa.me/393713708294">371 370 8294</a></p><p><a href="../privacy-richieste-immobili/">Informativa in revisione</a> · <a href="../../../gestione/">Dashboard</a></p></div></footer>
+<footer><div class="wrap"><strong>CASE IN PUBBLICITÀ 24/7</strong><p>Titolare del trattamento: <strong>Joseph Malafronte (persona fisica)</strong>. Informativa GDPR per le richieste (versione in revisione); raccolta e invii promozionali non attivi.</p><p>Informazioni: <a href="mailto:caseinpubblicita@gmail.com">caseinpubblicita@gmail.com</a> · WhatsApp <a href="https://wa.me/393713708294">371 370 8294</a></p><p><a href="../privacy-richieste-immobili/">Informativa in revisione</a> · <a href="../../../gestione/">Dashboard</a></p></div></footer>
 <script>
 (function(){
 'use strict';
@@ -123,7 +124,7 @@ form.addEventListener('submit',async e=>{
    email_optin_requested:d.has('email_optin'),whatsapp_optin_requested:d.has('whatsapp_optin'),
    privacy_seen:d.has('privacy_seen'),notice_version:version,
    origin_url:location.href,turnstile_token:turnstileToken,
-   trap:''
+   trap:String(d.get('trap')||'')
   };
   const response=await fetch(endpoint,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(payload)});
   const data=await response.json().catch(()=>({}));
