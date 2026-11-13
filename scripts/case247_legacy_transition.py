@@ -21,6 +21,27 @@ def canonical_listing_url(value):
         return ""
     return "https://lasacraimmobiliare.it"+path
 
+def record_listing_urls(record):
+    """Resolve original URLs from the current Metricool snapshot or older one-URL rows.
+
+    A missing/malformed URL must block all direct publishing, not silently
+    remove a collision reservation.
+    """
+    if not isinstance(record, dict):
+        raise ValueError("Invalid legacy reservation record")
+    raw = record.get("urls")
+    if raw is None and isinstance(record.get("url"), str):
+        raw = [record["url"]]
+    if not isinstance(raw, list) or not raw:
+        raise ValueError("Legacy reservation has no listing URLs")
+    clean = [canonical_listing_url(url) for url in raw]
+    if any(not url for url in clean):
+        raise ValueError("Legacy reservation has an invalid listing URL")
+    if len(clean) != len(set(clean)):
+        raise ValueError("Duplicate URL inside legacy reservation")
+    return set(clean)
+
+
 def reservations_for_day(day, snapshot, transition):
     """Return legacy listing URLs to exclude from our own schedule on 'day'.
     
@@ -54,14 +75,20 @@ def reservations_for_day(day, snapshot, transition):
     ids=[str(record.get("metricool_id","")) for _,record in all_records]
     if any(not x for x in ids) or len(ids)!=len(set(ids)):
         raise ValueError("Missing or duplicate legacy provider identifiers")
-    if any(dt.date.fromisoformat(key)>final for key,_ in all_records):
-        raise ValueError("Legacy inventory exceeds declared final date")
-    if day<=final and day>covered:
+    reserved_by_date = {}
+    for key, record in all_records:
+        if dt.date.fromisoformat(key) > final:
+            raise ValueError("Legacy inventory exceeds declared final date")
+        urls = record_listing_urls(record)
+        occupied = reserved_by_date.setdefault(key, set())
+        if occupied.intersection(urls):
+            raise ValueError("Duplicate legacy listing on the same day")
+        occupied.update(urls)
+    if day <= final and day > covered:
         raise ValueError("Legacy inventory does not cover the requested day")
-    # The snapshot is the ONLY residual record of the old provider.
-    # No Metricool calls, tokens or subscription are necessary after capture.
-    return {url for record in items.get(day.isoformat(),[])
-            if (url:=canonical_listing_url(record.get("url","")))}
+    # Validate ALL frozen rows before returning the day-specific exclusions.
+    # A malformed row must never silently disable the duplicate safety gate.
+    return reserved_by_date.get(day.isoformat(), set())
 
 def load_reservations(day, root, out):
     transition=json.loads((Path(root)/"config/case247-direct-meta-transition.json").read_text(encoding="utf-8"))
