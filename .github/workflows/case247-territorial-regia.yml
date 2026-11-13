@@ -1,18 +1,20 @@
-name: CASE247 Regia territoriale 20km · verifica 18:00
+name: CASE247 Regia territoriale 10km · verifica 06:00 e 18:00
 on:
   push:
     branches:
       - main
-      - feature/case247-regia-territoriale-20km-20261111
+      - feature/case247-10km-integrated-20261113
     paths:
       - scripts/case247_territorial_engine.py
       - scripts/test_case247_territorial_engine.py
+      - scripts/test_case247_territorial_publisher_policy.py
+      - scripts/case247_schedule_guard.py
+      - scripts/test_case247_schedule_guard.py
       - scripts/case247_legacy_transition.py
       - scripts/test_case247_legacy_transition.py
       - scripts/case247_quality_gate.py
       - scripts/test_case247_quality_gate.py
-      - scripts/case247_schedule_guard.py
-      - scripts/test_case247_schedule_guard.py
+      - config/case247-territorio.json
       - scripts/sync_sacra_catalog.py
       - .github/workflows/case247-territorial-regia.yml
   workflow_dispatch:
@@ -22,8 +24,8 @@ on:
         type: boolean
         default: true
   schedule:
-    # GitHub Actions cron is UTC; both times cover 18:00 Rome after DST changes.
-    - cron: "0 16,17 * * *"
+    # UTC hour pairs cover 06:00 and 18:00 Rome across DST changes.
+    - cron: "0 4,5,16,17 * * *"
 permissions:
   contents: write
 concurrency:
@@ -45,6 +47,7 @@ jobs:
           python -m unittest discover -s scripts -p test_case247_territorial_engine.py -v
           python -m unittest discover -s scripts -p test_case247_legacy_transition.py -v
           python -m unittest discover -s scripts -p test_case247_quality_gate.py -v
+          python -m unittest discover -s scripts -p test_case247_territorial_publisher_policy.py -v
           python -m unittest discover -s scripts -p test_case247_schedule_guard.py -v
 
   nightly-reconcile:
@@ -52,7 +55,7 @@ jobs:
     if: >
       github.ref == 'refs/heads/main' &&
       (github.event_name == 'workflow_dispatch' ||
-      (github.event_name == 'schedule'))
+      github.event_name == 'schedule' || github.event_name == 'push')
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -62,7 +65,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Reconcile once per Italian evening, including delayed cron starts
+      - name: Idempotent morning/evening plan guard with delayed-cron recovery
         id: local
         env:
           EVENT_NAME: ${{ github.event_name }}
@@ -95,7 +98,8 @@ jobs:
           x=json.loads(Path('campagne/case247/regia-territoriale/latest-plan.json').read_text())
           a=[p for p in x['assignments'] if p['type']=='IMMOBILE']
           assert len({p['listing_id'] for p in a})==len(a)
-          assert all(p['distance_upper_bound_km'] <= 20 for p in a)
+          assert x['max_distance_km'] == 10
+          assert all(p['distance_upper_bound_km'] <= 10 for p in a)
           print('Verified', len(a), 'unique scheduled candidates', 'ready for provider', x['ready_for_provider'])
           PY
       - name: Commit audited catalog and scheduling plans

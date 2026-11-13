@@ -18,7 +18,10 @@ import urllib.parse
 import urllib.request
 from zoneinfo import ZoneInfo
 
-from case247_territorial_engine import ROOT, OUT, read_json, atomic_write, TZ, listed_available, valid_picture, eligible_towns, GEO
+from case247_territorial_engine import (
+    ROOT, OUT, GEO, RADIUS_KM, read_json, atomic_write, TZ,
+    listed_available, valid_picture, eligible_towns,
+)
 from case247_legacy_transition import load_reservations, canonical_listing_url
 
 GRAPH = "https://graph.facebook.com/v26.0"
@@ -143,6 +146,31 @@ def verify_provider_identity(network, account):
     return True
 
 
+def verified_ten_km_assignment(item, listing, towns, geo):
+    """Recompute geographical evidence immediately before any provider request."""
+    if not listing or item.get("source_town_id") != listing.get("town_id"):
+        return False
+    match = next(
+        ((town, km) for town, km in eligible_towns(listing, towns, geo)
+         if town["id"] == item.get("town_id")),
+        None,
+    )
+    distance = item.get("distance_upper_bound_km")
+    return bool(
+        match and isinstance(distance, (int, float)) and not isinstance(distance, bool)
+        and 0 <= distance <= RADIUS_KM
+        and abs(distance - match[1]) <= 0.02
+    )
+
+
+def valid_plan_radius(plan):
+    """A stale or corrupted 20 km plan must never reach Meta."""
+    return (isinstance(plan, dict)
+            and isinstance(plan.get("max_distance_km"), (int, float))
+            and not isinstance(plan.get("max_distance_km"), bool)
+            and plan["max_distance_km"] == RADIUS_KM)
+
+
 def run(live=False,max_per_run=10):
     if live and os.getenv("CASE247_TERRITORIAL_LIVE")!="true":
         raise SystemExit("Live disabled by environment")
@@ -153,13 +181,18 @@ def run(live=False,max_per_run=10):
     if not plan or plan.get("date")!=now.date().isoformat():
         print("No verified current-day plan, nothing sent")
         return
+    if not valid_plan_radius(plan):
+        raise SystemExit("Daily plan radius is not 10 km; publishing blocked")
     # Once-only migration snapshot: protects legacy posts without any recurring
     # Metricool API, quota or subscription. Invalid snapshot fails closed.
     try:
         central_reserved = load_reservations(now.date(), ROOT, OUT)
     except (OSError, ValueError, KeyError, TypeError, json.JSONDecodeError) as error:
         raise SystemExit("Direct Meta legacy-overlap safety configuration invalid") from error
-    all_towns=read_json(CONFIG)["towns"]
+    config=read_json(CONFIG)
+    if not config or config.get("coverage_radius_km") != RADIUS_KM:
+        raise SystemExit("Configured territorial radius does not match 10 km policy")
+    all_towns=config["towns"]
     latest_catalog=read_json(ROOT / "immobili/catalogo.json", {})
     catalog_by_id={str(p["id"]):p for p in latest_catalog.get("items",[])}
     manifest=read_json(ROOT / "campagne/case247/dietro-le-quinte/manifest-60.json", {})
@@ -196,14 +229,10 @@ def run(live=False,max_per_run=10):
             continue
         if item["type"]=="IMMOBILE":
             current=catalog_by_id.get(item["listing_id"])
-            # Re-evaluate the verified municipality AND its conservative 20km
-            # boundary against the freshest catalogue, just before submission.
-            valid_location = False
-            if current and current.get("location_status") == "VERIFICATO_FONTE":
-                valid_location = (
-                    current.get("town_id") == item.get("source_town_id")
-                    and any(t["id"] == item["town_id"] and km <= 20
-                            for t, km in eligible_towns(current, all_towns, verified_geo)))
+            # Recompute the conservative 10km boundary against fresh OSM data.
+            # Reject forged distances, stale town names and unverified locations.
+            valid_location = verified_ten_km_assignment(
+                item, current, all_towns, verified_geo)
             if (not current or not valid_location or not listed_available(current)
                 or not valid_picture(current.get("image"))
                 or current.get("image") != item["media_url"]

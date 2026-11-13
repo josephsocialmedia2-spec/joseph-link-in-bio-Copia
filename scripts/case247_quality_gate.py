@@ -14,7 +14,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 from zoneinfo import ZoneInfo
 
-from case247_territorial_engine import ROOT, OUT, read_json, atomic_write, valid_picture
+from case247_territorial_engine import ROOT, OUT, RADIUS_KM, read_json, atomic_write, valid_picture
 from case247_legacy_transition import load_reservations
 
 MANIFEST = ROOT / "campagne/case247/dietro-le-quinte/manifest-60.json"
@@ -77,6 +77,8 @@ def inspect(config, manifest, plan, *, root=ROOT):
     if bad_urls:
         problems.append("MANIFEST_BAD_PUBLIC_URL")
 
+    if config.get("coverage_radius_km") != RADIUS_KM:
+        problems.append("INVALID_10KM_COVERAGE_CONFIG")
     towns = config.get("towns", [])
     verified_channels, invalid_activated = 0, 0
     for town in towns:
@@ -95,12 +97,14 @@ def inspect(config, manifest, plan, *, root=ROOT):
     if not isinstance(plan, dict) or "assignments" not in plan:
         problems.append("MISSING_EDITORIAL_PLAN")
         plan = {"assignments": [], "ready_for_provider": 0}
+    if plan.get("max_distance_km") != RADIUS_KM:
+        problems.append("PLAN_RADIUS_POLICY_MISMATCH")
     entries = plan["assignments"]
     keys = [(item.get("date"), item.get("type"),
              item.get("listing_id") or item.get("graphic_id")) for item in entries]
     if len(keys) != len(set(keys)):
         problems.append("DUPLICATE_EDITORIAL_ITEM")
-    if any(item.get("distance_upper_bound_km", 0) > 20
+    if any(item.get("distance_upper_bound_km", 0) > RADIUS_KM
            for item in entries if item.get("type") == "IMMOBILE"):
         problems.append("OUT_OF_RADIUS_ASSIGNMENT")
     return {

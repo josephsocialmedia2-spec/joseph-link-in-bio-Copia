@@ -7,7 +7,7 @@
   "territorial_landing_count": 41,
   "desired_facebook_pages": 41,
   "desired_instagram_professional_accounts": 41,
-  "distribution_radius_km": 20,
+  "distribution_radius_km": 10,
   "mode": "ONBOARDING_NOT_PUBLISHING",
   "towns": [
     {

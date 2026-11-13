@@ -26,7 +26,7 @@ CATALOG = ROOT / "immobili/catalogo.json"
 GRAPHICS = ROOT / "campagne/case247/dietro-le-quinte/manifest-60.json"
 OUT = ROOT / "campagne/case247/regia-territoriale"
 TZ = ZoneInfo("Europe/Rome")
-RADIUS_KM = 20.0
+RADIUS_KM = 10.0
 SLOTS = ("00:00", "04:00", "08:00", "12:00", "16:00", "20:00")
 PROPERTY_SLOTS = SLOTS[::2]
 GRAPHIC_SLOTS = SLOTS[1::2]
@@ -176,7 +176,7 @@ def make_plan(day, items, towns, geo, graphics, previous=None, reserved_urls=Non
     for p in sources:
         choices = eligible_towns(p, towns, geo)
         if not choices:
-            exclusions[str(p["id"])] = "NO_VERIFIED_TOWN_WITHIN_20KM"
+            exclusions[str(p["id"])] = "NO_VERIFIED_TOWN_WITHIN_10KM"
             continue
         preferred = "facebook" if (int(hash_order(p["id"], day)[:3], 16) + alternation) % 2 else "instagram"
         viable = []
@@ -338,17 +338,20 @@ def repair_future_today(day, items, towns, geo, old_plan, now_hour=18):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--day", help="Planned day, YYYY-MM-DD (default: next local day)")
+    parser.add_argument("--day", help="Planned day, YYYY-MM-DD (default: today before 18:00 Rome, otherwise tomorrow)")
     parser.add_argument("--geocode", action="store_true", help="Resolve missing municipality bounding boxes")
     parser.add_argument("--max-geocodes", type=int, default=50)
     args = parser.parse_args()
-    today = dt.datetime.now(TZ).date()
-    day = args.day or (today + dt.timedelta(days=1)).isoformat()
+    now = dt.datetime.now(TZ)
+    today = now.date()
+    day = args.day or (today if now.hour < 18 else today + dt.timedelta(days=1)).isoformat()
     config = read_json(CONFIG)
     catalog = read_json(CATALOG)
     manifest = read_json(GRAPHICS)
     if not config or not catalog or not manifest:
         raise SystemExit("Required config/catalog/graphic manifest missing")
+    if config.get("coverage_radius_km") != RADIUS_KM:
+        raise SystemExit("Coverage radius mismatch: config and planner must both be 10 km")
     towns = config["towns"]
     geo_source = read_json(GEO, {"towns": {}})
     geo = geo_source.get("towns", {})

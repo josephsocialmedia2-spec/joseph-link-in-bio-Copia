@@ -1,4 +1,4 @@
-"""41-town network checks: no synthetic Meta accounts, fail-closed 20km routing."""
+"""41-town network checks: no synthetic Meta accounts, fail-closed 10km routing."""
 import json
 import re
 import unittest
@@ -19,10 +19,10 @@ class SocialNetwork41Tests(unittest.TestCase):
         self.assertEqual(a,b)
         self.assertEqual(self.setup["desired_facebook_pages"],41)
         self.assertEqual(self.setup["desired_instagram_professional_accounts"],41)
-        self.assertEqual(self.setup["distribution_radius_km"],20)
+        self.assertEqual(self.setup["distribution_radius_km"],10)
         for t in self.original["towns"]:
             self.assertEqual(t["social_onboarding"]["status"],"PREPARED_NOT_CREATED")
-            self.assertEqual(t["social_onboarding"]["radius_km"],20)
+            self.assertEqual(t["social_onboarding"]["radius_km"],10)
             self.assertFalse(t["auto_publish"])
             self.assertFalse(t["social_onboarding"]["publishing_enabled"])
             self.assertTrue((ROOT/("paesi/"+t["id"]+"/index.html")).is_file())
@@ -61,14 +61,14 @@ class SocialNetwork41Tests(unittest.TestCase):
         self.assertIn("scanned_towns",ui)
         self.assertIn('mode:"scan"',ui)
         self.assertIn('href="./territori/"',home)
-    def test_20km_landing_catalog_is_restricted(self):
+    def test_10km_landing_catalog_is_restricted(self):
         js=read("immobili/catalogo.js")
-        self.assertIn("MAX_RADIUS_KM = 20",js)
+        self.assertIn("MAX_RADIUS_KM = 10",js)
         self.assertIn("localRadiusEligible",js)
         self.assertIn("case247-geo-verified.json",js)
         self.assertIn("location_status !== 'VERIFICATO_FONTE'",js)
         self.assertIn("Promise.all",js)
-        self.assertIn("Immobili dei comuni vicini entro 20 km",js)
+        self.assertIn("Immobili dei comuni vicini entro 10 km",js)
         self.assertNotIn("Nessun altro immobile corrisponde ai filtri",js)
     def test_publisher_gates_preserved(self):
         workflow=read(".github/workflows/case247-territorial-publisher.yml")

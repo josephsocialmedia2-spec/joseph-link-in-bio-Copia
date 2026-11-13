@@ -2,7 +2,7 @@
 
 ## Obiettivo e regole
 Distribuire ogni immobile La Sacra disponibile una sola volta al giorno
-nell'intera rete Facebook + Instagram, fino a 20 km dalla localizzazione
+nell'intera rete Facebook + Instagram, fino a 10 km dalla localizzazione
 pubblica, usando 41 landing territoriali e i canali effettivamente collegati.
 Non ripetere un immobile sullo stesso giorno o per riempire slot liberi.
 I 60 JPG Dietro le quinte vanno sempre presentati come ricostruzioni IA,
@@ -11,7 +11,7 @@ non come documentazione di visite, attività di agenzia o mutui avvenuti.
 ## Meccanismi di sicurezza
 - Catalogo da La Sacra products.json con stato di disponibilità esplicito.
 - Localizzazione da descrizione di fonte verificata, non dal solo titolo.
-- Comune di destinazione entro 20 km, calcolato da bbox comunale conservativa
+- Comune di destinazione entro 10 km, calcolato da bbox comunale conservativa
   OSM/Nominatim quando mancano coordinate esatte dell'immobile.
 - UNKNOWN, SOLD_OUT, ON_HOLD, foto IA come annunci reali, località non
   verificate: nessuna autopubblicazione.
