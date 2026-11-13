@@ -7,6 +7,10 @@ on:
     paths:
       - scripts/case247_territorial_engine.py
       - scripts/test_case247_territorial_engine.py
+      - scripts/case247_legacy_transition.py
+      - scripts/test_case247_legacy_transition.py
+      - scripts/case247_quality_gate.py
+      - scripts/test_case247_quality_gate.py
       - scripts/sync_sacra_catalog.py
       - .github/workflows/case247-territorial-regia.yml
   workflow_dispatch:
