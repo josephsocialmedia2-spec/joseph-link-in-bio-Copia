@@ -14,6 +14,9 @@ on:
       - scripts/test_case247_schedule_guard.py
       - scripts/case247_legacy_transition.py
       - scripts/test_case247_legacy_transition.py
+      - scripts/case247_validate_graphics.py
+      - scripts/test_case247_validate_graphics.py
+      - campagne/case247/dietro-le-quinte/manifest-60.json
       - scripts/case247_quality_gate.py
       - scripts/test_case247_quality_gate.py
       - config/case247-territorio.json
@@ -42,6 +45,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Install pinned image decoder
+        run: python -m pip install --disable-pip-version-check Pillow==12.3.0
       - name: Python syntax
         run: python -m py_compile scripts/case247_territorial_engine.py scripts/sync_sacra_catalog.py
       - name: Geofence and duplicate-safety suite
@@ -52,6 +57,7 @@ jobs:
           python -m unittest discover -s scripts -p test_case247_territorial_publisher_policy.py -v
           python -m unittest discover -s scripts -p test_case247_schedule_guard.py -v
           python -m unittest discover -s scripts -p test_case247_supabase_meta_bridge.py -v
+          python -m unittest discover -s scripts -p test_case247_validate_graphics.py -v
 
   nightly-reconcile:
     needs: unit-tests
@@ -78,6 +84,12 @@ jobs:
         env:
           CASE247_REGIA_BRIDGE_KEY: ${{ secrets.CASE247_REGIA_BRIDGE_KEY }}
         run: python scripts/case247_supabase_meta_bridge.py --sync-config
+      - name: Install pinned image decoder for JPEG integrity audit
+        if: steps.local.outputs.active == 'true'
+        run: python -m pip install --disable-pip-version-check Pillow==12.3.0
+      - name: Technical validation of all 60 JPEG assets
+        if: steps.local.outputs.active == 'true'
+        run: python scripts/case247_validate_graphics.py
       - name: Synchronize live La Sacra catalog
         if: steps.local.outputs.active == 'true'
         run: python scripts/sync_sacra_catalog.py
@@ -115,7 +127,7 @@ jobs:
         run: |
           git config user.name case247-territorial-bot
           git config user.email case247-territorial-bot@users.noreply.github.com
-          git add config/case247-territorio.json immobili/catalogo.json config/case247-geo-verified.json campagne/case247/territorio/bozze.json campagne/case247/regia-territoriale/
+          git add config/case247-territorio.json campagne/case247/dietro-le-quinte/manifest-60.json immobili/catalogo.json config/case247-geo-verified.json campagne/case247/territorio/bozze.json campagne/case247/regia-territoriale/
           if ! git diff --cached --quiet; then
             git commit -m "CASE247: riconciliazione territoriale delle 18"
             git fetch origin main
