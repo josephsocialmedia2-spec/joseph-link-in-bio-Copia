@@ -1,0 +1,409 @@
+{
+  "source": "Metricool brand 7844901 — getScheduledPosts",
+  "checked_at": "2026-11-12",
+  "note": "Solo post draft=false e autoPublish=true; PENDING indica pianificato, non pubblicato. Nessuna modifica ai post Metricool. Intervallo 2026-11-12–2026-12-12 Europe/Rome.",
+  "reservations": {
+    "2026-11-13": [
+      {
+        "metricool_id": 421681918,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/appartamento-4-locali-arredato-in-affitto-a-sant-ambrogio"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-11-13T10:00:00"
+      }
+    ],
+    "2026-11-14": [
+      {
+        "metricool_id": 421681983,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/appartamento-in-vendita-a-sant-ambrogio-di-torino-appena-ribassato"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-11-14T10:00:00"
+      }
+    ],
+    "2026-11-15": [
+      {
+        "metricool_id": 421682060,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/appartamento-in-vendita-a-sant-ambrogio-di-torino-in-piazza-del-comune"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-11-15T10:00:00"
+      },
+      {
+        "metricool_id": 421682114,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-11-15T17:00:00"
+      }
+    ],
+    "2026-11-16": [
+      {
+        "metricool_id": 421947965,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/bilocale-in-affitto-a-santambrogio-di-torino-con-box-e-posto-auto"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-11-16T10:00:00"
+      }
+    ],
+    "2026-11-17": [
+      {
+        "metricool_id": 421948090,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/bilocale-in-vendita-a-sant-ambrogio"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-11-17T10:00:00"
+      }
+    ],
+    "2026-11-18": [
+      {
+        "metricool_id": 421948195,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/bilocale-in-vendita-a-sant-ambrogio-disponibile-subito"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-11-18T10:00:00"
+      },
+      {
+        "metricool_id": 421948273,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-11-18T17:00:00"
+      }
+    ],
+    "2026-11-19": [
+      {
+        "metricool_id": 421948352,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/casa-in-vendita-a-sant-ambrogio-con-doppia-esposizione-e-riscaldamento-autonomo"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-11-19T10:00:00"
+      }
+    ],
+    "2026-11-20": [
+      {
+        "metricool_id": 421948438,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/casa-indipendente-in-vendita-a-santambrogio-di-torino-con-terrazzo-e-giardino"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-11-20T10:00:00"
+      }
+    ],
+    "2026-11-21": [
+      {
+        "metricool_id": 421948510,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-11-21T17:00:00"
+      }
+    ],
+    "2026-11-22": [
+      {
+        "metricool_id": 421948632,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/porzione-di-villa-in-vendita-a-sant-ambrogio-con-giardino-e-piscina"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-11-22T10:00:00"
+      }
+    ],
+    "2026-11-23": [
+      {
+        "metricool_id": 421948730,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/terreno-agricolo-in-vendita-a-sant-ambrogio-di-torino-di-circa-2-000-mq"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-11-23T10:00:00"
+      }
+    ],
+    "2026-11-24": [
+      {
+        "metricool_id": 421948833,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/terreno-edificabile-in-vendita-a-sant-ambrogio-di-torino-di-10-000-mq"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-11-24T10:00:00"
+      },
+      {
+        "metricool_id": 421948922,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-11-24T17:00:00"
+      }
+    ],
+    "2026-11-25": [
+      {
+        "metricool_id": 421949008,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/appartamento-in-vendita-a-villar-dora-libero-subito-con-cortile-privato"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-11-25T10:00:00"
+      }
+    ],
+    "2026-11-27": [
+      {
+        "metricool_id": 421949123,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-11-27T17:00:00"
+      }
+    ],
+    "2026-11-28": [
+      {
+        "metricool_id": 421949230,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/appartamento-in-vendita-a-caprie-ultimo-piano-con-ascensore"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-11-28T10:00:00"
+      }
+    ],
+    "2026-11-29": [
+      {
+        "metricool_id": 421949340,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/appartamento-4-locali-arredato-in-affitto-a-sant-ambrogio"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-11-29T10:00:00"
+      }
+    ],
+    "2026-11-30": [
+      {
+        "metricool_id": 421949627,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/appartamento-in-vendita-a-sant-ambrogio-di-torino-appena-ribassato"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-11-30T10:00:00"
+      },
+      {
+        "metricool_id": 421949736,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-11-30T17:00:00"
+      }
+    ],
+    "2026-12-01": [
+      {
+        "metricool_id": 421950888,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/appartamento-in-vendita-a-sant-ambrogio-di-torino-in-piazza-del-comune"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-12-01T10:00:00"
+      }
+    ],
+    "2026-12-02": [
+      {
+        "metricool_id": 421951012,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/bilocale-in-affitto-a-santambrogio-di-torino-con-box-e-posto-auto"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-12-02T10:00:00"
+      }
+    ],
+    "2026-12-03": [
+      {
+        "metricool_id": 421951238,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/bilocale-in-vendita-a-sant-ambrogio"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-12-03T10:00:00"
+      },
+      {
+        "metricool_id": 421951337,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-12-03T17:00:00"
+      }
+    ],
+    "2026-12-04": [
+      {
+        "metricool_id": 421952809,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/bilocale-in-vendita-a-sant-ambrogio-disponibile-subito"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-12-04T10:00:00"
+      }
+    ],
+    "2026-12-05": [
+      {
+        "metricool_id": 421953063,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/casa-in-vendita-a-sant-ambrogio-con-doppia-esposizione-e-riscaldamento-autonomo"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-12-05T10:00:00"
+      }
+    ],
+    "2026-12-06": [
+      {
+        "metricool_id": 421953181,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/casa-indipendente-in-vendita-a-santambrogio-di-torino-con-terrazzo-e-giardino"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-12-06T10:00:00"
+      },
+      {
+        "metricool_id": 421953285,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-12-06T17:00:00"
+      }
+    ],
+    "2026-12-08": [
+      {
+        "metricool_id": 421953396,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/porzione-di-villa-in-vendita-a-sant-ambrogio-con-giardino-e-piscina"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-12-08T10:00:00"
+      }
+    ],
+    "2026-12-09": [
+      {
+        "metricool_id": 421953530,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/terreno-agricolo-in-vendita-a-sant-ambrogio-di-torino-di-circa-2-000-mq"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-12-09T10:00:00"
+      },
+      {
+        "metricool_id": 421953701,
+        "urls": [
+          "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq"
+        ],
+        "status": {
+          "facebook": "PENDING",
+          "instagram": "PENDING"
+        },
+        "publication_date": "2026-12-09T17:00:00"
+      }
+    ]
+  }
+}
