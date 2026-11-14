@@ -1,21 +1,8 @@
 {
-  "source": "Metricool brand 7844901 — getScheduledPosts",
-  "checked_at": "2026-11-13",
-  "note": "Solo post draft=false e autoPublish=true; PENDING indica pianificato, non pubblicato. Stati provider mantenuti separati. Intervallo 2026-11-13–2026-12-13 Europe/Rome. Nessuna modifica ai post Metricool.",
+  "source": "Metricool brand 7844901 / getScheduledPosts / Facebook e Instagram",
+  "checked_at": "2026-11-14",
+  "note": "Riconciliazione sola lettura Metricool; solo draft=false e autoPublish=true. PENDING non equivale a pubblicato. Il connettore include anche stati PUBLISHED nella finestra richiesta; nessuna modifica ai post. Sincronizzazione catalogo e assegnazioni demandata al workflow delle 18:00.",
   "reservations": {
-    "2026-11-13": [
-      {
-        "metricool_id": 421681918,
-        "urls": [
-          "https://lasacraimmobiliare.it/products/appartamento-4-locali-arredato-in-affitto-a-sant-ambrogio"
-        ],
-        "status": {
-          "facebook": "PUBLISHED",
-          "instagram": "PUBLISHED"
-        },
-        "publication_date": "2026-11-13T10:00:00"
-      }
-    ],
     "2026-11-14": [
       {
         "metricool_id": 421681983,
@@ -23,8 +10,8 @@
           "https://lasacraimmobiliare.it/products/appartamento-in-vendita-a-sant-ambrogio-di-torino-appena-ribassato"
         ],
         "status": {
-          "facebook": "PENDING",
-          "instagram": "PENDING"
+          "facebook": "PUBLISHED",
+          "instagram": "PUBLISHED"
         },
         "publication_date": "2026-11-14T10:00:00"
       }
