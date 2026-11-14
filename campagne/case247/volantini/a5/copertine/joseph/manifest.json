@@ -1,0 +1,154 @@
+{
+  "project": "CASE247",
+  "section": "volantini/A5/copertine esterne",
+  "owner": "Joseph",
+  "state": "IN_RACCOLTA_NON_APPROVATE",
+  "format_intended": "A5 portrait 148 x 210 mm",
+  "file_format": "WebP qualità 93, dimensioni originali inalterate",
+  "original_storage": "Google Drive - CASE247_TEMP_GITHUB_JOSEPH_A5_20261111",
+  "images": [
+    {
+      "order_received": 1,
+      "webp_path": "webp/01-promozione-immobiliare.webp",
+      "git_blob_sha": "4111d010d6146f114dc7b38b493e778eeb41fa08",
+      "original_name": "Case in pubblicità immobiliare 24_7(1).png",
+      "original_drive_url": "https://drive.google.com/file/d/194skh2nt6e3up3M-vZCoWdAQ-wdK64wN/view",
+      "source_pixels": {
+        "width": 1122,
+        "height": 1402
+      },
+      "subject": "Promozione immobiliare",
+      "duplicate_of": null,
+      "approved": false
+    },
+    {
+      "order_received": 2,
+      "webp_path": "webp/02-valorizziamo-immobile-digitale.webp",
+      "git_blob_sha": "c16904c097dfcc37d7c41ae478fcf2ab02eb416b",
+      "original_name": "Valorizziamo il tuo immobile digitale(1).png",
+      "original_drive_url": "https://drive.google.com/file/d/17Z4JT4VxcAdRaYgsIkDrXAXaeNU0VSRq/view",
+      "source_pixels": {
+        "width": 1254,
+        "height": 1254
+      },
+      "subject": "Valorizzazione digitale",
+      "duplicate_of": null,
+      "approved": false
+    },
+    {
+      "order_received": 3,
+      "webp_path": "webp/03-visita-villa-panoramica.webp",
+      "git_blob_sha": "1f6a216d40cb1a071616280270bb0449c06e8ba2",
+      "original_name": "Visita a una villa panoramica(1).png",
+      "original_drive_url": "https://drive.google.com/file/d/15Feca4RP_l-JThVzNaMq10XR6VYnt_6U/view",
+      "source_pixels": {
+        "width": 1122,
+        "height": 1402
+      },
+      "subject": "Visita immobiliare",
+      "duplicate_of": null,
+      "approved": false
+    },
+    {
+      "order_received": 4,
+      "webp_path": "webp/04-case-pubblicita-avigliana.webp",
+      "git_blob_sha": "e4f2e4dc003d0aea4b4dc59df68ebd1b67059ee3",
+      "original_name": "Case in pubblicità ad Avigliana(1).png",
+      "original_drive_url": "https://drive.google.com/file/d/1JxJN-8mr37S_PPL_lVIUII0VOxSFH7Hv/view",
+      "source_pixels": {
+        "width": 1122,
+        "height": 1402
+      },
+      "subject": "Avigliana e Valle di Susa",
+      "duplicate_of": null,
+      "approved": false
+    },
+    {
+      "order_received": 5,
+      "webp_path": "webp/05-valorizziamo-casa-lago.webp",
+      "git_blob_sha": "52cb431e4692dda13dffd11695eac239ad115d7f",
+      "original_name": "Valorizziamo la tua casa sul lago(1).png",
+      "original_drive_url": "https://drive.google.com/file/d/1QKGmWPKmnk1vl9LIcwGFUVV5znDggXH6/view",
+      "source_pixels": {
+        "width": 1122,
+        "height": 1402
+      },
+      "subject": "Valorizzazione casa",
+      "duplicate_of": null,
+      "approved": false
+    },
+    {
+      "order_received": 6,
+      "webp_path": "webp/06-villa-indipendente-avigliana.webp",
+      "git_blob_sha": "d99180150ce59175bfa7109155f6b416b14d6440",
+      "original_name": "Villa indipendente ad Avigliana sul lago(1).png",
+      "original_drive_url": "https://drive.google.com/file/d/1U-BPLvwfntOpWg_14oUZRRzpICGNRGLW/view",
+      "source_pixels": {
+        "width": 1122,
+        "height": 1402
+      },
+      "subject": "Villa in vendita, collaborazione Immobiliare La Sacra",
+      "duplicate_of": null,
+      "approved": false
+    },
+    {
+      "order_received": 7,
+      "webp_path": "webp/07-speciale-natale-caprie.webp",
+      "git_blob_sha": "9a768c308973c145fef2a4a7d1aa42d90843936e",
+      "original_name": "Speciale Natale_ Appartamento a Caprie.png",
+      "original_drive_url": "https://drive.google.com/file/d/1gw8Bq5Iuuie1CKTkMnMbQzSKHfChEgGv/view",
+      "source_pixels": {
+        "width": 1199,
+        "height": 1312
+      },
+      "subject": "Speciale Natale Caprie, informazioni e prezzo da verificare",
+      "duplicate_of": null,
+      "approved": false
+    },
+    {
+      "order_received": 8,
+      "webp_path": "webp/08-guida-vendita-avigliana.webp",
+      "git_blob_sha": "91b12704a49235d1d67e6bc1b293a09e4565daf4",
+      "original_name": "Guida alla vendita casa ad Avigliana (1).png",
+      "original_drive_url": "https://drive.google.com/file/d/1YS8MF0s3tthCHJG5SOTf9LCTLkulxTmw/view",
+      "source_pixels": {
+        "width": 1055,
+        "height": 1491
+      },
+      "subject": "Guida vendita casa Avigliana",
+      "duplicate_of": null,
+      "approved": false
+    },
+    {
+      "order_received": 9,
+      "webp_path": "webp/09-guida-vendita-avigliana-duplicato.webp",
+      "git_blob_sha": "91b12704a49235d1d67e6bc1b293a09e4565daf4",
+      "original_name": "Guida alla vendita casa ad Avigliana(1)(1).png",
+      "original_drive_url": "https://drive.google.com/file/d/16MaNUGTLklIgnm_Q3RqZ45JshmiaYS07/view",
+      "source_pixels": {
+        "width": 1055,
+        "height": 1491
+      },
+      "subject": "Copia identica della grafica 08",
+      "duplicate_of": "08-guida-vendita-avigliana.webp",
+      "approved": false
+    }
+  ],
+  "summary": {
+    "received": 9,
+    "distinct": 8,
+    "identical_duplicate_pair": [
+      8,
+      9
+    ],
+    "final_a5_pdf_built": false
+  },
+  "workflow": {
+    "next": "Attendere ulteriori copertine Joseph; poi definire selezione/ordine e adattamento A5 senza tagli arbitrari",
+    "separate_branches": [
+      "assets/case247-a5-copertine-cristian",
+      "assets/case247-a5-copertine-ylenia"
+    ],
+    "forbid_auto_publish": true
+  }
+}
