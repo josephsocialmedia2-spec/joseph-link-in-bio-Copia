@@ -1,0 +1,26 @@
+/* CASE247 / LA SACRA — catalogo pubblico, tema blu-azzurro-bianco */
+body.case247-unified{background:#F4FAFF!important;color:#163956!important}
+body.case247-unified #case247-site-header{background:#fff!important;color:#173B59!important;border-top:4px solid #4DA8DA!important;border-bottom:1px solid #DCEAF4!important}
+#case247-site-header .case247-brand-pair{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+#case247-site-header .case247-sacra{display:flex;align-items:center;gap:10px;text-decoration:none!important}
+#case247-site-header .case247-sacra-bg{display:flex;align-items:center;justify-content:center;background:#173B59;border-radius:4px;width:110px;height:64px;padding:7px}
+#case247-site-header .case247-sacra-bg img{width:100%;height:100%;object-fit:contain}
+#case247-site-header .case247-sacra-label{display:block;color:#173B59;font:700 12px/1.4 Arial,sans-serif}
+#case247-site-header .case247-sacra-label small{display:block;font-size:10px;font-weight:400;color:#5E7887}
+#case247-site-header .case247-cobrand-separator{display:block;height:52px;width:1px;background:#CEE4F0}
+#case247-site-header .case247-brand img{display:block;max-width:230px;width:min(45vw,230px);height:auto;max-height:72px;object-fit:contain}
+#case247-site-header .case247-menu a,#case247-site-header .case247-toplinks a{color:#174B73!important}
+body.case247-unified #case-preview{background:#F4FAFF!important;color:#173B59!important;border-top:0!important}
+body.case247-unified #case-preview nav{border-color:#D6E9F3!important}
+body.case247-unified #case-preview nav button.active{background:#1A3A5C!important;color:#fff!important;border-color:#1A3A5C!important;padding:8px 12px!important;border-radius:6px!important}
+body.case247-unified #case-preview nav button:not(.active){color:#174B73!important}
+body.case247-unified #case-preview .filters{border-color:#D5E8F3!important;background:#fff!important}
+body.case247-unified #case-preview .source a,body.case247-unified #case-preview .reset{color:#126C9B!important}
+body.case247-unified #case-preview .pages button.active{background:#1A3A5C!important;border-color:#1A3A5C!important;color:#fff!important}
+body.case247-unified #case-preview .pages button:not(.active){color:#174B73!important}
+body.case247-unified #case-preview .price{color:#173B59!important}
+body.case247-unified #case-preview .badge{color:#175A86!important}
+body.case247-unified #case-preview .header-actions a{color:#176D9D!important}
+body.case247-unified #case-preview .grid article{border:1px solid #D8EAF4}
+@media(max-width:900px){#case247-site-header .case247-header-inner{display:flex!important;align-items:flex-start!important;flex-wrap:wrap!important;padding:14px 16px!important}#case247-site-header .case247-brand-pair{gap:12px}#case247-site-header .case247-toplinks{gap:12px}}
+@media(max-width:580px){#case247-site-header .case247-sacra{width:100%}#case247-site-header .case247-cobrand-separator{display:none}#case247-site-header .case247-brand img{width:210px;max-width:210px}#case247-site-header .case247-menu{overflow-x:auto;flex-wrap:nowrap!important;white-space:nowrap;padding:10px 14px!important}#case247-site-header .case247-menu a{flex:none!important}body.case247-unified #case-preview nav{overflow-x:auto;flex-wrap:nowrap!important;white-space:nowrap}body.case247-unified #case-preview nav button{flex:none}}
