@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 150" role="img" aria-labelledby="logoTitle logoDesc">
+<title id="logoTitle">Case in Pubblicità 24/7</title>
+<desc id="logoDesc">Logo del servizio di marketing e pubblicità immobiliare dedicato a La Sacra Immobiliare.</desc>
+<g transform="translate(7,9)">
+<rect x="0" y="0" width="126" height="126" rx="15" fill="#173B59"/>
+<path d="M19 62 L63 24 L107 62" fill="none" stroke="#75C9EE" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M33 63 V105 H93 V63" fill="none" stroke="#FFFFFF" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="53" y="76" width="20" height="29" fill="#75C9EE" rx="2"/>
+<circle cx="95" cy="34" r="4.5" fill="#FFFFFF"/>
+<path d="M103 15 Q120 27 115 45" fill="none" stroke="#75C9EE" stroke-width="5" stroke-linecap="round"/>
+<path d="M109 6 Q137 24 128 54" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity=".88"/>
+</g>
+<g font-family="Arial,Helvetica,sans-serif" fill="#173B59">
+<text x="156" y="48" font-size="30" font-weight="800" letter-spacing="2">CASE IN</text>
+<text x="156" y="89" font-size="36" font-weight="900" letter-spacing=".1">PUBBLICITÀ <tspan fill="#1885BF">24/7</tspan></text>
+<path d="M156 101 H532" stroke="#75C9EE" stroke-width="3"/>
+<text x="156" y="122" font-size="13.5" font-weight="700" letter-spacing="2.05">MARKETING IMMOBILIARE</text>
+<text x="156" y="138" font-size="11.5" fill="#446A83" letter-spacing=".7">PER IMMOBILIARE LA SACRA</text>
+</g>
+</svg>
