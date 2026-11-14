@@ -38,7 +38,7 @@ function redraw(){
  grid.replaceChildren();
  for(const t of list)grid.append(card(t));
  if(!list.length)grid.append(elt("p","cp-empty","Nessun comune trovato: cambia il filtro o la ricerca."));
- if(status)status.textContent=list.length+" comuni · "+Array.from(counts.values()).reduce((a,b)=>a+b,0)+" immobili geolocalizzati nel catalogo";
+ if(status)status.textContent=list.length+" comuni · "+list.reduce((sum,t)=>sum+(counts.get(t.id)||0),0)+" immobili geolocalizzati nel catalogo";
  if(!map)return;
  const show=new Set(list.map(t=>t.id));
  for(const [id,marker] of markers){if(show.has(id)&&!map.hasLayer(marker))marker.addTo(map);if(!show.has(id)&&map.hasLayer(marker))map.removeLayer(marker);}
