@@ -266,3 +266,55 @@ body{padding-bottom:68px}
 .cp-mobile-action{background:#1A3A5C;color:#FFFFFF;border-top:3px solid #4DA8DA}
 .cp-mobile-action:hover{background:#28618B}
 @media(max-width:680px){.cp-partner-logo{min-width:220px;min-height:90px}.cp-partner-logo img{max-width:220px}}
+
+
+/* CASE247 · BRAND ARCHITECTURE / LA SACRA (2026-11-14) */
+.cp-head-inner{min-height:110px;gap:24px}
+.cp-identity{display:flex;align-items:center;gap:21px;min-width:0;flex:1 1 auto}
+.cp-sacra-identity{display:flex;align-items:center;gap:12px;text-decoration:none;flex:none;color:#163956;min-width:0}
+.cp-sacra-logo{display:flex;align-items:center;justify-content:center;width:118px;min-width:118px;height:65px;background:#173B59;border-radius:4px;padding:8px}
+.cp-sacra-logo img{width:100%;height:100%;object-fit:contain}
+.cp-sacra-word{font-size:12px;font-weight:800;letter-spacing:.035em;line-height:1.25;max-width:150px}
+.cp-sacra-word small{display:block;margin-top:5px;font-size:10px;line-height:1.4;font-weight:500;color:#6B8190;letter-spacing:0}
+.cp-brand-divider{height:52px;width:1px;background:#C6DDEB;flex:none}
+.cp-brand-image{display:block;min-width:185px;max-width:245px;flex:1 1 245px}
+.cp-brand-image img{display:block;width:100%;height:auto;max-height:75px;object-fit:contain;object-position:left center}
+.cp-head .cp-nav{gap:18px;font-size:11px;justify-content:flex-end;flex:0 1 auto}
+.cp-head .cp-nav a{white-space:nowrap}
+.cp-head .cp-nav .cp-nav-cta{padding:12px 14px;min-height:44px}
+.cp-topline{background:#173B59;color:#D8EDF9}
+.cp-topline span:first-child{font-weight:800}
+.cp-affiliation{color:#5A7689;font-size:11px;line-height:1.4;margin:0}
+.cp-partner-intro{background:#E8F6FD;padding:14px 0;border-bottom:1px solid #CDE8F7}
+.cp-partner-intro .cp-wrap{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.cp-partner-intro p{margin:0;color:#1A3A5C;font-size:12px;font-weight:700}
+.cp-partner-intro a{color:#115E8E;font-weight:800;font-size:12px}
+.cp-brand-cta-group{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-top:20px}
+.cp-brand-cta-group .cp-btn{min-height:48px}
+.cp-partner-copy .cp-partner-tag{color:#176F9E}
+.cp-partner-copy .cp-partner-logo{background:#173B59}
+.cp-footer .cp-affiliation-note{border-top:1px solid #365B75;color:#BED5E5;padding-top:14px;margin-top:26px;font-size:12px;line-height:1.6}
+@media(max-width:1250px){
+ .cp-head-inner{flex-wrap:wrap;justify-content:space-between;padding-top:13px;padding-bottom:14px}
+ .cp-head .cp-nav{flex:1 1 100%;justify-content:flex-start;padding-top:8px;border-top:1px solid #E7F0F5}
+}
+@media(max-width:760px){
+ .cp-head-inner{gap:12px;min-height:auto}
+ .cp-identity{gap:12px;flex-wrap:wrap;width:100%}
+ .cp-sacra-logo{width:91px;min-width:91px;height:54px}
+ .cp-sacra-word{max-width:170px;font-size:11px}
+ .cp-sacra-word small{font-size:9px;margin-top:2px}
+ .cp-brand-divider{display:none}
+ .cp-brand-image{min-width:160px;width:205px;flex:0 0 205px}
+ .cp-brand-image img{max-height:60px}
+ .cp-head .cp-nav{display:flex;width:100%;flex:1 1 100%;justify-content:flex-start;padding-top:8px;overflow-x:auto;scrollbar-width:thin;flex-wrap:nowrap}
+}
+@media(max-width:430px){
+ .cp-identity{align-items:flex-start;gap:6px}
+ .cp-sacra-identity{width:100%;gap:10px}
+ .cp-brand-image{width:208px;flex:0 0 208px}
+ .cp-brand-image img{max-height:59px}
+ .cp-brand-divider{display:none}
+ .cp-topline .cp-wrap{justify-content:flex-start}
+ .cp-partner-intro .cp-wrap{align-items:flex-start}
+}

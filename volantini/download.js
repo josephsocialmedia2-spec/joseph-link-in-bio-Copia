@@ -22,13 +22,13 @@
     const txt = (x,y,s,size=12,bold=false,fill="#102e47") =>
       commands.push(color(fill)+" rg BT /F"+(bold?2:1)+" "+size+" Tf 1 0 0 1 "+x+" "+y+" Tm ("+escapePdf(s)+") Tj ET");
     rect(0,0,595,842,"#f7f9fc");
-    rect(0,582,595,260,"#082b48");
-    rect(0,575,595,7,"#f3b954");
+    rect(0,582,595,260,"#173B59");
+    rect(0,575,595,7,"#71C9F2");
     txt(43,782,"CASE IN PUBBLICITA 24/7",25,true,"#ffffff");
-    txt(43,749,"DIGITAL STRATEGY  |  PROMOZIONE IMMOBILIARE",11,false,"#bfdcef");
+    txt(43,749,"MARKETING IMMOBILIARE PER LA SACRA",11,false,"#bfdcef");
     txt(43,682,"LA VISIBILITA",31,true,"#ffffff");
     txt(43,641,"DEL TUO IMMOBILE",31,true,"#ffffff");
-    txt(43,607,"Avigliana - Valle di Susa - Torino",13,false,"#f3b954");
+    txt(43,607,"La Sacra Immobiliare - Avigliana - Torino",13,false,"#71C9F2");
     txt(43,529,"UNA STRATEGIA DI COMUNICAZIONE SU MISURA",16,true);
     txt(43,503,"Presentiamo gli immobili in modo chiaro, riconoscibile e professionale.",11);
     txt(43,486,"Ogni azione promozionale parte da obiettivi, contenuti e canali adeguati.",11);
@@ -47,14 +47,14 @@
     }
     txt(43,273,"VUOI CONOSCERE IL NOSTRO APPROCCIO?",16,true);
     txt(43,246,"Esplora il progetto online o richiedi informazioni tramite WhatsApp.",11);
-    rect(43,146,509,70,"#082b48");
-    txt(60,189,"Joseph Malafronte  |  Personal Digital Strategist",14,true,"#ffffff");
-    txt(60,163,"WhatsApp +39 371 370 8294",12,false,"#f3b954");
+    rect(43,146,509,70,"#173B59");
+    txt(60,189,"Joseph Malafronte  |  Marketing immobiliare",14,true,"#ffffff");
+    txt(60,163,"WhatsApp +39 371 370 8294",12,false,"#71C9F2");
     txt(43,114,"case in pubblicita 24/7  |  catalogo e informazioni sul sito",10,true);
     txt(43,96,"josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/",9,false,"#23577c");
     line(43,77,552,77,"#b6ccdb");
-    txt(43,58,"Servizi di marketing, comunicazione e pubblicita immobiliare.",9);
-    txt(43,43,"Non svolgiamo attivita di intermediazione. Nessuna promessa di vendita.",9);
+    txt(43,58,"Marketing e pubblicita immobiliare per La Sacra Immobiliare.",9);
+    txt(43,43,"Intermediazione e trattative: Immobiliare La Sacra, agenti abilitati.",9);
     const stream=commands.join("\n")+"\n";
     const objects=[
       "<< /Type /Catalog /Pages 2 0 R >>",
