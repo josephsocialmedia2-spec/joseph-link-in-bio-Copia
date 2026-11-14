@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "status": "PROPOSAL_DRY_RUN_ONLY",
+  "production_config": "config/case247-territorio.json",
+  "production_radius_km": 10,
+  "candidate_radius_km": 20,
+  "geofence_method": "Conservative source-municipality bounding box to destination municipality centroid (geodesic)",
+  "towns_expected": 42,
+  "preflight_requirements": [
+    "source municipality verified",
+    "source municipality bounds available",
+    "destination municipality coordinates verified",
+    "no duplicate listing across territories",
+    "all provider account permissions checked",
+    "explicit owner approval before changing production 10 km radius"
+  ],
+  "never_publish_from_candidate": true
+}

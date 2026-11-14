@@ -1,4 +1,5 @@
 import json
+from html.parser import HTMLParser
 from pathlib import Path
 import unittest
 from build_territorial_drafts import mention_ids
@@ -6,6 +7,18 @@ from verified_locations import apply_locations
 import copy
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+class LandingBody(HTMLParser):
+    """Read the actual page contract without brittle substring matching."""
+    def __init__(self):
+        super().__init__()
+        self.body = None
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "body" and self.body is None:
+            self.body = dict(attrs)
+
 
 class TerritoryRoutingTests(unittest.TestCase):
     def setUp(self):
@@ -52,11 +65,26 @@ class TerritoryRoutingTests(unittest.TestCase):
             self.assertIn(draft['landing_url'], draft['caption'])
 
     def test_all_towns_have_landings_without_opt_in(self):
+        # The public front-end uses document.body.dataset.cpTown (NOT townId).
+        js = (ROOT / "assets/case247-premium.js").read_text(encoding="utf-8")
+        self.assertIn("body.dataset.cpTown", js)
+        self.assertIn('page==="town"', js)
+        self.assertEqual(len(self.towns), 42)
+        self.assertEqual(len({town["id"] for town in self.towns}), 42)
         for town in self.towns:
-            page = (ROOT / 'paesi' / town['id'] / 'index.html').read_text()
-            self.assertNotIn('id="town-all"', page)
-            self.assertIn('data-town-id="' + town['id'] + '"', page)
-            self.assertFalse(town['auto_publish'])
+            with self.subTest(town=town["id"]):
+                page = (ROOT / "paesi" / town["id"] / "index.html").read_text(encoding="utf-8")
+                parser = LandingBody()
+                parser.feed(page)
+                self.assertIsNotNone(parser.body)
+                self.assertEqual(parser.body.get("data-cp-page"), "town")
+                self.assertEqual(parser.body.get("data-cp-town"), town["id"])
+                # If a legacy alias is ever reintroduced, it must be identical.
+                if "data-town-id" in parser.body:
+                    self.assertEqual(parser.body["data-town-id"], town["id"])
+                self.assertIn("case247-premium.js", page)
+                self.assertNotIn('id="town-all"', page)
+                self.assertFalse(town["auto_publish"])
 
 if __name__ == '__main__':
     unittest.main()
