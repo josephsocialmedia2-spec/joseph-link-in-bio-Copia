@@ -104,8 +104,24 @@ jobs:
           python -m unittest discover -s scripts -p 'test_case247_supabase_meta_bridge.py' -v
       - name: Deterministic dry run validates zero Meta and ledger writes
         run: python -m unittest discover -s scripts -p 'test_case247_dry_run.py' -v
-      - name: Live code entrypoint invoked without --live
-        run: python scripts/case247_territorial_publisher.py --max-per-run 10
+      - name: Build fresh offline territorial plan from public catalog (workspace only)
+        run: |
+          python scripts/sync_sacra_catalog.py
+          python scripts/build_territorial_drafts.py
+          python scripts/case247_territorial_engine.py --day "$(TZ=Europe/Rome date +%F)"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          plan=json.loads(Path('campagne/case247/regia-territoriale/latest-plan.json').read_text())
+          assert plan['max_distance_km']==10
+          assert plan['ready_for_provider']==0
+          assert all(a['status']=='BLOCKED_CHANNEL_NOT_CONNECTED' for a in plan['assignments'])
+          print('Generated offline plan:',len(plan['assignments']),'assignments; all correctly blocked')
+          PY
+      - name: Publisher executable in dry run against fresh plan, zero real posts
+        run: |
+          python scripts/case247_territorial_publisher.py --max-per-run 10
+          python scripts/case247_quality_gate.py --output /tmp/case247-fresh-plan-health.json
 
   read-only-quality-gate:
     runs-on: ubuntu-latest
