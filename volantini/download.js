@@ -1,4 +1,4 @@
-/* CASE247 | Download PDF di presentazione aziendale.
+/* Immobiliare La Sacra | Download PDF di presentazione aziendale.
    Non contiene dati di immobili e non registra alcun consenso marketing.
    Per sostituire il PDF dopo la verifica del catalogo, pubblicare il PDF
    approvato in /volantini/ e impostare APPROVED_PDF_PATH qui sotto. */

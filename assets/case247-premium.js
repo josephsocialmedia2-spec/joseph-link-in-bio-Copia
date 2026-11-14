@@ -46,14 +46,14 @@ function renderTowns(towns){
 }
 function propertyCard(it){
  const card=make("article","cp-property");
- const photo=make("a","cp-property-photo");photo.href=it.url;photo.target="_blank";photo.rel="noopener noreferrer";photo.setAttribute("aria-label","Apri la scheda immobile sul sito di La Sacra Immobiliare");
+ const photo=make("a","cp-property-photo");photo.href=it.url;photo.target="_blank";photo.rel="noopener noreferrer";photo.setAttribute("aria-label","Apri la scheda immobile sul sito di Immobiliare La Sacra");
  if(goodImg(it.image)){
   const img=make("img");img.src=it.image;img.loading="lazy";img.decoding="async";img.alt="Fotografia dell'immobile "+it.title;img.onerror=()=>{img.remove();photo.append(make("span","cp-empty","Fotografia disponibile nella scheda del partner."));};
   photo.append(img);
  }else{photo.append(make("span","cp-empty","Immagine consultabile sulla scheda ufficiale."));}
  const info=make("div","cp-property-body");
  const meta=make("div","cp-property-meta");
- meta.append(make("span","",it.municipality||"Località da confermare"),make("span","","La Sacra Immobiliare"));
+ meta.append(make("span","",it.municipality||"Località da confermare"),make("span","","Immobiliare La Sacra"));
  const title=make("h3","",it.title);
  const price=make("div","cp-property-price",money(it.price));
  const link=make("a","cp-property-cta","Esplora la scheda originale →");
@@ -75,20 +75,20 @@ function renderProperties(items,stamp){
  }
  const cnt=$("cp-feature-count");if(cnt)cnt.textContent=shown.length===1?"1 immobile associato al territorio":shown.length+" immobili associati al territorio";
  const upd=$("cp-catalog-updated");
- if(upd){const date=new Date(stamp);upd.textContent=Number.isNaN(date.getTime())?"Fonte: catalogo La Sacra Immobiliare":"Ultimo aggiornamento catalogo: "+date.toLocaleDateString("it-IT",{day:"2-digit",month:"long",year:"numeric",timeZone:"Europe/Rome"});}
+ if(upd){const date=new Date(stamp);upd.textContent=Number.isNaN(date.getTime())?"Fonte: catalogo Immobiliare La Sacra":"Ultimo aggiornamento catalogo: "+date.toLocaleDateString("it-IT",{day:"2-digit",month:"long",year:"numeric",timeZone:"Europe/Rome"});}
 }
 async function init(){
  const name=body.dataset.cpTownName||"";
  setupWa(page==="town"?name:"");
  const requests=[];
  if(false && $("cp-town-grid"))requests.push(fetch(ROOT+"config/case247-territorio.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("Errore territori");return r.json()}).then(data=>renderTowns(Array.isArray(data.towns)?data.towns:[])).catch(()=>{const grid=$("cp-town-grid");grid?.replaceChildren(make("div","cp-empty","Elenco territoriale momentaneamente non disponibile. Consulta la pagina Paesi dal menu."))}));
- if($("cp-feature-grid"))requests.push(fetch(ROOT+"immobili/catalogo.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("Errore catalogo");return r.json()}).then(data=>renderProperties(Array.isArray(data.items)?data.items:[],data.last_success_at)).catch(()=>{const grid=$("cp-feature-grid");grid?.replaceChildren(make("div","cp-empty","Catalogo momentaneamente non disponibile. Consulta gli annunci sul sito La Sacra Immobiliare."));}));
+ if($("cp-feature-grid"))requests.push(fetch(ROOT+"immobili/catalogo.json",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("Errore catalogo");return r.json()}).then(data=>renderProperties(Array.isArray(data.items)?data.items:[],data.last_success_at)).catch(()=>{const grid=$("cp-feature-grid");grid?.replaceChildren(make("div","cp-empty","Catalogo momentaneamente non disponibile. Consulta gli annunci sul sito Immobiliare La Sacra."));}));
  await Promise.all(requests);
 }
 
 if(page==="town"){
  const target=document.getElementById("promozione");
- if(target&&!document.getElementById("partner"))target.insertAdjacentHTML("beforebegin", "<section class=\"cp-partner-band\" id=\"partner\" aria-labelledby=\"partner-title\"><div class=\"cp-wrap\"><div class=\"cp-partner-grid\"><div class=\"cp-partner-copy\"><div class=\"cp-partner-tag\">Immobiliare La Sacra · riferimento immobiliare</div><div class=\"cp-partner-logo\"><img src=\"https://lasacraimmobiliare.it/cdn/shop/files/Untitled_design_14.png?height=108&amp;v=1766316153\" alt=\"Logo ufficiale La Sacra Immobiliare\" loading=\"lazy\"></div><h2 id=\"partner-title\">La Sacra Immobiliare.</h2><p>Immobiliare La Sacra gestisce attraverso i propri professionisti abilitati annunci, visite, compravendite, locazioni e trattative. Immobiliare La Sacra è il servizio di marketing e pubblicità immobiliare dedicato alla promozione degli immobili.</p><a class=\"cp-btn cp-btn-dark\" href=\"https://lasacraimmobiliare.it/\" target=\"_blank\" rel=\"noopener noreferrer\">Vai al sito immobiliare →</a></div><a class=\"cp-partner-photo\" href=\"https://lasacraimmobiliare.it/\" target=\"_blank\" rel=\"noopener noreferrer\" aria-label=\"Apri il sito ufficiale La Sacra Immobiliare\"><img src=\"https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5606.jpg?v=1791272576\" alt=\"Immobile dal catalogo La Sacra Immobiliare\" loading=\"lazy\"><strong>Scopri il catalogo La Sacra →</strong></a></div></div></section>");
+ if(target&&!document.getElementById("partner"))target.insertAdjacentHTML("beforebegin", "<section class=\"cp-partner-band\" id=\"partner\" aria-labelledby=\"partner-title\"><div class=\"cp-wrap\"><div class=\"cp-partner-grid\"><div class=\"cp-partner-copy\"><div class=\"cp-partner-tag\">Immobiliare La Sacra · riferimento immobiliare</div><div class=\"cp-partner-logo\"><img src=\"https://lasacraimmobiliare.it/cdn/shop/files/Untitled_design_14.png?height=108&amp;v=1766316153\" alt=\"Logo ufficiale Immobiliare La Sacra\" loading=\"lazy\"></div><h2 id=\"partner-title\">Immobiliare La Sacra.</h2><p>Immobiliare La Sacra gestisce attraverso i propri professionisti abilitati annunci, visite, compravendite, locazioni e trattative. Immobiliare La Sacra è il servizio di marketing e pubblicità immobiliare dedicato alla promozione degli immobili.</p><a class=\"cp-btn cp-btn-dark\" href=\"https://lasacraimmobiliare.it/\" target=\"_blank\" rel=\"noopener noreferrer\">Vai al sito immobiliare →</a></div><a class=\"cp-partner-photo\" href=\"https://lasacraimmobiliare.it/\" target=\"_blank\" rel=\"noopener noreferrer\" aria-label=\"Apri il sito ufficiale Immobiliare La Sacra\"><img src=\"https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5606.jpg?v=1791272576\" alt=\"Immobile dal catalogo Immobiliare La Sacra\" loading=\"lazy\"><strong>Scopri il catalogo La Sacra →</strong></a></div></div></section>");
  document.querySelectorAll(".cp-hero-mini b").forEach(node=>{if(node.textContent==="41")node.textContent="42"});
  document.querySelectorAll(".cp-footer-links a").forEach(node=>{if(node.textContent.includes("41 territori"))node.textContent=node.textContent.replace("41 territori","42 territori")});
  document.body.insertAdjacentHTML("beforeend", "<a class=\"cp-mobile-action\" data-cp-wa-sell href=\"https://wa.me/393462568685\" target=\"_blank\" rel=\"noopener noreferrer\">PROMUOVI IL TUO IMMOBILE →</a>");
