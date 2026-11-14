@@ -1,0 +1,118 @@
+name: CASE247 Recovery CI · no Meta publication
+on:
+  push:
+    branches:
+      - fix/case247-ci-legacy-landing-dryrun-20261114
+  pull_request:
+    paths:
+      - 'scripts/case247_legacy_transition.py'
+      - 'scripts/test_case247_legacy_transition.py'
+      - 'scripts/fixtures/**'
+      - 'scripts/test_territorial_drafts.py'
+      - 'scripts/case247_radius20_preview.py'
+      - 'scripts/test_case247_radius20_candidate.py'
+      - 'scripts/test_case247_dry_run.py'
+      - 'config/case247-radius20-candidate.json'
+      - '.github/workflows/case247-recovery-ci.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: case247-recovery-ci
+  cancel-in-progress: false
+
+jobs:
+  legacy-security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Python syntax
+        run: python -m py_compile scripts/case247_legacy_transition.py scripts/test_case247_legacy_transition.py
+      - name: Immutable legacy and live-inventory regression
+        run: python -m unittest discover -s scripts -p 'test_case247_legacy_transition.py' -v
+
+  catalog-and-42-landings:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Import La Sacra catalog (workspace only; no repository push)
+        run: python scripts/sync_sacra_catalog.py
+      - name: Build local draft inventory (no social scheduling)
+        run: python scripts/build_territorial_drafts.py
+      - name: Assert all 42 landing contracts and verified source towns
+        run: python -m unittest discover -s scripts -p 'test_territorial_drafts.py' -v
+
+  graphics-technical-only:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --disable-pip-version-check Pillow==12.3.0
+      - name: Decode and SHA-256 verify all 60 JPGs (no approval writes to GitHub)
+        run: |
+          python -m unittest discover -s scripts -p 'test_case247_validate_graphics.py' -v
+          python scripts/case247_validate_graphics.py
+      - name: Editorial approval must remain PENDING for all 60
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          m=json.loads(Path('campagne/case247/dietro-le-quinte/manifest-60.json').read_text())
+          assert len(m['entries'])==m['total']==60
+          assert all(e['technical_status']=='APPROVED' for e in m['entries'])
+          assert all(e['approval']=='PENDING' for e in m['entries'])
+          print('60/60 technical; 60/60 editorial PENDING, zero authorized for publishing')
+          PY
+
+  radius-20-candidate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Geodetic boundary and 42-town regression
+        run: |
+          python -m unittest discover -s scripts -p 'test_case247_territorial_engine.py' -v
+          python -m unittest discover -s scripts -p 'test_case247_schedule_guard.py' -v
+          python -m unittest discover -s scripts -p 'test_case247_radius20_candidate.py' -v
+      - name: Read-only 20 km coverage analysis
+        run: python scripts/case247_radius20_preview.py
+
+  publisher-dry-run:
+    runs-on: ubuntu-latest
+    env:
+      CASE247_TERRITORIAL_LIVE: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Authorization, geofence, idempotency and quality regression
+        run: |
+          python -m unittest discover -s scripts -p 'test_case247_publisher_safety.py' -v
+          python -m unittest discover -s scripts -p 'test_case247_territorial_publisher_policy.py' -v
+          python -m unittest discover -s scripts -p 'test_case247_quality_gate.py' -v
+          python -m unittest discover -s scripts -p 'test_case247_supabase_meta_bridge.py' -v
+      - name: Deterministic dry run validates zero Meta and ledger writes
+        run: python -m unittest discover -s scripts -p 'test_case247_dry_run.py' -v
+      - name: Live code entrypoint invoked without --live
+        run: python scripts/case247_territorial_publisher.py --max-per-run 10
+
+  read-only-quality-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate safety gates and existing plans
+        run: python scripts/case247_quality_gate.py --output /tmp/case247-quality-gate-ci.json

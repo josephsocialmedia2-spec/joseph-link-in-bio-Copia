@@ -90,7 +90,79 @@ def reservations_for_day(day, snapshot, transition):
     # A malformed row must never silently disable the duplicate safety gate.
     return reserved_by_date.get(day.isoformat(), set())
 
+# Captured from the real 2026-11-12 Metricool reconciliation commit.
+# This fixture is immutable: the daily operational register is not a fixture.
+FROZEN_INVENTORY = Path("scripts/fixtures/case247_legacy_reservations_2026-11-12.json")
+
+
+def current_reservations_for_day(day, snapshot, transition):
+    """Validate the mutable read-only Metricool inventory independently.
+
+    The old 32-post freeze is checked separately and remains reserved even if
+    a published post disappears from the provider's future-only response.
+    No current provider record is interpreted as proof that a post published.
+    """
+    if not isinstance(day, dt.date) or not isinstance(snapshot, dict):
+        raise ValueError("Invalid current Metricool inventory")
+    try:
+        captured = dt.date.fromisoformat(transition["snapshot_date"])
+        checked = dt.date.fromisoformat(snapshot["checked_at"])
+        covered = dt.date.fromisoformat(transition["verified_through"])
+    except (KeyError, ValueError, TypeError) as exc:
+        raise ValueError("Invalid operational inventory dates") from exc
+    if not captured <= checked <= covered:
+        raise ValueError("Operational inventory outside verified date range")
+    if "Metricool brand 7844901" not in str(snapshot.get("source", "")):
+        raise ValueError("Unrecognized operational inventory source")
+    items = snapshot.get("reservations")
+    if not isinstance(items, dict):
+        raise ValueError("Missing operational reservations")
+    ids, by_date = set(), {}
+    for date_key, rows in items.items():
+        try:
+            post_day = dt.date.fromisoformat(date_key)
+        except (ValueError, TypeError) as exc:
+            raise ValueError("Invalid operational reservation day") from exc
+        if post_day > covered or not isinstance(rows, list):
+            raise ValueError("Operational inventory coverage mismatch")
+        occupied = by_date.setdefault(date_key, set())
+        for record in rows:
+            if not isinstance(record, dict):
+                raise ValueError("Invalid operational reservation record")
+            provider_id = str(record.get("metricool_id") or "")
+            if not provider_id or provider_id in ids:
+                raise ValueError("Missing or duplicate operational Metricool ID")
+            ids.add(provider_id)
+            status = record.get("status")
+            if (not isinstance(status, dict)
+                    or not all(status.get(n) in
+                               ("PENDING", "PUBLISHED", "FAILED", "CANCELLED")
+                               for n in ("facebook", "instagram"))):
+                raise ValueError("Missing or unknown operational provider status")
+            published_date = record.get("publication_date")
+            if not isinstance(published_date, str):
+                raise ValueError("Missing operational publication date")
+            try:
+                if dt.datetime.fromisoformat(published_date).date() != post_day:
+                    raise ValueError("Operational publication date mismatch")
+            except (TypeError, ValueError) as exc:
+                raise ValueError("Invalid operational publication date") from exc
+            urls = record_listing_urls(record)
+            if occupied.intersection(urls):
+                raise ValueError("Duplicate operational listing on the same day")
+            occupied.update(urls)
+    return by_date.get(day.isoformat(), set())
+
+
 def load_reservations(day, root, out):
-    transition=json.loads((Path(root)/"config/case247-direct-meta-transition.json").read_text(encoding="utf-8"))
-    snapshot=json.loads((Path(out)/"metricool-central-reservations.json").read_text(encoding="utf-8"))
-    return reservations_for_day(day,snapshot,transition)
+    """Union of frozen historical and current provider reservations.
+
+    The original historical snapshot and current mutable register are NEVER
+    substituted for each other. Invalid input blocks the direct publisher.
+    """
+    root, out = Path(root), Path(out)
+    transition = json.loads((root / "config/case247-direct-meta-transition.json").read_text(encoding="utf-8"))
+    frozen = json.loads((root / FROZEN_INVENTORY).read_text(encoding="utf-8"))
+    current = json.loads((out / "metricool-central-reservations.json").read_text(encoding="utf-8"))
+    return (reservations_for_day(day, frozen, transition)
+            | current_reservations_for_day(day, current, transition))
