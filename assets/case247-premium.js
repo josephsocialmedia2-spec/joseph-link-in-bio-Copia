@@ -3,7 +3,7 @@
 "use strict";
 const ROOT="/joseph-link-in-bio-Copia/";
 const HOST="https://josephsocialmedia2-spec.github.io";
-const WA="https://wa.me/393713708294?text=";
+const WA="https://wa.me/393462568685?text=";
 const body=document.body, page=body.dataset.cpPage||"home", townId=body.dataset.cpTown||"";
 const $=id=>document.getElementById(id);
 const euro=new Intl.NumberFormat("it-IT",{style:"currency",currency:"EUR",maximumFractionDigits:0});
@@ -18,7 +18,7 @@ const urlTown=(id)=>ROOT+"paesi/"+encodeURIComponent(id)+"/";
 function setupWa(townName){
   document.querySelectorAll("[data-cp-wa-sell]").forEach(a=>{
     const suffix=townName?" nel comune di "+townName:"";
-    a.href=WA+encodeURIComponent("Buongiorno, sono interessato a promuovere un immobile"+suffix+". Vorrei conoscere il servizio Case in Pubblicità 24/7, dedicato alla promozione immobiliare per La Sacra Immobiliare.");
+    a.href=WA+encodeURIComponent("Buongiorno, sono interessato a promuovere un immobile"+suffix+". Vorrei informazioni sui servizi di vendita e promozione immobiliare.");
     a.target="_blank";a.rel="noopener noreferrer";
   });
 }
@@ -88,10 +88,10 @@ async function init(){
 
 if(page==="town"){
  const target=document.getElementById("promozione");
- if(target&&!document.getElementById("partner"))target.insertAdjacentHTML("beforebegin", "<section class=\"cp-partner-band\" id=\"partner\" aria-labelledby=\"partner-title\"><div class=\"cp-wrap\"><div class=\"cp-partner-grid\"><div class=\"cp-partner-copy\"><div class=\"cp-partner-tag\">Immobiliare La Sacra · riferimento immobiliare</div><div class=\"cp-partner-logo\"><img src=\"https://lasacraimmobiliare.it/cdn/shop/files/Untitled_design_14.png?height=108&amp;v=1766316153\" alt=\"Logo ufficiale La Sacra Immobiliare\" loading=\"lazy\"></div><h2 id=\"partner-title\">La Sacra Immobiliare.</h2><p>Immobiliare La Sacra gestisce attraverso i propri professionisti abilitati annunci, visite, compravendite, locazioni e trattative. Case in Pubblicità 24/7 è il servizio di marketing e pubblicità immobiliare dedicato alla promozione degli immobili.</p><a class=\"cp-btn cp-btn-dark\" href=\"https://lasacraimmobiliare.it/\" target=\"_blank\" rel=\"noopener noreferrer\">Vai al sito immobiliare →</a></div><a class=\"cp-partner-photo\" href=\"https://lasacraimmobiliare.it/\" target=\"_blank\" rel=\"noopener noreferrer\" aria-label=\"Apri il sito ufficiale La Sacra Immobiliare\"><img src=\"https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5606.jpg?v=1791272576\" alt=\"Immobile dal catalogo La Sacra Immobiliare\" loading=\"lazy\"><strong>Scopri il catalogo del partner →</strong></a></div></div></section>");
+ if(target&&!document.getElementById("partner"))target.insertAdjacentHTML("beforebegin", "<section class=\"cp-partner-band\" id=\"partner\" aria-labelledby=\"partner-title\"><div class=\"cp-wrap\"><div class=\"cp-partner-grid\"><div class=\"cp-partner-copy\"><div class=\"cp-partner-tag\">Immobiliare La Sacra · riferimento immobiliare</div><div class=\"cp-partner-logo\"><img src=\"https://lasacraimmobiliare.it/cdn/shop/files/Untitled_design_14.png?height=108&amp;v=1766316153\" alt=\"Logo ufficiale La Sacra Immobiliare\" loading=\"lazy\"></div><h2 id=\"partner-title\">La Sacra Immobiliare.</h2><p>Immobiliare La Sacra gestisce attraverso i propri professionisti abilitati annunci, visite, compravendite, locazioni e trattative. Immobiliare La Sacra è il servizio di marketing e pubblicità immobiliare dedicato alla promozione degli immobili.</p><a class=\"cp-btn cp-btn-dark\" href=\"https://lasacraimmobiliare.it/\" target=\"_blank\" rel=\"noopener noreferrer\">Vai al sito immobiliare →</a></div><a class=\"cp-partner-photo\" href=\"https://lasacraimmobiliare.it/\" target=\"_blank\" rel=\"noopener noreferrer\" aria-label=\"Apri il sito ufficiale La Sacra Immobiliare\"><img src=\"https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5606.jpg?v=1791272576\" alt=\"Immobile dal catalogo La Sacra Immobiliare\" loading=\"lazy\"><strong>Scopri il catalogo La Sacra →</strong></a></div></div></section>");
  document.querySelectorAll(".cp-hero-mini b").forEach(node=>{if(node.textContent==="41")node.textContent="42"});
  document.querySelectorAll(".cp-footer-links a").forEach(node=>{if(node.textContent.includes("41 territori"))node.textContent=node.textContent.replace("41 territori","42 territori")});
- document.body.insertAdjacentHTML("beforeend", "<a class=\"cp-mobile-action\" data-cp-wa-sell href=\"https://wa.me/393713708294\" target=\"_blank\" rel=\"noopener noreferrer\">PROMUOVI IL TUO IMMOBILE →</a>");
+ document.body.insertAdjacentHTML("beforeend", "<a class=\"cp-mobile-action\" data-cp-wa-sell href=\"https://wa.me/393462568685\" target=\"_blank\" rel=\"noopener noreferrer\">PROMUOVI IL TUO IMMOBILE →</a>");
 }
 init();
 })();

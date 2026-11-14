@@ -318,3 +318,15 @@ body{padding-bottom:68px}
  .cp-topline .cp-wrap{justify-content:flex-start}
  .cp-partner-intro .cp-wrap{align-items:flex-start}
 }
+
+/* Immobiliare La Sacra: marchio unico pubblico */
+.cp-head.cp-only-head .cp-head-inner{min-height:98px;display:flex;justify-content:space-between;align-items:center;gap:25px}
+.cp-head.cp-only-head .cp-single-brand{display:flex;align-items:center;gap:16px;flex:none;text-decoration:none}
+.cp-head.cp-only-head .cp-single-brand .cp-sacra-logo{width:143px;min-width:143px;height:78px;background:#173B59;padding:10px}
+.cp-head.cp-only-head .cp-single-brand .cp-sacra-word{font-size:16px;max-width:250px;letter-spacing:.04em}
+.cp-head.cp-only-head .cp-single-brand .cp-sacra-word small{font-size:11px}
+.cp-head.cp-only-head .cp-nav{flex:1;display:flex;justify-content:flex-end;flex-wrap:wrap;gap:16px}
+.cp-topline{letter-spacing:.09em}
+.cp-partner-logo{background:#173B59}
+@media(max-width:950px){.cp-head.cp-only-head .cp-head-inner{flex-wrap:wrap}.cp-head.cp-only-head .cp-nav{justify-content:flex-start;flex:1 1 100%;border-top:1px solid #D6E8F2;padding-top:12px}}
+@media(max-width:680px){.cp-head.cp-only-head .cp-single-brand .cp-sacra-logo{width:105px;min-width:105px;height:61px}.cp-head.cp-only-head .cp-single-brand .cp-sacra-word{font-size:13px;max-width:205px}.cp-head.cp-only-head .cp-single-brand .cp-sacra-word small{font-size:10px}.cp-head.cp-only-head .cp-nav{overflow-x:auto;flex-wrap:nowrap;justify-content:flex-start;gap:16px}}

@@ -24,8 +24,8 @@
     rect(0,0,595,842,"#f7f9fc");
     rect(0,582,595,260,"#173B59");
     rect(0,575,595,7,"#71C9F2");
-    txt(43,782,"CASE IN PUBBLICITA 24/7",25,true,"#ffffff");
-    txt(43,749,"MARKETING IMMOBILIARE PER LA SACRA",11,false,"#bfdcef");
+    txt(43,782,"IMMOBILIARE LA SACRA",25,true,"#ffffff");
+    txt(43,749,"COMPRAVENDITE  |  LOCAZIONI  |  VALUTAZIONI",11,false,"#bfdcef");
     txt(43,682,"LA VISIBILITA",31,true,"#ffffff");
     txt(43,641,"DEL TUO IMMOBILE",31,true,"#ffffff");
     txt(43,607,"La Sacra Immobiliare - Avigliana - Torino",13,false,"#71C9F2");
@@ -48,13 +48,13 @@
     txt(43,273,"VUOI CONOSCERE IL NOSTRO APPROCCIO?",16,true);
     txt(43,246,"Esplora il progetto online o richiedi informazioni tramite WhatsApp.",11);
     rect(43,146,509,70,"#173B59");
-    txt(60,189,"Joseph Malafronte  |  Marketing immobiliare",14,true,"#ffffff");
-    txt(60,163,"WhatsApp +39 371 370 8294",12,false,"#71C9F2");
-    txt(43,114,"case in pubblicita 24/7  |  catalogo e informazioni sul sito",10,true);
+    txt(60,189,"Immobiliare La Sacra  |  Consulenza immobiliare",14,true,"#ffffff");
+    txt(60,163,"WhatsApp +39 346 256 8685",12,false,"#71C9F2");
+    txt(43,114,"Immobiliare La Sacra  |  catalogo e informazioni sul sito",10,true);
     txt(43,96,"josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/",9,false,"#23577c");
     line(43,77,552,77,"#b6ccdb");
-    txt(43,58,"Marketing e pubblicita immobiliare per La Sacra Immobiliare.",9);
-    txt(43,43,"Intermediazione e trattative: Immobiliare La Sacra, agenti abilitati.",9);
+    txt(43,58,"Compravendite, affitti e promozione immobiliare.",9);
+    txt(43,43,"Immobiliare La Sacra: intermediazione con professionisti abilitati.",9);
     const stream=commands.join("\n")+"\n";
     const objects=[
       "<< /Type /Catalog /Pages 2 0 R >>",
@@ -82,10 +82,10 @@
       const approved = APPROVED_PDF_PATH.trim();
       if (approved && !/^\.?\/?[\w./-]+\.pdf$/i.test(approved)) throw Error("Percorso PDF non valido");
       link=document.createElement("a");
-      link.download=approved ? "CASE247_Volantino_Immobiliare.pdf" : "CASE247_Presentazione_Servizio.pdf";
+      link.download=approved ? "LaSacra_Volantino_Immobiliare.pdf" : "Immobiliare_La_Sacra_Presentazione.pdf";
       if(approved) {
         const target=new URL(approved, document.baseURI);
-        if(target.origin!==location.origin)throw Error("Il PDF deve essere ospitato sul sito CASE247");
+        if(target.origin!==location.origin)throw Error("Il PDF deve essere ospitato sul sito Immobiliare La Sacra");
         link.href=target.href;
       }else {
         link.href=URL.createObjectURL(presentationPdf());
