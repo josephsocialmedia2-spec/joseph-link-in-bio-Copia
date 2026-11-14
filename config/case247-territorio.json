@@ -2079,6 +2079,39 @@
         "radius_km": 10,
         "publishing_enabled": false
       }
+    },
+    {
+      "id": "beinasco",
+      "name": "Beinasco",
+      "aliases": [
+        "Beinasco"
+      ],
+      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/beinasco/",
+      "social_page_name": "Case in Pubblicità 24/7 - Beinasco",
+      "channels": {
+        "facebook": {
+          "url": "",
+          "status": "DA_VERIFICARE"
+        },
+        "instagram": {
+          "url": "",
+          "status": "DA_VERIFICARE",
+          "display_name": "Case in Pubblicità 24/7 - Beinasco"
+        }
+      },
+      "auto_publish": false,
+      "fb_ig_link": {
+        "status": "DA_VERIFICARE"
+      },
+      "joseph_control": {
+        "status": "DA_VERIFICARE",
+        "required": "Controllo completo di Joseph Malafronte"
+      },
+      "metricool": {
+        "status": "DA_COLLEGARE"
+      },
+      "operational_status": "PAGINA_WEB_OPERATIVA_SOCIAL_NON_ATTIVI",
+      "bio": "Immobili a Beinasco. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
     }
   ]
 }

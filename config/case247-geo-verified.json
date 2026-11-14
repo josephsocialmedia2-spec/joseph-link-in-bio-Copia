@@ -615,6 +615,13 @@
       "display_name": "Torino, Piemonte, Italia",
       "source": "OpenStreetMap Nominatim",
       "verified_scope": "MUNICIPALITY_BBOX_PROXY"
+    },
+    "beinasco": {
+      "lat": 45.0241,
+      "lon": 7.585,
+      "display_name": "Beinasco, Torino, Piemonte, Italia",
+      "source": "Comune di Beinasco, Schede-Risorse.pdf",
+      "verified_scope": "MUNICIPALITY_CENTRE_POINT"
     }
   }
 }
