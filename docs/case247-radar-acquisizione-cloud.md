@@ -4,7 +4,7 @@ Il radar gira **nei runner GitHub Actions**, senza dipendere da Windows, Python 
 
 ## Che cosa fa davvero
 
-- Ogni ora, anche a PC spento, esegue quattro dork rotanti per comuni tra Rivoli e Susa, con priorità Avigliana, Sant'Ambrogio di Torino, Almese e Condove.
+- Ogni ora, anche a PC spento, esegue una ricerca per ciascuno dei **soli quattro comuni autorizzati**: **Avigliana, Sant'Ambrogio di Torino, Almese e Condove**, più una ricerca stradale rotante interna a questi comuni. I comuni esterni non sono cercati né ammessi nei risultati.
 - Interroga il feed di ricerca **Bing RSS** (endpoint non contrattualmente garantito) e, se configurati, i feed **Google Alerts RSS** generati dal titolare. **Non interroga in automatico Google Search né simula un browser Google**. Google Custom Search JSON API non è disponibile per nuovi clienti.
 - Legge titolo, snippet e link mostrati dall'indice; classifica **PROBABILE_PRIVATO** solo quando il testo dichiara esplicitamente l'origine privata; le altre schede restano `DA_VERIFICARE`.
 - Conserva impronte SHA-256 degli URL visti e l'eventuale prezzo pubblicato; la prima esecuzione è una **baseline senza avvisi**. Avvisa su URL nuovi e riduzioni di prezzo indicative, senza attestare una compravendita.
@@ -45,7 +45,7 @@ GitHub Actions non fornisce monitoraggio in tempo reale: gli orari pianificati p
 
 Dopo l'unione del ramo con `main`, vai nella pagina **Actions**, apri **CASE247 · Radar acquisizione cloud** e verifica che i job `qa` e `cloud-scan` siano entrambi verdi. La prima scansione senza errori deve salvare `case247-acquisition-state` e `case247-acquisition-report`.
 
-Per aggiornare comuni e vie, modifica il file di configurazione. Per incrementare la copertura Google, configura altri Google Alerts RSS: Google Search non è raccolto direttamente.
+Per aggiornare le vie puoi modificare il file di configurazione soltanto per i quattro comuni consentiti. Il software rifiuta configurazioni che includono altri comuni. La dicitura «Via Susa» di Avigliana è una strada, non estende la ricerca al comune di Susa. Per incrementare la copertura Google, configura altri Google Alerts RSS: Google Search non è raccolto direttamente.
 
 Link diretti:
 - [Workflow](https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/actions/workflows/case247-acquisition-radar.yml)
