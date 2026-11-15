@@ -99,7 +99,7 @@ function render(){
  if(!$('#cc-studio'))return;
  $('#cc-school-week').value=week;
  const item=state.weeks[week],rows=getLessons(week),status=$('#cc-school-status');
- status.textContent='Settimana '+fmt(week)+' · '+(item?'CONFERMATO · '+rows.length+' lezioni · ultimo aggiornamento '+new Date(item.updatedAt).toLocaleString('it-IT'):'DA CARICARE · nessun orario confermato')+(state.lastUpload?' · ultimo file selezionato '+new Date(state.lastUpload).toLocaleDateString('it-IT'):'');
+ status.textContent='Settimana '+fmt(week)+' · '+(pending?'DA VERIFICARE · '+pending.length+' righe in anteprima':item?'CONFERMATO · '+rows.length+' lezioni · ultimo aggiornamento '+new Date(item.updatedAt).toLocaleString('it-IT'):'DA CARICARE · nessun orario confermato')+(state.lastUpload?' · ultimo file selezionato '+new Date(state.lastUpload).toLocaleDateString('it-IT'):'');
  const target=$('#cc-school-lessons');target.replaceChildren();
  if(rows.length){
   const scroller=node('div',undefined,'cc-school-table-wrap'),table=node('table',undefined,'cc-school-table'),thead=node('thead'),h=node('tr');
@@ -208,7 +208,7 @@ function taskConflict(t){
 function mount(context){
  root=context.root;ctx=context;state=read(KEY,{weeks:{}});if(!state||!state.weeks||typeof state.weeks!=='object')state={weeks:{}};
  week=S.monday(ctx.getWeek());setup();bindForm();render();
- return {render,lessonsForWeek:getLessons,scheduleWeekChanged:w=>{if(!pending){week=S.monday(w);render()}},populateTaskForm,enrichTask,importedTask,taskConflict};
+ return {render,lessonsForWeek:getLessons,allLessons:()=>Object.values(state.weeks).flatMap(s=>s.rows||[]),scheduleWeekChanged:w=>{if(!pending){week=S.monday(w);render()}},populateTaskForm,enrichTask,importedTask,taskConflict};
 }
 window.CASE247StudioUI={mount};
 })();
