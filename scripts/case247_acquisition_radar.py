@@ -187,7 +187,13 @@ def town_of(title: str, desc: str, url: str, config: dict) -> str:
     must be rejected. Require a single unambiguous primary locality.
     """
     candidates = tuple(config["priority_towns"])
-    excluded = locality_mentions(title, OUT_OF_SCOPE_TOWNS)
+    # Sant'Ambrogio di Torino is allowed; its "Torino" suffix must not
+    # trigger the excluded city "Torino" rule.
+    def without_allowed_names(value: str) -> str:
+        for name in sorted(candidates, key=len, reverse=True):
+            value = re.sub(r"(?<!\\w)" + re.escape(name) + r"(?!\\w)", " ", value, flags=re.I)
+        return value
+    excluded = locality_mentions(without_allowed_names(title), OUT_OF_SCOPE_TOWNS)
     if excluded:
         return ""
     in_title = locality_mentions(title, candidates)
@@ -205,7 +211,7 @@ def town_of(title: str, desc: str, url: str, config: dict) -> str:
     )
     if nearby:
         location_text = location_text[:nearby.start()]
-    if locality_mentions(location_text, OUT_OF_SCOPE_TOWNS):
+    if locality_mentions(without_allowed_names(location_text), OUT_OF_SCOPE_TOWNS):
         return ""
     found = []
     for town in candidates:
