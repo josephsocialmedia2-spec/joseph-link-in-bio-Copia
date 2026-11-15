@@ -314,16 +314,23 @@ def run(config: dict, previous: dict, slot: int, fetch=http_text, enrich=False) 
     for address in config.get("google_alerts_rss", []):
         if address.startswith("https://www.google.com/alerts/feeds/"):
             feeds.append(("Google Alerts RSS", address))
-    seen, errors, success, feed_items = {}, [], 0, 0
+    seen, errors, success, feed_items, diagnostics = {}, [], 0, 0, []
     for source, url in feeds:
         try:
             rows = parse_feed(fetch(url))
             feed_items += len(rows)
             success += 1
+            diag = {"source": source, "raw": len(rows), "geo": 0, "property": 0, "private": 0, "qualified": 0}
             for row in rows:
+                combined = row["title"] + " " + row["description"]
+                diag["geo"] += int(bool(town_of(row["title"], row["description"], row["url"], config)))
+                diag["property"] += int(bool(PROPERTY_RX.search(combined)))
+                diag["private"] += int(bool(PRIVATE_RX.search(combined)))
                 obj = normalize_result(row, source, config)
                 if obj:
+                    diag["qualified"] += 1
                     seen.setdefault(obj["id"], obj)
+            diagnostics.append(diag)
         except (TimeoutError, urllib.error.URLError, ET.ParseError, ValueError, OSError) as e:
             errors.append(f"{source}: {type(e).__name__}")
         time.sleep(0.2)
@@ -332,7 +339,7 @@ def run(config: dict, previous: dict, slot: int, fetch=http_text, enrich=False) 
     if success == 0:
         return {
             "status": "FONTI_NON_DISPONIBILI", "scanned_at_utc": now_iso, "new_count": 0,
-            "feeds_ok": 0, "feeds_attempted": len(feeds), "feed_items": 0, "errors": errors,
+            "feeds_ok": 0, "feeds_attempted": len(feeds), "feed_items": 0, "diagnostics": diagnostics, "errors": errors,
             "queries": [{"town": town, "query": q} for town, q in plans],
             "changes": [],
         }, previous, ""
@@ -349,7 +356,7 @@ def run(config: dict, previous: dict, slot: int, fetch=http_text, enrich=False) 
     output = {
         "status": "OK" if success == len(feeds) else "PARZIALE",
         "scanned_at_utc": now_iso, "new_count": len(reportable),
-        **stats, "errors": errors,
+        **stats, "diagnostics": diagnostics, "errors": errors,
         "queries": [{"town": town, "query": q} for town, q in plans],
         "changes": changes[:100],
         "candidate_count_uncertain": sum(1 for r in seen.values() if r["status"] == "DA_VERIFICARE"),
@@ -380,6 +387,7 @@ def main() -> int:
     else:
         save_json(args.out / "state.json", previous)
     print(f"CASE247_RADAR status={output['status']} sources={output['feeds_ok']}/{output['feeds_attempted']} rss_items={output.get('feed_items', 0)} candidates={output.get('candidates', 0)} notifications={output['new_count']}")
+    print("RADAR_DIAGNOSTICS " + json.dumps(output.get("diagnostics", []), ensure_ascii=False))
     if output["status"] == "FONTI_NON_DISPONIBILI":
         print("No live sources responded; NOT claiming zero new listings.", file=sys.stderr)
         return 2
