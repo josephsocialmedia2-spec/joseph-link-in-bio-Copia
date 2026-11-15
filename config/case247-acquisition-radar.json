@@ -1,30 +1,13 @@
 {
   "schema_version": 1,
-  "description": "Monitoraggio per motori di ricerca (non scraping dei portali). RSS Bing best effort + Google Alerts RSS configurabili; risultati incompleti o incerti restano da verificare.",
+  "description": "Radar acquisizione cloud SOLO nei 4 comuni autorizzati: Avigliana, Sant'Ambrogio di Torino, Almese, Condove. RSS Bing best effort e Google Alerts RSS configurabili. Nessun altro comune è ammesso nelle query o nei risultati.",
   "priority_towns": [
     "Avigliana",
     "Sant'Ambrogio di Torino",
     "Almese",
     "Condove"
   ],
-  "other_towns": [
-    "Rivoli",
-    "Rosta",
-    "Buttigliera Alta",
-    "Alpignano",
-    "Villar Dora",
-    "Caprie",
-    "Chiusa di San Michele",
-    "Vaie",
-    "Sant'Antonino di Susa",
-    "Borgone Susa",
-    "Villar Focchiardo",
-    "Bussoleno",
-    "Susa",
-    "Caselette",
-    "Rubiana",
-    "San Didero"
-  ],
+  "other_towns": [],
   "streets": {
     "Avigliana": [
       "Via Roma",
@@ -65,5 +48,6 @@
     "Nessuna ricerca inversa di persone tramite indirizzo o ricostruzione di recapiti privati.",
     "CRM personale e contatti non vengono scritti nel repository pubblico.",
     "Valutazioni di annuncio privato basate su snippet: sempre da verificare."
-  ]
+  ],
+  "scope_policy": "SOLO_QUATTRO_COMUNI: nessuna ricerca e nessun annuncio segnalato fuori da priority_towns"
 }
