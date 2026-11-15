@@ -1,0 +1,47 @@
+name: CASE247 Studio Browser QA
+on:
+  pull_request:
+    paths:
+      - 'gestione/index.html'
+      - 'gestione/control-center.js'
+      - 'gestione/studio-2scat.js'
+      - 'gestione/studio-2scat-ui.js'
+      - 'gestione/control-center.css'
+      - 'tests/studio-browser-smoke.cjs'
+      - '.github/workflows/case247-studio-browser.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'gestione/index.html'
+      - 'gestione/control-center.js'
+      - 'gestione/studio-2scat.js'
+      - 'gestione/studio-2scat-ui.js'
+      - 'gestione/control-center.css'
+      - 'tests/studio-browser-smoke.cjs'
+      - '.github/workflows/case247-studio-browser.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  chromium-studio-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify Chrome present
+        run: google-chrome --version
+      - name: Verify browser script
+        run: node --check tests/studio-browser-smoke.cjs
+      - name: Run browser integration test against local static site
+        run: node tests/studio-browser-smoke.cjs
+      - name: Preserve smoke screenshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: case247-studio-browser-screenshot
+          path: /tmp/case247-studio-chrome-smoke.png
+          if-no-files-found: ignore
+          retention-days: 7
