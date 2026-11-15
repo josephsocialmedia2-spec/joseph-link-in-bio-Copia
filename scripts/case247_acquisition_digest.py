@@ -43,6 +43,19 @@ def accumulate(state: dict, report: dict) -> dict:
     }
 
 
+def daily_intelligence(state: dict, day: str) -> dict:
+    """Use only today's silent pre-06:00 scan; never carry old news forward."""
+    cached = state.get("intelligence") or {}
+    timestamp = cached.get("generated_utc", "")
+    if not timestamp:
+        return {"news": [], "business_contacts": [], "sources": [], "errors": ["Raccolta mattutina non disponibile"]}
+    try:
+        local_day = datetime.fromisoformat(timestamp.replace("Z", "+00:00")).astimezone(ROME).date().isoformat()
+    except (TypeError, ValueError):
+        local_day = ""
+    return cached if local_day == day else {"news": [], "business_contacts": [], "sources": [], "errors": ["Raccolta giornaliera non disponibile"]}
+
+
 def create_digest(state: dict, day: str, intelligence: dict | None = None) -> tuple[str, dict]:
     """Include every distinct new/discounted lead since the last delivered digest."""
     pending = list(state.get("pending", {}).values())
@@ -50,7 +63,7 @@ def create_digest(state: dict, day: str, intelligence: dict | None = None) -> tu
     pending.sort(key=lambda r: (ALLOWED_TOWNS.index(r["town"]), r.get("first_detected", ""), r.get("title", "")))
     counts = {town: sum(r["town"] == town for r in pending) for town in ALLOWED_TOWNS}
     last = state.get("last_scan", {})
-    intelligence = intelligence or {"news": [], "business_contacts": [], "sources": [], "errors": []}
+    intelligence = intelligence if intelligence is not None else daily_intelligence(state, day)
     used_news = set(state.get("news_seen", []))
     used_business = set(state.get("business_seen", []))
     fresh_news = [n for n in intelligence.get("news", []) if n.get("id") not in used_news and n.get("town") in ALLOWED_TOWNS]
@@ -158,18 +171,18 @@ def create_digest(state: dict, day: str, intelligence: dict | None = None) -> tu
 def finalize(state: dict, day: str, intelligence: dict | None = None) -> dict:
     if state.get("last_digest_date") == day:
         return state
-    intelligence = intelligence or {}
+    intelligence = intelligence if intelligence is not None else daily_intelligence(state, day)
     news_ids = [x.get("id") for x in intelligence.get("news", []) if x.get("id")]
     business_ids = [x.get("id") for x in intelligence.get("business_contacts", []) if x.get("id")]
     news_seen = list(dict.fromkeys([*state.get("news_seen", []), *news_ids]))[-3000:]
     business_seen = list(dict.fromkeys([*state.get("business_seen", []), *business_ids]))[-3000:]
-    return {**state, "pending": {}, "last_digest_date": day,
+    return {**state, "pending": {}, "intelligence": {}, "last_digest_date": day,
             "news_seen": news_seen, "business_seen": business_seen}
 
 
 def main() -> int:
     p = argparse.ArgumentParser()
-    p.add_argument("mode", choices=("accumulate", "digest", "finalize"))
+    p.add_argument("mode", choices=("accumulate", "digest", "finalize", "cache"))
     p.add_argument("--state", type=Path, default=Path("_radar/out/state.json"))
     p.add_argument("--report", type=Path, default=Path("_radar/out/report.json"))
     p.add_argument("--out", type=Path, default=Path("_radar/out"))
@@ -183,7 +196,12 @@ def main() -> int:
     if args.intelligence is not None and args.intelligence.exists():
         intelligence = json.loads(args.intelligence.read_text(encoding="utf-8"))
 
-    if args.mode == "accumulate":
+    if args.mode == "cache":
+        if intelligence is None:
+            raise ValueError("Il comando cache richiede --intelligence e un file JSON disponibile")
+        save_json(args.out / "state.json", {**state, "intelligence": intelligence})
+        print(f"CASE247_INTELLIGENCE_CACHED news={len(intelligence.get('news', []))} contacts={len(intelligence.get('business_contacts', []))}")
+    elif args.mode == "accumulate":
         report = json.loads(args.report.read_text(encoding="utf-8"))
         state = accumulate(state, report)
         save_json(args.out / "state.json", state)
