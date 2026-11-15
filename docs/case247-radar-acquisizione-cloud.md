@@ -14,7 +14,7 @@ Il radar gira **nei runner GitHub Actions**, senza dipendere da Windows, Python 
 
 ## Opportunità aggiuntive per l'acquisizione (ore 06:00)
 
-Il riepilogo giornaliero ora raccoglie anche due gruppi di segnali, **senza creare notifiche aggiuntive**:
+Il riepilogo giornaliero ora raccoglie anche due gruppi di segnali, **senza creare notifiche aggiuntive**. La raccolta di queste due fonti avviene nella scansione silenziosa delle **05:17 Europe/Rome**; il digest delle 06:00 usa il cache del giorno per non attendere la rete. Se il controllo mattutino manca o è vecchio, il report lo dichiara: non riutilizza notizie e contatti come se fossero aggiornati.
 
 1. **Notizie territoriali** relative a edilizia, urbanistica, cantieri, immobiliare, case, proprietà e affitti. Fonte: ricerche RSS Google News limitate ai quattro comuni e a notizie pubblicate nelle ultime 72 ore, con titolo e link verificabile. Non equivale a un accesso completo a Google Search e la copertura può essere incompleta.
 2. **Contatti B2B pubblici** di aziende e professionisti presenti in OpenStreetMap (uffici immobiliari, studi, imprese edili, artigiani). Fonte: OpenStreetMap/Overpass (© OpenStreetMap contributors, licenza ODbL); vengono riportati solo i recapiti chiaramente pubblicati nella scheda aziendale, privilegiando caselle generiche e numeri fissi, mai contatti personali ricavati per incrocio di vie. Per ogni attività è incluso il link alla scheda originaria.
