@@ -18,7 +18,7 @@ const html=`<section id="cc-studio" class="cc-card cc-section" aria-label="STUDI
  <div id="cc-school-reminder" class="cc-school-reminder cc-hidden" role="status"><b>È domenica. Carica il PDF dell'orario scolastico 2S CAT della prossima settimana per aggiornare la tua agenda.</b><div class="cc-actions"><button type="button" id="cc-reminder-upload">CARICA ORARIO PDF</button><button type="button" id="cc-reminder-view">VISUALIZZA ORARIO ATTUALE</button></div></div>
  <div class="cc-school-controls">
  <label>Settimana dal lunedì<input type="date" id="cc-school-week"></label>
- <label>Promemoria domenicale<input type="time" id="cc-school-time" value="09:00"></label>
+ <label>Avviso nella dashboard domenica alle<input type="time" id="cc-school-time" value="09:00"></label>
  <button type="button" id="cc-school-upload">CARICA ORARIO PDF</button>
  <button type="button" id="cc-school-reference">Anteprima 16–20 novembre</button>
  <button type="button" id="cc-school-manual">Inserisci righe manualmente</button>
@@ -32,7 +32,7 @@ const html=`<section id="cc-studio" class="cc-card cc-section" aria-label="STUDI
  <div class="cc-school-panel"><h3>Prossime verifiche e interrogazioni</h3><div id="cc-school-exams"></div></div>
  <div class="cc-school-panel"><h3>Conflitti con il lavoro</h3><div id="cc-school-overlap"></div></div>
  <div class="cc-actions"><button type="button" id="cc-school-export">Esporta orario scuola JSON</button><button type="button" id="cc-school-import">Importa orario scuola JSON</button><input id="cc-school-json" type="file" class="cc-hidden" accept=".json,application/json"></div>
- <p class="cc-sub">I file PDF vengono analizzati nel browser; per i PDF scansionati è disponibile OCR. La settimana seguente va caricata separatamente. Nessun documento viene pubblicato su GitHub.</p>
+ <p class="cc-sub">I file PDF vengono analizzati nel browser; per i PDF scansionati è disponibile OCR. La settimana seguente va caricata separatamente. La notifica ChatGPT esterna rimane alle 09:00; qui puoi cambiare solo l'avviso della dashboard. Nessun documento viene pubblicato su GitHub.</p>
  </section>`;
 root.querySelector('#cc-calendar').insertAdjacentHTML('afterend',html);
 $('#cc-school-week').value=week;
@@ -71,8 +71,12 @@ async function upload(e){
  const file=e.target.files?.[0];if(!file)return;
  const st=$('#cc-school-status');
  try{
-  const read=await S.readFile(file,msg=>st.textContent=msg);
-  const parsed=S.parseScheduleText(read.text,week);
+  let read=await S.readFile(file,msg=>st.textContent=msg);
+  let parsed=S.parseScheduleText(read.text,week);
+  if(/\.pdf$/i.test(file.name)&&!parsed.rows.length&&read.method==='Testo selezionabile PDF'){
+   read=await S.readFile(file,msg=>st.textContent=msg,true);
+   parsed=S.parseScheduleText(read.text,week);
+  }
   source=file.name+' · '+read.method;pending=parsed.rows;
   state.lastUpload=new Date().toISOString();state.lastSource=file.name.slice(0,110);
   st.textContent=parsed.found&&parsed.rows.length?parsed.rows.length+' lezioni estratte: controllale prima di confermare. '+parsed.warnings.join(' '):'La tabella ORARIO 2S CAT non è stata estratta in modo affidabile. '+parsed.warnings.join(' ')+' Usa + Riga per correggere.';
@@ -136,7 +140,8 @@ function suggest(t,all){
 }
 function renderConflicts(){
  const dest=$('#cc-school-overlap');dest.replaceChildren();
- const hits=S.conflicts(getLessons(week),ctx.getTasks().filter(t=>t.date>=week&&t.date<=S.plusDays(week,5)));
+ const fixed=Array.from({length:5},(_,i)=>({type:'ACQUISIZIONE',date:S.plusDays(week,i),start:'09:30',end:'12:30',title:'Acquisizione immobiliare'}));
+ const hits=S.conflicts(getLessons(week),ctx.getTasks().filter(t=>t.date>=week&&t.date<=S.plusDays(week,5)),fixed);
  if(!hits.length){dest.append(node('p','Nessuna sovrapposizione reale rilevata tra lezioni confermate e impegni registrati.','cc-sub'));return}
  hits.forEach(([a,b])=>dest.append(node('p',fmt(a.date)+' · '+a.start+'–'+a.end+' '+a.title+' / '+b.start+'–'+b.end+' '+b.title,'cc-school-alert')));
 }
