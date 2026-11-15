@@ -1,0 +1,226 @@
+{
+  "version": 1,
+  "checked": "2026-11-15T05:17:39.789Z",
+  "branches": [
+    {
+      "name": "andrea-assistente-android",
+      "sha": "2593a1b0d2a3293f60216f449b3c14b7154ff188"
+    },
+    {
+      "name": "assets/case247-a5-copertine-joseph-20261111",
+      "sha": "95edae95f30412489ccb697c40cc19779f4337a4"
+    },
+    {
+      "name": "audit/gdpr-2026-10-24",
+      "sha": "7c853f61d0cf17676d17d5d909eafe98e0ff2e45"
+    },
+    {
+      "name": "backup/gestione-before-dashboard-cleanup-20261028",
+      "sha": "adc75afe5fa4b6d1e56c1342c41430ef7053a9f0"
+    },
+    {
+      "name": "backup/gestione-control-center-pre-20261115",
+      "sha": "2d9ad659ceb583d4698bfb9e59ca34f8e5ad5b07"
+    },
+    {
+      "name": "backup/real-estate-25-pages-20261028",
+      "sha": "849c4a04ced2cd2e4258e3deb3f89c03ef75e139"
+    },
+    {
+      "name": "clienti",
+      "sha": "3f22da4662b927eb9ba1efe2f986ac2092bec988"
+    },
+    {
+      "name": "feat/anteprima-grafiche-programmate-20261111",
+      "sha": "6197ffa04183132ec21d17fd2e2b379dd67de601"
+    },
+    {
+      "name": "feat/antica-cappella-studio-social-20261110",
+      "sha": "3f8fed1b09562d9b7457bf4e1497467d826d7a1d"
+    },
+    {
+      "name": "feat/case247-review-six-editorial-models-20261110",
+      "sha": "4d1874af54f46a510bc395eda5eee25baf922ef2"
+    },
+    {
+      "name": "feat/case247-volantino-form-caption-20261111",
+      "sha": "edd939434099ffe6d88542ecb54731cab044d3a7"
+    },
+    {
+      "name": "feat/studio-volantini-sei-modelli-festivita-20261110",
+      "sha": "a292552b3ffea0fa6cfea29b7aff4c08bc1ec60e"
+    },
+    {
+      "name": "feat/volantini-premium-layered-layout-20261110",
+      "sha": "dc3cf409d4d641812e3454d4f07dab64e94b5681"
+    },
+    {
+      "name": "feat/volantini-premium-print-engine-20261110",
+      "sha": "55f76a110dda7b57994e26131b0d70c5587ed56b"
+    },
+    {
+      "name": "feat/volantini-tre-referenti-logo-la-sacra-20261111",
+      "sha": "ef4d4f5ddfa63040b916b2c334c980aba180964c"
+    },
+    {
+      "name": "feature/case247-10km-integrated-20261113",
+      "sha": "cf047565ad90b14e602bc4e51635013df6409ba9"
+    },
+    {
+      "name": "feature/case247-41-social-onboarding-20261111",
+      "sha": "fdd49a621fd8a3440c25c1259c209baab8cd3a18"
+    },
+    {
+      "name": "feature/case247-auto-social-links-on-41-landings-20261111",
+      "sha": "9abc4fd7ac0c12e90ec1e988d4b6429d6bb7adc2"
+    },
+    {
+      "name": "feature/case247-avigliana-meta-pilot-20261111",
+      "sha": "87e466a1ea61dcb219799af19c53d220ab3e3add"
+    },
+    {
+      "name": "feature/case247-consent-first-property-requests-20261102",
+      "sha": "2c40bab424a24644df517b836fd7046c03565c28"
+    },
+    {
+      "name": "feature/case247-control-center-20261115",
+      "sha": "8e72af62e03488be89b6ae969ee3bde455d361a7"
+    },
+    {
+      "name": "feature/case247-dietro-le-quinte",
+      "sha": "ef8e66ff4fc7dc840a811247bcde05318af3c594"
+    },
+    {
+      "name": "feature/case247-direct-meta-without-metricool-20261111",
+      "sha": "35f4e3f3d6c281f7bb7f7f29b7ff22ddeded7930"
+    },
+    {
+      "name": "feature/case247-guided-territorial-creation-20261111",
+      "sha": "095ef15ac42d8303317014f0b0251989e6471633"
+    },
+    {
+      "name": "feature/case247-joseph-personal-posts-20261101",
+      "sha": "3dd4adca5edfec793b0633d30e3c8606f35ef737"
+    },
+    {
+      "name": "feature/case247-jpg-upload-20261111",
+      "sha": "6a1ae993eba0c86eb8d72642e11058435fc0b071"
+    },
+    {
+      "name": "feature/case247-radius-10km-daily-safety-20261113",
+      "sha": "23c4093c0bd361cb25206595247b769bf044154d"
+    },
+    {
+      "name": "feature/case247-regia-territoriale-20km-20261111",
+      "sha": "bacdea52386d5081a18fdf7b817402b4933f432a"
+    },
+    {
+      "name": "feature/case247-review-60-rebuild",
+      "sha": "f9b0de8da7cf212bd51c9ecfec8f03a5cfbbc9b8"
+    },
+    {
+      "name": "feature/case247-territorial-regia-20261111",
+      "sha": "c9e4c60cdbe422e4c697d8eaeec19fac388e3341"
+    },
+    {
+      "name": "feature/case247-unified-regia-20261101",
+      "sha": "737ee711844a5b6683ebf8e4460ff65a4df2316d"
+    },
+    {
+      "name": "feature/joseph-sales-automation-90-mvp-20261025",
+      "sha": "896fdcfe7477335bf34481ffddf0cd8e85d3d6dd"
+    },
+    {
+      "name": "feature/ocme-percorso-unico-20261110",
+      "sha": "713670f50f876be1a619c49cb60701568f9f25f6"
+    },
+    {
+      "name": "feature/ocme-unified-study-engine-20261110",
+      "sha": "586c2ff69b00ca222af5d4e4366828bd5aab8d06"
+    },
+    {
+      "name": "feature/rmp-social-isolato-20261028",
+      "sha": "72bcaa74ffb00daba867acd83e5cd0758f596861"
+    },
+    {
+      "name": "fix/avigliana-archivio-order-by-street-20261110",
+      "sha": "154df641cb67327808e3ef4074f7bed0ed4676d6"
+    },
+    {
+      "name": "fix/avigliana-import-excel-multisheet-20261110",
+      "sha": "8599cd9146d0804e7fc95fd9cf69deec53201855"
+    },
+    {
+      "name": "fix/case247-ci-legacy-landing-dryrun-20261114",
+      "sha": "acd2e6dcdac48bf3fd2a5fbe1443773131abaa29"
+    },
+    {
+      "name": "fix/case247-review-disable-broken-a4-link-20261110",
+      "sha": "ac7c32fc557a39162a11feef789e1eac07482929"
+    },
+    {
+      "name": "fix/case247-review-publish-preflight-20261110",
+      "sha": "44f4473d44067d7f84ae0cb902d7a966b84a21e1"
+    },
+    {
+      "name": "fix/case247-social-volantini-20261109",
+      "sha": "ebd18cd09927788b96eed07665b69c9b2bf504db"
+    },
+    {
+      "name": "fix/case247-tenant-binding-20261101",
+      "sha": "6acc1ea35da9626836cffec2a134a3ecf939cc41"
+    },
+    {
+      "name": "fix/flyer-premium-card-spacing-20261111",
+      "sha": "ae52ada671da69d25faa89903ae125238316811c"
+    },
+    {
+      "name": "fix/flyer-premium-footer-photo-small-type-20261111",
+      "sha": "353e11049ed0af68df879a54cb801892ff9a64cc"
+    },
+    {
+      "name": "fix/studio-volantini-foto-joseph-20261110",
+      "sha": "d9061281fa0ea1e40ec9f17407e2a25e24c03320"
+    },
+    {
+      "name": "fix/volantini-final-preflight-vector-qr-20261110",
+      "sha": "291e2e76c7530d32ab40cd0b6127e913640b68fb"
+    },
+    {
+      "name": "fix/volantini-la-sacra-dual-brand-layout-20261111",
+      "sha": "2b0f3c377146e34243e770bcc0334d52d1a18213"
+    },
+    {
+      "name": "fix/volantini-photo-preflight-onload-20261110",
+      "sha": "7adfd8fdfd1546671fc8b530e804aeaedbe00577"
+    },
+    {
+      "name": "main",
+      "sha": "2d9ad659ceb583d4698bfb9e59ca34f8e5ad5b07"
+    },
+    {
+      "name": "ocme-editor",
+      "sha": "f70ed798593e28f6192a6ee9a938f9d1328aa2b0"
+    },
+    {
+      "name": "ocme-palazzo",
+      "sha": "34a0cbe8d285ee9bcb3adca1e1d60fd50f7ce942"
+    },
+    {
+      "name": "review/la-sacra-a4-8-20261114",
+      "sha": "f7db631c7ac12f1191c6d0e95522f031a48d240f"
+    },
+    {
+      "name": "test/case247-consent-public-pages-20261102",
+      "sha": "8e6db1811b3450b62b9265b4d81eaec1e3c65093"
+    },
+    {
+      "name": "test/case247-live-security-20261101",
+      "sha": "c35bf476307fed3ddddcb847cd577dc72d732732"
+    },
+    {
+      "name": "test/case247-public-smoke-20261101",
+      "sha": "b6445b4addd6ba0a632207fea60c2b8eefe6e367"
+    }
+  ]
+}
