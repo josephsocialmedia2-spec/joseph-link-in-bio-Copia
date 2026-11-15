@@ -79,6 +79,15 @@ class RadarTests(unittest.TestCase):
         self.assertIsNotNone(row)
         self.assertEqual(row["town"], "Avigliana")
 
+    def test_sant_ambrogio_di_torino_is_allowed(self):
+        row = radar.normalize_result({
+            "title": "Privato vende trilocale Sant'Ambrogio di Torino",
+            "description": "82 mq, vendo direttamente, Via Torino 4",
+            "url": "https://example.org/santambrogio/4",
+        }, "Bing RSS", CFG)
+        self.assertIsNotNone(row)
+        self.assertEqual(row["town"], "Sant'Ambrogio di Torino")
+
     def test_nearby_allowed_town_without_property_location_is_rejected(self):
         row = radar.normalize_result({
             "title": "Privato vende casa",
