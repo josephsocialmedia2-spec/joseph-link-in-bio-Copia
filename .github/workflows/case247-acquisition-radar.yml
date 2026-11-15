@@ -6,17 +6,24 @@ on:
       - '.github/workflows/case247-acquisition-radar.yml'
       - 'scripts/case247_acquisition_radar.py'
       - 'scripts/test_case247_acquisition_radar.py'
+      - 'scripts/case247_acquisition_digest.py'
+      - 'scripts/test_case247_acquisition_digest.py'
       - 'config/case247-acquisition-radar.json'
   pull_request:
     paths:
       - '.github/workflows/case247-acquisition-radar.yml'
       - 'scripts/case247_acquisition_radar.py'
       - 'scripts/test_case247_acquisition_radar.py'
+      - 'scripts/case247_acquisition_digest.py'
+      - 'scripts/test_case247_acquisition_digest.py'
       - 'config/case247-acquisition-radar.json'
   workflow_dispatch:
   schedule:
-    # Ogni ora, 24/7: orario locale, compatibile con ora legale.
+    # Solo ricerca silenziosa, ogni ora.
     - cron: '17 * * * *'
+      timezone: "Europe/Rome"
+    # Un unico messaggio giornaliero, ore 06:00 Europe/Rome.
+    - cron: '0 6 * * *'
       timezone: "Europe/Rome"
 permissions:
   contents: read
@@ -37,8 +44,9 @@ jobs:
           python-version: '3.12'
       - name: Validate source without internet
         run: |
-          python -m py_compile scripts/case247_acquisition_radar.py
+          python -m py_compile scripts/case247_acquisition_radar.py scripts/case247_acquisition_digest.py
           python -m unittest discover -s scripts -p test_case247_acquisition_radar.py -v
+          python -m unittest discover -s scripts -p test_case247_acquisition_digest.py -v
 
   cloud-scan:
     needs: qa
@@ -65,7 +73,8 @@ jobs:
             echo "Prima scansione: costruisco baseline senza inviare falsi nuovi annunci"
           fi
 
-      - name: Cloud search engines — no local PC, no portal scraping
+      - name: Cloud search engines — silent hourly scan, no local PC
+        if: github.event.schedule != '0 6 * * *'
         id: scan
         env:
           CASE247_GOOGLE_ALERTS_RSS_URLS: ${{ secrets.CASE247_GOOGLE_ALERTS_RSS_URLS }}
@@ -73,16 +82,44 @@ jobs:
         run: |
           set -euo pipefail
           python scripts/case247_acquisition_radar.py --state _radar/state.json --out _radar/out --enrich
-          echo "new_count=$(python -c 'import json; print(json.load(open("_radar/out/report.json"))["new_count"])')" >> "$GITHUB_OUTPUT"
 
-      - name: Notify Joseph through a GitHub Issue with public listing links only
-        if: steps.scan.outputs.new_count != '0' && steps.scan.outputs.new_count != ''
+      - name: Accumulate hourly discoveries without a notification
+        if: github.event.schedule != '0 6 * * *'
+        run: python scripts/case247_acquisition_digest.py accumulate --state _radar/out/state.json --report _radar/out/report.json --out _radar/out
+
+      - name: Prepare the full daily digest at 06:00 Rome
+        if: github.event.schedule == '0 6 * * *'
+        run: |
+          set -euo pipefail
+          if [[ ! -f _radar/state.json ]]; then
+            echo '{"schema":1,"initialized":false,"known":{}}' > _radar/state.json
+          fi
+          python scripts/case247_acquisition_digest.py digest --state _radar/state.json --out _radar/out
+
+      - name: Send ONLY ONE daily GitHub Issue (idempotent by date)
+        if: github.event.schedule == '0 6 * * *'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         shell: bash
         run: |
           set -euo pipefail
-          gh issue create --repo "$GITHUB_REPOSITORY" --title "CASE247 Radar · nuovi segnali immobiliari (${{ github.run_id }})" --body-file _radar/out/alert.md --assignee "$GITHUB_REPOSITORY_OWNER"
+          if [[ "$(cat _radar/out/send.txt)" == "yes" ]]; then
+            day="$(TZ=Europe/Rome date +%F)"
+            title="CASE247 Radar · Riepilogo 06:00 · $day"
+            # Prevent a duplicate issue if the schedule is rerun after partial failure.
+            existing="$(gh issue list --repo "$GITHUB_REPOSITORY" --state all --limit 1000 --json title --jq '.[].title' | grep -Fxc "$title" || true)"
+            if [[ "$existing" != "0" ]]; then
+              echo "Digest gia pubblicato per il giorno $day; nessun messaggio duplicato."
+            else
+              gh issue create --repo "$GITHUB_REPOSITORY" --title "$title" --body-file _radar/out/digest.md --assignee "$GITHUB_REPOSITORY_OWNER"
+            fi
+          else
+            echo "Digest gia inviato secondo lo storico; nessun messaggio duplicato."
+          fi
+
+      - name: Mark the daily digest as delivered only after issue publication
+        if: github.event.schedule == '0 6 * * *'
+        run: python scripts/case247_acquisition_digest.py finalize --state _radar/state.json --out _radar/out
 
       - name: Save only anonymized seen-hashes for deduplication
         if: always()
@@ -98,6 +135,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: case247-acquisition-report
-          path: _radar/out/report.json
+          path: |
+            _radar/out/report.json
+            _radar/out/daily-report.json
+            _radar/out/digest.md
           if-no-files-found: warn
           retention-days: 14

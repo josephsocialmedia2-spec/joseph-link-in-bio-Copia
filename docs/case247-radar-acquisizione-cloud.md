@@ -8,7 +8,8 @@ Il radar gira **nei runner GitHub Actions**, senza dipendere da Windows, Python 
 - Interroga il feed di ricerca **Bing RSS** (endpoint non contrattualmente garantito) e, se configurati, i feed **Google Alerts RSS** generati dal titolare. **Non interroga in automatico Google Search né simula un browser Google**. Google Custom Search JSON API non è disponibile per nuovi clienti.
 - Legge titolo, snippet e link mostrati dall'indice; classifica **PROBABILE_PRIVATO** solo quando il testo dichiara esplicitamente l'origine privata; le altre schede restano `DA_VERIFICARE`.
 - Conserva impronte SHA-256 degli URL visti e l'eventuale prezzo pubblicato; la prima esecuzione è una **baseline senza avvisi**. Avvisa su URL nuovi e riduzioni di prezzo indicative, senza attestare una compravendita.
-- In caso di segnali qualificati crea una **GitHub Issue assegnata al titolare del repository** con fonte, prezzo, città e collegamento. Per vedere le notifiche su smartphone, occorre abilitare le notifiche GitHub (Issues assigned) nell'app GitHub/mobile o sul sito.
+- Le scansioni di ogni ora sono **silenziose**: i nuovi annunci e i ribassi indicativi vengono conservati nello stato del workflow. Alle **06:00 Europe/Rome** viene creata **una sola GitHub Issue giornaliera** assegnata al titolare, con **tutti i nuovi risultati pertinenti dall'ultimo riepilogo**, inclusi quelli DA_VERIFICARE chiaramente etichettati. Se non sono emerse novità, la Issue lo comunica (non afferma che non esistano immobili). Nessuna Issue viene creata durante le scansioni orarie. L'invio è idempotente per data, anche in caso di riesecuzione.
+- Per ricevere l'avviso su smartphone, abilitare le notifiche GitHub delle Issues assegnate. L'orario è quello **programmato**, non una garanzia di notifica esatta al secondo: GitHub può ritardare i workflow schedule.
 - Può interrogare in modo limitato OpenStreetMap/Overpass per elencare **attività commerciali sulla medesima via**; non è una misura della distanza, né un'associazione all'identità del proprietario.
 
 ## Impostazione Google Alerts (necessaria per includere Google)
@@ -26,11 +27,12 @@ Non inserire gli URL privati di Google Alerts nei file JSON del repository pubbl
 - Workflow: `.github/workflows/case247-acquisition-radar.yml`.
 - Ricerca: `scripts/case247_acquisition_radar.py`.
 - Configurazione: `config/case247-acquisition-radar.json`.
-- Test: `scripts/test_case247_acquisition_radar.py`.
-- Stato: artifact **case247-acquisition-state**, hash e valori numerici (retention 14 giorni). È scaricato dalla scansione successiva; se non disponibile viene costruita una nuova baseline.
+- Test: `scripts/test_case247_acquisition_radar.py`, `scripts/test_case247_acquisition_digest.py`.
+- Riepilogo giornaliero: `scripts/case247_acquisition_digest.py` (accumulate/digest/finalize).
+- Stato: artifact **case247-acquisition-state**, hash degli URL e batch di segnalazioni pubbliche in attesa del riepilogo (retention 14 giorni). È scaricato dalla scansione successiva; se non disponibile viene costruita una nuova baseline e non è possibile ricostruire eventuali segnalazioni pregresse.
 - Report: artifact **case247-acquisition-report**, link pubblici e classificazione, senza recapiti personali.
 
-GitHub Actions non fornisce monitoraggio in tempo reale: gli orari pianificati possono essere posticipati o saltati per congestione del servizio. L'intervallo configurato è di **un'ora**, 24/7.
+GitHub Actions non fornisce monitoraggio in tempo reale: gli orari pianificati possono essere posticipati o saltati per congestione del servizio. Le scansioni rimangono ogni ora 24/7, ma i messaggi sui nuovi immobili partono soltanto dal digest programmato alle **06:00 ora italiana**, una volta al giorno. Le altre notifiche GitHub del repository (review di PR, errori CI, altre issue) non sono gestite da questo radar.
 
 ## Sicurezza e attendibilità
 
