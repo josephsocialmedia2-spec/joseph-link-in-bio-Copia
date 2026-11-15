@@ -1,21 +1,8 @@
 {
   "source": "Metricool brand 7844901 / getScheduledPosts / Facebook e Instagram",
-  "checked_at": "2026-11-14",
-  "note": "Riconciliazione sola lettura Metricool; solo draft=false e autoPublish=true. PENDING non equivale a pubblicato. Il connettore include anche stati PUBLISHED nella finestra richiesta; nessuna modifica ai post. Sincronizzazione catalogo e assegnazioni demandata al workflow delle 18:00.",
+  "checked_at": "2026-11-15",
+  "note": "Riconciliazione sola lettura Metricool; solo draft=false e autoPublish=true. PENDING non equivale a pubblicato. Il connettore può restituire anche PUBLISHED. Nessuna modifica ai post. Catalogo e assegnazioni demandati al controllo delle 18:00.",
   "reservations": {
-    "2026-11-14": [
-      {
-        "metricool_id": 421681983,
-        "urls": [
-          "https://lasacraimmobiliare.it/products/appartamento-in-vendita-a-sant-ambrogio-di-torino-appena-ribassato"
-        ],
-        "status": {
-          "facebook": "PUBLISHED",
-          "instagram": "PUBLISHED"
-        },
-        "publication_date": "2026-11-14T10:00:00"
-      }
-    ],
     "2026-11-15": [
       {
         "metricool_id": 421682060,
@@ -23,8 +10,8 @@
           "https://lasacraimmobiliare.it/products/appartamento-in-vendita-a-sant-ambrogio-di-torino-in-piazza-del-comune"
         ],
         "status": {
-          "facebook": "PENDING",
-          "instagram": "PENDING"
+          "facebook": "PUBLISHED",
+          "instagram": "PUBLISHED"
         },
         "publication_date": "2026-11-15T10:00:00"
       },
