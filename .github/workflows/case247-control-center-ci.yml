@@ -1,0 +1,31 @@
+name: CASE247 Control Center CI
+on:
+  pull_request:
+    paths:
+      - 'gestione/index.html'
+      - 'gestione/control-center.js'
+      - 'gestione/control-center.css'
+      - 'gestione/cc-branches-snapshot.json'
+      - 'tests/control-center.test.cjs'
+      - '.github/workflows/case247-control-center-ci.yml'
+  push:
+    branches: ['feature/case247-control-center-20261115']
+    paths:
+      - 'gestione/index.html'
+      - 'gestione/control-center.js'
+      - 'gestione/control-center.css'
+      - 'gestione/cc-branches-snapshot.json'
+      - 'tests/control-center.test.cjs'
+      - '.github/workflows/case247-control-center-ci.yml'
+permissions:
+  contents: read
+jobs:
+  static-control-center:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check JavaScript syntax
+        run: node --check gestione/control-center.js
+      - name: Run built-in Node tests
+        run: node --test tests/control-center.test.cjs
