@@ -8,6 +8,8 @@ on:
       - 'scripts/test_case247_acquisition_radar.py'
       - 'scripts/case247_acquisition_digest.py'
       - 'scripts/test_case247_acquisition_digest.py'
+      - 'scripts/case247_acquisition_intelligence.py'
+      - 'scripts/test_case247_acquisition_intelligence.py'
       - 'config/case247-acquisition-radar.json'
   pull_request:
     paths:
@@ -16,6 +18,8 @@ on:
       - 'scripts/test_case247_acquisition_radar.py'
       - 'scripts/case247_acquisition_digest.py'
       - 'scripts/test_case247_acquisition_digest.py'
+      - 'scripts/case247_acquisition_intelligence.py'
+      - 'scripts/test_case247_acquisition_intelligence.py'
       - 'config/case247-acquisition-radar.json'
   workflow_dispatch:
   schedule:
@@ -44,9 +48,29 @@ jobs:
           python-version: '3.12'
       - name: Validate source without internet
         run: |
-          python -m py_compile scripts/case247_acquisition_radar.py scripts/case247_acquisition_digest.py
+          python -m py_compile scripts/case247_acquisition_radar.py scripts/case247_acquisition_digest.py scripts/case247_acquisition_intelligence.py
           python -m unittest discover -s scripts -p test_case247_acquisition_radar.py -v
           python -m unittest discover -s scripts -p test_case247_acquisition_digest.py -v
+          python -m unittest discover -s scripts -p test_case247_acquisition_intelligence.py -v
+
+  live-source-smoke:
+    needs: qa
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Audit accessible territorial news and B2B sources, WITHOUT notifications
+        run: python scripts/case247_acquisition_intelligence.py --out _radar/intelligence-smoke.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: case247-acquisition-intelligence-smoke
+          path: _radar/intelligence-smoke.json
+          if-no-files-found: error
+          retention-days: 7
 
   cloud-scan:
     needs: qa
@@ -87,6 +111,11 @@ jobs:
         if: github.event.schedule != '0 6 * * *'
         run: python scripts/case247_acquisition_digest.py accumulate --state _radar/out/state.json --report _radar/out/report.json --out _radar/out
 
+      - name: Gather territorial news and public B2B contacts for the daily summary
+        if: github.event.schedule == '0 6 * * *'
+        shell: bash
+        run: python scripts/case247_acquisition_intelligence.py --out _radar/out/intelligence.json
+
       - name: Prepare the full daily digest at 06:00 Rome
         if: github.event.schedule == '0 6 * * *'
         run: |
@@ -94,7 +123,7 @@ jobs:
           if [[ ! -f _radar/state.json ]]; then
             echo '{"schema":1,"initialized":false,"known":{}}' > _radar/state.json
           fi
-          python scripts/case247_acquisition_digest.py digest --state _radar/state.json --out _radar/out
+          python scripts/case247_acquisition_digest.py digest --state _radar/state.json --out _radar/out --intelligence _radar/out/intelligence.json
 
       - name: Send ONLY ONE daily GitHub Issue (idempotent by date)
         if: github.event.schedule == '0 6 * * *'
@@ -119,7 +148,7 @@ jobs:
 
       - name: Mark the daily digest as delivered only after issue publication
         if: github.event.schedule == '0 6 * * *'
-        run: python scripts/case247_acquisition_digest.py finalize --state _radar/state.json --out _radar/out
+        run: python scripts/case247_acquisition_digest.py finalize --state _radar/state.json --out _radar/out --intelligence _radar/out/intelligence.json
 
       - name: Save only anonymized seen-hashes for deduplication
         if: always()
@@ -139,5 +168,6 @@ jobs:
             _radar/out/report.json
             _radar/out/daily-report.json
             _radar/out/digest.md
+            _radar/out/intelligence.json
           if-no-files-found: warn
           retention-days: 14
