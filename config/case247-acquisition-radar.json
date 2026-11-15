@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "description": "Monitoraggio per motori di ricerca (non scraping dei portali). RSS Bing best effort + Google Alerts RSS configurabili; risultati incompleti o incerti restano da verificare.",
+  "priority_towns": [
+    "Avigliana",
+    "Sant'Ambrogio di Torino",
+    "Almese",
+    "Condove"
+  ],
+  "other_towns": [
+    "Rivoli",
+    "Rosta",
+    "Buttigliera Alta",
+    "Alpignano",
+    "Villar Dora",
+    "Caprie",
+    "Chiusa di San Michele",
+    "Vaie",
+    "Sant'Antonino di Susa",
+    "Borgone Susa",
+    "Villar Focchiardo",
+    "Bussoleno",
+    "Susa",
+    "Caselette",
+    "Rubiana",
+    "San Didero"
+  ],
+  "streets": {
+    "Avigliana": [
+      "Via Roma",
+      "Via Volvera",
+      "Via Susa",
+      "Via Torino",
+      "Via Rubiana",
+      "Corso Laghi",
+      "Via Monti",
+      "Via Giustetto",
+      "Via Trinità",
+      "Via Fenestrelle",
+      "Via della Marcanzia",
+      "Via Alpignano",
+      "Via Bardonecchia",
+      "Via Meana di Susa",
+      "Via Rivoli",
+      "Via Villarbasse",
+      "Via Mortera",
+      "Via Traversella",
+      "Via Cappuccini",
+      "Via dei Ronchi",
+      "Via delle Rose",
+      "Via degli Alpini",
+      "Viale dei Pini",
+      "Piazza Conte Rosso",
+      "Piazza del Popolo",
+      "Piazza Martini",
+      "Piazza Prealpi",
+      "Borgata Bertassi",
+      "SS25 del Moncenisio"
+    ]
+  },
+  "google_alerts_rss": [],
+  "note_google": "Aggiungi solo URL RSS generati dal tuo account in Google Alerts (Consegna a feed RSS) tramite PR di configurazione privata; se contengono identificativi account non inserirli in repository pubblico. Preferisci Google Alerts con URL di feed in secret: CASE247_GOOGLE_ALERTS_RSS_URLS.",
+  "notes_privacy": [
+    "Non associare telefoni aziendali sulla stessa via all'identità del proprietario.",
+    "Nessuna ricerca inversa di persone tramite indirizzo o ricostruzione di recapiti privati.",
+    "CRM personale e contatti non vengono scritti nel repository pubblico.",
+    "Valutazioni di annuncio privato basate su snippet: sempre da verificare."
+  ]
+}
