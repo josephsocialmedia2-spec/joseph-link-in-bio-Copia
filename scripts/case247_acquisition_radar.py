@@ -37,6 +37,7 @@ GENERIC_RX = re.compile(r"\b(?:annunci immobiliari|tutti gli annunci|case in ven
 TRACKING = frozenset(("utm_source", "utm_campaign", "utm_medium", "utm_content", "utm_term", "fbclid", "gclid", "msclkid"))
 ALLOWED_SCHEMES = ("http", "https")
 ALLOWED_TOWNS = ("Avigliana", "Sant'Ambrogio di Torino", "Almese", "Condove")
+EXCLUDED_TOWNS = ("Buttigliera Alta", "Rivoli", "Rosta", "Alpignano", "Villar Dora", "Caprie", "Chiusa di San Michele", "Vaie", "Sant'Antonino di Susa", "Borgone Susa", "Villar Focchiardo", "Bussoleno", "Susa", "Caselette", "Rubiana", "San Didero", "Torino", "Giaveno", "Collegno", "Grugliasco", "Oulx", "Bardonecchia")
 
 
 def clean_text(value: str) -> str:
@@ -159,11 +160,47 @@ def parse_feed(text: str) -> list[dict]:
     return results
 
 
+def _mentions(value: str, towns: tuple[str, ...] | list[str]) -> list[str]:
+    value = value.casefold()
+    return [town for town in towns if re.search(r"(?<!\w)" + re.escape(town.casefold()) + r"(?!\w)", value)]
+
+
+def _nearby_only(text: str, town: str) -> bool:
+    # A locality described as a landmark is not the property's location.
+    pattern = r"(?:vicino a|nei pressi di|a pochi minuti da|nelle vicinanze di|a \d+\s*km da|dista \d+\s*km da)\s+" + re.escape(town) + r"\b"
+    return bool(re.search(pattern, text, re.I))
+
+
 def town_of(title: str, desc: str, url: str, config: dict) -> str:
-    combined = (title + " " + desc + " " + urllib.parse.unquote(urllib.parse.urlsplit(url).path)).casefold()
-    towns = config["priority_towns"]
-    found = [t for t in towns if re.search(r"(?<!\w)" + re.escape(t.casefold()) + r"(?!\w)", combined)]
-    return max(found, key=len) if found else ""
+    """Fail closed if a listing explicitly names an excluded property location."""
+    allowed = tuple(config["priority_towns"])
+    path = urllib.parse.unquote(urllib.parse.urlsplit(url).path).replace("-", " ").replace("_", " ")
+    title_out = _mentions(title, EXCLUDED_TOWNS)
+    if title_out:
+        return ""
+    title_in = _mentions(title, allowed)
+    path_out = _mentions(path, EXCLUDED_TOWNS)
+    path_in = _mentions(path, allowed)
+    if path_out:
+        return ""
+    # An excluded municipality in the description may be a nearby landmark.
+    # Reject explicit property location cues and all ambiguous descriptions
+    # unless the title or URL identifies an allowed municipality.
+    desc_out = _mentions(desc, EXCLUDED_TOWNS)
+    for town in desc_out:
+        if not _nearby_only(desc, town):
+            return ""
+    if title_in:
+        return max(title_in, key=len)
+    if path_in:
+        return max(path_in, key=len)
+    if desc_out:
+        return ""
+    desc_in = _mentions(desc, allowed)
+    for town in desc_in:
+        if re.search(r"\b(?:a|ad|in|di)\s+" + re.escape(town) + r"\b", desc, re.I) and not _nearby_only(desc, town):
+            return town
+    return ""
 
 
 def normalize_result(raw: dict, source: str, config: dict) -> dict | None:
