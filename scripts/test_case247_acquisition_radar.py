@@ -11,8 +11,8 @@ import case247_acquisition_radar as radar
 
 
 CFG = {
-    "priority_towns": ["Avigliana", "Almese", "Condove", "Sant'Ambrogio di Torino"],
-    "other_towns": ["Rivoli", "Susa"],
+    "priority_towns": ["Avigliana", "Sant'Ambrogio di Torino", "Almese", "Condove"],
+    "other_towns": [],
     "streets": {"Avigliana": ["Via Roma", "Via Susa"]},
     "google_alerts_rss": [],
 }
@@ -33,17 +33,46 @@ class RadarTests(unittest.TestCase):
         path = Path(__file__).resolve().parents[1] / "config/case247-acquisition-radar.json"
         config = radar.read_config(path)
         self.assertIn("Avigliana", config["priority_towns"])
-        self.assertIn("Susa", config["other_towns"])
+        self.assertEqual(config["priority_towns"], list(radar.ALLOWED_TOWNS))
+        self.assertEqual(config["other_towns"], [])
         self.assertGreater(len(config["streets"]["Avigliana"]), 10)
 
     def test_query_rotation(self):
         plan0 = radar.search_plan(CFG, 0)
         plan1 = radar.search_plan(CFG, 1)
-        self.assertEqual(len(plan0), 4)
+        self.assertEqual(len(plan0), 5)
+        for slot in range(8):
+            plan = radar.search_plan(CFG, slot)
+            self.assertEqual({town for town, _ in plan}, set(radar.ALLOWED_TOWNS))
+            self.assertFalse(any(t in query for _, query in plan for t in ("Rivoli", "Susa", "Bussoleno")))
         self.assertIn("Avigliana", plan0[0][1])
-        self.assertIn('"Via Roma"', plan0[3][1])
-        self.assertIn('"Via Susa"', plan1[3][1])
-        self.assertNotEqual(plan0[0][0], plan1[0][0])
+        self.assertIn('"Via Roma"', plan0[4][1])
+        self.assertIn('"Via Susa"', plan1[4][1])
+        self.assertNotEqual(plan0[0][1], plan1[0][1])
+
+    def test_only_four_municipalities_are_accepted(self):
+        for foreign in ("Rivoli", "Susa", "Bussoleno", "Rubiana"):
+            row = radar.normalize_result({
+                "title": f"Privato vende appartamento {foreign}",
+                "description": "90 mq € 220.000 senza agenzie",
+                "url": "https://example.org/annuncio/foreign-" + foreign.lower(),
+            }, "Bing RSS", CFG)
+            self.assertIsNone(row, f"Il comune {foreign} non deve essere accettato")
+
+    def test_bad_config_rejected(self):
+        import tempfile
+        config = radar.read_config(Path(__file__).resolve().parents[1] / "config/case247-acquisition-radar.json")
+        variants = [
+            {**config, "other_towns": ["Rivoli"]},
+            {**config, "priority_towns": ["Avigliana"]},
+            {**config, "streets": {**config["streets"], "Susa": ["Via Roma"]}},
+        ]
+        with tempfile.TemporaryDirectory() as dirname:
+            path = Path(dirname) / "config.json"
+            for variant in variants:
+                path.write_text(json.dumps(variant, ensure_ascii=False), encoding="utf-8")
+                with self.assertRaises(ValueError):
+                    radar.read_config(path)
 
     def test_rss_feed_and_canonical(self):
         items = radar.parse_feed(rss([("Vendesi da privato Avigliana", "https://www.example.com/listing/3?utm_source=rss&id=3", "85 mq")]))
@@ -99,8 +128,8 @@ class RadarTests(unittest.TestCase):
         item = ("Privato vende trilocale Avigliana", "https://example.org/annuncio/123", "85 mq € 195.000 Via Roma, no agenzie")
         mocked = lambda _: rss([item])
         out1, state1, alert1 = radar.run(CFG, {"schema": 1, "initialized": False, "known": {}}, 0, fetch=mocked)
-        self.assertEqual(out1["feeds_ok"], 4)
-        self.assertEqual(out1["feed_items"], 4)
+        self.assertEqual(out1["feeds_ok"], 5)
+        self.assertEqual(out1["feed_items"], 5)
         self.assertEqual(out1["new_count"], 0)
         self.assertFalse(alert1)
         out2, state2, alert2 = radar.run(CFG, state1, 1, fetch=mocked)
@@ -134,7 +163,7 @@ class RadarTests(unittest.TestCase):
             urls.append(url)
             return rss([])
         output, _, _ = radar.run(config, {"schema": 1, "initialized": True, "known": {}}, 0, fetch=capture)
-        self.assertEqual(output["feeds_attempted"], 5)
+        self.assertEqual(output["feeds_attempted"], 6)
         self.assertTrue(any("google.com/alerts/feeds" in u for u in urls))
 
 
