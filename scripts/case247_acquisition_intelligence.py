@@ -34,7 +34,7 @@ GENERIC_BUSINESS_EMAIL = re.compile(
     r"commerciale|reception|direzione|office)@[a-z0-9.-]+\.[a-z]{2,}$", re.I,
 )
 SAFE_PHONE = re.compile(r"^\+?39[\s.-]*0\d[\d\s()./-]{5,18}$|^0\d[\d\s()./-]{5,18}$")
-OSM_ENDPOINT = "https://overpass-api.de/api/interpreter"
+OSM_ENDPOINTS = ("https://overpass.private.coffee/api/interpreter", "https://overpass-api.de/api/interpreter")
 OSM_ATTRIBUTION = "© OpenStreetMap contributors (ODbL)"
 
 
@@ -52,7 +52,7 @@ def exact_town(text: str, town: str) -> bool:
 def news_from_feed(xml: str, town: str, now: datetime) -> list[dict]:
     root = ET.fromstring(xml)
     news = []
-    cutoff = now - timedelta(hours=72)
+    cutoff = now - timedelta(days=7)
     for item in root.findall(".//item"):
         title = clean_text(item.findtext("title") or "")
         link = clean_text(item.findtext("link") or "")
@@ -83,7 +83,7 @@ def overpass_query(town: str) -> str:
     assert town in ALLOWED_TOWNS
     safe = town.replace("\\", "\\\\").replace('"', '\\"')
     return (
-        '[out:json][timeout:22];'
+        '[out:json][timeout:15];'
         f'area["name"="{safe}"]["admin_level"="8"]->.a;'
         '('
         'nwr(area.a)["office"~"^(estate_agent|company|architect|surveyor|notary)$"]["name"];'
@@ -156,9 +156,18 @@ def gather(now: datetime, fetch=http_text, limit_per_town: int = 8) -> dict:
             errors.append(f"{town}: news {type(err).__name__}")
             status.append({"town": town, "source": "Google News RSS", "status": "ERROR"})
         try:
-            payload = fetch(OSM_ENDPOINT, timeout=28,
-                            data=urllib.parse.urlencode({"data": overpass_query(town)}).encode())
-            rows = business_from_osm(json.loads(payload), town)
+            rows = None
+            last_error = None
+            for endpoint in OSM_ENDPOINTS:
+                try:
+                    payload = fetch(endpoint, timeout=15,
+                                    data=urllib.parse.urlencode({"data": overpass_query(town)}).encode())
+                    rows = business_from_osm(json.loads(payload), town)
+                    break
+                except (OSError, urllib.error.URLError, json.JSONDecodeError, ValueError, TimeoutError) as err:
+                    last_error = err
+            if rows is None:
+                raise last_error or TimeoutError("all Overpass sources unavailable")
             for row in rows[:limit_per_town]:
                 business.setdefault(row["id"], row)
             status.append({"town": town, "source": "OpenStreetMap Overpass", "status": "OK", "items": len(rows)})
