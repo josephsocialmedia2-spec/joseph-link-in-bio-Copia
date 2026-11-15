@@ -7,6 +7,8 @@ on:
       - 'gestione/control-center.css'
       - 'gestione/cc-branches-snapshot.json'
       - 'tests/control-center.test.cjs'
+      - 'tests/crm-connect.test.cjs'
+      - 'gestione/collega-crm/**'
       - '.github/workflows/case247-control-center-ci.yml'
   push:
     branches: ['feature/case247-control-center-20261115']
@@ -16,6 +18,8 @@ on:
       - 'gestione/control-center.css'
       - 'gestione/cc-branches-snapshot.json'
       - 'tests/control-center.test.cjs'
+      - 'tests/crm-connect.test.cjs'
+      - 'gestione/collega-crm/**'
       - '.github/workflows/case247-control-center-ci.yml'
 permissions:
   contents: read
@@ -26,6 +30,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Check JavaScript syntax
-        run: node --check gestione/control-center.js
+        run: |
+          node --check gestione/control-center.js
+          node --check gestione/collega-crm/setup.js
       - name: Run built-in Node tests
-        run: node --test tests/control-center.test.cjs
+        run: node --test tests/control-center.test.cjs tests/crm-connect.test.cjs
