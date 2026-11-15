@@ -191,7 +191,7 @@ def town_of(title: str, desc: str, url: str, config: dict) -> str:
     # trigger the excluded city "Torino" rule.
     def without_allowed_names(value: str) -> str:
         for name in sorted(candidates, key=len, reverse=True):
-            value = re.sub(r"(?<!\\w)" + re.escape(name) + r"(?!\\w)", " ", value, flags=re.I)
+            value = re.sub(r"(?<!\w)" + re.escape(name) + r"(?!\w)", " ", value, flags=re.I)
         return value
     excluded = locality_mentions(without_allowed_names(title), OUT_OF_SCOPE_TOWNS)
     if excluded:
