@@ -36,6 +36,7 @@ AGENCY_RX = re.compile(r"\b(?:agenzia immobiliare|agente immobiliare|professioni
 GENERIC_RX = re.compile(r"\b(?:annunci immobiliari|tutti gli annunci|case in vendita a|immobili in vendita a|agenzie immobiliari a)\b", re.I)
 TRACKING = frozenset(("utm_source", "utm_campaign", "utm_medium", "utm_content", "utm_term", "fbclid", "gclid", "msclkid"))
 ALLOWED_SCHEMES = ("http", "https")
+ALLOWED_TOWNS = ("Avigliana", "Sant'Ambrogio di Torino", "Almese", "Condove")
 
 
 def clean_text(value: str) -> str:
@@ -98,24 +99,29 @@ def get_street(value: str) -> str:
 
 def read_config(path: Path) -> dict:
     data = json.loads(path.read_text(encoding="utf-8"))
-    assert isinstance(data.get("priority_towns"), list) and data["priority_towns"]
-    assert isinstance(data.get("other_towns"), list) and data["other_towns"]
-    assert isinstance(data.get("streets"), dict)
-    assert isinstance(data.get("google_alerts_rss"), list)
+    if data.get("priority_towns") != list(ALLOWED_TOWNS):
+        raise ValueError("La ricerca e autorizzata solo per Avigliana, Sant'Ambrogio di Torino, Almese e Condove")
+    if data.get("other_towns") != []:
+        raise ValueError("Non sono ammessi comuni aggiuntivi nel radar acquisizione")
+    if not isinstance(data.get("streets"), dict) or set(data["streets"]) - set(ALLOWED_TOWNS):
+        raise ValueError("Le vie devono appartenere soltanto ai quattro comuni autorizzati")
+    if not isinstance(data.get("google_alerts_rss"), list):
+        raise ValueError("Configurazione feed Google Alerts non valida")
     return data
 
 
 def search_plan(config: dict, slot: int) -> list[tuple[str, str]]:
-    priority = config["priority_towns"]
-    others = config["other_towns"]
-    t1 = priority[slot % len(priority)]
-    t2 = priority[(slot + 1) % len(priority)]
-    t3 = others[slot % len(others)]
-    plans = [
-        (t1, f'{t1} casa vendita da privato'),
-        (t2, f'{t2} privato vende appartamento'),
-        (t3, f'{t3} vendo casa privato'),
-    ]
+    # Tutti e quattro i comuni vengono ricercati AD OGNI esecuzione.
+    # Si alternano le formulazioni, non le localita.
+    towns = config["priority_towns"]
+    templates = (
+        '{town} casa vendita da privato',
+        '{town} privato vende appartamento',
+        '{town} vendo casa privato',
+        '"{town}" vendesi appartamento proprietario',
+    )
+    plans = [(town, templates[(slot + i) % len(templates)].format(town=town))
+             for i, town in enumerate(towns)]
     streets = [(town, street) for town, roads in config["streets"].items() for street in roads]
     if streets:
         town, street = streets[slot % len(streets)]
@@ -155,7 +161,7 @@ def parse_feed(text: str) -> list[dict]:
 
 def town_of(title: str, desc: str, url: str, config: dict) -> str:
     combined = (title + " " + desc + " " + urllib.parse.unquote(urllib.parse.urlsplit(url).path)).casefold()
-    towns = config["priority_towns"] + config["other_towns"]
+    towns = config["priority_towns"]
     found = [t for t in towns if re.search(r"(?<!\w)" + re.escape(t.casefold()) + r"(?!\w)", combined)]
     return max(found, key=len) if found else ""
 
