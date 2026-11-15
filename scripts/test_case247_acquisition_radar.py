@@ -60,6 +60,30 @@ class RadarTests(unittest.TestCase):
             }, "Bing RSS", CFG)
             self.assertIsNone(row, f"Il comune {foreign} non deve essere accettato")
 
+    def test_codex_p2_nearby_allowed_town_does_not_relabel_property(self):
+        row = radar.normalize_result({
+            "title": "Privato vende appartamento a Buttigliera Alta",
+            "description": "90 mq, a pochi minuti da Avigliana, no agenzie",
+            "url": "https://example.org/immobile/100",
+        }, "Bing RSS", CFG)
+        self.assertIsNone(row)
+
+    def test_allowed_property_near_excluded_landmark(self):
+        row = radar.normalize_result({
+            "title": "Privato vende trilocale Avigliana",
+            "description": "90 mq, vicino a Buttigliera Alta, no agenzie",
+            "url": "https://example.org/immobile/101",
+        }, "Bing RSS", CFG)
+        self.assertEqual(row["town"], "Avigliana")
+
+    def test_excluded_location_in_url(self):
+        row = radar.normalize_result({
+            "title": "Privato vende trilocale",
+            "description": "A pochi minuti da Avigliana, no agenzie",
+            "url": "https://example.org/immobili/buttigliera-alta/trilocale",
+        }, "Bing RSS", CFG)
+        self.assertIsNone(row)
+
     def test_bad_config_rejected(self):
         import tempfile
         config = radar.read_config(Path(__file__).resolve().parents[1] / "config/case247-acquisition-radar.json")
