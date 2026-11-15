@@ -78,7 +78,7 @@ async function upload(e){
    parsed=S.parseScheduleText(read.text,week);
   }
   source=file.name+' · '+read.method;pending=parsed.rows;
-  state.lastUpload=new Date().toISOString();state.lastSource=file.name.slice(0,110);
+  state.lastUpload=new Date().toISOString();state.lastSource=file.name.slice(0,110);save(KEY,state);
   st.textContent=parsed.found&&parsed.rows.length?parsed.rows.length+' lezioni estratte: controllale prima di confermare. '+parsed.warnings.join(' '):'La tabella ORARIO 2S CAT non è stata estratta in modo affidabile. '+parsed.warnings.join(' ')+' Usa + Riga per correggere.';
   renderDraft();
  }catch(err){st.textContent='PDF/immagine non leggibile: '+err.message+'. Puoi inserire le lezioni manualmente.'}
@@ -207,7 +207,7 @@ function taskConflict(t){
 }
 function mount(context){
  root=context.root;ctx=context;state=read(KEY,{weeks:{}});if(!state||!state.weeks||typeof state.weeks!=='object')state={weeks:{}};
- week=S.monday(ctx.getWeek());setup();bindForm();render();
+ week=S.monday(ctx.getWeek());setup();bindForm();render();window.setInterval(()=>{if(document.visibilityState!=='hidden')render()},60000);
  return {render,lessonsForWeek:getLessons,allLessons:()=>Object.values(state.weeks).flatMap(s=>s.rows||[]),scheduleWeekChanged:w=>{if(!pending){week=S.monday(w);render()}},populateTaskForm,enrichTask,importedTask,taskConflict};
 }
 window.CASE247StudioUI={mount};
