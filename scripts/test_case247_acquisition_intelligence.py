@@ -108,6 +108,24 @@ class IntelligenceTests(unittest.TestCase):
         self.assertEqual(next_report["business_contacts"], [])
         self.assertNotIn("info@studio.example", next_md)
 
+    def test_morning_cache_is_date_scoped(self):
+        intel = {
+            "generated_utc": "2026-11-16T04:17:00+00:00",
+            "news": [{"id": "fresh", "town": "Avigliana", "title": "Avigliana edilizia",
+                      "url": "https://news.example/fresh"}],
+            "business_contacts": [], "sources": [{"status": "OK"}], "errors": [],
+        }
+        state = {"schema": 1, "initialized": True, "known": {}, "intelligence": intel}
+        today, report = digest.create_digest(state, "2026-11-16")
+        self.assertEqual(len(report["news"]), 1)
+        self.assertIn("Avigliana edilizia", today)
+        old, old_report = digest.create_digest(state, "2026-11-17")
+        self.assertEqual(old_report["news"], [])
+        self.assertNotIn("Avigliana edilizia", old)
+        finalized = digest.finalize(state, "2026-11-16")
+        self.assertEqual(finalized.get("intelligence"), {})
+        self.assertIn("fresh", finalized["news_seen"])
+
     def test_foreign_news_and_business_are_excluded(self):
         intel = {"news": [{"id": "x", "town": "Susa", "title": "Nuova casa"}],
                  "business_contacts": [{"id": "y", "town": "Rivoli", "name": "Azienda"}]}
