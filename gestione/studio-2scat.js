@@ -39,20 +39,20 @@ function reference(week){
 function parseScheduleText(input,week){
  const lines=String(input||'').replace(/\r/g,'').split('\n').map(x=>x.trim()).filter(Boolean);
  const heads=lines.map(x=>normalize(x));
- const first=heads.findIndex(x=>/\bORARIO\s*2\s*S\s*CAT\b/.test(x));
+ const first=heads.findIndex((x,i)=>/\bORARIO\s*2\s*S\s*CAT\b/.test(x)||(x==='ORARIO'&&/^2\s*S\s*CAT\b/.test(heads[i+1]||'')));
  if(first<0)return {rows:[],warnings:['Sezione ORARIO 2S CAT non trovata: non importare le altre classi.'],found:false};
  let end=lines.length;
  for(let i=first+1;i<lines.length;i++){
   if(/\bORARIO\s*(?:1|2|3|4|5)\s*S\s*(?:AFM|CAT)\b/.test(heads[i])){end=i;break}
  }
- let day=-1,rows=[],warnings=[],countTime=0;
+ let day=-1,rows=[],warnings=[],countTime=0,dayMismatch=false;
  const dayRE=/^(?:[•*–-]\s*)?(LUNED[IÌ]|MARTED[IÌ]|MERCOLED[IÌ]|GIOVED[IÌ]|VENERD[IÌ]|SABATO)\b/i;
  const clock=/\b([01]?\d|2[0-3])[:.]([0-5]\d)\s*[-–—]\s*([01]?\d|2[0-3])[:.]([0-5]\d)\b/;
  const cleanSubject=s=>s.replace(/^[\s:;–—-]+/,'').replace(/[\s:;–—-]+$/,'').trim();
  for(let i=first+1;i<end;i++){
   const raw=lines[i]; const n=normalize(raw);
   const dayMatch=n.match(/^(?:[•*\-]\s*)?(LUNEDI|MARTEDI|MERCOLEDI|GIOVEDI|VENERDI|SABATO)\b/);
-  if(dayMatch){day=DAYS.indexOf(dayMatch[1])}
+  if(dayMatch){day=DAYS.indexOf(dayMatch[1]);const m=n.match(/\b(?:LUNEDI|MARTEDI|MERCOLEDI|GIOVEDI|VENERDI|SABATO)\s+(\d{1,2})\b/);dayMismatch=!!(m&&Number(m[1])!==Number(dateForDay(week,day).slice(-2)));if(dayMismatch)warnings.push('Data nel PDF non coerente con la settimana selezionata: '+raw.slice(0,95));}
   const match=raw.match(clock);
   if(!match)continue;countTime++;
   if(day<0){warnings.push('Orario senza giorno riconoscibile: '+raw.slice(0,85));continue}
@@ -65,7 +65,7 @@ function parseScheduleText(input,week){
   const subject=SUBJECTS.find(s=>normalize(subj).startsWith(normalize(s)))||subj.slice(0,80);
   const numbered=raw.match(/\b(0?[1-9]|[12]\d|3[01])\s+(?:NOVEMBRE|DICEMBRE|GENNAIO|FEBBRAIO|MARZO|APRILE|MAGGIO|GIUGNO|LUGLIO|AGOSTO|SETTEMBRE|OTTOBRE)\b/i);
   const exact=SUBJECTS.some(s=>normalize(subj)===normalize(s));
-  const lesson=makeLesson({date:dateForDay(week,day),start,end:stop,subject,notes:'Da '+(numbered?'riga datata':'estrazione PDF')+(after&&normalize(subject)!==normalize(after)?' · '+after.slice(0,65):''),confidence:exact?'confermato':'da verificare'},week);
+  const lesson=makeLesson({date:dateForDay(week,day),start,end:stop,subject,notes:'Da '+(numbered?'riga datata':'estrazione PDF')+(after&&normalize(subject)!==normalize(after)?' · '+after.slice(0,65):''),confidence:exact&&!dayMismatch?'confermato':'da verificare'},week);
   if(lesson)rows.push(lesson);else warnings.push('Intervallo non valido: '+raw.slice(0,100));
  }
  if(!rows.length)warnings.push(countTime?'Orari individuati ma nessuna riga validabile: correggere l’anteprima.':'Tabella 2S CAT non leggibile automaticamente: inserire o correggere le righe.');
@@ -87,7 +87,7 @@ function conflicts(lessons,tasks,additional){
  const collisions=[];
  for(let i=0;i<all.length;i++){
   for(let j=i+1;j<all.length;j++){
-   if(overlaps(all[i],all[j])&&all[i].type!==all[j].type)collisions.push([all[i],all[j]]);
+   if(overlaps(all[i],all[j]))collisions.push([all[i],all[j]]);
   }
  }
  return collisions;
@@ -104,7 +104,7 @@ function suggestStudySlots(date,weekLessons,tasks,limit=3){
  const result=[];
  for(let offset=1;offset<=7;offset++){
   const day=plusDays(date,-offset),num=fromISO(day).getUTCDay();
-  if(num===0)continue;
+  if(num===0||day<localParts('Europe/Rome').date)continue;
   for(const hour of ['14:00','15:30','16:00','19:30']){
    const span={date:day,start:hour,end:clockAfter(hour,45)};
    if(span.end<'22:00'&&occupiedForDay(day,weekLessons,tasks).every(other=>!overlaps(span,other))){
@@ -140,7 +140,7 @@ function textLines(content){
  });
  return [...bins.entries()].sort((a,b)=>b[0]-a[0]).map(([,items])=>items.sort((a,b)=>a.x-b.x).map(x=>x.str).join(' ').replace(/\s+/g,' ').trim()).filter(Boolean).join('\n');
 }
-async function readFile(file,onStatus){
+async function readFile(file,onStatus,forceOCR=false){
  if(!file||file.size>15*1024*1024)throw Error('File mancante o oltre 15 MB');
  const status=typeof onStatus==='function'?onStatus:()=>{};
  const isPdf=file.type==='application/pdf'||/\.pdf$/i.test(file.name||'');
@@ -155,7 +155,7 @@ async function readFile(file,onStatus){
  const pages=[];
  for(let i=1;i<=limit;i++){status('Lettura PDF: pagina '+i+' di '+limit);const page=await doc.getPage(i),text=await page.getTextContent();pages.push(textLines(text));}
  let all=pages.join('\n');
- if(!/\bORARIO\s*2\s*S\s*CAT\b/i.test(normalize(all))){
+ if(forceOCR||!/\bORARIO\s*2\s*S\s*CAT\b/i.test(normalize(all))){
   status('Tabella non selezionabile: avvio OCR locale sulle prime pagine…');
   const t=await loadOCR();
   const worker=await t.createWorker('ita+eng');
