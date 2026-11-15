@@ -182,6 +182,8 @@ def main() -> int:
     save_json(args.out, data)
     good = sum(x["status"] == "OK" for x in data["sources"])
     print(f"CASE247_INTELLIGENCE sources_ok={good}/8 news={len(data['news'])} business_contacts={len(data['business_contacts'])}")
+    print("CASE247_SOURCE_DIAGNOSTICS " + json.dumps(data["sources"], ensure_ascii=False))
+    print("CASE247_SOURCE_ERRORS " + json.dumps(data["errors"], ensure_ascii=False))
     if good == 0:
         # Do not block the property digest: it will explicitly show unavailable sources.
         print("CASE247_INTELLIGENCE WARNING: all news/referral sources unavailable")
