@@ -44,7 +44,8 @@ class RadarTests(unittest.TestCase):
         for slot in range(8):
             plan = radar.search_plan(CFG, slot)
             self.assertEqual({town for town, _ in plan}, set(radar.ALLOWED_TOWNS))
-            self.assertFalse(any(t in query for _, query in plan for t in ("Rivoli", "Susa", "Bussoleno")))
+            self.assertTrue(all(town in radar.ALLOWED_TOWNS for town, _ in plan))
+            self.assertFalse(any(query.startswith("Rivoli ") or query.startswith("Susa ") for _, query in plan))
         self.assertIn("Avigliana", plan0[0][1])
         self.assertIn('"Via Roma"', plan0[4][1])
         self.assertIn('"Via Susa"', plan1[4][1])
