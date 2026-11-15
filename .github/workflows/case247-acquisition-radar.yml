@@ -111,10 +111,15 @@ jobs:
         if: github.event.schedule != '0 6 * * *'
         run: python scripts/case247_acquisition_digest.py accumulate --state _radar/out/state.json --report _radar/out/report.json --out _radar/out
 
-      - name: Gather territorial news and public B2B contacts for the daily summary
-        if: github.event.schedule == '0 6 * * *'
+      - name: Collect and cache morning news / public B2B contacts silently at 05:17 Rome
+        if: github.event.schedule == '17 * * * *'
         shell: bash
-        run: python scripts/case247_acquisition_intelligence.py --out _radar/out/intelligence.json
+        run: |
+          set -euo pipefail
+          if [[ "$(TZ=Europe/Rome date +%H)" == "05" ]]; then
+            python scripts/case247_acquisition_intelligence.py --out _radar/out/intelligence.json
+            python scripts/case247_acquisition_digest.py cache --state _radar/out/state.json --out _radar/out --intelligence _radar/out/intelligence.json
+          fi
 
       - name: Prepare the full daily digest at 06:00 Rome
         if: github.event.schedule == '0 6 * * *'
