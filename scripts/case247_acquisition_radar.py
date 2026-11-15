@@ -365,6 +365,9 @@ def main() -> int:
     p.add_argument("--enrich", action="store_true")
     args = p.parse_args()
     config = read_config(args.config)
+    # Google Alerts feeds are private to the owner; configure as GitHub Actions Secret.
+    feeds_secret = os.environ.get("CASE247_GOOGLE_ALERTS_RSS_URLS", "")
+    config["google_alerts_rss"] += [url.strip() for url in feeds_secret.splitlines() if url.strip()]
     previous = load_state(args.state)
     slot = args.slot if args.slot is not None else int(time.time() // 3600)
     output, next_state, alert = run(config, previous, slot, enrich=args.enrich)
