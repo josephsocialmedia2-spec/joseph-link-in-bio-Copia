@@ -41,18 +41,28 @@ async function brevo(path:string,method="GET",body?:unknown) {
  if(!r.ok){const err=new Error("Brevo HTTP "+r.status);(err as any).httpStatus=r.status;throw err;}
  return data;
 }
+async function designatedTestEmail(){
+ const {data,error}=await db.from("case247_mail_contacts").select("email").eq("test_only",true).is("unsubscribed_at",null).limit(2);
+ if(error||!data||data.length!==1)return "";
+ const value=email(data[0].email);
+ const secretEmail=config().testEmail;
+ // An explicitly configured environment recipient cannot silently override the database authorization.
+ if(secretEmail&&secretEmail!==value)return "";
+ return value;
+}
 async function approvedRecipient(sector:string) {
  const c=config();
- if(!c.testEmail||!EMAIL_RE.test(c.testEmail))return {eligible:[],reasons:["Nessun destinatario di prova designato nel backend"]};
+ c.testEmail=await designatedTestEmail();
+ if(!c.testEmail||!EMAIL_RE.test(c.testEmail))return {eligible:[],reasons:["Nessun destinatario di prova designato e autorizzato"]};
  if(!["privati","aziende"].includes(sector))return {eligible:[],reasons:["Settore non valido"]};
- const {data:contacts,error:e}=await db.from("case247_mail_contacts").select("id,email,consent_at,unsubscribed_at,evidence,lawful_basis,sector").eq("sector",sector).eq("email",c.testEmail).limit(2);
+ const {data:contacts,error:e}=await db.from("case247_mail_contacts").select("id,email,consent_at,unsubscribed_at,evidence,lawful_basis,sector,test_only").eq("sector",sector).eq("email",c.testEmail).limit(2);
  if(e)throw Error("Errore controllo consensi");
  const {data:excluded,error:x}=await db.from("case247_mail_suppressions").select("email").eq("email",c.testEmail).maybeSingle();
  if(x)throw Error("Errore controllo soppressioni");
  const reasons:string[]=[];
  if((contacts||[]).length!==1)reasons.push("Contatto di test non registrato nel settore");
  const one=contacts?.[0];
- if(one&&(!one.consent_at||one.lawful_basis!=="consent"||safe(one.evidence).length<12))reasons.push("Consenso non documentato");
+ if(one&&(!one.consent_at||one.lawful_basis!=="consent"||safe(one.evidence).length<12||one.test_only!==true))reasons.push("Autorizzazione tecnica non documentata");
  if(one?.unsubscribed_at||excluded)reasons.push("Destinatario disiscritto o escluso");
  if(reasons.length)return {eligible:[],reasons};
  return {eligible:[{email:c.testEmail}],reasons:[]};
@@ -126,6 +136,7 @@ async function campaignHtml(c:any,addr:string){
 }
 async function preview(c:any) {
  const r=await approvedRecipient(c.sector),cfg=config();
+ cfg.testEmail=await designatedTestEmail();
  const reasons=[...r.reasons];
  if(!cfg.enabled)reasons.push("Invio di prova disabilitato (interruttore backend)");
  if(!cfg.brevo)reasons.push("Chiave Brevo non configurata");
@@ -151,6 +162,7 @@ async function start(id:string) {
  let providerId:number|undefined;
  try {
   const cfg=await checkProvider();
+ cfg.testEmail=await designatedTestEmail();
   if(c.flyer_url)await verifyAsset(c.flyer_url);
   const recipients=await approvedRecipient(c.sector);
   if(recipients.eligible.length!==1||recipients.eligible[0].email!==cfg.testEmail)throw Error("Il consenso o il destinatario sono cambiati");
@@ -257,6 +269,7 @@ Deno.serve(async(req:Request)=>{
    ]);
    if(a.error||b.error)throw Error("Database non raggiungibile");
    const cfg=config();
+   cfg.testEmail=await designatedTestEmail();
    return json({contacts:a.data,campaigns:b.data,diagnostics:{
     project:"CASE247",brand:BRAND,provider_key_configured:cfg.brevo,
     sender_configured:!!cfg.sender,designated_test_recipient_configured:!!cfg.testEmail,
@@ -268,17 +281,19 @@ Deno.serve(async(req:Request)=>{
   const b=await req.json();
   if(b.action==="contact"){
    const addr=email(b.email),sector=safe(b.sector,20),evidence=safe(b.evidence,1000),date=new Date(b.consent_at),cfg=config();
+   cfg.testEmail=await designatedTestEmail();
    if(addr!==cfg.testEmail||!EMAIL_RE.test(addr))return problem("È consentito registrare solo il destinatario di test designato",403);
    if(!["privati","aziende"].includes(sector)||evidence.length<12||!b.test_authorized||isNaN(date.getTime())||date.getTime()>Date.now())return problem("Autorizzazione di prova e prova del consenso obbligatorie");
    const {data:suppressed}=await db.from("case247_mail_suppressions").select("email").eq("email",addr).maybeSingle();
    if(suppressed)return problem("Contatto già disiscritto: riattivazione bloccata",409);
-   const {error}=await db.from("case247_mail_contacts").insert({email:addr,sector,full_name:safe(b.full_name,130),city:safe(b.city,80),evidence,lawful_basis:"consent",consent_at:date.toISOString()});
+   const {error}=await db.from("case247_mail_contacts").insert({email:addr,sector,full_name:safe(b.full_name,130),city:safe(b.city,80),evidence,lawful_basis:"consent",consent_at:date.toISOString(),test_only:true});
    if(error)return problem("Contatto già esistente o dati non validi",409);
    return json({created:true},201);
   }
   if(b.action==="campaign"){
    const sector=safe(b.sector,20),scheduled=new Date(b.scheduled_at),urlString=safe(b.flyer_url,1000);
    const asset=urlString?linkAllowed(urlString):null,cfg=config();
+   cfg.testEmail=await designatedTestEmail();
    if(!["privati","aziende"].includes(sector)||!cfg.testEmail||!EMAIL_RE.test(cfg.testEmail)||isNaN(scheduled.getTime())||scheduled.getTime()<Date.now()+120000||scheduled.getTime()>Date.now()+86400000||urlString&&!asset)
       return problem("Campagna di prova non valida (data 2 minuti–24 ore; URL file CASE247 HTTPS)");
    const {data,error}=await db.from("case247_mail_campaigns").insert({title:safe(b.title||"Collaudo tecnico",100),sector,subject:"[PROVA] "+BRAND,flyer_url:asset||"",scheduled_at:scheduled.toISOString(),test_mode:true,test_email:cfg.testEmail,status:"draft"}).select("id").single();
@@ -301,7 +316,7 @@ Deno.serve(async(req:Request)=>{
    return json({status:"cancelled"});
   }
   if(b.action==="unsubscribe"){
-   const addr=email(b.email),cfg=config();if(addr!==cfg.testEmail)return problem("Solo destinatario designato",403);
+   const addr=email(b.email),cfg=config();cfg.testEmail=await designatedTestEmail();if(addr!==cfg.testEmail)return problem("Solo destinatario designato",403);
    await suppress(addr,"admin-suppression","dashboard");
    return json({suppressed:true});
   }
