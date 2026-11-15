@@ -12,6 +12,19 @@ Il radar gira **nei runner GitHub Actions**, senza dipendere da Windows, Python 
 - Per ricevere l'avviso su smartphone, abilitare le notifiche GitHub delle Issues assegnate. L'orario è quello **programmato**, non una garanzia di notifica esatta al secondo: GitHub può ritardare i workflow schedule.
 - Può interrogare in modo limitato OpenStreetMap/Overpass per elencare **attività commerciali sulla medesima via**; non è una misura della distanza, né un'associazione all'identità del proprietario.
 
+## Opportunità aggiuntive per l'acquisizione (ore 06:00)
+
+Il riepilogo giornaliero ora raccoglie anche due gruppi di segnali, **senza creare notifiche aggiuntive**:
+
+1. **Notizie territoriali** relative a edilizia, urbanistica, cantieri, immobiliare, case, proprietà e affitti. Fonte: ricerche RSS Google News limitate ai quattro comuni e a notizie pubblicate nelle ultime 72 ore, con titolo e link verificabile. Non equivale a un accesso completo a Google Search e la copertura può essere incompleta.
+2. **Contatti B2B pubblici** di aziende e professionisti presenti in OpenStreetMap (uffici immobiliari, studi, imprese edili, artigiani). Fonte: OpenStreetMap/Overpass (© OpenStreetMap contributors, licenza ODbL); vengono riportati solo i recapiti chiaramente pubblicati nella scheda aziendale, privilegiando caselle generiche e numeri fissi, mai contatti personali ricavati per incrocio di vie. Per ogni attività è incluso il link alla scheda originaria.
+
+Il motore mantiene due registri di ID già segnalati, così una notizia o un'azienda invariata non viene ripetuta nei giorni successivi. L'identificazione di un'attività sulla stessa strada di un immobile **non dimostra né suggerisce** che l'attività sia il proprietario: rimane un'opportunità B2B indipendente.
+
+Questi dati sono **segnali per una verifica commerciale** e non autorizzano a telefonare o inviare email promozionali. Prima di contattare chiunque occorre verificare base giuridica, consenso quando necessario, Registro Pubblico delle Opposizioni e richieste di non contatto; non è attivo alcun invio automatico.
+
+Le fonti esterne sono best-effort, possono risultare indisponibili o non esaustive; in tal caso il digest segnala gli errori e continua a mostrare gli immobili eventualmente acquisiti.
+
 ## Impostazione Google Alerts (necessaria per includere Google)
 
 1. Apri https://www.google.com/alerts e accedi al tuo account Google.
@@ -29,6 +42,7 @@ Non inserire gli URL privati di Google Alerts nei file JSON del repository pubbl
 - Configurazione: `config/case247-acquisition-radar.json`.
 - Test: `scripts/test_case247_acquisition_radar.py`, `scripts/test_case247_acquisition_digest.py`.
 - Riepilogo giornaliero: `scripts/case247_acquisition_digest.py` (accumulate/digest/finalize).
+- Notizie e recapiti aziendali pubblici: `scripts/case247_acquisition_intelligence.py` e test `scripts/test_case247_acquisition_intelligence.py`.
 - Stato: artifact **case247-acquisition-state**, hash degli URL e batch di segnalazioni pubbliche in attesa del riepilogo (retention 14 giorni). È scaricato dalla scansione successiva; se non disponibile viene costruita una nuova baseline e non è possibile ricostruire eventuali segnalazioni pregresse.
 - Report: artifact **case247-acquisition-report**, link pubblici e classificazione, senza recapiti personali.
 
