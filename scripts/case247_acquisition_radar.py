@@ -37,6 +37,15 @@ GENERIC_RX = re.compile(r"\b(?:annunci immobiliari|tutti gli annunci|case in ven
 TRACKING = frozenset(("utm_source", "utm_campaign", "utm_medium", "utm_content", "utm_term", "fbclid", "gclid", "msclkid"))
 ALLOWED_SCHEMES = ("http", "https")
 ALLOWED_TOWNS = ("Avigliana", "Sant'Ambrogio di Torino", "Almese", "Condove")
+# Known adjacent and out-of-scope localities, separate from search allowlist.
+# The list is intentionally conservative: ambiguous/multi-town entries are discarded.
+OUT_OF_SCOPE_TOWNS = (
+    "Buttigliera Alta", "Rivoli", "Rosta", "Alpignano", "Villar Dora",
+    "Caprie", "Chiusa di San Michele", "Vaie", "Sant'Antonino di Susa",
+    "Borgone Susa", "Villar Focchiardo", "Bussoleno", "Susa",
+    "Caselette", "Rubiana", "San Didero", "Torino", "Collegno",
+    "Giaveno", "Trana", "Reano", "Valgioie", "San Giorio di Susa",
+)
 
 
 def clean_text(value: str) -> str:
@@ -159,11 +168,51 @@ def parse_feed(text: str) -> list[dict]:
     return results
 
 
+def locality_mentions(value: str, towns: tuple[str, ...] | list[str]) -> list[str]:
+    """Read municipality mentions without interpreting street names as municipalities."""
+    text = value.casefold()
+    # Only strip known street-prefix + locality combinations (e.g. Via Susa in Avigliana).
+    for town in towns:
+        text = re.sub(
+            r"\b(?:via|viale|corso|piazza|strada|vicolo)\s+" + re.escape(town.casefold()) + r"\b",
+            " ", text,
+        )
+    return [town for town in towns if re.search(r"(?<!\w)" + re.escape(town.casefold()) + r"(?!\w)", text)]
+
+
 def town_of(title: str, desc: str, url: str, config: dict) -> str:
-    combined = (title + " " + desc + " " + urllib.parse.unquote(urllib.parse.urlsplit(url).path)).casefold()
-    towns = config["priority_towns"]
-    found = [t for t in towns if re.search(r"(?<!\w)" + re.escape(t.casefold()) + r"(?!\w)", combined)]
-    return max(found, key=len) if found else ""
+    """Never infer property location from an allowed-town nearby landmark.
+
+    Codex P2: 'appartamento a Buttigliera Alta, pochi minuti da Avigliana'
+    must be rejected. Require a single unambiguous primary locality.
+    """
+    candidates = tuple(config["priority_towns"])
+    excluded = locality_mentions(title, OUT_OF_SCOPE_TOWNS)
+    if excluded:
+        return ""
+    in_title = locality_mentions(title, candidates)
+    if len(in_title) == 1:
+        return in_title[0]
+    if len(in_title) > 1:
+        return ""
+    # If the title lacks a locality, accept only explicit property-location text,
+    # never generic proximity cues such as "a pochi minuti da Avigliana".
+    location_text = desc.casefold()
+    nearby = re.search(
+        r"\b(?:pochi minuti da|a pochi km da|vicino a|vicin[oa] ad?|nei pressi di|"
+        r"nelle vicinanze di|limitrof[oa] a)\s+",
+        location_text,
+    )
+    if nearby:
+        location_text = location_text[:nearby.start()]
+    if locality_mentions(location_text, OUT_OF_SCOPE_TOWNS):
+        return ""
+    found = []
+    for town in candidates:
+        t = re.escape(town.casefold())
+        if re.search(r"\b(?:a|ad|in|nel comune di|situat[oa] a|localit[aà])\s+" + t + r"\b", location_text):
+            found.append(town)
+    return found[0] if len(found) == 1 else ""
 
 
 def normalize_result(raw: dict, source: str, config: dict) -> dict | None:
@@ -274,7 +323,7 @@ def compare(results: list[dict], state: dict, now_iso: str) -> tuple[list[dict],
     # Memory limit: retaining a bounded recent index avoids uncontrolled artifacts.
     if len(known) > 12000:
         known = dict(sorted(known.items(), key=lambda kv: kv[1].get("last_seen", ""), reverse=True)[:12000])
-    return changes, {"schema": 1, "initialized": True, "known": known}
+    return changes, {**state, "schema": 1, "initialized": True, "known": known}
 
 
 def md_report(changes: list[dict], stats: dict, now_iso: str) -> str:
@@ -364,7 +413,7 @@ def run(config: dict, previous: dict, slot: int, fetch=http_text, enrich=False) 
         "scanned_at_utc": now_iso, "new_count": len(reportable),
         **stats, "diagnostics": diagnostics, "errors": errors,
         "queries": [{"town": town, "query": q} for town, q in plans],
-        "changes": changes[:100],
+        "changes": changes,
         "candidate_count_uncertain": sum(1 for r in seen.values() if r["status"] == "DA_VERIFICARE"),
     }
     return output, state, md_report(reportable, stats, now_iso) if reportable else ""
