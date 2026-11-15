@@ -60,6 +60,33 @@ class RadarTests(unittest.TestCase):
             }, "Bing RSS", CFG)
             self.assertIsNone(row, f"Il comune {foreign} non deve essere accettato")
 
+    def test_nearby_landmark_cannot_relabel_foreign_town(self):
+        # Codex P2 regression: the private property is in Buttigliera Alta,
+        # and Avigliana is only mentioned as a nearby landmark.
+        row = radar.normalize_result({
+            "title": "Privato vende appartamento a Buttigliera Alta",
+            "description": "90 mq, a pochi minuti da Avigliana, no agenzie",
+            "url": "https://example.org/buttigliera/123",
+        }, "Bing RSS", CFG)
+        self.assertIsNone(row)
+
+    def test_road_name_is_not_a_neighbouring_municipality(self):
+        row = radar.normalize_result({
+            "title": "Privato vende appartamento ad Avigliana Via Susa",
+            "description": "80 mq, Euro 210.000, da privato",
+            "url": "https://example.org/avigliana/456",
+        }, "Bing RSS", CFG)
+        self.assertIsNotNone(row)
+        self.assertEqual(row["town"], "Avigliana")
+
+    def test_nearby_allowed_town_without_property_location_is_rejected(self):
+        row = radar.normalize_result({
+            "title": "Privato vende casa",
+            "description": "Buttigliera Alta: a pochi minuti da Avigliana, 100 mq, no agenzie",
+            "url": "https://example.org/poi/789",
+        }, "Bing RSS", CFG)
+        self.assertIsNone(row)
+
     def test_bad_config_rejected(self):
         import tempfile
         config = radar.read_config(Path(__file__).resolve().parents[1] / "config/case247-acquisition-radar.json")
