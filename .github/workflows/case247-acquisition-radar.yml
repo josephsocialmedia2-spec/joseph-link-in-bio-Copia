@@ -1,0 +1,103 @@
+name: CASE247 · Radar acquisizione cloud (Google Alerts + Bing RSS)
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/case247-acquisition-radar.yml'
+      - 'scripts/case247_acquisition_radar.py'
+      - 'scripts/test_case247_acquisition_radar.py'
+      - 'config/case247-acquisition-radar.json'
+  pull_request:
+    paths:
+      - '.github/workflows/case247-acquisition-radar.yml'
+      - 'scripts/case247_acquisition_radar.py'
+      - 'scripts/test_case247_acquisition_radar.py'
+      - 'config/case247-acquisition-radar.json'
+  workflow_dispatch:
+  schedule:
+    # Ogni ora, 24/7: orario locale, compatibile con ora legale.
+    - cron: '17 * * * *'
+      timezone: "Europe/Rome"
+permissions:
+  contents: read
+  actions: read
+  issues: write
+concurrency:
+  group: case247-acquisition-radar
+  cancel-in-progress: false
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate source without internet
+        run: |
+          python -m py_compile scripts/case247_acquisition_radar.py
+          python -m unittest discover -s scripts -p test_case247_acquisition_radar.py -v
+
+  cloud-scan:
+    needs: qa
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Restore anonymized previous observations from last GitHub artifact
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          mkdir -p _radar
+          previous="$(gh api -X GET "repos/${GITHUB_REPOSITORY}/actions/artifacts?per_page=40&name=case247-acquisition-state" --jq '[.artifacts[] | select(.expired == false)] | sort_by(.created_at) | last | .workflow_run.id // empty' || true)"
+          if [[ -n "${previous:-}" ]]; then
+            gh run download "$previous" -R "$GITHUB_REPOSITORY" --name case247-acquisition-state --dir _radar || echo "Nessuno stato precedente scaricabile: prima esecuzione o retention scaduta"
+          else
+            echo "Prima scansione: costruisco baseline senza inviare falsi nuovi annunci"
+          fi
+
+      - name: Cloud search engines — no local PC, no portal scraping
+        id: scan
+        env:
+          CASE247_GOOGLE_ALERTS_RSS_URLS: ${{ secrets.CASE247_GOOGLE_ALERTS_RSS_URLS }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/case247_acquisition_radar.py --state _radar/state.json --out _radar/out --enrich
+          echo "new_count=$(python -c 'import json; print(json.load(open("_radar/out/report.json"))["new_count"])')" >> "$GITHUB_OUTPUT"
+
+      - name: Notify Joseph through a GitHub Issue with public listing links only
+        if: steps.scan.outputs.new_count != '0' && steps.scan.outputs.new_count != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh issue create --repo "$GITHUB_REPOSITORY" --title "CASE247 Radar · nuovi segnali immobiliari (${{ github.run_id }})" --body-file _radar/out/alert.md --assignee "$GITHUB_REPOSITORY_OWNER"
+
+      - name: Save only anonymized seen-hashes for deduplication
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: case247-acquisition-state
+          path: _radar/out/state.json
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Save reviewable public-link report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: case247-acquisition-report
+          path: _radar/out/report.json
+          if-no-files-found: warn
+          retention-days: 14
