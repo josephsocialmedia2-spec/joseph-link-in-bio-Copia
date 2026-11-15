@@ -57,7 +57,7 @@ def news_from_feed(xml: str, town: str, now: datetime) -> list[dict]:
         title = clean_text(item.findtext("title") or "")
         link = clean_text(item.findtext("link") or "")
         description = clean_text(item.findtext("description") or "")
-        if not title or not exact_town(title, town) or not NEWS_RX.search(title + " " + description):
+        if not title or not exact_town(title, town) or not NEWS_RX.search(title):
             continue
         link = canonical_url(link)
         if not link:
