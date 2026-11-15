@@ -112,14 +112,14 @@ def search_plan(config: dict, slot: int) -> list[tuple[str, str]]:
     t2 = priority[(slot + 1) % len(priority)]
     t3 = others[slot % len(others)]
     plans = [
-        (t1, f'"{t1}" "vendesi" "da privato" casa'),
-        (t2, f'"{t2}" ("privato vende" OR "no agenzie") appartamento'),
-        (t3, f'"{t3}" ("da privato" OR "vendo casa") vendita'),
+        (t1, f'{t1} casa vendita da privato'),
+        (t2, f'{t2} privato vende appartamento'),
+        (t3, f'{t3} vendo casa privato'),
     ]
     streets = [(town, street) for town, roads in config["streets"].items() for street in roads]
     if streets:
         town, street = streets[slot % len(streets)]
-        plans.append((town, f'"{town}" "{street}" ("vendesi" OR "vendo") ("privato" OR "proprietario")'))
+        plans.append((town, f'"{town}" "{street}" appartamento vendita'))
     return plans
 
 
@@ -275,7 +275,7 @@ def md_report(changes: list[dict], stats: dict, now_iso: str) -> str:
     lines = [
         "# CASE247 · Radar nuovi immobili",
         f"Scansione (UTC): {now_iso}",
-        f"Fonti riuscite: {stats['feeds_ok']} / {stats['feeds_attempted']}; risultati candidati: {stats['candidates']}.",
+        f"Fonti riuscite: {stats['feeds_ok']} / {stats['feeds_attempted']}; righe negli indici: {stats['feed_items']}; candidati: {stats['candidates']}.",
         "",
         "Solo segnali derivati dagli indici pubblici: **non è accertato** che l'annuncio sia realmente di un privato.",
         "I recapiti delle attività sulla stessa via non identificano il proprietario e non vanno attribuiti all'immobile.",
@@ -314,10 +314,11 @@ def run(config: dict, previous: dict, slot: int, fetch=http_text, enrich=False) 
     for address in config.get("google_alerts_rss", []):
         if address.startswith("https://www.google.com/alerts/feeds/"):
             feeds.append(("Google Alerts RSS", address))
-    seen, errors, success = {}, [], 0
+    seen, errors, success, feed_items = {}, [], 0, 0
     for source, url in feeds:
         try:
             rows = parse_feed(fetch(url))
+            feed_items += len(rows)
             success += 1
             for row in rows:
                 obj = normalize_result(row, source, config)
@@ -331,7 +332,7 @@ def run(config: dict, previous: dict, slot: int, fetch=http_text, enrich=False) 
     if success == 0:
         return {
             "status": "FONTI_NON_DISPONIBILI", "scanned_at_utc": now_iso, "new_count": 0,
-            "feeds_ok": 0, "feeds_attempted": len(feeds), "errors": errors,
+            "feeds_ok": 0, "feeds_attempted": len(feeds), "feed_items": 0, "errors": errors,
             "queries": [{"town": town, "query": q} for town, q in plans],
             "changes": [],
         }, previous, ""
@@ -344,7 +345,7 @@ def run(config: dict, previous: dict, slot: int, fetch=http_text, enrich=False) 
                 r["same_street_businesses"] = match_same_street(r, openstreetmap_same_street(r))
             except (TimeoutError, urllib.error.URLError, ValueError, OSError):
                 r["enrichment_status"] = "NON_DISPONIBILE"
-    stats = {"feeds_ok": success, "feeds_attempted": len(feeds), "candidates": len(seen)}
+    stats = {"feeds_ok": success, "feeds_attempted": len(feeds), "feed_items": feed_items, "candidates": len(seen)}
     output = {
         "status": "OK" if success == len(feeds) else "PARZIALE",
         "scanned_at_utc": now_iso, "new_count": len(reportable),
@@ -378,7 +379,7 @@ def main() -> int:
         save_json(args.out / "state.json", next_state)
     else:
         save_json(args.out / "state.json", previous)
-    print(f"CASE247_RADAR status={output['status']} sources={output['feeds_ok']}/{output['feeds_attempted']} candidates={output.get('candidates', 0)} notifications={output['new_count']}")
+    print(f"CASE247_RADAR status={output['status']} sources={output['feeds_ok']}/{output['feeds_attempted']} rss_items={output.get('feed_items', 0)} candidates={output.get('candidates', 0)} notifications={output['new_count']}")
     if output["status"] == "FONTI_NON_DISPONIBILI":
         print("No live sources responded; NOT claiming zero new listings.", file=sys.stderr)
         return 2
