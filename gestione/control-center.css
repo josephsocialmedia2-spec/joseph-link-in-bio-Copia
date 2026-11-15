@@ -78,3 +78,37 @@
 #case247-control-center .cc-crm-label{display:block;font-weight:700;font-size:12px;margin:12px 0}
 #case247-control-center .cc-crm-label input{margin-top:6px;display:block;width:100%}
 #case247-control-center #cc-crm-error[hidden]{display:none}
+
+/* STUDIO — 2S CAT. Red reserved for school; acquisition stays green. */
+#case247-control-center .cc-slot.cc-school-lesson{background:#fff0f0;border:1px solid #b95757;border-left:4px solid #aa2b37;color:#651823;min-height:55px}
+#case247-control-center .cc-slot.cc-school-task{background:#fde9e9;border-left:4px solid #b42335;color:#6d1526;font-weight:700}
+#case247-control-center .cc-slot.cc-school-task.cc-conflict{outline:2px solid #9b1c1c;outline-offset:-1px}
+#case247-control-center #cc-studio{color:#173b31}
+#case247-control-center .cc-school-reminder{border:2px solid #af3740;border-radius:10px;background:#fff0f0;color:#5d1521;padding:15px;margin:13px 0}
+#case247-control-center .cc-school-reminder b{font-size:14px;display:block;margin-bottom:12px}
+#case247-control-center .cc-school-controls{display:flex;gap:8px;align-items:end;flex-wrap:wrap;margin:14px 0}
+#case247-control-center .cc-school-controls label{display:grid;gap:5px;font-weight:700;font-size:12px;min-width:150px}
+#case247-control-center .cc-school-controls button{min-height:40px}
+#case247-control-center .cc-school-panel{border-top:1px solid #d5e4d9;margin-top:16px;padding-top:13px}
+#case247-control-center .cc-school-panel h3{margin-bottom:7px}
+#case247-control-center .cc-school-exam{padding:12px;border:1px solid #e3a4a8;border-left:4px solid #aa2536;border-radius:9px;background:#fff7f7;margin:8px 0;color:#651823}
+#case247-control-center .cc-school-exam p,#case247-control-center .cc-school-exam small{color:#62212d}
+#case247-control-center .cc-school-exam button{margin:8px 7px 0 0;color:#792638}
+#case247-control-center .cc-school-alert{padding:10px 12px;background:#fff0e5;border-left:4px solid #c37924;color:#60310a}
+#case247-control-center .cc-school-table-wrap{overflow-x:auto;margin:12px 0;max-width:100%;border:1px solid #cfdfd2;border-radius:9px}
+#case247-control-center .cc-school-table{width:100%;border-collapse:collapse;background:#fff;color:#173b31;font-size:12px;min-width:570px}
+#case247-control-center .cc-school-table th{background:#e8f0ea;color:#173b31;text-align:left;font-weight:750}
+#case247-control-center .cc-school-table th,#case247-control-center .cc-school-table td{padding:9px;border-bottom:1px solid #d5e4d9;vertical-align:middle}
+#case247-control-center .cc-school-table td input,#case247-control-center .cc-school-table td select{min-width:100px;font-size:12px;padding:7px 5px;min-height:38px}
+#case247-control-center .cc-school-table td input[type=text]{min-width:140px}
+#case247-control-center #cc-school-preview{border:2px solid #87ae96;padding:14px;border-radius:12px;background:#f8fcf9;margin-top:13px}
+#case247-control-center .cc-school-fields{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;border:1px solid #e4b3b8;border-radius:8px;padding:12px;background:#fff6f6;color:#651823}
+#case247-control-center .cc-school-fields label{display:grid;gap:6px;font-size:12px;font-weight:700}
+#case247-control-center #cc-studio .cc-actions{margin-top:10px}
+#case247-control-center #cc-school-preview .cc-primary{background:#08754f!important;color:#fff!important}
+@media(max-width:550px){
+ #case247-control-center .cc-school-controls{display:grid;grid-template-columns:1fr}
+ #case247-control-center .cc-school-controls label,#case247-control-center .cc-school-controls button{width:100%}
+ #case247-control-center .cc-school-fields{grid-template-columns:1fr}
+ #case247-control-center .cc-school-table{min-width:650px}
+}

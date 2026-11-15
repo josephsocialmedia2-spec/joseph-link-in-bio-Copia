@@ -40,3 +40,24 @@ Review PR, run CI, merge only when approved and all existing checks remain green
 - CRM panel provides "Apri CRM Excel", "Collega / modifica CRM" and "Dissocia CRM"; invalid protocols/hosts are rejected.
 - This is an authenticated provider link, *not* copying the workbook to Google Drive nor implementing server-side access control. Actual access still depends on the user's OneDrive/Drive permissions.
 - The existing restricted acquisition scheduling block, conflict detector and current-block indicator are aligned at 09:30.
+
+## STUDIO — CLASSE 2S CAT (2026-11-15)
+
+The branch feature/case247-studio-2scat-20261115 extends the existing Control Center on main. The earlier feature/case247-control-center-20261115 branch had already been merged; this feature starts from the latest main to retain CRM and later changes.
+
+- The existing Monday–Saturday agenda renders school lessons in light red, school exams/oral interrogations in deeper red, and acquisition in green. Sidebar has a STUDIO section.
+- Existing New Task form has project STUDIO and exact activity labels SCUOLA VERIFICA, INTERROGAZIONE, STUDIO / RIPASSO; new subject, topics and prep-status fields. Task JSON import/export preserves those new fields and retains the pre-existing task key.
+- Upload PDF, PNG/JPG: Mozilla PDF.js for selectable text and Tesseract.js OCR for scanned input. Strictly isolate ORARIO 2S CAT; review and correct an editable preview before insertion. Invalid OCR never produces a silent definitive import.
+- Week 2026-11-16 contains 13 review-only reference lessons supplied by the user; never repeat them in future weeks automatically.
+- Saved weeks use local storage key case247-cc-school-2scat-v1. Confirmation diff lists added, removed and unchanged lessons. Manually recorded tasks are preserved. Includes independent JSON backup/restore.
+- School pane shows upcoming exams, preceding lessons in the same subject, suggested preparation slots requiring approval, and conflicts with lessons, tasks and the acquisition period. Confirmed school lessons are included in local ICS export.
+- Dashboard reminder runs on Sunday after locally configured time, default 09:00 Rome. A separate ChatGPT scheduled automation named Carica orario 2S CAT is active weekly Sunday 09:00 Europe/Rome beginning 2026-11-22, including when the browser is closed. Changing the dashboard alert time does NOT change the server-side reminder.
+- No uploaded school PDF or private link is saved in the public repository. Actual records remain in localStorage and do not sync between devices. CRM link remains configured per browser.
+- Tests: tests/studio-2scat.test.cjs in the existing CI workflow alongside core and CRM tests.
+
+### Limitations and acceptance
+
+- The 16–20 November timetable is based on textual user reference, not inspection of a source PDF. A school PDF or screenshot was not included with this upload.
+- Complex multi-column PDF tables/scans may require manual review. PDF/OCR libraries are loaded on demand via public CDNs, requiring internet access for the libraries.
+- Calendar conflict detection uses confirmed local school lessons and locally registered tasks; Google Calendar is not synchronized.
+- Browser-level click-through/PDF upload verification is separate from passing Node CI and must not be asserted without real browser testing.
