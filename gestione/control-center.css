@@ -71,3 +71,10 @@
 @media(max-width:810px){#case247-control-center .cc-grid{display:block}#case247-control-center .cc-sidebar{display:none;border-right:0;border-bottom:1px solid var(--cc-line);max-height:none}#case247-control-center .cc-sidebar.cc-open{display:block}#case247-control-center .cc-main{padding:11px}#case247-control-center .cc-stats{grid-template-columns:repeat(2,minmax(0,1fr))}#case247-control-center .cc-top{align-items:flex-start;flex-wrap:wrap}#case247-control-center .cc-list{grid-template-columns:1fr}#case247-control-center .cc-search{max-width:100%}}
 @media(min-width:811px){#case247-control-center #cc-menu-toggle{display:none}}
 @media(max-width:550px){#case247-control-center{padding:10px}#case247-control-center .cc-week{grid-template-columns:repeat(2,minmax(0,1fr))}#case247-control-center .cc-formgrid{grid-template-columns:1fr}#case247-control-center .cc-dayhead{font-size:10px}#case247-control-center .cc-slot{font-size:10px;min-height:unset}#case247-control-center .cc-stat b{font-size:20px}}
+/* Acquisition blocks link directly to the locally configured Excel CRM. */
+#case247-control-center a.cc-slot.cc-fixed{width:100%;display:block;text-align:left;cursor:pointer;text-decoration:none;background:#e0f0e5;border:1px solid #86b69b;color:#164f36;padding:7px;border-radius:7px;min-height:65px;white-space:normal}
+#case247-control-center a.cc-slot.cc-fixed:hover{background:#cce9d5;border-color:#288458}
+#case247-control-center a.cc-slot.cc-fixed:focus-visible{outline:3px solid #08754f;outline-offset:2px}
+#case247-control-center .cc-crm-label{display:block;font-weight:700;font-size:12px;margin:12px 0}
+#case247-control-center .cc-crm-label input{margin-top:6px;display:block;width:100%}
+#case247-control-center #cc-crm-error[hidden]{display:none}
