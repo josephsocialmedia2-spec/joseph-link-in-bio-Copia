@@ -199,3 +199,13 @@ button.primary{background:linear-gradient(150deg,#008ccf,#07589f);border-color:#
 .drive-result[hidden]{display:none!important}
 .drive-result strong{flex:0 0 100%}
 .drive-result a{color:#ddf9ff;text-decoration:underline;word-break:break-word}
+
+/* Diagnostica di conformità: tutte le verifiche consultabili e modificabili. */
+#preflight{scroll-margin-top:20px}
+#preflight details{margin-top:12px;border:1px solid #7694a8;border-radius:10px;padding:12px;background:#f3f8fc;color:#193247}
+#preflight details summary{cursor:pointer;font-weight:700;line-height:1.4}
+#preflight .preflight-item{border-top:1px solid #c5d7e1;padding:10px 0}
+#preflight .preflight-item:first-of-type{margin-top:10px}
+#preflight .preflight-open{display:block;width:100%;max-width:100%;text-align:left;white-space:normal;overflow-wrap:anywhere;border-radius:6px;padding:9px 12px;background:#174c75;color:#fff;border:1px solid #174c75;cursor:pointer;font-size:14px;line-height:1.35}
+#preflight .preflight-open:focus-visible{outline:3px solid #e79e40;outline-offset:2px}
+#preflight li{margin:4px 0;overflow-wrap:anywhere}
