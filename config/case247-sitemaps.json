@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "description": "Sitemap pubbliche autorizzate: configurare solo URL HTTPS realmente pubblici e consentiti da robots.txt e condizioni del sito. Nessun proxy o bypass anti-bot. Gli esempi NON sono preattivati.",
+  "sources": [],
+  "configuration_example": {
+    "name": "Agenzia locale con sitemap pubblica autorizzata",
+    "host": "www.esempio.it",
+    "sitemap_url": "https://www.esempio.it/sitemap.xml"
+  },
+  "allowed_towns": [
+    "Avigliana",
+    "Sant'Ambrogio di Torino",
+    "Almese",
+    "Condove"
+  ]
+}

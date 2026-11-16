@@ -76,3 +76,28 @@ Il Radar delle 06:00 tenta di recuperare l'ultimo artifact di inventario (non pi
 **Limiti:** il controllo legge le prime pagine dei portali autorizzati e non garantisce l'estrazione di tutte le inserzioni. I filtri `da-privati` di Immobiliare.it possono mostrare anche agenzie, perciò questi link sono etichettati `DA_VERIFICARE`. Lo stesso immobile potrebbe essere presente su più portali. Non confondere il numero degli annunci con il numero dei proprietari disponibili per l'acquisizione.
 
 **Divieto commerciale:** CasaDaPrivato vieta esplicitamente le proposte di intermediazione o servizi immobiliari agli inserzionisti tramite il sito senza autorizzazione. Il catalogo serve per analisi di mercato, non autorizza telefonate, messaggi o contatti commerciali.
+
+## Pipeline multi-sorgente 05:10 → unico messaggio 06:00 (aggiornamento)
+
+Il workflow `.github/workflows/case247-market-inventory.yml` ora usa **due job paralleli** (matrix `portals` e `sitemaps`), più un job **consolidate**. Ogni fonte salva il proprio artifact JSON; il consolidatore scarica gli artifact disponibili, accorpa solo URL canonici identici, segnala separatamente i possibili duplicati con pari comune/prezzo/mq, e produce:
+
+- `CASE247_Immobili_4_Comuni_YYYY-MM-DD.xlsx` (fogli `Annunci`, `Fonti`, `Riepilogo`)
+- `inventory.csv` (UTF-8; separatore ;)
+- `inventory.json` e `market.md` per il riepilogo unico delle 06:00.
+
+Il file Excel è disponibile nell'artifact `case247-market-inventory` della relativa esecuzione. **Non viene inviata alcuna notifica aggiuntiva** alle 05:10. L'unica GitHub Issue quotidiana continua a essere preparata dal Radar alle 06:00; il foglio Excel resta un file scaricabile dal workflow, non un allegato alla notifica GitHub.
+
+### Sitemap pubbliche
+
+`scripts/case247_sitemap_sources.py` legge le fonti in `config/case247-sitemaps.json`. La lista è **intenzionalmente vuota** fino alla verifica di URL pubblici concretamente utilizzabili e dei rispettivi permessi. Ogni fonte richiede `name`, `host`, `sitemap_url` HTTPS dello stesso host. Il parser supporta `sitemapindex`, `urlset` e gzip, con limiti di profondità, numero file e numero URL. Se robots non è verificabile, **non esegue la raccolta**. Le sitemap che contengono identificatori opachi, senza riferimento inequivocabile al comune nell'URL, non vengono attribuite a un comune arbitrario.
+
+Non vengono attivati `curl_cffi`, TLS impersonation, proxy residenziali né servizi di bypass anti-bot: un IP differente non crea un'autorizzazione a prelevare dati da un portale. L'accesso a Immobiliare.it resta **non disponibile nei runner GitHub** fino a un canale dati consentito.
+
+### Regole di deduplicazione e contatti
+
+- **Unione automatica:** solo URL canonici identici.
+- **Comune + prezzo + mq:** segnale `Possibile duplicato`; le schede restano distinte per revisione.
+- **Contattabilità:** mai positiva automaticamente. `No agenzie` indica una limitazione, non un consenso per proposte commerciali. CasaDaPrivato resta etichettato `NO PROPOSTE COMMERCIALI`.
+- Gli annunci dai portali e dalle sitemap sono **schede di mercato**; la qualificazione del proprietario richiede verifica diretta lecita della fonte.
+
+**Copertura reale:** la pipeline aumenta il numero di fonti che si possono collegare, ma non equivale a 560 immobili acquisiti o verificati. I conteggi dichiarati dai portali comprendono anche agenzie e annunci duplicati; i report mostrano sempre lo stato delle fonti e il numero effettivo dei link recuperati.

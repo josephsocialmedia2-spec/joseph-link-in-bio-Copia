@@ -6,54 +6,112 @@ on:
       - '.github/workflows/case247-market-inventory.yml'
       - 'scripts/case247_market_inventory.py'
       - 'scripts/test_case247_market_inventory.py'
+      - 'scripts/case247_sitemap_sources.py'
+      - 'scripts/case247_market_consolidate.py'
+      - 'scripts/test_case247_market_pipeline.py'
+      - 'config/case247-sitemaps.json'
   pull_request:
     paths:
       - '.github/workflows/case247-market-inventory.yml'
       - 'scripts/case247_market_inventory.py'
       - 'scripts/test_case247_market_inventory.py'
+      - 'scripts/case247_sitemap_sources.py'
+      - 'scripts/case247_market_consolidate.py'
+      - 'scripts/test_case247_market_pipeline.py'
+      - 'config/case247-sitemaps.json'
   workflow_dispatch:
   schedule:
-    # Un solo passaggio al giorno, prima del riepilogo alle 06:00 italiane.
+    # Prima della notifica UNICA del Radar alle ore 06:00.
     - cron: '10 5 * * *'
       timezone: "Europe/Rome"
 permissions:
   contents: read
+  actions: read
 concurrency:
   group: case247-market-inventory
   cancel-in-progress: false
+
 jobs:
   qa:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 6
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Offline validation
+      - name: Validate code and reproducible XLSX without internet
         run: |
-          python -m py_compile scripts/case247_market_inventory.py
+          python -m py_compile scripts/case247_market_inventory.py scripts/case247_sitemap_sources.py scripts/case247_market_consolidate.py
           python -m unittest discover -s scripts -p test_case247_market_inventory.py -v
+          python -m unittest discover -s scripts -p test_case247_market_pipeline.py -v
 
-  inventory:
+  scan-sources:
     needs: qa
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 14
+    strategy:
+      fail-fast: false
+      matrix:
+        source: [portals, sitemaps]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Public index scan (only if robots permit)
-        run: python scripts/case247_market_inventory.py --out _market
-      - name: Save market source URLs and status, no notification
+      - name: Collect public index URLs, no bypass or personal contact harvesting
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p _part
+          case "${{ matrix.source }}" in
+            portals)
+              python scripts/case247_market_inventory.py --out _part
+              ;;
+            sitemaps)
+              python scripts/case247_sitemap_sources.py --out _part/sitemaps.json
+              ;;
+            *)
+              echo "Unexpected source" >&2; exit 1
+              ;;
+          esac
+      - name: Upload each source's JSON, even if empty or unavailable
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: case247-part-${{ matrix.source }}
+          path: _part/*.json
+          if-no-files-found: warn
+          retention-days: 3
+
+  consolidate:
+    needs: [qa, scan-sources]
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && always() && needs.qa.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download independently collected JSON artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: case247-part-*
+          path: _market_parts
+          merge-multiple: false
+      - name: Merge exact URLs; flag potential duplicates; export Excel and CSV
+        run: python scripts/case247_market_consolidate.py --inputs-dir _market_parts --out _market
+      - name: Keep 05:10 collection silent; publish report and Excel as artifacts only
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: case247-market-inventory
           path: |
             _market/inventory.json
+            _market/inventory.csv
             _market/market.md
+            _market/CASE247_Immobili_4_Comuni_*.xlsx
           if-no-files-found: warn
           retention-days: 14
