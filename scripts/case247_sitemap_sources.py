@@ -94,6 +94,13 @@ def is_individual_listing(url: str) -> bool:
         return bool(re.fullmatch(r"/annunci/\d{5,}", path))
     if host == "casadaprivato.it":
         return bool(re.search(r"-torino-\d{3,}$", path))
+    if host == "immobiliarevalmessa.it":
+        # Public property pages: /portfolio-items/almese-appartamento-in-villa/
+        # Codes without a town in the slug are kept out until locality is verified.
+        return bool(re.fullmatch(r"/portfolio-items/[a-z0-9-]+", path))
+    if host == "fcimmobiliare.it":
+        # Real publicly observed single-listing path: /i-671890-vendita-rustico-condove/
+        return bool(re.fullmatch(r"/i-\d{4,}-(?:vendita)-[a-z0-9-]+", path))
     if host == "teckimmobiliare.it":
         # Verified real page pattern: /properties/appartamento/avigliana/<slug>/
         return bool(re.fullmatch(
