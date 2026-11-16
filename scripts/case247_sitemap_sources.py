@@ -89,8 +89,16 @@ def read_config(path: Path) -> dict:
             raise ValueError("duplicate source name")
         names.add(src["name"])
         base = src.get("sitemap_url", "")
-        host = safe_host(base)
-        if not host or host != src.get("host", "").lower():
+        host = src.get("host", "").lower()
+        if not safe_host("https://" + host + "/robots.txt"):
+            raise ValueError("invalid source host")
+        discover = src.get("discover_from_robots", False)
+        if not isinstance(discover, bool):
+            raise ValueError("discover_from_robots must be boolean")
+        if discover:
+            if base:
+                raise ValueError("discovery source must not specify sitemap_url")
+        elif safe_host(base) != host:
             raise ValueError("sitemap_url must be HTTPS and same as source host")
     return data
 
@@ -136,7 +144,6 @@ def xml_urls(root: ET.Element) -> tuple[str, list[tuple[str, str]]]:
 def collect_source(source: dict, downloader=fetch) -> dict:
     result = {"source": source["name"], "status": "OK", "listings": [],
               "sitemaps_checked": 0, "urls_scanned": 0, "errors": []}
-    base_url = source["sitemap_url"]
     host = source["host"].lower()
     try:
         rules_text = downloader("https://" + host + "/robots.txt").decode("utf-8", "replace")
@@ -145,7 +152,19 @@ def collect_source(source: dict, downloader=fetch) -> dict:
     except Exception:
         result["status"] = "ROBOTS_NON_VERIFICABILE"
         return result
-    pending = [(base_url, 0)]
+    if source.get("discover_from_robots"):
+        # Only follow the publisher's own publicly advertised sitemap URLs.
+        advertised = [
+            line.split(":", 1)[1].strip()
+            for line in rules_text.splitlines()
+            if line.strip().casefold().startswith("sitemap:")
+        ]
+        pending = [(u, 0) for u in advertised if safe_host(u) == host][:MAX_FILES_PER_SOURCE]
+        if not pending:
+            result["status"] = "SITEMAP_NON_PUBBLICATA"
+            return result
+    else:
+        pending = [(source["sitemap_url"], 0)]
     seen_sitemaps = set()
     seen_links = set()
     while pending and len(seen_sitemaps) < MAX_FILES_PER_SOURCE:
