@@ -66,3 +66,13 @@ Per aggiornare le vie puoi modificare il file di configurazione soltanto per i q
 Link diretti:
 - [Workflow](https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/actions/workflows/case247-acquisition-radar.yml)
 - [Avvisi GitHub Issues](https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/issues)
+
+## Inventario pubblico 4 comuni (controllo aggiuntivo)
+
+Un secondo workflow **CASE247 · Inventario pubblico mercato 4 comuni** è programmato ogni giorno alle **05:10 Europe/Rome**. Con accesso consentito da `robots.txt`, legge soltanto le pagine indice pubbliche di CasaDaPrivato e Immobiliare.it nei quattro comuni autorizzati, senza account, CAPTCHA o estrazione di contatti personali. Salva un JSON e un report Markdown come artifact `case247-market-inventory`.
+
+Il Radar delle 06:00 tenta di recuperare l'ultimo artifact di inventario (non più vecchio di 48 ore) e lo aggiunge alla **stessa unica GitHub Issue giornaliera**. Il nuovo workflow **non invia alcuna Issue**. Se un portale blocca accesso o robots non è verificabile, quel dato rimane `NON_DISPONIBILE`, mai zero annunci.
+
+**Limiti:** il controllo legge le prime pagine dei portali autorizzati e non garantisce l'estrazione di tutte le inserzioni. I filtri `da-privati` di Immobiliare.it possono mostrare anche agenzie, perciò questi link sono etichettati `DA_VERIFICARE`. Lo stesso immobile potrebbe essere presente su più portali. Non confondere il numero degli annunci con il numero dei proprietari disponibili per l'acquisizione.
+
+**Divieto commerciale:** CasaDaPrivato vieta esplicitamente le proposte di intermediazione o servizi immobiliari agli inserzionisti tramite il sito senza autorizzazione. Il catalogo serve per analisi di mercato, non autorizza telefonate, messaggi o contatti commerciali.
