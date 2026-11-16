@@ -133,6 +133,26 @@ def xlsx_rows(path: Path) -> list[list[str]]:
                       for si in root if si.tag.rsplit("}",1)[-1]=="si"]
         rows = []
         root = read_part(sheets[0])
+        # Some XLSX exports show a label in a cell and store the URL in an
+        # external hyperlink relationship instead of the cell's text.
+        rel_name = "xl/worksheets/_rels/" + Path(sheets[0]).name + ".rels"
+        rel_targets = {}
+        if rel_name in names:
+            for rel in read_part(rel_name):
+                if rel.attrib.get("Type", "").endswith("/hyperlink"):
+                    target = rel.attrib.get("Target", "")
+                    if canonical_url(target):
+                        rel_targets[rel.attrib.get("Id", "")] = target
+        hyperlink_cells = {}
+        for link in root.iter():
+            if link.tag.rsplit("}", 1)[-1] != "hyperlink":
+                continue
+            ref = link.attrib.get("ref", "")
+            link_id = next((v for k,v in link.attrib.items() if k.endswith("}id")), "")
+            target = rel_targets.get(link_id)
+            match = re.fullmatch(r"([A-Z]+)(\d+)", ref)
+            if target and match:
+                hyperlink_cells[(int(match.group(2)), _col_index(ref))] = target
         for row in root.iter():
             if row.tag.rsplit("}",1)[-1]!="row":
                 continue
@@ -155,6 +175,12 @@ def xlsx_rows(path: Path) -> list[list[str]]:
                 elif kind == "inlineStr":
                     v = "".join(node.text or "" for node in cell.iter() if node.tag.rsplit("}",1)[-1]=="t")
                 values[col] = v
+            excel_row_number = int(row.attrib.get("r", len(rows)+1))
+            for (row_number, col), target in hyperlink_cells.items():
+                if row_number == excel_row_number and col < 100:
+                    while len(values) <= col:
+                        values.append("")
+                    values[col] = target
             if any(str(x).strip() for x in values):
                 rows.append(values)
             if len(rows) >= HOST_LIMIT + 20:
