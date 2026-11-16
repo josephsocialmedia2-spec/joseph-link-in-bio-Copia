@@ -230,9 +230,54 @@
     const target=$('preflight');
     const apeInProgress=model.properties.filter(p=>p?.apeStatus==='IN_CORSO').length;
     const apeExempt=model.properties.filter(p=>p?.apeStatus==='ESENTE').length;
-    target.innerHTML='<strong>'+model.properties.filter(p=>p?.title).length+'/18 annunci · '+issues.length+' controlli aperti</strong>'+
-      '<p>APE in redazione: '+apeInProgress+' · esenzioni da gestire: '+apeExempt+'. I riferimenti energetici sono visualizzati nelle schede; un APE in corso non autorizza la diffusione.</p>'+
-      (issues.length?'<ul>'+issues.slice(0,10).map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>':'<p>Tutti i campi verificati secondo le dichiarazioni dell’operatore.</p>');
+    const categories={ape:[],photos:[],availability:[],other:[]};
+    const byCard=new Map(),general=[];
+    for(const issue of issues){
+      if(/APE|energetic|EPgl|involucro|esenzione/i.test(issue))categories.ape.push(issue);
+      else if(/foto|fotograf|panorama|immagin/i.test(issue))categories.photos.push(issue);
+      else if(/disponibilit|prezzo|annuncio|catalogo|URL|titolo|localit/i.test(issue))categories.availability.push(issue);
+      else categories.other.push(issue);
+      const match=issue.match(/^Scheda (\d+): /);
+      const index=match?Number(match[1])-1:-1;
+      if(index>=0&&index<18){
+        if(!byCard.has(index))byCard.set(index,[]);
+        byCard.get(index).push(issue.replace(/^Scheda \d+: /,''));
+      }else general.push(issue);
+    }
+    const summary=document.createElement('strong');
+    summary.textContent=model.properties.filter(p=>p?.title).length+'/18 annunci · '+issues.length+' verifiche aperte';
+    const explanation=document.createElement('p');
+    explanation.textContent='Energia/APE: '+categories.ape.length+' · Foto: '+categories.photos.length+' · Dati e disponibilità: '+categories.availability.length+' · Altri: '+categories.other.length+'. APE in redazione: '+apeInProgress+' · Esenzioni: '+apeExempt+'. Le bozze private restano disponibili.';
+    target.replaceChildren(summary,explanation);
+    if(issues.length){
+      const details=document.createElement('details');
+      details.id='preflightDetails';
+      details.open=target.dataset.expanded==='true';
+      details.addEventListener('toggle',()=>{target.dataset.expanded=String(details.open)});
+      const heading=document.createElement('summary');
+      heading.textContent='Mostra tutte le '+issues.length+' verifiche e apri le schede da correggere';
+      details.append(heading);
+      if(general.length){
+        const list=document.createElement('ul');
+        for(const issue of general){const li=document.createElement('li');li.textContent=issue;list.append(li);}
+        details.append(list);
+      }
+      for(const [index,items] of [...byCard.entries()].sort((a,b)=>a[0]-b[0])){
+        const section=document.createElement('div');
+        section.className='preflight-item';
+        const open=document.createElement('button');
+        open.type='button';
+        open.className='preflight-open';
+        open.textContent='Modifica scheda '+(index+1)+' · '+(model.properties[index]?.title||'Immobile da completare');
+        open.onclick=()=>openDialog(index);
+        const list=document.createElement('ul');
+        for(const issue of items){const li=document.createElement('li');li.textContent=issue;list.append(li);}
+        section.append(open,list);details.append(section);
+      }
+      target.append(details);
+    }else{
+      const ok=document.createElement('p');ok.textContent='Nessuna verifica aperta. Controllare comunque l’anteprima prima di pubblicare.';target.append(ok);
+    }
     return issues;
   }
   function render(){
@@ -359,7 +404,7 @@
       if(qrProblems.length)throw Error(qrProblems.join(' · '));
       if((definitive===true||draftToDrive)&&!Drive?.isConnected())throw Error('Google Drive non autorizzato: premi «Autorizza Google Drive» prima di salvare.');
       const proof=issues.length>0;
-      if(proof&&definitive===true)throw Error(`Pubblicazione sospesa: ${issues.length} verifiche aperte (inclusi eventuali APE in corso). Utilizza «Salva BOZZA su Drive (privata)» senza distribuire il PDF.`);
+      if(proof&&definitive===true){$('preflight').dataset.expanded='true';showPreflight();$('preflight').scrollIntoView({behavior:'smooth',block:'start'});throw Error(`Pubblicazione sospesa: ${issues.length} verifiche aperte. Apri «Mostra tutte le verifiche» qui sotto e modifica le schede indicate. Puoi salvare una BOZZA privata su Drive.`);}
       const result=await PDF.exportPdf({flyer:$('flyer'),properties:model.properties,externalLeft,externalRight,
         externalLeftPage:Number($('outerLeftPage').value)||1,externalRightPage:Number($('outerRightPage').value)||1,watermark:definitive!==true,whatsappUrl:whatsappFor(activeProfile()),filename:(definitive===true?'DEFINITIVO':draftToDrive?'BOZZA_DRIVE_PRIVATA':'BOZZA_STAMPA')+'_Volantino_A4_'+activeProfile().name+'.pdf'});
       const q=Math.round(result.minModuleMm*100)/100;
