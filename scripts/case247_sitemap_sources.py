@@ -76,6 +76,25 @@ def municipality(url: str) -> str:
     return found[0] if len(found) == 1 else ""
 
 
+def is_individual_listing(url: str) -> bool:
+    """Exclude search categories and area landing pages from sitemap results.
+
+    A URL naming a municipality is NOT evidence of an individual property.
+    For unknown hosts, require a property/listing path AND a numeric ID.
+    """
+    x = urllib.parse.urlsplit(url)
+    host = (x.hostname or "").lower().removeprefix("www.")
+    path = x.path.casefold().rstrip("/")
+    if host == "immobiliare.it":
+        return bool(re.fullmatch(r"/annunci/\d{5,}", path))
+    if host == "casadaprivato.it":
+        return bool(re.search(r"-torino-\d{3,}$", path))
+    return bool(
+        re.search(r"/(?:annunci?|annuncio|immobili?|immobile|listing|property|scheda)/", path)
+        and re.search(r"(?:-|/)\d{3,}$", path)
+    )
+
+
 def read_config(path: Path) -> dict:
     data = json.loads(path.read_text(encoding="utf-8"))
     sources = data.get("sources")
@@ -196,7 +215,7 @@ def collect_source(source: dict, downloader=fetch) -> dict:
                     continue
                 town = municipality(uri)
                 normalized = canonical(uri)
-                if not town or not normalized or normalized in seen_links:
+                if not town or not normalized or not is_individual_listing(uri) or normalized in seen_links:
                     continue
                 seen_links.add(normalized)
                 result["listings"].append({
