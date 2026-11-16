@@ -60,3 +60,15 @@ test('privacy-aware one-time request form without prechecked marketing optin',()
  assert.match(notice,/Nessuna casella di iscrizione al marketing/);
  assert.doesNotMatch(html,/<script[^>]+google-analytics/i);
 });
+
+test('commercial activity may voluntarily request promotional materials without newsletter subscription',()=>{
+ assert.match(html,/Materiale pubblicitario per vendere un’attività commerciale/);
+ assert.match(html,/id="reqBusiness"/);
+ assert.match(html,/id="reqCity"/);
+ assert.match(html,/non attiva invii pubblicitari periodici/);
+ assert.match(js,/f\.business\.value\.trim\(\)/);
+ assert.match(js,/f\.city\.value\.trim\(\)/);
+ assert.match(js,/Questa è una richiesta puntuale e NON un consenso a marketing periodico/);
+ const notice=read('catalogo-premium/privacy-richiesta.html');
+ assert.match(notice,/attività\/ragione sociale, comune dell’attività/);
+});
