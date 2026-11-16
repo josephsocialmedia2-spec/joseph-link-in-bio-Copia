@@ -1,0 +1,24 @@
+name: CASE247 Two Boards UI Checks
+on:
+  pull_request:
+    paths:
+      - 'gestione/quadro-strumenti/**'
+      - 'gestione/quadro-social/**'
+      - 'gestione/menu-operativo/**'
+      - 'gestione/archivio-branch/**'
+      - 'gestione/index.html'
+      - 'tests/case247-two-boards.test.cjs'
+      - '.github/workflows/case247-two-boards.yml'
+  workflow_dispatch:
+jobs:
+  boards:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify internal links, scripts, and status claims
+        run: node --test tests/case247-two-boards.test.cjs
