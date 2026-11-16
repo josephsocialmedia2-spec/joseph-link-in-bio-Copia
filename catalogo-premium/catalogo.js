@@ -65,6 +65,7 @@ const escText=x=>typeof x==='string'?x.trim():'';
 function cell(tag,className,value){const el=document.createElement(tag);el.className=className;if(value!==undefined)el.textContent=String(value);return el}
 function card(p,compact=false){
   const a=cell('article',compact?'property-card sheet-card':'property-card');
+  if(compact)a.setAttribute('aria-label','Immobile '+p.title);
   const original=escText(p.image),photo=cell('div','property-photo');
   if(original){
     const image=document.createElement('img');
@@ -88,7 +89,7 @@ function card(p,compact=false){
     photo.append(image);
   }else{
     photo.classList.add('photo-unavailable');
-    photo.append(cell('span','photo-fallback','Fotografia da inserire'));
+    photo.append(cell('span','photo-fallback','Scheda senza fotografia: consulta il sito ufficiale'));
   }
   a.append(photo);
   const body=cell('div','content');
@@ -113,35 +114,46 @@ function renderListings(){
     for(const p of filtered)grid.append(card(p));
     container.append(grid);
   }
-  $('listingCount').textContent=listings.length+' ANNUNCI IN ARCHIVIO';
+  $('listingCount').textContent=listings.length+' ANNUNCI IN ARCHIVIO · FOTO GRANDI PER LE SCHEDE DISPONIBILI';
 }
 function addSheets(items){
   const frame=document.querySelector('.reader-frame');
   for(const old of frame.querySelectorAll('.page-listing-sheet'))old.remove();
-  // Insert six properties per page, before the territory page.
+  // Presentazione premium: una vera fotografia grande per pagina; nessun segnaposto.
+  // Le proposte senza fotografia restano ricercabili nell'indice, senza pagina fotografica.
+  const photoItems=items.filter(p=>escText(p.image));
   const before=frame.querySelector('.page-territory');
-  const pageSize=6;
-  for(let offset=0;offset<items.length;offset+=pageSize){
+  const pageSize=1;
+  for(let offset=0;offset<photoItems.length;offset+=pageSize){
+    const p=photoItems[offset];
     const sheet=cell('article','page page-listing-sheet');sheet.hidden=true;
     const content=cell('div','page-inner');
-    const num=Math.floor(offset/pageSize)+1;
-    content.append(cell('p','eyebrow','03 / IL PORTAFOGLIO IMMOBILIARE · '+String(num).padStart(2,'0')));
-    content.append(cell('h2','sheet-title','Le nostre proposte'));
-    const intro=cell('p','sheet-subtitle','Consulta ogni annuncio sul sito ufficiale La Sacra. Prezzo e disponibilità possono variare; richiedi conferma all’agenzia.');
-    content.append(intro);
+    content.append(cell('p','eyebrow','IMMOBILIARE LA SACRA · PROPOSTA '+String(offset+1).padStart(2,'0')));
     const grid=cell('div','sheet-grid');
-    for(const p of items.slice(offset,offset+pageSize))grid.append(card(p,true));
+    grid.append(card(p,true));
     content.append(grid);
-    const foot=cell('div','page-tail','IMMOBILIARE LA SACRA · CATALOGO IMMOBILI');
-    foot.append(cell('span','','ANNUNCI '+(offset+1)+'–'+Math.min(offset+pageSize,items.length)+' / '+items.length));
+    const foot=cell('div','page-tail','IMMOBILIARE LA SACRA · LA VALLE DI SUSA E TORINO');
+    foot.append(cell('span','','SCHEDA '+(offset+1)+' / '+photoItems.length+' · PREZZO E DISPONIBILITÀ DA CONFERMARE'));
     content.append(foot);
     sheet.append(content);frame.insertBefore(sheet,before);
   }
   pageNodes=[...document.querySelectorAll('.page')];
-  pageNames=['Copertina','Il nostro metodo','Indice immobili',...Array.from({length:Math.ceil(items.length/pageSize)},(_,i)=>'Immobili '+(i*pageSize+1)+'–'+Math.min((i+1)*pageSize,items.length)),'Il territorio','Contatti'];
+  pageNames=['Copertina','Il nostro metodo','Indice immobili',
+    ...photoItems.map((p,i)=>(i+1)+' · '+(p.municipality||'Immobile')),
+    'Il territorio','Contatti'];
   pageNodes.forEach((p,i)=>{p.dataset.page=String(i)});
   resetDots();
+  dots.classList.toggle('many-pages',pageNodes.length>20);
   showPage(selected,false);
+  // Copertina fotografica ricavata da una scheda vera del portafoglio.
+  const cover=photoItems.find(x=>/villa|indipendente|giardino/i.test(x.title))||photoItems[0];
+  if(cover){
+    const hero=document.querySelector('.cover-photo');
+    const local='./photos/'+encodeURIComponent(String(cover.id))+'.jpg';
+    hero.style.backgroundImage='linear-gradient(90deg,rgba(5,30,55,.88),rgba(7,37,64,.48) 72%),url("'+local+'")';
+    hero.style.backgroundPosition='center';
+    hero.style.backgroundSize='cover';
+  }
 }
 async function load(){
   try{
