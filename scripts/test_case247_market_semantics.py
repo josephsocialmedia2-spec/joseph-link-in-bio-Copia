@@ -48,6 +48,38 @@ class SemanticTests(unittest.TestCase):
         self.assertEqual(r["nature"], "Agenzia_Verificata")
         self.assertTrue(r["active_confirmed"])
 
+    def test_exact_property_sale_heading_may_verify_town_but_not_proximity(self):
+        valid = ("<html><head><title>Rustico</title></head><body>"
+                 "<nav aria-label='breadcrumb'><a>Immobili</a></nav>"
+                 "<h1>Rustico in vendita a Condove - Via Roma 36</h1></body></html>")
+        good = sm.inspect_html(valid, "F.C. Immobiliare", "AGENZIA",
+                               "https://www.fcimmobiliare.it/i-671890-vendita-rustico-condove/")
+        self.assertEqual(good["verified_town"], "Condove")
+        self.assertEqual(good["contract_status"], "Vendita")
+        invalid = ("<html><head><title>Rustico</title></head><body>"
+                   "<h1>Rustico in vendita a 5 minuti da Condove</h1></body></html>")
+        bad = sm.inspect_html(invalid, "F.C. Immobiliare", "AGENZIA",
+                              "https://www.fcimmobiliare.it/i-671891-vendita-rustico-condove/")
+        self.assertEqual(bad["commune_status"], "Comune_Da_Verificare")
+
+    def test_www_origin_robots_is_queried_without_bypass(self):
+        urls=[]
+        html=listing_html(town="Condove", title="Rustico in vendita a Condove")
+        def download(url):
+            urls.append(url)
+            if url.endswith("/robots.txt"):
+                return "User-agent: *\nAllow: /\n"
+            if url.startswith("https://www.fcimmobiliare.it/"):
+                return html
+            raise AssertionError("unexpected request " + url)
+        parts=[{"listings":[{"town":"Condove",
+          "url":"https://www.fcimmobiliare.it/i-671890-vendita-rustico-condove/",
+          "source":"F.C. Immobiliare", "source_type":"AGENZIA"}]}]
+        out=sm.enrich_sources(parts, downloader=download, sleep=lambda _:None)
+        self.assertEqual(out["checked"], 1)
+        self.assertIn("https://www.fcimmobiliare.it/robots.txt", urls)
+        self.assertTrue(parts[0]["listings"][0]["detail_verified"])
+
     def test_external_municipality_not_counted(self):
         r=sm.inspect_html(listing_html(town="Rivoli", title="Casa in vendita ad Avigliana"),
                           "Teck", "AGENZIA", "https://teckimmobiliare.it/annuncio/avigliana-10")
