@@ -101,8 +101,22 @@ jobs:
           pattern: case247-part-*
           path: _market_parts
           merge-multiple: false
+      - name: Restore recent successful public links if a source temporarily fails
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p _market_history
+          mapfile -t runs < <(gh api -X GET "repos/${GITHUB_REPOSITORY}/actions/artifacts?per_page=50&name=case247-market-inventory" --jq '[.artifacts[] | select(.expired == false)] | sort_by(.created_at) | reverse | .[:8] | .[].workflow_run.id' || true)
+          for run in "${runs[@]}"; do
+            [[ -z "${run:-}" ]] && continue
+            mkdir -p "_market_history/$run"
+            gh run download "$run" -R "$GITHUB_REPOSITORY" --name case247-market-inventory --dir "_market_history/$run" || echo "Unable to restore history from run $run"
+          done
+
       - name: Merge exact URLs; flag potential duplicates; export Excel and CSV
-        run: python scripts/case247_market_consolidate.py --inputs-dir _market_parts --out _market
+        run: python scripts/case247_market_consolidate.py --inputs-dir _market_parts --history-dir _market_history --out _market
       - name: Keep 05:10 collection silent; publish report and Excel as artifacts only
         if: always()
         uses: actions/upload-artifact@v4
