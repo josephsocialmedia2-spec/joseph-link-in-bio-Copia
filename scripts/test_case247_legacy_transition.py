@@ -95,7 +95,7 @@ class LegacyTransitionTests(unittest.TestCase):
     def test_operational_count_is_not_frozen_count(self):
         live = {
             "source": "Metricool brand 7844901 / getScheduledPosts",
-            "checked_at": "2026-11-14",
+            "checked_at": "2026-11-15",
             "reservations": {"2026-11-15": [{
                 "metricool_id": 987,
                 "urls": ["https://lasacraimmobiliare.it/products/casa-test"],
