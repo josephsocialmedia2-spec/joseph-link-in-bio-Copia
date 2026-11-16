@@ -58,3 +58,35 @@
 .reader-tools .pdf-download{display:inline-flex;align-items:center;text-decoration:none;background:#0a4167;color:#fff;border:1px solid #0a4167;padding:10px 13px;border-radius:6px;font-size:11px;font-weight:700}
 .reader-tools .pdf-download:hover{background:#155c83}
 @media(max-width:800px){.reader-tools .pdf-download{padding:9px;font-size:10px}}
+
+/* Branding ufficiale Immobiliare La Sacra, referente Joseph e modulo privacy-first */
+.logo-frame{display:flex;align-items:center;justify-content:center;background:#fff;border-radius:5px;padding:3px 8px;flex:0 0 132px;height:66px;overflow:hidden}
+.logo-frame img{display:block;width:100%;height:100%;object-fit:contain}
+.subheading{margin:9px 0 0;color:#567083;font-size:13px}
+.subheading a{text-decoration:none;color:#0b4d7b;font-weight:700}
+.referent{display:flex;flex-direction:column;gap:3px;margin:9px 0;font-size:14px;color:#e7eef5}
+.referent small{font-size:11px;color:#d4dfeb}
+.action-hub{margin-top:23px;display:grid;grid-template-columns:1fr 1.3fr;align-items:center;gap:28px;padding:30px 38px;background:#fff;border:1px solid #d0dce4;box-shadow:0 8px 30px #092a4711}
+.hub-copy h2,.request-info h2{font:500 clamp(28px,3vw,43px)/1.12 'Playfair Display',Georgia,serif;color:var(--deep);margin:6px 0 14px}
+.hub-copy h2 em{color:#a48354}.hub-copy>p:last-child{line-height:1.65;font-size:13px;color:#486578}
+.hub-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.hub-btn{min-height:68px;display:flex;justify-content:center;align-items:center;text-align:center;text-decoration:none;font-size:12px;font-weight:700;padding:16px 10px;border-radius:6px;background:#0a4167;color:white;line-height:1.35}
+.hub-btn.wa{background:#166f5d}.hub-btn.call{background:#f2eadb;color:#0d3859;border:1px solid #c8ac81}
+.hub-btn:hover{filter:brightness(1.12)}
+.request-section{margin:22px 0 30px;display:grid;grid-template-columns:.95fr 1.25fr;gap:33px;padding:clamp(22px,4vw,48px);background:linear-gradient(120deg,#f8faf9,#eff5f7);border:1px solid #cadbe5;scroll-margin-top:20px}
+.request-info p{max-width:440px;font-size:14px;color:#536879;line-height:1.7}
+.request-identity{margin:25px 0 14px;display:flex;flex-direction:column;gap:4px;padding:15px 18px;border-left:3px solid #ca9c58;background:#fff;color:#0c3756}
+.request-identity strong{font:500 23px 'Playfair Display',Georgia,serif}.request-identity span{font-size:12px}.request-identity a{font-size:12px;font-weight:700;color:#095989}
+.request-form{background:#fff;border:1px solid #cfdee7;padding:24px;box-shadow:0 6px 24px #0b2b4812;display:flex;flex-direction:column;gap:14px}
+.request-form label{display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:700;color:#23435c}
+.request-form input:not([type=checkbox]),.request-form select,.request-form textarea{width:100%;background:#fbfdfe;border:1px solid #afc5d3;color:#153a57;border-radius:5px;padding:11px 13px;font-size:14px;min-height:44px}
+.request-form textarea{resize:vertical}.field-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.request-form .check-row{flex-direction:row;align-items:flex-start;gap:11px;background:#edf4f8;border:1px solid #d3e1e8;padding:12px;border-radius:5px;font-size:12px;line-height:1.6;font-weight:400}
+.check-row input{flex:0 0 17px;width:17px;height:17px;margin:3px 0 0;accent-color:#0a4265}.check-row a{font-weight:700;color:#074e82}
+.check-row.optional{background:#faf9f6;border-color:#e4dfd2}
+.request-validation{min-height:18px;color:#185c82;font-size:12px;margin:0;font-weight:700}
+.request-submit{border:0;background:#0b3e63;color:#fff;font-weight:700;font-size:13px;padding:16px 24px;min-height:52px;border-radius:5px}
+.request-submit:hover{background:#155a82}.request-note{color:#6a7a84!important;font-size:11px!important;line-height:1.6!important;margin:0!important}
+@media(max-width:900px){.action-hub,.request-section{grid-template-columns:1fr}.hub-actions{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:650px){.logo-frame{flex-basis:68px;width:68px;height:49px;padding:2px 4px}.topbar{gap:6px}.identity{gap:7px}.identity strong{font-size:11px}.identity small{font-size:7px}.contact-pill{font-size:9px;padding:9px}.action-hub,.request-section{padding:18px;gap:16px}.hub-actions{grid-template-columns:1fr}.hub-btn{min-height:48px}.field-row{grid-template-columns:1fr}.request-form{padding:15px}.reader-top h1{font-size:29px}}
+@media print{.action-hub,.request-section{display:none!important}}
