@@ -1,0 +1,315 @@
+#!/usr/bin/env python3
+"""Combine CASE247 public index + permitted sitemap evidence into CSV and XLSX.
+
+Exact URL duplicates are merged; matching town/price/mq is *only* a potential
+duplicate flag, never an automatic merge. Contactability is never inferred from
+owner claims such as "no agenzie". Workbook written with stdlib OOXML for
+reproducible zero-dependency execution on GitHub runners.
+"""
+from __future__ import annotations
+
+import argparse
+import csv
+import json
+import re
+import urllib.parse
+import zipfile
+from collections import Counter, defaultdict
+from datetime import datetime
+from pathlib import Path
+from xml.sax.saxutils import escape
+from zoneinfo import ZoneInfo
+
+TOWNS = ("Avigliana", "Sant'Ambrogio di Torino", "Almese", "Condove")
+ROME = ZoneInfo("Europe/Rome")
+HEADERS = (
+    "Comune", "Fonte", "URL fonte", "Titolo", "Via", "Prezzo EUR", "Superficie mq",
+    "Venditore", "Contattabilita", "Possibile duplicato", "Link annuncio",
+    "Ultimo aggiornamento", "Esito verifica",
+)
+SOURCE_HEADERS = ("Fonte", "Comune", "Esito", "Totale dichiarato", "Link estratti", "URL indice")
+
+
+def normalize_url(url: str) -> str:
+    try:
+        u = urllib.parse.urlsplit(str(url).strip())
+        if u.scheme not in ("https", "http") or not u.hostname or u.username or u.password:
+            return ""
+        host = u.hostname.lower().removeprefix("www.")
+        # Keep listing identifiers when used in query params.
+        key_values = urllib.parse.parse_qsl(u.query)
+        keep = {"id", "annuncio", "listingid", "itemid", "pid", "p"}
+        cleaned = urllib.parse.urlencode(sorted((k, v) for k, v in key_values if k.casefold() in keep))
+        return urllib.parse.urlunsplit(("https", host, u.path.rstrip("/") or "/", cleaned, ""))
+    except ValueError:
+        return ""
+
+
+def _number(value):
+    if isinstance(value, bool):
+        return None
+    if isinstance(value, (int, float)) and value > 0:
+        return int(value)
+    if isinstance(value, str) and re.fullmatch(r"\d{1,8}(?:[.,]\d{3})*", value.strip()):
+        return int(value.replace(".", "").replace(",", ""))
+    return None
+
+
+def _candidate_key(row: dict) -> tuple | None:
+    town = row["town"]
+    price = row.get("price")
+    size = row.get("mq")
+    if price is None or size is None:
+        return None
+    # Primary purpose: identify collisions for manual review, never dedup on it.
+    return (town, price, size)
+
+
+def merge(parts: list[dict]) -> dict:
+    all_rows = []
+    sources = []
+    for part in parts:
+        for entry in part.get("sources", []):
+            sources.append({
+                "source": entry.get("source", "sitemap"),
+                "town": entry.get("town", ""),
+                "status": entry.get("status", "NON_DISPONIBILE"),
+                "reported_count": entry.get("reported_count"),
+                "extracted_links": entry.get("extracted_links", len(entry.get("listings", []))),
+                "index_url": entry.get("index_url", ""),
+            })
+        all_rows.extend(part.get("listings", []))
+
+    grouped = {}
+    for row in all_rows:
+        town = row.get("town")
+        url = normalize_url(row.get("url", ""))
+        if town not in TOWNS or not url:
+            continue
+        key = url
+        name = str(row.get("source") or "Fonte pubblica")[:70]
+        if key not in grouped:
+            grouped[key] = {
+                "town": town, "url": url, "title": row.get("title", "") or "Annuncio senza titolo",
+                "street": row.get("street", "") or "", "price": _number(row.get("price")),
+                "mq": _number(row.get("mq")), "sources": [name],
+                "source_urls": [url],
+                "owner_status": row.get("owner_status", "DA_VERIFICARE"),
+                "contact_permission": "DA_VERIFICARE",
+                "last_modified": row.get("last_modified", ""),
+                "possibly_duplicate": False,
+                "verification": "DA_VERIFICARE SU FONTE ORIGINALE",
+            }
+        else:
+            g = grouped[key]
+            if g["town"] != town:
+                g["verification"] = "CONFLITTO_COMUNE: VERIFICA MANUALE"
+                # Never silently change municipality.
+            if name not in g["sources"]:
+                g["sources"].append(name)
+            for field in ("street", "last_modified"):
+                if not g.get(field) and row.get(field):
+                    g[field] = row[field]
+            for field in ("price", "mq"):
+                if g.get(field) is None and _number(row.get(field)) is not None:
+                    g[field] = _number(row[field])
+            if g["title"] == "Annuncio senza titolo" and row.get("title"):
+                g["title"] = row["title"]
+
+        g = grouped[key]
+        if "CasaDaPrivato" in name or row.get("contact_permission") == "NO PROPOSTE COMMERCIALI":
+            g["contact_permission"] = "NO PROPOSTE COMMERCIALI"
+        elif g["contact_permission"] != "NO PROPOSTE COMMERCIALI":
+            # Never infer YES from 'privato' or 'no agenzie'.
+            g["contact_permission"] = "DA_VERIFICARE BASE GIURIDICA"
+    buckets = defaultdict(list)
+    for g in grouped.values():
+        k = _candidate_key(g)
+        if k:
+            buckets[k].append(g)
+    for items in buckets.values():
+        if len(items) > 1:
+            for item in items:
+                item["possibly_duplicate"] = True
+    records = sorted(grouped.values(), key=lambda x: (TOWNS.index(x["town"]), x["title"].casefold(), x["url"]))
+    counts = {town: sum(r["town"] == town for r in records) for town in TOWNS}
+    source_outages = sum(s["status"] != "OK" for s in sources)
+    return {
+        "as_of_rome": datetime.now(ROME).isoformat(timespec="seconds"),
+        "scope": list(TOWNS), "status": "PARZIALE" if source_outages else "OK",
+        "listing_count": len(records),
+        "possible_duplicate_count": sum(r["possibly_duplicate"] for r in records),
+        "counts": counts, "source_errors": source_outages,
+        "sources": sources, "listings": records,
+    }
+
+
+def load_parts(directory: Path) -> list[dict]:
+    parts = []
+    for path in sorted(directory.rglob("*.json")):
+        # Ignore already consolidated outputs, if the input path overlaps output dir.
+        if path.name not in ("inventory.json", "sitemaps.json"):
+            continue
+        try:
+            value = json.loads(path.read_text(encoding="utf-8"))
+            if isinstance(value, dict) and isinstance(value.get("listings"), list):
+                parts.append(value)
+        except (OSError, ValueError):
+            continue
+    return parts
+
+
+def render_markdown(result: dict) -> str:
+    lines = [
+        "## CASE247 · Inventario pubblico multi-fonte dei quattro comuni",
+        f"Rilevazione {result['as_of_rome']}; **link annunci distinti: {result['listing_count']}**. "
+        "Le fonti possono essere parziali: non è il totale degli immobili in vendita.",
+        "**Nessun annuncio è automaticamente un contatto commerciale acquisibile.** "
+        "Un prezzo e una superficie uguali non dimostrano che due annunci siano lo stesso immobile.",
+        "",
+    ]
+    for town in TOWNS:
+        lines.append(f"### {town} — {result['counts'][town]} URL distinti")
+        for row in (r for r in result["listings"] if r["town"] == town):
+            lines.append(
+                f"- [{row['title']}]({row['url']}) · {', '.join(row['sources'])}"
+                + (" · potenziale duplicato" if row["possibly_duplicate"] else "")
+                + (" · **non usare per proposte commerciali**" if row["contact_permission"] == "NO PROPOSTE COMMERCIALI" else "")
+            )
+        lines.append("")
+    lines.append("### Diagnostica delle fonti")
+    for source in result["sources"]:
+        lines.append(
+            f"- {source['source']} {source['town']}: {source['status']}, link {source['extracted_links']}, "
+            f"totale pagina {source['reported_count'] if source['reported_count'] is not None else 'N/D'}."
+        )
+    lines += ["", "Il file Excel completo e i JSON della scansione sono negli artifact GitHub dell'esecuzione."]
+    return "\n".join(lines) + "\n"
+
+
+def _cell(col: int, row: int, value, style: int = 0) -> str:
+    colname = ""
+    x = col
+    while x:
+        x, digit = divmod(x-1, 26)
+        colname = chr(65+digit) + colname
+    ref = f"{colname}{row}"
+    if value is None:
+        value = ""
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        return f'<c r="{ref}" s="{style}"><v>{value}</v></c>'
+    raw = str(value)
+    return f'<c r="{ref}" s="{style}" t="inlineStr"><is><t xml:space="preserve">{escape(raw)}</t></is></c>'
+
+
+def _sheet_xml(headers: tuple, rows: list[list], width: list[int]) -> bytes:
+    ncol = len(headers)
+    coldefs = "".join(f'<col min="{i+1}" max="{i+1}" width="{w}" customWidth="1"/>' for i, w in enumerate(width))
+    lines = ['<?xml version="1.0" encoding="UTF-8" standalone="yes"?>',
+             '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">',
+             '<sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews>',
+             '<cols>' + coldefs + '</cols>', '<sheetData>']
+    lines.append('<row r="1" ht="27" customHeight="1">' +
+                 "".join(_cell(j+1, 1, h, 1) for j, h in enumerate(headers)) + '</row>')
+    for i, record in enumerate(rows, 2):
+        lines.append(f'<row r="{i}">' +
+                     "".join(_cell(j+1, i, value, 2 if isinstance(value, (int,float)) else 0)
+                             for j, value in enumerate(record)) + '</row>')
+    lines += ['</sheetData>',
+              f'<autoFilter ref="A1:{_col(ncol)}{max(1,len(rows)+1)}"/>',
+              '</worksheet>']
+    return "\n".join(lines).encode("utf-8")
+
+
+def _col(n: int) -> str:
+    out = ""
+    while n:
+        n, digit = divmod(n-1, 26)
+        out = chr(65+digit)+out
+    return out
+
+
+def write_xlsx(data: dict, output: Path) -> None:
+    """Write a portable, correctly structured XLSX without third-party dependencies."""
+    listings = []
+    for row in data["listings"]:
+        listings.append([
+            row["town"], ", ".join(row["sources"]), ", ".join(row["source_urls"]),
+            row["title"], row["street"], row["price"], row["mq"], row["owner_status"],
+            row["contact_permission"], "VERIFICARE" if row["possibly_duplicate"] else "",
+            row["url"], row["last_modified"], row["verification"],
+        ])
+    source_rows = [
+        [r.get("source"), r.get("town"), r.get("status"), r.get("reported_count"),
+         r.get("extracted_links"), r.get("index_url")] for r in data["sources"]
+    ]
+    overview_rows = [
+        [town, data["counts"][town], "URL distinti, non immobili o proprietari unici"]
+        for town in TOWNS
+    ] + [
+        ["TOTALE", data["listing_count"], "Rilevazione parziale; verificare fonti"],
+        ["POTENZIALI DOPPIONI", data["possible_duplicate_count"], "Mai eliminati automaticamente"],
+        ["FONTI CON PROBLEMI", data["source_errors"], "N/D non equivale a zero immobili"],
+    ]
+    sheets = [
+        ("Annunci", HEADERS, listings, [25,24,38,46,28,16,16,33,35,23,53,22,35]),
+        ("Fonti", SOURCE_HEADERS, source_rows, [28,26,30,21,19,64]),
+        ("Riepilogo", ("Comune / KPI","Valore","Interpretazione"), overview_rows, [32,16,70]),
+    ]
+    content_types = ['<?xml version="1.0" encoding="UTF-8"?>',
+        '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">',
+        '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>',
+        '<Default Extension="xml" ContentType="application/xml"/>',
+        '<Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>',
+        '<Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>',
+    ]
+    for ix in range(1, len(sheets)+1):
+        content_types.append(f'<Override PartName="/xl/worksheets/sheet{ix}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>')
+    content_types.append("</Types>")
+    workbook = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>' + "".join(f'<sheet name="{escape(name)}" sheetId="{i}" r:id="rId{i}"/>' for i,(name,*_) in enumerate(sheets,1)) + '</sheets></workbook>'
+    workbook_rels = '<?xml version="1.0" encoding="UTF-8"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' + "".join(f'<Relationship Id="rId{i}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet{i}.xml"/>' for i in range(1,len(sheets)+1)) + f'<Relationship Id="rId{len(sheets)+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>'
+    styles = ('<?xml version="1.0" encoding="UTF-8"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">'
+              '<fonts count="2"><font><sz val="10"/><name val="Aptos"/></font><font><b/><color rgb="FFFFFFFF"/><sz val="10"/><name val="Aptos"/></font></fonts>'
+              '<fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FF17365D"/><bgColor indexed="64"/></patternFill></fill></fills>'
+              '<borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders>'
+              '<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>'
+              '<cellXfs count="3"><xf fontId="0" fillId="0" borderId="0" xfId="0"/><xf fontId="1" fillId="2" borderId="0" xfId="0" applyFill="1" applyFont="1"/><xf fontId="0" fillId="0" borderId="0" xfId="0"/></cellXfs>'
+              '</styleSheet>')
+    root_rels = '<?xml version="1.0" encoding="UTF-8"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>'
+    output.parent.mkdir(parents=True, exist_ok=True)
+    with zipfile.ZipFile(output, "w", compression=zipfile.ZIP_DEFLATED) as package:
+        package.writestr("[Content_Types].xml", "\n".join(content_types))
+        package.writestr("_rels/.rels", root_rels)
+        package.writestr("xl/workbook.xml", workbook)
+        package.writestr("xl/_rels/workbook.xml.rels", workbook_rels)
+        package.writestr("xl/styles.xml", styles)
+        for i, (_, headers, rows, widths) in enumerate(sheets, 1):
+            package.writestr(f"xl/worksheets/sheet{i}.xml", _sheet_xml(headers, rows, widths))
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--inputs-dir", type=Path, default=Path("_market_parts"))
+    ap.add_argument("--out", type=Path, default=Path("_market"))
+    args = ap.parse_args()
+    args.out.mkdir(parents=True, exist_ok=True)
+    result = merge(load_parts(args.inputs_dir))
+    (args.out/"inventory.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (args.out/"market.md").write_text(render_markdown(result), encoding="utf-8")
+    with (args.out/"inventory.csv").open("w", encoding="utf-8-sig", newline="") as fd:
+        wr = csv.writer(fd, delimiter=";")
+        wr.writerow(HEADERS)
+        for row in result["listings"]:
+            wr.writerow([
+                row["town"], ", ".join(row["sources"]), ", ".join(row["source_urls"]),
+                row["title"], row["street"], row["price"], row["mq"], row["owner_status"],
+                row["contact_permission"], "VERIFICARE" if row["possibly_duplicate"] else "",
+                row["url"], row["last_modified"], row["verification"],
+            ])
+    file = args.out / f"CASE247_Immobili_4_Comuni_{datetime.now(ROME).date().isoformat()}.xlsx"
+    write_xlsx(result, file)
+    print(f"CASE247_CONSOLIDATED links={result['listing_count']} potential_duplicates={result['possible_duplicate_count']} sources_with_issues={result['source_errors']} xlsx={file.name}")
+
+
+if __name__ == "__main__":
+    main()
