@@ -116,7 +116,7 @@
             <div class="contact-identity">
               <img id="footerPortrait" class="footer-portrait" src="/joseph-link-in-bio-Copia/assets/joseph-malafronte.webp" alt="Fotografia di Joseph">
               <img id="footerAgencyLogo" class="footer-agency-logo" src="" alt="Immobiliare La Sacra">
-              <div class="partner-copy"><strong id="staffFooterName">Joseph · Digital Strategist</strong><span id="staffFooterPartner">Partner commerciale di Immobiliare La Sacra</span><small>Piazza del Comune XXV Aprile, 1 · 10057 Sant’Ambrogio di Torino (TO)</small></div>
+              <div class="partner-copy"><strong id="staffFooterName">Joseph · Digital Strategist</strong><span id="staffFooterPartner">Partner commerciale di Immobiliare La Sacra</span><small>Piazza del Comune XXV Aprile, 1 · 10057 Sant’Ambrogio di Torino (TO)</small><small>Ufficio: 346 256 8685 · immobiliarelasacra@gmail.com · lasacraimmobiliare.it</small></div>
             </div>
             <div class="contact-cta"><b id="staffCta">Scrivi VENDO su WhatsApp</b><strong id="staffPhone">371 370 8294</strong></div>
             <div id="waQr" class="qr-box qr-whatsapp" aria-label="QR WhatsApp referente selezionato"></div>
@@ -141,12 +141,13 @@
       <label>Titolo immobile<input id="fieldTitle" required></label>
       <label>Comune<input id="fieldCity"></label>
       <label>Prezzo € (vuoto = non disponibile)<input id="fieldPrice" inputmode="decimal"></label>
-      <label>Stato APE<select id="fieldApeStatus"><option value="DA_VERIFICARE">Da verificare</option><option value="PRESENTE">APE presente</option><option value="IN_CORSO">APE in fase di redazione</option><option value="MANCANTE">APE mancante</option><option value="ESENTE">Esenzione da verificare</option></select></label>
+      <label>Stato APE (D.Lgs. 192/2005, art. 6, c. 8)<select id="fieldApeStatus"><option value="DA_VERIFICARE">Da verificare</option><option value="PRESENTE">APE presente</option><option value="IN_CORSO">APE in fase di redazione</option><option value="MANCANTE">APE mancante</option><option value="ESENTE">Esenzione da verificare</option></select></label>
       <label>Classe energetica (A4–G)<input id="fieldEnergy"></label>
       <label>EPgl,nren (kWh/m² anno)<input id="fieldEp"></label>
       <label>Indice involucro / IPE (se applicabile)<input id="fieldEnvelope"></label>
       <label class="wide">Motivo esenzione APE (solo se applicabile)<input id="fieldApeExemptionReason" placeholder="Indicare la specifica fattispecie normativa e documentazione"></label>
       <label class="wide checkbox-label"><input id="fieldApeExemptionVerified" type="checkbox">Esenzione controllata e autorizzata dal responsabile La Sacra (non selezionare automaticamente)</label>
+      <p class="hint wide">APE in corso: scheda conservata e PDF BOZZA privato. Per la diffusione commerciale, se obbligatoria, indicare la classe e gli indici energetici verificati. <a target="_blank" rel="noopener noreferrer" href="https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:2005-08-19;192">Riferimento: D.Lgs. 192/2005, art. 6 comma 8</a>.</p>
       <label class="wide">URL esatto dell’annuncio La Sacra<input id="fieldUrl" required></label>
       <label>Foto immobile<input id="fieldPhoto" type="file" accept="image/*"></label>
       <label>Contratto<select id="fieldContract"><option value="Vendita">Vendita</option><option value="Affitto">Affitto</option><option value="Da verificare">Da verificare</option></select></label>
