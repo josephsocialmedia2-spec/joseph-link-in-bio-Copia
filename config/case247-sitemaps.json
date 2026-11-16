@@ -1,7 +1,18 @@
 {
   "schema_version": 1,
-  "description": "Sitemap pubbliche autorizzate: configurare solo URL HTTPS realmente pubblici e consentiti da robots.txt e condizioni del sito. Nessun proxy o bypass anti-bot. Gli esempi NON sono preattivati.",
-  "sources": [],
+  "description": "Solo sitemap dichiarate direttamente dai siti in robots.txt: rispettare robots, host HTTPS e quattro comuni. I blocchi non vengono aggirati, le fonti inaccessibili registrate.",
+  "sources": [
+    {
+      "name": "CasaDaPrivato · sitemap pubbliche",
+      "host": "www.casadaprivato.it",
+      "discover_from_robots": true
+    },
+    {
+      "name": "Immobiliare.it · sitemap pubbliche",
+      "host": "www.immobiliare.it",
+      "discover_from_robots": true
+    }
+  ],
   "configuration_example": {
     "name": "Agenzia locale con sitemap pubblica autorizzata",
     "host": "www.esempio.it",
