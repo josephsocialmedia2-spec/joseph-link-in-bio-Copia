@@ -303,9 +303,9 @@
       const proof=issues.length>0;
       if(proof&&definitive)throw Error(`Impossibile generare il PDF definitivo: ${issues.length} verifiche aperte. Usa «PDF per stampa di prova» per scaricare automaticamente la BOZZA.`);
       const result=await PDF.exportPdf({flyer:$('flyer'),properties:model.properties,externalLeft,externalRight,
-        externalLeftPage:Number($('outerLeftPage').value)||1,externalRightPage:Number($('outerRightPage').value)||1,watermark:proof,whatsappUrl:whatsappFor(activeProfile()),filename:(definitive?'DEFINITIVO':'BOZZA_STAMPA')+'_Volantino_A4_'+activeProfile().name+'.pdf'});
+        externalLeftPage:Number($('outerLeftPage').value)||1,externalRightPage:Number($('outerRightPage').value)||1,watermark:!definitive,whatsappUrl:whatsappFor(activeProfile()),filename:(definitive?'DEFINITIVO':'BOZZA_STAMPA')+'_Volantino_A4_'+activeProfile().name+'.pdf'});
       const q=Math.round(result.minModuleMm*100)/100;
-      setStatus(`PDF esportato: ${result.pages} pagine, ${result.qrCount} QR vettoriali. Modulo minimo ${q} mm. ${proof?'BOZZA — NON DISTRIBUIRE.':'Verificare comunque la stampa su carta.'}`,'good');
+      setStatus(`PDF esportato: ${result.pages} pagine, ${result.qrCount} QR vettoriali. Modulo minimo ${q} mm. ${result.missingImages?result.missingImages+' immagini non caricate sono state omesse. ':''}${!definitive?'BOZZA — NON DISTRIBUIRE.':'Verificare comunque la stampa su carta.'}`,'good');
     }catch(e){setStatus('Esportazione interrotta: '+e.message,'warn');console.error(e);}finally{loading=false;$('exportPdf').disabled=false;$('exportFinalPdf').disabled=false;}
   }
   
@@ -335,7 +335,7 @@
         if(errors.length)throw Error('QR '+who.name+': '+errors.join(', '));
         setStatus('Genero volantino di '+who.name+'…');
         const result=await PDF.exportPdf({flyer:$('flyer'),properties:model.properties,whatsappUrl:number,
-          externalLeft,externalRight,externalLeftPage:Number($('outerLeftPage').value)||1,externalRightPage:Number($('outerRightPage').value)||1,watermark:issues.length>0,
+          externalLeft,externalRight,externalLeftPage:Number($('outerLeftPage').value)||1,externalRightPage:Number($('outerRightPage').value)||1,watermark:true,
           autoDownload:false,filename:'Volantino_'+who.name+'.pdf'});
         if(result.qrCount!==19)throw Error('QR incompleti per '+who.name);
         zip.file('Volantino_'+who.name+'_A4.pdf',result.bytes);
