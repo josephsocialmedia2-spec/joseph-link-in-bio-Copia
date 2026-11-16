@@ -95,7 +95,7 @@
     }
     return result;
   };
-  const fromCatalog=x=>Core.makeEntry({title:x.title,city:x.municipality,price:x.price,contract:x.contract,img:x.image,url:x.url,energy:x.energy_class||x.energyClass||x.energy,ep:x.epgl_nren||x.epgl||x.ep,envelope:x.epe_invol||x.envelope});
+  const fromCatalog=x=>Core.makeEntry({title:x.title,city:x.municipality,price:x.price,contract:x.contract,img:x.image,url:x.url,energy:x.energy_class||x.energyClass||x.energy,ep:x.epgl_nren||x.epgl||x.ep,envelope:x.epe_invol||x.envelope,apeStatus:x.ape_status||'DA_VERIFICARE',apeExemptionReason:x.ape_exemption_reason||'',apeExemptionVerified:false});
   try{
     const old=JSON.parse(localStorage.getItem(KEY)||'null');
     if(old&&Array.isArray(old.properties)&&old.properties.length===18){
@@ -209,9 +209,11 @@
     put('property-title',p.title);
     put('property-city',p.city||'Località da verificare');
     put('price-badge'+(p.price===null?' is-unknown':''),Core.formatPrice(p.price));
-    const energy=put('energy energy-'+(p.energy||'unknown').toLowerCase().replace(/\d/g,''),'');
-    const cl=document.createElement('b');cl.className='class';cl.textContent='Classe '+(p.energy||'da verificare');
-    const ep=document.createElement('span');ep.textContent='EPgl,nren '+(p.ep||'da verificare');
+    const energy=put('energy energy-'+(p.apeStatus==='PRESENTE'&&p.energy?p.energy:'unknown').toLowerCase().replace(/\d/g,''),'');
+    const cl=document.createElement('b');cl.className='class';
+    cl.textContent=p.apeStatus==='PRESENTE'?'Classe '+(p.energy||'da verificare'):Core.apeLabel(p);
+    const ep=document.createElement('span');
+    ep.textContent=p.apeStatus==='PRESENTE'?'EPgl,nren '+(p.ep||'da verificare')+(p.envelope?' · Invol. '+p.envelope:''):p.apeStatus==='ESENTE'?'Esenzione soggetta a verifica':'Nessun indice energetico pubblicabile';
     energy.append(cl,document.createElement('br'),ep);
     const qrBox=document.createElement('div');qrBox.className='qr-box';qrBox.dataset.qrId=`listing-${i}`;
     qrBox.title='QR: '+(p.url||'URL da inserire');card.append(qrBox);
@@ -226,7 +228,10 @@
     document.querySelectorAll('.card.has-fallback').forEach(card=>issues.push(`Scheda ${Number(card.dataset.slot)+1}: foto non caricabile`));
     if(CFG.panoramaReal===''&&model.panorama===CFG.panoramaFallback)issues.push('Panorama illustrativo: caricare fotografia reale prima della diffusione');
     const target=$('preflight');
+    const apeInProgress=model.properties.filter(p=>p?.apeStatus==='IN_CORSO').length;
+    const apeExempt=model.properties.filter(p=>p?.apeStatus==='ESENTE').length;
     target.innerHTML='<strong>'+model.properties.filter(p=>p?.title).length+'/18 annunci · '+issues.length+' controlli aperti</strong>'+
+      '<p>APE in redazione: '+apeInProgress+' · esenzioni da gestire: '+apeExempt+'. I riferimenti energetici sono visualizzati nelle schede; un APE in corso non autorizza la diffusione.</p>'+
       (issues.length?'<ul>'+issues.slice(0,10).map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>':'<p>Tutti i campi verificati secondo le dichiarazioni dell’operatore.</p>');
     return issues;
   }
@@ -313,18 +318,26 @@
     $('dialogIndex').textContent=index+1;
     for(const [id,k] of Object.entries({fieldTitle:'title',fieldCity:'city',fieldPrice:'price',fieldEnergy:'energy',fieldEp:'ep',
       fieldEnvelope:'envelope',fieldUrl:'url',fieldContract:'contract'}))$(id).value=p[k]??'';
+    $('fieldApeStatus').value=p.apeStatus||'DA_VERIFICARE';
+    $('fieldApeExemptionReason').value=p.apeExemptionReason||'';
+    $('fieldApeExemptionVerified').checked=p.apeExemptionVerified===true;
     $('fieldVerified').checked=!!p.checked;$('fieldPhoto').value='';$('dialogError').textContent='';$('listingDialog').showModal();
   }
   function readEditor(){
     const old=model.properties[selected]||{};
     return Core.makeEntry({title:$('fieldTitle').value,city:$('fieldCity').value,price:$('fieldPrice').value,
       energy:$('fieldEnergy').value,ep:$('fieldEp').value,envelope:$('fieldEnvelope').value,
+      apeStatus:$('fieldApeStatus').value,apeExemptionReason:$('fieldApeExemptionReason').value,
+      apeExemptionVerified:$('fieldApeExemptionVerified').checked,
       url:$('fieldUrl').value,contract:$('fieldContract').value,checked:$('fieldVerified').checked,img:old.img||''});
   }
   async function onEditorSubmit(event){
     event.preventDefault();const p=readEditor();
     if(!p.title||!p.url){$('dialogError').textContent='Titolo e URL La Sacra diretto sono obbligatori.';return;}
     if(model.properties.some((x,i)=>i!==selected&&x?.url===p.url)){$('dialogError').textContent='Annuncio già presente nella griglia.';return;}
+    if(p.apeStatus==='ESENTE'&&p.apeExemptionVerified&&!p.apeExemptionReason){
+      $('dialogError').textContent='Specifica il motivo dell’esenzione APE prima di validarla.';return;
+    }
     const photo=$('fieldPhoto').files[0];if(photo)p.img=await loadPhoto(photo,900);
     model.properties[selected]=p;save();$('listingDialog').close();render();
   }
@@ -346,7 +359,7 @@
       if(qrProblems.length)throw Error(qrProblems.join(' · '));
       if((definitive===true||draftToDrive)&&!Drive?.isConnected())throw Error('Google Drive non autorizzato: premi «Autorizza Google Drive» prima di salvare.');
       const proof=issues.length>0;
-      if(proof&&definitive===true)throw Error(`Impossibile generare il PDF definitivo: ${issues.length} verifiche aperte. Usa «PDF per stampa di prova» per scaricare automaticamente la BOZZA.`);
+      if(proof&&definitive===true)throw Error(`Pubblicazione sospesa: ${issues.length} verifiche aperte (inclusi eventuali APE in corso). Utilizza «Salva BOZZA su Drive (privata)» senza distribuire il PDF.`);
       const result=await PDF.exportPdf({flyer:$('flyer'),properties:model.properties,externalLeft,externalRight,
         externalLeftPage:Number($('outerLeftPage').value)||1,externalRightPage:Number($('outerRightPage').value)||1,watermark:definitive!==true,whatsappUrl:whatsappFor(activeProfile()),filename:(definitive===true?'DEFINITIVO':draftToDrive?'BOZZA_DRIVE_PRIVATA':'BOZZA_STAMPA')+'_Volantino_A4_'+activeProfile().name+'.pdf'});
       const q=Math.round(result.minModuleMm*100)/100;
