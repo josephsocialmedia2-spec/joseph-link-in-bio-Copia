@@ -103,3 +103,20 @@ Non vengono attivati `curl_cffi`, TLS impersonation, proxy residenziali né serv
 **Copertura reale:** la pipeline aumenta il numero di fonti che si possono collegare, ma non equivale a 560 immobili acquisiti o verificati. I conteggi dichiarati dai portali comprendono anche agenzie e annunci duplicati; i report mostrano sempre lo stato delle fonti e il numero effettivo dei link recuperati.
 
 **Filtro indispensabile sitemap:** un URL che contiene il nome del comune ma conduce a una pagina categoria (es. vendita-negozi/avigliana) NON è una scheda immobiliare. Dal 16/11/2026 il parser accetta soltanto percorsi riconoscibili come singoli annunci con identificativo, prima di attribuire il comune. Le sitemap con pagine categoria non aumentano il conteggio degli immobili. La prima discovery aveva prodotto 11 falsi candidati di categoria, ora corretti.
+
+
+## Siti di agenzie locali e aste (16 novembre 2026)
+
+Aggiunti al monitoraggio sitemap in modalità **robots-only e fail-closed** tre domini effettivamente esistenti, individuati sui loro siti ufficiali:
+
+- Teck Immobiliare — `teckimmobiliare.it`; schede individuali osservate in `/properties/<tipo>/<comune>/<slug>/`, senza ID finale.
+- CasaMia Immobiliare — `www.casamiaimmobiliare.org`; dominio verificato ma schema delle singole schede e presenza di sitemap da verificare.
+- Immobiliare La Sacra — `lasacraimmobiliare.it`; schede osservate in `/products/<slug>`, con accettazione delle sole denominazioni immobiliari e località dei quattro comuni.
+
+Queste fonti sono **annunci di agenzia, NON annunci di proprietario privato**. Sono contrassegnate `AGENZIA - NON PRIVATO` in un campo separato nell'Excel, che conserva i tre fogli Annunci/Fonti/Riepilogo. Gli URL senza località certa o che rappresentano categorie restano esclusi. L'esistenza del sito non garantisce sitemap accessibili sul runner GitHub: fanno fede solo il conteggio e i messaggi dell'ultima esecuzione.
+
+**Aste:** nel foglio Fonti è incluso il Portale delle Vendite Pubbliche ufficiale `https://pvp.giustizia.it/pvp/` con stato `SOLO_CONSULTAZIONE`. Non esiste in questa pipeline un feed automatizzato PVP verificato, quindi nessun lotto viene conteggiato come annuncio ordinario né come vendita privata. Se verrà messa a disposizione una fonte PVP accessibile e autorizzata, richiederà parser e classificazione distinti.
+
+Il criterio generico `/<annuncio>/...<ID>` rimane prudente; non viene imposto a domini reali che usano slug descrittivi senza numero (per i quali esistono regole specifiche). L'inventario è un'analisi del mercato pubblico, non un elenco di proprietari contattabili.
+
+**Orari:** la raccolta resta alle **05:10 Europe/Rome**, il messaggio unico alle **06:00 Europe/Rome**. Anche con 50 minuti di margine GitHub Actions non garantisce esecuzione o notifica puntuale; uno spostamento alle 04:45 resta opzionale e non è stato fatto senza necessità comprovata.
