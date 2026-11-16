@@ -33,6 +33,6 @@ test('only direct official urls; do not fabricate energy class',()=>{
  assert.match(html,/informazioni energetiche mancanti/i);
 });
 test('official agency contact and property links exist',()=>{
- assert.match(html,/IMMOBILIARE LA SACRA/);assert.match(html,/346 256 8685/);
+ assert.match(html,/IMMOBILIARE LA SACRA/);assert.match(html,/371 370 8294/);
  assert.match(html,/immobiliarelasacra@gmail\.com/);assert.match(js,/Apri scheda ufficiale/);
 });
