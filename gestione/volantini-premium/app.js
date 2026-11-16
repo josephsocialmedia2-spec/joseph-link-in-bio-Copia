@@ -10,7 +10,13 @@
   function whatsappFor(profile){return 'https://wa.me/39'+profile.phone+'?text='+encodeURIComponent(profile.whatsappText||'VENDO');}
   const blank=()=>Array.from({length:18},()=>null);
   const model={profile:'joseph',theme:'cobalto',properties:blank(),portrait:(CFG.portraitFallback||global.CASE247_DEFAULT_PORTRAIT),panorama:CFG.panoramaReal||CFG.panoramaFallback};
-  let external=null,selected=-1,catalog=null,loading=false;
+  let external=null,externalPreviewUrl=null,selected=-1,catalog=null,loading=false;
+  const NEARBY=[["avigliana"],["buttigliera alta","sant ambrogio di torino","villar dora","almese"],["caprie","rubiana","caselette","rosta","chiusa di san michele","vaie"],["rivoli","valgioie","sant antonino di susa","condove"]];
+  const fold=s=>String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase("it").replace(/[^a-z0-9]+/g," ").trim();
+  const propertyEligible=x=>Core.canonicalUrl(x?.url)&&x.availability_status==="AVAILABLE"&&x.location_status==="VERIFICATO_FONTE"&&x.municipality&&x.image&&!/attivit|azienda|negozio|bar|tabacchi|ristorante|locale commerciale/i.test(String(x.title||"")+" "+String(x.category||""));
+  const priority=x=>{const name=fold(x.municipality);const i=NEARBY.findIndex(group=>group.includes(name));return i<0?99:i;};
+  const eligibleListings=items=>items.filter(propertyEligible).sort((a,b)=>priority(a)-priority(b)||fold(a.municipality).localeCompare(fold(b.municipality),"it")||fold(a.title).localeCompare(fold(b.title),"it"));
+  const fromCatalog=x=>Core.makeEntry({title:x.title,city:x.municipality,price:x.price,contract:x.contract,img:x.image,url:x.url,energy:x.energy_class||x.energyClass||x.energy,ep:x.epgl_nren||x.epgl||x.ep,envelope:x.epe_invol||x.envelope});
   try{
     const old=JSON.parse(localStorage.getItem(KEY)||'null');
     if(old&&Array.isArray(old.properties)&&old.properties.length===18){
@@ -93,6 +99,8 @@
   }
   function showPreflight(){
     const issues=Core.checkSheet(model.properties);
+    if(!catalog)issues.push("Catalogo ufficiale non verificato in questa sessione");
+    else model.properties.forEach((p,i)=>{if(p?.title&&!eligibleListings(catalog).some(x=>Core.canonicalUrl(x.url)===p.url))issues.push(`Scheda ${i+1}: annuncio non confermato nel catalogo ufficiale`);});
     document.querySelectorAll('.card.has-fallback').forEach(card=>issues.push(`Scheda ${Number(card.dataset.slot)+1}: foto non caricabile`));
     if(CFG.panoramaReal===''&&model.panorama===CFG.panoramaFallback)issues.push('Panorama illustrativo: caricare fotografia reale prima della diffusione');
     const target=$('preflight');
@@ -139,22 +147,9 @@
   async function readUrl(url){
     const products=await loadCatalog().catch(()=>[]);
     const found=products.find(x=>Core.canonicalUrl(x.url)===url);
-    if(found)return Core.makeEntry({title:found.title,city:found.municipality||'',
-      price:found.contract==='Affitto'?null:found.price,
-      contract:found.contract,img:found.image||'',url,
-      energy:found.energy_class||found.energyClass||found.energy||'',
-      ep:found.epgl_nren||found.epgl||found.ep||'',
-      envelope:found.epe_invol||found.envelope||''});
-    // Best effort: endpoint Shopify product.js può essere bloccato da CORS su GitHub Pages.
-    try{
-      const r=await fetch(url+'.js',{mode:'cors',cache:'no-store'});
-      if(!r.ok)throw Error('HTTP '+r.status);
-      const j=await r.json();
-      return Core.makeEntry({title:j.title||'DA COMPILARE',price:j.price!=null?Number(j.price)/100:null,
-        url,img:j.featured_image||j.images?.[0]||'',city:''});
-    }catch{
-      return Core.makeEntry({title:'DA COMPILARE — lettura URL non riuscita',url});
-    }
+    if(found&&propertyEligible(found))return fromCatalog(found);
+    throw Error('Annuncio non presente tra gli immobili verificati e disponibili nel catalogo La Sacra: '+url);
+
   }
   function firstFree(){return model.properties.findIndex(x=>!x?.title)}
   async function bulkImport(urls){
@@ -164,7 +159,7 @@
       if(!url){invalid++;continue;}
       if(model.properties.some(p=>p?.url===url)){dups++;continue;}
       const index=firstFree();if(index<0)break;
-      model.properties[index]=await readUrl(url);added++;
+      try{model.properties[index]=await readUrl(url);added++;}catch(e){invalid++;console.warn(e.message);}
     }
     save();render();setStatus(`Importazione: ${added} inseriti · ${invalid} URL non validi · ${dups} duplicati. Verifica i campi incompleti.`,added?'good':'warn');
   }
@@ -205,8 +200,11 @@
   async function exportPdf(){
     if(loading)return;loading=true;$('exportPdf').disabled=true;setStatus('Preparazione PDF in corso...');
     try{
+      await loadCatalog(true);
       const issues=showPreflight();
       if(model.properties.some(x=>!x?.title)||model.properties.some(x=>!x?.url))throw Error('Per creare 19 QR occorrono 18 schede con URL diretti.');
+      const invalid=model.properties.filter(x=>!eligibleListings(catalog).some(y=>Core.canonicalUrl(y.url)===x.url));
+      if(invalid.length)throw Error(invalid.length+" annunci non verificati nel catalogo ufficiale: esportazione bloccata.");
       const qrProblems=QR.verifyAssociations(model.properties,whatsappFor(activeProfile()));
       if(qrProblems.length)throw Error(qrProblems.join(' · '));
       const proof=issues.length>0;
@@ -227,7 +225,9 @@
     const saved=model.profile;
     try{
       if(!window.JSZip)throw Error('Libreria ZIP non disponibile: verifica la connessione.');
+      await loadCatalog(true);
       const issues=showPreflight();
+      if(model.properties.some(x=>x?.title&&!eligibleListings(catalog).some(y=>Core.canonicalUrl(y.url)===x.url)))throw Error('Lo ZIP non può includere annunci assenti o non verificati nel catalogo ufficiale.');
       if(model.properties.some(p=>!p?.title||!p?.url))throw Error('Servono 18 annunci con URL validi, uno per scheda.');
       if(issues.length&&!confirm('Sono aperti '+issues.length+' controlli. Generare solo tre bozze con filigrana NON DISTRIBUIRE?'))return;
       const zip=new JSZip();
@@ -254,21 +254,52 @@
     finally{model.profile=saved;render();loading=false;buttons.forEach(b=>b.disabled=false);}
   }
 
+  function syncCatalog(){
+    return loadCatalog(true).then(items=>{
+      const eligible=eligibleListings(items),urls=new Set(eligible.map(x=>Core.canonicalUrl(x.url)));
+      let removed=0;
+      model.properties=model.properties.map(p=>{if(!p?.title)return null;if(!urls.has(Core.canonicalUrl(p.url))){removed++;return null;}return p;});
+      if(removed)save();render();
+      $("catalogAudit").textContent=eligible.length+" annunci immobiliari idonei in catalogo · "+removed+" schede senza riscontro rimosse dalla selezione · priorità Avigliana e dintorni. Presenza online dei singoli URL da confermare prima della distribuzione.";
+      return eligible;
+    }).catch(e=>{$("catalogAudit").textContent="Impossibile verificare catalogo: "+e.message+". Stampa bloccata finché non torna disponibile.";setStatus("Catalogo non disponibile: non considerare verificati gli annunci.","warn");});
+  }
+  function previewOuter(){
+    const node=$("outerPreview");node.replaceChildren();
+    if(externalPreviewUrl){URL.revokeObjectURL(externalPreviewUrl);externalPreviewUrl=null;}
+    if(!external){const p=document.createElement("p");p.textContent="Nessuna facciata esterna caricata. Seleziona PDF/JPG/PNG dal pannello a sinistra.";node.append(p);$("outerPreviewState").textContent="Nessun file caricato";return;}
+    if(!["application/pdf","image/png","image/jpeg"].includes(external.type)){
+      $("outerPreviewState").textContent="Formato non supportato";const p=document.createElement("p");p.textContent="Usa PDF, JPG o PNG.";node.append(p);return;
+    }
+    externalPreviewUrl=URL.createObjectURL(external);
+    const view=external.type==="application/pdf"?document.createElement("iframe"):document.createElement("img");
+    view.className="outer-preview-media";
+    view.setAttribute("aria-label","Anteprima della facciata esterna");
+    if(view.tagName==="IMG")view.alt="Anteprima facciata esterna";
+    view.src=externalPreviewUrl+(external.type==="application/pdf"?"#page="+(Number($("outerPage").value)||1)+"&view=FitH":"");
+    node.append(view);$("outerPreviewState").textContent=external.name+" · "+(external.type==="application/pdf"?"pagina "+(Number($("outerPage").value)||1):"immagine");
+  }
   function init(){
-    showStaff();showThemes();render();
+    showStaff();showThemes();render();syncCatalog();
     window.addEventListener('resize',resizePreview);
     $('addUrls').onclick=async()=>{if(loading)return;loading=true;try{
       const urls=$('listingUrls').value.split(/\s+/).map(x=>x.trim()).filter(Boolean);
       await bulkImport(urls);$('listingUrls').value='';
     }catch(e){setStatus('Importazione fallita: '+e.message,'warn')}finally{loading=false}};
-    $('loadCatalog').onclick=async()=>{if(loading)return;loading=true;setStatus('Lettura catalogo La Sacra...');
-      try{const items=await loadCatalog(true);const urls=items.filter(x=>Core.canonicalUrl(x.url)).slice(0,18).map(x=>x.url);
-        await bulkImport(urls);}catch(e){setStatus('Impossibile leggere il catalogo: '+e.message,'warn')}finally{loading=false}};
+    $('loadCatalog').onclick=async()=>{if(loading)return;loading=true;setStatus('Selezione annunci immobiliari Avigliana e comuni vicini...');
+      try{const items=eligibleListings(await loadCatalog(true)).slice(0,18);
+        model.properties=blank();items.forEach((x,i)=>{model.properties[i]=fromCatalog(x);});
+        save();render();setStatus(items.length+' annunci ufficiali idonei selezionati, Avigliana e comuni vicini in priorità. Verificare APE, foto e disponibilità prima della stampa.','good');
+      }catch(e){setStatus('Impossibile leggere il catalogo: '+e.message,'warn')}finally{loading=false}};
     $('addManual').onclick=()=>openDialog(Math.max(0,firstFree()));
     $('clearAll').onclick=()=>{if(confirm('Svuotare le 18 posizioni?')){model.properties=blank();save();render();}};
     $('portraitInput').onchange=async e=>{try{model.portrait=await loadPhoto(e.target.files[0],1200);save();render();}catch(err){setStatus(err.message,'warn')}};
     $('panoramaInput').onchange=async e=>{try{model.panorama=await loadPhoto(e.target.files[0],1800);save();render();}catch(err){setStatus(err.message,'warn')}};
-    $('outerInput').onchange=e=>{external=e.target.files[0]||null;$('outerDescription').textContent=external?'Esterno selezionato: '+external.name:'Nessun esterno caricato';};
+    $('outerInput').onchange=e=>{external=e.target.files[0]||null;$('outerDescription').textContent=external?'Esterno selezionato: '+external.name:'Nessun esterno caricato';previewOuter();};
+    $('outerPage').onchange=previewOuter;
+    $('clearOuter').onclick=()=>{external=null;$('outerInput').value='';$('outerDescription').textContent='Facciata esterna: non caricata.';previewOuter();};
+    window.addEventListener('pagehide',()=>{if(externalPreviewUrl)URL.revokeObjectURL(externalPreviewUrl);});
+    previewOuter();
     $('listingEditor').onsubmit=onEditorSubmit;
     $('closeDialog').onclick=()=>$('listingDialog').close();
     $('deleteListing').onclick=()=>{if(selected<0)return;model.properties[selected]=null;save();$('listingDialog').close();render();};
