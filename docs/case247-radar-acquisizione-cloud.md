@@ -122,3 +122,12 @@ Il criterio generico `/<annuncio>/...<ID>` rimane prudente; non viene imposto a 
 **Orari:** la raccolta resta alle **05:10 Europe/Rome**, il messaggio unico alle **06:00 Europe/Rome**. Anche con 50 minuti di margine GitHub Actions non garantisce esecuzione o notifica puntuale; uno spostamento alle 04:45 resta opzionale e non è stato fatto senza necessità comprovata.
 
 **Filtro vendite del 16/11/2026:** durante la prima acquisizione reale di sitemap d'agenzia sono emerse URL di locazione esplicita e schede descritte «ai confini di Avigliana». Il parser ora scarta le URL che dichiarano affitto/locazione e rifiuta località usate soltanto come prossimità (es. ai confini di, vicino a, a pochi minuti da). Queste esclusioni sono conservative e possono lasciare fuori casi dubbi: nessun URL ambiguo viene presentato come vendita certa nel comune richiesto.
+
+
+## Resilienza alle interruzioni delle fonti pubbliche
+
+Se una fonte prima funzionante risulta temporaneamente `ROBOTS_NON_VERIFICABILE` oppure `FONTE_NON_DISPONIBILE`, il job di consolidamento cerca negli ultimi otto artifact di mercato fino a **72 ore** precedenti. Riutilizza soltanto link già censiti in una scansione in cui quella fonte aveva stato `OK`. Questi URL restano **archivio da riverificare**, non nuovi annunci correnti. Colonna `Stato rilevazione` del foglio `Annunci`: `SCANSIONE CORRENTE` oppure `ARCHIVIO 72H`; il testo segnala `DA RIVERIFICARE`. Il report markdown distingue lo stesso stato.
+
+Non si riutilizzano link quando il sito nega esplicitamente il permesso di lettura mediante robots.txt. I collegamenti più vecchi di 72 ore vengono rimossi dalla cache del riepilogo, senza scambiare la loro assenza per una vendita conclusa. L'ultimo controllo live può quindi avere meno link correnti del totale che include quelli storici: i due valori non vanno confusi.
+
+La raccolta delle 05:10 e l'unico riepilogo delle 06:00 restano invariati.

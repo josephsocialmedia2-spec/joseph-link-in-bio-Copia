@@ -15,7 +15,7 @@ import re
 import urllib.parse
 import zipfile
 from collections import Counter, defaultdict
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 from xml.sax.saxutils import escape
 from zoneinfo import ZoneInfo
@@ -25,7 +25,7 @@ ROME = ZoneInfo("Europe/Rome")
 HEADERS = (
     "Comune", "Fonte", "URL fonte", "Titolo", "Via", "Prezzo EUR", "Superficie mq",
     "Venditore", "Contattabilita", "Possibile duplicato", "Link annuncio",
-    "Ultimo aggiornamento", "Esito verifica", "Categoria mercato",
+    "Ultimo aggiornamento", "Esito verifica", "Categoria mercato", "Stato rilevazione",
 )
 SOURCE_HEADERS = ("Fonte", "Comune", "Esito", "Totale dichiarato", "Link estratti", "URL indice")
 
@@ -65,7 +65,56 @@ def _candidate_key(row: dict) -> tuple | None:
     return (town, price, size)
 
 
-def merge(parts: list[dict]) -> dict:
+def cached_rows(sources: list[dict], history: list[dict], now: datetime | None = None) -> list[dict]:
+    """Retain earlier public URLs only when the source is temporarily offline.
+
+    These are explicitly HISTORICAL, not confirmed current sale listings.
+    A robots disallow is never overridden by a cache.
+    """
+    now = now or datetime.now(ROME)
+    offline = {s["source"] for s in sources if s.get("status") in (
+        "ROBOTS_NON_VERIFICABILE", "FONTE_NON_DISPONIBILE",
+    )}
+    selected = {}
+    for entry in history:
+        try:
+            at = datetime.fromisoformat(entry.get("as_of_rome", ""))
+            if at.tzinfo is None:
+                continue
+            elapsed = now - at.astimezone(ROME)
+            if elapsed < timedelta(0) or elapsed > timedelta(hours=72):
+                continue
+        except (TypeError, ValueError):
+            continue
+        successful = {s.get("source") for s in entry.get("sources", []) if s.get("status") == "OK"}
+        for row in entry.get("listings", []):
+            for name in row.get("sources", []):
+                if name not in offline or name not in successful:
+                    continue
+                key = (name, row.get("url"))
+                previous = selected.get(key)
+                if previous is None or previous["as_of"] < at:
+                    selected[key] = {"row": row, "source": name, "as_of": at}
+    result = []
+    for item in selected.values():
+        row, name = item["row"], item["source"]
+        if row.get("town") not in TOWNS or not normalize_url(row.get("url", "")):
+            continue
+        result.append({
+            "town": row["town"], "url": row["url"],
+            "title": row.get("title", "Annuncio da riverificare"),
+            "street": row.get("street", ""), "price": row.get("price"),
+            "mq": row.get("mq"), "source": name,
+            "source_type": "AGENZIA" if row.get("market_segment") == "AGENZIA" else "",
+            "owner_status": row.get("owner_status", "DA_VERIFICARE"),
+            "contact_permission": row.get("contact_permission", "DA_VERIFICARE"),
+            "last_modified": row.get("last_modified", ""),
+            "stale": True,
+        })
+    return result
+
+
+def merge(parts: list[dict], history: list[dict] | None = None, now: datetime | None = None) -> dict:
     all_rows = []
     sources = []
     for part in parts:
@@ -81,6 +130,8 @@ def merge(parts: list[dict]) -> dict:
             })
         all_rows.extend(part.get("listings", []))
 
+    if history:
+        all_rows.extend(cached_rows(sources, history, now))
     grouped = {}
     for row in all_rows:
         town = row.get("town")
@@ -99,7 +150,9 @@ def merge(parts: list[dict]) -> dict:
                 "contact_permission": "DA_VERIFICARE",
                 "last_modified": row.get("last_modified", ""),
                 "possibly_duplicate": False,
-                "verification": "DA_VERIFICARE SU FONTE ORIGINALE",
+                "verification": "DA RIVERIFICARE: FONTE TEMPORANEAMENTE NON DISPONIBILE"
+                    if row.get("stale") else "DA_VERIFICARE SU FONTE ORIGINALE",
+                "stale": bool(row.get("stale", False)),
                 "market_segment": "AGENZIA" if row.get("source_type") == "AGENZIA" or
                     "AGENZIA" in str(row.get("owner_status", "")) else
                     "PORTALE PRIVATI - DA VERIFICARE" if name == "CasaDaPrivato" else
@@ -109,6 +162,10 @@ def merge(parts: list[dict]) -> dict:
             g = grouped[key]
             if g["town"] != town:
                 g["verification"] = "CONFLITTO_COMUNE: VERIFICA MANUALE"
+            if not row.get("stale"):
+                g["stale"] = False
+                if not g["verification"].startswith("CONFLITTO_"):
+                    g["verification"] = "DA_VERIFICARE SU FONTE ORIGINALE"
             if row.get("source_type") == "AGENZIA" or "AGENZIA" in str(row.get("owner_status", "")):
                 g["market_segment"] = "AGENZIA"
                 # Never silently change municipality.
@@ -180,6 +237,7 @@ def render_markdown(result: dict) -> str:
         for row in (r for r in result["listings"] if r["town"] == town):
             lines.append(
                 f"- [{row['title']}]({row['url']}) · {', '.join(row['sources'])}"
+                + (" · ARCHIVIO, DA RIVERIFICARE" if row.get("stale") else "")
                 + (" · potenziale duplicato" if row["possibly_duplicate"] else "")
                 + (" · **non usare per proposte commerciali**" if row["contact_permission"] == "NO PROPOSTE COMMERCIALI" else "")
             )
@@ -246,6 +304,7 @@ def write_xlsx(data: dict, output: Path) -> None:
             row["title"], row["street"], row["price"], row["mq"], row["owner_status"],
             row["contact_permission"], "VERIFICARE" if row["possibly_duplicate"] else "",
             row["url"], row["last_modified"], row["verification"], row["market_segment"],
+            "ARCHIVIO 72H" if row.get("stale") else "SCANSIONE CORRENTE",
         ])
     source_rows = [
         [r.get("source"), r.get("town"), r.get("status"), r.get("reported_count"),
@@ -260,7 +319,7 @@ def write_xlsx(data: dict, output: Path) -> None:
         ["FONTI CON PROBLEMI", data["source_errors"], "N/D non equivale a zero immobili"],
     ]
     sheets = [
-        ("Annunci", HEADERS, listings, [25,24,38,46,28,16,16,33,35,23,53,22,35,28]),
+        ("Annunci", HEADERS, listings, [25,24,38,46,28,16,16,33,35,23,53,22,35,28,24]),
         ("Fonti", SOURCE_HEADERS, source_rows, [28,26,30,21,19,64]),
         ("Riepilogo", ("Comune / KPI","Valore","Interpretazione"), overview_rows, [32,16,70]),
     ]
@@ -299,9 +358,19 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--inputs-dir", type=Path, default=Path("_market_parts"))
     ap.add_argument("--out", type=Path, default=Path("_market"))
+    ap.add_argument("--history-dir", type=Path, default=None)
     args = ap.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
-    result = merge(load_parts(args.inputs_dir))
+    history = []
+    if args.history_dir and args.history_dir.exists():
+        for file in args.history_dir.rglob("inventory.json"):
+            try:
+                item = json.loads(file.read_text(encoding="utf-8"))
+                if isinstance(item.get("listings"), list):
+                    history.append(item)
+            except (OSError, ValueError):
+                continue
+    result = merge(load_parts(args.inputs_dir), history=history)
     (args.out/"inventory.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (args.out/"market.md").write_text(render_markdown(result), encoding="utf-8")
     with (args.out/"inventory.csv").open("w", encoding="utf-8-sig", newline="") as fd:
@@ -313,10 +382,12 @@ def main():
                 row["title"], row["street"], row["price"], row["mq"], row["owner_status"],
                 row["contact_permission"], "VERIFICARE" if row["possibly_duplicate"] else "",
                 row["url"], row["last_modified"], row["verification"], row["market_segment"],
+                "ARCHIVIO 72H" if row.get("stale") else "SCANSIONE CORRENTE",
             ])
     file = args.out / f"CASE247_Immobili_4_Comuni_{datetime.now(ROME).date().isoformat()}.xlsx"
     write_xlsx(result, file)
-    print(f"CASE247_CONSOLIDATED links={result['listing_count']} potential_duplicates={result['possible_duplicate_count']} sources_with_issues={result['source_errors']} xlsx={file.name}")
+    archived = sum(bool(r.get("stale")) for r in result["listings"])
+    print(f"CASE247_CONSOLIDATED links={result['listing_count']} archived_recheck={archived} potential_duplicates={result['possible_duplicate_count']} sources_with_issues={result['source_errors']} xlsx={file.name}")
 
 
 if __name__ == "__main__":
