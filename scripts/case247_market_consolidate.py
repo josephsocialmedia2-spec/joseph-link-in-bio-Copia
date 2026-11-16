@@ -272,13 +272,13 @@ def merge(parts: list[dict], history: list[dict] | None = None, now: datetime | 
         # Never silently recategorize an ambiguous address to the URL's town.
         if rec["commune_status"] == "Verificato" and rec["verified_town"] != rec["town"]:
             rec["commune_status"] = "Fuori_Perimetro"
-        if rec["contract_status"] == "Contratto_Da_Verificare" and
+        if (rec["contract_status"] == "Contratto_Da_Verificare" and
             isinstance(rec.get("price"), int) and 0 < rec["price"] < 15000):
             rec["contract_status"] = "Prezzo_Da_Verificare"
         if not rec.get("micro_zone"):
             label = str(rec.get("title", ""))
             rec["micro_zone"] = next((z for z in MICRO_AREAS if
-                                      re.search(r"\\b" + re.escape(z) + r"\\b", label, re.I)), "")
+                                      re.search(r"\b" + re.escape(z) + r"\b", label, re.I)), "")
         rec["nature"] = ("Agenzia_Verificata" if rec["market_segment"] == "AGENZIA" else
                           "Privato_Dichiarato" if rec["nature"] == "Privato_Dichiarato" or
                           rec["market_segment"] in ("PORTALE PRIVATI - DA VERIFICARE",
