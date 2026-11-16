@@ -1,0 +1,31 @@
+name: La Sacra Catalogo Premium QA
+on:
+  pull_request:
+    paths:
+      - 'catalogo-premium/**'
+      - 'tests/case247-catalogo-premium.test.cjs'
+      - '.github/workflows/la-sacra-catalogo-premium.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'catalogo-premium/**'
+      - 'tests/case247-catalogo-premium.test.cjs'
+      - '.github/workflows/la-sacra-catalogo-premium.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  catalogo-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validazione catalogo premium
+        run: node --test tests/case247-catalogo-premium.test.cjs
+      - name: Verifica JSON e sintassi JavaScript
+        run: |
+          node --check catalogo-premium/catalogo.js
+          node -e "const d=require('./catalogo-premium/immobili-verificati.json');if(!Array.isArray(d.items))process.exit(1)"
