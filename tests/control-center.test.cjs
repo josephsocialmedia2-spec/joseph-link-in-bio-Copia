@@ -83,3 +83,26 @@ test('Mobile Agenda has a real single-day picker and responsive CSS',()=>{
  assert.match(js,/href="#cc-studio"/);
  assert.match(js,/href="#cc-crm"/);
 });
+
+test('The Perché ticker is first above Agenda and uses localStorage without HTML injection',()=>{
+ const header=html.indexOf('id="case247-site-header"');
+ const widget=html.indexOf('id="perche-widget"');
+ const agenda=html.indexOf('id="case247-control-center"');
+ assert.ok(header>=0&&widget>header&&agenda>widget);
+ assert.equal((html.match(/id="perche-widget"/g)||[]).length,1);
+ assert.match(html,/id="perche-form"/);
+ assert.match(html,/id="input-perche"/);
+ assert.match(html,/id="ticker-container"/);
+ assert.match(html,/perche-widget\.js\?v=/);
+ assert.match(html,/perche-widget\.css\?v=/);
+ const ticker=read('gestione/perche-widget.js');
+ const tickerCss=read('gestione/perche-widget.css');
+ assert.doesNotThrow(()=>new vm.Script(ticker));
+ assert.match(ticker,/KEY='mieiPerche'/);
+ assert.match(ticker,/localStorage\.setItem\(KEY,JSON\.stringify\(next\)\)/);
+ assert.match(ticker,/text\.textContent=contenuto/);
+ assert.doesNotMatch(ticker,/innerHTML\s*=/);
+ assert.match(ticker,/new Intl\.DateTimeFormat\('it-IT'/);
+ assert.match(tickerCss,/prefers-reduced-motion:reduce/);
+ assert.match(tickerCss,/#perche-widget/);
+});
