@@ -49,7 +49,22 @@ async function main(){
  console.log('Using browser:',chrome);
  await connect(await discover());await command('Page.enable');await command('Runtime.enable');
  await command('Page.navigate',{url:'http://127.0.0.1:18765/gestione/'});
- await until("Boolean(document.querySelector('#cc-studio')&&document.querySelector('#cc-school-reference'))",'STUDIO render');
+ await until("Boolean(document.querySelector('#cc-studio')&&document.querySelector('#cc-school-reference')&&document.querySelector('#input-perche'))",'STUDIO and motivation widget render');
+ assert.equal(await evalJS("document.querySelector('#perche-widget').compareDocumentPosition(document.querySelector('#case247-control-center')) & 4"),4);
+ await evalJS("(()=>{const i=document.querySelector('#input-perche');i.value='Completare la mia giornata';document.querySelector('#perche-form').requestSubmit();return true})()");
+ assert.equal(await evalJS("JSON.parse(localStorage.getItem('mieiPerche')).length"),1);
+ assert.equal(await evalJS("document.querySelector('#ticker-text').textContent.includes('Completare la mia giornata')"),true);
+ await evalJS("(()=>{const i=document.querySelector('#input-perche');i.value='<img src=x onerror=alert(1)>';document.querySelector('#perche-form').requestSubmit();return true})()");
+ assert.equal(await evalJS("document.querySelector('#ticker-text img')===null"),true);
+ assert.equal(await evalJS("JSON.parse(localStorage.getItem('mieiPerche')).length"),2);
+ await command('Page.reload',{ignoreCache:true});
+ await until("Boolean(document.querySelector('#cc-studio')&&document.querySelector('#ticker-text')?.textContent.includes('Completare la mia giornata'))",'saved Perché after page reload');
+ assert.equal(await evalJS("JSON.parse(localStorage.getItem('mieiPerche')).length"),2);
+ console.log('PASS: Perché precedes Agenda; saved entries persist across reload and HTML is rendered safely');
+ assert.equal(await evalJS("document.querySelector('#case247-control-center').compareDocumentPosition(document.querySelector('#case247-two-boards')) & Node.DOCUMENT_POSITION_FOLLOWING"),4);
+ assert.equal(await evalJS("document.querySelector('.cc-main > .cc-section').id"),'cc-calendar');
+ assert.equal(await evalJS("document.querySelectorAll('#cc-new').length"),1);
+ console.log('PASS: Agenda is first, without duplicate controls');
  assert.equal(await evalJS("document.querySelector('#cc-studio h2').textContent"),'STUDIO — CLASSE 2S CAT');
  assert.equal(await evalJS("document.querySelectorAll('#cc-week .cc-slot.cc-fixed').length"),5);
  assert.equal(await evalJS("document.querySelector('#cc-week .cc-slot.cc-fixed').textContent.includes('09:30')"),true);
@@ -70,6 +85,14 @@ async function main(){
  const screenshot=await command('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});
  fs.writeFileSync('/tmp/case247-studio-chrome-smoke.png',Buffer.from(screenshot.data,'base64'));
  console.log('PASS: browser screenshot produced');
+ await command('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
+ await until("getComputedStyle(document.querySelector('#cc-day-nav')).display!=='none'",'mobile day picker');
+ assert.equal(await evalJS("[...document.querySelectorAll('#cc-week .cc-day')].filter(x=>getComputedStyle(x).display!=='none').length"),1);
+ await evalJS("document.querySelectorAll('#cc-day-nav button')[1].click();true");
+ assert.equal(await evalJS("document.querySelectorAll('#cc-day-nav button')[1].getAttribute('aria-pressed')"),'true');
+ assert.equal(await evalJS("[...document.querySelectorAll('#cc-week .cc-day')].filter(x=>getComputedStyle(x).display!=='none').length"),1);
+ console.log('PASS: one-day mobile view and day navigation');
+ await command('Emulation.clearDeviceMetricsOverride');
 }
 main().catch(e=>{console.error('FAIL:',e.stack||String(e));process.exitCode=1})
  .finally(async()=>{try{socket?.close()}catch(_){}server.kill('SIGTERM');browser.kill('SIGTERM');});
