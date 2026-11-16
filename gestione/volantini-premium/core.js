@@ -34,12 +34,28 @@
     const p = normalizedMoney(input);
     return p === null ? 'In fase di definizione' : new Intl.NumberFormat('it-IT', { style:'currency', currency:'EUR', maximumFractionDigits:0 }).format(p);
   }
+  const APE_STATUSES=['PRESENTE','IN_CORSO','MANCANTE','ESENTE'];
+  function apeStatus(obj={}){
+    const input=String(obj.apeStatus||obj.ape_status||'').toUpperCase().trim();
+    return APE_STATUSES.includes(input)?input:(normalizedEnergy(obj.energy)||normalizedEnergy(obj.energy_class)?'DA_VERIFICARE':'DA_VERIFICARE');
+  }
+  function apeLabel(entry={}){
+    const status=apeStatus(entry);
+    if(status==='IN_CORSO')return 'APE in corso · solo uso interno';
+    if(status==='MANCANTE')return 'APE mancante · solo uso interno';
+    if(status==='ESENTE')return 'Esente APE · motivazione da verificare';
+    if(status==='PRESENTE')return 'Classe '+(normalizedEnergy(entry.energy)||'da verificare');
+    return 'APE da verificare · solo uso interno';
+  }
   function makeEntry(obj = {}) {
     return {
       title: String(obj.title || '').trim(),
       city: String(obj.city || obj.municipality || '').trim(),
       price: normalizedMoney(obj.price),
       energy: normalizedEnergy(obj.energy),
+      apeStatus: apeStatus(obj),
+      apeExemptionReason: String(obj.apeExemptionReason||obj.ape_exemption_reason||'').trim(),
+      apeExemptionVerified: obj.apeExemptionVerified===true,
       ep: normalizedEp(obj.ep),
       envelope: normalizedEp(obj.envelope),
       url: canonicalUrl(obj.url),
@@ -54,10 +70,23 @@
     if (!canonicalUrl(entry.url)) issues.push(`Scheda ${n}: URL La Sacra non valido`);
     if (!entry.city) issues.push(`Scheda ${n}: località mancante`);
     if (normalizedMoney(entry.price) === null) issues.push(`Scheda ${n}: prezzo da verificare`);
-    if (!normalizedEnergy(entry.energy)) issues.push(`Scheda ${n}: classe energetica mancante`);
-    if (!normalizedEp(entry.ep)) issues.push(`Scheda ${n}: EPgl,nren mancante`);
+    const status=apeStatus(entry);
+    if(status==='PRESENTE'){
+      if(!normalizedEnergy(entry.energy))issues.push(`Scheda ${n}: classe energetica da riportare dall'APE`);
+      if(!normalizedEp(entry.ep))issues.push(`Scheda ${n}: EPgl,nren da riportare dall'APE`);
+      if(!normalizedEp(entry.envelope))issues.push(`Scheda ${n}: indice prestazione energetica involucro da riportare dall'APE`);
+    }else if(status==='ESENTE'){
+      if(!entry.apeExemptionReason?.trim())issues.push(`Scheda ${n}: motivazione esenzione APE mancante`);
+      if(entry.apeExemptionVerified!==true)issues.push(`Scheda ${n}: esenzione APE non validata dal responsabile`);
+    }else if(status==='IN_CORSO'){
+      issues.push(`Scheda ${n}: APE in corso (ammessa solo BOZZA privata)`);
+    }else if(status==='MANCANTE'){
+      issues.push(`Scheda ${n}: APE mancante (ammessa solo BOZZA privata)`);
+    }else{
+      issues.push(`Scheda ${n}: stato APE non verificato (ammessa solo BOZZA privata)`);
+    }
     if (!entry.img || /foto-non-disponibile\.svg/.test(entry.img)) issues.push(`Scheda ${n}: fotografia da sostituire`);
-    if (!entry.checked) issues.push(`Scheda ${n}: APE, disponibilità e foto non confermati`);
+    if (!entry.checked) issues.push(`Scheda ${n}: disponibilità, prezzo e fotografia non confermati`);
     return issues;
   }
   function checkSheet(entries) {
@@ -72,7 +101,7 @@
     });
     return issues;
   }
-  const exported = { canonicalUrl, normalizedMoney, normalizedEnergy, normalizedEp, formatPrice, makeEntry, checkEntry, checkSheet };
+  const exported = { canonicalUrl, normalizedMoney, normalizedEnergy, normalizedEp, formatPrice, apeStatus, apeLabel, makeEntry, checkEntry, checkSheet };
   global.CASE247_CORE = exported;
   if (typeof module !== 'undefined' && module.exports) module.exports = exported;
 })(typeof window !== 'undefined' ? window : globalThis);
