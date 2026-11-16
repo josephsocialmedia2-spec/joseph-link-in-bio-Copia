@@ -195,6 +195,47 @@ class ConsolidateTests(unittest.TestCase):
                 self.assertIn("Villa in Condove", content)
                 self.assertIn("300000",content)
 
+    def test_last_successful_public_urls_retained_but_marked_archive(self):
+        from datetime import datetime
+        from zoneinfo import ZoneInfo
+        now = datetime(2026, 11, 16, 12, tzinfo=ZoneInfo("Europe/Rome"))
+        source = "Teck Immobiliare · sito agenzia"
+        prior = {
+            "as_of_rome": "2026-11-15T12:00:00+01:00",
+            "sources": [{"source":source, "status":"OK"}],
+            "listings": [{"town":"Avigliana", "url":"https://teckimmobiliare.it/properties/appartamento/avigliana/villa-1",
+                          "title":"Appartamento", "sources":[source], "market_segment":"AGENZIA",
+                          "owner_status":"AGENZIA - NON PRIVATO", "contact_permission":"DA_VERIFICARE BASE GIURIDICA",
+                          "price":120000, "mq":80}],
+        }
+        current = {"sources":[{"source":source, "status":"ROBOTS_NON_VERIFICABILE"}], "listings":[]}
+        data = co.merge([current], history=[prior], now=now)
+        self.assertEqual(data["listing_count"],1)
+        item = data["listings"][0]
+        self.assertTrue(item["stale"])
+        self.assertEqual(item["market_segment"],"AGENZIA")
+        self.assertIn("DA RIVERIFICARE", item["verification"])
+        self.assertIn("ARCHIVIO, DA RIVERIFICARE", co.render_markdown(data))
+        self.assertIn("Stato rilevazione", co.HEADERS)
+
+    def test_cache_never_overrides_explicit_robots_disallow_or_old_sources(self):
+        from datetime import datetime
+        from zoneinfo import ZoneInfo
+        now = datetime(2026, 11, 16, 12, tzinfo=ZoneInfo("Europe/Rome"))
+        source = "Agency"
+        prior = {"as_of_rome":"2026-11-10T12:00:00+01:00",
+                 "sources":[{"source":source,"status":"OK"}],
+                 "listings":[{"town":"Avigliana","url":"https://example.it/property/1",
+                              "title":"Annuncio", "sources":[source]}]}
+        for current_status in ("ROBOTS_NON_VERIFICABILE", "NON_CONSENTITO_DA_ROBOTS"):
+            out = co.merge([{"sources":[{"source":source,"status":current_status}], "listings":[]}],
+                           history=[prior], now=now)
+            self.assertEqual(out["listing_count"],0)
+        recent = {**prior, "as_of_rome":"2026-11-16T08:00:00+01:00"}
+        out = co.merge([{"sources":[{"source":source,"status":"NON_CONSENTITO_DA_ROBOTS"}], "listings":[]}],
+                       history=[recent], now=now)
+        self.assertEqual(out["listing_count"],0)
+
     def test_same_fingerprint_no_automatic_merging(self):
         out = co.merge([{"sources":[],"listings":[
             {"town":"Almese","url":"https://a.it/1","source":"A","price":200000,"mq":88},
