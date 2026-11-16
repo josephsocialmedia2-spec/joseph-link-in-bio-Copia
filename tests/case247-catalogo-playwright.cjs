@@ -54,7 +54,7 @@ fs.mkdirSync(out,{recursive:true});
    await page.evaluate(()=>{window.open=(url)=>{window.__requestTestUrl=url;return null}});
    await page.locator('#requestByWhatsApp').click();
    const composed=await page.evaluate(()=>window.__requestTestUrl);
-   assert.match(composed,/wa\\.me\\/393713708294/);
+   assert.ok(composed.includes('wa.me/393713708294'));
    assert.ok(decodeURIComponent(composed).includes('Cliente Collaudo'));
    await page.locator('#reqEmail').fill('cliente@example.com');
    assert.equal(await page.locator('#requestByEmail').count(),1);
