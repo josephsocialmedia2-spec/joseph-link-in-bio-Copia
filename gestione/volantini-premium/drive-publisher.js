@@ -58,12 +58,16 @@
     if(!blob.size)throw Error('PDF vuoto: caricamento interrotto');
     const name=String(filename||'Volantino_Immobiliare_La_Sacra.pdf').replace(/[\\/]/g,'_');
     const metadata={name,mimeType:'application/pdf',description:'Volantino immobiliare definitivo verificato · Immobiliare La Sacra'};
-    // FormData serializes the metadata+file multipart body and sets its boundary automatically.
-    const payload=new FormData();
-    payload.append('metadata',new Blob([JSON.stringify(metadata)],{type:'application/json'}));
-    payload.append('file',blob,name);
+    // Google Drive uploadType=multipart requires multipart/related (not multipart/form-data).
+    const boundary='case247_pdf_'+Math.random().toString(36).slice(2);
+    const payload=new Blob([
+      '--'+boundary+'\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n',
+      JSON.stringify(metadata),'\r\n',
+      '--'+boundary+'\r\nContent-Type: application/pdf\r\n\r\n',
+      blob,'\r\n--'+boundary+'--'
+    ],{type:'multipart/related; boundary='+boundary});
     const uploaded=await googleFetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,name,mimeType,webViewLink',{
-      method:'POST',body:payload
+      method:'POST',headers:{'Content-Type':'multipart/related; boundary='+boundary},body:payload
     });
     if(!uploaded.id)throw Error('Drive non ha restituito l’ID file: link non creato');
     currentLink=null;
