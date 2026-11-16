@@ -11,6 +11,9 @@ on:
       - 'scripts/test_case247_market_pipeline.py'
       - 'scripts/case247_idealista_export.py'
       - 'scripts/test_case247_idealista_export.py'
+      - 'scripts/case247_market_semantics.py'
+      - 'scripts/case247_market_lifecycle.py'
+      - 'scripts/test_case247_market_semantics.py'
       - 'config/case247-sitemaps.json'
   pull_request:
     paths:
@@ -22,6 +25,9 @@ on:
       - 'scripts/test_case247_market_pipeline.py'
       - 'scripts/case247_idealista_export.py'
       - 'scripts/test_case247_idealista_export.py'
+      - 'scripts/case247_market_semantics.py'
+      - 'scripts/case247_market_lifecycle.py'
+      - 'scripts/test_case247_market_semantics.py'
       - 'config/case247-sitemaps.json'
   workflow_dispatch:
   schedule:
@@ -46,10 +52,11 @@ jobs:
           python-version: '3.12'
       - name: Validate code and reproducible XLSX without internet
         run: |
-          python -m py_compile scripts/case247_market_inventory.py scripts/case247_sitemap_sources.py scripts/case247_market_consolidate.py scripts/case247_idealista_export.py
+          python -m py_compile scripts/case247_market_inventory.py scripts/case247_sitemap_sources.py scripts/case247_market_consolidate.py scripts/case247_idealista_export.py scripts/case247_market_semantics.py scripts/case247_market_lifecycle.py
           python -m unittest discover -s scripts -p test_case247_market_inventory.py -v
           python -m unittest discover -s scripts -p test_case247_market_pipeline.py -v
           python -m unittest discover -s scripts -p test_case247_idealista_export.py -v
+          python -m unittest discover -s scripts -p test_case247_market_semantics.py -v
 
   scan-sources:
     needs: qa
@@ -94,7 +101,7 @@ jobs:
     needs: [qa, scan-sources]
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && always() && needs.qa.result == 'success'
     runs-on: ubuntu-latest
-    timeout-minutes: 7
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -106,6 +113,11 @@ jobs:
           pattern: case247-part-*
           path: _market_parts
           merge-multiple: false
+      - name: Semantic validation of public individual agency listings
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/case247_market_semantics.py --input-dir _market_parts --max-per-host 6
       - name: Restore recent successful public links if a source temporarily fails
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -129,6 +141,7 @@ jobs:
           name: case247-market-inventory
           path: |
             _market/inventory.json
+            _market/lifecycle.json
             _market/inventory.csv
             _market/market.md
             _market/CASE247_Immobili_4_Comuni_*.xlsx
