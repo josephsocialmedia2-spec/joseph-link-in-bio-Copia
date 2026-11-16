@@ -408,7 +408,13 @@ def main():
     ap.add_argument("--inputs-dir", type=Path, default=Path("_market_parts"))
     ap.add_argument("--out", type=Path, default=Path("_market"))
     ap.add_argument("--history-dir", type=Path, default=None)
+    ap.add_argument("--idealista-export", type=Path, default=None,
+                    help="Optional user-authorized CSV or XLSX export to merge privately")
+    ap.add_argument("--authorized-export", action="store_true",
+                    help="Explicitly confirm the right to process the supplied file")
     args = ap.parse_args()
+    if args.idealista_export and not args.authorized_export:
+        ap.error("--idealista-export requires --authorized-export")
     args.out.mkdir(parents=True, exist_ok=True)
     history = []
     if args.history_dir and args.history_dir.exists():
@@ -419,7 +425,11 @@ def main():
                     history.append(item)
             except (OSError, ValueError):
                 continue
-    result = merge(load_parts(args.inputs_dir), history=history)
+    parts = load_parts(args.inputs_dir)
+    if args.idealista_export:
+        from case247_idealista_export import parse_export
+        parts.append(parse_export(args.idealista_export))
+    result = merge(parts, history=history)
     (args.out/"inventory.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (args.out/"market.md").write_text(render_markdown(result), encoding="utf-8")
     with (args.out/"inventory.csv").open("w", encoding="utf-8-sig", newline="") as fd:
