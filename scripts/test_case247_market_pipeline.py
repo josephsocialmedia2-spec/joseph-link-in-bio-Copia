@@ -36,6 +36,48 @@ class SitemapTests(unittest.TestCase):
         self.assertTrue(sm.is_individual_listing("https://www.casadaprivato.it/case-indipendenti/villa-torino-123456"))
         self.assertTrue(sm.is_individual_listing("https://example.it/annuncio/avigliana-123"))
 
+    def test_local_agency_url_patterns_without_fake_numeric_id(self):
+        self.assertTrue(sm.is_individual_listing(
+            "https://teckimmobiliare.it/properties/appartamento/avigliana/affascinante-appartamento-con-vista-sulla-sacra-ad-avigliana/"))
+        self.assertTrue(sm.is_individual_listing(
+            "https://lasacraimmobiliare.it/products/appartamento-sa-santambrogio"))
+        self.assertTrue(sm.is_individual_listing(
+            "https://lasacraimmobiliare.it/products/bilocale-in-vendita-a-sant-ambrogio-disponibile-subito"))
+        self.assertFalse(sm.is_individual_listing(
+            "https://teckimmobiliare.it/properties/appartamento/avigliana/"))
+        self.assertFalse(sm.is_individual_listing(
+            "https://lasacraimmobiliare.it/collections/tutti-gli-immobili"))
+        self.assertFalse(sm.is_individual_listing(
+            "https://lasacraimmobiliare.it/products/avigliana-attivita-bar-ristorante"))
+        self.assertEqual(sm.municipality(
+            "https://lasacraimmobiliare.it/products/appartamento-sa-santambrogio"),
+            "Sant'Ambrogio di Torino")
+
+    def test_agency_results_not_marked_private(self):
+        xml = b'<urlset><url><loc>https://teckimmobiliare.it/properties/appartamento/avigliana/trilocale-con-vista</loc></url></urlset>'
+        def fetch(url):
+            return ROBOTS_OK if url.endswith("robots.txt") else xml
+        source = {"name":"Teck", "host":"teckimmobiliare.it",
+                  "sitemap_url":"https://teckimmobiliare.it/sitemap.xml", "kind":"AGENZIA"}
+        result = sm.collect_source(source, fetch)
+        self.assertEqual(len(result["listings"]), 1)
+        item = result["listings"][0]
+        self.assertEqual(item["source_type"], "AGENZIA")
+        self.assertEqual(item["owner_status"], "AGENZIA - NON PRIVATO")
+        merged = co.merge([{"sources":[result], "listings":result["listings"]}])
+        self.assertEqual(merged["listings"][0]["market_segment"], "AGENZIA")
+        self.assertNotIn("SI", merged["listings"][0]["contact_permission"])
+
+    def test_auction_reference_is_not_an_ordinary_listing(self):
+        out = co.merge([{"sources":[{
+            "source":"Portale delle Vendite Pubbliche - Ministero Giustizia",
+            "town":"", "status":"SOLO_CONSULTAZIONE",
+            "index_url":"https://pvp.giustizia.it/pvp/", "source_type":"ASTE"
+        }], "listings":[]}])
+        self.assertEqual(out["listing_count"], 0)
+        self.assertEqual(out["source_errors"], 0)
+        self.assertEqual(out["sources"][0]["source_type"], "ASTE")
+
     def test_sitemap_nested_index_and_scope(self):
         calls = []
         def fetch(url):

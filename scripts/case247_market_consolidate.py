@@ -25,7 +25,7 @@ ROME = ZoneInfo("Europe/Rome")
 HEADERS = (
     "Comune", "Fonte", "URL fonte", "Titolo", "Via", "Prezzo EUR", "Superficie mq",
     "Venditore", "Contattabilita", "Possibile duplicato", "Link annuncio",
-    "Ultimo aggiornamento", "Esito verifica",
+    "Ultimo aggiornamento", "Esito verifica", "Categoria mercato",
 )
 SOURCE_HEADERS = ("Fonte", "Comune", "Esito", "Totale dichiarato", "Link estratti", "URL indice")
 
@@ -77,6 +77,7 @@ def merge(parts: list[dict]) -> dict:
                 "reported_count": entry.get("reported_count"),
                 "extracted_links": entry.get("extracted_links", len(entry.get("listings", []))),
                 "index_url": entry.get("index_url", ""),
+                "source_type": entry.get("source_type", ""),
             })
         all_rows.extend(part.get("listings", []))
 
@@ -99,11 +100,17 @@ def merge(parts: list[dict]) -> dict:
                 "last_modified": row.get("last_modified", ""),
                 "possibly_duplicate": False,
                 "verification": "DA_VERIFICARE SU FONTE ORIGINALE",
+                "market_segment": "AGENZIA" if row.get("source_type") == "AGENZIA" or
+                    "AGENZIA" in str(row.get("owner_status", "")) else
+                    "PORTALE PRIVATI - DA VERIFICARE" if name == "CasaDaPrivato" else
+                    "MERCATO - DA VERIFICARE",
             }
         else:
             g = grouped[key]
             if g["town"] != town:
                 g["verification"] = "CONFLITTO_COMUNE: VERIFICA MANUALE"
+            if row.get("source_type") == "AGENZIA" or "AGENZIA" in str(row.get("owner_status", "")):
+                g["market_segment"] = "AGENZIA"
                 # Never silently change municipality.
             if name not in g["sources"]:
                 g["sources"].append(name)
@@ -133,7 +140,7 @@ def merge(parts: list[dict]) -> dict:
                 item["possibly_duplicate"] = True
     records = sorted(grouped.values(), key=lambda x: (TOWNS.index(x["town"]), x["title"].casefold(), x["url"]))
     counts = {town: sum(r["town"] == town for r in records) for town in TOWNS}
-    source_outages = sum(s["status"] != "OK" for s in sources)
+    source_outages = sum(s["status"] not in ("OK", "SOLO_CONSULTAZIONE") for s in sources)
     return {
         "as_of_rome": datetime.now(ROME).isoformat(timespec="seconds"),
         "scope": list(TOWNS), "status": "PARZIALE" if source_outages else "OK",
@@ -183,7 +190,8 @@ def render_markdown(result: dict) -> str:
             f"- {source['source']} {source['town']}: {source['status']}, link {source['extracted_links']}, "
             f"totale pagina {source['reported_count'] if source['reported_count'] is not None else 'N/D'}."
         )
-    lines += ["", "Il file Excel completo e i JSON della scansione sono negli artifact GitHub dell'esecuzione."]
+    lines += ["", "Le aste PVP sono una fonte ufficiale di consultazione separata, non un catalogo acquisito automaticamente e non annunci privati.",
+              "Il file Excel completo e i JSON della scansione sono negli artifact GitHub dell'esecuzione."]
     return "\n".join(lines) + "\n"
 
 
@@ -237,7 +245,7 @@ def write_xlsx(data: dict, output: Path) -> None:
             row["town"], ", ".join(row["sources"]), ", ".join(row["source_urls"]),
             row["title"], row["street"], row["price"], row["mq"], row["owner_status"],
             row["contact_permission"], "VERIFICARE" if row["possibly_duplicate"] else "",
-            row["url"], row["last_modified"], row["verification"],
+            row["url"], row["last_modified"], row["verification"], row["market_segment"],
         ])
     source_rows = [
         [r.get("source"), r.get("town"), r.get("status"), r.get("reported_count"),
@@ -252,7 +260,7 @@ def write_xlsx(data: dict, output: Path) -> None:
         ["FONTI CON PROBLEMI", data["source_errors"], "N/D non equivale a zero immobili"],
     ]
     sheets = [
-        ("Annunci", HEADERS, listings, [25,24,38,46,28,16,16,33,35,23,53,22,35]),
+        ("Annunci", HEADERS, listings, [25,24,38,46,28,16,16,33,35,23,53,22,35,28]),
         ("Fonti", SOURCE_HEADERS, source_rows, [28,26,30,21,19,64]),
         ("Riepilogo", ("Comune / KPI","Valore","Interpretazione"), overview_rows, [32,16,70]),
     ]
@@ -304,7 +312,7 @@ def main():
                 row["town"], ", ".join(row["sources"]), ", ".join(row["source_urls"]),
                 row["title"], row["street"], row["price"], row["mq"], row["owner_status"],
                 row["contact_permission"], "VERIFICARE" if row["possibly_duplicate"] else "",
-                row["url"], row["last_modified"], row["verification"],
+                row["url"], row["last_modified"], row["verification"], row["market_segment"],
             ])
     file = args.out / f"CASE247_Immobili_4_Comuni_{datetime.now(ROME).date().isoformat()}.xlsx"
     write_xlsx(result, file)
