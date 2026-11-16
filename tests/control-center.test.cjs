@@ -55,3 +55,31 @@ test('acquisition slot is a direct Excel CRM link after local one-time setup',()
  assert.match(validate('https://1drv.ms/x/c/example'),/^https:\/\/1drv\.ms\//);
  assert.match(validate('https://drive.google.com/file/d/abc'),/^https:\/\/drive\.google\.com\//);
 });
+
+test('Agenda is structurally first and preserves the original dashboard and local persistence',()=>{
+ const app=html.indexOf('id="case247-control-center"');
+ const boards=html.indexOf('id="case247-two-boards"');
+ const header=html.indexOf('id="case247-site-header"');
+ assert.ok(header>=0&&app>header&&boards>app,'Control Center must precede the two boards');
+ assert.equal((html.match(/id="case247-control-center"/g)||[]).length,1);
+ assert.ok(js.indexOf("'<section id=\"cc-calendar\"")<js.indexOf("'<div class=\"cc-stats\""));
+ assert.ok(js.indexOf("'<section id=\"cc-calendar\"")<js.indexOf("'<section id=\"cc-overview\""));
+ assert.ok(js.indexOf("'<section id=\"cc-crm\"")<js.indexOf("'<section id=\"cc-overview\""));
+ assert.equal((js.match(/id="cc-new"/g)||[]).length,1);
+ assert.match(js,/case247-cc-tasks-v1/);
+ assert.match(js,/case247-cc-private-excel-url-v1/);
+ assert.match(js,/CASE247StudioUI\.mount/);
+ assert.match(js,/function ics\(\)/);
+ assert.match(js,/function importTasks/);
+});
+test('Mobile Agenda has a real single-day picker and responsive CSS',()=>{
+ assert.match(js,/id="cc-day-nav"/);
+ assert.match(js,/cc-active-day/);
+ assert.match(js,/aria-pressed/);
+ assert.match(js,/function resetMobileDay/);
+ assert.match(css,/@media\(max-width:680px\)/);
+ assert.match(css,/\.cc-day\.cc-active-day\{display:block\}/);
+ assert.match(css,/\.cc-week\{grid-template-columns:1fr!important\}/);
+ assert.match(js,/href="#cc-studio"/);
+ assert.match(js,/href="#cc-crm"/);
+});
