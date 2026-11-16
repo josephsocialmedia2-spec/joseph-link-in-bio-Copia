@@ -175,3 +175,12 @@ La scansione **05:10** dei siti pubblici e il **solo riepilogo alle 06:00** rima
 - `Riepilogo`: conteggi **verificati** per comune/natura/fascia `< 30 gg`, `30-90 gg`, `> 90 gg`, separati dai link indicizzati ma non ancora confermati. Il giorno 90 rientra nella fascia 30-90, ma può ricevere priorità oltre 90 secondo la soglia richiesta `>=90`. La colonna `Possibile_Duplicato` è solo un avviso, non causa eliminazione.
 
 Le nuove fonti candidate in `config/case247-sitemaps.json` includono **Immobiliare Valmessa** e **F.C. Immobiliare** (siti pubblici delle agenzie attive nell'area Almese/Condove). Solo sitemap ufficialmente esposte in `robots.txt` e accessibili diventano scansioni. Un sito senza sitemap accessibile non costituisce copertura acquisita. Nessun cambiamento alla pianificazione: 05:10 Europe/Rome, singolo riepilogo alle 06:00.
+
+
+## Affinamento parser: JSON-LD di immobile vs dati del sito (PR #69)
+
+Il parser `scripts/case247_market_semantics.py` evita di attribuire all'annuncio la sede dell'agenzia o del portale. I valori JSON-LD di `addressLocality`, `streetAddress`, `offers.price`, `availability` e natura del venditore sono utilizzati soltanto all'interno dei nodi che rappresentano una proprietà. Il semplice nodo `Organization` o `RealEstateAgent` che identifica il *publisher* del sito non dimostra che l'inserzionista di una scheda sia un'agenzia. Gli `itemprop` sono considerati soltanto se racchiusi in un `itemscope` di un immobile. Sui portali privati si evita quindi di riclassificare un proprietario per effetto del solo footer aziendale.
+
+La validazione dei comuni preserva il nome ufficiale **Sant'Ambrogio di Torino** e gestisce anche varianti come `S. Ambrogio di Torino (TO)`; non deduce il comune dalla descrizione promozionale. Anche i divieti `no agenzie`, `no agenzia`, `no intermediari`, `no telemarketing` presenti nella descrizione specifica JSON-LD della proprietà vengono rispettati. `No provvigioni` è un'indicazione economica da verificare, non automaticamente un'autorizzazione a contattare né prova univoca di divieto; nessun contatto viene autorizzato dal solo flag.
+
+**Conservazione di vincoli precedenti:** prezzi strutturati inferiori a 15.000 € = `Prezzo_Da_Verificare`, **non** `Escluso_Affitto`; `Data_Ultima_Verifica` si aggiorna soltanto dopo verifica effettiva del dettaglio; un record storico non verificato non è venduto o disponibile per definizione; stessa sequenza 05:10 / 06:00 e stesso XLSX a tre fogli.
