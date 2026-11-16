@@ -3,8 +3,8 @@
  * Solo schede di export espressamente convalidate possono apparire al cliente. */
 (()=>{
 'use strict';
-const pageNodes=[...document.querySelectorAll('.page')];
-const pageNames=['Copertina','Il nostro metodo','Immobili','Il territorio','Contatti'];
+let pageNodes=[...document.querySelectorAll('.page')];
+let pageNames=['Copertina','Il nostro metodo','Indice immobili','Il territorio','Contatti'];
 const rootUrl=new URL('./',location.href).href.split('#')[0].split('?')[0];
 let selected=0;
 const $=id=>document.getElementById(id);
@@ -23,7 +23,11 @@ function showPage(index,updateUrl=true){
   for(const [i,b] of [...dots.children].entries()){b.classList.toggle('active',i===selected);b.setAttribute('aria-current',i===selected?'page':'false');}
   if(updateUrl)history.replaceState(null,'',rootUrl+'#pagina-'+(selected+1));
 }
-pageNodes.forEach((_,i)=>{const b=document.createElement('button');b.type='button';b.title=pageNames[i];b.setAttribute('aria-label','Vai a '+pageNames[i]);b.onclick=()=>showPage(i);dots.append(b)});
+function resetDots(){
+  dots.replaceChildren();
+  pageNodes.forEach((_,i)=>{const b=document.createElement('button');b.type='button';b.title=pageNames[i];b.setAttribute('aria-label','Vai a '+pageNames[i]);b.onclick=()=>showPage(i);dots.append(b)});
+}
+resetDots();
 $('prevPage').onclick=()=>showPage(selected-1);
 $('nextPage').onclick=()=>showPage(selected+1);
 const match=location.hash.match(/^#pagina-(\d+)$/);showPage(match?Number(match[1])-1:0,false);
@@ -54,39 +58,89 @@ function publishable(p){
   if(p.apeStatus==='ESENTE')return p.exemptionVerified===true&&text(p.exemptionReason).length>5;
   return false;
 }
+
 let listings=[];
-function cell(tag,className,value){const n=document.createElement(tag);n.className=className;if(value!==undefined)n.textContent=String(value);return n}
-function card(p){
-  const a=cell('article','property-card'),im=document.createElement('img');
-  im.src=p.image;im.alt='Fotografia immobile: '+p.title;im.loading='lazy';im.referrerPolicy='no-referrer';a.append(im);
-  const body=cell('div','content');body.append(cell('span','location',p.municipality),cell('h3','',p.title));
-  body.append(cell('strong','price',new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(Number(p.price))));
-  body.append(cell('p','energy',p.apeStatus==='ESENTE'?'APE: esenzione verificata':'Classe '+p.energyClass+' · EPgl,nren '+p.epglNren+' kWh/m² anno'));
-  const link=cell('a','','Vedi immobile e richiedi visita ↗');link.href=p.url;link.target='_blank';link.rel='noopener noreferrer';body.append(link);a.append(body);return a;
+const formatPrice=value=>Number(value)>0?new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(Number(value)):'Prezzo da richiedere';
+const escText=x=>typeof x==='string'?x.trim():'';
+function cell(tag,className,value){const el=document.createElement(tag);el.className=className;if(value!==undefined)el.textContent=String(value);return el}
+function card(p,compact=false){
+  const a=cell('article',compact?'property-card sheet-card':'property-card');
+  const image=cell('img','');image.src=p.image||'';image.alt='Immobile '+p.title;image.loading='lazy';image.referrerPolicy='no-referrer';
+  image.onerror=()=>{image.removeAttribute('src');image.alt='Fotografia non disponibile'};
+  a.append(image);
+  const body=cell('div','content');
+  const locality=p.municipality||'Località da confermare';
+  body.append(cell('span','location',locality),cell('h3','',p.title),cell('strong','price',formatPrice(p.price)));
+  if(p.surface)body.append(cell('span','property-feature',p.surface+' m²'));
+  body.append(cell('p','energy','Prestazione energetica: dato non riportato nella fonte catalogo'));
+  const link=cell('a','','Apri scheda ufficiale ↗');link.href=p.url;link.target='_blank';link.rel='noopener noreferrer';body.append(link);
+  a.append(body);return a;
 }
 function renderListings(){
-  const city=$('cityFilter').value,needle=text($('queryFilter').value).toLocaleLowerCase('it');
-  const filtered=listings.filter(x=>(!city||x.municipality===city)&&(!needle||[x.title,x.municipality,x.description].some(t=>text(t).toLocaleLowerCase('it').includes(needle))));
+  const city=$('cityFilter').value,needle=escText($('queryFilter').value).toLocaleLowerCase('it');
+  const filtered=listings.filter(x=>(!city||x.municipality===city)&&(!needle||[x.title,x.municipality,x.description].some(t=>escText(t).toLocaleLowerCase('it').includes(needle))));
   const container=$('propertyResults');container.replaceChildren();
   if(!filtered.length){
-    const box=cell('div','empty-state');box.append(cell('span','empty-glyph','⌂'));
-    box.append(cell('h3','',listings.length?'Nessun immobile per questa ricerca':'Stiamo completando la selezione'));
-    box.append(cell('p','',listings.length?'Prova a cambiare comune o criterio di ricerca.':'Le schede immobiliari saranno mostrate qui quando i dati energetici e le altre verifiche saranno completati.'));
-    const link=cell('a','','Consulta il sito ufficiale ↗');link.href='https://lasacraimmobiliare.it';link.target='_blank';link.rel='noopener noreferrer';box.append(link);container.append(box);
-  }else{const grid=cell('div','property-grid');for(const p of filtered)grid.append(card(p));container.append(grid)}
-  $('listingCount').textContent=listings.length?listings.length+' SCHEDE PUBBLICABILI':'SCHEDE IN VALIDAZIONE';
+    const box=cell('div','empty-state');box.append(cell('h3','','Nessun immobile per questa ricerca'));
+    box.append(cell('p','','Prova a modificare il comune o le parole cercate.'));container.append(box);
+  }else{
+    const heading=cell('p','results-note',filtered.length+' immobili nell’indice · seleziona un annuncio per aprirlo sul sito ufficiale.');
+    container.append(heading);
+    const grid=cell('div','property-grid');
+    for(const p of filtered)grid.append(card(p));
+    container.append(grid);
+  }
+  $('listingCount').textContent=listings.length+' ANNUNCI IN ARCHIVIO';
+}
+function addSheets(items){
+  const frame=document.querySelector('.reader-frame');
+  for(const old of frame.querySelectorAll('.page-listing-sheet'))old.remove();
+  // Insert six properties per page, before the territory page.
+  const before=frame.querySelector('.page-territory');
+  const pageSize=6;
+  for(let offset=0;offset<items.length;offset+=pageSize){
+    const sheet=cell('article','page page-listing-sheet');sheet.hidden=true;
+    const content=cell('div','page-inner');
+    const num=Math.floor(offset/pageSize)+1;
+    content.append(cell('p','eyebrow','03 / IL PORTAFOGLIO IMMOBILIARE · '+String(num).padStart(2,'0')));
+    content.append(cell('h2','sheet-title','Le nostre <em>proposte</em>'));
+    const intro=cell('p','sheet-subtitle','Consulta ogni annuncio sul sito ufficiale La Sacra. Prezzo e disponibilità possono variare; richiedi conferma all’agenzia.');
+    content.append(intro);
+    const grid=cell('div','sheet-grid');
+    for(const p of items.slice(offset,offset+pageSize))grid.append(card(p,true));
+    content.append(grid);
+    const foot=cell('div','page-tail','IMMOBILIARE LA SACRA · CATALOGO IMMOBILI');
+    foot.append(cell('span','','ANNUNCI '+(offset+1)+'–'+Math.min(offset+pageSize,items.length)+' / '+items.length));
+    content.append(foot);
+    sheet.append(content);frame.insertBefore(sheet,before);
+  }
+  pageNodes=[...document.querySelectorAll('.page')];
+  pageNames=['Copertina','Il nostro metodo','Indice immobili',...Array.from({length:Math.ceil(items.length/pageSize)},(_,i)=>'Immobili '+(i*pageSize+1)+'–'+Math.min((i+1)*pageSize,items.length)),'Il territorio','Contatti'];
+  pageNodes.forEach((p,i)=>{p.dataset.page=String(i)});
+  resetDots();
+  showPage(selected,false);
 }
 async function load(){
   try{
-    const res=await fetch('./immobili-verificati.json',{cache:'no-store'});
-    if(!res.ok)throw Error('feed');
+    const res=await fetch('../immobili/catalogo.json',{cache:'no-store'});
+    if(!res.ok)throw Error('Catalogo non raggiungibile');
     const data=await res.json();
-    if(!Array.isArray(data.items))throw Error('format');
-    listings=data.items.filter(publishable).sort((a,b)=>a.municipality.localeCompare(b.municipality,'it')||a.title.localeCompare(b.title,'it'));
+    if(!Array.isArray(data.items))throw Error('Formato catalogo non valido');
+    // Archived/draft are not in this source. Do not infer energy certification from marketing descriptions.
+    listings=data.items.filter(p=>p&&hostOK(p.url)&&p.availability_status==='AVAILABLE')
+      .sort((a,b)=>(a.municipality||'ZZZ').localeCompare(b.municipality||'ZZZ','it')||a.title.localeCompare(b.title,'it'));
     const city=$('cityFilter');
-    for(const name of [...new Set(listings.map(x=>x.municipality))].sort((a,b)=>a.localeCompare(b,'it'))){const option=document.createElement('option');option.value=name;option.textContent=name;city.append(option)}
+    for(const name of [...new Set(listings.map(x=>x.municipality).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'it'))){
+      const opt=document.createElement('option');opt.value=name;opt.textContent=name;city.append(opt);
+    }
     renderListings();
-  }catch{listings=[];renderListings()}
+    addSheets(listings);
+  }catch(error){
+    const container=$('propertyResults');container.replaceChildren();
+    container.append(cell('p','results-error','Caricamento annunci non riuscito. '+error.message));
+    $('listingCount').textContent='ERRORE CARICAMENTO';
+    console.error(error);
+  }
 }
 $('cityFilter').addEventListener('change',renderListings);
 $('queryFilter').addEventListener('input',renderListings);
