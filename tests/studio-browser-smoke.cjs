@@ -50,6 +50,10 @@ async function main(){
  await connect(await discover());await command('Page.enable');await command('Runtime.enable');
  await command('Page.navigate',{url:'http://127.0.0.1:18765/gestione/'});
  await until("Boolean(document.querySelector('#cc-studio')&&document.querySelector('#cc-school-reference'))",'STUDIO render');
+ assert.equal(await evalJS("document.querySelector('#case247-control-center').compareDocumentPosition(document.querySelector('#case247-two-boards')) & Node.DOCUMENT_POSITION_FOLLOWING"),Node.DOCUMENT_POSITION_FOLLOWING);
+ assert.equal(await evalJS("document.querySelector('.cc-main > .cc-section').id"),'cc-calendar');
+ assert.equal(await evalJS("document.querySelectorAll('#cc-new').length"),1);
+ console.log('PASS: Agenda is first, without duplicate controls');
  assert.equal(await evalJS("document.querySelector('#cc-studio h2').textContent"),'STUDIO — CLASSE 2S CAT');
  assert.equal(await evalJS("document.querySelectorAll('#cc-week .cc-slot.cc-fixed').length"),5);
  assert.equal(await evalJS("document.querySelector('#cc-week .cc-slot.cc-fixed').textContent.includes('09:30')"),true);
@@ -70,6 +74,14 @@ async function main(){
  const screenshot=await command('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});
  fs.writeFileSync('/tmp/case247-studio-chrome-smoke.png',Buffer.from(screenshot.data,'base64'));
  console.log('PASS: browser screenshot produced');
+ await command('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
+ await until("getComputedStyle(document.querySelector('#cc-day-nav')).display!=='none'",'mobile day picker');
+ assert.equal(await evalJS("[...document.querySelectorAll('#cc-week .cc-day')].filter(x=>getComputedStyle(x).display!=='none').length"),1);
+ await evalJS("document.querySelectorAll('#cc-day-nav button')[1].click();true");
+ assert.equal(await evalJS("document.querySelectorAll('#cc-day-nav button')[1].getAttribute('aria-pressed')"),'true');
+ assert.equal(await evalJS("[...document.querySelectorAll('#cc-week .cc-day')].filter(x=>getComputedStyle(x).display!=='none').length"),1);
+ console.log('PASS: one-day mobile view and day navigation');
+ await command('Emulation.clearDeviceMetricsOverride');
 }
 main().catch(e=>{console.error('FAIL:',e.stack||String(e));process.exitCode=1})
  .finally(async()=>{try{socket?.close()}catch(_){}server.kill('SIGTERM');browser.kill('SIGTERM');});
