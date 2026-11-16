@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#081a30"><title>Immobiliare La Sacra | Censimento aziende 20 km</title>
+<style>
+:root{font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:dark;--bg:#071526;--p:#11283d;--edge:#35516b;--text:#ecf4ff;--muted:#b1c7d8;--gold:#dfbd7b}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(140deg,#082640,var(--bg) 45%);color:var(--text)}
+a{color:#acdfff}header{border-bottom:1px solid var(--edge);padding:22px max(16px,calc((100vw - 1110px)/2))}
+main{max-width:1110px;margin:auto;padding:24px 16px 95px}
+h1{font-size:clamp(27px,4vw,42px);line-height:1.15;margin:14px 0}h2{font-size:20px;margin:0 0 14px}
+small,.muted{color:var(--muted)}.eyebrow{color:var(--gold);font-size:12px;letter-spacing:.15em;font-weight:800}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.panel{background:var(--p);border:1px solid var(--edge);border-radius:14px;padding:20px;margin:17px 0}
+.note{border-left:4px solid var(--gold);padding:12px 16px;background:#172d40;border-radius:6px}
+input,button{font:inherit}input[type=file]{width:100%;padding:13px;border:1px dashed #83b2d6;border-radius:10px;background:#071c30}
+button{padding:11px 17px;border:0;border-radius:9px;background:var(--gold);color:#172438;font-weight:800;cursor:pointer;margin:13px 6px 0 0}
+button.secondary{background:#284863;color:var(--text)}button:disabled{opacity:.4;cursor:not-allowed}
+table{border-collapse:collapse;width:100%;font-size:12px}th,td{text-align:left;white-space:nowrap;border-bottom:1px solid var(--edge);padding:9px 11px}
+th{color:var(--gold)}.scroll{overflow:auto;max-height:520px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.stats>div{background:#091d30;padding:14px;border-radius:10px}
+.stats b{font-size:24px;display:block}.stats small{display:block}
+#message{white-space:pre-wrap;min-height:50px}#pdfPreview{width:100%;height:550px;border:1px solid var(--edge);border-radius:8px}
+[hidden]{display:none!important}@media(max-width:720px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.panel{padding:14px}#pdfPreview{height:380px}}
+</style></head><body>
+<header><a href="../">← Dashboard Immobiliare La Sacra</a><p class="eyebrow">AREA OPERATIVA / IMPORTAZIONE PRIVATA LOCALE</p><h1>Censimento aziende · 20 km da Avigliana</h1><p class="muted">Caricamento PDF, CSV e manifest. Controlli di integrità, deduplicazione e idoneità. Nessun invio email automatico.</p></header>
+<main>
+<section class="note"><strong>Protezione dati:</strong> i file sono letti esclusivamente nel browser su questo dispositivo; non vengono inviati a GitHub Pages e non vengono salvati sul server. La pagina, pur pubblicamente accessibile, non contiene il database aziendale. Tutti gli invii commerciali restano disattivati.</section>
+<div class="grid">
+<section class="panel"><h2>1. Carica il lotto</h2>
+<p class="muted">Seleziona i tre file del pacchetto con lo stesso lotto: PDF integrale, CSV strutturato, <code>manifest_importazione.json</code>. Puoi selezionarli insieme.</p>
+<label for="files">File locali da verificare</label>
+<input id="files" type="file" multiple accept=".pdf,.csv,.json,application/pdf,text/csv,application/json">
+<button id="check" type="button">Controlla e prepara</button>
+<button id="clear" class="secondary" type="button">Azzera</button>
+<p id="chosen" class="muted">Nessun file caricato.</p>
+</section>
+<section class="panel"><h2>2. Stato del lotto</h2>
+<div id="message" role="status" aria-live="polite">In attesa dei documenti.</div>
+<p class="muted" id="lotto">Lotto: —</p>
+<p class="note">Il tetto di <strong>280 email al giorno</strong> è soltanto operativo. Il caricamento del file NON autorizza a contattare email pubbliche. Nessun collegamento Brevo attivo qui.</p>
+</section>
+</div>
+<section class="panel" id="summary" hidden><h2>3. Riepilogo importazione</h2><div class="stats">
+<div><b id="nRows">0</b><small>Schede importate</small></div>
+<div><b id="nMail">0</b><small>Email pubbliche</small></div>
+<div><b id="nPiva">0</b><small>Partite IVA presenti</small></div>
+<div><b id="nAuth">0</b><small>Potenziali idonei da riesaminare</small></div></div>
+<p id="warnings" class="muted"></p>
+<button id="export" type="button" class="secondary">Esporta esito verifica JSON</button>
+<button disabled title="Invio disabilitato finché non esiste un backend autorizzato e un consenso verificato">Avvia campagna email (non disponibile)</button>
+</section>
+<section class="panel" id="preview" hidden><h2>4. Anteprima PDF locale</h2><iframe id="pdfPreview" title="Documento PDF selezionato"></iframe></section>
+<section class="panel" id="list" hidden><h2>5. Prime 50 righe del CSV</h2><p class="muted">L'intero CSV rimane elaborato in memoria. La tabella qui sotto è una sola anteprima, non un limite alle schede.</p><div class="scroll"><table><thead><tr><th>Ragione sociale</th><th>Comune</th><th>Partita IVA</th><th>Email</th><th>Stato campagna</th></tr></thead><tbody id="tbody"></tbody></table></div></section>
+</main>
+<script type="module">
+import {parseSemicolonCSV,validateManifest,analyzeRecords,sha256Hex} from "./validator.mjs";
+const $=id=>document.getElementById(id);
+let files={};let blobUrl=null;let lastSummary=null;let lastManifest=null;
+function alertText(t,ok=false){$("message").textContent=t;$("message").style.color=ok?"#92e2cb":"#ffd39a"}
+function reset(){if(blobUrl){URL.revokeObjectURL(blobUrl);blobUrl=null;}files={};lastSummary=null;lastManifest=null;$("files").value="";$("chosen").textContent="Nessun file caricato.";$("lotto").textContent="Lotto: —";["summary","preview","list"].forEach(id=>$(id).hidden=true);alertText("In attesa dei documenti.")}
+function setFiles(){
+  for(const f of $("files").files)files[f.name]=f;
+  $("chosen").textContent=Object.keys(files).length+" file: "+Object.keys(files).join(", ");
+  const pdf=files["IMMOBILIARE_LA_SACRA_CENSIMENTO_AZIENDE_AVIGLIANA_20KM.pdf"] || Object.values(files).find(f=>f.name.toLowerCase().endsWith(".pdf"));
+  if(pdf){if(blobUrl)URL.revokeObjectURL(blobUrl);blobUrl=URL.createObjectURL(pdf);$("pdfPreview").src=blobUrl;$("preview").hidden=false;}
+  if(files["manifest_importazione.json"] && files["aziende_avigliana_20km.csv"] && pdf)verify().catch(e=>alertText("Errore: "+e.message));
+}
+async function verify(){
+  const mf=files["manifest_importazione.json"], cf=files["aziende_avigliana_20km.csv"],pf=files["IMMOBILIARE_LA_SACRA_CENSIMENTO_AZIENDE_AVIGLIANA_20KM.pdf"];
+  if(!mf||!cf||!pf){alertText("Per validare occorrono PDF, CSV e manifest con i nomi previsti.");return;}
+  alertText("Verifica locale SHA-256 in corso...");
+  const m=JSON.parse(await mf.text());const shape=validateManifest(m,files);if(!shape.ok)throw Error(shape.problems.join("; "));
+  for(const f of [cf,pf]){
+    const actual=await sha256Hex(f);const expected=m.files[f.name].sha256.toLowerCase();
+    if(actual!==expected)throw Error("Checksum non corrispondente: "+f.name);
+  }
+  const parsed=parseSemicolonCSV(await cf.text());const summary=analyzeRecords(parsed,m);
+  if(summary.eligibleCandidates!==0)throw Error("Sono presenti candidature a invio: richiesta una revisione legale e verifica documentale prima di ogni attivazione.");
+  lastSummary=summary;lastManifest=m;
+  $("lotto").textContent="Lotto: "+m.lotto;
+  $("nRows").textContent=summary.rows.toLocaleString("it-IT");
+  $("nMail").textContent=summary.email.toLocaleString("it-IT");
+  $("nPiva").textContent=summary.piva.toLocaleString("it-IT");
+  $("nAuth").textContent=summary.eligibleCandidates.toLocaleString("it-IT");
+  $("warnings").textContent="Email duplicate: "+summary.duplicateEmail+". Schede bloccate: "+summary.blocked+". Limite giornaliero: "+summary.dailyCap+". Idoneità marketing: NON verificata dal solo caricamento.";
+  $("summary").hidden=false;
+  const tbody=$("tbody");tbody.textContent="";
+  const idx=Object.fromEntries(parsed.headers.map((h,i)=>[h.trim().toLowerCase(),i]));
+  for(const r of parsed.rows.slice(0,50)){
+    const tr=document.createElement("tr");
+    for(const h of ["ragione sociale / attività","comune","partita iva","email pubblica","stato campagna"]){
+      const td=document.createElement("td");td.textContent=r[idx[h]]||"—";tr.append(td);
+    }tbody.append(tr);
+  }
+  $("list").hidden=false;
+  alertText("Integrità PDF e CSV verificata. "+summary.rows+" record importati in memoria. Campagna NON attiva; nessun invio eseguito.",true);
+}
+$("check").addEventListener("click",()=>verify().catch(e=>alertText("Errore: "+e.message)));
+$("files").addEventListener("change",setFiles);
+$("clear").addEventListener("click",reset);
+$("export").addEventListener("click",()=>{
+  if(!lastSummary||!lastManifest)return;
+  const data={lotto:lastManifest.lotto,verificato_alle:new Date().toISOString(),esito:"INTEGRITA_OK_CAMPAGNA_NON_ATTIVA",...lastSummary};
+  const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}));
+  const a=document.createElement("a");a.href=url;a.download="esito_importazione_"+lastManifest.lotto+".json";a.click();setTimeout(()=>URL.revokeObjectURL(url),500);
+});
+</script></body></html>
