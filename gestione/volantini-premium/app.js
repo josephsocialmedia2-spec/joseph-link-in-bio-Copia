@@ -10,7 +10,7 @@
   function whatsappFor(profile){return 'https://wa.me/39'+profile.phone+'?text='+encodeURIComponent(profile.whatsappText||'VENDO');}
   const blank=()=>Array.from({length:18},()=>null);
   const model={profile:'joseph',theme:'cobalto',properties:blank(),portrait:(CFG.portraitFallback||global.CASE247_DEFAULT_PORTRAIT),panorama:CFG.panoramaReal||CFG.panoramaFallback};
-  let external=null,externalPreviewUrl=null,selected=-1,catalog=null,loading=false;
+  let externalLeft=null,externalRight=null,externalLeftPreviewUrl=null,externalRightPreviewUrl=null,selected=-1,catalog=null,loading=false;
   const NEARBY=[["avigliana"],["buttigliera alta","sant ambrogio di torino","villar dora","almese"],["caprie","rubiana","caselette","rosta","chiusa di san michele","vaie"],["rivoli","valgioie","sant antonino di susa","condove"]];
   const fold=s=>String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase("it").replace(/[^a-z0-9]+/g," ").trim();
   const propertyEligible=x=>Core.canonicalUrl(x?.url)&&x.availability_status==="AVAILABLE"&&x.location_status==="VERIFICATO_FONTE"&&x.municipality&&x.image&&!/attivit|azienda|negozio|bar|tabacchi|ristorante|locale commerciale|magazzino|terreno|capannone|autorimessa/i.test(String(x.title||"")+" "+String(x.category||""));
@@ -213,6 +213,7 @@
   }
   async function exportPdf(){
     if(loading)return;loading=true;$('exportPdf').disabled=true;setStatus('Preparazione PDF in corso...');
+    if(Boolean(externalLeft)!==Boolean(externalRight)){setStatus('Carica ENTRAMBI i volantini A5 prima di esportare il fronte.','warn');loading=false;$('exportPdf').disabled=false;return;}
     try{
       await loadCatalog(true);
       const issues=showPreflight();
@@ -223,8 +224,8 @@
       if(qrProblems.length)throw Error(qrProblems.join(' · '));
       const proof=issues.length>0;
       if(proof&&!confirm(`Sono aperte ${issues.length} verifiche. Generare solo un PDF BOZZA non distribuibile?`))return;
-      const result=await PDF.exportPdf({flyer:$('flyer'),properties:model.properties,externalFile:external,
-        externalPage:Number($('outerPage').value)||1,watermark:proof,whatsappUrl:whatsappFor(activeProfile()),filename:'Volantino_A4_'+activeProfile().name+'.pdf'});
+      const result=await PDF.exportPdf({flyer:$('flyer'),properties:model.properties,externalLeft,externalRight,
+        externalLeftPage:Number($('outerLeftPage').value)||1,externalRightPage:Number($('outerRightPage').value)||1,watermark:proof,whatsappUrl:whatsappFor(activeProfile()),filename:'Volantino_A4_'+activeProfile().name+'.pdf'});
       const q=Math.round(result.minModuleMm*100)/100;
       setStatus(`PDF esportato: ${result.pages} pagine, ${result.qrCount} QR vettoriali. Modulo minimo ${q} mm. ${proof?'BOZZA — NON DISTRIBUIRE.':'Verificare comunque la stampa su carta.'}`,'good');
     }catch(e){setStatus('Esportazione interrotta: '+e.message,'warn');console.error(e);}finally{loading=false;$('exportPdf').disabled=false;}
@@ -235,7 +236,8 @@
   }
   async function exportAll(){
     if(loading)return;loading=true;
-    const buttons=[$('exportPdf'),$('generateAll')];buttons.forEach(b=>b.disabled=true);
+    const buttons=[$('exportPdf'),$('generateAll')];
+    if(Boolean(externalLeft)!==Boolean(externalRight)){setStatus('Carica ENTRAMBI i volantini A5 prima di esportare il fronte.','warn');loading=false;return;}buttons.forEach(b=>b.disabled=true);
     const saved=model.profile;
     try{
       if(!window.JSZip)throw Error('Libreria ZIP non disponibile: verifica la connessione.');
@@ -255,7 +257,7 @@
         if(errors.length)throw Error('QR '+who.name+': '+errors.join(', '));
         setStatus('Genero volantino di '+who.name+'…');
         const result=await PDF.exportPdf({flyer:$('flyer'),properties:model.properties,whatsappUrl:number,
-          externalFile:external,externalPage:Number($('outerPage').value)||1,watermark:issues.length>0,
+          externalLeft,externalRight,externalLeftPage:Number($('outerLeftPage').value)||1,externalRightPage:Number($('outerRightPage').value)||1,watermark:issues.length>0,
           autoDownload:false,filename:'Volantino_'+who.name+'.pdf'});
         if(result.qrCount!==19)throw Error('QR incompleti per '+who.name);
         zip.file('Volantino_'+who.name+'_A4.pdf',result.bytes);
@@ -278,20 +280,35 @@
       return eligible;
     }).catch(e=>{$("catalogAudit").textContent="Impossibile verificare catalogo: "+e.message+". Stampa bloccata finché non torna disponibile.";setStatus("Catalogo non disponibile: non considerare verificati gli annunci.","warn");});
   }
-  function previewOuter(){
-    const node=$("outerPreview");node.replaceChildren();
-    if(externalPreviewUrl){URL.revokeObjectURL(externalPreviewUrl);externalPreviewUrl=null;}
-    if(!external){const p=document.createElement("p");p.textContent="Nessuna facciata esterna caricata. Seleziona PDF/JPG/PNG dal pannello a sinistra.";node.append(p);$("outerPreviewState").textContent="Nessun file caricato";return;}
-    if(!["application/pdf","image/png","image/jpeg"].includes(external.type)){
-      $("outerPreviewState").textContent="Formato non supportato";const p=document.createElement("p");p.textContent="Usa PDF, JPG o PNG.";node.append(p);return;
+  function previewA5(side){
+    const left=side==='Left',file=left?externalLeft:externalRight;
+    const target=$(left?'outerLeftPreview':'outerRightPreview');
+    const oldUrl=left?externalLeftPreviewUrl:externalRightPreviewUrl;
+    if(oldUrl)URL.revokeObjectURL(oldUrl);
+    if(left)externalLeftPreviewUrl=null;else externalRightPreviewUrl=null;
+    target.replaceChildren();
+    if(!file){
+      const p=document.createElement('p');p.textContent='Carica A5 '+(left?'SINISTRA':'DESTRA');target.append(p);return;
     }
-    externalPreviewUrl=URL.createObjectURL(external);
-    const view=external.type==="application/pdf"?document.createElement("iframe"):document.createElement("img");
-    view.className="outer-preview-media";
-    view.setAttribute("aria-label","Anteprima della facciata esterna");
-    if(view.tagName==="IMG")view.alt="Anteprima facciata esterna";
-    view.src=externalPreviewUrl+(external.type==="application/pdf"?"#page="+(Number($("outerPage").value)||1)+"&view=FitH":"");
-    node.append(view);$("outerPreviewState").textContent=external.name+" · "+(external.type==="application/pdf"?"pagina "+(Number($("outerPage").value)||1):"immagine");
+    if(!['application/pdf','image/png','image/jpeg'].includes(file.type)){
+      const p=document.createElement('p');p.textContent='Formato non valido: usa PDF, PNG o JPG';target.append(p);return;
+    }
+    const url=URL.createObjectURL(file);
+    if(left)externalLeftPreviewUrl=url;else externalRightPreviewUrl=url;
+    const view=document.createElement(file.type==='application/pdf'?'iframe':'img');
+    view.className='outer-a5-media';
+    view.setAttribute('aria-label','Volantino A5 '+(left?'sinistra':'destra'));
+    if(view.tagName==='IMG')view.alt='Volantino A5 '+(left?'sinistra':'destra');
+    const page=Number($(left?'outerLeftPage':'outerRightPage').value)||1;
+    view.src=url+(file.type==='application/pdf'?'#page='+page+'&view=FitH':'');
+    target.append(view);
+  }
+  function previewOuter(){
+    previewA5('Left');previewA5('Right');
+    const count=Number(!!externalLeft)+Number(!!externalRight);
+    $('outerPreviewState').textContent=count===2?'2 volantini A5 caricati · fronte pronto':count===1?'1/2 A5 · manca l’altra metà':'0/2 A5 caricati';
+    $('outerDescription').textContent=count===2?'Fronte A4 composto da 2 A5 verticali: SINISTRA '+externalLeft.name+' + DESTRA '+externalRight.name:
+      'Fronte incompleto: carica A5 SINISTRA e A5 DESTRA. Non verrà generata una pagina fronte con un solo A5.';
   }
   function init(){
     showStaff();showThemes();render();syncCatalog();
@@ -309,10 +326,12 @@
     $('clearAll').onclick=()=>{if(confirm('Svuotare le 18 posizioni?')){model.properties=blank();save();render();}};
     $('portraitInput').onchange=async e=>{try{model.portrait=await loadPhoto(e.target.files[0],1200);save();render();}catch(err){setStatus(err.message,'warn')}};
     $('panoramaInput').onchange=async e=>{try{model.panorama=await loadPhoto(e.target.files[0],1800);save();render();}catch(err){setStatus(err.message,'warn')}};
-    $('outerInput').onchange=e=>{external=e.target.files[0]||null;$('outerDescription').textContent=external?'Esterno selezionato: '+external.name:'Nessun esterno caricato';previewOuter();};
-    $('outerPage').onchange=previewOuter;
-    $('clearOuter').onclick=()=>{external=null;$('outerInput').value='';$('outerDescription').textContent='Facciata esterna: non caricata.';previewOuter();};
-    window.addEventListener('pagehide',()=>{if(externalPreviewUrl)URL.revokeObjectURL(externalPreviewUrl);});
+    $('outerLeftInput').onchange=e=>{externalLeft=e.target.files[0]||null;previewOuter();};
+    $('outerRightInput').onchange=e=>{externalRight=e.target.files[0]||null;previewOuter();};
+    $('outerLeftPage').onchange=previewOuter;
+    $('outerRightPage').onchange=previewOuter;
+    $('clearOuter').onclick=()=>{externalLeft=null;externalRight=null;$('outerLeftInput').value='';$('outerRightInput').value='';previewOuter();};
+    window.addEventListener('pagehide',()=>{if(externalLeftPreviewUrl)URL.revokeObjectURL(externalLeftPreviewUrl);if(externalRightPreviewUrl)URL.revokeObjectURL(externalRightPreviewUrl);});
     previewOuter();
     $('listingEditor').onsubmit=onEditorSubmit;
     $('closeDialog').onclick=()=>$('listingDialog').close();

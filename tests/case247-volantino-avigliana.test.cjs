@@ -11,13 +11,13 @@ const app=source('gestione/volantini-premium/app.js');
 const html=source('gestione/volantini-premium/index.html');
 const styles=source('gestione/volantini-premium/styles.css');
 test('App syntax',()=>assert.doesNotThrow(()=>new vm.Script(app)));
-test('External preview controls and handlers',()=>{
- for(const id of ['outerPreview','outerPreviewState','outerPage','outerInput','clearOuter'])assert.match(html,new RegExp('id="'+id+'"'));
+test('Paired A5 external preview controls and handlers',()=>{
+ for(const id of ['outerPreview','outerPreviewState','outerLeftInput','outerRightInput','outerLeftPage','outerRightPage','outerLeftPreview','outerRightPreview','clearOuter'])assert.match(html,new RegExp('id="'+id+'"'));
  assert.match(app,/function previewOuter\(/);
- assert.match(app,/URL\.createObjectURL\(external\)/);
- assert.match(app,/external\.type==="application\/pdf"/);
+ assert.match(app,/URL\.createObjectURL\(file\)/);
+ assert.match(app,/file\.type==='application\/pdf'/);
  assert.match(app,/URL\.revokeObjectURL/);
- assert.match(styles,/\.outer-preview-media/);
+ assert.match(styles,/\.outer-a5-media/);
 });
 test('Catalog import uses priority instead of first eighteen source rows',()=>{
  assert.match(app,/eligibleListings\(await loadCatalog\(true\)\)/);
