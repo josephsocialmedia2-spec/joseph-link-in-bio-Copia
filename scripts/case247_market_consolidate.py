@@ -20,6 +20,9 @@ from pathlib import Path
 from xml.sax.saxutils import escape
 from zoneinfo import ZoneInfo
 
+from case247_market_lifecycle import load_state, apply_lifecycle, write_state
+from case247_market_semantics import BAN, MICRO_AREAS, classify_seller, contact_state
+
 TOWNS = ("Avigliana", "Sant'Ambrogio di Torino", "Almese", "Condove")
 ROME = ZoneInfo("Europe/Rome")
 HEADERS = (
@@ -27,6 +30,10 @@ HEADERS = (
     "Venditore", "Contattabilita", "Possibile duplicato", "Link annuncio",
     "Ultimo aggiornamento", "Esito verifica", "Categoria mercato", "Stato rilevazione",
     "Telefono nel report", "Altri link associati", "Incrocio con altra fonte",
+    "Natura_Inserzionista", "Stato_Contatto_Commerciale", "Micro_Zona_Indirizzo",
+    "Stato_Contratto", "Stato_Comune", "Data_Prima_Rilevazione",
+    "Data_Ultima_Verifica", "Giorni_Sul_Mercato", "Priorita_Monitoraggio",
+    "Stato_Attivita", "Possibile_Duplicato",
 )
 SOURCE_HEADERS = ("Fonte", "Comune", "Esito", "Totale dichiarato", "Link estratti", "URL indice")
 
@@ -115,7 +122,8 @@ def cached_rows(sources: list[dict], history: list[dict], now: datetime | None =
     return result
 
 
-def merge(parts: list[dict], history: list[dict] | None = None, now: datetime | None = None) -> dict:
+def merge(parts: list[dict], history: list[dict] | None = None, now: datetime | None = None,
+          lifecycle: dict | None = None) -> dict:
     all_rows = []
     sources = []
     for part in parts:
@@ -169,6 +177,14 @@ def merge(parts: list[dict], history: list[dict] | None = None, now: datetime | 
                 "verification": "DA RIVERIFICARE: FONTE TEMPORANEAMENTE NON DISPONIBILE"
                     if row.get("stale") else "DA_VERIFICARE SU FONTE ORIGINALE",
                 "stale": bool(row.get("stale", False)),
+                "detail_verified": bool(row.get("detail_verified", False)),
+                "active_confirmed": bool(row.get("active_confirmed", False)),
+                "verified_town": row.get("verified_town", ""),
+                "commune_status": row.get("commune_status", "Comune_Da_Verificare"),
+                "contract_status": row.get("contract_status", "Contratto_Da_Verificare"),
+                "nature": row.get("nature") or classify_seller(name, row.get("source_type", ""), url, None),
+                "micro_zone": row.get("micro_zone", ""),
+                "explicit_ban": bool(row.get("explicit_ban") or BAN.search(str(row.get("title", "")))),
                 "market_segment": "AGENZIA" if row.get("source_type") == "AGENZIA" or
                     "AGENZIA" in str(row.get("owner_status", "")) else
                     "PRIVATO - DA VERIFICARE" if row.get("source_type") == "IDEALISTA_TOOLS_EXPORT" else
@@ -197,6 +213,18 @@ def merge(parts: list[dict], history: list[dict] | None = None, now: datetime | 
                 g["crosspost_evidence"] = "LINK ASSOCIATI NEL REPORT IDEALISTA"
             if row.get("phone_availability") == "PRESENTE_NEL_FILE_DA_VERIFICARE":
                 g["phone_availability"] = "PRESENTE_NEL_FILE_DA_VERIFICARE"
+            if row.get("explicit_ban") or BAN.search(str(row.get("title", ""))):
+                g["explicit_ban"] = True
+            if row.get("nature") == "Agenzia_Verificata" or row.get("source_type") == "AGENZIA":
+                g["nature"] = "Agenzia_Verificata"
+            if row.get("micro_zone") and not g.get("micro_zone"):
+                g["micro_zone"] = row["micro_zone"]
+            if row.get("detail_verified"):
+                g["detail_verified"] = True
+                g["active_confirmed"] = bool(row.get("active_confirmed"))
+                g["verified_town"] = row.get("verified_town", "")
+                g["commune_status"] = row.get("commune_status", "Comune_Da_Verificare")
+                g["contract_status"] = row.get("contract_status", "Contratto_Da_Verificare")
             for field in ("street", "last_modified"):
                 if not g.get(field) and row.get(field):
                     g[field] = row[field]
@@ -240,17 +268,45 @@ def merge(parts: list[dict], history: list[dict] | None = None, now: datetime | 
             for item in items:
                 item["possibly_duplicate"] = True
     records = sorted(grouped.values(), key=lambda x: (TOWNS.index(x["town"]), x["title"].casefold(), x["url"]))
-    counts = {town: sum(r["town"] == town for r in records) for town in TOWNS}
+    for rec in records:
+        # Never silently recategorize an ambiguous address to the URL's town.
+        if rec["commune_status"] == "Verificato" and rec["verified_town"] != rec["town"]:
+            rec["commune_status"] = "Fuori_Perimetro"
+        if rec["contract_status"] == "Contratto_Da_Verificare" and
+            isinstance(rec.get("price"), int) and 0 < rec["price"] < 15000):
+            rec["contract_status"] = "Prezzo_Da_Verificare"
+        if not rec.get("micro_zone"):
+            label = str(rec.get("title", ""))
+            rec["micro_zone"] = next((z for z in MICRO_AREAS if
+                                      re.search(r"\\b" + re.escape(z) + r"\\b", label, re.I)), "")
+        rec["nature"] = ("Agenzia_Verificata" if rec["market_segment"] == "AGENZIA" else
+                          "Privato_Dichiarato" if rec["nature"] == "Privato_Dichiarato" or
+                          rec["market_segment"] in ("PORTALE PRIVATI - DA VERIFICARE",
+                                                     "PRIVATO - DA VERIFICARE") else
+                          rec["nature"])
+        rec["stato_contatto"] = contact_state(rec["nature"], " | ".join(rec["sources"]),
+                          rec["contact_permission"], bool(rec.get("phone_public_verified", False)),
+                          bool(rec.get("explicit_ban", False)))
+        if rec["stato_contatto"] == "Divieto_Esplicito":
+            rec["contact_permission"] = "NO PROPOSTE COMMERCIALI"
+        rec["verified_scope"] = (rec["commune_status"] == "Verificato" and
+                                 rec["verified_town"] == rec["town"] and
+                                 rec["contract_status"] == "Vendita" and not rec["stale"])
+    now = now or datetime.now(ROME)
+    lifecycle_state = apply_lifecycle(records, lifecycle or {}, now)
+    counts = {town: sum(r["town"] == town and r["verified_scope"] for r in records) for town in TOWNS}
+    indexed_counts = {town: sum(r["town"] == town for r in records) for town in TOWNS}
     source_outages = sum(s["status"] not in ("OK", "SOLO_CONSULTAZIONE", "IMPORT_UTENTE") for s in sources)
     return {
-        "as_of_rome": datetime.now(ROME).isoformat(timespec="seconds"),
+        "as_of_rome": now.isoformat(timespec="seconds"),
         "scope": list(TOWNS), "status": "PARZIALE" if source_outages else "OK",
         "listing_count": len(records),
+        "verified_listing_count": sum(counts.values()),
         "possible_duplicate_count": sum(r["possibly_duplicate"] for r in records),
         "crosspost_records": sum(bool(r["related_urls"]) for r in records),
         "independent_crosspost_matches": sum(bool(r["linked_matches"]) for r in records),
-        "counts": counts, "source_errors": source_outages,
-        "sources": sources, "listings": records,
+        "counts": counts, "indexed_counts": indexed_counts, "source_errors": source_outages,
+        "sources": sources, "listings": records, "lifecycle": lifecycle_state,
     }
 
 
