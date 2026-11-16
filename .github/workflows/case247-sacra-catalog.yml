@@ -10,6 +10,12 @@ on:
       - scripts/build_territorial_drafts.py
       - config/case247-location-verifications.json
       - .github/workflows/case247-sacra-catalog.yml
+  pull_request:
+    paths:
+      - 'scripts/test_territorial_drafts.py'
+      - 'paesi/**'
+      - 'config/case247-territorio.json'
+      - '.github/workflows/case247-sacra-catalog.yml'
   workflow_dispatch:
 permissions:
   contents: write
@@ -18,6 +24,20 @@ concurrency:
   group: case247-sacra-catalog
   cancel-in-progress: false
 jobs:
+  offline-territory-qa:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify town landing contract and draft-only routing (no writes)
+        run: python -m unittest discover -s scripts -p test_territorial_drafts.py -v
+
   synchronize:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
