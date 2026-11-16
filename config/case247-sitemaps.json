@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "description": "Radar CASE247: sitemap pubbliche solo se dichiarate in robots.txt e accessibili. Fonti locali di agenzia distinte dai privati; aste PVP solo riferimento, non catalogo automatizzato.",
+  "description": "CASE247 fonti pubbliche autorizzate: sitemap solo se dichiarate ufficialmente in robots.txt e consentite dal sito; agenzie Almese/Condove classificate NON PRIVATI. Per localita non verificata nessun conteggio nei comuni. Nessun bypass.",
   "sources": [
     {
       "name": "CasaDaPrivato · sitemap pubbliche",
@@ -27,6 +27,18 @@
     {
       "name": "Immobiliare La Sacra · sito agenzia",
       "host": "lasacraimmobiliare.it",
+      "kind": "AGENZIA",
+      "discover_from_robots": true
+    },
+    {
+      "name": "Immobiliare Valmessa · Almese",
+      "host": "www.immobiliarevalmessa.it",
+      "kind": "AGENZIA",
+      "discover_from_robots": true
+    },
+    {
+      "name": "F.C. Immobiliare · Condove",
+      "host": "www.fcimmobiliare.it",
       "kind": "AGENZIA",
       "discover_from_robots": true
     }
