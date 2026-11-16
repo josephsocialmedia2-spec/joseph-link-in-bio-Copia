@@ -5,7 +5,7 @@ const app=fs.readFileSync(path.join(root,'gestione/volantini-premium/app.js'),'u
 const html=fs.readFileSync(path.join(root,'gestione/volantini-premium/index.html'),'utf8');
 test('Print and verified final are explicitly separate',()=>{
   assert.match(html,/id="exportPdf"[^>]*>PDF per stampa di prova<\/button>/);
-  assert.match(html,/id="exportFinalPdf"[^>]*>PDF definitivo verificato<\/button>/);
+  assert.match(html,/id="exportFinalPdf"[^>]*>PDF definitivo \+ Drive<\/button>/);
   assert.match(app,/\$\('exportPdf'\)\.onclick=\(\)=>exportPdf\(false\)/);
   assert.match(app,/\$\('exportFinalPdf'\)\.onclick=\(\)=>exportPdf\(true\)/);
 });

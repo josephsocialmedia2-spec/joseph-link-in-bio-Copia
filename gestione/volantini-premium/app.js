@@ -108,6 +108,57 @@
   }catch(e){console.warn('Caricamento progetto non riuscito:',e);}
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   function setStatus(msg,type=''){$('status').textContent=msg;$('status').className='message '+type;}
+  const Drive=global.CASE247_DRIVE;
+  let customerDriveLink='';
+  function driveStatus(message,type=''){
+    $('driveStatus').textContent=message;
+    $('driveStatus').className='message '+type;
+  }
+  function clearDriveLink(){
+    customerDriveLink='';
+    $('driveResult').hidden=true;
+    $('driveCustomerLink').removeAttribute('href');
+  }
+  function showDriveLink(url){
+    if(!/^https:\/\/(?:drive|docs)\.google\.com\//.test(String(url)))throw Error('Link di Google Drive non valido');
+    customerDriveLink=url;
+    $('driveCustomerLink').href=url;
+    $('driveResult').hidden=false;
+    driveStatus('PDF definitivo caricato e permesso di sola lettura verificato. Link cliente disponibile.','good');
+  }
+  function initDrive(){
+    $('googleOAuthClientId').value=Drive?.getConfiguredId()||'';
+    $('configureDrive').onclick=()=>{
+      try{
+        Drive.configure($('googleOAuthClientId').value);
+        clearDriveLink();
+        driveStatus('Client ID salvato in questo browser. Adesso premi «Collega Google Drive».','good');
+      }catch(error){driveStatus(error.message,'warn')}
+    };
+    $('connectDrive').onclick=async()=>{
+      try{
+        const expected=$('googleOAuthClientId').value.trim();
+        if(!Drive.validClientId(expected))throw Error('Inserisci prima un Google OAuth Client ID web valido.');
+        if(Drive.getConfiguredId()!==expected)Drive.configure(expected);
+        await Drive.authorize();
+        clearDriveLink();
+        driveStatus('Google Drive collegato. I PDF definitivi verificati verranno caricati automaticamente quando premi «PDF definitivo + Drive».','good');
+      }catch(error){driveStatus(error.message,'warn')}
+    };
+    $('copyDriveLink').onclick=async()=>{
+      if(!customerDriveLink)return;
+      try{
+        await navigator.clipboard.writeText(customerDriveLink);
+        driveStatus('Link cliente copiato.','good');
+      }catch(error){driveStatus('Copia automatica non disponibile; apri il link e copialo dalla barra indirizzi.','warn')}
+    };
+    $('whatsappDriveLink').onclick=()=>{
+      if(!customerDriveLink)return;
+      const message='Immobiliare La Sacra · Consulta il volantino immobili in evidenza: '+customerDriveLink;
+      window.open('https://wa.me/?text='+encodeURIComponent(message),'_blank','noopener,noreferrer');
+    };
+  }
+
   function save(){try{localStorage.setItem(KEY,JSON.stringify(model));}catch(e){setStatus('Memoria browser piena: esporta il progetto come JSON.','warn');}}
   function resizePreview(){
     const viewport=$('previewViewport'),available=Math.max(100,viewport.clientWidth-22);
@@ -300,12 +351,26 @@
       if(invalid.length)throw Error(invalid.length+" annunci non verificati nel catalogo ufficiale: esportazione bloccata.");
       const qrProblems=QR.verifyAssociations(model.properties,whatsappFor(activeProfile()));
       if(qrProblems.length)throw Error(qrProblems.join(' · '));
+      if(definitive&&!Drive?.isConnected())throw Error('Google Drive non collegato: premi «Collega Google Drive» prima del PDF definitivo.');
       const proof=issues.length>0;
       if(proof&&definitive)throw Error(`Impossibile generare il PDF definitivo: ${issues.length} verifiche aperte. Usa «PDF per stampa di prova» per scaricare automaticamente la BOZZA.`);
       const result=await PDF.exportPdf({flyer:$('flyer'),properties:model.properties,externalLeft,externalRight,
         externalLeftPage:Number($('outerLeftPage').value)||1,externalRightPage:Number($('outerRightPage').value)||1,watermark:!definitive,whatsappUrl:whatsappFor(activeProfile()),filename:(definitive?'DEFINITIVO':'BOZZA_STAMPA')+'_Volantino_A4_'+activeProfile().name+'.pdf'});
       const q=Math.round(result.minModuleMm*100)/100;
-      setStatus(`PDF esportato: ${result.pages} pagine, ${result.qrCount} QR vettoriali. Modulo minimo ${q} mm. ${result.missingImages?result.missingImages+' immagini non caricate sono state omesse. ':''}${!definitive?'BOZZA — NON DISTRIBUIRE.':'Verificare comunque la stampa su carta.'}`,'good');
+      if(definitive){
+        clearDriveLink();
+        driveStatus('PDF validato. Caricamento su Google Drive in corso…');
+        try{
+          const uploaded=await Drive.uploadVerifiedPdf(result.bytes,'Immobiliare_La_Sacra_Immobili_in_evidenza_'+activeProfile().name+'_'+new Date().toISOString().slice(0,10)+'.pdf');
+          showDriveLink(uploaded.url);
+          setStatus('PDF definitivo pubblicato su Drive: link cliente verificato, solo lettura. '+result.pages+' pagine e '+result.qrCount+' QR.','good');
+        }catch(error){
+          driveStatus('Caricamento o condivisione Drive non completati: '+error.message,'warn');
+          setStatus('Il PDF è stato generato, ma NON è disponibile un link cliente verificato. '+error.message,'warn');
+        }
+      }else{
+        setStatus(`PDF di prova scaricato: ${result.pages} pagine, ${result.qrCount} QR. ${result.missingImages?result.missingImages+' immagini omesse. ':''}BOZZA — NON DISTRIBUIRE. Nessuna condivisione Drive.`,'good');
+      }
     }catch(e){setStatus('Esportazione interrotta: '+e.message,'warn');console.error(e);}finally{loading=false;$('exportPdf').disabled=false;$('exportFinalPdf').disabled=false;}
   }
   
@@ -389,7 +454,7 @@
       'Fronte incompleto: carica A5 SINISTRA e A5 DESTRA. Non verrà generata una pagina fronte con un solo A5.';
   }
   function init(){
-    showStaff();showThemes();render();syncCatalog();restorePortraits();
+    initDrive();showStaff();showThemes();render();syncCatalog();restorePortraits();
     window.addEventListener('resize',resizePreview);
     $('addUrls').onclick=async()=>{if(loading)return;loading=true;try{
       const urls=$('listingUrls').value.split(/\s+/).map(x=>x.trim()).filter(Boolean);

@@ -17,7 +17,9 @@
 <script defer src="./qr.js"></script>
 <script defer src="./pdf-engine.js?v=20261116-due-a5"></script>
 <script defer src="./portrait-default.js"></script>
-<script defer src="./app.js?v=20261116-stampa-prova-v1"></script>
+<script defer src="https://accounts.google.com/gsi/client"></script>
+<script defer src="./drive-publisher.js?v=20261116-drive-v1"></script>
+<script defer src="./app.js?v=20261116-drive-v1"></script>
 </head>
 <body>
 <header class="workspace-head no-print">
@@ -66,9 +68,27 @@
       <a href="#fronte-volantino" class="flyer-side-link">01 · FRONTE <small>Facciata esterna</small></a>
       <a href="#retro-volantino" class="flyer-side-link">02 · RETRO <small>18 immobili + QR</small></a>
     </nav>
+    <section class="drive-publish-panel no-print" aria-label="Pubblicazione PDF verificato su Google Drive">
+      <h2>Google Drive · Link cliente</h2>
+      <p class="hint">Dopo l’autorizzazione, <strong>PDF definitivo verificato</strong> carica automaticamente il volantino su Drive e crea un link accessibile in sola lettura. I PDF di prova restano sul tuo dispositivo e non vengono condivisi.</p>
+      <div class="drive-connect-controls">
+        <label for="googleOAuthClientId">Google OAuth Client ID web</label>
+        <input id="googleOAuthClientId" autocomplete="off" spellcheck="false" placeholder="1234567890-....apps.googleusercontent.com" aria-describedby="driveSetupHint">
+        <button type="button" id="configureDrive">Salva configurazione</button>
+        <button type="button" id="connectDrive" class="primary">Collega Google Drive</button>
+      </div>
+      <p class="hint" id="driveSetupHint">Configurazione iniziale: OAuth Client ID dell’app web autorizzata per <code>https://josephsocialmedia2-spec.github.io</code>, Google Drive API abilitata. Non inserire password, chiavi segrete o service-account JSON.</p>
+      <p id="driveStatus" class="message" role="status">Drive non collegato. Nessun caricamento automatico attivo.</p>
+      <div id="driveResult" class="drive-result" hidden>
+        <strong>Volantino definitivo pubblicato: link cliente</strong>
+        <a id="driveCustomerLink" href="#" target="_blank" rel="noopener noreferrer">Visualizza il PDF su Google Drive</a>
+        <button type="button" id="copyDriveLink">Copia link cliente</button>
+        <button type="button" id="whatsappDriveLink">Condividi su WhatsApp</button>
+      </div>
+    </section>
     <section id="retro-volantino" class="flyer-side-section" aria-label="Retro del volantino con diciotto immobili">
     <div class="preview-toolbar"><div><h2>RETRO · 18 immobili e QR — A4 orizzontale</h2><small id="templateName">Modello 01</small></div>
-      <div class="action-row"><button id="saveProject">Salva dati</button><button id="downloadProject">Esporta JSON</button><button id="exportPdf" class="primary" title="Scarica il PDF per stampa di prova, con filigrana BOZZA se ci sono verifiche aperte">PDF per stampa di prova</button><button id="exportFinalPdf" title="Solo se tutti i controlli risultano completati">PDF definitivo verificato</button></div>
+      <div class="action-row"><button id="saveProject">Salva dati</button><button id="downloadProject">Esporta JSON</button><button id="exportPdf" class="primary" title="Scarica il PDF per stampa di prova, con filigrana BOZZA se ci sono verifiche aperte">PDF per stampa di prova</button><button id="exportFinalPdf" title="Solo dopo le verifiche; richiede Google Drive collegato e crea un link pubblico in sola lettura">PDF definitivo + Drive</button></div>
     </div>
     <div id="previewViewport"><div id="previewSizer">
       <section id="flyer" class="theme-cobalto" aria-label="Retro del volantino A4 orizzontale con 18 schede immobiliari e QR">
