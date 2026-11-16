@@ -20,7 +20,7 @@ window.CASE247_CONFIG = Object.freeze({
   agencyLogo:"https://lasacraimmobiliare.it/cdn/shop/files/Untitled_design_14.png?height=108&v=1766316153",
   profiles:{
     joseph:{id:"joseph",name:"Joseph",role:"Digital Strategist",brand:"case247",phone:"3713708294",displayPhone:"371 370 8294",whatsappText:"VENDO"},
-    cristian:{id:"cristian",name:"Cristian",role:"Funzionario",brand:"lasacra",phone:"3462568685",displayPhone:"346 256 8685",whatsappText:"VENDO"},
+    cristian:{id:"cristian",name:"Christian",role:"Titolare",brand:"lasacra",phone:"3462568685",displayPhone:"346 256 8685",whatsappText:"VENDO"},
     ylenia:{id:"ylenia",name:"Ylenia",role:"Funzionaria",brand:"lasacra",phone:"3462568685",displayPhone:"346 256 8685",whatsappText:"VENDO"}
   },
   templates: [

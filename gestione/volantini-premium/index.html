@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Studio Volantini · Joseph, Cristian, Ylenia</title>
+<title>Studio Volantini · Joseph, Christian, Ylenia</title>
 <link rel="stylesheet" href="./styles.css?v=20261116-fronte-retro">
 <!-- Librerie client-side, versioni fissate: installare copie locali per produzione offline. -->
 <script defer src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script defer src="./config.js?v=20261111-tre-referenti-v1"></script>
+<script defer src="./config.js?v=20261116-christian-titolare"></script>
 <script defer src="./branding-logo.js?v=20261111-tre-referenti-v1"></script>
 <script defer src="./core.js"></script>
 <script defer src="./qr.js"></script>
@@ -30,11 +30,11 @@
     <p class="hint">Un massimo di 18 annunci immobiliari verificati nel catalogo, in priorità Avigliana e comuni limitrofi. Logo, referente e WhatsApp cambiano per ogni versione.</p>
     <div id="staffPicker" class="staff-picker" role="group" aria-label="Referenti del volantino">
       <button type="button" data-staff="joseph">Joseph · Case in Pubblicità 24/7</button>
-      <button type="button" data-staff="cristian">Cristian · Immobiliare La Sacra</button>
+      <button type="button" data-staff="cristian">Christian · Immobiliare La Sacra</button>
       <button type="button" data-staff="ylenia">Ylenia · Immobiliare La Sacra</button>
     </div>
     <button id="generateAll" class="primary" type="button">Genera tutti e 3 i volantini (ZIP)</button>
-    <p class="hint" id="staffHint">Le versioni Cristian e Ylenia non mostrano ritratti.</p>
+    <p class="hint" id="staffHint">Le versioni Christian e Ylenia non mostrano ritratti.</p>
     <hr>
     <h2>01 · Modello premium</h2><p class="hint">Seleziona una grafica. I dati immobiliari e i QR rimangono invariati.</p>
     <div id="templatePicker" class="template-picker" aria-label="Selezione template"></div>
@@ -45,7 +45,7 @@
     <div class="action-row"><button id="addManual">+ Scheda da verificare</button><button id="clearAll">Svuota le 18 posizioni</button></div><p id="catalogAudit" class="hint" role="status">Verifica annunci dal catalogo non ancora eseguita.</p>
     <hr>
     <h2>03 · Materiale grafico</h2>
-    <label>Fotografia di Joseph (preferibile PNG trasparente; non usata per Cristian e Ylenia)<input id="portraitInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
+    <label>Fotografia di Joseph (preferibile PNG trasparente; non usata per Christian e Ylenia)<input id="portraitInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
     <label>Panorama reale di Avigliana (JPG/PNG)<input id="panoramaInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
     <label>Facciata esterna da abbinare (PDF/JPG/PNG)<input id="outerInput" type="file" accept="application/pdf,image/png,image/jpeg"></label>
     <label>Pagina esterna se PDF multipagina<input id="outerPage" type="number" min="1" step="1" value="1"></label>
