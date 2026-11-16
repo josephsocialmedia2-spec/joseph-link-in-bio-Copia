@@ -169,7 +169,8 @@ class ConsolidateTests(unittest.TestCase):
                         {"town":"Rivoli","source":"Altro","title":"Fuori zona","url":"https://y.it/b/1"}]}
         out=co.merge([p1,p2])
         self.assertEqual(out["listing_count"],2)
-        self.assertEqual(out["counts"]["Avigliana"],2)
+        self.assertEqual(out["indexed_counts"]["Avigliana"],2)
+        self.assertEqual(out["counts"]["Avigliana"],0)  # no individual HTML verification
         self.assertEqual(out["possible_duplicate_count"],2)
         self.assertTrue(all(row["possibly_duplicate"] for row in out["listings"]))
         self.assertTrue(all(row["contact_permission"]=="NO PROPOSTE COMMERCIALI" for row in out["listings"]))
