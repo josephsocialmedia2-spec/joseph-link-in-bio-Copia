@@ -185,3 +185,17 @@ button.primary{background:linear-gradient(150deg,#008ccf,#07589f);border-color:#
 #flyer .headline{left:24px;top:83px}
 #flyer .headline span{font-size:35px;line-height:1.03;letter-spacing:0}
 #flyer.theme-signature .headline span{font-size:35px}
+
+
+/* Pubblicazione verificata Drive: configurazione e risultato chiaramente separati dall'anteprima PDF */
+.drive-publish-panel{padding:15px;margin:0 0 16px;background:#0b2f4c;border:1px solid #54a1ce;border-radius:12px}
+.drive-publish-panel h2{margin:0 0 8px;font-size:16px}
+.drive-connect-controls{display:flex;gap:9px;flex-wrap:wrap;align-items:end}
+.drive-connect-controls label{display:block;font-size:12px;flex:0 0 100%;font-weight:700}
+.drive-connect-controls input{flex:1 1 265px;min-width:0;margin:0}
+.drive-publish-panel .hint{font-size:12px}
+.drive-publish-panel .message{margin:10px 0;padding:10px;border-radius:8px}
+.drive-result{margin-top:12px;background:#0e4963;padding:12px;border:1px solid #63c6dc;border-radius:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.drive-result[hidden]{display:none!important}
+.drive-result strong{flex:0 0 100%}
+.drive-result a{color:#ddf9ff;text-decoration:underline;word-break:break-word}
