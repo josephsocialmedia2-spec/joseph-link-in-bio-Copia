@@ -3,7 +3,7 @@ const {test}=require('node:test'),assert=require('node:assert/strict'),fs=requir
 const root=path.resolve(__dirname,'..');
 const app=fs.readFileSync(path.join(root,'gestione/volantini-premium/app.js'),'utf8');
 const html=fs.readFileSync(path.join(root,'gestione/volantini-premium/index.html'),'utf8');
-test('Print and verified final are explicitly separate',()=>{
+test('Print, private Drive draft and verified final are explicitly separate',()=>{
   assert.match(html,/id="exportPdf"[^>]*>PDF per stampa di prova<\/button>/);
   assert.match(html,/id="exportFinalPdf"[^>]*>PDF definitivo \+ Drive<\/button>/);
   assert.match(app,/\$\('exportPdf'\)\.onclick=\(\)=>exportPdf\(false\)/);
@@ -13,8 +13,8 @@ test('Proof printing does not trigger a browser confirm popup',()=>{
   assert.doesNotThrow(()=>new vm.Script(app));
   const proof=app.slice(app.indexOf('async function exportPdf('),app.indexOf('function downloadBlob('));
   assert.doesNotMatch(proof,/confirm\s*\(/);
-  assert.match(proof,/watermark:!definitive/);
-  assert.match(proof,/if\(proof&&definitive\)throw Error/);
+  assert.match(proof,/watermark:definitive!==true/);
+  assert.ok(proof.includes('if(proof&&definitive===true)throw Error'));
   assert.match(proof,/BOZZA_STAMPA/);
   assert.match(proof,/DEFINITIVO/);
 });
