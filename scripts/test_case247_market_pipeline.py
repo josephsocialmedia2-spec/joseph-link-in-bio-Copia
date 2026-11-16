@@ -46,6 +46,26 @@ class SitemapTests(unittest.TestCase):
         self.assertEqual(result["sitemaps_checked"], 2)
         self.assertEqual(result["urls_scanned"], 5)
 
+    def test_official_robots_sitemap_discovery(self):
+        calls = []
+        def fetch(url):
+            calls.append(url)
+            if url.endswith("/robots.txt"):
+                return b"User-agent: *\\nAllow: /\\nSitemap: https://www.example.it/sitemap.xml\\nSitemap: https://www.other.it/foreign.xml\\n".replace(b"\\n",b"\n")
+            if url == "https://www.example.it/sitemap.xml":
+                return XML_URLS
+            raise AssertionError("Unadvertised or foreign host requested: " + url)
+        source = {"name":"Official", "host":"www.example.it", "discover_from_robots":True}
+        out = sm.collect_source(source, fetch)
+        self.assertEqual(len(out["listings"]), 2)
+        self.assertEqual(len(calls), 2)
+
+    def test_robots_without_declared_sitemap_does_not_guess(self):
+        source = {"name":"NoHints", "host":"www.example.it", "discover_from_robots":True}
+        out = sm.collect_source(source, lambda url: ROBOTS_OK)
+        self.assertEqual(out["status"], "SITEMAP_NON_PUBBLICATA")
+        self.assertEqual(out["sitemaps_checked"], 0)
+
     def test_robots_disallow_does_not_fetch_sitemap(self):
         calls = []
         def fetch(url):
