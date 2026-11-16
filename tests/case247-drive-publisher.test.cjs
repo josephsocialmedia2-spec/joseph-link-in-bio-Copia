@@ -34,7 +34,7 @@ test('Only a validated final PDF is made public; Drive drafts stay private',()=>
   const body=app.slice(app.indexOf('async function exportPdf('),app.indexOf('function downloadBlob('));
   assert.ok(body.includes('if(proof&&definitive===true)throw Error'));
   assert.ok(body.includes('if((definitive===true||draftToDrive)&&!Drive?.isConnected())'));
-  assert.match(body,/else if\\(definitive===true\\)\\{[\\s\\S]*Drive\\.uploadVerifiedPdf/);
+  assert.ok(body.includes('else if(definitive===true){')&&body.includes('Drive.uploadVerifiedPdf'));
   assert.match(body,/watermark:definitive!==true/);
   assert.match(body,/PDF di prova scaricato/);
 });
