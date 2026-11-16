@@ -65,7 +65,9 @@ def municipality(url: str) -> str:
     """Scope only where the *listing URL* explicitly names one town unambiguously."""
     path = urllib.parse.unquote(urllib.parse.urlsplit(url).path).casefold().replace("_", "-")
     # A page about nearby towns is not evidence of a listing's location.
-    if any(x in path for x in ("/vicino-a-", "/nei-pressi-di-", "/a-pochi-minuti-da-")):
+    # Proximity claims are not evidence that the home is IN the municipality.
+    proximity = r"(?:^|[-/])(?:ai-confini-di|nei-pressi-di|a-pochi-minuti-da|vicino-a|vicinanze-di|limitrof[oa]-a|nei-dintorni-di)(?:[-/])"
+    if re.search(proximity, path):
         return ""
     if any(re.search(r"(?<![a-z])" + re.escape(x) + r"(?![a-z])", path) for x in EXCLUDED):
         return ""
@@ -85,6 +87,9 @@ def is_individual_listing(url: str) -> bool:
     x = urllib.parse.urlsplit(url)
     host = (x.hostname or "").lower().removeprefix("www.")
     path = x.path.casefold().rstrip("/")
+    # Acquisition inventory tracks property sales, not residential rentals.
+    if re.search(r"(?:^|[-/])(?:in-affitto|affittasi|in-locazione|locazione|rental|rent)(?:[-/]|$)", path):
+        return False
     if host == "immobiliare.it":
         return bool(re.fullmatch(r"/annunci/\d{5,}", path))
     if host == "casadaprivato.it":
