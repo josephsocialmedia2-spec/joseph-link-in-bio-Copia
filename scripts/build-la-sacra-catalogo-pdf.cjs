@@ -12,12 +12,13 @@ const path=require('node:path');
    await page.waitForFunction(()=>document.querySelectorAll('.page-listing-sheet').length>=1,{timeout:30000});
    const inventory=await page.evaluate(()=>({sheets:document.querySelectorAll('.page-listing-sheet').length,cards:document.querySelectorAll('.sheet-card').length}));
    if(inventory.cards!==58||inventory.sheets!==10)throw Error('Inventario incompleto '+JSON.stringify(inventory));
+   await page.emulateMedia({media:'print'});
+   await page.evaluate(()=>document.querySelectorAll('.sheet-card img').forEach(img=>img.loading='eager'));
    // Le immagini esterne possono richiedere più tempo: attende fino a 20 s senza bloccare la generazione.
    await page.evaluate(()=>Promise.race([
      Promise.all([...document.querySelectorAll('.sheet-card img')].map(i=>i.complete?Promise.resolve():new Promise(r=>{i.addEventListener('load',r,{once:true});i.addEventListener('error',r,{once:true})}))),
      new Promise(r=>setTimeout(r,20000))
    ]));
-   await page.emulateMedia({media:'print'});
    const dest=path.resolve(__dirname,'../catalogo-premium/La_Sacra_Catalogo_Tutti_Immobili.pdf');
    await page.pdf({path:dest,printBackground:true,preferCSSPageSize:true,displayHeaderFooter:false,timeout:120000});
    const size=fs.statSync(dest).size;
