@@ -172,3 +172,16 @@ button.primary{background:linear-gradient(150deg,#008ccf,#07589f);border-color:#
 .outer-a5-page p{color:#425a67;padding:15px;text-align:center}
 .outer-a5-media{width:100%;height:100%;border:0;display:block;object-fit:contain;background:white}
 @media(max-width:620px){.outer-preview.outer-a5-pair{padding:4px}.outer-a5-item{padding:4px}.outer-a5-item strong{font-size:10px}.outer-a5-page{min-height:170px}}
+
+
+/* Ritratti personalizzati per i tre referenti: solo la foto selezionata appare in stampa. */
+.staff-photo-inputs{border:1px solid #467896;border-radius:11px;padding:10px 12px;background:#0c2743}
+.staff-photo-inputs label{margin-top:12px}
+.staff-photo-inputs small{display:block;margin-top:3px}
+#flyer.profile-lasacra.has-staff-photo .flyer-header .portrait{display:block!important;right:160px;top:-18px}
+#flyer.profile-lasacra.has-staff-photo .footer-portrait{display:block!important}
+#flyer.profile-lasacra.has-staff-photo .footer-agency-logo{max-width:122px}
+#flyer.profile-lasacra.has-staff-photo .portrait-sign{right:16px;top:25px}
+#flyer .headline{left:24px;top:83px}
+#flyer .headline span{font-size:35px;line-height:1.03;letter-spacing:0}
+#flyer.theme-signature .headline span{font-size:35px}

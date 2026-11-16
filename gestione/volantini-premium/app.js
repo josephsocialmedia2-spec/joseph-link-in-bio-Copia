@@ -11,6 +11,71 @@
   const blank=()=>Array.from({length:18},()=>null);
   const model={profile:'joseph',theme:'cobalto',properties:blank(),portrait:(CFG.portraitFallback||global.CASE247_DEFAULT_PORTRAIT),panorama:CFG.panoramaReal||CFG.panoramaFallback};
   let externalLeft=null,externalRight=null,externalLeftPreviewUrl=null,externalRightPreviewUrl=null,selected=-1,catalog=null,loading=false;
+  const storedPortraits={joseph:null,cristian:null,ylenia:null};
+  const portraitInputs={joseph:'portraitJosephInput',cristian:'portraitCristianInput',ylenia:'portraitYleniaInput'};
+  const portraitStatuses={joseph:'portraitJosephStatus',cristian:'portraitCristianStatus',ylenia:'portraitYleniaStatus'};
+  const photoStoreName='case247-referenti-foto-v1';
+  function openPhotoDb(){
+    return new Promise((resolve,reject)=>{
+      if(!global.indexedDB)return reject(Error('IndexedDB non disponibile'));
+      const req=global.indexedDB.open(photoStoreName,1);
+      req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains('portraits'))req.result.createObjectStore('portraits')};
+      req.onsuccess=()=>resolve(req.result);
+      req.onerror=()=>reject(req.error||Error('Archivio foto non disponibile'));
+    });
+  }
+  async function savePortrait(id,data){
+    let db;
+    try{
+      db=await openPhotoDb();
+      await new Promise((resolve,reject)=>{
+        const tx=db.transaction('portraits','readwrite');
+        tx.objectStore('portraits').put(data,id);
+        tx.oncomplete=resolve;
+        tx.onerror=()=>reject(tx.error||Error('Salvataggio foto non riuscito'));
+        tx.onabort=()=>reject(tx.error||Error('Salvataggio foto interrotto'));
+      });
+    }catch(err){
+      try{global.localStorage.setItem(photoStoreName+'-'+id,data)}
+      catch(e){throw Error('Memoria browser insufficiente per la fotografia: '+e.message)}
+    }finally{if(db)db.close()}
+    storedPortraits[id]=data;
+  }
+  async function loadPortrait(id){
+    let data=null,db;
+    try{
+      db=await openPhotoDb();
+      data=await new Promise((resolve,reject)=>{
+        const tx=db.transaction('portraits','readonly'),req=tx.objectStore('portraits').get(id);
+        req.onsuccess=()=>resolve(req.result||null);
+        req.onerror=()=>reject(req.error||Error('Lettura foto non riuscita'));
+      });
+    }catch(_){/* IndexedDB non disponibile; usa localStorage. */}
+    finally{if(db)db.close()}
+    return data||global.localStorage.getItem(photoStoreName+'-'+id)||null;
+  }
+  function updatePortraitLabels(){
+    for(const [id,target] of Object.entries(portraitStatuses)){
+      $(target).textContent=storedPortraits[id]?'Foto '+PROFILES[id].name+' memorizzata in questo browser.':'Nessuna foto '+PROFILES[id].name+' memorizzata.';
+    }
+  }
+  async function restorePortraits(){
+    for(const id of Object.keys(portraitInputs)){
+      try{
+        const saved=await loadPortrait(id);
+        if(saved)storedPortraits[id]=saved;
+        else if(id==='joseph'&&model.portrait&&model.portrait.startsWith('data:image/'))await savePortrait('joseph',model.portrait);
+      }catch(err){console.warn('Ripristino foto '+id+' non riuscito',err);setStatus('Impossibile ripristinare la foto '+PROFILES[id].name+'.','warn')}
+    }
+    updatePortraitLabels();render();
+  }
+  async function onPortraitChange(id,file){
+    if(!file)return;
+    const data=await loadPhoto(file,950);
+    await savePortrait(id,data);
+    updatePortraitLabels();render();
+    setStatus('Foto di '+PROFILES[id].name+' memorizzata in questo browser e applicata al suo volantino.','good');
+  }
   const NEARBY=[["avigliana"],["buttigliera alta","sant ambrogio di torino","villar dora","almese"],["caprie","rubiana","caselette","rosta","chiusa di san michele","vaie"],["rivoli","valgioie","sant antonino di susa","condove"]];
   const fold=s=>String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase("it").replace(/[^a-z0-9]+/g," ").trim();
   const propertyEligible=x=>Core.canonicalUrl(x?.url)&&x.availability_status==="AVAILABLE"&&x.location_status==="VERIFICATO_FONTE"&&x.municipality&&x.image&&!/attivit|azienda|negozio|bar|tabacchi|ristorante|locale commerciale|magazzino|terreno|capannone|autorimessa/i.test(String(x.title||"")+" "+String(x.category||""));
@@ -137,12 +202,25 @@
     $('flyer').querySelector('.brand-partner').textContent=staff.brand==='lasacra'?'Case in Pubblicità 24/7 · partner commerciale di Immobiliare La Sacra':'Selezione immobili dal portafoglio La Sacra Immobiliare';
     $('staffCta').textContent='Contatta '+staff.name+' su WhatsApp';
     $('staffPhone').textContent=staff.displayPhone;
-    $('staffHint').textContent=staff.brand==='lasacra'?'Logo La Sacra · Nessun ritratto · WhatsApp '+staff.displayPhone:'Foto Joseph · Case in Pubblicità 24/7 · WhatsApp '+staff.displayPhone;
-    const portrait=$('portrait');
-    portrait.onerror=()=>{portrait.onerror=null;portrait.src=CFG.portraitFallback;};
-    portrait.src=model.portrait||CFG.portraitFallback;
-    const footerPortrait=$('footerPortrait');
-    if(footerPortrait){footerPortrait.onerror=()=>{footerPortrait.onerror=null;footerPortrait.src=CFG.portraitFallback;};footerPortrait.src=model.portrait||CFG.portraitFallback;}
+    $('staffHint').textContent='Foto di '+staff.name+(storedPortraits[staff.id]?' memorizzata':' da caricare')+' · WhatsApp '+staff.displayPhone;
+    const portrait=$('portrait'),footerPortrait=$('footerPortrait');
+    const photo=storedPortraits[staff.id]||(staff.id==='joseph'?model.portrait||CFG.portraitFallback:null);
+    $('flyer').classList.toggle('has-staff-photo',!!photo);
+    const portraitError=()=>{
+      portrait.removeAttribute('src');
+      if(footerPortrait)footerPortrait.removeAttribute('src');
+      $('flyer').classList.remove('has-staff-photo');
+      setStatus('La fotografia di '+staff.name+' non è decodificabile. Sostituiscila prima di esportare.','warn');
+    };
+    portrait.onerror=portraitError;
+    if(footerPortrait)footerPortrait.onerror=portraitError;
+    if(photo){
+      portrait.src=photo;
+      if(footerPortrait)footerPortrait.src=photo;
+    }else{
+      portrait.removeAttribute('src');
+      if(footerPortrait)footerPortrait.removeAttribute('src');
+    }
     $('heroPanorama').style.backgroundImage=`linear-gradient(90deg, rgba(0,33,70,.18), rgba(0,41,78,.03)), url(${JSON.stringify(model.panorama)})`;
     const grid=$('listingGrid');grid.replaceChildren();
     for(let i=0;i<18;i++)grid.append(makeCard(model.properties[i],i));
@@ -311,7 +389,7 @@
       'Fronte incompleto: carica A5 SINISTRA e A5 DESTRA. Non verrà generata una pagina fronte con un solo A5.';
   }
   function init(){
-    showStaff();showThemes();render();syncCatalog();
+    showStaff();showThemes();render();syncCatalog();restorePortraits();
     window.addEventListener('resize',resizePreview);
     $('addUrls').onclick=async()=>{if(loading)return;loading=true;try{
       const urls=$('listingUrls').value.split(/\s+/).map(x=>x.trim()).filter(Boolean);
@@ -324,7 +402,12 @@
       }catch(e){setStatus('Impossibile leggere il catalogo: '+e.message,'warn')}finally{loading=false}};
     $('addManual').onclick=()=>openDialog(Math.max(0,firstFree()));
     $('clearAll').onclick=()=>{if(confirm('Svuotare le 18 posizioni?')){model.properties=blank();save();render();}};
-    $('portraitInput').onchange=async e=>{try{model.portrait=await loadPhoto(e.target.files[0],1200);save();render();}catch(err){setStatus(err.message,'warn')}};
+    for(const [id,inputId] of Object.entries(portraitInputs)){
+      $(inputId).onchange=async e=>{
+        try{await onPortraitChange(id,e.target.files[0])}
+        catch(err){setStatus('Foto '+PROFILES[id].name+': '+err.message,'warn');console.warn(err)}
+      };
+    }
     $('panoramaInput').onchange=async e=>{try{model.panorama=await loadPhoto(e.target.files[0],1800);save();render();}catch(err){setStatus(err.message,'warn')}};
     $('outerLeftInput').onchange=e=>{externalLeft=e.target.files[0]||null;previewOuter();};
     $('outerRightInput').onchange=e=>{externalRight=e.target.files[0]||null;previewOuter();};
