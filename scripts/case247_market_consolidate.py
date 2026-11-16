@@ -141,7 +141,8 @@ def merge(parts: list[dict], history: list[dict] | None = None, now: datetime | 
         if town not in TOWNS or not url:
             continue
         key = url
-        name = str(row.get("source") or "Fonte pubblica")[:70]
+        name = str(row.get("source") or
+                   " | ".join(row.get("sources", [])) or "Fonte pubblica")[:160]
         # Relations may be trusted ONLY when explicitly present in a user-authorized
         # idealista/tools export. Never infer equivalence from price/mq alone.
         related = [normalize_url(link) for link in row.get("related_urls", [])
@@ -170,8 +171,9 @@ def merge(parts: list[dict], history: list[dict] | None = None, now: datetime | 
                 "stale": bool(row.get("stale", False)),
                 "market_segment": "AGENZIA" if row.get("source_type") == "AGENZIA" or
                     "AGENZIA" in str(row.get("owner_status", "")) else
+                    "PRIVATO - DA VERIFICARE" if row.get("source_type") == "IDEALISTA_TOOLS_EXPORT" else
                     "PORTALE PRIVATI - DA VERIFICARE" if name == "CasaDaPrivato" else
-                    "MERCATO - DA VERIFICARE",
+                    row.get("market_segment") or "MERCATO - DA VERIFICARE",
             }
         else:
             g = grouped[key]
@@ -293,7 +295,9 @@ def render_markdown(result: dict) -> str:
             f"- {source['source']} {source['town']}: {source['status']}, link {source['extracted_links']}, "
             f"totale pagina {source['reported_count'] if source['reported_count'] is not None else 'N/D'}."
         )
-    lines += ["", "Le aste PVP sono una fonte ufficiale di consultazione separata, non un catalogo acquisito automaticamente e non annunci privati.",
+    lines += ["", "**Incrocio tra portali:** i collegamenti attribuiti allo stesso immobile in un export idealista/tools sono associati come evidenza, non cancellati. Comune+prezzo+mq rimangono solo un'indicazione di possibile doppione.",
+              "**Recapiti:** l'eventuale presenza di un numero nell'export richiede verifica della sua pubblicità e della base giuridica per l'uso; nessun numero è incluso negli artifact.",
+              "Le aste PVP sono una fonte ufficiale di consultazione separata, non un catalogo acquisito automaticamente e non annunci privati.",
               "Il file Excel completo e i JSON della scansione sono negli artifact GitHub dell'esecuzione."]
     return "\n".join(lines) + "\n"
 
