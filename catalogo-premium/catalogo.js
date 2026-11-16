@@ -103,7 +103,7 @@ function addSheets(items){
     const content=cell('div','page-inner');
     const num=Math.floor(offset/pageSize)+1;
     content.append(cell('p','eyebrow','03 / IL PORTAFOGLIO IMMOBILIARE · '+String(num).padStart(2,'0')));
-    content.append(cell('h2','sheet-title','Le nostre <em>proposte</em>'));
+    content.append(cell('h2','sheet-title','Le nostre proposte'));
     const intro=cell('p','sheet-subtitle','Consulta ogni annuncio sul sito ufficiale La Sacra. Prezzo e disponibilità possono variare; richiedi conferma all’agenzia.');
     content.append(intro);
     const grid=cell('div','sheet-grid');
