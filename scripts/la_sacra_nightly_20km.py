@@ -8,6 +8,8 @@ import argparse, base64, csv, datetime as dt, io, json, math, os, re, sys, time,
 from pathlib import Path
 from html.parser import HTMLParser
 from zoneinfo import ZoneInfo
+import socket
+socket.setdefaulttimeout(9)
 from xml.sax.saxutils import escape
 
 CENTER=(45.0800,7.3980)
@@ -17,7 +19,7 @@ ROME=ZoneInfo("Europe/Rome")
 OVERPASS=("https://overpass.kumi.systems/api/interpreter","https://overpass-api.de/api/interpreter","https://overpass.nchc.org.tw/api/interpreter")
 AMENITY="restaurant|cafe|bar|pub|fast_food|ice_cream|biergarten|bank|pharmacy|fuel|car_wash|veterinary|dentist|doctors|clinic|nightclub|cinema|post_office|marketplace|events_venue"
 TOURISM="hotel|motel|hostel|guest_house|camp_site|caravan_site|apartment|chalet"
-COLUMNS=["N.","ATTIVITA / RAGIONE SOCIALE","PARTITA IVA","COMUNE","INDIRIZZO","CAP","EMAIL PUBBLICA","TELEFONO","SITO","DISTANZA KM","QUADRANTE","FONTE OSM","FONTE P.IVA","FONTE EMAIL","VERIFICA P.IVA","QUALITA DATI","CONSENSO MARKETING","ID OSM","DATA","GOOGLE DORK"]
+COLUMNS=["N.","AZIENDA / ATTIVITA","PARTITA IVA","EMAIL PUBBLICA","TELEFONO","COMUNE","INDIRIZZO","CAP","SITO","DISTANZA KM","STATO DATI","QUADRANTE","FONTE P.IVA","FONTE EMAIL","FONTE OSM","VERIFICA P.IVA","CONSENSO MARKETING","DATA","ID OSM","GOOGLE DORK"]
 VAT_RE=re.compile(r"(?i)(?:P\.?\s*I\.?V\.?A\.?|PARTITA\s+IVA|VAT\s*(?:NO|NUMBER|ID)?)[\s:.#-]*(?:IT\s*)?(\d{11})(?!\d)")
 EMAIL_RE=re.compile(r"(?i)\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b")
 PHONE_RE=re.compile(r"\+?\d[\d ()/.-]{5,20}\d")
@@ -179,10 +181,9 @@ def rotate(rows,seen,day):
 
 def values(r,index):
     dork="https://www.google.com/search?q="+urllib.parse.quote('"'+r["name"]+'" "partita iva" "'+r["town"]+'"')
-    return [index,r["name"],r["vat"],r["town"],r["address"],r["cap"],r["email"],r["phone"],r["site"],r["distance"],r["quadrant"],
-            r["osm_url"],r["vat_url"],r["email_url"],r["vat_status"],
-            "DA_VERIFICARE" if not (r["vat"] and r["email"] and r["phone"]) else "CHECKSUM_OK_ALTRI_CONTROLLI",
-            "NON_DOCUMENTATO",r["id"],r["date"],dork]
+    status="PARZIALE / DA_VERIFICARE" if not (r["vat"] and r["email"] and r["phone"]) else "CHECKSUM_OK / ALTRI_CONTROLLI"
+    return [index,r["name"],r["vat"],r["email"],r["phone"],r["town"],r["address"],r["cap"],r["site"],r["distance"],status,r["quadrant"],
+            r["vat_url"],r["email_url"],r["osm_url"],r["vat_status"],"NON_DOCUMENTATO",r["date"],r["id"],dork]
 
 def make_csv(rows):
     out=io.StringIO();w=csv.writer(out,delimiter=";",lineterminator="\n");w.writerow(COLUMNS)
@@ -197,7 +198,7 @@ def excel_column(i):
     return s
 
 def xmlsheet(grid,wide=False):
-    widths=[7,39,18,23,38,11,35,23,39,15,13,45,45,45,30,24,22,23,17,60]
+    widths=[7,40,17,34,24,23,40,11,42,15,27,13,45,45,45,26,22,17,22,60]
     parts=['<?xml version="1.0" encoding="UTF-8" standalone="yes"?>',
     '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews><sheetFormatPr defaultRowHeight="21"/><cols>']
     for j in range(len(grid[0])):
