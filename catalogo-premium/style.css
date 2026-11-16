@@ -13,3 +13,44 @@
 @media(max-width:800px){.topbar{height:auto;min-height:74px;padding:14px 18px}.identity strong{font-size:12px;letter-spacing:.12em}.identity small{font-size:7px}.monogram{width:38px;height:38px;font-size:19px}.topactions .textlink{display:none}.contact-pill{font-size:10px;padding:10px 12px}.shell{padding:24px 12px}.reader-top{display:block}.reader-tools{justify-content:flex-start;margin-top:20px}.reader-tools button{padding:9px;font-size:10px}.reader-frame{height:min(165vw,760px);min-height:540px;max-height:none}.page-inner{padding:38px 24px 18px}.page h2{font-size:clamp(35px,8.3vw,57px);margin-bottom:13px}.lead{font-size:15px;line-height:1.6}.cover-top,.cover-bottom,.cover-text{left:25px;right:25px}.cover-top{top:25px}.cover-mark{font-size:12px}.edition{font-size:8px}.cover-text{top:31%}.cover-text h2{font-size:clamp(51px,11vw,78px)}.cover-text>p:last-child{font-size:15px}.cover-bottom{font-size:9px;bottom:23px}.pillars{display:block;margin-top:18px;margin-bottom:10px}.pillars>div{padding:9px 0;display:grid;grid-template-columns:32px 1fr;gap:2px 8px}.pillars b{font-size:19px;grid-row:span 2}.pillars h3{font-size:17px;margin:0}.pillars p{font-size:11px;margin:0;line-height:1.45}.filters input{width:165px}.page-tail{font-size:8px}.towns{gap:7px;margin:20px 0}.towns span{font-size:10px;padding:8px}.territory-call{padding:16px;gap:8px}.territory-call b{font-size:21px}.territory-call p{font-size:11px}.end-content{padding:39px 24px}.end-foot{left:24px}.reader-bottom{padding:10px;grid-template-columns:1fr 1.2fr 1fr}.reader-bottom button{font-size:10px;padding:10px 8px}.fineprint{display:block}.fineprint span{display:block;max-width:none;margin:6px 0}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
 @media print{@page{size:A4 landscape;margin:0}body{background:white!important}.topbar,.reader-top,.reader-bottom,.fineprint,.toast,.filters,.skip-link{display:none!important}.shell{max-width:none;padding:0}.reader{box-shadow:none}.reader-frame{overflow:visible;min-height:0;max-height:none;height:auto}.page,.page[hidden]{position:relative!important;inset:auto!important;display:block!important;width:297mm;height:210mm;overflow:hidden;page-break-after:always;break-after:page;animation:none}.page:last-child{page-break-after:auto}.page-inner{padding:18mm}.page h2{font-size:40pt}.cover-text h2{font-size:60pt}.pillars{display:grid}.property-results{overflow:visible}.page-end{print-color-adjust:exact;-webkit-print-color-adjust:exact}.cover-photo,.page-cover,.page-intro,.page-territory{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
+
+/* Catalogo immobiliare completo: schede editoriali sfogliabili e pronte per stampa. */
+.page-listing-sheet{background:#f8fafb}
+.page-listing-sheet .page-inner{padding:28px 43px 18px}
+.page-listing-sheet .eyebrow{margin-bottom:4px}
+.page-listing-sheet .sheet-title{font-size:clamp(27px,3vw,40px);line-height:1.12;margin:0 0 3px}
+.page-listing-sheet .sheet-subtitle{margin:0 0 9px;font-size:11px;color:#62798b;line-height:1.5}
+.sheet-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:10px;flex:1;min-height:0}
+.sheet-card{display:flex;flex-direction:column;min-width:0;min-height:0}
+.sheet-card img{height:45%;flex:0 0 45%;object-fit:cover}
+.sheet-card .content{padding:7px 10px;min-height:0;overflow:hidden}
+.sheet-card h3{font-size:12px;margin:2px 0;line-height:1.27;max-height:2.55em;overflow:hidden}
+.sheet-card .location{font-size:9px}
+.sheet-card .price{font-size:14px;margin:3px 0}
+.sheet-card .energy{font-size:9px;line-height:1.2;margin:1px 0 4px;color:#8b673c}
+.sheet-card a{font-size:10px}
+.property-feature{display:inline-block;font-size:10px;margin:3px 0;color:#587184}
+.results-note{font-size:12px;color:#536a7c}
+.reader-bottom .pager .dots{max-width:320px;margin:8px auto 0;flex-wrap:wrap}
+@media(max-width:800px){
+ .page-listing-sheet .page-inner{padding:19px 14px 13px}
+ .page-listing-sheet .sheet-title{font-size:26px}
+ .page-listing-sheet .sheet-subtitle{font-size:9px;margin:3px 0 6px}
+ .sheet-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:6px}
+ .sheet-card img{height:38%;flex-basis:38%}
+ .sheet-card .content{padding:5px 7px}
+ .sheet-card h3{font-size:10px;line-height:1.2;margin:2px 0}
+ .sheet-card .location{font-size:8px}
+ .sheet-card .price{font-size:12px}
+ .sheet-card .energy{font-size:8px;line-height:1.1}
+ .sheet-card a{font-size:9px}
+ .reader-bottom .pager .dots{max-width:180px}
+ .page-listing-sheet .page-tail{padding-top:6px;font-size:7px}
+}
+@media print{
+ .sheet-grid{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr))}
+ .sheet-card img{max-height:74px}
+ .page-listing-sheet .page-inner{padding:12mm}
+ .page-listing-sheet .sheet-title{font-size:25pt}
+ .page-listing-sheet .sheet-subtitle{font-size:8pt}
+}
