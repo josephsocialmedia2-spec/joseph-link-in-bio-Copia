@@ -167,7 +167,7 @@ async function load(){
 }
 
 const requestFields={
-  name:$('reqName'),material:$('reqMaterial'),email:$('reqEmail'),phone:$('reqPhone'),
+  name:$('reqName'),material:$('reqMaterial'),business:$('reqBusiness'),city:$('reqCity'),email:$('reqEmail'),phone:$('reqPhone'),
   message:$('reqMessage'),privacy:$('reqPrivacySeen'),feedback:$('requestFeedback')
 };
 function requestMessage(channel){
@@ -185,6 +185,8 @@ function requestMessage(channel){
  return 'RICHIESTA VOLONTARIA DI MATERIALE INFORMATIVO - IMMOBILIARE LA SACRA'+
   '\nReferente: Malafronte Joseph, 371 370 8294'+
   '\nNome: '+name+'\nMateriale richiesto: '+f.material.value+
+  (f.business.value.trim()?'\nAttività / ragione sociale: '+f.business.value.trim().slice(0,130):'')+
+  (f.city.value.trim()?'\nComune: '+f.city.value.trim().slice(0,90):'')+
   (email?'\nEmail per risposta: '+email:'')+(phone?'\nCellulare per risposta: '+phone:'')+
   (f.message.value.trim()?'\nNote: '+f.message.value.trim():'')+
   '\n\nHo preso visione dell’informativa sulla richiesta di materiale (catalogo-premium/privacy-richiesta.html).'+
