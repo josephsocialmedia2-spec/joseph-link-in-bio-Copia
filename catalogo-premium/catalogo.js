@@ -142,6 +142,53 @@ async function load(){
     console.error(error);
   }
 }
+// Richiesta spontanea di materiale: passaggio esplicito al client email del visitatore.
+// Questa pagina statica NON crea contatti marketing e non dichiara consensi verificati.
+const requestForm=$('materialRequest');
+if(requestForm){
+  requestForm.addEventListener('submit',event=>{
+    event.preventDefault();
+    const status=$('requestStatus');
+    if(!requestForm.checkValidity()){
+      status.textContent='Completa i campi obbligatori e prendi visione dell’informativa.';
+      requestForm.reportValidity();
+      return;
+    }
+    const d=new FormData(requestForm);
+    const clean=(field,max)=>String(d.get(field)||'').trim().slice(0,max).replace(/[\\r\\n]+/g,' ');
+    const name=clean('name',100),business=clean('business',130),
+      email=clean('email',254),city=clean('city',90),subject=clean('subject',100),
+      message=String(d.get('message')||'').trim().slice(0,700);
+    if(!name||!business||!email||!city||!subject){
+      status.textContent='Compila tutti i campi obbligatori.';return;
+    }
+    const lines=[
+      'Richiesta spontanea di materiale pubblicitario',
+      'Immobiliare La Sacra · Referente Malafronte Joseph',
+      '',
+      'Nome e cognome: '+name,
+      'Attività: '+business,
+      'Email: '+email,
+      'Comune: '+city,
+      'Materiale richiesto: '+subject,
+      'Messaggio: '+(message||'Nessuno'),
+      '',
+      'Informativa privacy: presa visione dichiarata.',
+      d.has('marketing')
+        ? 'Future comunicazioni marketing: interesse espresso, NON iscrizione e NON consenso operativo verificato; richiede separata procedura di verifica.'
+        : 'Future comunicazioni marketing: NON richieste.',
+      'Origine: '+rootUrl,
+      '',
+      'La presente è una richiesta individuale inviata spontaneamente dall’interessato.'
+    ];
+    const href='mailto:immobiliarelasacra@gmail.com?subject='+
+      encodeURIComponent('Richiesta materiale · '+subject+' · '+business)+
+      '&body='+encodeURIComponent(lines.join('\\n'));
+    status.textContent='Il programma email si aprirà con la richiesta pronta. Conferma l’invio nella tua email; nessun dato è stato ancora trasmesso da questa pagina.';
+    window.location.href=href;
+  });
+}
+
 $('cityFilter').addEventListener('change',renderListings);
 $('queryFilter').addEventListener('input',renderListings);
 load();
