@@ -58,3 +58,13 @@
 .reader-tools .pdf-download{display:inline-flex;align-items:center;text-decoration:none;background:#0a4167;color:#fff;border:1px solid #0a4167;padding:10px 13px;border-radius:6px;font-size:11px;font-weight:700}
 .reader-tools .pdf-download:hover{background:#155c83}
 @media(max-width:800px){.reader-tools .pdf-download{padding:9px;font-size:10px}}
+
+/* Thumbnail container: no broken browser image icons and no blank white card area. */
+.property-card .property-photo{height:130px;overflow:hidden;background:linear-gradient(140deg,#e5edf2,#bfcfda);display:flex;align-items:center;justify-content:center;position:relative}
+.property-card .property-photo img{display:block;width:100%;height:100%;object-fit:cover;flex:none}
+.property-card .property-photo.photo-unavailable{background:linear-gradient(135deg,#e8edf1,#c9d7df);border-bottom:1px solid #bdced8}
+.property-card .photo-fallback{display:grid;place-items:center;max-width:85%;padding:10px 15px;border:1px solid #91a8bb;color:#345875;background:rgba(255,255,255,.6);font-size:11px;font-weight:600;text-align:center;line-height:1.5}
+.sheet-card .property-photo{height:45%;flex:0 0 45%}
+.sheet-card .property-photo img{height:100%;max-height:none}
+@media(max-width:800px){.sheet-card .property-photo{height:38%;flex-basis:38%}.sheet-card .photo-fallback{font-size:9px;padding:7px}}
+@media print{.sheet-card .property-photo{height:72px;flex:0 0 72px}.sheet-card .property-photo img{height:100%;max-height:none}.sheet-card .photo-fallback{font-size:8pt}}
