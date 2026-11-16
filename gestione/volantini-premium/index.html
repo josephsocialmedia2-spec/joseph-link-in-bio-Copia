@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>Studio Volantini · Joseph, Cristian, Ylenia</title>
-<link rel="stylesheet" href="./styles.css?v=20261116-avigliana-audit-preview">
+<link rel="stylesheet" href="./styles.css?v=20261116-fronte-retro">
 <!-- Librerie client-side, versioni fissate: installare copie locali per produzione offline. -->
 <script defer src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -52,11 +52,16 @@
     <div class="hint" id="outerDescription">Facciata esterna: non caricata. In questo caso sarà generata una sola pagina PDF.</div><button type="button" id="clearOuter">Rimuovi facciata esterna</button>
   </aside>
   <main class="panel preview-panel">
-    <div class="preview-toolbar"><div><h2>Anteprima interna A4 orizzontale</h2><small id="templateName">Modello 01</small></div>
+    <nav class="flyer-side-nav no-print" aria-label="Seleziona la facciata del volantino">
+      <a href="#fronte-volantino" class="flyer-side-link">01 · FRONTE <small>Facciata esterna</small></a>
+      <a href="#retro-volantino" class="flyer-side-link">02 · RETRO <small>18 immobili + QR</small></a>
+    </nav>
+    <section id="retro-volantino" class="flyer-side-section" aria-label="Retro del volantino con diciotto immobili">
+    <div class="preview-toolbar"><div><h2>RETRO · 18 immobili e QR — A4 orizzontale</h2><small id="templateName">Modello 01</small></div>
       <div class="action-row"><button id="saveProject">Salva dati</button><button id="downloadProject">Esporta JSON</button><button id="exportPdf" class="primary">Genera PDF referente selezionato</button></div>
     </div>
     <div id="previewViewport"><div id="previewSizer">
-      <section id="flyer" class="theme-cobalto" aria-label="Volantino interno A4 landscape">
+      <section id="flyer" class="theme-cobalto" aria-label="Retro del volantino A4 orizzontale con 18 schede immobiliari e QR">
         <div class="flyer-header">
           <div class="hero-panorama" id="heroPanorama"></div>
           <svg class="wave-overlay" aria-hidden="true" viewBox="0 0 1122 150" preserveAspectRatio="none"><path class="wave1" d="M0 107 C220 57 430 160 645 108 S951 35 1122 96"/><path class="wave2" d="M0 137 Q270 86 493 131 T1122 116"/></svg>
@@ -89,9 +94,11 @@
         </footer>
       </section>
     </div></div>
-    <section class="outer-preview-panel" aria-label="Anteprima della facciata esterna"><div class="preview-toolbar"><div><h2>Anteprima esterna A4 orizzontale</h2><small>Facciata 1 · Fronte del volantino</small></div><span id="outerPreviewState" class="hint">Nessun file caricato</span></div><div id="outerPreview" class="outer-preview"><p>Carica la facciata esterna in PDF, JPG o PNG dalla colonna sinistra per visualizzarla qui prima di generare il PDF.</p></div></section><div id="status" role="status" class="message">Preparazione...</div>
+    <p class="flyer-side-caption">RETRO — Questa è la facciata posteriore che sarà stampata con le schede immobiliari, fotografie, prezzi e QR.</p>
+    </section>
+    <section id="fronte-volantino" class="outer-preview-panel" aria-label="Anteprima della facciata esterna"><div class="preview-toolbar"><div><h2>FRONTE · Facciata esterna — A4 orizzontale</h2><small>Facciata 1 nel PDF fronte/retro</small></div><span id="outerPreviewState" class="hint">Nessun file caricato</span></div><div id="outerPreview" class="outer-preview"><p>Carica la facciata esterna in PDF, JPG o PNG dalla colonna sinistra per visualizzarla qui prima di generare il PDF.</p></div></section><div id="status" role="status" class="message">Preparazione...</div>
     <div id="preflight" class="preflight"></div>
-    <p class="hint">La facciata esterna appare nell’anteprima qui sopra. Il PDF contiene due pagine solo quando l’esterno è caricato. Le schede senza annuncio ufficiale nel catalogo non sono autorizzate per la stampa.</p>
+    <p class="hint">La facciata esterna appare nell’anteprima qui sopra. Il PDF contiene pagina 1 FRONTE e pagina 2 RETRO solo quando l’esterno è caricato. Le schede senza annuncio ufficiale nel catalogo non sono autorizzate per la stampa.</p>
   </main>
 </div>
 <dialog id="listingDialog" class="edit-dialog">
