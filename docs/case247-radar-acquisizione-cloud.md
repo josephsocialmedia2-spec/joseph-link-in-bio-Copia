@@ -101,3 +101,5 @@ Non vengono attivati `curl_cffi`, TLS impersonation, proxy residenziali né serv
 - Gli annunci dai portali e dalle sitemap sono **schede di mercato**; la qualificazione del proprietario richiede verifica diretta lecita della fonte.
 
 **Copertura reale:** la pipeline aumenta il numero di fonti che si possono collegare, ma non equivale a 560 immobili acquisiti o verificati. I conteggi dichiarati dai portali comprendono anche agenzie e annunci duplicati; i report mostrano sempre lo stato delle fonti e il numero effettivo dei link recuperati.
+
+**Filtro indispensabile sitemap:** un URL che contiene il nome del comune ma conduce a una pagina categoria (es. vendita-negozi/avigliana) NON è una scheda immobiliare. Dal 16/11/2026 il parser accetta soltanto percorsi riconoscibili come singoli annunci con identificativo, prima di attribuire il comune. Le sitemap con pagine categoria non aumentano il conteggio degli immobili. La prima discovery aveva prodotto 11 falsi candidati di categoria, ora corretti.
