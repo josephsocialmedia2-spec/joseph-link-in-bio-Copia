@@ -1,0 +1,46 @@
+name: La Sacra · Foto catalogo originali
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'immobili/catalogo.json'
+      - 'scripts/build-la-sacra-photos.cjs'
+      - '.github/workflows/la-sacra-photos.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: la-sacra-thumbnails
+  cancel-in-progress: false
+jobs:
+  photo-cache:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Installa ottimizzatore immagini
+        run: npm install --no-save --no-package-lock sharp@0.34.5
+      - name: Crea 54 miniature ufficiali Shopify e rapporto
+        run: node scripts/build-la-sacra-photos.cjs
+      - name: Salva fotografie ottimizzate nel sito
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add catalogo-premium/photos/
+          if ! git diff --cached --quiet; then
+            git commit -m "build(catalogo): sincronizza miniature ufficiali [skip ci]"
+            git push origin HEAD:main
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: la-sacra-report-fotografie
+          path: catalogo-premium/photos/report.json
+          retention-days: 14
+          if-no-files-found: ignore
