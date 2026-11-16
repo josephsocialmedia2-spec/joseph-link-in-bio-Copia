@@ -14,7 +14,7 @@ test('Proof printing does not trigger a browser confirm popup',()=>{
   const proof=app.slice(app.indexOf('async function exportPdf('),app.indexOf('function downloadBlob('));
   assert.doesNotMatch(proof,/confirm\s*\(/);
   assert.match(proof,/watermark:definitive!==true/);
-  assert.match(proof,/if\\(proof&&definitive===true\\)throw Error/);
+  assert.ok(proof.includes('if(proof&&definitive===true)throw Error'));
   assert.match(proof,/BOZZA_STAMPA/);
   assert.match(proof,/DEFINITIVO/);
 });
