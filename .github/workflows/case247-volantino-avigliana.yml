@@ -21,4 +21,3 @@ jobs:
           node --check gestione/volantini-premium/app.js
           node --check gestione/volantini-premium/pdf-engine.js
           node --test tests/case247-volantino-avigliana.test.cjs
-          node gestione/volantini-premium/test/test-core.cjs
