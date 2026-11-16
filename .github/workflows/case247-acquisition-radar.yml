@@ -111,6 +111,30 @@ jobs:
           fi
           python scripts/case247_acquisition_digest.py digest --state _radar/state.json --out _radar/out --intelligence _radar/out/intelligence.json
 
+      - name: Append last permissible public market index to the same 06:00 message
+        if: github.event.schedule == '0 6 * * *'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p _market
+          artifact_data="$(gh api -X GET "repos/${GITHUB_REPOSITORY}/actions/artifacts?per_page=50&name=case247-market-inventory" --jq '[.artifacts[] | select(.expired == false)] | sort_by(.created_at) | last | {run: .workflow_run.id, created: .created_at}' || true)"
+          run="$(echo "${artifact_data:-null}" | jq -r '.run // empty' || true)"
+          created="$(echo "${artifact_data:-null}" | jq -r '.created // empty' || true)"
+          if [[ -n "${run:-}" && -n "${created:-}" ]]; then
+            age_seconds="$(( $(date -u +%s) - $(date -ud "$created" +%s) ))"
+            if (( age_seconds < 172800 )); then
+              gh run download "$run" -R "$GITHUB_REPOSITORY" --name case247-market-inventory --dir _market || true
+            fi
+          fi
+          if [[ -s _market/market.md ]]; then
+            printf '\n---\n\n' >> _radar/out/digest.md
+            head -c 40000 _market/market.md >> _radar/out/digest.md
+          else
+            printf '\n\n---\n\nInventario aggiuntivo: ultimo controllo dei portali non disponibile; il numero di annunci non puo essere dedotto.\n' >> _radar/out/digest.md
+          fi
+
       - name: Send ONLY ONE daily GitHub Issue (idempotent by date)
         if: github.event.schedule == '0 6 * * *'
         env:
