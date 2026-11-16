@@ -9,11 +9,13 @@ test('real-estate flipbook Javascript parses and catalog has source listings',()
  assert.ok(catalog.items.length>=50);
  assert.equal(catalog.items.length,58);
 });
-test('flipbook dynamically spreads all inventory records into six-card sheets',()=>{
+test('flipbook dynamically spreads all inventory records into full-page premium photo spreads',()=>{
  assert.match(js,/fetch\('\.\.\/immobili\/catalogo\.json'/);
- assert.match(js,/const pageSize=6/);
+ assert.match(js,/const pageSize=1/);
  assert.match(js,/addSheets\(listings\)/);
  assert.match(js,/frame\.insertBefore\(sheet,before\)/);
+ assert.match(js,/const photoItems=items\.filter\(p=>escText\(p\.image\)\)/);
+ assert.match(css,/grid-template-columns:65% 35%/);
  assert.match(js,/listings\.length\+' ANNUNCI IN ARCHIVIO'/);
  assert.match(js,/resetDots\(\)/);
  assert.match(js,/renderListings\(\)/);
