@@ -27,7 +27,7 @@ ROME = ZoneInfo("Europe/Rome")
 USER_AGENT = "CASE247SitemapMonitor/1.0 (public index, robots compliant)"
 SLUGS = {
     "Avigliana": ("avigliana",),
-    "Sant'Ambrogio di Torino": ("sant-ambrogio-di-torino", "santambrogio-di-torino", "santambrogioditorino"),
+    "Sant'Ambrogio di Torino": ("sant-ambrogio-di-torino", "santambrogio-di-torino", "santambrogioditorino", "sant-ambrogio", "santambrogio"),
     "Almese": ("almese",),
     "Condove": ("condove",),
 }
@@ -89,8 +89,23 @@ def is_individual_listing(url: str) -> bool:
         return bool(re.fullmatch(r"/annunci/\d{5,}", path))
     if host == "casadaprivato.it":
         return bool(re.search(r"-torino-\d{3,}$", path))
+    if host == "teckimmobiliare.it":
+        # Verified real page pattern: /properties/appartamento/avigliana/<slug>/
+        return bool(re.fullmatch(
+            r"/properties/(?:appartamento|casa|villa|terreno|rustico|attico|immobile|negozio|commerciale|bilocale|trilocale|quadrilocale)/[a-z0-9-]+/[a-z0-9-]+",
+            path,
+        ))
+    if host == "lasacraimmobiliare.it":
+        # Shopify products use textual property slugs rather than numeric IDs.
+        return bool(re.fullmatch(r"/products/[a-z0-9-]+", path)) and bool(re.search(
+            r"(?:appartamento|alloggio|bilocale|trilocale|quadrilocale|casa|villa|chalet|terreno|rustico|mansarda|bifamiliare|semindipendente)",
+            path,
+        ))
+    # Unknown publishers: conservative individual listing path + numeric identifier.
+    if re.search(r"/(?:vendita-[^/]*|affitto-[^/]*|aste-[^/]*|agenzie|cerca|ricerca|news|prezzi|valutazione)(?:/|$)", path):
+        return False
     return bool(
-        re.search(r"/(?:annunci?|annuncio|immobili?|immobile|listing|property|scheda)/", path)
+        re.search(r"/(?:annunci?|immobili?|listing|property|scheda)/", path)
         and re.search(r"(?:-|/)\d{3,}$", path)
     )
 
@@ -106,6 +121,8 @@ def read_config(path: Path) -> dict:
             raise ValueError("source requires name")
         if src["name"] in names:
             raise ValueError("duplicate source name")
+        if src.get("kind", "PORTALE") not in ("PORTALE", "AGENZIA"):
+            raise ValueError("kind must be PORTALE or AGENZIA")
         names.add(src["name"])
         base = src.get("sitemap_url", "")
         host = src.get("host", "").lower()
@@ -222,9 +239,9 @@ def collect_source(source: dict, downloader=fetch) -> dict:
                     "town": town, "source": source["name"], "url": normalized,
                     "title": "Da verificare sulla fonte originale",
                     "last_modified": lastmod,
-                    "owner_status": "DA_VERIFICARE",
-                    "contact_permission": "DA_VERIFICARE: NESSUN CONTATTO AUTOMATICO",
-                    "source_type": "SITEMAP_PUBBLICA",
+                    "owner_status": "AGENZIA - NON PRIVATO" if source.get("kind") == "AGENZIA" else "DA_VERIFICARE",
+                    "contact_permission": "NO CONTATTO AUTOMATICO",
+                    "source_type": "AGENZIA" if source.get("kind") == "AGENZIA" else "SITEMAP_PUBBLICA",
                     "price": None, "mq": None, "street": "",
                 })
         if len(seen_links) >= MAX_LISTINGS_PER_SOURCE:
@@ -244,11 +261,18 @@ def main() -> int:
     args = parser.parse_args()
     cfg = read_config(args.config)
     entries = [collect_source(s) for s in cfg["sources"]]
+    references = [
+        {"source": "Portale delle Vendite Pubbliche - Ministero Giustizia",
+         "town": "", "status": "SOLO_CONSULTAZIONE", "reported_count": None,
+         "extracted_links": 0, "index_url": "https://pvp.giustizia.it/pvp/",
+         "source_type": "ASTE", "listings": []},
+    ]
     result = {"as_of_rome": datetime.now(ROME).isoformat(timespec="seconds"),
               "scope": list(SLUGS), "type": "SITEMAP",
               "status": "OK" if entries and all(r["status"] == "OK" for r in entries) else
                         "NESSUNA_FONTE_CONFIGURATA" if not entries else "PARZIALE",
-              "sources": entries, "listings": [row for entry in entries for row in entry["listings"]]}
+              "sources": [*entries, *references],
+              "listings": [row for entry in entries for row in entry["listings"]]}
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print("CASE247_SITEMAPS status=" + result["status"] + " listings=" + str(len(result["listings"])))
