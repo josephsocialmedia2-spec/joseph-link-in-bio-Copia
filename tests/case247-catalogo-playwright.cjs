@@ -20,22 +20,22 @@ fs.mkdirSync(out,{recursive:true});
    assert.equal(response.status(),200,'HTTP status');
    await page.locator('.page-cover').waitFor();
    assert.match(await page.title(),/Immobiliare La Sacra/i);
-   await page.waitForFunction(()=>document.querySelectorAll('.page-listing-sheet').length===10,{timeout:20000});
-   assert.equal(await page.locator('.page').count(),15);
-   assert.equal(await page.locator('.page-listing-sheet').count(),10);
-   assert.equal(await page.locator('.sheet-card').count(),58);
+   await page.waitForFunction(()=>document.querySelectorAll('.page-listing-sheet').length===54,{timeout:20000});
+   assert.equal(await page.locator('.page').count(),59);
+   assert.equal(await page.locator('.page-listing-sheet').count(),54);
+   assert.equal(await page.locator('.sheet-card').count(),54);
    assert.equal(await page.locator('.page:not([hidden])').count(),1);
    await page.screenshot({path:path.join(out,label+'-copertina.png'),fullPage:true});
-   const labels=['Il nostro metodo','Indice immobili','Immobili 1–6'];
+   const labels=['Il nostro metodo','Indice immobili',null];
    for(let i=0;i<3;i++){
      await page.locator('#nextPage').click();
      assert.equal((await page.locator('#pageCounter').innerText()).trim(),(i+2)+' / 15');
-     assert.equal((await page.locator('#pageLabel').innerText()).trim(),labels[i]);
+     if(labels[i])assert.equal((await page.locator('#pageLabel').innerText()).trim(),labels[i]);else assert.match((await page.locator('#pageLabel').innerText()).trim(),/^1 · /);
      assert.equal(await page.locator('.page:not([hidden])').count(),1);
    }
-   assert.equal(await page.locator('.page:not([hidden]) .sheet-card').count(),6);
+   assert.equal(await page.locator('.page:not([hidden]) .sheet-card').count(),1);
    await page.screenshot({path:path.join(out,label+'-immobili.png'),fullPage:true});
-   await page.locator('#pageDots button').nth(14).click();
+   await page.locator('#pageDots button').nth(58).click();
    assert.equal((await page.locator('#pageLabel').innerText()).trim(),'Contatti');
    await page.screenshot({path:path.join(out,label+'-contatti.png'),fullPage:true});
    await page.locator('#pageDots button').nth(2).click();
@@ -68,7 +68,7 @@ fs.mkdirSync(out,{recursive:true});
    // CSS does not allow horizontal scrolling at normal viewport.
    const dims=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,width:document.documentElement.clientWidth}));
    assert.ok(dims.scroll<=dims.width+3,'Horizontal overflow '+JSON.stringify(dims));
-   console.log('PASS '+label+' 58 listings, 10 property spreads, navigation, sharing, responsive viewport');
+   console.log('PASS '+label+' 58 catalog entries, 54 photographic spreads, navigation, sharing, responsive viewport');
   }catch(e){failures.push(label+': '+e.message);console.error('FAIL '+label,e);try{await page.screenshot({path:path.join(out,label+'-failure.png'),fullPage:true})}catch{}}
   finally{await context.close()}
  }
