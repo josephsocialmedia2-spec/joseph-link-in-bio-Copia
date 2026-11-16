@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow"/><title>Immobiliare La Sacra · Apri lotto cifrato</title>
+<style>
+:root{font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(155deg,#103453,#071728 55%);color:#eef5ff;min-height:100vh}
+main{width:min(730px,calc(100% - 30px));margin:35px auto 90px}
+h1{font-size:clamp(26px,5vw,40px);line-height:1.15}
+a{color:#b5dcfa}.muted{color:#b3c8d8}.eyebrow{letter-spacing:.13em;color:#efc88b;font-size:12px;font-weight:900}
+.card{padding:23px;border-radius:15px;border:1px solid #3b5671;background:#102940;margin:22px 0}
+label{display:block;margin:16px 0 7px;font-weight:750}
+input{background:#0b1d30;border:1px dashed #6596b7;padding:15px;border-radius:8px;width:100%;color:#fff}
+button{display:inline-flex;align-items:center;justify-content:center;font:inherit;padding:13px 18px;margin-top:20px;background:#e8c18a;color:#152d43;font-weight:800;border:0;border-radius:9px;cursor:pointer}
+button:disabled{opacity:.5;cursor:not-allowed}
+#status{margin-top:16px;white-space:pre-wrap;color:#a1efd4;min-height:40px}
+.warn{border-left:4px solid #f0c182;padding:10px 14px;background:#23344a;color:#f4e2c6;border-radius:4px}
+</style>
+</head><body><main>
+<a href="./">← Torna al Censimento aziende</a>
+<p class="eyebrow">IMMOBILIARE LA SACRA · LOTTI GIORNALIERI DA 280</p>
+<h1>Apri il lotto aziendale cifrato</h1>
+<p class="muted">Carica il file <code>.case247</code> scaricato da GitHub Actions e la tua chiave privata <code>.pem</code>. La pagina restituisce un file ZIP con Excel, CSV e riepilogo.</p>
+<div class="warn"><strong>Protezione dei contatti:</strong> questa pagina non invia nulla a internet. La chiave privata resta nel browser e non viene archiviata. Non caricarla su GitHub o in una cartella pubblica.</div>
+<section class="card">
+<label for="archive">1. Lotto cifrato (.case247)</label>
+<input id="archive" type="file" accept=".case247,application/octet-stream" required/>
+<label for="key">2. Chiave privata La Sacra (.pem)</label>
+<input id="key" type="file" accept=".pem,text/plain" required/>
+<button id="decrypt" type="button">Decifra e scarica Excel + CSV</button>
+<p id="status" role="status" aria-live="polite">In attesa dei due file.</p>
+</section>
+<section class="card"><h2>Dove trovare i lotti</h2>
+<p>Vai alle <a target="_blank" rel="noopener" href="https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/actions/workflows/la-sacra-nightly-280.yml">esecuzioni notturne su GitHub</a>. Apri quella del giorno e scarica l'artefatto <strong>LA-SACRA-CIFRATO</strong>.</p>
+<p class="muted">Ogni ZIP può contenere fino a 280 righe. Le email pubbliche non costituiscono autorizzazioni a inviare pubblicità: il CSV per campagne autorizzate è inizialmente vuoto.</p></section>
+</main>
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+function parsePem(pem){
+ const match=pem.match(/-----BEGIN PRIVATE KEY-----([\s\S]*?)-----END PRIVATE KEY-----/);
+ if(!match)throw Error("La chiave non è un file PKCS8 valido.");
+ const raw=atob(match[1].replace(/\s+/g,""));
+ return Uint8Array.from(raw,c=>c.charCodeAt(0));
+}
+function b64bytes(value){return Uint8Array.from(atob(value),c=>c.charCodeAt(0))}
+async function decryptPackage(bytes,pem){
+ const magic=new TextEncoder().encode("CASE247ENC1\n");
+ const buf=new Uint8Array(bytes);
+ if(buf.length<16+32||!magic.every((v,i)=>buf[i]===v))throw Error("Il file non è un archivio CASE247.");
+ const headerLen=new DataView(bytes).getUint32(magic.length,false);
+ if(headerLen<100||headerLen>10000||16+headerLen>=buf.length)throw Error("Intestazione non valida.");
+ const meta=JSON.parse(new TextDecoder().decode(buf.slice(16,16+headerLen)));
+ if(meta.version!==1)throw Error("Versione di archivio non supportata.");
+ const privateKey=await crypto.subtle.importKey("pkcs8",parsePem(pem),{name:"RSA-OAEP",hash:"SHA-256"},false,["decrypt"]);
+ const rawKey=await crypto.subtle.decrypt({name:"RSA-OAEP"},privateKey,b64bytes(meta.wrapped_key));
+ const aes=await crypto.subtle.importKey("raw",rawKey,{name:"AES-GCM"},false,["decrypt"]);
+ return await crypto.subtle.decrypt({name:"AES-GCM",iv:b64bytes(meta.nonce)},aes,buf.slice(16+headerLen));
+}
+$("decrypt").addEventListener("click",async()=>{
+ const a=$("archive").files[0],k=$("key").files[0],button=$("decrypt");
+ if(!a||!k){$("status").textContent="Seleziona entrambi i file.";return}
+ if(a.size>150*1024*1024){$("status").textContent="Archivio troppo grande.";return}
+ button.disabled=true;$("status").textContent="Decifratura in corso, esclusivamente in questo browser...";
+ try{
+   const result=await decryptPackage(await a.arrayBuffer(),await k.text());
+   const url=URL.createObjectURL(new Blob([result],{type:"application/zip"}));
+   const link=document.createElement("a");link.href=url;
+   link.download=a.name.replace(/\.case247$/i,"")+"_EXCEL_CSV.zip";document.body.append(link);link.click();link.remove();
+   setTimeout(()=>URL.revokeObjectURL(url),30000);
+   $("status").textContent="Lotto decifrato. Estrai lo ZIP per ottenere Excel e CSV.";
+ }catch(error){
+   $("status").textContent="Decifratura non riuscita. Controlla archivio e chiave privata. Dettaglio: "+(error?.message||"errore crittografico");
+ }finally{button.disabled=false}
+});
+</script></body></html>
