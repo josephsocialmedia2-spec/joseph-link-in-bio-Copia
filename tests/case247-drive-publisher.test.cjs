@@ -10,7 +10,7 @@ test('Drive publisher and editor scripts are valid Javascript',()=>{
   assert.doesNotThrow(()=>new vm.Script(app));
 });
 test('Drive setup UI and customer link actions exist',()=>{
-  for(const id of ['googleOAuthClientId','configureDrive','connectDrive','driveStatus','driveResult','driveCustomerLink','copyDriveLink','whatsappDriveLink'])
+  for(const id of ['googleOAuthClientId','connectDrive','driveStatus','driveResult','driveCustomerLink','copyDriveLink','whatsappDriveLink'])
     assert.match(html,new RegExp('id="'+id+'"'));
   assert.match(html,/src="https:\/\/accounts\.google\.com\/gsi\/client"/);
   assert.match(html,/drive-publisher\.js/);
@@ -44,6 +44,7 @@ test('No real ID hardcoded, token client ID validated',()=>{
  assert.equal(module.exports.validClientId('1234567890-test-abc.apps.googleusercontent.com'),true);
  assert.equal(module.exports.validClientId('secret-token'),false);
  assert.equal(module.exports.validClientId(''),false);
+ assert.equal(module.exports.getConfiguredId(),'329979188953-pp3odbtatu7hen8pni86grui0bevt8dg.apps.googleusercontent.com');
 });
 
 test('Uploaded PDFs are directed to the actual VOLANTINO folder and parent is verified',()=>{
@@ -53,4 +54,12 @@ test('Uploaded PDFs are directed to the actual VOLANTINO folder and parent is ve
  assert.match(js,/location\.parents\.includes\(FOLDER_ID\)/);
  assert.match(html,/Cartella VOLANTINO/);
  assert.match(html,new RegExp(folder));
+});
+
+test('Web client is preconfigured, without user needing to paste the ID',()=>{
+ assert.match(js,/const DEFAULT_CLIENT_ID='329979188953-pp3odbtatu7hen8pni86grui0bevt8dg\.apps\.googleusercontent\.com'/);
+ assert.match(html,/id="googleOAuthClientId"[^>]+readonly/);
+ assert.match(html,/Autorizza Google Drive/);
+ assert.doesNotMatch(html,/id="configureDrive"/);
+ assert.match(app,/await Drive\.authorize\(\)/);
 });
