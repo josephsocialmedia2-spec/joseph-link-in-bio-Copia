@@ -28,6 +28,14 @@ class SitemapTests(unittest.TestCase):
     def test_read_config_source_empty_is_accepted(self):
         sm.read_config(Path(__file__).resolve().parents[1] / "config/case247-sitemaps.json")
 
+    def test_sitemap_category_urls_are_not_individual_properties(self):
+        self.assertFalse(sm.is_individual_listing("https://www.immobiliare.it/vendita-negozi/avigliana/"))
+        self.assertFalse(sm.is_individual_listing("https://www.immobiliare.it/affitto-capannoni/almese/"))
+        self.assertFalse(sm.is_individual_listing("https://example.it/annunci/case-in-vendita/condove/"))
+        self.assertTrue(sm.is_individual_listing("https://www.immobiliare.it/annunci/123456789/"))
+        self.assertTrue(sm.is_individual_listing("https://www.casadaprivato.it/case-indipendenti/villa-torino-123456"))
+        self.assertTrue(sm.is_individual_listing("https://example.it/annuncio/avigliana-123"))
+
     def test_sitemap_nested_index_and_scope(self):
         calls = []
         def fetch(url):
