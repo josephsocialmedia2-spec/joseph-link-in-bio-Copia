@@ -4,12 +4,14 @@ on:
     paths:
       - 'catalogo-premium/**'
       - 'tests/case247-catalogo-premium.test.cjs'
+      - 'tests/la-sacra-joseph-request-form.test.cjs'
       - '.github/workflows/la-sacra-catalogo-premium.yml'
   push:
     branches: [main]
     paths:
       - 'catalogo-premium/**'
       - 'tests/case247-catalogo-premium.test.cjs'
+      - 'tests/la-sacra-joseph-request-form.test.cjs'
       - '.github/workflows/la-sacra-catalogo-premium.yml'
   workflow_dispatch:
 permissions:
@@ -24,7 +26,7 @@ jobs:
         with:
           node-version: '22'
       - name: Validazione catalogo premium
-        run: node --test tests/case247-catalogo-premium.test.cjs
+        run: node --test tests/case247-catalogo-premium.test.cjs tests/la-sacra-joseph-request-form.test.cjs
       - name: Verifica JSON e sintassi JavaScript
         run: |
           node --check catalogo-premium/catalogo.js
