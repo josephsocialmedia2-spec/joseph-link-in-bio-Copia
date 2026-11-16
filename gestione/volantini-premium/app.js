@@ -333,8 +333,9 @@
     const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),12000);
   }
   async function exportPdf(definitive=false){
-    if(loading)return;loading=true;$('exportPdf').disabled=true;$('exportFinalPdf').disabled=true;setStatus(definitive?'Verifica finale prima della generazione...':'Preparazione PDF per stampa di prova...');
-    if(Boolean(externalLeft)!==Boolean(externalRight)){setStatus('Carica ENTRAMBI i volantini A5 prima di esportare il fronte.','warn');loading=false;$('exportPdf').disabled=false;$('exportFinalPdf').disabled=false;return;}
+    const draftToDrive=definitive==='draft';
+    if(loading)return;loading=true;$('exportPdf').disabled=true;$('exportFinalPdf').disabled=true;$('uploadDraftDrive').disabled=true;setStatus(definitive===true?'Verifica finale prima della generazione...':draftToDrive?'Preparazione BOZZA privata per Google Drive...':'Preparazione PDF per stampa di prova...');
+    if(Boolean(externalLeft)!==Boolean(externalRight)){setStatus('Carica ENTRAMBI i volantini A5 prima di esportare il fronte.','warn');loading=false;$('exportPdf').disabled=false;$('exportFinalPdf').disabled=false;$('uploadDraftDrive').disabled=false;return;}
     try{
       await loadCatalog(true);
       const issues=showPreflight();
@@ -343,13 +344,19 @@
       if(invalid.length)throw Error(invalid.length+" annunci non verificati nel catalogo ufficiale: esportazione bloccata.");
       const qrProblems=QR.verifyAssociations(model.properties,whatsappFor(activeProfile()));
       if(qrProblems.length)throw Error(qrProblems.join(' · '));
-      if(definitive&&!Drive?.isConnected())throw Error('Google Drive non collegato: premi «Collega Google Drive» prima del PDF definitivo.');
+      if((definitive===true||draftToDrive)&&!Drive?.isConnected())throw Error('Google Drive non autorizzato: premi «Autorizza Google Drive» prima di salvare.');
       const proof=issues.length>0;
-      if(proof&&definitive)throw Error(`Impossibile generare il PDF definitivo: ${issues.length} verifiche aperte. Usa «PDF per stampa di prova» per scaricare automaticamente la BOZZA.`);
+      if(proof&&definitive===true)throw Error(`Impossibile generare il PDF definitivo: ${issues.length} verifiche aperte. Usa «PDF per stampa di prova» per scaricare automaticamente la BOZZA.`);
       const result=await PDF.exportPdf({flyer:$('flyer'),properties:model.properties,externalLeft,externalRight,
-        externalLeftPage:Number($('outerLeftPage').value)||1,externalRightPage:Number($('outerRightPage').value)||1,watermark:!definitive,whatsappUrl:whatsappFor(activeProfile()),filename:(definitive?'DEFINITIVO':'BOZZA_STAMPA')+'_Volantino_A4_'+activeProfile().name+'.pdf'});
+        externalLeftPage:Number($('outerLeftPage').value)||1,externalRightPage:Number($('outerRightPage').value)||1,watermark:definitive!==true,whatsappUrl:whatsappFor(activeProfile()),filename:(definitive===true?'DEFINITIVO':draftToDrive?'BOZZA_DRIVE_PRIVATA':'BOZZA_STAMPA')+'_Volantino_A4_'+activeProfile().name+'.pdf'});
       const q=Math.round(result.minModuleMm*100)/100;
-      if(definitive){
+      if(draftToDrive){
+        clearDriveLink();
+        driveStatus('Salvataggio della BOZZA PRIVATA nella cartella VOLANTINO in corso…');
+        const draft=await Drive.uploadPrivateDraft(result.bytes,'BOZZA_NON_DISTRIBUIRE_Immobiliare_La_Sacra_'+activeProfile().name+'_'+new Date().toISOString().slice(0,10)+'.pdf');
+        driveStatus('BOZZA PRIVATA salvata nella cartella VOLANTINO. Nessun link cliente creato.','good');
+        setStatus('BOZZA caricata su Google Drive (privata), '+result.pages+' pagine, '+issues.length+' verifiche aperte. Non distribuire ai clienti.','good');
+      }else if(definitive===true){
         clearDriveLink();
         driveStatus('PDF validato. Caricamento su Google Drive in corso…');
         try{
@@ -363,7 +370,7 @@
       }else{
         setStatus(`PDF di prova scaricato: ${result.pages} pagine, ${result.qrCount} QR. ${result.missingImages?result.missingImages+' immagini omesse. ':''}BOZZA — NON DISTRIBUIRE. Nessuna condivisione Drive.`,'good');
       }
-    }catch(e){setStatus('Esportazione interrotta: '+e.message,'warn');console.error(e);}finally{loading=false;$('exportPdf').disabled=false;$('exportFinalPdf').disabled=false;}
+    }catch(e){setStatus('Esportazione interrotta: '+e.message,'warn');console.error(e);}finally{loading=false;$('exportPdf').disabled=false;$('exportFinalPdf').disabled=false;$('uploadDraftDrive').disabled=false;}
   }
   
   function downloadBlob(blob,name){
@@ -479,6 +486,7 @@
     $('saveProject').onclick=()=>{save();setStatus('Progetto salvato nel browser.','good')};
     $('downloadProject').onclick=()=>jsonDownload({...model,savedAt:new Date().toISOString()},'CASE247_studio_volantini.json');
     $('exportPdf').onclick=()=>exportPdf(false);
+    $('uploadDraftDrive').onclick=()=>exportPdf('draft');
     $('exportFinalPdf').onclick=()=>exportPdf(true);
     $('generateAll').onclick=exportAll;
     setStatus('Editor pronto. Le immagini mancanti saranno sostituite con segnaposto dichiarati.');
