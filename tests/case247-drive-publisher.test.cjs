@@ -30,12 +30,12 @@ test('Upload is multipart/related and public link requires confirmed read-only p
   assert.match(js,/info\.permissions\.some\(p=>p\.type==='anyone'&&p\.role==='reader'\)/);
   assert.match(js,/!allowed\|\|!info\.webViewLink/);
 });
-test('Only a validated final PDF is auto-uploaded, draft is local only',()=>{
+test('Only a validated final PDF is made public; Drive drafts stay private',()=>{
   const body=app.slice(app.indexOf('async function exportPdf('),app.indexOf('function downloadBlob('));
   assert.match(body,/if\(proof&&definitive\)throw Error/);
   assert.match(body,/if\(definitive&&!Drive\?\.isConnected\(\)\)/);
   assert.match(body,/if\(definitive\)\{[\s\S]*Drive\.uploadVerifiedPdf/);
-  assert.match(body,/watermark:!definitive/);
+  assert.match(body,/watermark:definitive!==true/);
   assert.match(body,/PDF di prova scaricato/);
 });
 test('No real ID hardcoded, token client ID validated',()=>{
@@ -62,4 +62,16 @@ test('Web client is preconfigured, without user needing to paste the ID',()=>{
  assert.match(html,/Autorizza Google Drive/);
  assert.doesNotMatch(html,/id="configureDrive"/);
  assert.match(app,/await Drive\.authorize\(\)/);
+});
+
+test('Private draft upload remains separate from public permission update',()=>{
+ const start=js.indexOf('async function uploadPrivateDraft(');
+ const end=js.indexOf('async function uploadVerifiedPdf(',start);
+ assert.ok(start>0&&end>start);
+ const body=js.slice(start,end);
+ assert.match(body,/parents:\[FOLDER_ID\]/);
+ assert.doesNotMatch(body,/permissions\?fields/);
+ assert.match(body,/private:true/);
+ assert.match(html,/id="uploadDraftDrive"/);
+ assert.match(app,/Drive\.uploadPrivateDraft\(result\.bytes/);
 });
