@@ -26,6 +26,7 @@ HEADERS = (
     "Comune", "Fonte", "URL fonte", "Titolo", "Via", "Prezzo EUR", "Superficie mq",
     "Venditore", "Contattabilita", "Possibile duplicato", "Link annuncio",
     "Ultimo aggiornamento", "Esito verifica", "Categoria mercato", "Stato rilevazione",
+    "Telefono nel report", "Altri link associati", "Incrocio con altra fonte",
 )
 SOURCE_HEADERS = ("Fonte", "Comune", "Esito", "Totale dichiarato", "Link estratti", "URL indice")
 
@@ -133,19 +134,34 @@ def merge(parts: list[dict], history: list[dict] | None = None, now: datetime | 
     if history:
         all_rows.extend(cached_rows(sources, history, now))
     grouped = {}
+    explicit_relations = []
     for row in all_rows:
         town = row.get("town")
         url = normalize_url(row.get("url", ""))
         if town not in TOWNS or not url:
             continue
         key = url
-        name = str(row.get("source") or "Fonte pubblica")[:70]
+        name = str(row.get("source") or
+                   " | ".join(row.get("sources", [])) or "Fonte pubblica")[:160]
+        # Relations may be trusted ONLY when explicitly present in a user-authorized
+        # idealista/tools export. Never infer equivalence from price/mq alone.
+        related = [normalize_url(link) for link in row.get("related_urls", [])
+                   if isinstance(link, str)]
+        related = list(dict.fromkeys(link for link in related if link and link != url))
+        if row.get("source_type") == "IDEALISTA_TOOLS_EXPORT" and related:
+            explicit_relations.append((url, town, related))
+        else:
+            related = []
         if key not in grouped:
             grouped[key] = {
                 "town": town, "url": url, "title": row.get("title", "") or "Annuncio senza titolo",
                 "street": row.get("street", "") or "", "price": _number(row.get("price")),
                 "mq": _number(row.get("mq")), "sources": [name],
-                "source_urls": [url],
+                "source_urls": [url] + related,
+                "related_urls": related,
+                "linked_matches": [],
+                "phone_availability": row.get("phone_availability", "NON_DISPONIBILE"),
+                "crosspost_evidence": "LINK ASSOCIATI NEL REPORT IDEALISTA" if related else "",
                 "owner_status": row.get("owner_status", "DA_VERIFICARE"),
                 "contact_permission": "DA_VERIFICARE",
                 "last_modified": row.get("last_modified", ""),
@@ -155,8 +171,9 @@ def merge(parts: list[dict], history: list[dict] | None = None, now: datetime | 
                 "stale": bool(row.get("stale", False)),
                 "market_segment": "AGENZIA" if row.get("source_type") == "AGENZIA" or
                     "AGENZIA" in str(row.get("owner_status", "")) else
+                    "PRIVATO - DA VERIFICARE" if row.get("source_type") == "IDEALISTA_TOOLS_EXPORT" else
                     "PORTALE PRIVATI - DA VERIFICARE" if name == "CasaDaPrivato" else
-                    "MERCATO - DA VERIFICARE",
+                    row.get("market_segment") or "MERCATO - DA VERIFICARE",
             }
         else:
             g = grouped[key]
@@ -171,6 +188,15 @@ def merge(parts: list[dict], history: list[dict] | None = None, now: datetime | 
                 # Never silently change municipality.
             if name not in g["sources"]:
                 g["sources"].append(name)
+            for related_url in related:
+                if related_url not in g["related_urls"]:
+                    g["related_urls"].append(related_url)
+                if related_url not in g["source_urls"]:
+                    g["source_urls"].append(related_url)
+            if related:
+                g["crosspost_evidence"] = "LINK ASSOCIATI NEL REPORT IDEALISTA"
+            if row.get("phone_availability") == "PRESENTE_NEL_FILE_DA_VERIFICARE":
+                g["phone_availability"] = "PRESENTE_NEL_FILE_DA_VERIFICARE"
             for field in ("street", "last_modified"):
                 if not g.get(field) and row.get(field):
                     g[field] = row[field]
@@ -186,6 +212,24 @@ def merge(parts: list[dict], history: list[dict] | None = None, now: datetime | 
         elif g["contact_permission"] != "NO PROPOSTE COMMERCIALI":
             # Never infer YES from 'privato' or 'no agenzie'.
             g["contact_permission"] = "DA_VERIFICARE BASE GIURIDICA"
+    # Cross-post comparison: the linked URL must also be independently present
+    # in the current dataset to count as an observed overlap.
+    for primary, town, links in explicit_relations:
+        first = grouped.get(primary)
+        if not first or first["town"] != town:
+            continue
+        for link in links:
+            other = grouped.get(link)
+            if not other or other["town"] != town:
+                continue
+            if link not in first["linked_matches"]:
+                first["linked_matches"].append(link)
+            if primary not in other["linked_matches"]:
+                other["linked_matches"].append(primary)
+            first["possibly_duplicate"] = True
+            other["possibly_duplicate"] = True
+            first["crosspost_evidence"] = "LINK INCROCIATO: REPORT IDEALISTA + FONTE"
+            other["crosspost_evidence"] = "LINK INCROCIATO: REPORT IDEALISTA + FONTE"
     buckets = defaultdict(list)
     for g in grouped.values():
         k = _candidate_key(g)
@@ -197,12 +241,14 @@ def merge(parts: list[dict], history: list[dict] | None = None, now: datetime | 
                 item["possibly_duplicate"] = True
     records = sorted(grouped.values(), key=lambda x: (TOWNS.index(x["town"]), x["title"].casefold(), x["url"]))
     counts = {town: sum(r["town"] == town for r in records) for town in TOWNS}
-    source_outages = sum(s["status"] not in ("OK", "SOLO_CONSULTAZIONE") for s in sources)
+    source_outages = sum(s["status"] not in ("OK", "SOLO_CONSULTAZIONE", "IMPORT_UTENTE") for s in sources)
     return {
         "as_of_rome": datetime.now(ROME).isoformat(timespec="seconds"),
         "scope": list(TOWNS), "status": "PARZIALE" if source_outages else "OK",
         "listing_count": len(records),
         "possible_duplicate_count": sum(r["possibly_duplicate"] for r in records),
+        "crosspost_records": sum(bool(r["related_urls"]) for r in records),
+        "independent_crosspost_matches": sum(bool(r["linked_matches"]) for r in records),
         "counts": counts, "source_errors": source_outages,
         "sources": sources, "listings": records,
     }
@@ -238,6 +284,7 @@ def render_markdown(result: dict) -> str:
             lines.append(
                 f"- [{row['title']}]({row['url']}) · {', '.join(row['sources'])}"
                 + (" · ARCHIVIO, DA RIVERIFICARE" if row.get("stale") else "")
+                + (" · possibili pubblicazioni multiple: " + ", ".join(row["related_urls"][:5]) if row["related_urls"] else "")
                 + (" · potenziale duplicato" if row["possibly_duplicate"] else "")
                 + (" · **non usare per proposte commerciali**" if row["contact_permission"] == "NO PROPOSTE COMMERCIALI" else "")
             )
@@ -248,7 +295,9 @@ def render_markdown(result: dict) -> str:
             f"- {source['source']} {source['town']}: {source['status']}, link {source['extracted_links']}, "
             f"totale pagina {source['reported_count'] if source['reported_count'] is not None else 'N/D'}."
         )
-    lines += ["", "Le aste PVP sono una fonte ufficiale di consultazione separata, non un catalogo acquisito automaticamente e non annunci privati.",
+    lines += ["", "**Incrocio tra portali:** i collegamenti attribuiti allo stesso immobile in un export idealista/tools sono associati come evidenza, non cancellati. Comune+prezzo+mq rimangono solo un'indicazione di possibile doppione.",
+              "**Recapiti:** l'eventuale presenza di un numero nell'export richiede verifica della sua pubblicità e della base giuridica per l'uso; nessun numero è incluso negli artifact.",
+              "Le aste PVP sono una fonte ufficiale di consultazione separata, non un catalogo acquisito automaticamente e non annunci privati.",
               "Il file Excel completo e i JSON della scansione sono negli artifact GitHub dell'esecuzione."]
     return "\n".join(lines) + "\n"
 
@@ -305,6 +354,8 @@ def write_xlsx(data: dict, output: Path) -> None:
             row["contact_permission"], "VERIFICARE" if row["possibly_duplicate"] else "",
             row["url"], row["last_modified"], row["verification"], row["market_segment"],
             "ARCHIVIO 72H" if row.get("stale") else "SCANSIONE CORRENTE",
+            row["phone_availability"], ", ".join(row["related_urls"]),
+            row["crosspost_evidence"],
         ])
     source_rows = [
         [r.get("source"), r.get("town"), r.get("status"), r.get("reported_count"),
@@ -317,9 +368,11 @@ def write_xlsx(data: dict, output: Path) -> None:
         ["TOTALE", data["listing_count"], "Rilevazione parziale; verificare fonti"],
         ["POTENZIALI DOPPIONI", data["possible_duplicate_count"], "Mai eliminati automaticamente"],
         ["FONTI CON PROBLEMI", data["source_errors"], "N/D non equivale a zero immobili"],
+        ["ANNUNCI CON LINK INCROCIATI", data["crosspost_records"], "Link indicati nello stesso export idealista/tools"],
+        ["INCROCI ANCHE NEL RADAR", data["independent_crosspost_matches"], "Collegamenti riconosciuti su fonti indipendenti"],
     ]
     sheets = [
-        ("Annunci", HEADERS, listings, [25,24,38,46,28,16,16,33,35,23,53,22,35,28,24]),
+        ("Annunci", HEADERS, listings, [25,24,38,46,28,16,16,33,35,23,53,22,35,28,24,30,55,48]),
         ("Fonti", SOURCE_HEADERS, source_rows, [28,26,30,21,19,64]),
         ("Riepilogo", ("Comune / KPI","Valore","Interpretazione"), overview_rows, [32,16,70]),
     ]
@@ -359,7 +412,13 @@ def main():
     ap.add_argument("--inputs-dir", type=Path, default=Path("_market_parts"))
     ap.add_argument("--out", type=Path, default=Path("_market"))
     ap.add_argument("--history-dir", type=Path, default=None)
+    ap.add_argument("--idealista-export", type=Path, default=None,
+                    help="Optional user-authorized CSV or XLSX export to merge privately")
+    ap.add_argument("--authorized-export", action="store_true",
+                    help="Explicitly confirm the right to process the supplied file")
     args = ap.parse_args()
+    if args.idealista_export and not args.authorized_export:
+        ap.error("--idealista-export requires --authorized-export")
     args.out.mkdir(parents=True, exist_ok=True)
     history = []
     if args.history_dir and args.history_dir.exists():
@@ -370,7 +429,11 @@ def main():
                     history.append(item)
             except (OSError, ValueError):
                 continue
-    result = merge(load_parts(args.inputs_dir), history=history)
+    parts = load_parts(args.inputs_dir)
+    if args.idealista_export:
+        from case247_idealista_export import parse_export
+        parts.append(parse_export(args.idealista_export))
+    result = merge(parts, history=history)
     (args.out/"inventory.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (args.out/"market.md").write_text(render_markdown(result), encoding="utf-8")
     with (args.out/"inventory.csv").open("w", encoding="utf-8-sig", newline="") as fd:
@@ -383,11 +446,13 @@ def main():
                 row["contact_permission"], "VERIFICARE" if row["possibly_duplicate"] else "",
                 row["url"], row["last_modified"], row["verification"], row["market_segment"],
                 "ARCHIVIO 72H" if row.get("stale") else "SCANSIONE CORRENTE",
+                row["phone_availability"], ", ".join(row["related_urls"]),
+                row["crosspost_evidence"],
             ])
     file = args.out / f"CASE247_Immobili_4_Comuni_{datetime.now(ROME).date().isoformat()}.xlsx"
     write_xlsx(result, file)
     archived = sum(bool(r.get("stale")) for r in result["listings"])
-    print(f"CASE247_CONSOLIDATED links={result['listing_count']} archived_recheck={archived} potential_duplicates={result['possible_duplicate_count']} sources_with_issues={result['source_errors']} xlsx={file.name}")
+    print(f"CASE247_CONSOLIDATED links={result['listing_count']} archived_recheck={archived} potential_duplicates={result['possible_duplicate_count']} crossposts={result['crosspost_records']} matched={result['independent_crosspost_matches']} sources_with_issues={result['source_errors']} xlsx={file.name}")
 
 
 if __name__ == "__main__":

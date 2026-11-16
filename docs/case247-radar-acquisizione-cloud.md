@@ -131,3 +131,33 @@ Se una fonte prima funzionante risulta temporaneamente `ROBOTS_NON_VERIFICABILE`
 Non si riutilizzano link quando il sito nega esplicitamente il permesso di lettura mediante robots.txt. I collegamenti più vecchi di 72 ore vengono rimossi dalla cache del riepilogo, senza scambiare la loro assenza per una vendita conclusa. L'ultimo controllo live può quindi avere meno link correnti del totale che include quelli storici: i due valori non vanno confusi.
 
 La raccolta delle 05:10 e l'unico riepilogo delle 06:00 restano invariati.
+
+
+## Incrocio CASE247 con idealista/tools — export autorizzato (16/11/2026)
+
+**Modalità verificata:** `idealista/tools` documenta il servizio `Acquisizione > Evoluzione dei privati` con esportazione dei dati filtrati in **Excel**. `Acquisizione su mappa` mostra anche link dello stesso immobile su altri portali e agenzie; non è però garantito che le relative colonne siano presenti in ogni export Excel o in tutti gli abbonamenti. Non è stata verificata alcuna API pubblica per leggere direttamente l'account: CASE247 utilizza esclusivamente file XLSX/CSV forniti dall'utente con diritto di accesso.
+
+Riferimenti ufficiali:
+- https://www.idealista.com/tools/centrodeayuda/it/articulos/evoluzione-dei-privati/
+- https://www.idealista.it/tools/centrodeayuda/it/articulos/acquisizione-su-mappa/
+
+### Procedura tecnica — niente password o scraping
+
+1. Con un account professionale e accesso a `idealista/tools`, nel menu `Acquisizione > Evoluzione dei privati` filtra **vendita** e una zona autorizzata: Avigliana, Sant'Ambrogio di Torino, Almese, Condove. Esporta in Excel solo i dati cui hai diritto di accesso.
+2. Salva l'originale fuori dal repository, ad esempio `private-exports/idealista_tools_personale.xlsx`, e **non** caricarlo su GitHub. La CLI supporta anche CSV con intestazioni `Comune` e `Link annuncio` (obbligatorie); `Altri portali`, `Titolo`, `Indirizzo`, `Prezzo`, `Mq`, `Telefono`, `Operazione` sono opzionali. Se i titoli di colonna effettivi differiscono, va adattata la mappatura, non inventati valori.
+3. Scarica da GitHub Actions gli artifact di **fonti** dell'inventario corrente (i JSON dei job `case247-part-portals` e `case247-part-sitemaps`) e decomprimili in cartelle sotto `_market_parts/`. Se questi file mancano, l'elaborazione importerà solo l'export idealista, **non** farà alcun confronto con il Radar.
+4. Esegui in un ambiente locale o riservato, senza trasmettere gli export originali al repository:
+
+```bash
+python scripts/case247_market_consolidate.py --inputs-dir _market_parts --idealista-export "private-exports/idealista_tools_personale.xlsx" --authorized-export --out _market
+```
+
+L'output `_market/CASE247_Immobili_4_Comuni_YYYY-MM-DD.xlsx` conserva i tre fogli `Annunci`, `Fonti`, `Riepilogo`. In `Annunci` compaiono `Altri link associati`, `Incrocio con altra fonte` e `Telefono nel report`. Vengono considerate corrispondenze da revisione i link esplicitamente associati allo stesso annuncio nell'export, se trovati anche nel Radar. Per prezzo+mq+comune non avvengono fusioni automatiche. Gli URL delle agenzie e dei privati rimangono verificabili singolarmente.
+
+### Telefono: protezione dei recapiti
+
+L'importer `scripts/case247_idealista_export.py` accetta solo export forniti con l'opzione `--authorized-export`. **Non esporta numeri di telefono, indirizzi email personali o nominativi** nei report CASE247 o negli artifact GitHub. Il campo `Telefono nel report` indica soltanto `PRESENTE_NEL_FILE_DA_VERIFICARE` o `NON_RILEVATO`: non significa che il numero sia pubblicamente visibile, né che sia lecito inviare offerte commerciali. L'eventuale gestione dei contatti e delle basi giuridiche va mantenuta in un CRM privato conforme alle autorizzazioni disponibili. Se non c'è un recapito pubblicamente reso disponibile, CASE247 non tenta di estrarre numeri nascosti.
+
+### Automazione
+
+La scansione **05:10** dei siti pubblici e il **solo riepilogo alle 06:00** rimangono attivi e indipendenti dall'export. L'**import idealista non è collegato automaticamente** alla scansione, poiché non è stato fornito né verificato un accesso autorizzato al servizio o un canale di esportazione automatico. Non si accedono a contenuti riservati tramite bypass. La CI verifica il parser dei file ed eventuali incroci con dati sintetici, non l'account professionale dell'utente.

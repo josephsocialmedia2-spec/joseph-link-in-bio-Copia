@@ -18,3 +18,13 @@ privacy-censimento/*-clienti.csv
 
 __pycache__/
 *.pyc
+
+# CASE247 - export originali idealista/tools e file di lavoro privati
+# Non commettere sul repository export contenenti recapiti di proprietari.
+private-exports/
+_private_exports/
+_market_parts/
+_market_history/
+_market/
+*idealista*export*.csv
+*idealista*export*.xlsx
