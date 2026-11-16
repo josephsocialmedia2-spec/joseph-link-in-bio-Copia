@@ -218,7 +218,10 @@ def valida_comune(s: Signals) -> tuple[str, str]:
                 candidate = canonical_town(crumb)
                 if candidate:
                     found.add(candidate)
-        return (next(iter(found)), "Verificato") if len(found) == 1 else ("", "Comune_Da_Verificare")
+        if len(found) == 1:
+            return next(iter(found)), "Verificato"
+        if len(found) > 1:
+            return "", "Comune_Da_Verificare"  # conflicting breadcrumbs: fail closed
     # Last-resort specific property heading, never arbitrary descriptive text.
     # "Rustico in vendita a Condove" is evidence; "a 5 minuti da Condove" is not.
     matches = []
