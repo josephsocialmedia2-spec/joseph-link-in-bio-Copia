@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>Studio Volantini · Joseph, Christian, Ylenia</title>
-<link rel="stylesheet" href="./styles.css?v=20261116-fronte-retro">
+<link rel="stylesheet" href="./styles.css?v=20261116-due-a5">
 <!-- Librerie client-side, versioni fissate: installare copie locali per produzione offline. -->
 <script defer src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -15,9 +15,9 @@
 <script defer src="./branding-logo.js?v=20261111-tre-referenti-v1"></script>
 <script defer src="./core.js"></script>
 <script defer src="./qr.js"></script>
-<script defer src="./pdf-engine.js?v=20261111-tre-referenti-v1"></script>
+<script defer src="./pdf-engine.js?v=20261116-due-a5"></script>
 <script defer src="./portrait-default.js"></script>
-<script defer src="./app.js?v=20261116-avigliana-audit-preview"></script>
+<script defer src="./app.js?v=20261116-due-a5"></script>
 </head>
 <body>
 <header class="workspace-head no-print">
@@ -47,9 +47,14 @@
     <h2>03 · Materiale grafico</h2>
     <label>Fotografia di Joseph (preferibile PNG trasparente; non usata per Christian e Ylenia)<input id="portraitInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
     <label>Panorama reale di Avigliana (JPG/PNG)<input id="panoramaInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
-    <label>Facciata esterna da abbinare (PDF/JPG/PNG)<input id="outerInput" type="file" accept="application/pdf,image/png,image/jpeg"></label>
-    <label>Pagina esterna se PDF multipagina<input id="outerPage" type="number" min="1" step="1" value="1"></label>
-    <div class="hint" id="outerDescription">Facciata esterna: non caricata. In questo caso sarà generata una sola pagina PDF.</div><button type="button" id="clearOuter">Rimuovi facciata esterna</button>
+    <h2>FRONTE ESTERNO · Due volantini A5 verticali</h2>
+    <p class="hint">Carica entrambi i volantini A5: saranno affiancati SINISTRA + DESTRA per formare una pagina A4 orizzontale, senza sovrapposizioni.</p>
+    <label>A5 SINISTRA (PDF/JPG/PNG)<input id="outerLeftInput" type="file" accept="application/pdf,image/png,image/jpeg"></label>
+    <label>Pagina PDF A5 sinistra<input id="outerLeftPage" type="number" min="1" step="1" value="1"></label>
+    <label>A5 DESTRA (PDF/JPG/PNG)<input id="outerRightInput" type="file" accept="application/pdf,image/png,image/jpeg"></label>
+    <label>Pagina PDF A5 destra<input id="outerRightPage" type="number" min="1" step="1" value="1"></label>
+    <div class="hint" id="outerDescription" role="status">Fronte non completo: carica entrambi i volantini A5 per creare il PDF fronte/retro.</div>
+    <button type="button" id="clearOuter">Rimuovi entrambi gli A5</button>
   </aside>
   <main class="panel preview-panel">
     <nav class="flyer-side-nav no-print" aria-label="Seleziona la facciata del volantino">
@@ -96,9 +101,12 @@
     </div></div>
     <p class="flyer-side-caption">RETRO — Questa è la facciata posteriore che sarà stampata con le schede immobiliari, fotografie, prezzi e QR.</p>
     </section>
-    <section id="fronte-volantino" class="outer-preview-panel" aria-label="Anteprima della facciata esterna"><div class="preview-toolbar"><div><h2>FRONTE · Facciata esterna — A4 orizzontale</h2><small>Facciata 1 nel PDF fronte/retro</small></div><span id="outerPreviewState" class="hint">Nessun file caricato</span></div><div id="outerPreview" class="outer-preview"><p>Carica la facciata esterna in PDF, JPG o PNG dalla colonna sinistra per visualizzarla qui prima di generare il PDF.</p></div></section><div id="status" role="status" class="message">Preparazione...</div>
+    <section id="fronte-volantino" class="outer-preview-panel" aria-label="Anteprima della facciata esterna"><div class="preview-toolbar"><div><h2>FRONTE · 2 × A5 affiancati = A4 orizzontale</h2><small>A5 sinistra + A5 destra, pagina 1 del PDF</small></div><span id="outerPreviewState" class="hint">A5 sinistra e destra da caricare</span></div><div id="outerPreview" class="outer-preview outer-a5-pair">
+      <div class="outer-a5-item"><strong>A5 SINISTRA</strong><div id="outerLeftPreview" class="outer-a5-page"><p>Carica il volantino A5 sinistro.</p></div></div>
+      <div class="outer-a5-item"><strong>A5 DESTRA</strong><div id="outerRightPreview" class="outer-a5-page"><p>Carica il volantino A5 destro.</p></div></div>
+    </div></section><div id="status" role="status" class="message">Preparazione...</div>
     <div id="preflight" class="preflight"></div>
-    <p class="hint">La facciata esterna appare nell’anteprima qui sopra. Il PDF contiene pagina 1 FRONTE e pagina 2 RETRO solo quando l’esterno è caricato. Le schede senza annuncio ufficiale nel catalogo non sono autorizzate per la stampa.</p>
+    <p class="hint">Il fronte è formato da due A5 affiancati. Con entrambi gli A5 caricati, il PDF contiene pagina 1 FRONTE A4 e pagina 2 RETRO con 18 immobili. Con uno solo dei due A5 l’esportazione viene bloccata. Le schede senza annuncio ufficiale nel catalogo non sono autorizzate per la stampa.</p>
   </main>
 </div>
 <dialog id="listingDialog" class="edit-dialog">
