@@ -1,49 +1,13 @@
-name: La Sacra · Censimento attività 20 km
+name: La Sacra - Censimento legacy sospeso
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'scripts/la-sacra-censimento-20km.py'
-      - '.github/workflows/la-sacra-censimento-20km.yml'
-  schedule:
-    - cron: '17 5 1 * *'
 permissions:
   contents: read
 jobs:
-  census:
+  legacy:
     runs-on: ubuntu-latest
-    timeout-minutes: 55
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Verifica sintassi
-        run: python -m py_compile scripts/la-sacra-censimento-20km.py
-      - name: Ricerca pubblica senza limite artificiale di risultati
-        run: python scripts/la-sacra-censimento-20km.py
-      - name: Archivia CSV per Excel, non pubblicare contatti sul sito
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: la-sacra-censimento-attivita-avigliana-20km
-          path: artifacts/la-sacra-censimento/
-          if-no-files-found: warn
-          retention-days: 30
-      - name: Conteggi nel riepilogo
-        if: always()
+      - name: Non esportare CSV di contatti in chiaro dal repository pubblico
         run: |
-          if [ -f artifacts/la-sacra-censimento/riepilogo.json ]; then
-            python - <<'PY'
-          import json, os
-          p='artifacts/la-sacra-censimento/riepilogo.json'
-          j=json.load(open(p))
-          lines=['## Censimento attività - Avigliana 20 km',
-            f"Attività OSM censite: **{j['attivita_osm_uniche']}**",
-            f"Email pubbliche: **{j['email_osm_pubbliche']}** (consenso marketing non verificato)",
-            f"Comuni completati: **{j['comuni_riusciti']} / {j['comuni_richiesti']}**",
-            "CSV completo disponibile come artifact dell'esecuzione (non sul sito pubblico)."]
-          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:f.write('\n\n'.join(lines))
-          PY
-          fi
+          echo "Workflow legacy disattivato per sicurezza."
+          echo "Utilizzare LA SACRA - Ricerca notturna 23-04 - 280 aziende giornaliere."
