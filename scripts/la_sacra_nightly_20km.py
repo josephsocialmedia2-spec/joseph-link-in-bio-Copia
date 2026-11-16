@@ -4,7 +4,7 @@ Nessun destinatario autorizzato per inferenza; nessuna email viene inviata.
 Fonte OSM: https://www.openstreetmap.org/copyright (ODbL).
 """
 from __future__ import annotations
-import argparse, base64, csv, datetime as dt, io, json, math, os, re, sys, time, urllib.parse, urllib.request, urllib.robotparser, zipfile
+import argparse, base64, csv, datetime as dt, hashlib, io, json, math, os, re, sys, time, urllib.parse, urllib.request, urllib.robotparser, zipfile
 from pathlib import Path
 from html.parser import HTMLParser
 from zoneinfo import ZoneInfo
@@ -179,6 +179,14 @@ def rotate(rows,seen,day):
             if buckets[name]:out.append(buckets[name].pop(0))
     return out
 
+def fingerprint(r):
+    # Il repository pubblico memorizza solo un hash dell'identita aziendale.
+    # Distinguere sedi diverse quando esiste un indirizzo specifico.
+    def clean(v):
+        return re.sub(r"[^a-z0-9]+","",str(v or "").casefold())
+    identity="|".join([clean(r["name"]),clean(r["town"]),clean(r["address"]) or clean(r["site"])])
+    return hashlib.sha256(identity.encode("utf-8")).hexdigest()
+
 def values(r,index):
     dork="https://www.google.com/search?q="+urllib.parse.quote('"'+r["name"]+'" "partita iva" "'+r["town"]+'"')
     status="PARZIALE / DA_VERIFICARE" if not (r["vat"] and r["email"] and r["phone"]) else "CHECKSUM_OK / ALTRI_CONTROLLI"
@@ -296,9 +304,15 @@ def main(argv=None):
             if r:unique.setdefault(r["id"],r)
         except (ValueError,TypeError,KeyError):pass
     rows=[]
+    fingerprints=set(state.get("seen_fingerprints",[]))
     for r in rotate(list(unique.values()),set(state["seen"]),day):
         if len(rows)>=args.max_rows or time.monotonic()>deadline-60:break
         if not args.fixture:enrich(r,deadline)
+        # Un contatto richiede almeno un recapito pubblico. Mai inventare email o telefono.
+        if not (r["email"] or r["phone"]):continue
+        fp=fingerprint(r)
+        if fp in fingerprints:continue
+        fingerprints.add(fp)
         rows.append(r)
     if not rows:
         print("ZERO nuovi nominativi; non creare lotti vuoti");return 0
@@ -308,6 +322,7 @@ def main(argv=None):
     target.write_bytes(encrypted(blob,Path(args.public_key).read_bytes()))
     if not args.dry_run:
         state["seen"]=sorted(set(state["seen"])|{r["id"] for r in rows})
+        state["seen_fingerprints"]=sorted(fingerprints)
         state["batches"].append({"date":str(day),"count":len(rows),"file":target.name,"source_tiles_ok":ok})
         statepath.parent.mkdir(parents=True,exist_ok=True)
         statepath.write_text(json.dumps(state,indent=2,ensure_ascii=False)+"\n",encoding="utf-8")
