@@ -219,6 +219,20 @@ def valida_comune(s: Signals) -> tuple[str, str]:
                 if candidate:
                     found.add(candidate)
         return (next(iter(found)), "Verificato") if len(found) == 1 else ("", "Comune_Da_Verificare")
+    # Last-resort specific property heading, never arbitrary descriptive text.
+    # "Rustico in vendita a Condove" is evidence; "a 5 minuti da Condove" is not.
+    matches = []
+    for heading in s.h1:
+        m = re.search(
+            r"\b(?:in vendita|vendesi)\s+(?:a|ad)\s+"
+            r"(Avigliana|Almese|Condove|Sant[’']?Ambrogio(?:\s+di\s+Torino)?)\b",
+            heading, re.I
+        )
+        if m:
+            candidate = canonical_town(m.group(1))
+            if candidate: matches.append(candidate)
+    if len(set(matches)) == 1:
+        return matches[0], "Verificato"
     return "", "Comune_Da_Verificare"
 
 
@@ -307,7 +321,9 @@ def enrich_sources(parts: list[dict], downloader=None, per_host: int = 8,
         def downloader(url):
             req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "text/html"})
             with urllib.request.urlopen(req, timeout=8) as response:
-                if urllib.parse.urlsplit(response.geturl()).hostname != urllib.parse.urlsplit(url).hostname:
+                before = (urllib.parse.urlsplit(url).hostname or "").removeprefix("www.")
+                after = (urllib.parse.urlsplit(response.geturl()).hostname or "").removeprefix("www.")
+                if before != after:
                     raise ValueError("cross-origin redirect")
                 return response.read(1_000_000).decode("utf-8", "replace")
     robots, counts, checked = {}, {}, 0
@@ -319,7 +335,8 @@ def enrich_sources(parts: list[dict], downloader=None, per_host: int = 8,
             row["contract_status"] = "Contratto_Da_Verificare"
             source = row.get("source", "")
             url = row.get("url", "")
-            host = (urllib.parse.urlsplit(url).hostname or "").lower().removeprefix("www.")
+            raw_host = (urllib.parse.urlsplit(url).hostname or "").lower()
+            host = raw_host.removeprefix("www.")
             row["nature"] = classify_seller(source, row.get("source_type", ""), url, None)
             row["contact_status"] = contact_state(row["nature"], source, row.get("contact_permission",""), False)
             if row.get("stale") or host not in DETAIL_HOSTS or counts.get(host, 0) >= per_host:
@@ -327,7 +344,7 @@ def enrich_sources(parts: list[dict], downloader=None, per_host: int = 8,
             if host not in robots:
                 try:
                     rules = urllib.robotparser.RobotFileParser()
-                    rules.parse(downloader("https://" + host + "/robots.txt").splitlines())
+                    rules.parse(downloader("https://" + raw_host + "/robots.txt").splitlines())
                     robots[host] = rules
                 except Exception:
                     robots[host] = None
