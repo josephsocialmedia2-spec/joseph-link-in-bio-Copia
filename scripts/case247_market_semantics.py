@@ -7,7 +7,7 @@ Never save telephone numbers, names, cookies or personal emails in artifacts.
 """
 from __future__ import annotations
 
-import html
+import html as html_module
 import json
 import re
 import time
@@ -152,7 +152,7 @@ def structured_data(scripts: list[str]) -> list[dict]:
         except (TypeError, ValueError):
             # Some sites HTML-encode JSON-LD inside their script tags.
             try:
-                item = json.loads(html.unescape(script))
+                item = json.loads(html_module.unescape(script))
             except (TypeError, ValueError):
                 continue
         pending = item if isinstance(item, list) else [item]
@@ -353,7 +353,7 @@ def inspect_html(html: str, source: str, source_type: str, url: str,
     # Include listing-specific JSON-LD descriptions: often the opt-out appears
     # only in structured description, not in visible page paragraphs.
     listing_descriptions = [
-        html.unescape(str(o.get("description", "")))[:1200]
+        html_module.unescape(str(o.get("description", "")))[:1200]
         for o in structured_data(p.scripts)
         if _jsonld_type(o) in PROPERTY_TYPES and isinstance(o.get("description"), str)
     ]
