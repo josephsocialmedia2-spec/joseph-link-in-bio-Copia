@@ -53,6 +53,18 @@ class SitemapTests(unittest.TestCase):
             "https://lasacraimmobiliare.it/products/appartamento-sa-santambrogio"),
             "Sant'Ambrogio di Torino")
 
+    def test_no_rental_or_border_landmark_false_positives(self):
+        self.assertFalse(sm.is_individual_listing(
+            "https://lasacraimmobiliare.it/products/casa-semindipendente-in-affitto-a-sant-ambrogio"))
+        self.assertFalse(sm.is_individual_listing(
+            "https://lasacraimmobiliare.it/products/bilocale-in-locazione-a-santambrogio"))
+        self.assertEqual(sm.municipality(
+            "https://lasacraimmobiliare.it/products/bifamiliare-in-vendita-ai-confini-di-avigliana-con-terrazzo"), "")
+        self.assertTrue(sm.is_individual_listing(
+            "https://lasacraimmobiliare.it/products/bilocale-in-vendita-a-sant-ambrogio"))
+        self.assertEqual(sm.municipality(
+            "https://lasacraimmobiliare.it/products/bilocale-in-vendita-a-sant-ambrogio"), "Sant'Ambrogio di Torino")
+
     def test_agency_results_not_marked_private(self):
         xml = b'<urlset><url><loc>https://teckimmobiliare.it/properties/appartamento/avigliana/trilocale-con-vista</loc></url></urlset>'
         def fetch(url):
