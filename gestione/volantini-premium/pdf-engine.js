@@ -22,26 +22,38 @@
     const a=document.createElement('a');a.href=u;a.download=filename;
     document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),25000);
   }
-  async function addExternalPage(doc,file,pageNumber){
-    if(!file)return;
-    const pdf=global.PDFLib,page=doc.addPage([W,H]),bytes=await file.arrayBuffer();
-    let obj,w,h,draw;
+  /* Due pagine A5 verticali vengono montate sulla stessa facciata A4 orizzontale.
+     I due originali vengono ridimensionati proporzionalmente, senza taglio o distorsione. */
+  async function drawA5(doc,page,file,pageNumber,x){
+    const pdf=global.PDFLib,bytes=await file.arrayBuffer();
+    const half=W/2;
+    let w,h,draw;
     if(file.type==='application/pdf'){
       const src=await pdf.PDFDocument.load(bytes,{ignoreEncryption:false});
-      const idx=Math.max(0,Math.trunc(Number(pageNumber)||1)-1);
-      if(idx>=src.getPageCount())throw Error('Numero pagina esterna fuori intervallo');
-      const [embedded]=await doc.embedPdf(bytes,[idx]);
+      const index=Math.trunc(Number(pageNumber)||1)-1;
+      if(index<0||index>=src.getPageCount())throw Error('Pagina PDF A5 non disponibile: '+file.name);
+      const [embedded]=await doc.embedPdf(bytes,[index]);
       w=embedded.width;h=embedded.height;
-      draw=(x,y,width,height)=>page.drawPage(embedded,{x,y,width,height});
-    } else if(file.type==='image/png'||file.type==='image/jpeg'){
-      obj=file.type==='image/png'?await doc.embedPng(bytes):await doc.embedJpg(bytes);
-      w=obj.width;h=obj.height;draw=(x,y,width,height)=>page.drawImage(obj,{x,y,width,height});
-    }else throw Error('Esterno non supportato: usare PDF, PNG o JPEG');
-    const scale=Math.min(W/w,H/h);const ww=w*scale,hh=h*scale;
-    page.drawRectangle({x:0,y:0,width:W,height:H,color:pdf.rgb(1,1,1)});
-    draw((W-ww)/2,(H-hh)/2,ww,hh);
+      draw=(cx,cy,cw,ch)=>page.drawPage(embedded,{x:cx,y:cy,width:cw,height:ch});
+    }else if(file.type==='image/png'||file.type==='image/jpeg'){
+      const pic=file.type==='image/png'?await doc.embedPng(bytes):await doc.embedJpg(bytes);
+      w=pic.width;h=pic.height;
+      draw=(cx,cy,cw,ch)=>page.drawImage(pic,{x:cx,y:cy,width:cw,height:ch});
+    }else throw Error('A5 non supportato: usare PDF, PNG o JPG');
+    if(w>=h)throw Error('Il volantino '+file.name+' deve essere A5 verticale, non orizzontale.');
+    const scale=Math.min(half/w,H/h);
+    const targetWidth=w*scale,targetHeight=h*scale;
+    draw(x+(half-targetWidth)/2,(H-targetHeight)/2,targetWidth,targetHeight);
   }
-  async function exportPdf({flyer, properties, externalFile=null,externalPage=1,watermark=true, filename,whatsappUrl,autoDownload=true}){
+  async function addExternalPage(doc,left,right,leftPage,rightPage){
+    if(!left&&!right)return;
+    if(!left||!right)throw Error('Per il FRONTE servono entrambi i volantini A5: SINISTRA e DESTRA.');
+    const page=doc.addPage([W,H]);
+    page.drawRectangle({x:0,y:0,width:W,height:H,color:global.PDFLib.rgb(1,1,1)});
+    await drawA5(doc,page,left,leftPage,0);
+    await drawA5(doc,page,right,rightPage,W/2);
+  }
+  async function exportPdf({flyer, properties, externalLeft=null,externalRight=null,externalLeftPage=1,externalRightPage=1,watermark=true, filename,whatsappUrl,autoDownload=true}){
     if(!global.PDFLib||!global.html2canvas||!global.CASE247_QR)throw Error('Librerie PDF/QR non disponibili. Serve una connessione Internet o le librerie JS locali.');
     if(!flyer)throw Error('Anteprima non trovata');
     const urlWhatsApp=whatsappUrl||`https://wa.me/39${global.CASE247_CONFIG.phone}?text=${encodeURIComponent(global.CASE247_CONFIG.whatsappText)}`;
@@ -50,7 +62,7 @@
     if(!(await waitAllImages(flyer)))throw Error('Una o più immagini non sono state caricate. Attendi o sostituiscile.');
     const {PDFDocument,rgb,degrees,StandardFonts}=global.PDFLib;
     const pdf=await PDFDocument.create();
-    if(externalFile)await addExternalPage(pdf,externalFile,externalPage);
+    if(externalLeft||externalRight)await addExternalPage(pdf,externalLeft,externalRight,externalLeftPage,externalRightPage);
     const capture=await global.html2canvas(flyer,{
       backgroundColor:'#ffffff',scale:3,useCORS:true,allowTaint:false,logging:false,
       width:1122,height:794,windowWidth:1400,scrollX:0,scrollY:0,
