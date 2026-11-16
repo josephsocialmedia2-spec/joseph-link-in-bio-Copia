@@ -32,8 +32,8 @@ page=files[FILES[0]];notice=files[FILES[1]];revoke=files[FILES[2]];admin=files[F
 server=files[FILES[4]];staff=files[FILES[5]]
 # On the current public site the old CASE247 form was deliberately retired.
 # Protect the closed state instead of requiring fields that would reopen it.
-no_local_form = not re.search(r"<form\\b", page, flags=re.IGNORECASE)
-no_inline_submission = not re.search(r"<script\\b", page, flags=re.IGNORECASE)
+no_local_form = not re.search(r"<form\b", page, flags=re.IGNORECASE)
+no_inline_submission = not re.search(r"<script\b", page, flags=re.IGNORECASE)
 check("LEGACY_INBOUND_TYPES_REMOVED", no_local_form and
       all(v not in page for v in ("CERCO_CASA","VOGLIO_VENDERE","ATTIVITA_IMMOBILE")))
 check("LEGACY_PROMOTIONAL_OPTINS_REMOVED",
@@ -43,7 +43,7 @@ check("RETIRED_INTAKE_NOT_SUBMITTABLE", no_local_form and no_inline_submission a
       "precedente modulo di consenso non è utilizzato" in page and
       'https://wa.me/393462568685' in page)
 check("DRAFT_PRIVACY",("Documento operativo in revisione" in notice and
-      bool(re.search(r"DRAFT-CASE247-\\d{4}-\\d{2}-\\d{2}-\\d{2}",notice)) and
+      bool(re.search(r"DRAFT-CASE247-\d{4}-\d{2}-\d{2}-\d{2}",notice)) and
       "modulo resta tecnicamente disabilitata" in notice))
 check("CONTROLLER_CONFIRMED_BUT_RELEASE_BLOCKED",("Joseph Malafronte, persona fisica" in notice and "non equivale ad approvazione" in notice and "DA VERIFICARE" not in notice))
 check("LANDING_ROUTES_TO_LICENSED_PARTNER", no_local_form and
