@@ -120,3 +120,5 @@ Queste fonti sono **annunci di agenzia, NON annunci di proprietario privato**. S
 Il criterio generico `/<annuncio>/...<ID>` rimane prudente; non viene imposto a domini reali che usano slug descrittivi senza numero (per i quali esistono regole specifiche). L'inventario è un'analisi del mercato pubblico, non un elenco di proprietari contattabili.
 
 **Orari:** la raccolta resta alle **05:10 Europe/Rome**, il messaggio unico alle **06:00 Europe/Rome**. Anche con 50 minuti di margine GitHub Actions non garantisce esecuzione o notifica puntuale; uno spostamento alle 04:45 resta opzionale e non è stato fatto senza necessità comprovata.
+
+**Filtro vendite del 16/11/2026:** durante la prima acquisizione reale di sitemap d'agenzia sono emerse URL di locazione esplicita e schede descritte «ai confini di Avigliana». Il parser ora scarta le URL che dichiarano affitto/locazione e rifiuta località usate soltanto come prossimità (es. ai confini di, vicino a, a pochi minuti da). Queste esclusioni sono conservative e possono lasciare fuori casi dubbi: nessun URL ambiguo viene presentato come vendita certa nel comune richiesto.
