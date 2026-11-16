@@ -9,8 +9,7 @@ from __future__ import annotations
 
 import argparse
 import csv
-import hashlib
-import io
+ import io
 import json
 import re
 import unicodedata
@@ -34,7 +33,7 @@ ALIASES = {
     "town": ("comune", "citta", "localita", "municipio"),
     "url": ("url", "link annuncio", "url annuncio", "link all annuncio", "annuncio", "collegamento annuncio", "link"),
     "crosspost": ("altri portali", "altri siti", "link altri siti", "link su altri siti", "altri annunci", "link fonti", "altre pubblicazioni", "url altri portali"),
-    "title": ("titolo", "descrizione", "tipo immobile", "tipologia"),
+    "title": ("titolo", "tipo immobile", "tipologia"),
     "street": ("indirizzo", "via", "indirizzo immobile"),
     "price": ("prezzo", "prezzo euro", "prezzo vendita", "prezzo attuale", "prezzo corrente"),
     "sqm": ("mq", "m2", "metri quadrati", "superficie", "superficie mq"),
@@ -82,6 +81,13 @@ def _number(value: str) -> int | None:
         # For a surface, 75.5 -> 76; caller decides what is meaningful.
         return int(round(float(value.replace(",", "."))))
     return None
+
+
+def public_label(value: str, limit: int = 160) -> str:
+    """Redact numbers/emails that might appear in free-text labels."""
+    value = re.sub(r"(?i)[\w.+-]+@[\w.-]+\.[a-z]{2,}", "[EMAIL]", value)
+    value = re.sub(r"(?<!\d)(?:\+?\d[\d .-]{6,}\d)(?!\d)", "[TELEFONO]", value)
+    return value.replace("<", "").replace(">", "")[:limit]
 
 
 def csv_rows(path: Path) -> list[list[str]]:
@@ -216,8 +222,8 @@ def parse_export(path: Path) -> dict:
         item = {
             "town": town, "source": "idealista/tools · esportazione autorizzata",
             "source_type": "IDEALISTA_TOOLS_EXPORT", "url": main_url,
-            "title": take(row, "title")[:160] or "Immobile privato - da verificare",
-            "street": take(row, "street")[:120],
+            "title": public_label(take(row, "title")) or "Immobile privato - da verificare",
+            "street": public_label(take(row, "street"), 120),
             "price": price, "mq": sqm,
             "last_modified": take(row, "published")[:30],
             "owner_status": "PRIVATO_DA_VERIFICARE",
