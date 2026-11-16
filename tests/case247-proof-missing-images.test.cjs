@@ -24,7 +24,7 @@ test('Broken image is reported but draft is not blocked by preflight',async()=>{
 });
 test('Preview is explicitly watermarked while definitive stays strict',()=>{
  const section=app.slice(app.indexOf('async function exportPdf('),app.indexOf('function downloadBlob('));
- assert.match(section,/watermark:!definitive/);
+ assert.match(section,/watermark:definitive!==true/);
  assert.match(section,/result\.missingImages/);
  assert.match(section,/if\(proof&&definitive\)/);
  assert.doesNotMatch(section,/confirm\s*\(/);
