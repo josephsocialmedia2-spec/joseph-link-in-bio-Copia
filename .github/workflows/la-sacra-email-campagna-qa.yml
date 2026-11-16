@@ -1,0 +1,26 @@
+name: La Sacra Email Campagne QA
+on:
+  pull_request:
+    paths:
+      - 'campagne/immobiliare/la-sacra-attivita-vendita-email.html'
+      - 'tests/case247-la-sacra-email-campagna.test.cjs'
+      - '.github/workflows/la-sacra-email-campagna-qa.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'campagne/immobiliare/la-sacra-attivita-vendita-email.html'
+      - 'tests/case247-la-sacra-email-campagna.test.cjs'
+      - '.github/workflows/la-sacra-email-campagna-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test tests/case247-la-sacra-email-campagna.test.cjs
