@@ -1,0 +1,59 @@
+name: CASE247 · Inventario pubblico mercato 4 comuni
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/case247-market-inventory.yml'
+      - 'scripts/case247_market_inventory.py'
+      - 'scripts/test_case247_market_inventory.py'
+  pull_request:
+    paths:
+      - '.github/workflows/case247-market-inventory.yml'
+      - 'scripts/case247_market_inventory.py'
+      - 'scripts/test_case247_market_inventory.py'
+  workflow_dispatch:
+  schedule:
+    # Un solo passaggio al giorno, prima del riepilogo alle 06:00 italiane.
+    - cron: '10 5 * * *'
+      timezone: "Europe/Rome"
+permissions:
+  contents: read
+concurrency:
+  group: case247-market-inventory
+  cancel-in-progress: false
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Offline validation
+        run: |
+          python -m py_compile scripts/case247_market_inventory.py
+          python -m unittest discover -s scripts -p test_case247_market_inventory.py -v
+
+  inventory:
+    needs: qa
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Public index scan (only if robots permit)
+        run: python scripts/case247_market_inventory.py --out _market
+      - name: Save market source URLs and status, no notification
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: case247-market-inventory
+          path: |
+            _market/inventory.json
+            _market/market.md
+          if-no-files-found: warn
+          retention-days: 14
