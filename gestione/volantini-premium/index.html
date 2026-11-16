@@ -18,8 +18,8 @@
 <script defer src="./pdf-engine.js?v=20261116-due-a5"></script>
 <script defer src="./portrait-default.js"></script>
 <script defer src="https://accounts.google.com/gsi/client"></script>
-<script defer src="./drive-publisher.js?v=20261116-drive-v1"></script>
-<script defer src="./app.js?v=20261116-drive-v1"></script>
+<script defer src="./drive-publisher.js?v=20261116-volantino-folder"></script>
+<script defer src="./app.js?v=20261116-volantino-folder"></script>
 </head>
 <body>
 <header class="workspace-head no-print">
@@ -69,15 +69,16 @@
       <a href="#retro-volantino" class="flyer-side-link">02 · RETRO <small>18 immobili + QR</small></a>
     </nav>
     <section class="drive-publish-panel no-print" aria-label="Pubblicazione PDF verificato su Google Drive">
-      <h2>Google Drive · Link cliente</h2><p class="hint"><strong>Pronta per le telefonate:</strong> <a href="./cliente-avigliana/" target="_blank" rel="noopener noreferrer" style="color:#b2efff;text-decoration:underline">Apri brochure informativa pubblica Avigliana</a>. È distinta dal volantino definitivo con 18 annunci, ancora da verificare.</p>
-      <p class="hint">Dopo l’autorizzazione, <strong>PDF definitivo verificato</strong> carica automaticamente il volantino su Drive e crea un link accessibile in sola lettura. I PDF di prova restano sul tuo dispositivo e non vengono condivisi.</p>
+      <h2>Google Drive · Cartella VOLANTINO</h2>
+      <p class="hint">Cartella predisposta nell'account principale: <a href="https://drive.google.com/drive/folders/1fk3pG5Pci0AQGhqbCiFr8eN7axwxsbO7" target="_blank" rel="noopener noreferrer" style="color:#a9eafa;text-decoration:underline">Apri VOLANTINO su Google Drive</a>. I PDF definitivi vengono salvati qui, non nella cartella principale.</p><p class="hint"><strong>Pronta per le telefonate:</strong> <a href="./cliente-avigliana/" target="_blank" rel="noopener noreferrer" style="color:#b2efff;text-decoration:underline">Apri brochure informativa pubblica Avigliana</a>. È distinta dal volantino definitivo con 18 annunci, ancora da verificare.</p>
+      <p class="hint">Dopo l’autorizzazione Google del sito, <strong>PDF definitivo + Drive</strong> carica il volantino nella cartella VOLANTINO e crea un link cliente in sola lettura soltanto dopo che Google ha confermato upload e permessi. I PDF di prova restano sul tuo dispositivo e non vengono condivisi.</p>
       <div class="drive-connect-controls">
         <label for="googleOAuthClientId">Google OAuth Client ID web</label>
         <input id="googleOAuthClientId" autocomplete="off" spellcheck="false" placeholder="1234567890-....apps.googleusercontent.com" aria-describedby="driveSetupHint">
         <button type="button" id="configureDrive">Salva configurazione</button>
         <button type="button" id="connectDrive" class="primary">Collega Google Drive</button>
       </div>
-      <p class="hint" id="driveSetupHint">Configurazione iniziale: OAuth Client ID dell’app web autorizzata per <code>https://josephsocialmedia2-spec.github.io</code>, Google Drive API abilitata. Non inserire password, chiavi segrete o service-account JSON.</p>
+      <p class="hint" id="driveSetupHint">Google Drive è già collegato a ChatGPT, ma il sito GitHub Pages richiede una propria autorizzazione OAuth. Inserisci il Client ID web Google Cloud (origine JavaScript <code>https://josephsocialmedia2-spec.github.io</code>) e autorizza l’accesso a Drive. L’app richiede accesso a Drive per utilizzare la cartella VOLANTINO preesistente; non inserire password o chiavi segrete qui.</p>
       <p id="driveStatus" class="message" role="status">Drive non collegato. Nessun caricamento automatico attivo.</p>
       <div id="driveResult" class="drive-result" hidden>
         <strong>Volantino definitivo pubblicato: link cliente</strong>

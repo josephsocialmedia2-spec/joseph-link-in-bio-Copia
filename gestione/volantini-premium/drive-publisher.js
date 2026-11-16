@@ -4,7 +4,11 @@
  */
 (function (global) {
   'use strict';
-  const SCOPE='https://www.googleapis.com/auth/drive.file';
+  const SCOPE='https://www.googleapis.com/auth/drive';
+  // User-owned existing folder created on Drive. Broader scope is needed because drive.file
+  // alone does not grant the app access to a folder created outside this OAuth application.
+  const FOLDER_ID='1fk3pG5Pci0AQGhqbCiFr8eN7axwxsbO7';
+  const FOLDER_URL='https://drive.google.com/drive/folders/'+FOLDER_ID;
   const SETTINGS_KEY='case247-google-oauth-client-id';
   const validClientId=value=>/^\d+-[a-z0-9-]+\.apps\.googleusercontent\.com$/.test(String(value||'').trim());
   let token=null,expiresAt=0,clientId='',client=null;
@@ -57,7 +61,7 @@
     const blob=new Blob([bytes],{type:'application/pdf'});
     if(!blob.size)throw Error('PDF vuoto: caricamento interrotto');
     const name=String(filename||'Volantino_Immobiliare_La_Sacra.pdf').replace(/[\\/]/g,'_');
-    const metadata={name,mimeType:'application/pdf',description:'Volantino immobiliare definitivo verificato · Immobiliare La Sacra'};
+    const metadata={name,mimeType:'application/pdf',parents:[FOLDER_ID],description:'Volantino immobiliare definitivo verificato · Immobiliare La Sacra'};
     // Google Drive uploadType=multipart requires multipart/related (not multipart/form-data).
     const boundary='case247_pdf_'+Math.random().toString(36).slice(2);
     const payload=new Blob([
@@ -70,6 +74,10 @@
       method:'POST',headers:{'Content-Type':'multipart/related; boundary='+boundary},body:payload
     });
     if(!uploaded.id)throw Error('Drive non ha restituito l’ID file: link non creato');
+    const location=await googleFetch('https://www.googleapis.com/drive/v3/files/'+encodeURIComponent(uploaded.id)+'?fields=id,name,parents');
+    if(!Array.isArray(location.parents)||!location.parents.includes(FOLDER_ID)){
+      throw Error('Drive ha caricato il PDF, ma non nella cartella VOLANTINO. Condivisione sospesa; controlla i permessi Google.');
+    }
     currentLink=null;
     // Public read-only link is an explicit choice in the UI. No editor permission is created.
     try{
@@ -88,7 +96,7 @@
       throw Error('PDF caricato su Drive, ma non condiviso con il cliente. '+error.message);
     }
   }
-  const publisher={configure,getConfiguredId,validClientId,isConnected,authorize,uploadVerifiedPdf,getLastLink:()=>currentLink};
+  const publisher={configure,getConfiguredId,validClientId,isConnected,authorize,uploadVerifiedPdf,getLastLink:()=>currentLink,getFolderUrl:()=>FOLDER_URL,getFolderId:()=>FOLDER_ID};
   global.CASE247_DRIVE=publisher;
   if(typeof module!=='undefined'&&module.exports)module.exports={validClientId};
 })(typeof window!=='undefined'?window:globalThis);

@@ -16,7 +16,7 @@ test('Drive setup UI and customer link actions exist',()=>{
   assert.match(html,/drive-publisher\.js/);
 });
 test('OAuth tokens are kept in memory, no service account on public site',()=>{
-  assert.match(js,/https:\/\/www\.googleapis\.com\/auth\/drive\.file/);
+  assert.match(js,/https:\/\/www\.googleapis\.com\/auth\/drive'/);
   assert.match(js,/initTokenClient/);
   assert.match(js,/hasGrantedAllScopes/);
   assert.match(js,/requestAccessToken\(\{prompt:'consent'\}\)/);
@@ -44,4 +44,13 @@ test('No real ID hardcoded, token client ID validated',()=>{
  assert.equal(module.exports.validClientId('1234567890-test-abc.apps.googleusercontent.com'),true);
  assert.equal(module.exports.validClientId('secret-token'),false);
  assert.equal(module.exports.validClientId(''),false);
+});
+
+test('Uploaded PDFs are directed to the actual VOLANTINO folder and parent is verified',()=>{
+ const folder='1fk3pG5Pci0AQGhqbCiFr8eN7axwxsbO7';
+ assert.match(js,new RegExp(folder));
+ assert.match(js,/parents:\[FOLDER_ID\]/);
+ assert.match(js,/location\.parents\.includes\(FOLDER_ID\)/);
+ assert.match(html,/Cartella VOLANTINO/);
+ assert.match(html,new RegExp(folder));
 });
