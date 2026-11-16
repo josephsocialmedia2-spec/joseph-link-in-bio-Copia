@@ -9,6 +9,8 @@ on:
       - 'scripts/case247_sitemap_sources.py'
       - 'scripts/case247_market_consolidate.py'
       - 'scripts/test_case247_market_pipeline.py'
+      - 'scripts/case247_idealista_export.py'
+      - 'scripts/test_case247_idealista_export.py'
       - 'config/case247-sitemaps.json'
   pull_request:
     paths:
@@ -18,6 +20,8 @@ on:
       - 'scripts/case247_sitemap_sources.py'
       - 'scripts/case247_market_consolidate.py'
       - 'scripts/test_case247_market_pipeline.py'
+      - 'scripts/case247_idealista_export.py'
+      - 'scripts/test_case247_idealista_export.py'
       - 'config/case247-sitemaps.json'
   workflow_dispatch:
   schedule:
@@ -42,9 +46,10 @@ jobs:
           python-version: '3.12'
       - name: Validate code and reproducible XLSX without internet
         run: |
-          python -m py_compile scripts/case247_market_inventory.py scripts/case247_sitemap_sources.py scripts/case247_market_consolidate.py
+          python -m py_compile scripts/case247_market_inventory.py scripts/case247_sitemap_sources.py scripts/case247_market_consolidate.py scripts/case247_idealista_export.py
           python -m unittest discover -s scripts -p test_case247_market_inventory.py -v
           python -m unittest discover -s scripts -p test_case247_market_pipeline.py -v
+          python -m unittest discover -s scripts -p test_case247_idealista_export.py -v
 
   scan-sources:
     needs: qa
