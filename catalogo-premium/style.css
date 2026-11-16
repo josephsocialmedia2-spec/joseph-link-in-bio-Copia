@@ -110,3 +110,73 @@
 @media(max-width:900px){.request-section{grid-template-columns:1fr;padding:22px}.request-form{border:0;border-top:1px solid #d8e3e9;padding:19px 0 0}}
 @media(max-width:600px){.request-fields{grid-template-columns:1fr}.request-section{margin:15px 0;padding:18px}.request-direct a{font-size:11px}.topbar .official-logo{width:48px;height:48px}.reader-top{margin-bottom:18px}.representative-action{padding:8px 9px;font-size:10px}.rep-line{font-size:11px}.privacy-document{margin:8px;padding:20px}.privacy-document h1{font-size:28px}}
 @media print{.request-section,.rep-line{display:none!important}}
+
+/* LA SACRA EDITORIAL 2026 — aderente al negozio ufficiale: bianco, navy e accento rosso. */
+body{background:#edf3f7;color:#0a3156;font-family:Arial,'Lato',sans-serif}
+.topbar{background:#fff;color:#0a3156;border-bottom:3px solid #cb2b28;box-shadow:0 5px 26px rgba(7,34,58,.07);min-height:102px}
+.identity strong{font-size:18px;color:#0b3155;letter-spacing:.1em}.identity small{color:#58728b}
+.official-logo{width:160px;max-width:160px;height:79px;object-fit:contain;background:#fff;padding:0}
+.topactions .textlink{color:#0a3156;font-weight:700}.topactions .contact-pill{background:#0a3156;color:#fff;border-radius:4px}
+.shell{max-width:1500px;padding:34px 27px}
+.reader-top{align-items:center;margin-bottom:27px}
+.reader-top h1{font-family:Georgia,serif;font-weight:600;color:#0b3155;font-size:clamp(29px,3vw,44px)}
+.reader{box-shadow:0 22px 68px #0b315529;border-radius:8px;border:1px solid #d5e1e8}
+.reader-frame{height:min(68vw,780px);min-height:600px;max-height:820px}
+.cover-photo{background-size:cover!important;background-position:center!important}
+.cover-shade{background:linear-gradient(90deg,rgba(0,19,39,.45),rgba(2,22,41,.13))!important}
+.cover-top{top:35px}.cover-brand-img{width:min(340px,48vw);max-height:95px;object-fit:contain;background:#fff;border-radius:4px;padding:7px 10px;filter:drop-shadow(0 5px 20px rgba(0,0,0,.12))}
+.cover-text{top:36%}.cover-text h2{font-family:Georgia,serif;font-size:clamp(48px,5.6vw,89px);text-shadow:0 3px 20px #001b37a8;line-height:1.05}
+.cover-text h2 em{color:#f3dfc1}
+.cover-bottom{font-weight:700}.reader-bottom{background:#fff}
+.reader-bottom button{border:1px solid #c9d8e2;color:#0b3155;border-radius:5px}
+.reader-bottom>button:last-child{background:#0a3156;color:#fff}
+.dots.many-pages{display:none}
+.page-listing-sheet{background:#f8fbfd}
+.page-listing-sheet .page-inner{padding:25px 34px 17px;gap:12px}
+.page-listing-sheet .eyebrow{font-size:12px;letter-spacing:.18em;margin:0;color:#0c527a}
+.page-listing-sheet .sheet-grid{display:block;flex:1;height:auto;min-height:0;grid-template-columns:none;grid-template-rows:none;gap:0}
+.page-listing-sheet .sheet-card{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(250px,1fr);height:100%;min-height:0;background:#fff;border:1px solid #dce7ee;border-radius:6px;box-shadow:0 8px 28px #092d5017;overflow:hidden}
+.page-listing-sheet .sheet-card .property-photo{position:relative;height:100%;min-height:0;overflow:hidden;background:#edf1f4}
+.page-listing-sheet .sheet-card .property-photo img{display:block;width:100%;height:100%;max-height:none;object-fit:cover;object-position:center;flex:none}
+.page-listing-sheet .sheet-card .content{height:100%;min-height:0;padding:clamp(18px,3vw,40px);display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:17px;overflow:hidden}
+.page-listing-sheet .sheet-card .location{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#0f6087;font-weight:700}
+.page-listing-sheet .sheet-card h3{font-family:Georgia,serif;color:#092b4b;font-size:clamp(24px,2.65vw,37px);font-weight:600;line-height:1.13;max-height:none;overflow:visible;margin:0}
+.page-listing-sheet .sheet-card .price{font-size:clamp(26px,3vw,38px);font-weight:800;color:#0d3656;margin:0}
+.page-listing-sheet .sheet-card .property-feature{font-size:13px}
+.page-listing-sheet .sheet-card .energy{font-size:11px;line-height:1.55;color:#876441;margin:0}
+.page-listing-sheet .sheet-card a{display:inline-block;background:#0d436d;padding:14px 19px;border-radius:3px;color:#fff;font-size:12px;font-weight:700;text-decoration:none}
+.page-listing-sheet .sheet-card a:hover{background:#16628e}
+.page-listing-sheet .page-tail{padding-top:9px;color:#637b8d;font-size:9px}
+.page-properties .page-inner{padding:32px 44px 20px}
+.page-properties .sheet-title{font-size:32px}
+.property-results .property-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.property-results .property-card{display:flex;flex-direction:column;border:1px solid #d9e5eb;border-radius:6px;overflow:hidden}
+.property-results .property-card .property-photo{height:230px;min-height:230px}
+.property-results .property-card .property-photo img{width:100%;height:100%;object-fit:cover}
+.property-results .property-card .content{padding:18px 20px}
+.property-results .property-card h3{font-size:18px}
+.property-results .property-card .price{font-size:22px}
+.photo-unavailable{background:#e3ebf0;color:#244760}
+.request-section{border-radius:8px;box-shadow:0 12px 35px #0d35591b}
+.request-intro h2{color:#0a3156}
+.form-actions button:first-child{background:#0a3156}
+@media(max-width:900px){.topbar{padding:14px 20px;min-height:85px}.official-logo{width:112px;height:57px}.reader-frame{height:min(155vw,850px);min-height:670px}.page-listing-sheet .page-inner{padding:17px 17px 14px;gap:7px}.page-listing-sheet .sheet-card{display:flex;flex-direction:column}.page-listing-sheet .sheet-card .property-photo{height:54%;min-height:54%;flex:0 0 54%}.page-listing-sheet .sheet-card .content{height:auto;min-height:0;padding:18px 18px 14px;justify-content:flex-start;gap:10px}.page-listing-sheet .sheet-card h3{font-size:clamp(22px,5vw,33px)}.page-listing-sheet .sheet-card .price{font-size:29px}.page-listing-sheet .sheet-card .energy{font-size:10px}.page-listing-sheet .sheet-card a{padding:9px 13px;font-size:11px}.property-results .property-grid{grid-template-columns:1fr}.cover-brand-img{width:min(250px,62vw)}}
+@media(max-width:600px){.topbar{gap:7px}.official-logo{width:72px;height:48px}.identity strong{font-size:10px}.identity small{font-size:7px}.topactions .contact-pill{font-size:9px;padding:9px 10px}.shell{padding:14px 10px}.reader-top h1{font-size:28px}.reader-frame{height:165vw;min-height:590px;max-height:735px}.page-listing-sheet .sheet-card .property-photo{height:51%;min-height:51%;flex-basis:51%}.page-listing-sheet .sheet-card .content{gap:8px;padding:14px}.page-listing-sheet .sheet-card h3{font-size:clamp(22px,5.5vw,27px)}.page-listing-sheet .sheet-card .price{font-size:26px}.page-listing-sheet .sheet-card .energy{font-size:9px}.page-listing-sheet .page-tail{font-size:7px}.cover-text h2{font-size:clamp(42px,11vw,66px)}}
+@media print{
+ @page{size:A4 landscape;margin:0}
+ .reader{border:0;border-radius:0;box-shadow:none}
+ .page-listing-sheet .page-inner{padding:10mm 12mm 8mm;gap:3mm}
+ .page-listing-sheet .sheet-grid{display:block!important;min-height:0!important}
+ .page-listing-sheet .sheet-card{display:grid!important;grid-template-columns:65% 35%!important;height:164mm!important;border:1px solid #ccdce6;box-shadow:none;border-radius:0}
+ .page-listing-sheet .sheet-card .property-photo{height:100%!important;min-height:0!important;max-height:none!important}
+ .page-listing-sheet .sheet-card .property-photo img{display:block!important;height:100%!important;width:100%!important;max-height:none!important;object-fit:cover!important}
+ .page-listing-sheet .sheet-card .content{height:100%!important;padding:10mm 7mm!important;gap:4mm;overflow:hidden!important}
+ .page-listing-sheet .sheet-card h3{font-size:24pt!important;line-height:1.1}
+ .page-listing-sheet .sheet-card .price{font-size:25pt!important}
+ .page-listing-sheet .sheet-card a{font-size:12pt!important}
+ .page-listing-sheet .sheet-card .energy{font-size:9pt!important}
+ .page-listing-sheet .page-tail{font-size:9pt!important}
+ .cover-brand-img{width:65mm!important;max-height:29mm}
+ .page-properties .property-results{display:none!important}
+ .page-properties .filters{display:none!important}
+}
