@@ -44,6 +44,7 @@ Il file ZIP ottenuto contiene un foglio Excel con massimo 280 aziende, CSV, riep
 - Alcune aziende possono non comparire in OSM o non avere dati di contatto.
 - Il scheduler GitHub Actions e **best effort**, può subire ritardi o mancate esecuzioni; controllare esiti nel tab Actions.
 - I dati rimangono cifrati anche se l'artifact e visibile su un repository pubblico, fintanto che la chiave privata e custodita.
+- Lo stato iniziale contiene 329 ID OSM derivati dagli archivi gia disponibili, per evitare di riciclare quei record nel primo lotto; nessuna email o telefono di tali archivi e stata pubblicata.
 - Le esecuzioni duplicate dello stesso giorno vengono ignorate tramite stato. Gli artifact decadono dopo 90 giorni, scaricarli periodicamente.
 
 **Nessun uso di TinyFish e Supabase.**
