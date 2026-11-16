@@ -6,6 +6,7 @@ on:
       - 'tests/case247-volantino-avigliana.test.cjs'
       - 'tests/case247-two-a5-front.test.cjs'
       - 'tests/case247-three-portraits.test.cjs'
+      - 'tests/case247-print-proof.test.cjs'
       - '.github/workflows/case247-volantino-avigliana.yml'
   workflow_dispatch:
 jobs:
@@ -22,4 +23,4 @@ jobs:
         run: |
           node --check gestione/volantini-premium/app.js
           node --check gestione/volantini-premium/pdf-engine.js
-          node --test tests/case247-volantino-avigliana.test.cjs tests/case247-two-a5-front.test.cjs tests/case247-three-portraits.test.cjs
+          node --test tests/case247-volantino-avigliana.test.cjs tests/case247-two-a5-front.test.cjs tests/case247-three-portraits.test.cjs tests/case247-print-proof.test.cjs

@@ -289,9 +289,9 @@
     const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
     const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),12000);
   }
-  async function exportPdf(){
-    if(loading)return;loading=true;$('exportPdf').disabled=true;setStatus('Preparazione PDF in corso...');
-    if(Boolean(externalLeft)!==Boolean(externalRight)){setStatus('Carica ENTRAMBI i volantini A5 prima di esportare il fronte.','warn');loading=false;$('exportPdf').disabled=false;return;}
+  async function exportPdf(definitive=false){
+    if(loading)return;loading=true;$('exportPdf').disabled=true;$('exportFinalPdf').disabled=true;setStatus(definitive?'Verifica finale prima della generazione...':'Preparazione PDF per stampa di prova...');
+    if(Boolean(externalLeft)!==Boolean(externalRight)){setStatus('Carica ENTRAMBI i volantini A5 prima di esportare il fronte.','warn');loading=false;$('exportPdf').disabled=false;$('exportFinalPdf').disabled=false;return;}
     try{
       await loadCatalog(true);
       const issues=showPreflight();
@@ -301,12 +301,12 @@
       const qrProblems=QR.verifyAssociations(model.properties,whatsappFor(activeProfile()));
       if(qrProblems.length)throw Error(qrProblems.join(' · '));
       const proof=issues.length>0;
-      if(proof&&!confirm(`Sono aperte ${issues.length} verifiche. Generare solo un PDF BOZZA non distribuibile?`))return;
+      if(proof&&definitive)throw Error(`Impossibile generare il PDF definitivo: ${issues.length} verifiche aperte. Usa «PDF per stampa di prova» per scaricare automaticamente la BOZZA.`);
       const result=await PDF.exportPdf({flyer:$('flyer'),properties:model.properties,externalLeft,externalRight,
-        externalLeftPage:Number($('outerLeftPage').value)||1,externalRightPage:Number($('outerRightPage').value)||1,watermark:proof,whatsappUrl:whatsappFor(activeProfile()),filename:'Volantino_A4_'+activeProfile().name+'.pdf'});
+        externalLeftPage:Number($('outerLeftPage').value)||1,externalRightPage:Number($('outerRightPage').value)||1,watermark:proof,whatsappUrl:whatsappFor(activeProfile()),filename:(definitive?'DEFINITIVO':'BOZZA_STAMPA')+'_Volantino_A4_'+activeProfile().name+'.pdf'});
       const q=Math.round(result.minModuleMm*100)/100;
       setStatus(`PDF esportato: ${result.pages} pagine, ${result.qrCount} QR vettoriali. Modulo minimo ${q} mm. ${proof?'BOZZA — NON DISTRIBUIRE.':'Verificare comunque la stampa su carta.'}`,'good');
-    }catch(e){setStatus('Esportazione interrotta: '+e.message,'warn');console.error(e);}finally{loading=false;$('exportPdf').disabled=false;}
+    }catch(e){setStatus('Esportazione interrotta: '+e.message,'warn');console.error(e);}finally{loading=false;$('exportPdf').disabled=false;$('exportFinalPdf').disabled=false;}
   }
   
   function downloadBlob(blob,name){
@@ -421,7 +421,8 @@
     $('deleteListing').onclick=()=>{if(selected<0)return;model.properties[selected]=null;save();$('listingDialog').close();render();};
     $('saveProject').onclick=()=>{save();setStatus('Progetto salvato nel browser.','good')};
     $('downloadProject').onclick=()=>jsonDownload({...model,savedAt:new Date().toISOString()},'CASE247_studio_volantini.json');
-    $('exportPdf').onclick=exportPdf;
+    $('exportPdf').onclick=()=>exportPdf(false);
+    $('exportFinalPdf').onclick=()=>exportPdf(true);
     $('generateAll').onclick=exportAll;
     setStatus('Editor pronto. Le immagini mancanti saranno sostituite con segnaposto dichiarati.');
   }

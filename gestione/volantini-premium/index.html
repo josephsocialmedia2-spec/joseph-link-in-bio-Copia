@@ -17,7 +17,7 @@
 <script defer src="./qr.js"></script>
 <script defer src="./pdf-engine.js?v=20261116-due-a5"></script>
 <script defer src="./portrait-default.js"></script>
-<script defer src="./app.js?v=20261116-foto-referenti"></script>
+<script defer src="./app.js?v=20261116-stampa-prova-v1"></script>
 </head>
 <body>
 <header class="workspace-head no-print">
@@ -68,7 +68,7 @@
     </nav>
     <section id="retro-volantino" class="flyer-side-section" aria-label="Retro del volantino con diciotto immobili">
     <div class="preview-toolbar"><div><h2>RETRO · 18 immobili e QR — A4 orizzontale</h2><small id="templateName">Modello 01</small></div>
-      <div class="action-row"><button id="saveProject">Salva dati</button><button id="downloadProject">Esporta JSON</button><button id="exportPdf" class="primary">Genera PDF referente selezionato</button></div>
+      <div class="action-row"><button id="saveProject">Salva dati</button><button id="downloadProject">Esporta JSON</button><button id="exportPdf" class="primary" title="Scarica il PDF per stampa di prova, con filigrana BOZZA se ci sono verifiche aperte">PDF per stampa di prova</button><button id="exportFinalPdf" title="Solo se tutti i controlli risultano completati">PDF definitivo verificato</button></div>
     </div>
     <div id="previewViewport"><div id="previewSizer">
       <section id="flyer" class="theme-cobalto" aria-label="Retro del volantino A4 orizzontale con 18 schede immobiliari e QR">
@@ -110,7 +110,7 @@
       <div class="outer-a5-item"><strong>A5 SINISTRA</strong><div id="outerLeftPreview" class="outer-a5-page"><p>Carica il volantino A5 sinistro.</p></div></div>
       <div class="outer-a5-item"><strong>A5 DESTRA</strong><div id="outerRightPreview" class="outer-a5-page"><p>Carica il volantino A5 destro.</p></div></div>
     </div></section><div id="status" role="status" class="message">Preparazione...</div>
-    <div id="preflight" class="preflight"></div>
+    <p class="hint"><strong>Stampa di prova:</strong> scarica il PDF senza conferme ripetitive; se ci sono verifiche aperte il PDF contiene la dicitura BOZZA — NON DISTRIBUIRE. <strong>PDF definitivo:</strong> disponibile solo dopo i controlli richiesti.</p><div id="preflight" class="preflight"></div>
     <p class="hint">Il fronte è formato da due A5 affiancati. Con entrambi gli A5 caricati, il PDF contiene pagina 1 FRONTE A4 e pagina 2 RETRO con 18 immobili. Con uno solo dei due A5 l’esportazione viene bloccata. Le schede senza annuncio ufficiale nel catalogo non sono autorizzate per la stampa.</p>
   </main>
 </div>
