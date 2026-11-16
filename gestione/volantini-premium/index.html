@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>Studio Volantini · Joseph, Cristian, Ylenia</title>
-<link rel="stylesheet" href="./styles.css?v=20261111-tre-referenti-v2">
+<link rel="stylesheet" href="./styles.css?v=20261116-avigliana-audit-preview">
 <!-- Librerie client-side, versioni fissate: installare copie locali per produzione offline. -->
 <script defer src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -17,17 +17,17 @@
 <script defer src="./qr.js"></script>
 <script defer src="./pdf-engine.js?v=20261111-tre-referenti-v1"></script>
 <script defer src="./portrait-default.js"></script>
-<script defer src="./app.js?v=20261111-tre-referenti-v2"></script>
+<script defer src="./app.js?v=20261116-avigliana-audit-preview"></script>
 </head>
 <body>
 <header class="workspace-head no-print">
-  <div class="workspace-brand"><span class="workspace-mark">⌂</span><div><b>CASE IN PUBBLICITÀ <em>24/7</em></b><small>Studio Volantini Premium · A4 landscape · 18 immobili</small></div></div>
+  <div class="workspace-brand"><span class="workspace-mark">⌂</span><div><b>CASE IN PUBBLICITÀ <em>24/7</em></b><small>Studio Volantini Premium · A4 landscape · Avigliana e comuni vicini</small></div></div>
   <a href="/joseph-link-in-bio-Copia/gestione/" class="top-link">Torna alla regia centrale</a>
 </header>
 <div class="studio no-print">
   <aside class="panel left-panel">
     <h2>00 · Seleziona il referente</h2>
-    <p class="hint">Una sola selezione di 18 annunci. Cambiano soltanto logo, referente e QR WhatsApp.</p>
+    <p class="hint">Un massimo di 18 annunci immobiliari verificati nel catalogo, in priorità Avigliana e comuni limitrofi. Logo, referente e WhatsApp cambiano per ogni versione.</p>
     <div id="staffPicker" class="staff-picker" role="group" aria-label="Referenti del volantino">
       <button type="button" data-staff="joseph">Joseph · Case in Pubblicità 24/7</button>
       <button type="button" data-staff="cristian">Cristian · Immobiliare La Sacra</button>
@@ -39,17 +39,17 @@
     <h2>01 · Modello premium</h2><p class="hint">Seleziona una grafica. I dati immobiliari e i QR rimangono invariati.</p>
     <div id="templatePicker" class="template-picker" aria-label="Selezione template"></div>
     <hr>
-    <h2>02 · Immobili</h2><p class="hint">Incolla fino a 18 URL La Sacra, uno per riga. I dati non disponibili restano «Da verificare».</p>
+    <h2>02 · Immobili</h2><p class="hint">Incolla URL esatti La Sacra, uno per riga. Schede non presenti nel catalogo ufficiale: escluse dalla stampa.</p>
     <label for="listingUrls">URL annunci</label><textarea id="listingUrls" rows="4" placeholder="https://lasacraimmobiliare.it/products/..."></textarea>
     <div class="action-row"><button id="addUrls" class="primary">Importa URL</button><button id="loadCatalog">Dal catalogo</button></div>
-    <div class="action-row"><button id="addManual">+ Scheda manuale</button><button id="clearAll">Svuota le 18 posizioni</button></div>
+    <div class="action-row"><button id="addManual">+ Scheda da verificare</button><button id="clearAll">Svuota le 18 posizioni</button></div><p id="catalogAudit" class="hint" role="status">Verifica annunci dal catalogo non ancora eseguita.</p>
     <hr>
     <h2>03 · Materiale grafico</h2>
     <label>Fotografia di Joseph (preferibile PNG trasparente; non usata per Cristian e Ylenia)<input id="portraitInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
     <label>Panorama reale di Avigliana (JPG/PNG)<input id="panoramaInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
     <label>Facciata esterna da abbinare (PDF/JPG/PNG)<input id="outerInput" type="file" accept="application/pdf,image/png,image/jpeg"></label>
     <label>Pagina esterna se PDF multipagina<input id="outerPage" type="number" min="1" step="1" value="1"></label>
-    <div class="hint" id="outerDescription">Facciata esterna: non caricata. In questo caso sarà generata una sola pagina PDF.</div>
+    <div class="hint" id="outerDescription">Facciata esterna: non caricata. In questo caso sarà generata una sola pagina PDF.</div><button type="button" id="clearOuter">Rimuovi facciata esterna</button>
   </aside>
   <main class="panel preview-panel">
     <div class="preview-toolbar"><div><h2>Anteprima interna A4 orizzontale</h2><small id="templateName">Modello 01</small></div>
@@ -89,9 +89,9 @@
         </footer>
       </section>
     </div></div>
-    <div id="status" role="status" class="message">Preparazione...</div>
+    <section class="outer-preview-panel" aria-label="Anteprima della facciata esterna"><div class="preview-toolbar"><div><h2>Anteprima esterna A4 orizzontale</h2><small>Facciata 1 · Fronte del volantino</small></div><span id="outerPreviewState" class="hint">Nessun file caricato</span></div><div id="outerPreview" class="outer-preview"><p>Carica la facciata esterna in PDF, JPG o PNG dalla colonna sinistra per visualizzarla qui prima di generare il PDF.</p></div></section><div id="status" role="status" class="message">Preparazione...</div>
     <div id="preflight" class="preflight"></div>
-    <p class="hint">Le 18 schede e i loro QR sono sulla <b>stessa pagina</b>. Con un file esterno caricato, il PDF contiene 2 pagine: esterno e interno.</p>
+    <p class="hint">La facciata esterna appare nell’anteprima qui sopra. Il PDF contiene due pagine solo quando l’esterno è caricato. Le schede senza annuncio ufficiale nel catalogo non sono autorizzate per la stampa.</p>
   </main>
 </div>
 <dialog id="listingDialog" class="edit-dialog">
