@@ -1,0 +1,55 @@
+name: La Sacra Catalogo PDF · Generazione automatica
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'immobili/catalogo.json'
+      - 'catalogo-premium/index.html'
+      - 'catalogo-premium/style.css'
+      - 'catalogo-premium/catalogo.js'
+      - 'scripts/build-la-sacra-catalogo-pdf.cjs'
+      - '.github/workflows/la-sacra-catalogo-pdf.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: la-sacra-catalogo-pdf
+  cancel-in-progress: false
+jobs:
+  pdf:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Installa Chromium / Playwright
+        run: |
+          npm install --no-save --no-package-lock playwright@1.57.0
+          npx playwright install --with-deps chromium
+      - name: Avvia sito e genera PDF
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/la-sacra-http.log 2>&1 &
+          sleep 2
+          node scripts/build-la-sacra-catalogo-pdf.cjs
+          ls -lh catalogo-premium/La_Sacra_Catalogo_Tutti_Immobili.pdf
+      - name: Salva PDF aggiornato nel repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add catalogo-premium/La_Sacra_Catalogo_Tutti_Immobili.pdf
+          if ! git diff --cached --quiet; then
+            git commit -m "build(catalogo): aggiorna PDF con 58 immobili [skip ci]"
+            git push origin HEAD:main
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: la-sacra-catalogo-pdf
+          path: catalogo-premium/La_Sacra_Catalogo_Tutti_Immobili.pdf
+          retention-days: 14
+          if-no-files-found: ignore
