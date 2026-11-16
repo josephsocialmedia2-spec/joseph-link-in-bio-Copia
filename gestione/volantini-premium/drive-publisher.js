@@ -56,6 +56,30 @@
     if(!response.ok)throw Error('Google Drive HTTP '+response.status+': '+(body.error?.message||'operazione rifiutata'));
     return body;
   }
+  async function uploadPrivateDraft(bytes,filename){
+    if(!isConnected())throw Error('Autorizza prima Google Drive.');
+    if(!(bytes instanceof Uint8Array)&&!(bytes instanceof ArrayBuffer))throw Error('Dati PDF non validi.');
+    const blob=new Blob([bytes],{type:'application/pdf'});
+    if(!blob.size)throw Error('PDF vuoto.');
+    const name=String(filename||'BOZZA_Volantino_La_Sacra.pdf').replace(/[\\/]/g,'_');
+    const metadata={name,mimeType:'application/pdf',parents:[FOLDER_ID],description:'BOZZA NON DISTRIBUIRE. Revisione immobili incompleta. File privato.'};
+    const boundary='case247_draft_'+Math.random().toString(36).slice(2);
+    const payload=new Blob([
+      '--'+boundary+'\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n',
+      JSON.stringify(metadata),'\r\n',
+      '--'+boundary+'\r\nContent-Type: application/pdf\r\n\r\n',
+      blob,'\r\n--'+boundary+'--'
+    ],{type:'multipart/related; boundary='+boundary});
+    const result=await googleFetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,name,mimeType',{
+      method:'POST',headers:{'Content-Type':'multipart/related; boundary='+boundary},body:payload
+    });
+    if(!result.id)throw Error('Caricamento non confermato da Drive.');
+    const location=await googleFetch('https://www.googleapis.com/drive/v3/files/'+encodeURIComponent(result.id)+'?fields=id,name,parents,webViewLink,permissions(id,type,role)');
+    if(!Array.isArray(location.parents)||!location.parents.includes(FOLDER_ID))throw Error('File non trovato nella cartella VOLANTINO dopo upload.');
+    // Never share the draft. If it already has public permission, fail closed.
+    if(Array.isArray(location.permissions)&&location.permissions.some(p=>p.type==='anyone'))throw Error('Il file bozza presenta permessi pubblici inattesi: verifica Drive.');
+    return {id:result.id,name:location.name,url:location.webViewLink||'',private:true};
+  }
   async function uploadVerifiedPdf(bytes,filename){
     if(!isConnected())throw Error('Google Drive non collegato. Collega l’account prima di generare il PDF definitivo.');
     if(!(bytes instanceof Uint8Array)&&!(bytes instanceof ArrayBuffer))throw Error('Dati del PDF non validi');
@@ -97,7 +121,7 @@
       throw Error('PDF caricato su Drive, ma non condiviso con il cliente. '+error.message);
     }
   }
-  const publisher={configure,getConfiguredId,validClientId,isConnected,authorize,uploadVerifiedPdf,getLastLink:()=>currentLink,getFolderUrl:()=>FOLDER_URL,getFolderId:()=>FOLDER_ID};
+  const publisher={configure,getConfiguredId,validClientId,isConnected,authorize,uploadVerifiedPdf,uploadPrivateDraft,getLastLink:()=>currentLink,getFolderUrl:()=>FOLDER_URL,getFolderId:()=>FOLDER_ID};
   global.CASE247_DRIVE=publisher;
   if(typeof module!=='undefined'&&module.exports)module.exports={validClientId,getConfiguredId};
 })(typeof window!=='undefined'?window:globalThis);
