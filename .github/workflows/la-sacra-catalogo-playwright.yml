@@ -1,0 +1,44 @@
+name: La Sacra Catalogo Playwright · Browser QA
+on:
+  pull_request:
+    paths:
+      - 'catalogo-premium/**'
+      - 'tests/case247-catalogo-playwright.cjs'
+      - '.github/workflows/la-sacra-catalogo-playwright.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'catalogo-premium/**'
+      - 'tests/case247-catalogo-playwright.cjs'
+      - '.github/workflows/la-sacra-catalogo-playwright.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  chromium-qa:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Installa Playwright e Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.57.0
+          npx playwright install --with-deps chromium
+      - name: Servi catalogo in locale
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/la-sacra-qa-http.log 2>&1 &
+          sleep 2
+          curl -fsS http://127.0.0.1:8765/catalogo-premium/ >/dev/null
+      - name: Test browser desktop e mobile
+        run: node tests/case247-catalogo-playwright.cjs
+      - name: Screenshot QA
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: la-sacra-catalogo-playwright-screenshots
+          path: artifacts/catalogo-playwright/
+          if-no-files-found: ignore
+          retention-days: 14
