@@ -13,7 +13,7 @@ test('Proof printing does not trigger a browser confirm popup',()=>{
   assert.doesNotThrow(()=>new vm.Script(app));
   const proof=app.slice(app.indexOf('async function exportPdf('),app.indexOf('function downloadBlob('));
   assert.doesNotMatch(proof,/confirm\s*\(/);
-  assert.match(proof,/watermark:proof/);
+  assert.match(proof,/watermark:!definitive/);
   assert.match(proof,/if\(proof&&definitive\)throw Error/);
   assert.match(proof,/BOZZA_STAMPA/);
   assert.match(proof,/DEFINITIVO/);
