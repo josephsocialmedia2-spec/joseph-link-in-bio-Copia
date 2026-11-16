@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#112f4c">
+<title>CASE247 | Autorizza Hotmail – Immobiliare La Sacra</title>
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:#edf6fc;background:#091a2b;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;min-height:100vh}main{max-width:570px;padding:24px 18px 75px;margin:auto}
+h1{font-size:clamp(26px,6vw,36px);line-height:1.12;margin:14px 0 8px}p{line-height:1.55;color:#b9cede}header small{color:#8ed9ce;letter-spacing:.10em;font-weight:750}
+.card{background:#132b40;border:1px solid #31536b;border-radius:16px;padding:19px;margin:19px 0}
+h2{font-size:19px;margin:0 0 10px}label{display:block;color:#c5dae8;margin:12px 0 5px;font-size:14px;font-weight:650}
+input{width:100%;padding:13px;color:#fff;background:#081c2c;border:1px solid #527591;border-radius:9px;font:inherit}
+button,a.btn{display:block;text-align:center;width:100%;padding:13px 16px;margin-top:12px;border:0;border-radius:10px;background:#73ddd1;color:#062c2b;font:700 16px system-ui;text-decoration:none;cursor:pointer}
+button.secondary,a.btn.secondary{background:#213f55;color:#e4f2fa;border:1px solid #52728d}
+button:disabled{opacity:.5;cursor:wait}.muted{font-size:13px;color:#b8ccdc}.mono{font-family:ui-monospace,Consolas,monospace}
+#code{font-size:38px;letter-spacing:.14em;text-align:center;font-weight:900;color:#fff;background:#0c2032;border:1px dashed #8ed9ce;border-radius:12px;padding:16px;margin:14px 0}
+#message{white-space:pre-wrap;line-height:1.5;padding:11px;border-left:3px solid #7adbd1;background:#0d2437;border-radius:7px;margin-top:14px}
+#message.error{border-color:#ffad99;color:#ffcbbe}
+[hidden]{display:none!important}.quiet{margin-top:24px;font-size:12px}
+a{color:#a7e7ff}
+</style></head><body><main>
+<header><small>CASE247 · IMMOBILIARE LA SACRA</small><h1>Autorizza l'invio da Hotmail</h1>
+<p>Collega <strong>joseph.malafronte@hotmail.it</strong> al motore email CASE247. Al termine verrà inviata automaticamente una sola email di prova a te stesso.</p></header>
+<section class="card" id="loginbox"><h2>1. Accedi alla gestione CASE247</h2>
+<p class="muted">L'accesso tecnico di CASE247 è distinto dalla casella mittente Hotmail. Le credenziali restano nel browser e vengono trasmesse direttamente a Supabase.</p>
+<form id="loginform">
+<label for="loginemail">Account amministratore CASE247</label><input id="loginemail" type="email" value="f1immobiliaresusa@outlook.it" required autocomplete="username">
+<label for="loginpwd">Password CASE247</label><input id="loginpwd" type="password" required autocomplete="current-password">
+<button id="loginbtn" type="submit">Accedi</button></form>
+<button id="magic" class="secondary" type="button">Invia link di accesso via email</button>
+</section>
+<section class="card" id="authbox" hidden><h2>2. Autorizza Microsoft</h2>
+<p class="muted">Si aprirà il sito ufficiale Microsoft. Effettua l'accesso con <strong>joseph.malafronte@hotmail.it</strong> e approva le autorizzazioni richieste.</p>
+<button id="start" type="button">Genera codice Microsoft</button>
+<div id="device" hidden>
+<p>Inserisci questo codice nella pagina Microsoft:</p><div id="code" class="mono"></div>
+<a id="mslink" class="btn" href="https://microsoft.com/devicelogin" target="_blank" rel="noopener">Apri Microsoft per autorizzare</a>
+<button id="poll" type="button" class="secondary">Ho autorizzato: verifica collegamento</button>
+<p class="muted">La verifica avviene anche automaticamente ogni pochi secondi mentre questa pagina è aperta. Il codice Microsoft scade dopo alcuni minuti.</p>
+</div>
+<button id="sendtest" class="secondary" hidden type="button">Invia un'email di prova da CASE247</button>
+</section>
+<div id="message" role="status" aria-live="polite">Verifica sessione in corso…</div>
+<p class="quiet">Sito ufficiale CASE247 su GitHub Pages · Utilizza soltanto login.microsoftonline.com o microsoft.com/devicelogin per inserire le credenziali Microsoft. Non condividere mai password o codici nella chat.</p>
+</main>
+<script type="module">
+import {createClient} from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.0/+esm";
+const BASE="https://nqnmlsmeiynxbdojeyjt.supabase.co";
+const KEY="sb_publishable_Clz5qPTkTtvwV0rqWTcfMQ_sCDSRgnu";
+const CLIENT="404cd3f1-8036-4918-85b7-e5fc568f7f1f";
+const ACCOUNT="9078d9d3-322c-487b-9ffe-91fe3947b7c7";
+const CAMPAIGN="7d80e266-687b-4464-9bf4-92e059931191";
+const OWNER="f7eeeb4c-e48d-4693-8dd3-b8862f97fac0";
+const EMAIL="joseph.malafronte@hotmail.it";
+const supa=createClient(BASE,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+const $=id=>document.getElementById(id);
+let interval=null,checking=false,sent=false;
+function msg(txt,err=false){$("message").textContent=txt;$("message").classList.toggle("error",err)}
+function stop(){if(interval)clearInterval(interval);interval=null}
+async function api(action,extra={}){
+  const {data:{session}}=await supa.auth.getSession();
+  if(!session)throw Error("Sessione scaduta. Accedi nuovamente.");
+  const response=await fetch(BASE+"/functions/v1/f1-client-email",{method:"POST",headers:{"content-type":"application/json","apikey":KEY,"authorization":"Bearer "+session.access_token},body:JSON.stringify(Object.assign({action},extra))});
+  const d=await response.json().catch(()=>({error:"Risposta non valida"}));
+  if(!response.ok||d.ok===false)throw Error(d.error||"Errore del servizio email");
+  return d;
+}
+async function ready(){
+  const {data:{user}}=await supa.auth.getUser();
+  if(!user){$("loginbox").hidden=false;$("authbox").hidden=true;msg("Accedi per iniziare l'autorizzazione.");return}
+  if(user.id!==OWNER){await supa.auth.signOut();throw Error("Utente diverso dall'amministratore CASE247. Accedi con l'account indicato.");}
+  $("loginbox").hidden=true;$("authbox").hidden=false;
+  const d=await api("STATUS",{client_id:CLIENT});
+  if(!d.provider_config?.microsoft?.configured){$("start").disabled=true;msg("Microsoft non è ancora configurato nel backend CASE247 (client ID assente).",true);return}
+  const account=(d.accounts||[]).find(x=>x.id===ACCOUNT);
+  if(!account)throw Error("Account Hotmail non presente nella gestione CASE247.");
+  if(account.connection_status==="COLLEGATO"&&account.connected_email?.toLowerCase()===EMAIL){$("start").hidden=true;$("device").hidden=true;$("sendtest").hidden=false;msg("Autorizzazione Microsoft già completata. Puoi inviare l'email di prova.");}
+  else msg("Accesso CASE247 riuscito. Premi «Genera codice Microsoft».");
+}
+$("loginform").addEventListener("submit",async e=>{e.preventDefault();$("loginbtn").disabled=true;try{const {error}=await supa.auth.signInWithPassword({email:$("loginemail").value.trim(),password:$("loginpwd").value});$("loginpwd").value="";if(error)throw error;await ready()}catch(err){msg("Accesso non riuscito: "+err.message,true)}finally{$("loginbtn").disabled=false}});
+$("magic").addEventListener("click",async()=>{try{$("magic").disabled=true;const {error}=await supa.auth.signInWithOtp({email:$("loginemail").value.trim(),options:{shouldCreateUser:false,emailRedirectTo:location.href.split("#")[0].split("?")[0]}});if(error)throw error;msg("Link richiesto. Apri l'email amministratore CASE247 e clicca sul link di accesso. Se non riporta qui, utilizza la password.")}catch(e){msg("Link non disponibile: "+e.message,true)}finally{$("magic").disabled=false}});
+$("start").addEventListener("click",async()=>{try{$("start").disabled=true;msg("Richiedo un codice di autorizzazione a Microsoft…");const d=await api("MS_DEVICE_START",{account_id:ACCOUNT});if(!d.user_code)throw Error("Nessun codice ricevuto");$("code").textContent=d.user_code;$("mslink").href=d.verification_uri||"https://microsoft.com/devicelogin";$("device").hidden=false;msg("Codice pronto. Apri Microsoft e autorizza il tuo account Hotmail.");stop();interval=setInterval(poll,Math.max(5000,1000*Number(d.interval||5)))}catch(e){msg("Avvio autorizzazione non riuscito: "+e.message,true)}finally{$("start").disabled=false}});
+async function poll(){if(checking)return;checking=true;try{const d=await api("MS_DEVICE_POLL",{account_id:ACCOUNT});if(d.connected){stop();$("device").hidden=true;$("start").hidden=true;$("sendtest").hidden=false;msg("Hotmail autorizzato in CASE247. Invio ora la prova…");await sendTest()}else if(d.mismatch){stop();msg("È stato autorizzato l'account Microsoft errato: "+d.connected+". Usa "+EMAIL+".",true)}}catch(e){stop();msg("Verifica Microsoft: "+e.message+". Se necessario rigenera il codice.",true)}finally{checking=false}}
+$("poll").addEventListener("click",poll);
+async function sendTest(){if(sent)return;sent=true;$("sendtest").disabled=true;try{const d=await api("SEND_TEST",{campaign_id:CAMPAIGN,email:EMAIL,first_name:"Joseph"});msg(d.test_sent?"TEST INVIATO DA CASE247 a "+EMAIL+" tramite "+d.provider+". Verifica la posta in arrivo.":"Risposta ricevuta: "+JSON.stringify(d));$("sendtest").hidden=true}catch(e){sent=false;msg("Hotmail autorizzato, ma test non inviato: "+e.message,true)}finally{$("sendtest").disabled=false}}
+$("sendtest").addEventListener("click",sendTest);
+window.addEventListener("focus",()=>{if(interval)poll()});
+ready().catch(e=>msg("Impossibile verificare la sessione: "+e.message,true));
+</script></body></html>
