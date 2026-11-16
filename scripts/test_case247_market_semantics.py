@@ -128,6 +128,89 @@ class SemanticTests(unittest.TestCase):
         self.assertEqual(p["nature"],"Privato_Dichiarato")
         self.assertEqual(p["contact_status"],"Divieto_Esplicito")
 
+    def test_santambrogio_exact_and_abbreviated_postal_locality(self):
+        for municipality in ("Sant'Ambrogio di Torino", "S. Ambrogio di Torino (TO)",
+                             "Sant'Ambrogio (TO)"):
+            item=sm.inspect_html(
+                listing_html(town=municipality, title="Trilocale in vendita a Sant'Ambrogio"),
+                "CasaDaPrivato", "", "https://casadaprivato.it/properties/1")
+            self.assertEqual(item["verified_town"], "Sant'Ambrogio di Torino", municipality)
+            self.assertEqual(item["commune_status"], "Verificato", municipality)
+        self.assertEqual(sm.canonical_town("Sant'Antonino di Susa"), "")
+
+    def test_site_organization_address_not_property_address(self):
+        graph = {
+            "@context":"https://schema.org",
+            "@graph": [
+                {"@type":"Organization", "name":"Annunci privati",
+                 "address":{"@type":"PostalAddress","addressLocality":"Avigliana"},
+                 "offers":{"@type":"Offer","price":"5"}},
+                {"@type":"Apartment", "name":"Trilocale in vendita a Condove",
+                 "address":{"@type":"PostalAddress","addressLocality":"Condove",
+                            "streetAddress":"Via Roma 3"},
+                 "offers":{"@type":"Offer","price":"150000",
+                           "availability":"https://schema.org/InStock"}}
+            ]
+        }
+        html=("<html><head><title>Trilocale in vendita</title>"
+              "<script type='application/ld+json'>"+json.dumps(graph)+
+              "</script></head><body><h1>Trilocale in vendita</h1></body></html>")
+        item=sm.inspect_html(html,"CasaDaPrivato","",
+                             "https://casadaprivato.it/appartamenti/vendita-torino-12345")
+        self.assertEqual(item["verified_town"],"Condove")
+        self.assertEqual(item["nature"],"Privato_Dichiarato")
+        self.assertEqual(item["contract_status"],"Vendita")
+        self.assertEqual(item["micro_zone"],"Via Roma 3")
+        self.assertTrue(item["active_confirmed"])
+
+    def test_organization_only_does_not_verify_location_or_brokerage(self):
+        graph={"@context":"https://schema.org", "@type":"RealEstateAgent",
+               "address":{"addressLocality":"Avigliana"},
+               "offers":{"@type":"Offer", "price":900}}
+        html=("<html><head><title>Villa in vendita</title>"
+              "<script type='application/ld+json'>"+json.dumps(graph)+
+              "</script></head><body><h1>Villa in vendita</h1></body></html>")
+        item=sm.inspect_html(html,"CasaDaPrivato","",
+                             "https://casadaprivato.it/villa/xx")
+        self.assertEqual(item["commune_status"],"Comune_Da_Verificare")
+        self.assertEqual(item["verified_town"],"")
+        # Platform/publisher data are not evidence of the actual seller.
+        self.assertEqual(item["nature"],"Privato_Dichiarato")
+        self.assertEqual(item["contract_status"],"Vendita")
+
+    def test_property_microdata_ignores_agency_office_microdata(self):
+        html=("<html><head><title>Appartamento in vendita</title></head><body>"
+              '<div itemscope itemtype="https://schema.org/RealEstateAgent">'
+              '<meta itemprop="addressLocality" content="Avigliana"></div>'
+              '<div itemscope itemtype="https://schema.org/Apartment">'
+              '<meta itemprop="addressLocality" content="Almese">'
+              '<meta itemprop="streetAddress" content="Via Rivera 28"></div>'
+              "<h1>Appartamento in vendita</h1></body></html>")
+        item=sm.inspect_html(html,"CasaDaPrivato","",
+                             "https://casadaprivato.it/annunci/1234")
+        self.assertEqual(item["commune_status"],"Verificato")
+        self.assertEqual(item["verified_town"],"Almese")
+        self.assertEqual(item["micro_zone"],"Via Rivera 28")
+
+    def test_jsonld_description_denies_agency_contact_even_with_phone_flag(self):
+        graph={"@context":"https://schema.org","@type":"House",
+               "address":{"addressLocality":"Almese"},
+               "description":"Vendita tra privati, no agenzia, grazie.",
+               "offers":{"price":"190000"}}
+        page=("<html><head><title>Casa in vendita</title>"
+              '<script type="application/ld+json">'+json.dumps(graph)+
+              "</script></head><body><h1>Casa in vendita</h1></body></html>")
+        item=sm.inspect_html(page,"Fonte privata","","https://example.it/annunci/2",
+                             phone_public=True)
+        self.assertEqual(item["contact_status"],"Divieto_Esplicito")
+        self.assertTrue(item["explicit_ban"])
+
+    def test_no_sale_verb_does_not_automatically_mean_sale(self):
+        html=("<html><head><title>Villa privata</title></head>"
+              "<body><h1>Villa</h1><span>Consulenza gratuita</span></body></html>")
+        item=sm.inspect_html(html,"Portale","","https://example.it/annunci/1")
+        self.assertEqual(item["contract_status"],"Contratto_Da_Verificare")
+
     def test_robots_fail_closed(self):
         def download(url):
             if url.endswith("robots.txt"):

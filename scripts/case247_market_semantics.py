@@ -7,6 +7,7 @@ Never save telephone numbers, names, cookies or personal emails in artifacts.
 """
 from __future__ import annotations
 
+import html as html_module
 import json
 import re
 import time
@@ -23,15 +24,17 @@ AGENCY_HOSTS = frozenset(("teckimmobiliare.it", "lasacraimmobiliare.it",
                           "immobiliarevalmessa.it", "fcimmobiliare.it"))
 DETAIL_HOSTS = AGENCY_HOSTS  # Only verified agency-owned public pages; no portals.
 UA = "CASE247Semantic/1.0 (robots-aware, low-frequency research)"
-CONTRACT_RENT = re.compile(r"\b(?:affitto|affittasi|affittato|in\s+locazione|locazione|canone\s+mensile|transitorio|rental|for\s+rent)\b", re.I)
+CONTRACT_RENT = re.compile(r"\b(?:affitto|affittasi|affittato|in\s+locazione|locazione|canone\s+mensile|uso\s+transitorio|transitorio|rental|for\s*rent)\b", re.I)
 CONTRACT_SALE = re.compile(r"\b(?:vendita|vendesi|in\s+vendita|for\s+sale)\b", re.I)
-BAN = re.compile(r"\b(?:no\s+agenzie|no\s+intermediari|no\s+telemarketing|astenersi\s+(?:agenzie|intermediari)|non\s+(?:voglio|desidero)\s+(?:essere\s+)?contattat[oa]\s+da\s+agenzie)\b", re.I)
+BAN = re.compile(r"\b(?:no\s+agenzi(?:a|e)|no\s+intermediari|no\s+telemarketing|astenersi\s+(?:agenzi(?:a|e)|intermediari)|non\s+(?:voglio|desidero)\s+(?:essere\s+)?contattat[oa]\s+da\s+agenzie)\b", re.I)
 TOWN_ALIASES = {
     "avigliana": "Avigliana",
     "sant ambrogio di torino": "Sant'Ambrogio di Torino",
     "sant ambrogio": "Sant'Ambrogio di Torino",
     "santambrogio di torino": "Sant'Ambrogio di Torino",
     "santambrogio": "Sant'Ambrogio di Torino",
+    "s ambrogio": "Sant'Ambrogio di Torino",
+    "s ambrogio di torino": "Sant'Ambrogio di Torino",
     "almese": "Almese",
     "condove": "Condove",
 }
@@ -46,10 +49,21 @@ def normalize(value: str) -> str:
 
 
 def canonical_town(value: str) -> str:
+    """Normalize exact municipality labels, retaining 'di Torino' in the name.
+
+    Removing every occurrence of 'Torino' previously corrupted the legal
+    municipality 'Sant'Ambrogio di Torino'.
+    """
     x = normalize(value)
-    x = re.sub(r"\b(?:provincia di|provincia|to|torino|piemonte|italia)\b", " ", x)
-    x = " ".join(x.split())
-    return TOWN_ALIASES.get(x, "")
+    if x in TOWN_ALIASES:
+        return TOWN_ALIASES[x]
+    # Administrative suffixes, never free-text substring matching.
+    x = re.sub(r"\s+(?:(?:provincia\s+(?:di\s+)?)?to|provincia\s+di\s+torino|piemonte|italia)$", "", x)
+    if x in TOWN_ALIASES:
+        return TOWN_ALIASES[x]
+    if x.endswith(" torino") and x[:-7] in TOWN_ALIASES:
+        return TOWN_ALIASES[x[:-7]]
+    return ""
 
 
 class Signals(HTMLParser):
@@ -73,14 +87,27 @@ class Signals(HTMLParser):
         breadcrumb = parent or "breadcrumb" in klass or a.get("aria-label", "").lower() == "breadcrumb"
         if tag == "nav" and a.get("aria-label", "").lower() in ("breadcrumb", "breadcrumbs"):
             breadcrumb = True
-        self.stack.append((tag, breadcrumb, a.get("type", "").lower() == "application/ld+json"))
+        # Inline schema.org microdata are trustworthy only inside a property's
+        # itemscope, not inside the broker's address in the page footer.
+        itemtype = (a.get("itemtype", "") or "").casefold()
+        within_property = self.stack[-1][3] if self.stack else False
+        property_scope = within_property or bool(
+            "itemscope" in a and
+            any(kind in itemtype for kind in (
+                "apartment", "house", "residence", "accommodation",
+                "realestatelisting", "product", "place"
+            ))
+        )
+        self.stack.append((tag, breadcrumb,
+                           a.get("type", "").lower() == "application/ld+json",
+                           property_scope))
         if tag == "meta":
             key = a.get("property", a.get("name", "")).lower()
             if key and a.get("content"):
                 self.meta[key] = a["content"][:300]
-        if a.get("itemprop", "").lower() == "addresslocality" and a.get("content"):
+        if property_scope and a.get("itemprop", "").lower() == "addresslocality" and a.get("content"):
             self.localities.append(a["content"][:90])
-        if a.get("itemprop", "").lower() == "streetaddress" and a.get("content"):
+        if property_scope and a.get("itemprop", "").lower() == "streetaddress" and a.get("content"):
             self.streets.append(a["content"][:130])
 
     def handle_startendtag(self, tag, attrs):
@@ -97,7 +124,7 @@ class Signals(HTMLParser):
     def handle_data(self, text):
         if not text.strip() or not self.stack:
             return
-        tag, _, _ = self.stack[-1]
+        tag = self.stack[-1][0]
         if tag in ("script", "style"):
             if tag == "script" and self.stack[-1][2]:
                 self.scripts.append(text)
@@ -123,7 +150,11 @@ def structured_data(scripts: list[str]) -> list[dict]:
         try:
             item = json.loads(script)
         except (TypeError, ValueError):
-            continue
+            # Some sites HTML-encode JSON-LD inside their script tags.
+            try:
+                item = json.loads(html_module.unescape(script))
+            except (TypeError, ValueError):
+                continue
         pending = item if isinstance(item, list) else [item]
         while pending and len(result) < 60:
             obj = pending.pop()
@@ -140,26 +171,42 @@ def structured_data(scripts: list[str]) -> list[dict]:
     return result
 
 
+def _jsonld_type(obj: dict) -> str:
+    raw = obj.get("@type", "")
+    return normalize(" ".join(raw) if isinstance(raw, list) else str(raw)).replace(" ", "")
+
+
+def _agency_in_seller(value) -> bool:
+    """Only a property-specific named broker proves brokerage, not site publisher."""
+    if isinstance(value, list):
+        return any(_agency_in_seller(item) for item in value)
+    if not isinstance(value, dict):
+        return False
+    return "realestateagent" in _jsonld_type(value) or "realestateagency" in _jsonld_type(value)
+
+
 def _property_values(s: Signals) -> tuple[list[str], list[str], list[int], bool, bool]:
     localities, streets = list(s.localities), list(s.streets)
     prices, active, agency = [], False, False
     for obj in structured_data(s.scripts):
-        objtype = normalize(" ".join(obj.get("@type", [])) if isinstance(obj.get("@type"), list)
-                            else str(obj.get("@type", ""))).replace(" ", "")
-        # Organisation address is the brokerage office, not the listing!
-        if any(x in objtype for x in ("realestateagent", "realestateorganization")):
-            agency = True
-        if "organization" in objtype:
-            agency = True
-        if objtype in PROPERTY_TYPES or any(x in objtype for x in ("realestatelisting","apartment","residence")):
-            address = obj.get("address")
-            if isinstance(address, dict):
-                if isinstance(address.get("addressLocality"), str):
-                    localities.append(address["addressLocality"][:90])
-                if isinstance(address.get("streetAddress"), str):
-                    streets.append(address["streetAddress"][:130])
-            if isinstance(obj.get("addressLocality"), str):
-                localities.append(obj["addressLocality"][:90])
+        objtype = _jsonld_type(obj)
+        is_property = (objtype in PROPERTY_TYPES or
+                       any(x in objtype for x in (
+                           "realestatelisting", "apartment", "residence",
+                           "singlefamilyresidence", "house"
+                       )))
+        # Never take the publisher's address or offers as property evidence.
+        if not is_property:
+            continue
+        address = obj.get("address")
+        if isinstance(address, dict):
+            if isinstance(address.get("addressLocality"), str):
+                localities.append(address["addressLocality"][:90])
+            if isinstance(address.get("streetAddress"), str):
+                streets.append(address["streetAddress"][:130])
+        if isinstance(obj.get("addressLocality"), str):
+            localities.append(obj["addressLocality"][:90])
+        agency = agency or _agency_in_seller(obj.get("seller")) or _agency_in_seller(obj.get("broker"))
         offers = obj.get("offers")
         if isinstance(offers, dict):
             offers = [offers]
@@ -167,10 +214,12 @@ def _property_values(s: Signals) -> tuple[list[str], list[str], list[int], bool,
             for offer in offers[:10]:
                 if not isinstance(offer, dict):
                     continue
+                agency = agency or _agency_in_seller(offer.get("seller")) or _agency_in_seller(offer.get("offeredBy"))
                 try:
                     price = int(float(str(offer.get("price", "")).replace(",", ".")))
-                    if price > 0: prices.append(price)
-                except ValueError:
+                    if price > 0:
+                        prices.append(price)
+                except (TypeError, ValueError):
                     pass
                 availability = str(offer.get("availability", "")).lower()
                 if availability.endswith(("instock", "/instock")):
@@ -273,8 +322,11 @@ def classify_seller(source: str, source_type: str, url: str, signals: Signals | 
         return "Agenzia_Verificata"
     if signals:
         _, _, _, _, agency = _property_values(signals)
-        if agency or re.search(r"\bP\.?\s*IVA\s*[:\s]*\d{11}\b", " ".join(signals.content), re.I):
+        if agency:
             return "Agenzia_Verificata"
+        # A P.IVA in the site's footer may belong to the platform and is not
+        # proof that the specific property is offered by a real estate agency.
+        # For ambiguous portals, keep seller status Da_Verificare.
     if "CasaDaPrivato" in source or source_type == "IDEALISTA_TOOLS_EXPORT":
         return "Privato_Dichiarato" if not signals or not agency else "Agenzia_Verificata"
     return "Da_Verificare"
@@ -298,7 +350,14 @@ def inspect_html(html: str, source: str, source_type: str, url: str,
     town, location_status = valida_comune(p)
     contract = is_vendita(p)
     nature = classify_seller(source, source_type, url, p)
-    ban = bool(BAN.search(" ".join(p.content)))
+    # Include listing-specific JSON-LD descriptions: often the opt-out appears
+    # only in structured description, not in visible page paragraphs.
+    listing_descriptions = [
+        html_module.unescape(str(o.get("description", "")))[:1200]
+        for o in structured_data(p.scripts)
+        if _jsonld_type(o) in PROPERTY_TYPES and isinstance(o.get("description"), str)
+    ]
+    ban = bool(BAN.search(" ".join([*p.content, *listing_descriptions])))
     _, _, _, active, _ = _property_values(p)
     return {
         "verified_town": town,
