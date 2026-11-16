@@ -108,7 +108,7 @@ class IdealistaImportTests(unittest.TestCase):
                 self.assertNotIn("333 123 4567", all_xml)
                 self.assertIn("PRESENTE_NEL_FILE_DA_VERIFICARE", all_xml)
                 self.assertIn("Altri link associati", all_xml)
-                self.assertEqual(len(HEADERS), 18)
+                self.assertEqual(len(HEADERS), 29)
 
     def test_missing_required_columns_fails_closed(self):
         with tempfile.TemporaryDirectory() as d:
