@@ -180,3 +180,16 @@ body{background:#edf3f7;color:#0a3156;font-family:Arial,'Lato',sans-serif}
  .page-properties .property-results{display:none!important}
  .page-properties .filters{display:none!important}
 }
+
+/* Opposizione marketing sempre accessibile, anche senza automazioni Google Forms attivate. */
+.premium-deck{max-width:670px;margin:10px 0 0;color:#526d83;font-size:13px;line-height:1.5}
+.stop-marketing{display:grid;grid-template-columns:1.5fr 1fr;gap:30px;margin:25px 0 18px;padding:31px 35px;background:#fff;border:1px solid #d4e0e8;border-left:5px solid #c32a26;border-radius:6px}
+.stop-marketing h2{font:600 clamp(24px,2.7vw,35px)/1.16 Georgia,serif;color:#0a3156;margin:6px 0 13px}
+.stop-marketing p{font-size:13px;line-height:1.65;color:#506c7f;max-width:760px}
+.stop-actions{display:flex;flex-direction:column;justify-content:center;gap:12px}
+.stop-link{display:block;text-decoration:none;background:#0a3156;color:#fff;border-radius:4px;padding:15px 20px;font-weight:700;text-align:center;font-size:13px}
+.stop-link.secondary{background:#edf4f8;border:1px solid #9ab5c6;color:#0a3156}
+.stop-privacy{font-size:12px;color:#0b517e;text-align:center}
+@media(max-width:900px){.stop-marketing{grid-template-columns:1fr}}
+@media(max-width:600px){.stop-marketing{padding:19px}.premium-deck{font-size:11px}}
+@media print{.stop-marketing,.premium-deck{display:none!important}}
