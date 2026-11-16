@@ -65,9 +65,32 @@ const escText=x=>typeof x==='string'?x.trim():'';
 function cell(tag,className,value){const el=document.createElement(tag);el.className=className;if(value!==undefined)el.textContent=String(value);return el}
 function card(p,compact=false){
   const a=cell('article',compact?'property-card sheet-card':'property-card');
-  const image=cell('img','');image.src=p.image||'';image.alt='Immobile '+p.title;image.loading='lazy';image.referrerPolicy='no-referrer';
-  image.onerror=()=>{image.removeAttribute('src');image.alt='Fotografia non disponibile'};
-  a.append(image);
+  const original=escText(p.image),photo=cell('div','property-photo');
+  if(original){
+    const image=document.createElement('img');
+    image.alt='Fotografia immobile: '+p.title;
+    image.loading=compact?'eager':'lazy';
+    image.decoding='async';
+    image.referrerPolicy='no-referrer';
+    image.onerror=()=>{
+      // Local thumbnails are preferred. If not yet published, try the official Shopify original once.
+      if(image.dataset.source==='local'){
+        image.dataset.source='shopify';
+        image.src=original;
+      }else{
+        image.remove();
+        photo.classList.add('photo-unavailable');
+        photo.append(cell('span','photo-fallback','Fotografia non disponibile'));
+      }
+    };
+    image.dataset.source='local';
+    image.src='./photos/'+encodeURIComponent(String(p.id))+'.jpg';
+    photo.append(image);
+  }else{
+    photo.classList.add('photo-unavailable');
+    photo.append(cell('span','photo-fallback','Fotografia da inserire'));
+  }
+  a.append(photo);
   const body=cell('div','content');
   const locality=p.municipality||'Località da confermare';
   body.append(cell('span','location',locality),cell('h3','',p.title),cell('strong','price',formatPrice(p.price)));
