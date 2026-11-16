@@ -105,7 +105,7 @@ def is_individual_listing(url: str) -> bool:
     if re.search(r"/(?:vendita-[^/]*|affitto-[^/]*|aste-[^/]*|agenzie|cerca|ricerca|news|prezzi|valutazione)(?:/|$)", path):
         return False
     return bool(
-        re.search(r"/(?:annunci?|immobili?|listing|property|scheda)/", path)
+        re.search(r"/(?:annunci?|annuncio|immobili?|immobile|listing|property|scheda)/", path)
         and re.search(r"(?:-|/)\d{3,}$", path)
     )
 
