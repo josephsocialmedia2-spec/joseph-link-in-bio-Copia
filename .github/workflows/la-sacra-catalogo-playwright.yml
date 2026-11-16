@@ -25,8 +25,10 @@ jobs:
           node-version: '22'
       - name: Installa Playwright e Chromium
         run: |
-          npm install --no-save --no-package-lock playwright@1.57.0
+          npm install --no-save --no-package-lock playwright@1.57.0 sharp@0.34.5
           npx playwright install --with-deps chromium
+      - name: Prepara immagini Shopify per test fedele al sito pubblicato
+        run: node scripts/build-la-sacra-photos.cjs
       - name: Servi catalogo in locale
         run: |
           python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/la-sacra-qa-http.log 2>&1 &

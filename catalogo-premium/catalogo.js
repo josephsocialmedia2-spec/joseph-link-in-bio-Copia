@@ -65,9 +65,32 @@ const escText=x=>typeof x==='string'?x.trim():'';
 function cell(tag,className,value){const el=document.createElement(tag);el.className=className;if(value!==undefined)el.textContent=String(value);return el}
 function card(p,compact=false){
   const a=cell('article',compact?'property-card sheet-card':'property-card');
-  const image=cell('img','');image.src=p.image||'';image.alt='Immobile '+p.title;image.loading='lazy';image.referrerPolicy='no-referrer';
-  image.onerror=()=>{image.removeAttribute('src');image.alt='Fotografia non disponibile'};
-  a.append(image);
+  const original=escText(p.image),photo=cell('div','property-photo');
+  if(original){
+    const image=document.createElement('img');
+    image.alt='Fotografia immobile: '+p.title;
+    image.loading=compact?'eager':'lazy';
+    image.decoding='async';
+    image.referrerPolicy='no-referrer';
+    image.onerror=()=>{
+      // Local thumbnails are preferred. If not yet published, try the official Shopify original once.
+      if(image.dataset.source==='local'){
+        image.dataset.source='shopify';
+        image.src=original;
+      }else{
+        image.remove();
+        photo.classList.add('photo-unavailable');
+        photo.append(cell('span','photo-fallback','Fotografia non disponibile'));
+      }
+    };
+    image.dataset.source='local';
+    image.src='./photos/'+encodeURIComponent(String(p.id))+'.jpg';
+    photo.append(image);
+  }else{
+    photo.classList.add('photo-unavailable');
+    photo.append(cell('span','photo-fallback','Fotografia da inserire'));
+  }
+  a.append(photo);
   const body=cell('div','content');
   const locality=p.municipality||'Località da confermare';
   body.append(cell('span','location',locality),cell('h3','',p.title),cell('strong','price',formatPrice(p.price)));
@@ -142,6 +165,43 @@ async function load(){
     console.error(error);
   }
 }
+
+const requestFields={
+  name:$('reqName'),material:$('reqMaterial'),email:$('reqEmail'),phone:$('reqPhone'),
+  message:$('reqMessage'),privacy:$('reqPrivacySeen'),feedback:$('requestFeedback')
+};
+function requestMessage(channel){
+ const f=requestFields;
+ const name=f.name.value.trim(), email=f.email.value.trim(),phone=f.phone.value.trim();
+ f.feedback.textContent='';
+ if(name.length<2){f.feedback.textContent='Inserisci nome e cognome.';f.name.focus();return null}
+ if(channel==='email'&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+   f.feedback.textContent='Inserisci un indirizzo email valido per la risposta.';f.email.focus();return null
+ }
+ if(channel==='whatsapp'&&phone&&!/^\+?[0-9 ()-]{8,25}$/.test(phone)){
+   f.feedback.textContent='Controlla il numero di cellulare oppure lascia il campo vuoto.';f.phone.focus();return null
+ }
+ if(!f.privacy.checked){f.feedback.textContent='Leggi l’informativa e conferma di averne preso visione.';f.privacy.focus();return null}
+ return 'RICHIESTA VOLONTARIA DI MATERIALE INFORMATIVO - IMMOBILIARE LA SACRA'+
+  '\nReferente: Malafronte Joseph, 371 370 8294'+
+  '\nNome: '+name+'\nMateriale richiesto: '+f.material.value+
+  (email?'\nEmail per risposta: '+email:'')+(phone?'\nCellulare per risposta: '+phone:'')+
+  (f.message.value.trim()?'\nNote: '+f.message.value.trim():'')+
+  '\n\nHo preso visione dell’informativa sulla richiesta di materiale (catalogo-premium/privacy-richiesta.html).'+
+  '\nQuesta è una richiesta puntuale e NON un consenso a marketing periodico.';
+}
+$('requestByWhatsApp').addEventListener('click',()=>{
+  const msg=requestMessage('whatsapp');if(!msg)return;
+  const url='https://wa.me/393713708294?text='+encodeURIComponent(msg);
+  $('requestFeedback').textContent='Si apre WhatsApp. Premi Invia nella conversazione con Joseph per trasmettere davvero la richiesta.';
+  window.open(url,'_blank','noopener,noreferrer');
+});
+$('requestByEmail').addEventListener('click',()=>{
+  const msg=requestMessage('email');if(!msg)return;
+  const href='mailto:immobiliarelasacra@gmail.com?subject='+encodeURIComponent('Richiesta materiale La Sacra — c.a. Malafronte Joseph')+'&body='+encodeURIComponent(msg);
+  $('requestFeedback').textContent='Si apre il programma email. Per completare la richiesta premi Invia nel messaggio preparato.';
+  window.location.href=href;
+});
 $('cityFilter').addEventListener('change',renderListings);
 $('queryFilter').addEventListener('input',renderListings);
 load();

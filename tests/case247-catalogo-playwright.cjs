@@ -45,6 +45,25 @@ fs.mkdirSync(out,{recursive:true});
    assert.ok(await page.locator('#queryFilter').inputValue()==='Avigliana');
    for(const t of ['whatsapp','email','sms','copy','print'])assert.equal(await page.locator('[data-share="'+t+'"]').count(),1);
    assert.match(await page.locator('.contact-block').innerText(),/346 256 8685/);
+   // One-time request: no sending without acknowledgement, no mailing list subscription.
+   assert.equal(await page.locator('#reqPrivacySeen').isChecked(),false);
+   await page.locator('#reqName').fill('Cliente Collaudo');
+   await page.locator('#requestByWhatsApp').click();
+   assert.match(await page.locator('#requestFeedback').innerText(),/informativa/i);
+   await page.locator('#reqPrivacySeen').check();
+   await page.evaluate(()=>{window.open=(url)=>{window.__requestTestUrl=url;return null}});
+   await page.locator('#requestByWhatsApp').click();
+   const composed=await page.evaluate(()=>window.__requestTestUrl);
+   assert.ok(composed.includes('wa.me/393713708294'));
+   assert.ok(decodeURIComponent(composed).includes('Cliente Collaudo'));
+   await page.locator('#reqEmail').fill('cliente@example.com');
+   assert.equal(await page.locator('#requestByEmail').count(),1);
+   assert.equal(await page.locator('a[href^="tel:+393713708294"]').count()>0,true);
+   assert.equal(await page.locator('a[href$="privacy-richiesta.html"]').count()>0,true);
+   const imgs=await page.locator('.sheet-card .property-photo img').count();
+   assert.equal(imgs,54);
+   await page.screenshot({path:path.join(out,label+'-richiesta-materiale.png'),fullPage:true});
+
    assert.equal(errors.length,0,'Browser errors: '+errors.join(' | '));
    // CSS does not allow horizontal scrolling at normal viewport.
    const dims=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,width:document.documentElement.clientWidth}));

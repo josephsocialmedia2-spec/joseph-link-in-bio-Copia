@@ -36,3 +36,27 @@ test('official agency contact and property links exist',()=>{
  assert.match(html,/IMMOBILIARE LA SACRA/);assert.match(html,/346 256 8685/);
  assert.match(html,/immobiliarelasacra@gmail\.com/);assert.match(js,/Apri scheda ufficiale/);
 });
+
+test('official logo, Joseph as referente e funzionario, direct telephone WhatsApp and PDF',()=>{
+ assert.match(html,/Logo ufficiale Immobiliare La Sacra/);
+ assert.match(html,/Malafronte Joseph/);
+ assert.match(html,/371 370 8294/);
+ assert.match(html,/tel:\+393713708294/);
+ assert.match(html,/https:\/\/wa\.me\/393713708294/);
+ assert.match(html,/La_Sacra_Catalogo_Tutti_Immobili\.pdf/);
+});
+test('privacy-aware one-time request form without prechecked marketing optin',()=>{
+ for(const id of ['materialRequest','reqName','reqEmail','reqPhone','reqMaterial','reqMessage','reqPrivacySeen','requestByWhatsApp','requestByEmail','requestFeedback'])
+   assert.match(html,new RegExp('id="'+id+'"'));
+ assert.match(html,/privacy-richiesta\.html/);
+ assert.match(html,/Non è un’iscrizione automatica/);
+ assert.match(js,/requestMessage\(channel\)/);
+ assert.match(js,/window\.open\(url/);
+ assert.match(js,/mailto:immobiliarelasacra@gmail\.com/);
+ assert.doesNotMatch(html,/id="reqPrivacySeen"[^>]+checked/);
+ const notice=read('catalogo-premium/privacy-richiesta.html');
+ assert.match(notice,/Regolamento|GDPR/);
+ assert.match(notice,/Garante/);
+ assert.match(notice,/Nessuna casella di iscrizione al marketing/);
+ assert.doesNotMatch(html,/<script[^>]+google-analytics/i);
+});
