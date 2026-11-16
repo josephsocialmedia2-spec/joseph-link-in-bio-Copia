@@ -12,7 +12,14 @@ def doc(path):
 class AviglianaPilotTests(unittest.TestCase):
     def test_single_existing_app_and_no_live_flip(self):
         cfg=doc("config/case247-territorio.json")
-        self.assertEqual(len(cfg["towns"]),41)
+        setup=doc("config/case247-territorial-social-setup.json")
+        self.assertEqual(len(setup["towns"]),41)
+        self.assertEqual(
+            {t["id"] for t in cfg["towns"]}-{t["town_id"] for t in setup["towns"]},
+            {"beinasco"})
+        beinasco=next(t for t in cfg["towns"] if t["id"]=="beinasco")
+        self.assertFalse(beinasco["auto_publish"])
+        self.assertFalse(beinasco.get("social_onboarding",{}).get("publishing_enabled",False))
         t=next(x for x in cfg["towns"] if x["id"]=="avigliana")
         self.assertFalse(t["auto_publish"])
         self.assertFalse(t["meta_pilot"]["publishing_enabled"])
@@ -45,7 +52,10 @@ class AviglianaPilotTests(unittest.TestCase):
         workflow=text(".github/workflows/case247-territorial-publisher.yml")
         self.assertIn("CASE247_TERRITORIAL_LIVE",workflow)
         self.assertIn("github.ref == 'refs/heads/main'",workflow)
-        self.assertIn("CASE247_TERRITORIAL_ACCOUNTS_JSON",workflow)
+        self.assertIn("CASE247_REGIA_BRIDGE_KEY",workflow)
+        self.assertIn("secrets.CASE247_REGIA_BRIDGE_KEY",workflow)
+        self.assertIn("vars.CASE247_TERRITORIAL_LIVE == 'true'",workflow)
+        self.assertIn("inputs.dry_run == false",workflow)
 
 if __name__=="__main__":
     unittest.main()
