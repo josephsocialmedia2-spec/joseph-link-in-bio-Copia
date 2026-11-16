@@ -92,7 +92,7 @@ class Signals(HTMLParser):
         itemtype = (a.get("itemtype", "") or "").casefold()
         within_property = self.stack[-1][3] if self.stack else False
         property_scope = within_property or bool(
-            a.get("itemscope") is not None and
+            "itemscope" in a and
             any(kind in itemtype for kind in (
                 "apartment", "house", "residence", "accommodation",
                 "realestatelisting", "product", "place"
