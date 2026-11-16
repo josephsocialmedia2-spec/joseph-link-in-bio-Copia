@@ -44,7 +44,18 @@ jobs:
           git add catalogo-premium/La_Sacra_Catalogo_Tutti_Immobili.pdf
           if ! git diff --cached --quiet; then
             git commit -m "build(catalogo): aggiorna PDF con 58 immobili [skip ci]"
-            git push origin HEAD:main
+            for i in 1 2 3 4 5; do
+              git pull --rebase origin main
+              if git push origin HEAD:main; then
+                echo "Aggiornamento pubblicato correttamente"
+                break
+              fi
+              if [ "$i" -eq 5 ]; then
+                echo "Impossibile pubblicare dopo 5 tentativi" >&2
+                exit 1
+              fi
+              sleep 3
+            done
           fi
       - uses: actions/upload-artifact@v4
         if: always()
