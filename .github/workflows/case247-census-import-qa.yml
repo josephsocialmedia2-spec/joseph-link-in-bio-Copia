@@ -1,0 +1,46 @@
+name: CASE247 - Census import QA
+on:
+  push:
+    branches:
+      - case247/censimento-av20-import-20261116
+    paths:
+      - "gestione/censimento-aziende/**"
+      - "scripts/test_case247_census_import.mjs"
+      - "gestione/index.html"
+      - ".github/workflows/case247-census-import-qa.yml"
+  pull_request:
+    paths:
+      - "gestione/censimento-aziende/**"
+      - "scripts/test_case247_census_import.mjs"
+      - "gestione/index.html"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validazione parser, manifest, autorizzazioni e checksum
+        run: node --test scripts/test_case247_census_import.mjs
+      - name: Controllo collegamenti e policy di sicurezza
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('gestione/censimento-aziende/index.html').read_text(encoding='utf-8')
+          home=Path('gestione/index.html').read_text(encoding='utf-8')
+          validator=Path('gestione/censimento-aziende/validator.mjs').read_text(encoding='utf-8')
+          assert './censimento-aziende/' in home
+          assert 'validator.mjs' in p
+          assert 'crypto.subtle.digest' in validator
+          assert 'sending_enabled!==false' in validator
+          assert 'non vengono inviati a GitHub Pages' in p
+          assert 'Avvia campagna email (non disponibile)' in p
+          assert 'disabled title=' in p
+          assert 'fetch(' not in p and 'XMLHttpRequest' not in p
+          print('PASS: importazione locale, nessuna chiamata remota, invio disabilitato')
+          PY
