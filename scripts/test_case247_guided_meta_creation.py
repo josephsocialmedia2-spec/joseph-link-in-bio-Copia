@@ -34,5 +34,8 @@ class GuidedMetaCreationTests(unittest.TestCase):
  def test_scheduler_keeps_default_live_gate(self):
   workflow=content(".github/workflows/case247-territorial-publisher.yml")
   self.assertIn('vars.CASE247_TERRITORIAL_LIVE',workflow)
-  self.assertIn('CASE247_TERRITORIAL_ACCOUNTS_JSON',workflow)
+  self.assertIn('CASE247_REGIA_BRIDGE_KEY',workflow)
+  self.assertIn('secrets.CASE247_REGIA_BRIDGE_KEY',workflow)
+  self.assertIn("github.ref == 'refs/heads/main'",workflow)
+  self.assertIn('inputs.dry_run == false',workflow)
 if __name__=="__main__":unittest.main()
