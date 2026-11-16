@@ -150,3 +150,14 @@ button.primary{background:linear-gradient(150deg,#008ccf,#07589f);border-color:#
 .outer-preview img.outer-preview-media{height:auto;max-height:640px;max-width:100%;aspect-ratio:297/210}
 .outer-preview iframe.outer-preview-media{aspect-ratio:297/210;max-width:940px}
 @media(max-width:700px){.outer-preview-media{height:320px}.outer-preview{max-height:430px}}
+
+
+/* Navigazione esplicita tra fronte e retro del PDF A4. */
+.flyer-side-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0 0 16px}
+.flyer-side-link{display:flex;flex-direction:column;gap:3px;text-decoration:none;border:1px solid #65afd9;background:#154f75;color:#fff;padding:13px 16px;border-radius:10px;font-weight:900;font-size:15px}
+.flyer-side-link small{font-size:12px;font-weight:500;color:#d7edf9}
+.flyer-side-link:hover,.flyer-side-link:focus-visible{background:#23749b;outline:2px solid #9ddfff}
+.flyer-side-section{scroll-margin-top:18px}
+.flyer-side-caption{margin:9px 0 15px;color:#d0eaff;font-size:12px}
+#fronte-volantino{scroll-margin-top:18px}
+@media(max-width:500px){.flyer-side-nav{grid-template-columns:1fr}}
