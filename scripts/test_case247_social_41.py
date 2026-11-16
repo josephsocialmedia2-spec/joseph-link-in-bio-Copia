@@ -15,17 +15,24 @@ class SocialNetwork41Tests(unittest.TestCase):
     def test_41_towns_and_82_reserved_destinations(self):
         a={x["id"] for x in self.original["towns"]}
         b={x["town_id"] for x in self.setup["towns"]}
-        self.assertEqual(len(a),41)
-        self.assertEqual(a,b)
+        self.assertEqual(len(b),41)
+        # The 42nd geographic landing is Beinasco, without a planned Meta
+        # identity. Never create a fictitious 42nd Facebook/Instagram account.
+        self.assertEqual(a-b,{"beinasco"})
+        self.assertEqual(len(a),42)
         self.assertEqual(self.setup["desired_facebook_pages"],41)
         self.assertEqual(self.setup["desired_instagram_professional_accounts"],41)
         self.assertEqual(self.setup["distribution_radius_km"],10)
         for t in self.original["towns"]:
-            self.assertEqual(t["social_onboarding"]["status"],"PREPARED_NOT_CREATED")
-            self.assertEqual(t["social_onboarding"]["radius_km"],10)
             self.assertFalse(t["auto_publish"])
-            self.assertFalse(t["social_onboarding"]["publishing_enabled"])
             self.assertTrue((ROOT/("paesi/"+t["id"]+"/index.html")).is_file())
+            if t["id"] in b:
+                self.assertEqual(t["social_onboarding"]["status"],"PREPARED_NOT_CREATED")
+                self.assertEqual(t["social_onboarding"]["radius_km"],10)
+                self.assertFalse(t["social_onboarding"]["publishing_enabled"])
+            else:
+                self.assertEqual(t["operational_status"],"PAGINA_WEB_OPERATIVA_SOCIAL_NON_ATTIVI")
+                self.assertFalse(t.get("social_onboarding",{}).get("publishing_enabled",False))
     def test_no_created_pages_claimed_and_unique_handles(self):
         handles=set()
         for t in self.setup["towns"]:
@@ -43,6 +50,11 @@ class SocialNetwork41Tests(unittest.TestCase):
     def test_secure_bulk_meta_linker(self):
         edge=read("supabase/functions/case247-territory-connect/index.ts")
         self.assertIn("const TOWNS=",edge)
+        # Only 41 reviewed on-boarding records belong to the Meta connector.
+        verified_ids={row["town_id"] for row in self.setup["towns"]}
+        edge_towns=json.loads(edge.split("const TOWNS=",1)[1].split(";",1)[0])
+        self.assertEqual({row["id"] for row in edge_towns},verified_ids)
+        self.assertNotIn("beinasco",{row["id"] for row in edge_towns})
         self.assertIn('body?.mode==="scan"',edge)
         self.assertIn('case247_admins',edge)
         self.assertIn("getUser(access)",edge)
@@ -73,6 +85,10 @@ class SocialNetwork41Tests(unittest.TestCase):
     def test_publisher_gates_preserved(self):
         workflow=read(".github/workflows/case247-territorial-publisher.yml")
         self.assertIn("CASE247_TERRITORIAL_LIVE",workflow)
-        self.assertIn("CASE247_TERRITORIAL_ACCOUNTS_JSON",workflow)
+        self.assertIn("CASE247_REGIA_BRIDGE_KEY",workflow)
+        self.assertIn("secrets.CASE247_REGIA_BRIDGE_KEY",workflow)
+        self.assertIn("vars.CASE247_TERRITORIAL_LIVE == 'true'",workflow)
+        self.assertIn("inputs.dry_run == false",workflow)
+        self.assertNotIn("CASE247_TERRITORIAL_ACCOUNTS_JSON",workflow)
         self.assertIn("github.ref == 'refs/heads/main'",workflow)
 if __name__=="__main__":unittest.main()
