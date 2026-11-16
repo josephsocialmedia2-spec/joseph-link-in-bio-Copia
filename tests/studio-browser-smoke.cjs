@@ -50,7 +50,7 @@ async function main(){
  await connect(await discover());await command('Page.enable');await command('Runtime.enable');
  await command('Page.navigate',{url:'http://127.0.0.1:18765/gestione/'});
  await until("Boolean(document.querySelector('#cc-studio')&&document.querySelector('#cc-school-reference'))",'STUDIO render');
- assert.equal(await evalJS("document.querySelector('#case247-control-center').compareDocumentPosition(document.querySelector('#case247-two-boards')) & Node.DOCUMENT_POSITION_FOLLOWING"),Node.DOCUMENT_POSITION_FOLLOWING);
+ assert.equal(await evalJS("document.querySelector('#case247-control-center').compareDocumentPosition(document.querySelector('#case247-two-boards')) & Node.DOCUMENT_POSITION_FOLLOWING"),4);
  assert.equal(await evalJS("document.querySelector('.cc-main > .cc-section').id"),'cc-calendar');
  assert.equal(await evalJS("document.querySelectorAll('#cc-new').length"),1);
  console.log('PASS: Agenda is first, without duplicate controls');
