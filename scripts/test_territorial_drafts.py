@@ -1,4 +1,5 @@
 import json
+from html.parser import HTMLParser
 from pathlib import Path
 import unittest
 from build_territorial_drafts import mention_ids
@@ -6,6 +7,17 @@ from verified_locations import apply_locations
 import copy
 
 ROOT = Path(__file__).resolve().parents[1]
+
+class TownPage(HTMLParser):
+    """Inspect the real HTML contract used by the public La Sacra town pages."""
+    def __init__(self):
+        super().__init__()
+        self.bodies=[]
+
+    def handle_starttag(self,tag,attrs):
+        if tag.lower()=="body":
+            self.bodies.append(dict(attrs))
+
 
 class TerritoryRoutingTests(unittest.TestCase):
     def setUp(self):
@@ -54,8 +66,14 @@ class TerritoryRoutingTests(unittest.TestCase):
     def test_all_towns_have_landings_without_opt_in(self):
         for town in self.towns:
             page = (ROOT / 'paesi' / town['id'] / 'index.html').read_text()
+            parsed=TownPage()
+            parsed.feed(page)
+            self.assertEqual(len(parsed.bodies),1)
+            self.assertEqual(parsed.bodies[0].get('data-cp-page'),'town')
+            self.assertEqual(parsed.bodies[0].get('data-cp-town'),town['id'])
             self.assertNotIn('id="town-all"', page)
-            self.assertIn('data-town-id="' + town['id'] + '"', page)
+            self.assertNotIn('name="email_optin"', page)
+            self.assertNotIn('name="whatsapp_optin"', page)
             self.assertFalse(town['auto_publish'])
 
 if __name__ == '__main__':
