@@ -1,6 +1,6 @@
 /* Google Drive publisher for final, verified PDFs only.
  * OAuth tokens remain in memory; the OAuth Client ID (public identifier) is local to this browser.
- * Scope drive.file limits access to files the user explicitly lets this app create/open.
+ * The Google OAuth client ID is public. No access tokens or client secrets are stored in code.
  */
 (function (global) {
   'use strict';
@@ -9,15 +9,16 @@
   // alone does not grant the app access to a folder created outside this OAuth application.
   const FOLDER_ID='1fk3pG5Pci0AQGhqbCiFr8eN7axwxsbO7';
   const FOLDER_URL='https://drive.google.com/drive/folders/'+FOLDER_ID;
+  const DEFAULT_CLIENT_ID='329979188953-pp3odbtatu7hen8pni86grui0bevt8dg.apps.googleusercontent.com';
   const SETTINGS_KEY='case247-google-oauth-client-id';
   const validClientId=value=>/^\d+-[a-z0-9-]+\.apps\.googleusercontent\.com$/.test(String(value||'').trim());
   let token=null,expiresAt=0,clientId='',client=null;
   let currentLink=null;
-  const getConfiguredId=()=>localStorage.getItem(SETTINGS_KEY)||'';
+  const getConfiguredId=()=>DEFAULT_CLIENT_ID;
   function configure(id){
     const value=String(id||'').trim();
     if(!validClientId(value))throw Error('Inserisci un OAuth Client ID web valido (*.apps.googleusercontent.com).');
-    localStorage.setItem(SETTINGS_KEY,value);
+    if(value!==DEFAULT_CLIENT_ID)throw Error('Il progetto CASE247 utilizza il Client ID già configurato: non occorre cambiarlo.');
     clientId=value;client=null;token=null;expiresAt=0;
   }
   function isConnected(){return Boolean(token&&Date.now()<expiresAt-60000);}
@@ -98,5 +99,5 @@
   }
   const publisher={configure,getConfiguredId,validClientId,isConnected,authorize,uploadVerifiedPdf,getLastLink:()=>currentLink,getFolderUrl:()=>FOLDER_URL,getFolderId:()=>FOLDER_ID};
   global.CASE247_DRIVE=publisher;
-  if(typeof module!=='undefined'&&module.exports)module.exports={validClientId};
+  if(typeof module!=='undefined'&&module.exports)module.exports={validClientId,getConfiguredId};
 })(typeof window!=='undefined'?window:globalThis);
