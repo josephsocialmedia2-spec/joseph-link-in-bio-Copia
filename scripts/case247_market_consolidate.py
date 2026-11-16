@@ -20,6 +20,9 @@ from pathlib import Path
 from xml.sax.saxutils import escape
 from zoneinfo import ZoneInfo
 
+from case247_market_lifecycle import load_state, apply_lifecycle, write_state
+from case247_market_semantics import BAN, MICRO_AREAS, classify_seller, contact_state
+
 TOWNS = ("Avigliana", "Sant'Ambrogio di Torino", "Almese", "Condove")
 ROME = ZoneInfo("Europe/Rome")
 HEADERS = (
@@ -27,6 +30,10 @@ HEADERS = (
     "Venditore", "Contattabilita", "Possibile duplicato", "Link annuncio",
     "Ultimo aggiornamento", "Esito verifica", "Categoria mercato", "Stato rilevazione",
     "Telefono nel report", "Altri link associati", "Incrocio con altra fonte",
+    "Natura_Inserzionista", "Stato_Contatto_Commerciale", "Micro_Zona_Indirizzo",
+    "Stato_Contratto", "Stato_Comune", "Data_Prima_Rilevazione",
+    "Data_Ultima_Verifica", "Giorni_Sul_Mercato", "Priorita_Monitoraggio",
+    "Stato_Attivita", "Possibile_Duplicato",
 )
 SOURCE_HEADERS = ("Fonte", "Comune", "Esito", "Totale dichiarato", "Link estratti", "URL indice")
 
@@ -115,7 +122,8 @@ def cached_rows(sources: list[dict], history: list[dict], now: datetime | None =
     return result
 
 
-def merge(parts: list[dict], history: list[dict] | None = None, now: datetime | None = None) -> dict:
+def merge(parts: list[dict], history: list[dict] | None = None, now: datetime | None = None,
+          lifecycle: dict | None = None) -> dict:
     all_rows = []
     sources = []
     for part in parts:
@@ -169,6 +177,14 @@ def merge(parts: list[dict], history: list[dict] | None = None, now: datetime | 
                 "verification": "DA RIVERIFICARE: FONTE TEMPORANEAMENTE NON DISPONIBILE"
                     if row.get("stale") else "DA_VERIFICARE SU FONTE ORIGINALE",
                 "stale": bool(row.get("stale", False)),
+                "detail_verified": bool(row.get("detail_verified", False)),
+                "active_confirmed": bool(row.get("active_confirmed", False)),
+                "verified_town": row.get("verified_town", ""),
+                "commune_status": row.get("commune_status", "Comune_Da_Verificare"),
+                "contract_status": row.get("contract_status", "Contratto_Da_Verificare"),
+                "nature": row.get("nature") or classify_seller(name, row.get("source_type", ""), url, None),
+                "micro_zone": row.get("micro_zone", ""),
+                "explicit_ban": bool(row.get("explicit_ban") or BAN.search(str(row.get("title", "")))),
                 "market_segment": "AGENZIA" if row.get("source_type") == "AGENZIA" or
                     "AGENZIA" in str(row.get("owner_status", "")) else
                     "PRIVATO - DA VERIFICARE" if row.get("source_type") == "IDEALISTA_TOOLS_EXPORT" else
@@ -197,6 +213,18 @@ def merge(parts: list[dict], history: list[dict] | None = None, now: datetime | 
                 g["crosspost_evidence"] = "LINK ASSOCIATI NEL REPORT IDEALISTA"
             if row.get("phone_availability") == "PRESENTE_NEL_FILE_DA_VERIFICARE":
                 g["phone_availability"] = "PRESENTE_NEL_FILE_DA_VERIFICARE"
+            if row.get("explicit_ban") or BAN.search(str(row.get("title", ""))):
+                g["explicit_ban"] = True
+            if row.get("nature") == "Agenzia_Verificata" or row.get("source_type") == "AGENZIA":
+                g["nature"] = "Agenzia_Verificata"
+            if row.get("micro_zone") and not g.get("micro_zone"):
+                g["micro_zone"] = row["micro_zone"]
+            if row.get("detail_verified"):
+                g["detail_verified"] = True
+                g["active_confirmed"] = bool(row.get("active_confirmed"))
+                g["verified_town"] = row.get("verified_town", "")
+                g["commune_status"] = row.get("commune_status", "Comune_Da_Verificare")
+                g["contract_status"] = row.get("contract_status", "Contratto_Da_Verificare")
             for field in ("street", "last_modified"):
                 if not g.get(field) and row.get(field):
                     g[field] = row[field]
@@ -240,17 +268,45 @@ def merge(parts: list[dict], history: list[dict] | None = None, now: datetime | 
             for item in items:
                 item["possibly_duplicate"] = True
     records = sorted(grouped.values(), key=lambda x: (TOWNS.index(x["town"]), x["title"].casefold(), x["url"]))
-    counts = {town: sum(r["town"] == town for r in records) for town in TOWNS}
+    for rec in records:
+        # Never silently recategorize an ambiguous address to the URL's town.
+        if rec["commune_status"] == "Verificato" and rec["verified_town"] != rec["town"]:
+            rec["commune_status"] = "Fuori_Perimetro"
+        if (rec["contract_status"] == "Contratto_Da_Verificare" and
+            isinstance(rec.get("price"), int) and 0 < rec["price"] < 15000):
+            rec["contract_status"] = "Prezzo_Da_Verificare"
+        if not rec.get("micro_zone"):
+            label = str(rec.get("title", ""))
+            rec["micro_zone"] = next((z for z in MICRO_AREAS if
+                                      re.search(r"\b" + re.escape(z) + r"\b", label, re.I)), "")
+        rec["nature"] = ("Agenzia_Verificata" if rec["market_segment"] == "AGENZIA" else
+                          "Privato_Dichiarato" if rec["nature"] == "Privato_Dichiarato" or
+                          rec["market_segment"] in ("PORTALE PRIVATI - DA VERIFICARE",
+                                                     "PRIVATO - DA VERIFICARE") else
+                          rec["nature"])
+        rec["stato_contatto"] = contact_state(rec["nature"], " | ".join(rec["sources"]),
+                          rec["contact_permission"], bool(rec.get("phone_public_verified", False)),
+                          bool(rec.get("explicit_ban", False)))
+        if rec["stato_contatto"] == "Divieto_Esplicito":
+            rec["contact_permission"] = "NO PROPOSTE COMMERCIALI"
+        rec["verified_scope"] = (rec["commune_status"] == "Verificato" and
+                                 rec["verified_town"] == rec["town"] and
+                                 rec["contract_status"] == "Vendita" and not rec["stale"])
+    now = now or datetime.now(ROME)
+    lifecycle_state = apply_lifecycle(records, lifecycle or {}, now)
+    counts = {town: sum(r["town"] == town and r["verified_scope"] for r in records) for town in TOWNS}
+    indexed_counts = {town: sum(r["town"] == town for r in records) for town in TOWNS}
     source_outages = sum(s["status"] not in ("OK", "SOLO_CONSULTAZIONE", "IMPORT_UTENTE") for s in sources)
     return {
-        "as_of_rome": datetime.now(ROME).isoformat(timespec="seconds"),
+        "as_of_rome": now.isoformat(timespec="seconds"),
         "scope": list(TOWNS), "status": "PARZIALE" if source_outages else "OK",
         "listing_count": len(records),
+        "verified_listing_count": sum(counts.values()),
         "possible_duplicate_count": sum(r["possibly_duplicate"] for r in records),
         "crosspost_records": sum(bool(r["related_urls"]) for r in records),
         "independent_crosspost_matches": sum(bool(r["linked_matches"]) for r in records),
-        "counts": counts, "source_errors": source_outages,
-        "sources": sources, "listings": records,
+        "counts": counts, "indexed_counts": indexed_counts, "source_errors": source_outages,
+        "sources": sources, "listings": records, "lifecycle": lifecycle_state,
     }
 
 
@@ -272,18 +328,22 @@ def load_parts(directory: Path) -> list[dict]:
 def render_markdown(result: dict) -> str:
     lines = [
         "## CASE247 · Inventario pubblico multi-fonte dei quattro comuni",
-        f"Rilevazione {result['as_of_rome']}; **link annunci distinti: {result['listing_count']}**. "
-        "Le fonti possono essere parziali: non è il totale degli immobili in vendita.",
+        f"Rilevazione {result['as_of_rome']}; **link indicizzati: {result['listing_count']}**; "
+        f"**vendite e comuni verificati: {result['verified_listing_count']}**.",
+        "Le fonti possono essere parziali. Un link indicizzato NON conferma comune, vendita o attività.",
         "**Nessun annuncio è automaticamente un contatto commerciale acquisibile.** "
         "Un prezzo e una superficie uguali non dimostrano che due annunci siano lo stesso immobile.",
         "",
     ]
     for town in TOWNS:
-        lines.append(f"### {town} — {result['counts'][town]} URL distinti")
+        lines.append(f"### {town} — {result['counts'][town]} verificati / "
+                     f"{result['indexed_counts'][town]} indicizzati")
         for row in (r for r in result["listings"] if r["town"] == town):
             lines.append(
                 f"- [{row['title']}]({row['url']}) · {', '.join(row['sources'])}"
                 + (" · ARCHIVIO, DA RIVERIFICARE" if row.get("stale") else "")
+                + (" · COMUNE/CONTRATTO NON VERIFICATO" if not row.get("verified_scope") else "")
+                + (" · " + row["priorita_monitoraggio"] if row.get("priorita_monitoraggio") == "Invenduto_Oltre_90gg" else "")
                 + (" · possibili pubblicazioni multiple: " + ", ".join(row["related_urls"][:5]) if row["related_urls"] else "")
                 + (" · potenziale duplicato" if row["possibly_duplicate"] else "")
                 + (" · **non usare per proposte commerciali**" if row["contact_permission"] == "NO PROPOSTE COMMERCIALI" else "")
@@ -356,13 +416,23 @@ def write_xlsx(data: dict, output: Path) -> None:
             "ARCHIVIO 72H" if row.get("stale") else "SCANSIONE CORRENTE",
             row["phone_availability"], ", ".join(row["related_urls"]),
             row["crosspost_evidence"],
+            row["nature"], row["stato_contatto"], row.get("micro_zone", ""),
+            row["contract_status"], row["commune_status"],
+            row["data_prima_rilevazione"], row["data_ultima_verifica"],
+            row["giorni_sul_mercato"], row["priorita_monitoraggio"],
+            "ATTIVO_CONFERMATO" if row.get("active_confirmed") and row.get("detail_verified") else "DA_VERIFICARE",
+            "Sì" if row["possibly_duplicate"] else "No",
         ])
     source_rows = [
         [r.get("source"), r.get("town"), r.get("status"), r.get("reported_count"),
          r.get("extracted_links"), r.get("index_url")] for r in data["sources"]
     ]
     overview_rows = [
-        [town, data["counts"][town], "URL distinti, non immobili o proprietari unici"]
+        [town, data["counts"][town], "Vendite con comune verificato", ""]
+        for town in TOWNS
+    ] + [
+        [town+" · da verificare", data["indexed_counts"][town]-data["counts"][town],
+         "Link non conteggiati come immobili confermati", ""]
         for town in TOWNS
     ] + [
         ["TOTALE", data["listing_count"], "Rilevazione parziale; verificare fonti"],
@@ -371,10 +441,25 @@ def write_xlsx(data: dict, output: Path) -> None:
         ["ANNUNCI CON LINK INCROCIATI", data["crosspost_records"], "Link indicati nello stesso export idealista/tools"],
         ["INCROCI ANCHE NEL RADAR", data["independent_crosspost_matches"], "Collegamenti riconosciuti su fonti indipendenti"],
     ]
+    overview_rows = [list(r) + [""]*(4-len(r)) for r in overview_rows]
+    overview_rows.extend([
+        ["COMUNE", "NATURA_INSERZIONISTA", "FASCIA_PERMANENZA", "NUMERO_ANNUNCI"],
+    ])
+    # All combinations, including zeros, make territorial gaps visible.
+    groups = ("Agenzia_Verificata", "Privato_Dichiarato", "Da_Verificare")
+    bands = ("< 30 gg", "30-90 gg", "> 90 gg")
+    for town in TOWNS:
+        for nature in groups:
+            for band in bands:
+                n = sum(1 for row in data["listings"]
+                        if row["town"] == town and row["verified_scope"] and
+                           row["nature"] == nature and row["fascia_permanenza"] == band)
+                overview_rows.append([town, nature, band, n])
     sheets = [
-        ("Annunci", HEADERS, listings, [25,24,38,46,28,16,16,33,35,23,53,22,35,28,24,30,55,48]),
+        ("Annunci", HEADERS, listings, [25,24,38,46,28,16,16,33,35,23,53,22,35,28,24,30,55,48,
+                                       26,30,32,25,27,24,24,22,28,25,23]),
         ("Fonti", SOURCE_HEADERS, source_rows, [28,26,30,21,19,64]),
-        ("Riepilogo", ("Comune / KPI","Valore","Interpretazione"), overview_rows, [32,16,70]),
+        ("Riepilogo", ("Comune / KPI","Valore","Interpretazione","Totale"), overview_rows, [32,30,53,22]),
     ]
     content_types = ['<?xml version="1.0" encoding="UTF-8"?>',
         '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">',
@@ -433,7 +518,11 @@ def main():
     if args.idealista_export:
         from case247_idealista_export import parse_export
         parts.append(parse_export(args.idealista_export))
-    result = merge(parts, history=history)
+    result = merge(parts, history=history, lifecycle=load_state(args.history_dir))
+    write_state(args.out / "lifecycle.json", result["lifecycle"])
+    # History itself is stored as a separate artifact; the public report needs
+    # no duplicate nested state dictionary.
+    del result["lifecycle"]
     (args.out/"inventory.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (args.out/"market.md").write_text(render_markdown(result), encoding="utf-8")
     with (args.out/"inventory.csv").open("w", encoding="utf-8-sig", newline="") as fd:
@@ -448,11 +537,17 @@ def main():
                 "ARCHIVIO 72H" if row.get("stale") else "SCANSIONE CORRENTE",
                 row["phone_availability"], ", ".join(row["related_urls"]),
                 row["crosspost_evidence"],
+                row["nature"], row["stato_contatto"], row.get("micro_zone", ""),
+                row["contract_status"], row["commune_status"],
+                row["data_prima_rilevazione"], row["data_ultima_verifica"],
+                row["giorni_sul_mercato"], row["priorita_monitoraggio"],
+                "ATTIVO_CONFERMATO" if row.get("active_confirmed") and row.get("detail_verified") else "DA_VERIFICARE",
+                "Sì" if row["possibly_duplicate"] else "No",
             ])
     file = args.out / f"CASE247_Immobili_4_Comuni_{datetime.now(ROME).date().isoformat()}.xlsx"
     write_xlsx(result, file)
     archived = sum(bool(r.get("stale")) for r in result["listings"])
-    print(f"CASE247_CONSOLIDATED links={result['listing_count']} archived_recheck={archived} potential_duplicates={result['possible_duplicate_count']} crossposts={result['crosspost_records']} matched={result['independent_crosspost_matches']} sources_with_issues={result['source_errors']} xlsx={file.name}")
+    print(f"CASE247_CONSOLIDATED links={result['listing_count']} verified={result['verified_listing_count']} archived_recheck={archived} potential_duplicates={result['possible_duplicate_count']} crossposts={result['crosspost_records']} matched={result['independent_crosspost_matches']} sources_with_issues={result['source_errors']} xlsx={file.name}")
 
 
 if __name__ == "__main__":
