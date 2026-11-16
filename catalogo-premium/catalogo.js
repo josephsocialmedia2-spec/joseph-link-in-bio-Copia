@@ -175,20 +175,20 @@ function requestMessage(channel){
  const name=f.name.value.trim(), email=f.email.value.trim(),phone=f.phone.value.trim();
  f.feedback.textContent='';
  if(name.length<2){f.feedback.textContent='Inserisci nome e cognome.';f.name.focus();return null}
- if(channel==='email'&&!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)){
+ if(channel==='email'&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
    f.feedback.textContent='Inserisci un indirizzo email valido per la risposta.';f.email.focus();return null
  }
- if(channel==='whatsapp'&&phone&&!/^\\+?[0-9 ()-]{8,25}$/.test(phone)){
+ if(channel==='whatsapp'&&phone&&!/^\+?[0-9 ()-]{8,25}$/.test(phone)){
    f.feedback.textContent='Controlla il numero di cellulare oppure lascia il campo vuoto.';f.phone.focus();return null
  }
  if(!f.privacy.checked){f.feedback.textContent='Leggi l’informativa e conferma di averne preso visione.';f.privacy.focus();return null}
  return 'RICHIESTA VOLONTARIA DI MATERIALE INFORMATIVO - IMMOBILIARE LA SACRA'+
-  '\\nReferente: Malafronte Joseph, 371 370 8294'+
-  '\\nNome: '+name+'\\nMateriale richiesto: '+f.material.value+
-  (email?'\\nEmail per risposta: '+email:'')+(phone?'\\nCellulare per risposta: '+phone:'')+
-  (f.message.value.trim()?'\\nNote: '+f.message.value.trim():'')+
-  '\\n\\nHo preso visione dell’informativa sulla richiesta di materiale (catalogo-premium/privacy-richiesta.html).'+
-  '\\nQuesta è una richiesta puntuale e NON un consenso a marketing periodico.';
+  '\nReferente: Malafronte Joseph, 371 370 8294'+
+  '\nNome: '+name+'\nMateriale richiesto: '+f.material.value+
+  (email?'\nEmail per risposta: '+email:'')+(phone?'\nCellulare per risposta: '+phone:'')+
+  (f.message.value.trim()?'\nNote: '+f.message.value.trim():'')+
+  '\n\nHo preso visione dell’informativa sulla richiesta di materiale (catalogo-premium/privacy-richiesta.html).'+
+  '\nQuesta è una richiesta puntuale e NON un consenso a marketing periodico.';
 }
 $('requestByWhatsApp').addEventListener('click',()=>{
   const msg=requestMessage('whatsapp');if(!msg)return;
