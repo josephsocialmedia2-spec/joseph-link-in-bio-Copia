@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "description": "Solo sitemap dichiarate direttamente dai siti in robots.txt: rispettare robots, host HTTPS e quattro comuni. I blocchi non vengono aggirati, le fonti inaccessibili registrate.",
+  "description": "Radar CASE247: sitemap pubbliche solo se dichiarate in robots.txt e accessibili. Fonti locali di agenzia distinte dai privati; aste PVP solo riferimento, non catalogo automatizzato.",
   "sources": [
     {
       "name": "CasaDaPrivato · sitemap pubbliche",
@@ -10,6 +10,24 @@
     {
       "name": "Immobiliare.it · sitemap pubbliche",
       "host": "www.immobiliare.it",
+      "discover_from_robots": true
+    },
+    {
+      "name": "Teck Immobiliare · sito agenzia",
+      "host": "teckimmobiliare.it",
+      "kind": "AGENZIA",
+      "discover_from_robots": true
+    },
+    {
+      "name": "CasaMia Immobiliare · sito agenzia",
+      "host": "www.casamiaimmobiliare.org",
+      "kind": "AGENZIA",
+      "discover_from_robots": true
+    },
+    {
+      "name": "Immobiliare La Sacra · sito agenzia",
+      "host": "lasacraimmobiliare.it",
+      "kind": "AGENZIA",
       "discover_from_robots": true
     }
   ],
