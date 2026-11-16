@@ -32,7 +32,7 @@ test('Upload is multipart/related and public link requires confirmed read-only p
 });
 test('Only a validated final PDF is made public; Drive drafts stay private',()=>{
   const body=app.slice(app.indexOf('async function exportPdf('),app.indexOf('function downloadBlob('));
-  assert.ok(body.includes('if(proof&&definitive===true)throw Error'));
+  assert.ok(body.includes('if(proof&&definitive===true){')&&body.includes('throw Error('));
   assert.ok(body.includes('if((definitive===true||draftToDrive)&&!Drive?.isConnected())'));
   assert.ok(body.includes('else if(definitive===true){')&&body.includes('Drive.uploadVerifiedPdf'));
   assert.match(body,/watermark:definitive!==true/);
