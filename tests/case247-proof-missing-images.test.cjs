@@ -26,6 +26,6 @@ test('Preview is explicitly watermarked while definitive stays strict',()=>{
  const section=app.slice(app.indexOf('async function exportPdf('),app.indexOf('function downloadBlob('));
  assert.match(section,/watermark:definitive!==true/);
  assert.match(section,/result\.missingImages/);
- assert.match(section,/if\\(proof&&definitive===true\\)/);
+ assert.ok(section.includes('if(proof&&definitive===true)'));
  assert.doesNotMatch(section,/confirm\s*\(/);
 });
