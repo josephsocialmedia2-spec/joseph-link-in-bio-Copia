@@ -7,6 +7,7 @@ on:
       - scripts/case247_legacy_transition.py
       - scripts/test_case247_legacy_transition.py
       - config/case247-direct-meta-transition.json
+      - scripts/fixtures/case247_legacy_reservations_2026-11-12.json
       - scripts/case247_supabase_meta_bridge.py
       - scripts/test_case247_supabase_meta_bridge.py
       - scripts/case247_territorial_publisher.py
@@ -42,6 +43,7 @@ on:
       - scripts/test_case247_territorial_publisher_policy.py
       - config/case247-territorio.json
       - config/case247-direct-meta-transition.json
+      - scripts/fixtures/case247_legacy_reservations_2026-11-12.json
       - .github/workflows/case247-territorial-publisher.yml
 permissions:
   contents: read
