@@ -124,7 +124,7 @@ class Signals(HTMLParser):
     def handle_data(self, text):
         if not text.strip() or not self.stack:
             return
-        tag, _, _ = self.stack[-1]
+        tag = self.stack[-1][0]
         if tag in ("script", "style"):
             if tag == "script" and self.stack[-1][2]:
                 self.scripts.append(text)
