@@ -93,7 +93,12 @@ class IndexParser(HTMLParser):
             path = urllib.parse.urlsplit(value).path if value else ""
             yes = bool(CASA_RE.search(path)) if self.source == "CasaDaPrivato" else bool(IMM_RE.match(path))
             if value and yes and not self.nearby:
-                title = " ".join(self.anchor_text).strip() or "(titolo da verificare)"
+                title = " ".join(self.anchor_text).strip()
+                if not title and self.source == "CasaDaPrivato":
+                    slug = path.rsplit("/", 1)[-1].rsplit("-torino-", 1)[0]
+                    title = slug.replace("-", " ").capitalize()
+                if not title:
+                    title = "(titolo da verificare)"
                 if len(title) > 130:
                     title = title[:127] + "..."
                 self.result.append({"url": value, "title": title})
