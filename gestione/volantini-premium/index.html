@@ -18,8 +18,8 @@
 <script defer src="./pdf-engine.js?v=20261116-due-a5"></script>
 <script defer src="./portrait-default.js"></script>
 <script defer src="https://accounts.google.com/gsi/client"></script>
-<script defer src="./drive-publisher.js?v=20261116-private-draft-v2"></script>
-<script defer src="./app.js?v=20261116-private-draft-v2"></script>
+<script defer src="./drive-publisher.js?v=20261116-ape-v3"></script>
+<script defer src="./app.js?v=20261116-ape-v3"></script>
 </head>
 <body>
 <header class="workspace-head no-print">
@@ -71,7 +71,7 @@
     <section class="drive-publish-panel no-print" aria-label="Pubblicazione PDF verificato su Google Drive">
       <h2>Google Drive · Cartella VOLANTINO</h2>
       <p class="hint">Cartella predisposta nell'account principale: <a href="https://drive.google.com/drive/folders/1fk3pG5Pci0AQGhqbCiFr8eN7axwxsbO7" target="_blank" rel="noopener noreferrer" style="color:#a9eafa;text-decoration:underline">Apri VOLANTINO su Google Drive</a>. I PDF definitivi vengono salvati qui, non nella cartella principale.</p><p class="hint"><strong>Pronta per le telefonate:</strong> <a href="./cliente-avigliana/" target="_blank" rel="noopener noreferrer" style="color:#b2efff;text-decoration:underline">Apri brochure informativa pubblica Avigliana</a>. È distinta dal volantino definitivo con 18 annunci, ancora da verificare.</p>
-      <p class="hint">Dopo l’autorizzazione Google del sito, <strong>PDF definitivo + Drive</strong> carica il volantino nella cartella VOLANTINO e crea un link cliente in sola lettura soltanto dopo che Google ha confermato upload e permessi. I PDF di prova restano sul tuo dispositivo e non vengono condivisi.</p>
+      <p class="hint">Dopo l’autorizzazione Google del sito, <strong>PDF definitivo + Drive</strong> carica il volantino nella cartella VOLANTINO e crea un link cliente in sola lettura soltanto dopo che Google ha confermato upload e permessi. Le bozze possono essere salvate privatamente su Drive; non generano link pubblici.</p>
       <div class="drive-connect-controls">
         <label for="googleOAuthClientId">Google OAuth Client ID · Configurato</label>
         <input id="googleOAuthClientId" autocomplete="off" readonly aria-describedby="driveSetupHint">
@@ -141,13 +141,16 @@
       <label>Titolo immobile<input id="fieldTitle" required></label>
       <label>Comune<input id="fieldCity"></label>
       <label>Prezzo € (vuoto = non disponibile)<input id="fieldPrice" inputmode="decimal"></label>
+      <label>Stato APE<select id="fieldApeStatus"><option value="DA_VERIFICARE">Da verificare</option><option value="PRESENTE">APE presente</option><option value="IN_CORSO">APE in fase di redazione</option><option value="MANCANTE">APE mancante</option><option value="ESENTE">Esenzione da verificare</option></select></label>
       <label>Classe energetica (A4–G)<input id="fieldEnergy"></label>
       <label>EPgl,nren (kWh/m² anno)<input id="fieldEp"></label>
       <label>Indice involucro / IPE (se applicabile)<input id="fieldEnvelope"></label>
+      <label class="wide">Motivo esenzione APE (solo se applicabile)<input id="fieldApeExemptionReason" placeholder="Indicare la specifica fattispecie normativa e documentazione"></label>
+      <label class="wide checkbox-label"><input id="fieldApeExemptionVerified" type="checkbox">Esenzione controllata e autorizzata dal responsabile La Sacra (non selezionare automaticamente)</label>
       <label class="wide">URL esatto dell’annuncio La Sacra<input id="fieldUrl" required></label>
       <label>Foto immobile<input id="fieldPhoto" type="file" accept="image/*"></label>
       <label>Contratto<select id="fieldContract"><option value="Vendita">Vendita</option><option value="Affitto">Affitto</option><option value="Da verificare">Da verificare</option></select></label>
-      <label class="wide checkbox-label"><input id="fieldVerified" type="checkbox">Dichiaro di avere verificato APE, disponibilità, prezzo e fotografia sulla fonte originale.</label>
+      <label class="wide checkbox-label"><input id="fieldVerified" type="checkbox">Dichiaro di avere verificato disponibilità, prezzo, fotografia e dati inseriti sulla fonte originale. La validazione APE è separata.</label>
     </div>
     <p id="dialogError" class="form-error"></p>
     <div class="action-row"><button type="button" id="deleteListing">Rimuovi scheda</button><button type="button" id="closeDialog">Annulla</button><button type="submit" class="primary">Salva scheda</button></div>
