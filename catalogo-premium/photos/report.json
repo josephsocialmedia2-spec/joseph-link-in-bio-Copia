@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-16T13:30:26.887Z",
+  "source": "Shopify La Sacra",
+  "total": 58,
+  "photosAvailable": 54,
+  "missingSourcePhoto": [
+    {
+      "id": "10826816553287",
+      "title": "VILLAR DORA APPARTAMENTO IN QUADRIFAMILIARE"
+    },
+    {
+      "id": "10816074056007",
+      "title": "PIANO TERRA IN BIFAMILIARE"
+    },
+    {
+      "id": "10781715595591",
+      "title": "DUE ALLOGGI IN IN QUADRIFAMILARE VILLAR DORA"
+    },
+    {
+      "id": "10777477611847",
+      "title": "TRILOCALE CON TERRAZZO E BOX A CAPRIE"
+    }
+  ],
+  "created": 54,
+  "reused": 0,
+  "failed": []
+}
