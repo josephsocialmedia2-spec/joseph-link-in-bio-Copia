@@ -7,6 +7,8 @@ on:
       - 'gestione/studio-2scat.js'
       - 'gestione/studio-2scat-ui.js'
       - 'gestione/control-center.css'
+      - 'gestione/perche-widget.js'
+      - 'gestione/perche-widget.css'
       - 'tests/studio-browser-smoke.cjs'
       - '.github/workflows/case247-studio-browser.yml'
   push:
@@ -17,6 +19,8 @@ on:
       - 'gestione/studio-2scat.js'
       - 'gestione/studio-2scat-ui.js'
       - 'gestione/control-center.css'
+      - 'gestione/perche-widget.js'
+      - 'gestione/perche-widget.css'
       - 'tests/studio-browser-smoke.cjs'
       - '.github/workflows/case247-studio-browser.yml'
   workflow_dispatch:
