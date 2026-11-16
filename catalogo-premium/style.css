@@ -54,3 +54,7 @@
  .page-listing-sheet .sheet-title{font-size:25pt}
  .page-listing-sheet .sheet-subtitle{font-size:8pt}
 }
+
+.reader-tools .pdf-download{display:inline-flex;align-items:center;text-decoration:none;background:#0a4167;color:#fff;border:1px solid #0a4167;padding:10px 13px;border-radius:6px;font-size:11px;font-weight:700}
+.reader-tools .pdf-download:hover{background:#155c83}
+@media(max-width:800px){.reader-tools .pdf-download{padding:9px;font-size:10px}}
