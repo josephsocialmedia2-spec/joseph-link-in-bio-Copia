@@ -4,18 +4,22 @@
   'use strict';
   const W=841.8898,H=595.2756; // A4 landscape in punti PDF (297 × 210 mm).
   function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
-  async function waitForImg(img, timeout=9000){
-    if(!img) return false;
-    if(img.complete && img.naturalWidth>0) return true;
+  async function waitForImg(img,timeout=5000){
+    // I ritratti senza file non hanno src: non sono immagini guaste.
+    if(!img || !img.getAttribute('src'))return true;
+    if(img.complete)return img.naturalWidth>0&&img.naturalHeight>0;
     return Promise.race([
-      new Promise(resolve=>{img.addEventListener('load',()=>resolve(true),{once:true});img.addEventListener('error',()=>resolve(false),{once:true});}),
+      new Promise(resolve=>{
+        img.addEventListener('load',()=>resolve(img.naturalWidth>0&&img.naturalHeight>0),{once:true});
+        img.addEventListener('error',()=>resolve(false),{once:true});
+      }),
       sleep(timeout).then(()=>false)
     ]);
   }
-  async function waitAllImages(flyer){
+  async function inspectImages(flyer){
     const images=[...flyer.querySelectorAll('img')];
-    const ok=await Promise.all(images.map(x=>waitForImg(x)));
-    return ok.every(Boolean);
+    const results=await Promise.all(images.map(img=>waitForImg(img)));
+    return results.flatMap((ok,index)=>ok?[]:[index]);
   }
   function download(bytes,filename,type='application/pdf'){
     const blob=new Blob([bytes],{type}),u=URL.createObjectURL(blob);
@@ -59,7 +63,12 @@
     const urlWhatsApp=whatsappUrl||`https://wa.me/39${global.CASE247_CONFIG.phone}?text=${encodeURIComponent(global.CASE247_CONFIG.whatsappText)}`;
     const urls=global.CASE247_QR.verifyAssociations(properties,urlWhatsApp);
     if(urls.length)throw Error(urls.join('; '));
-    if(!(await waitAllImages(flyer)))throw Error('Una o più immagini non sono state caricate. Attendi o sostituiscile.');
+    const missingImages=await inspectImages(flyer);
+    if(missingImages.length&&!watermark)throw Error(
+      missingImages.length+' immagini non caricate: correggile prima del PDF definitivo. Per la stampa di prova usa il PDF BOZZA.'
+    );
+    // La stampa di prova prosegue: i file guasti sono nascosti nel clone
+    // e segnalati, non viene stampata una foto non verificabile.
     const {PDFDocument,rgb,degrees,StandardFonts}=global.PDFLib;
     const pdf=await PDFDocument.create();
     if(externalLeft||externalRight)await addExternalPage(pdf,externalLeft,externalRight,externalLeftPage,externalRightPage);
@@ -71,6 +80,18 @@
         copy.style.transform='none';copy.style.top='0';copy.style.left='0';
         // Nel bitmap si nascondono i QR; il motore PDF li ridisegna vettorialmente.
         doc.querySelectorAll('.qr-box svg').forEach(svg=>svg.style.visibility='hidden');
+        const cloneImages=[...copy.querySelectorAll('img')];
+        for(const index of missingImages){
+          const img=cloneImages[index];if(!img)continue;
+          img.style.visibility='hidden';
+          const card=img.closest('.card');
+          if(card&&!card.querySelector('.photo-fallback-label')){
+            const note=doc.createElement('div');
+            note.className='photo-fallback-label';
+            note.textContent='FOTO DA VERIFICARE';
+            card.append(note);
+          }
+        }
       }
     });
     const page=pdf.addPage([W,H]);
@@ -93,8 +114,8 @@
     if(!waNode)throw Error('QR WhatsApp non trovato');
     report.push(global.CASE247_QR.drawPdf(page,waNode,'whatsapp',flyer,W,H,global.PDFLib));
     const bytes=await pdf.save();if(autoDownload)download(bytes,filename||global.CASE247_CONFIG.outputName);
-    return {bytes, pdfBytes:bytes.length, pages:pdf.getPageCount(),qrCount:report.length,
+    return {bytes, pdfBytes:bytes.length, pages:pdf.getPageCount(),qrCount:report.length,missingImages:missingImages.length,
       minModuleMm:Math.min(...report.map(x=>x.moduleMm)),qrs:report};
   }
-  global.CASE247_PDF = {exportPdf,waitForImg};
+  global.CASE247_PDF = {exportPdf,waitForImg,inspectImages};
 })(window);
