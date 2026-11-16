@@ -128,21 +128,13 @@
   }
   function initDrive(){
     $('googleOAuthClientId').value=Drive?.getConfiguredId()||'';
-    $('configureDrive').onclick=()=>{
-      try{
-        Drive.configure($('googleOAuthClientId').value);
-        clearDriveLink();
-        driveStatus('Client ID salvato in questo browser. Adesso premi «Collega Google Drive».','good');
-      }catch(error){driveStatus(error.message,'warn')}
-    };
     $('connectDrive').onclick=async()=>{
       try{
         const expected=$('googleOAuthClientId').value.trim();
-        if(!Drive.validClientId(expected))throw Error('Inserisci prima un Google OAuth Client ID web valido.');
-        if(Drive.getConfiguredId()!==expected)Drive.configure(expected);
+        if(!Drive.validClientId(expected)||expected!==Drive.getConfiguredId())throw Error('Client ID CASE247 non configurato correttamente. Aggiorna la pagina.');
         await Drive.authorize();
         clearDriveLink();
-        driveStatus('Google Drive collegato. I PDF definitivi verificati verranno caricati automaticamente quando premi «PDF definitivo + Drive».','good');
+        driveStatus('Accesso Google Drive autorizzato per questa sessione. I PDF definitivi verificati potranno essere caricati nella cartella VOLANTINO.','good');
       }catch(error){driveStatus(error.message,'warn')}
     };
     $('copyDriveLink').onclick=async()=>{
