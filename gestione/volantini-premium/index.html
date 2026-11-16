@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>Studio Volantini · Joseph, Christian, Ylenia</title>
-<link rel="stylesheet" href="./styles.css?v=20261116-due-a5">
+<link rel="stylesheet" href="./styles.css?v=20261116-foto-referenti">
 <!-- Librerie client-side, versioni fissate: installare copie locali per produzione offline. -->
 <script defer src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -17,7 +17,7 @@
 <script defer src="./qr.js"></script>
 <script defer src="./pdf-engine.js?v=20261116-due-a5"></script>
 <script defer src="./portrait-default.js"></script>
-<script defer src="./app.js?v=20261116-due-a5"></script>
+<script defer src="./app.js?v=20261116-foto-referenti"></script>
 </head>
 <body>
 <header class="workspace-head no-print">
@@ -45,7 +45,12 @@
     <div class="action-row"><button id="addManual">+ Scheda da verificare</button><button id="clearAll">Svuota le 18 posizioni</button></div><p id="catalogAudit" class="hint" role="status">Verifica annunci dal catalogo non ancora eseguita.</p>
     <hr>
     <h2>03 · Materiale grafico</h2>
-    <label>Fotografia di Joseph (preferibile PNG trasparente; non usata per Christian e Ylenia)<input id="portraitInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
+    <div class="staff-photo-inputs">
+      <p class="hint">Una foto diversa per ogni referente. Le fotografie vengono memorizzate in questo browser e riutilizzate automaticamente quando selezioni il referente; non sono pubblicate online.</p>
+      <label>Fotografia Joseph (PNG trasparente consigliato)<input id="portraitJosephInput" type="file" accept="image/png,image/jpeg,image/webp"></label><small id="portraitJosephStatus" class="hint" role="status">Fotografia da verificare.</small>
+      <label>Fotografia Christian · Titolare<input id="portraitCristianInput" type="file" accept="image/png,image/jpeg,image/webp"></label><small id="portraitCristianStatus" class="hint" role="status">Nessuna fotografia memorizzata.</small>
+      <label>Fotografia Ylenia<input id="portraitYleniaInput" type="file" accept="image/png,image/jpeg,image/webp"></label><small id="portraitYleniaStatus" class="hint" role="status">Nessuna fotografia memorizzata.</small>
+    </div>
     <label>Panorama reale di Avigliana (JPG/PNG)<input id="panoramaInput" type="file" accept="image/png,image/jpeg,image/webp"></label>
     <h2>FRONTE ESTERNO · Due volantini A5 verticali</h2>
     <p class="hint">Carica entrambi i volantini A5: saranno affiancati SINISTRA + DESTRA per formare una pagina A4 orizzontale, senza sovrapposizioni.</p>
@@ -75,7 +80,7 @@
             <svg class="house-logo" viewBox="0 0 56 56" aria-hidden="true"><path d="M5 30 28 8 51 30M14 27V51H44V27"/><path d="M25 35h8v16m5-16h7"/></svg>
             <div><div class="brand-title">CASE IN PUBBLICITÀ <span>24/7</span></div><div class="brand-subtitle">Avigliana e territorio circostante</div><div class="brand-partner">Selezione immobili dal portafoglio La Sacra Immobiliare</div></div>
           </div>
-          <div class="headline"><strong>18</strong><span>IMMOBILI<br>IN EVIDENZA</span></div>
+          <div class="headline"><span>IMMOBILI<br>IN EVIDENZA</span></div>
           <p class="hero-tagline">Opportunità immobiliari presentate con visibilità 24/7</p>
           <img id="portrait" class="portrait" alt="Joseph">
           <div id="portraitSign" class="portrait-sign">Joseph<small>Digital Strategist</small></div>
