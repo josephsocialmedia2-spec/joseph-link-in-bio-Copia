@@ -13,9 +13,23 @@
   let external=null,externalPreviewUrl=null,selected=-1,catalog=null,loading=false;
   const NEARBY=[["avigliana"],["buttigliera alta","sant ambrogio di torino","villar dora","almese"],["caprie","rubiana","caselette","rosta","chiusa di san michele","vaie"],["rivoli","valgioie","sant antonino di susa","condove"]];
   const fold=s=>String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase("it").replace(/[^a-z0-9]+/g," ").trim();
-  const propertyEligible=x=>Core.canonicalUrl(x?.url)&&x.availability_status==="AVAILABLE"&&x.location_status==="VERIFICATO_FONTE"&&x.municipality&&x.image&&!/attivit|azienda|negozio|bar|tabacchi|ristorante|locale commerciale/i.test(String(x.title||"")+" "+String(x.category||""));
+  const propertyEligible=x=>Core.canonicalUrl(x?.url)&&x.availability_status==="AVAILABLE"&&x.location_status==="VERIFICATO_FONTE"&&x.municipality&&x.image&&!/attivit|azienda|negozio|bar|tabacchi|ristorante|locale commerciale|magazzino|terreno|capannone|autorimessa/i.test(String(x.title||"")+" "+String(x.category||""));
   const priority=x=>{const name=fold(x.municipality);const i=NEARBY.findIndex(group=>group.includes(name));return i<0?99:i;};
-  const eligibleListings=items=>items.filter(propertyEligible).sort((a,b)=>priority(a)-priority(b)||fold(a.municipality).localeCompare(fold(b.municipality),"it")||fold(a.title).localeCompare(fold(b.title),"it"));
+  const eligibleListings=items=>{
+    const eligible=items.filter(propertyEligible),groups=new Map();
+    for(const listing of eligible){
+      const tier=priority(listing),key=tier+"|"+fold(listing.municipality);
+      if(!groups.has(key))groups.set(key,[]);
+      groups.get(key).push(listing);
+    }
+    for(const listings of groups.values())listings.sort((a,b)=>fold(a.title).localeCompare(fold(b.title),"it"));
+    const result=[],tiers=[...new Set([...groups.keys()].map(x=>Number(x.split("|")[0])))].sort((a,b)=>a-b);
+    for(const tier of tiers){
+      const keys=[...groups.keys()].filter(k=>k.startsWith(tier+"|")).sort((a,b)=>a.localeCompare(b,"it"));
+      while(keys.some(k=>groups.get(k).length))for(const key of keys){const next=groups.get(key).shift();if(next)result.push(next);}
+    }
+    return result;
+  };
   const fromCatalog=x=>Core.makeEntry({title:x.title,city:x.municipality,price:x.price,contract:x.contract,img:x.image,url:x.url,energy:x.energy_class||x.energyClass||x.energy,ep:x.epgl_nren||x.epgl||x.ep,envelope:x.epe_invol||x.envelope});
   try{
     const old=JSON.parse(localStorage.getItem(KEY)||'null');
