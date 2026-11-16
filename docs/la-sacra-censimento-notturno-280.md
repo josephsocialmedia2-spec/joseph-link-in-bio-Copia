@@ -16,7 +16,7 @@ I repository accessibili all'app GitHub risultano **pubblici**. Non pubblicare q
 4. Produce **Excel con foglio LOTTO 280** (nome, partita IVA, email, telefono, comune e indirizzo in prima posizione), riepilogo, CSV e file campagna idonei (inizialmente vuoto).
 5. Cifra il pacchetto ZIP con AES-256-GCM e RSA-OAEP usando **solo la chiave pubblica** `config/la-sacra-census-public.pem`.
 6. Carica solo `.case247` come artefatto GitHub Actions, durata 90 giorni.
-7. Registra in `state/la-sacra-av20-processed.json` esclusivamente gli identificativi OSM trattati, senza email, telefoni o partite IVA.
+7. Registra in `state/la-sacra-av20-processed.json` soltanto identificativi OSM e impronte SHA-256 delle aziende trattate, senza email, telefoni o partite IVA in chiaro.
 
 ## Scaricare il lotto quotidiano
 
