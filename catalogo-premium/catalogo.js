@@ -46,6 +46,11 @@ document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey||['INP
   if(e.key==='ArrowLeft'){e.preventDefault();showPage(selected-1)}
 });
 let touchX=null,touchY=null;
+// Only one page is visible while browsing; printing requires the ENTIRE flipbook.
+addEventListener('beforeprint',()=>{
+  for(const page of document.querySelectorAll('.reader-frame .page'))page.hidden=false;
+});
+addEventListener('afterprint',()=>showPage(selected,false));
 const frame=document.querySelector('.reader-frame');
 frame.addEventListener('touchstart',e=>{if(e.touches.length!==1)return;touchX=e.touches[0].clientX;touchY=e.touches[0].clientY},{passive:true});
 frame.addEventListener('touchend',e=>{if(touchX===null||e.changedTouches.length!==1)return;const dx=e.changedTouches[0].clientX-touchX,dy=e.changedTouches[0].clientY-touchY;touchX=null;touchY=null;if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*1.4)showPage(selected+(dx<0?1:-1))},{passive:true});

@@ -24,7 +24,18 @@ const path=require('node:path');
    const inventory=await page.evaluate(()=>({sheets:document.querySelectorAll('.page-listing-sheet').length,cards:document.querySelectorAll('.sheet-card').length,pages:document.querySelectorAll('.page').length}));
    if(inventory.cards!==58||inventory.sheets!==15||inventory.pages!==17)throw Error('Inventario o impaginazione 4-per-pagina incompleti '+JSON.stringify(inventory));
    await page.emulateMedia({media:'print'});
-   await page.evaluate(()=>document.fonts.ready);
+   await page.evaluate(async()=>{
+     await document.fonts.ready;
+     // Deterministically print ALL pages, including the pages hidden in the flipbook UI.
+     document.querySelectorAll('.reader-frame .page').forEach(el=>{
+       el.hidden=false;
+       el.style.setProperty('display','block','important');
+     });
+     for(const selector of ['.reader','.reader-frame']){
+       const node=document.querySelector(selector);
+       if(node)node.style.setProperty('overflow','visible','important');
+     }
+   });
    await page.evaluate(()=>document.querySelectorAll('.sheet-card img').forEach(img=>img.loading='eager'));
    // Le immagini esterne possono richiedere più tempo: attende fino a 20 s senza bloccare la generazione.
    await page.evaluate(()=>Promise.race([
@@ -35,6 +46,10 @@ const path=require('node:path');
    await page.pdf({path:dest,printBackground:true,preferCSSPageSize:true,displayHeaderFooter:false,timeout:120000});
    const size=fs.statSync(dest).size;
    if(size<20000)throw Error('PDF anomalo: '+size+' bytes');
+   // Detect silently clipped Chromium output BEFORE pushing the PDF to main.
+   const pdfData=fs.readFileSync(dest).toString('latin1');
+   const pageCount=(pdfData.match(/\/Type\s*\/Page\b/g)||[]).length;
+   if(pageCount!==inventory.pages)throw Error('PDF incompleto: '+pageCount+' pagine anziché '+inventory.pages+'. Pubblicazione bloccata.');
    console.log('PDF multipagina generato',inventory,size,'immagini ottimizzate',compressed);
    if(size>25000000)throw Error('PDF troppo pesante per invio clienti: '+size+' bytes');
  }finally{await browser.close()}
