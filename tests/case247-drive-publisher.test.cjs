@@ -10,7 +10,7 @@ test('Drive publisher and editor scripts are valid Javascript',()=>{
   assert.doesNotThrow(()=>new vm.Script(app));
 });
 test('Drive setup UI and customer link actions exist',()=>{
-  for(const id of ['googleOAuthClientId','connectDrive','driveStatus','driveResult','driveCustomerLink','copyDriveLink','whatsappDriveLink'])
+  for(const id of ['googleOAuthClientId','connectDrive','driveStatus','driveResult','driveCustomerLink','driveLinkValue','driveLinkTitle','copyDriveLink','whatsappDriveLink'])
     assert.match(html,new RegExp('id="'+id+'"'));
   assert.match(html,/src="https:\/\/accounts\.google\.com\/gsi\/client"/);
   assert.match(html,/drive-publisher\.js/);
@@ -27,8 +27,12 @@ test('Upload is multipart/related and public link requires confirmed read-only p
   assert.match(js,/uploadType=multipart/);
   assert.match(js,/multipart\/related/);
   assert.match(js,/type:'anyone',role:'reader',allowFileDiscovery:false/);
-  assert.match(js,/info\.permissions\.some\(p=>p\.type==='anyone'&&p\.role==='reader'\)/);
-  assert.match(js,/!allowed\|\|!info\.webViewLink/);
+  // Access checks are centralized in verifyPublicPdf rather than inline in upload.
+  assert.match(js,/async function verifyPublicPdf\(fileId\)/);
+  assert.match(js,/permissions\.some\(p=>p\.type==='anyone'&&p\.role==='reader'\)/);
+  assert.match(js,/if\(!publicReader\)throw Error/);
+  assert.match(js,/const verified=await verifyPublicPdf\(uploaded\.id\)/);
+  assert.match(js,/info\.webViewLink/);
 });
 test('Only a validated final PDF is made public; Drive drafts stay private',()=>{
   const body=app.slice(app.indexOf('async function exportPdf('),app.indexOf('function downloadBlob('));
@@ -74,4 +78,15 @@ test('Private draft upload remains separate from public permission update',()=>{
  assert.match(body,/private:true/);
  assert.match(html,/id="uploadDraftDrive"/);
  assert.match(app,/Drive\.uploadPrivateDraft\(result\.bytes/);
+});
+
+
+test('Restoring a published link rechecks permissions and never stores an OAuth token',()=>{
+  assert.match(js,/async function restorePublishedLink\(\)/);
+  assert.match(js,/const verified=await verifyPublicPdf\(saved\.id\)/);
+  assert.match(js,/localStorage\?\.setItem\(PUBLICATION_KEY/);
+  assert.match(js,/publishedAt:new Date\(\)\.toISOString\(\)/);
+  assert.match(app,/await Drive\.restorePublishedLink\(\)/);
+  assert.match(app,/showDriveLink\(previous\.url,true\)/);
+  assert.match(html,/Ultimo PDF pubblicato|driveLinkTitle/);
 });

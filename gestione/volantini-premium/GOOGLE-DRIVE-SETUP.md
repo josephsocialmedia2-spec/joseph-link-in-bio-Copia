@@ -18,7 +18,7 @@
 5. Confermare i dati delle 18 schede reali e i requisiti documentali. Premere **PDF definitivo + Drive**. Il sito crea il PDF, lo carica nella cartella VOLANTINO e mostra il link soltanto se Drive conferma parent corretto e permessi di sola lettura.
 6. Da browser non autenticato verificare il link; se Google vieta `anyone`, cambiare la policy dell'account/organizzazione **solo se autorizzato**, altrimenti lasciare il file privato e non condividerlo ai clienti.
 
-**NOTA:** Il repository non contiene un Client ID web valido né può riutilizzare automaticamente l'autenticazione dell'assistente Google Drive o i secret di GitHub Actions. Fino a configurazione e accesso OAuth la pubblicazione automatica non è attiva. GitHub Pages statico non gestisce credenziali segrete.
+**NOTA:** Il codice contiene un identificativo pubblico OAuth Web (`DEFAULT_CLIENT_ID`), ma questo non prova che l'origine JavaScript sia stata autorizzata su Google Cloud né che l'utente abbia concesso i permessi. L'autenticazione dell'assistente Google Drive o i secret di GitHub Actions non sono riutilizzabili dalla pagina. Fino a consenso OAuth effettivo e collaudo con Google Drive reale, la pubblicazione automatica non può essere dichiarata attiva. GitHub Pages statico non gestisce credenziali segrete.
 
 ## Collaudo richiesto
 Test automatici Node: sintassi, instradamento bozza/definitivo, costruzione multipart/related, token in memoria, permessi reader e UI.
@@ -31,3 +31,12 @@ Non sostituiscono il collaudo E2E con account Google reale, PDF effettivo, link 
 - Tutti i file risultavano **privati** a verifica dell’API: **non** sono link pubblici per i clienti.
 - Non confondere il collegamento del connettore ChatGPT con il consenso OAuth del browser GitHub Pages: sono autenticazioni diverse.
 - Il retro con le 18 schede non è stato aggiunto al fronte archiviato, perché esistono verifiche immobiliari ancora aperte.
+
+## Recupero del link cliente (17 novembre 2026)
+
+- Una volta connesso l'account Google, lo Studio prova a recuperare l'ultimo **ID file PDF** pubblicato da questo browser. L'ID (non il token) è salvato in `localStorage`.
+- Il link viene mostrato di nuovo soltanto dopo una nuova verifica delle API `files.get` e `permissions.list`: PDF non cestinato, cartella VOLANTINO, permesso `anyone/reader`, `webViewLink` presente.
+- Il link recuperato è etichettato **ultimo PDF pubblicato**: non implica che l'editor corrente, con eventuali modifiche locali successive, coincida con quel PDF.
+- Copia link usa Clipboard API quando disponibile, altrimenti seleziona il campo di testo per copia manuale; il pulsante WhatsApp trasmette solo l'URL del PDF confermato.
+- Il definitivo richiede entrambi gli A5 del fronte, le 18 schede e tutte le verifiche. Non rimuovere i blocchi APE, fotografie o disponibilità per ottenere artificialmente un link.
+- Test simulati: `node gestione/volantini-premium/test-link-cliente.cjs`. Restano necessari login OAuth, caricamento effettivo, apertura anonima e prova QR/stampa con un browser reale.

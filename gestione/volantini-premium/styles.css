@@ -198,6 +198,8 @@ button.primary{background:linear-gradient(150deg,#008ccf,#07589f);border-color:#
 .drive-result{margin-top:12px;background:#0e4963;padding:12px;border:1px solid #63c6dc;border-radius:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .drive-result[hidden]{display:none!important}
 .drive-result strong{flex:0 0 100%}
+.drive-link-label{flex:0 0 100%;font-size:12px;color:#e6f8fc;font-weight:700}
+#driveLinkValue{flex:1 1 100%;min-width:0;background:#f4fbff;color:#102b44;padding:11px 12px;border:1px solid #68bcd3;border-radius:7px;font-size:13px;cursor:text}
 .drive-result a{color:#ddf9ff;text-decoration:underline;word-break:break-word}
 
 /* Diagnostica di conformità: tutte le verifiche consultabili e modificabili. */

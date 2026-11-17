@@ -118,13 +118,20 @@
     customerDriveLink='';
     $('driveResult').hidden=true;
     $('driveCustomerLink').removeAttribute('href');
+    $('driveLinkValue').value='';
   }
-  function showDriveLink(url){
+  function showDriveLink(url,previous=false){
     if(!/^https:\/\/(?:drive|docs)\.google\.com\//.test(String(url)))throw Error('Link di Google Drive non valido');
     customerDriveLink=url;
     $('driveCustomerLink').href=url;
+    $('driveLinkValue').value=url;
+    $('driveLinkTitle').textContent=previous?
+      'Ultimo PDF pubblicato · verifica che corrisponda al volantino da inviare':
+      'PDF definitivo pubblicato · link cliente';
     $('driveResult').hidden=false;
-    driveStatus('PDF definitivo caricato e permesso di sola lettura verificato. Link cliente disponibile.','good');
+    driveStatus(previous?
+      'Ultimo link verificato nuovamente su Drive. Potrebbe riferirsi a una versione precedente.':
+      'PDF definitivo caricato e accesso pubblico in sola lettura verificato. Link cliente disponibile.','good');
   }
   function initDrive(){
     $('googleOAuthClientId').value=Drive?.getConfiguredId()||'';
@@ -134,15 +141,33 @@
         if(!Drive.validClientId(expected)||expected!==Drive.getConfiguredId())throw Error('Client ID CASE247 non configurato correttamente. Aggiorna la pagina.');
         await Drive.authorize();
         clearDriveLink();
-        driveStatus('Accesso Google Drive autorizzato per questa sessione. I PDF definitivi verificati potranno essere caricati nella cartella VOLANTINO.','good');
+        try{
+          const previous=await Drive.restorePublishedLink();
+          if(previous)showDriveLink(previous.url,true);
+          else driveStatus('Drive autorizzato. Nessun PDF definitivo precedente da recuperare: pubblica un PDF verificato per creare il link cliente.','good');
+        }catch(error){
+          driveStatus('Drive autorizzato, ma il vecchio link non è stato riconfermato: '+error.message+' Pubblica una nuova versione verificata.','warn');
+        }
       }catch(error){driveStatus(error.message,'warn')}
     };
     $('copyDriveLink').onclick=async()=>{
       if(!customerDriveLink)return;
+      let copied=false;
       try{
-        await navigator.clipboard.writeText(customerDriveLink);
-        driveStatus('Link cliente copiato.','good');
-      }catch(error){driveStatus('Copia automatica non disponibile; apri il link e copialo dalla barra indirizzi.','warn')}
+        if(navigator.clipboard?.writeText){
+          await navigator.clipboard.writeText(customerDriveLink);
+          copied=true;
+        }
+      }catch(_){}
+      if(!copied){
+        const field=$('driveLinkValue');
+        field.focus();
+        field.select();
+        try{copied=Boolean(document.execCommand?.('copy'));}catch(_){}
+      }
+      driveStatus(copied?
+        'Link cliente copiato. Puoi incollarlo su WhatsApp o email.':
+        'Seleziona il link nel campo qui sotto e copialo manualmente.',''+(copied?'good':'warn'));
     };
     $('whatsappDriveLink').onclick=()=>{
       if(!customerDriveLink)return;
@@ -395,6 +420,7 @@
     if(loading)return;loading=true;$('exportPdf').disabled=true;$('exportFinalPdf').disabled=true;$('uploadDraftDrive').disabled=true;setStatus(definitive===true?'Verifica finale prima della generazione...':draftToDrive?'Preparazione BOZZA privata per Google Drive...':'Preparazione PDF per stampa di prova...');
     if(Boolean(externalLeft)!==Boolean(externalRight)){setStatus('Carica ENTRAMBI i volantini A5 prima di esportare il fronte.','warn');loading=false;$('exportPdf').disabled=false;$('exportFinalPdf').disabled=false;$('uploadDraftDrive').disabled=false;return;}
     try{
+      if(definitive===true&&(!externalLeft||!externalRight))throw Error('PDF definitivo fronte/retro: carica entrambi gli A5 esterni prima di pubblicare il link cliente.');
       await loadCatalog(true);
       const issues=showPreflight();
       if(model.properties.some(x=>!x?.title)||model.properties.some(x=>!x?.url))throw Error('Per creare 19 QR occorrono 18 schede con URL diretti.');
@@ -406,7 +432,8 @@
       const proof=issues.length>0;
       if(proof&&definitive===true){$('preflight').dataset.expanded='true';showPreflight();$('preflight').scrollIntoView({behavior:'smooth',block:'start'});throw Error(`Pubblicazione sospesa: ${issues.length} verifiche aperte. Apri «Mostra tutte le verifiche» qui sotto e modifica le schede indicate. Puoi salvare una BOZZA privata su Drive.`);}
       const result=await PDF.exportPdf({flyer:$('flyer'),properties:model.properties,externalLeft,externalRight,
-        externalLeftPage:Number($('outerLeftPage').value)||1,externalRightPage:Number($('outerRightPage').value)||1,watermark:definitive!==true,whatsappUrl:whatsappFor(activeProfile()),filename:(definitive===true?'DEFINITIVO':draftToDrive?'BOZZA_DRIVE_PRIVATA':'BOZZA_STAMPA')+'_Volantino_A4_'+activeProfile().name+'.pdf'});
+        externalLeftPage:Number($('outerLeftPage').value)||1,externalRightPage:Number($('outerRightPage').value)||1,watermark:definitive!==true,whatsappUrl:whatsappFor(activeProfile()),filename:(definitive===true?'DEFINITIVO':draftToDrive?'BOZZA_DRIVE_PRIVATA':'BOZZA_STAMPA')+'_Volantino_A4_'+activeProfile().name+'.pdf',
+        autoDownload:!draftToDrive&&definitive!==true});
       const q=Math.round(result.minModuleMm*100)/100;
       if(draftToDrive){
         clearDriveLink();

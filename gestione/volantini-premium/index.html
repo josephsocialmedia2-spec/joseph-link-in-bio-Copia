@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>Studio Volantini · Joseph, Christian, Ylenia</title>
-<link rel="stylesheet" href="./styles.css?v=20261116-preflight-all">
+<link rel="stylesheet" href="./styles.css?v=20261117-link-cliente">
 <!-- Librerie client-side, versioni fissate: installare copie locali per produzione offline. -->
 <script defer src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -18,8 +18,8 @@
 <script defer src="./pdf-engine.js?v=20261116-due-a5"></script>
 <script defer src="./portrait-default.js"></script>
 <script defer src="https://accounts.google.com/gsi/client"></script>
-<script defer src="./drive-publisher.js?v=20261116-ape-v3"></script>
-<script defer src="./app.js?v=20261116-brand-lasacra"></script>
+<script defer src="./drive-publisher.js?v=20261117-link-cliente"></script>
+<script defer src="./app.js?v=20261117-link-cliente"></script>
 </head>
 <body>
 <header class="workspace-head no-print">
@@ -71,17 +71,19 @@
     <section class="drive-publish-panel no-print" aria-label="Pubblicazione PDF verificato su Google Drive">
       <h2>Google Drive · Cartella VOLANTINO</h2>
       <p class="hint">Cartella predisposta nell'account principale: <a href="https://drive.google.com/drive/folders/1fk3pG5Pci0AQGhqbCiFr8eN7axwxsbO7" target="_blank" rel="noopener noreferrer" style="color:#a9eafa;text-decoration:underline">Apri VOLANTINO su Google Drive</a>. I PDF definitivi vengono salvati qui, non nella cartella principale.</p><p class="hint"><strong>Pronta per le telefonate:</strong> <a href="./cliente-avigliana/" target="_blank" rel="noopener noreferrer" style="color:#b2efff;text-decoration:underline">Apri brochure informativa pubblica Avigliana</a>. È distinta dal volantino definitivo con 18 annunci, ancora da verificare.</p>
-      <p class="hint">Dopo l’autorizzazione Google del sito, <strong>PDF definitivo + Drive</strong> carica il volantino nella cartella VOLANTINO e crea un link cliente in sola lettura soltanto dopo che Google ha confermato upload e permessi. Le bozze possono essere salvate privatamente su Drive; non generano link pubblici.</p>
+      <p class="hint">Questa è una <strong>pagina di gestione privata dell'operatore</strong>, non il link da inviare al cliente. Dopo l'autorizzazione Google, <strong>PDF definitivo + Drive</strong> carica il volantino fronte/retro verificato e genera un link PDF pubblico in sola lettura. Il link appare solo dopo la conferma dei permessi da parte di Google Drive. Le bozze restano private e non sono inviabili.</p>
       <div class="drive-connect-controls">
         <label for="googleOAuthClientId">Google OAuth Client ID · Configurato</label>
         <input id="googleOAuthClientId" autocomplete="off" readonly aria-describedby="driveSetupHint">
         <button type="button" id="connectDrive" class="primary">Autorizza Google Drive</button>
       </div>
-      <p class="hint" id="driveSetupHint">Client ID web già installato. Per accedere alla cartella VOLANTINO premi <strong>Autorizza Google Drive</strong> e seleziona l’account Google principale. L’origine JavaScript autorizzata su Google Cloud deve essere <code>https://josephsocialmedia2-spec.github.io</code>. Google mostrerà i permessi richiesti prima di concedere l’accesso.</p>
+      <p class="hint" id="driveSetupHint">Client ID web inserito nel codice; l'autorizzazione reale dipende dalla configurazione su Google Cloud. Per accedere alla cartella VOLANTINO premi <strong>Autorizza Google Drive</strong> e seleziona l’account Google principale. L’origine JavaScript autorizzata su Google Cloud deve essere <code>https://josephsocialmedia2-spec.github.io</code>. Google mostrerà i permessi richiesti prima di concedere l’accesso.</p>
       <p id="driveStatus" class="message" role="status">Drive non collegato. Nessun caricamento automatico attivo.</p>
       <div id="driveResult" class="drive-result" hidden>
-        <strong>Volantino definitivo pubblicato: link cliente</strong>
-        <a id="driveCustomerLink" href="#" target="_blank" rel="noopener noreferrer">Visualizza il PDF su Google Drive</a>
+        <strong id="driveLinkTitle">PDF definitivo pubblicato · link cliente</strong>
+        <label class="drive-link-label" for="driveLinkValue">Link verificato da copiare e inviare al cliente</label>
+        <input type="text" id="driveLinkValue" readonly aria-label="Link pubblico del PDF verificato">
+        <a id="driveCustomerLink" href="#" target="_blank" rel="noopener noreferrer">Apri il PDF come lo vedrà il cliente</a>
         <button type="button" id="copyDriveLink">Copia link cliente</button>
         <button type="button" id="whatsappDriveLink">Condividi su WhatsApp</button>
       </div>

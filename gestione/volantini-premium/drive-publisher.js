@@ -10,7 +10,7 @@
   const FOLDER_ID='1fk3pG5Pci0AQGhqbCiFr8eN7axwxsbO7';
   const FOLDER_URL='https://drive.google.com/drive/folders/'+FOLDER_ID;
   const DEFAULT_CLIENT_ID='329979188953-pp3odbtatu7hen8pni86grui0bevt8dg.apps.googleusercontent.com';
-  const SETTINGS_KEY='case247-google-oauth-client-id';
+  const PUBLICATION_KEY='case247-last-verified-pdf-v1';
   const validClientId=value=>/^\d+-[a-z0-9-]+\.apps\.googleusercontent\.com$/.test(String(value||'').trim());
   let token=null,expiresAt=0,clientId='',client=null;
   let currentLink=null;
@@ -55,6 +55,36 @@
     const body=await response.json().catch(()=>({}));
     if(!response.ok)throw Error('Google Drive HTTP '+response.status+': '+(body.error?.message||'operazione rifiutata'));
     return body;
+  }
+// A customer link is considered usable only after a fresh Drive API permission check.
+  // Saving the file ID locally is safe; OAuth access tokens are never persisted.
+  async function verifyPublicPdf(fileId){
+    const id=String(fileId||'').trim();
+    if(!/^[a-zA-Z0-9_-]{15,}$/.test(id))throw Error('ID PDF Google Drive non valido.');
+    const encoded=encodeURIComponent(id);
+    const info=await googleFetch('https://www.googleapis.com/drive/v3/files/'+encoded+
+      '?fields=id,name,mimeType,parents,trashed,webViewLink');
+    if(info.trashed||info.mimeType!=='application/pdf'||!Array.isArray(info.parents)||!info.parents.includes(FOLDER_ID)){
+      throw Error('Il PDF non è presente nella cartella VOLANTINO oppure non è più utilizzabile.');
+    }
+    const permissions=await googleFetch('https://www.googleapis.com/drive/v3/files/'+encoded+
+      '/permissions?pageSize=100&fields=nextPageToken,permissions(type,role)');
+    const publicReader=Array.isArray(permissions.permissions)&&
+      permissions.permissions.some(p=>p.type==='anyone'&&p.role==='reader');
+    if(!publicReader)throw Error('Accesso pubblico in sola lettura NON confermato da Google Drive.');
+    if(!/^https:\/\/(?:drive|docs)\.google\.com\//.test(String(info.webViewLink||''))){
+      throw Error('Google Drive non ha restituito un link cliente verificabile.');
+    }
+    return {id:info.id,name:info.name,url:info.webViewLink};
+  }
+  async function restorePublishedLink(){
+    if(!isConnected())throw Error('Autorizza Google Drive per verificare l’ultimo link pubblicato.');
+    let saved=null;
+    try{saved=JSON.parse(global.localStorage?.getItem(PUBLICATION_KEY)||'null');}catch(_){}
+    if(!saved?.id)return null;
+    const verified=await verifyPublicPdf(saved.id);
+    currentLink=verified.url;
+    return {...verified,publishedAt:saved.publishedAt||''};
   }
   async function uploadPrivateDraft(bytes,filename){
     if(!isConnected())throw Error('Autorizza prima Google Drive.');
@@ -111,17 +141,20 @@
         headers:{'Content-Type':'application/json'},
         body:JSON.stringify({type:'anyone',role:'reader',allowFileDiscovery:false})
       });
-      const info=await googleFetch('https://www.googleapis.com/drive/v3/files/'+encodeURIComponent(uploaded.id)+'?fields=id,name,mimeType,webViewLink,permissions(id,type,role)&supportsAllDrives=false');
-      const allowed=Array.isArray(info.permissions)&&info.permissions.some(p=>p.type==='anyone'&&p.role==='reader');
-      if(!allowed||!info.webViewLink)throw Error('Il file è stato caricato, ma il link pubblico in sola lettura non risulta confermato.');
-      currentLink=info.webViewLink;
-      return {id:uploaded.id,name:info.name,url:currentLink};
+      const verified=await verifyPublicPdf(uploaded.id);
+      currentLink=verified.url;
+      try{
+        global.localStorage?.setItem(PUBLICATION_KEY,JSON.stringify({
+          id:verified.id,publishedAt:new Date().toISOString()
+        }));
+      }catch(_){/* Se la memoria locale è bloccata, il link appena verificato resta visibile. */}
+      return verified;
     }catch(error){
       // File intentionally remains PRIVATE if publishing was denied. Never return a public link.
       throw Error('PDF caricato su Drive, ma non condiviso con il cliente. '+error.message);
     }
   }
-  const publisher={configure,getConfiguredId,validClientId,isConnected,authorize,uploadVerifiedPdf,uploadPrivateDraft,getLastLink:()=>currentLink,getFolderUrl:()=>FOLDER_URL,getFolderId:()=>FOLDER_ID};
+  const publisher={configure,getConfiguredId,validClientId,isConnected,authorize,uploadVerifiedPdf,uploadPrivateDraft,verifyPublicPdf,restorePublishedLink,getLastLink:()=>currentLink,getFolderUrl:()=>FOLDER_URL,getFolderId:()=>FOLDER_ID};
   global.CASE247_DRIVE=publisher;
   if(typeof module!=='undefined'&&module.exports)module.exports={validClientId,getConfiguredId};
 })(typeof window!=='undefined'?window:globalThis);
