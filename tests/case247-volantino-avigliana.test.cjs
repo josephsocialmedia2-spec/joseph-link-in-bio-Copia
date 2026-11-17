@@ -25,15 +25,20 @@ test('Catalog import uses priority instead of first eighteen source rows',()=>{
  assert.match(app,/model\.properties=blank\(\)/);
 });
 test('Unsourced and unchecked listings cannot be exported',()=>{
- assert.match(app,/availability_status==="AVAILABLE"/);
- assert.match(app,/location_status==="VERIFICATO_FONTE"/);
+ assert.match(app,/LaSacraRules\?\.isEligible/);
+ const rules=require('../catalogo-premium/property-rules.js');
+ const candidates=rules.filterListings(catalog.items);
+ assert.ok(candidates.every(p=>p.availability_status==='AVAILABLE'&&p.location_status==='VERIFICATO_FONTE'));
  assert.match(app,/annunci non verificati nel catalogo ufficiale/);
  assert.match(app,/Lo ZIP non può includere annunci assenti/);
  assert.match(app,/schede senza riscontro rimosse dalla selezione/);
 });
-test('Local catalogue provides enough verified residential listings for eighteen slots',()=>{
- const candidates=catalog.items.filter(x=>x.url&&x.availability_status==='AVAILABLE'&&x.location_status==='VERIFICATO_FONTE'&&x.municipality&&x.image&&!/attivit|azienda|negozio|bar|tabacchi|ristorante|locale commerciale|magazzino|terreno|capannone|autorimessa/i.test(String(x.title||'')+' '+String(x.category||'')));
+test('Studio uses only whitelist residential source listings and up to eighteen slots',()=>{
+ const rules=require('../catalogo-premium/property-rules.js');
+ const candidates=rules.filterListings(catalog.items);
  assert.ok(candidates.length>=18);
- assert.ok(candidates.some(x=>x.municipality==='Avigliana'));
+ assert.ok(candidates.every(x=>x.category==='Residenziale'&&rules.ALLOWED_TOWN_IDS.has(x.town_id)));
+ assert.ok(candidates.some(x=>x.municipality==='Sant’Ambrogio di Torino'));
  assert.equal(new Set(candidates.map(x=>x.url)).size,candidates.length);
+ assert.match(app,/chosen\.length&&!selectedIds\.length/);
 });
