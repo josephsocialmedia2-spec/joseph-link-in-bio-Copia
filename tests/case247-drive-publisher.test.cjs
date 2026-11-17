@@ -90,3 +90,28 @@ test('Restoring a published link rechecks permissions and never stores an OAuth 
   assert.match(app,/showDriveLink\(previous\.url,true\)/);
   assert.match(html,/Ultimo PDF pubblicato|driveLinkTitle/);
 });
+
+
+test('Public client flyer offers a WhatsApp message and never exposes unverified listing data',()=>{
+  const flyer=read('gestione/volantini-premium/volantino-digitale/index.html');
+  const controls=['publicFlyerOpen','publicFlyerWhatsApp','publicFlyerCopy','publicFlyerLink','publicFlyerStatus'];
+  for(const id of controls){
+    assert.ok(html.includes('id="'+id+'"'),'Missing studio control '+id);
+    assert.ok(app.includes("$('"+id+"')"),'Missing control handler '+id);
+  }
+  assert.ok(app.includes("new URL('./volantino-digitale/',global.location.href)"));
+  assert.ok(app.includes('https://wa.me/?text='));
+  for(const id of ['shareWhatsapp','copyMessage','flyerUrl','printFlyer','officialLogo']){
+    assert.ok(flyer.includes('id="'+id+'"'),'Missing public flyer control '+id);
+  }
+  assert.ok(flyer.includes('Geom. Christian Raimondi'));
+  assert.ok(flyer.includes('Volantino digitale informativo'));
+  assert.ok(flyer.includes('https://lasacraimmobiliare.it/'));
+  assert.ok(flyer.includes('class="front"'));
+  assert.ok(flyer.includes('class="back"'));
+  assert.ok(!flyer.includes('data-price'));
+  assert.ok(!flyer.includes('class="property-card"'));
+  const inline=flyer.split('<script>')[1]?.split('</script>')[0];
+  assert.ok(inline,'Public flyer inline script is missing');
+  assert.doesNotThrow(()=>new vm.Script(inline));
+});
