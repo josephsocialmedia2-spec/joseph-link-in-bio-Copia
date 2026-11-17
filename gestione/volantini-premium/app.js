@@ -343,7 +343,7 @@
     const grid=$('listingGrid');grid.replaceChildren();
     for(let i=0;i<18;i++)grid.append(makeCard(model.properties[i],i));
     const wa=$('waQr');QR.paint(wa,'whatsapp',whatsappFor(staff));
-    showPreflight();resizePreview();
+    showPreflight();resizePreview();refreshClientCatalogueShare();
   }
   async function loadCatalog(force=false){
     if(catalog&&!force)return catalog;
@@ -537,15 +537,37 @@
     $('outerDescription').textContent=count===2?'Fronte A4 composto da 2 A5 verticali: SINISTRA '+externalLeft.name+' + DESTRA '+externalRight.name:
       'Fronte incompleto: carica A5 SINISTRA e A5 DESTRA. Non verrà generata una pagina fronte con un solo A5.';
   }
-  function initPublicFlyerShare(){
-    // The client-facing catalogue with actual property proposals lives at the repo root.
-    // Do not substitute the general-purpose brochure in ./volantino-digitale/.
-    const url=new URL('../../catalogo-premium/',global.location.href).href;
-    const message='Buongiorno, come concordato ti invio il catalogo digitale aggiornato di Immobiliare La Sacra con le proposte immobiliari nella Valle di Susa e nel Torinese.\n\nSfoglia le proposte qui: '+url+'\n\nPrezzi e disponibilità sono da confermare con l’agenzia. Se vuoi informazioni su un immobile, rispondi a questo messaggio.';
+  // A single client catalogue is derived from the same official URL catalogue
+  // used by Studio Premium. The URL carries only product IDs, never private data.
+  function clientCatalogueUrl(){
+    const url=new URL('../../catalogo-premium/',global.location.href);
+    if(!Array.isArray(catalog))return {url:url.href,count:0};
+    const selectedIds=[];
+    for(const picked of model.properties){
+      if(!picked?.url)continue;
+      const matched=catalog.find(item=>Core.canonicalUrl(item.url)===Core.canonicalUrl(picked.url));
+      if(!matched||!propertyEligible(matched)||!(/^\d{10,20}$/.test(String(matched.id))))continue;
+      if(!selectedIds.includes(String(matched.id)))selectedIds.push(String(matched.id));
+      if(selectedIds.length>=18)break;
+    }
+    if(selectedIds.length)url.searchParams.set('immobili',selectedIds.join(','));
+    return {url:url.href,count:selectedIds.length};
+  }
+  function refreshClientCatalogueShare(){
+    const state=clientCatalogueUrl(),url=state.url;
+    const message='Buongiorno, come concordato ti invio il catalogo immobiliare sfogliabile di Immobiliare La Sacra con fotografie, prezzi e schede ufficiali.\n\nApri il catalogo: '+url+'\n\nOgni pagina contiene fino a quattro immobili. Puoi anche stamparlo o salvarlo in PDF. Prezzi e disponibilità sono da confermare con l’agenzia.';
     $('publicFlyerOpen').href=url;
     $('publicFlyerLink').value=url;
     $('publicFlyerWhatsApp').href='https://wa.me/?text='+encodeURIComponent(message);
+    $('publicFlyerStatus').textContent=state.count?
+      'Catalogo unico con '+state.count+' annunci selezionati dagli URL del catalogo ufficiale. Il cliente vede solo questi e può stamparli in PDF.':
+      'Catalogo unico con gli annunci attuali del sito ufficiale. Importa gli URL per ottenere un link limitato alla selezione.';
+    return message;
+  }
+  function initPublicFlyerShare(){
+    refreshClientCatalogueShare();
     $('publicFlyerCopy').onclick=async()=>{
+      const message=refreshClientCatalogueShare();
       let copied=false;
       try{
         if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(message);copied=true;}
@@ -555,7 +577,7 @@
         field.focus();field.select();
         try{copied=Boolean(document.execCommand?.('copy'));}catch(_){}
         $('publicFlyerStatus').textContent=copied?
-          'Link copiato. Per inviare anche il testo usa il pulsante WhatsApp.':
+          'Link copiato. Per inviare il messaggio completo usa il pulsante WhatsApp.':
           'Seleziona il link dal campo e copialo manualmente.';
       }else{
         $('publicFlyerStatus').textContent='Messaggio e link copiati: puoi incollarli su WhatsApp o email.';
