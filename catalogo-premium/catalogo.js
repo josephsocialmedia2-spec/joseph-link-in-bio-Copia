@@ -5,7 +5,16 @@
 'use strict';
 let pageNodes=[...document.querySelectorAll('.page')];
 let pageNames=['Copertina','Valutazione gratuita'];
-const rootUrl=new URL('./',location.href).href.split('#')[0].split('?')[0];
+// The one client URL can optionally carry a conservative allowlist of product IDs
+// selected from existing official URLs in Studio Volantini Premium.
+const publicUrl=new URL(location.href);
+publicUrl.hash='';
+for(const key of [...publicUrl.searchParams.keys()])if(key!=='immobili')publicUrl.searchParams.delete(key);
+const rootUrl=publicUrl.href;
+const rawIds=publicUrl.searchParams.get('immobili');
+const wantedIds=rawIds&&/^\\d{10,20}(,\\d{10,20}){0,17}$/.test(rawIds)?
+  new Set(rawIds.split(',')):null;
+const selectionInvalid=Boolean(rawIds&&!wantedIds);
 let selected=0;
 const $=id=>document.getElementById(id);
 const toast=message=>{const node=$('toast');node.textContent=message;node.classList.add('show');setTimeout(()=>node.classList.remove('show'),3200)};
@@ -138,8 +147,25 @@ async function load(){
     const data=await res.json();
     if(!Array.isArray(data.items))throw Error('Formato catalogo non valido');
     // Archived/draft are not in this source. Do not infer energy certification from marketing descriptions.
-    listings=data.items.filter(p=>p&&hostOK(p.url)&&p.availability_status==='AVAILABLE')
+    if(selectionInvalid)throw Error('Selezione immobili non valida. Richiedi un nuovo link all’agenzia.');
+    listings=data.items.filter(p=>p&&hostOK(p.url)&&p.availability_status==='AVAILABLE'&&(!wantedIds||wantedIds.has(String(p.id))))
       .sort((a,b)=>(a.municipality||'ZZZ').localeCompare(b.municipality||'ZZZ','it')||a.title.localeCompare(b.title,'it'));
+    if(wantedIds&&!listings.length)throw Error('Il link non contiene immobili ancora presenti nel catalogo ufficiale.');
+    if(wantedIds){
+      // A pre-generated PDF always contains the full archive. For a restricted,
+      // user-selected flyer print exactly the visible set with native print-to-PDF.
+      const fullPdf=document.querySelector('.pdf-download');
+      if(fullPdf)fullPdf.hidden=true;
+      const printButton=document.querySelector('[data-share="print"]');
+      if(printButton)printButton.textContent='Scarica PDF della selezione';
+    }
+    const firstPhoto=listings.find(p=>p.image&&p.id);
+    if(firstPhoto){
+      const photo='./photos/'+encodeURIComponent(String(firstPhoto.id))+'.jpg';
+      for(const node of document.querySelectorAll('.catalog-cover-photo,.catalog-end-scene')){
+        node.style.backgroundImage='linear-gradient(115deg,rgba(5,40,79,.25),rgba(4,61,97,.18)),url("'+photo+'")';
+      }
+    }
     addSheets(listings);
   }catch(error){
     const frame=document.querySelector('.reader-frame');
