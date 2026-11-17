@@ -56,6 +56,38 @@ const Rules=require('../catalogo-premium/property-rules.js');
      Promise.all([...document.querySelectorAll('.sheet-card img')].map(i=>i.complete?Promise.resolve():new Promise(r=>{i.addEventListener('load',r,{once:true});i.addEventListener('error',r,{once:true})}))),
      new Promise(r=>setTimeout(r,20000))
    ]));
+   // Visual QA: every printed page must keep four card positions, with large
+   // photos and an entirely visible official link. This protects against PDFs
+   // which have the correct page count but visually differ from the web reader.
+   const geometry=await page.evaluate(()=>{
+     const sheets=[...document.querySelectorAll('.page-listing-sheet')].map(sheet=>
+       [...sheet.querySelectorAll('.sheet-card')].map(card=>{
+         const c=card.getBoundingClientRect();
+         const img=card.querySelector('.property-photo').getBoundingClientRect();
+         const link=card.querySelector('.property-link').getBoundingClientRect();
+         const text=card.querySelector('.content').getBoundingClientRect();
+         return {
+           cardHeight:c.height,photoHeight:img.height,
+           photoRatio:img.height/c.height,
+           linkBottom:link.bottom,cardBottom:c.bottom,
+           linkWidth:link.width,linkHeight:link.height,
+           contentBottom:text.bottom
+         };
+       }));
+     return sheets;
+   });
+   if(geometry.length!==expectedSheets)throw Error('Griglie stampa non coerenti con il catalogo.');
+   for(let i=0;i<geometry.length;i++){
+     const expectedCards=Math.min(4,expected.length-i*4);
+     if(geometry[i].length!==expectedCards)throw Error('Pagina '+(i+2)+': immobili '+geometry[i].length+' anziché '+expectedCards);
+     for(const box of geometry[i]){
+       if(!Number.isFinite(box.photoRatio)||box.photoRatio<0.59||box.photoRatio>0.82)
+         throw Error('Fotografia PDF troppo piccola o fuori proporzione: '+JSON.stringify(box));
+       if(box.linkWidth<=1||box.linkHeight<=1||box.linkBottom>box.cardBottom+2||box.contentBottom>box.cardBottom+2)
+         throw Error('Link o contenuto tagliato nel PDF: '+JSON.stringify(box));
+     }
+   }
+   console.log('Impaginazione stampa verificata: 2×2, fotografie dominanti e link visibili.');
    const dest=path.resolve(__dirname,'../catalogo-premium/La_Sacra_Catalogo_Tutti_Immobili.pdf');
    await page.pdf({path:dest,printBackground:true,preferCSSPageSize:true,displayHeaderFooter:false,timeout:120000});
    const size=fs.statSync(dest).size;
