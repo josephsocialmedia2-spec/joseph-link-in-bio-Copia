@@ -100,6 +100,8 @@ test('content-first web cards keep links visible; A4 PDF 2x2 retains cover and f
   assert.match(css,/@media print/);
   assert.match(css,/break-inside:avoid!important/);
   assert.match(css,/height:44mm!important;min-height:44mm!important;flex:0 0 44mm!important/);
+  assert.match(css,/height:57mm!important/);
+  assert.match(read('scripts/build-la-sacra-catalogo-pdf.cjs'),/photoRatio<0\.59/);
   assert.match(css,/grid-template-columns:repeat\(2,minmax\(0,1fr\)\)!important/);
   assert.match(html,/class="page page-cover active"/);
   assert.match(html,/CATALOGO<br><em>IMMOBILIARE<\/em>/);

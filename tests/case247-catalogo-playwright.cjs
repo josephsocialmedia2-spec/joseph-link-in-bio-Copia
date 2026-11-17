@@ -123,6 +123,17 @@ const countPdfPages=buf=>{
 
      if(!isMobile){
        await page.emulateMedia({media:'print'});
+       const proof=await page.locator('.sheet-card').evaluateAll(cards=>cards.map(card=>{
+         const c=card.getBoundingClientRect();
+         const p=card.querySelector('.property-photo').getBoundingClientRect();
+         const l=card.querySelector('.property-link').getBoundingClientRect();
+         return {ratio:p.height/c.height,linkBottom:l.bottom,cardBottom:c.bottom,linkHeight:l.height};
+       }));
+       assert.equal(proof.length,expected);
+       for(const item of proof){
+         assert.ok(item.ratio>=0.59&&item.ratio<=0.82,'PDF photo must dominate the 2x2 card: '+JSON.stringify(item));
+         assert.ok(item.linkHeight>0&&item.linkBottom<=item.cardBottom+2,'Printed URL clipped: '+JSON.stringify(item));
+       }
        const pdf=await page.pdf({printBackground:true,preferCSSPageSize:true,timeout:120000});
        fs.writeFileSync(path.join(out,'desktop-full-print.pdf'),pdf);
        assert.equal(countPdfPages(pdf),pages,'Full printed PDF must include all selected offers');

@@ -397,3 +397,174 @@
  .sheet-card .property-link{display:block!important;min-height:0!important;font-size:8pt!important;line-height:1.25!important;margin-top:auto!important;padding:1mm 0 0!important;text-decoration:underline!important;color:#035d9a!important}
  .page-listing-sheet .page-inner,.sheet-grid,.sheet-card,.sheet-card .content{break-inside:avoid!important}
 }
+
+
+/* 2026-11-17 · Allineamento PDF ↔ struttura della pagina web.
+   Cover and valuation finale are unchanged. On A4 landscape the property
+   photos occupy approximately the same proportion of each card as on web
+   (~64% rather than 49%), leaving a fully readable text/link panel below. */
+@media print {
+  /* Keep the actual reader DOM: one cover, exactly 4 listing cards per sheet,
+     one closing valuation page. Never print navigation or the contact form. */
+  .reader-frame .page-listing-sheet .page-inner{
+    height:210mm!important;
+    min-height:210mm!important;
+    display:flex!important;
+    flex-direction:column!important;
+    padding:6mm 9mm 5mm!important;
+    box-sizing:border-box!important;
+  }
+  .reader-frame .page-listing-sheet .sheet-title{
+    font-family:Arial,sans-serif!important;
+    font-size:24pt!important;
+    margin:0 0 1mm!important;
+    color:#063967!important;
+    line-height:1.06!important;
+  }
+  .reader-frame .page-listing-sheet .eyebrow{
+    font-size:8pt!important;
+    letter-spacing:.1em!important;
+    margin:0 0 1mm!important;
+    color:#164e79!important;
+  }
+  .reader-frame .page-listing-sheet .sheet-subtitle{
+    font-size:8pt!important;
+    line-height:1.2!important;
+    margin:0 0 3mm!important;
+    color:#365b73!important;
+  }
+  .reader-frame .sheet-grid{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    grid-template-rows:repeat(2,minmax(0,1fr))!important;
+    gap:3mm!important;
+    flex:1 1 auto!important;
+    min-height:0!important;
+    align-items:stretch!important;
+  }
+  .reader-frame .sheet-card{
+    display:flex!important;
+    flex-direction:column!important;
+    justify-content:space-between!important;
+    box-sizing:border-box!important;
+    height:100%!important;
+    min-height:0!important;
+    overflow:hidden!important;
+    border:1px solid #c5e0ed!important;
+    border-radius:3mm!important;
+    background:#fff!important;
+    box-shadow:none!important;
+    break-inside:avoid!important;
+    page-break-inside:avoid!important;
+  }
+  .reader-frame .sheet-card .property-photo{
+    width:100%!important;
+    height:57mm!important;
+    min-height:57mm!important;
+    max-height:57mm!important;
+    flex:0 0 57mm!important;
+    aspect-ratio:auto!important;
+    border-bottom:2px solid #2d9bdb!important;
+    border-radius:3mm 3mm 0 0!important;
+    overflow:hidden!important;
+  }
+  .reader-frame .sheet-card .property-photo img{
+    width:100%!important;
+    height:100%!important;
+    min-height:0!important;
+    max-height:none!important;
+    object-fit:cover!important;
+    display:block!important;
+  }
+  .reader-frame .sheet-card .content{
+    display:flex!important;
+    flex-direction:column!important;
+    justify-content:space-between!important;
+    box-sizing:border-box!important;
+    flex:1 1 auto!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow:hidden!important;
+    gap:.45mm!important;
+    padding:1.7mm 3mm 2mm!important;
+  }
+  .reader-frame .sheet-card .property-main{
+    display:flex!important;
+    flex-direction:column!important;
+    gap:.5mm!important;
+    flex:0 0 auto!important;
+  }
+  .reader-frame .sheet-card .property-heading{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    gap:2mm!important;
+  }
+  .reader-frame .sheet-card .location{
+    font-size:7.5pt!important;
+    color:#135d89!important;
+    font-weight:900!important;
+    line-height:1.14!important;
+  }
+  .reader-frame .sheet-card .price{
+    background:linear-gradient(105deg,#07508c,#0a85c8)!important;
+    font-size:9pt!important;
+    color:#fff!important;
+    padding:.8mm 2.2mm!important;
+    margin:0!important;
+    border-radius:99px!important;
+    line-height:1.2!important;
+  }
+  .reader-frame .sheet-card .property-title{
+    font:900 10pt/1.15 Arial,sans-serif!important;
+    margin:0!important;
+    max-height:none!important;
+    overflow:visible!important;
+    color:#062f52!important;
+  }
+  .reader-frame .sheet-card .property-features{
+    display:flex!important;
+    flex-wrap:wrap!important;
+    gap:.6mm!important;
+    margin:0!important;
+  }
+  .reader-frame .sheet-card .property-feature{
+    font-size:6.8pt!important;
+    line-height:1.15!important;
+    padding:.45mm 1.2mm!important;
+    margin:0!important;
+    border-radius:1mm!important;
+    color:#25516c!important;
+    background:#eff7fc!important;
+    border:1px solid #d1e4f0!important;
+  }
+  .reader-frame .sheet-card .ape-badge{
+    font-size:6.7pt!important;
+    line-height:1.15!important;
+    padding:.45mm 1.2mm!important;
+    margin:0!important;
+    border-radius:1mm!important;
+  }
+  .reader-frame .sheet-card .property-link{
+    display:block!important;
+    align-self:stretch!important;
+    font-size:7.5pt!important;
+    line-height:1.2!important;
+    font-weight:900!important;
+    flex:0 0 auto!important;
+    margin-top:auto!important;
+    margin-bottom:0!important;
+    padding:1mm 0 0!important;
+    color:#0568a1!important;
+    text-decoration:underline!important;
+    overflow:visible!important;
+  }
+  .reader-frame .page-listing-sheet .page-tail{
+    margin-top:2mm!important;
+    padding-top:1mm!important;
+    font-size:7pt!important;
+    border-top:1px solid #83c9ed!important;
+  }
+}
