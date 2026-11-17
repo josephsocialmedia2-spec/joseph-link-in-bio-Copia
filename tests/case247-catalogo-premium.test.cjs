@@ -45,30 +45,46 @@ test('official logo, Joseph as referente e funzionario, direct telephone WhatsAp
  assert.match(html,/https:\/\/wa\.me\/393713708294/);
  assert.match(html,/La_Sacra_Catalogo_Tutti_Immobili\.pdf/);
 });
-test('privacy-aware one-time request form without prechecked marketing optin',()=>{
- for(const id of ['materialRequest','reqName','reqEmail','reqPhone','reqMaterial','reqMessage','reqPrivacySeen','requestByWhatsApp','requestByEmail','requestFeedback'])
-   assert.match(html,new RegExp('id="'+id+'"'));
- assert.match(html,/privacy-richiesta\.html/);
- assert.match(html,/Non è un’iscrizione automatica/);
- assert.match(js,/requestMessage\(channel\)/);
- assert.match(js,/window\.open\(url/);
- assert.match(js,/mailto:immobiliarelasacra@gmail\.com/);
- assert.doesNotMatch(html,/id="reqPrivacySeen"[^>]+checked/);
- const notice=read('catalogo-premium/privacy-richiesta.html');
- assert.match(notice,/Regolamento|GDPR/);
- assert.match(notice,/Garante/);
- assert.match(notice,/Nessuna casella di iscrizione al marketing/);
- assert.doesNotMatch(html,/<script[^>]+google-analytics/i);
+test('page 03 shows actual estate proposals instead of generic territory marketing',()=>{
+ assert.match(html,/03 \/ ALTRE PROPOSTE IMMOBILIARI/);
+ assert.match(html,/id="morePropertyResults"/);
+ assert.match(html,/page-more-properties/);
+ assert.doesNotMatch(html,/03 \/ IL TERRITORIO|La Valle di Susa<br><em>è casa nostra|UN TERRITORIO, TANTE STORIE/);
+ assert.match(js,/function renderMoreProperties\(\)/);
+ assert.match(js,/renderMoreProperties\(\)/);
+ assert.match(js,/for\(const property of more\)container\.append\(card\(property\)\)/);
+ assert.match(js,/frame\.querySelector\('\.page-more-properties'\)/);
+ assert.match(css,/\.more-property-grid/);
 });
 
-test('commercial activity may voluntarily request promotional materials without newsletter subscription',()=>{
- assert.match(html,/Materiale pubblicitario per vendere un’attività commerciale/);
- assert.match(html,/id="reqBusiness"/);
- assert.match(html,/id="reqCity"/);
- assert.match(html,/non attiva invii pubblicitari periodici/);
- assert.match(js,/f\.business\.value\.trim\(\)/);
- assert.match(js,/f\.city\.value\.trim\(\)/);
- assert.match(js,/Questa è una richiesta puntuale e NON un consenso a marketing periodico/);
+test('checkbox reveals further-property-request form without enrolling automatically',()=>{
+ for(const id of ['requestMoreToggle','richiesta-materiale','materialRequest','reqName','reqEmail','reqPhone','reqMaterial','reqType','reqBudget','reqCity','reqMessage','reqPrivacySeen','reqMoreOffersConsent','requestByWhatsApp','requestByEmail','requestFeedback']){
+   assert.ok(html.includes('id="'+id+'"'),'Missing checkbox or form control: '+id);
+ }
+ assert.match(html,/id="richiesta-materiale"[^>]+hidden/);
+ assert.match(html,/id="requestMoreToggle" type="checkbox"/);
+ assert.match(js,/requestSection\.hidden=!requestToggle\.checked/);
+ assert.match(js,/requestToggle\.addEventListener\('change'/);
+ assert.match(js,/window\.open\(url/);
+ assert.match(js,/mailto:immobiliarelasacra@gmail\.com/);
+ assert.match(html,/privacy-richiesta\.html/);
+ assert.match(html,/Non iscrive automaticamente|non attiva da sola alcun invio automatico/i);
+ assert.match(css,/#richiesta-materiale\[hidden\]/);
+});
+
+test('future property offers consent is optional, initially unchecked and kept separate from privacy reading',()=>{
+ assert.ok(html.includes('id="reqMoreOffersConsent" type="checkbox"'));
+ assert.ok(html.includes('id="reqPrivacySeen" type="checkbox" required'));
+ assert.doesNotMatch(html,/id="reqMoreOffersConsent"[^>]+checked/);
+ assert.doesNotMatch(html,/id="reqPrivacySeen"[^>]+checked/);
+ assert.match(js,/f\.offersConsent\.checked/);
+ assert.match(js,/Consenso per comunicazioni future/);
+ assert.match(js,/Questa è una richiesta puntuale|non costituisce registrazione automatica/);
+ assert.doesNotMatch(html,/Hai un’attività da vendere\?|Materiale pubblicitario per vendere un’attività commerciale/);
  const notice=read('catalogo-premium/privacy-richiesta.html');
- assert.match(notice,/attività\/ragione sociale, comune dell’attività/);
+ assert.match(notice,/GDPR/);
+ assert.match(notice,/Garante/);
+ assert.match(notice,/facoltativa, non preselezionata/);
+ assert.match(notice,/registrazione automatica/);
+ assert.doesNotMatch(html,/<script[^>]+google-analytics/i);
 });
