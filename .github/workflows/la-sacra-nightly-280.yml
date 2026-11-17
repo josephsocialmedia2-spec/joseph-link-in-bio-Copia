@@ -1,7 +1,9 @@
 name: LA SACRA - Ricerca notturna 23-04 - 280 aziende giornaliere
 on:
   schedule:
-    - cron: "0 21,22 * * *"
+    # Tentativi orari: 23:00-03:00 Europe/Rome (CET/CEST) con guardia locale
+    # GitHub schedule può essere ritardato: niente doppi lotti grazie allo state.
+    - cron: "0 21,22,23,0,1,2 * * *"
   workflow_dispatch:
     inputs:
       collect:
@@ -111,8 +113,13 @@ jobs:
           {
             echo "## Immobiliare La Sacra - censimento Avigliana 20 km"
             echo "Ora Italia: 23:00-04:00; Google Actions cron UTC gestito nello script."
-            echo "Fino a 280 record reali / giorno, rotazione geografica e deduplicazione."
-            echo "Tutti i lotti contengono Excel e CSV in un archivio CIFRATO."
-            echo "Invii marketing effettuati: ZERO."
+            echo "Obiettivo: fino a 280 record / giorno (NON garantiti)."
+            if compgen -G "artifacts/la-sacra-nightly/*.case247" > /dev/null; then
+              echo "Lotto: GENERATO (vedere artifact Actions)."
+            else
+              echo "**Lotto: NON GENERATO**. Guardare il log: orario fuori finestra, nessun nuovo record o fonte indisponibile."
+            fi
+            echo "I lotti eventualmente prodotti contengono CSV e XLSX in archivio CIFRATO."
+            echo "Invii marketing effettuati dal workflow: ZERO."
             echo "Nessun elenco contatti nel repository o su GitHub Pages."
           } >> "$GITHUB_STEP_SUMMARY"
