@@ -228,3 +228,10 @@ button.primary{background:linear-gradient(150deg,#008ccf,#07589f);border-color:#
 
 /* Un unico catalogo cliente: le vecchie varianti triple restano disattivate nella UI. */
 #staffPicker[hidden],#generateAll[hidden],#templatePicker[hidden],.staff-photo-inputs[hidden]{display:none!important}
+
+/* Studio Volantini Premium · editorial controls for the one client-facing catalogue. */
+.public-catalogue-filters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:13px 0 16px}
+.public-catalogue-filters label{display:flex;flex-direction:column;gap:5px;font-size:12px;font-weight:800;color:#163d59}
+.public-catalogue-filters select{width:100%;min-height:45px;padding:9px 11px;font:700 12px/1.2 "Segoe UI",Arial,sans-serif;color:#093d60;background:white;border:1px solid #91bcd5;border-radius:7px}
+.public-catalogue-filters select:focus-visible{outline:3px solid #1588c3;outline-offset:2px}
+@media(max-width:800px){.public-catalogue-filters{grid-template-columns:1fr}}

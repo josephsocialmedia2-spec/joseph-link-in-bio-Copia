@@ -1,6 +1,6 @@
 /* Immobiliare La Sacra · Lettore catalogo pubblico.
  * Nessuna credenziale / API privata nel browser.
- * Solo schede di export espressamente convalidate possono apparire al cliente. */
+ * Tutti gli URL prodotto ufficiali sono leggibili; filtri soltanto su richiesta. */
 (()=>{
 'use strict';
 const Rules=window.LaSacraRules;
@@ -11,13 +11,15 @@ let pageNames=['Copertina','Valutazione gratuita'];
 // selected from existing official URLs in Studio Volantini Premium.
 const publicUrl=new URL(location.href);
 publicUrl.hash='';
-for(const key of [...publicUrl.searchParams.keys()])if(!['immobili','solo_verificati'].includes(key))publicUrl.searchParams.delete(key);
+for(const key of [...publicUrl.searchParams.keys()])if(!['immobili','categoria','comune','stato'].includes(key))publicUrl.searchParams.delete(key);
 const rootUrl=publicUrl.href;
 const rawIds=publicUrl.searchParams.get('immobili');
 const wantedIds=rawIds&&/^\d{10,20}(,\d{10,20}){0,17}$/.test(rawIds)?
   new Set(rawIds.split(',')):null;
 const selectionInvalid=Boolean(rawIds&&!wantedIds);
-const onlyVerified=publicUrl.searchParams.get('solo_verificati')==='1';
+const categoryFilter=publicUrl.searchParams.get('categoria')||'';
+const municipalityFilter=publicUrl.searchParams.get('comune')||'';
+const statusFilter=publicUrl.searchParams.get('stato')||'';
 let selected=0;
 const $=id=>document.getElementById(id);
 const toast=message=>{const node=$('toast');node.textContent=message;node.classList.add('show');setTimeout(()=>node.classList.remove('show'),3200)};
@@ -54,14 +56,33 @@ addEventListener('hashchange',()=>{
   const m=location.hash.match(/^#pagina-(\d+)$/);
   if(m)showPage(Number(m[1])-1,false);
 });
-$('verifiedOnly').checked=onlyVerified;
-$('verifiedOnly').addEventListener('change',()=>{
-  const url=new URL(location.href);
-  if($('verifiedOnly').checked)url.searchParams.set('solo_verificati','1');
-  else url.searchParams.delete('solo_verificati');
-  url.hash='';
-  location.assign(url.href);
-});
+function configureFilters(all){
+  const facets=Rules.facets(all);
+  const fields=[
+    ['categoryFilter','categoria',facets.categories,categoryFilter],
+    ['townFilter','comune',facets.municipalities,municipalityFilter],
+    ['statusFilter','stato',facets.statuses,statusFilter]
+  ];
+  for(const [id,key,values,chosen] of fields){
+    const input=$(id);
+    for(const value of values){
+      const option=document.createElement('option');
+      option.value=value;option.textContent=value;input.append(option);
+    }
+    if(chosen&&!values.includes(chosen)){
+      const option=document.createElement('option');
+      option.value=chosen;option.textContent=chosen+' (non presente nel feed)';input.append(option);
+    }
+    input.value=chosen;
+    input.addEventListener('change',()=>{
+      const url=new URL(location.href);
+      if(input.value)url.searchParams.set(key,input.value);
+      else url.searchParams.delete(key);
+      url.hash='';
+      location.assign(url.href);
+    });
+  }
+}
 document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey||['INPUT','SELECT','TEXTAREA'].includes(document.activeElement?.tagName))return;
   if(e.key==='ArrowRight'){e.preventDefault();showPage(selected+1)}
   if(e.key==='ArrowLeft'){e.preventDefault();showPage(selected-1)}
@@ -103,7 +124,7 @@ function card(p,compact=false){
   const article=cell('article',compact?'property-card sheet-card':'property-card');
   article.setAttribute('data-property-id',String(p.id));
   const photo=cell('div','property-photo');
-  const original=escText(p.image);
+  const original=escText(data.image);
   if(original){
     const image=document.createElement('img');
     image.alt='Fotografia: '+data.title+' a '+data.locality;
@@ -120,8 +141,9 @@ function card(p,compact=false){
         photo.append(cell('span','photo-fallback','Fotografia non disponibile'));
       }
     };
-    image.dataset.source='local';
-    image.src='./photos/'+encodeURIComponent(String(p.id))+'.jpg';
+    // Local cache mirrors p.image; gallery alternatives use their own source URL.
+    image.dataset.source=original===escText(p.image)?'local':'shopify';
+    image.src=image.dataset.source==='local'?'./photos/'+encodeURIComponent(String(p.id))+'.jpg':original;
     photo.append(image);
   }else{
     photo.classList.add('photo-unavailable');
@@ -137,7 +159,12 @@ function card(p,compact=false){
   const values=[data.surface,data.rooms,data.type,...data.features];
   for(const value of values)facts.append(cell('span','property-feature',value));
   main.append(facts);
-  main.append(cell('span',data.apeVerified?'ape-badge verified':'ape-badge',data.ape));
+  const status=cell('span','listing-status',data.status);
+  status.classList.add(data.status==='Disponibile'?'available':data.status==='Venduto'?'sold':data.status==='In trattativa'?'negotiating':'needs-review');
+  const quality=cell('div','property-quality');
+  quality.append(status,cell('span',data.apeVerified?'ape-badge verified':'ape-badge',data.ape));
+  if(data.needsReview)quality.append(cell('span','quality-badge','Dati da verificare'));
+  main.append(quality);
   const link=cell('a','property-link','Apri scheda ufficiale ↗');
   link.href=p.url;
   link.target='_blank';
@@ -159,7 +186,7 @@ function addSheets(items){
     const num=Math.floor(offset/pageSize)+1;
     content.append(cell('p','eyebrow','IMMOBILIARE LA SACRA · LE NOSTRE PROPOSTE · '+String(num).padStart(2,'0')));
     content.append(cell('h2','sheet-title','Le nostre proposte'));
-    const intro=cell('p','sheet-subtitle','4 immobili per pagina · immagini originali e link ufficiali · prezzi e disponibilità da confermare con l’agenzia.');
+    const intro=cell('p','sheet-subtitle','Proposte dal sito ufficiale · schede consultabili online · disponibilità da confermare con l’agenzia.');
     content.append(intro);
     const grid=cell('div','sheet-grid');
     for(const p of items.slice(offset,offset+pageSize))grid.append(card(p,true));
@@ -181,26 +208,26 @@ async function load(){
     if(!res.ok)throw Error('Catalogo non raggiungibile');
     const data=await res.json();
     if(!Array.isArray(data.items))throw Error('Formato catalogo non valido');
-    // Archived/draft are not in this source. Do not infer energy certification from marketing descriptions.
-    if(selectionInvalid)throw Error('Selezione immobili non valida. Richiedi un nuovo link all’agenzia.');
+    if(selectionInvalid)throw Error('Selezione immobili non valida. Richiedi un link corretto all’agenzia.');
+    configureFilters(data.items);
     listings=Rules.filterListings(data.items,{
       ids:wantedIds?[...wantedIds]:null,
-      onlyVerified
+      category:categoryFilter,
+      municipality:municipalityFilter,
+      status:statusFilter
     });
-    // Public feed eligibility is editorial, not proof of the APE or legal availability.
-    // The professional checks the original URL before accepting an appointment.
-    const message=listings.length?
-      listings.length+' proposte residenziali nei comuni ammessi · quattro immobili per pagina.':
-      onlyVerified?'Nessun annuncio con APE documentato e verificato in questo momento.':
-      wantedIds?'La selezione non contiene annunci residenziali idonei e localizzati nei comuni ammessi.':
-      'Nessun annuncio residenziale idoneo disponibile nel territorio selezionato.';
-    $('catalogStatus').textContent=message;
-    if(wantedIds||onlyVerified){
-      // Never expose the whole archive PDF for a filtered client selection.
+    // All 58 official product URLs remain in the feed; no automatic status/APE
+    // or territorial/category exclusions. Filter values are explicitly chosen.
+    $('catalogStatus').textContent=listings.length?
+      'Catalogo aggiornato · '+listings.length+' proposte visualizzate.':
+      'Nessuna proposta corrisponde ai filtri selezionati.';
+    if(wantedIds||categoryFilter||municipalityFilter||statusFilter){
+      // The static PDF is the COMPLETE catalogue; filtered selections print from
+      // this very same DOM so a client never downloads the wrong property list.
       const fullPdf=document.querySelector('.pdf-download');
       if(fullPdf)fullPdf.hidden=true;
       const printButton=document.querySelector('[data-share="print"]');
-      if(printButton)printButton.textContent='Stampa / Salva PDF di questa selezione';
+      if(printButton)printButton.textContent='Stampa / Salva PDF della selezione';
     }
     addSheets(listings);
   }catch(error){
