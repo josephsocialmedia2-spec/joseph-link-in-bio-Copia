@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="index,follow">
+<meta name="description" content="Volantino digitale Immobiliare La Sacra: vendere o cercare casa in Valle di Susa, con contatti ufficiali e consulenza.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Immobiliare La Sacra | Volantino digitale Valle di Susa">
+<meta property="og:description" content="Cerchi casa o vuoi vendere in Valle di Susa? Consulta il volantino Immobiliare La Sacra e contattaci.">
+<meta name="theme-color" content="#072c4e">
+<title>Volantino digitale | Immobiliare La Sacra · Valle di Susa</title>
+<style>
+:root{--navy:#092c4a;--deep:#06243e;--azure:#087eae;--cyan:#13a2cf;--sky:#e7f5fb;--gold:#bba56b;--ink:#17354d;--muted:#536c7e;--line:#c4dce8;color-scheme:light;font-family:Inter,"Segoe UI",Arial,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:#edf4f8;color:var(--ink);line-height:1.45}
+a{color:inherit}
+button,input{font:inherit}
+button{cursor:pointer}
+.topbar{padding:15px max(20px,calc((100vw - 1160px)/2));background:var(--deep);color:white;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;font-weight:900;font-size:18px;letter-spacing:.025em;line-height:1.2}
+.brand small{font-weight:600;display:block;font-size:10px;letter-spacing:.12em;color:#bce4f3;margin-top:5px}
+.brand img{width:100px;height:44px;object-fit:contain;background:#fff;border-radius:5px;padding:4px;display:none}
+.brand img.ready{display:block}
+.topbar a{font-size:13px;color:#d5f3ff}
+main{width:min(1160px,calc(100% - 26px));margin:24px auto 48px}
+h1,h2,h3,p{margin-top:0}
+.intro{display:flex;align-items:end;justify-content:space-between;flex-wrap:wrap;gap:12px;margin:0 0 15px}
+.kicker{font-weight:800;color:#006b9b;letter-spacing:.13em;font-size:11px}
+.intro h1{font-size:clamp(24px,3vw,34px);line-height:1.1;margin:7px 0}
+.intro p{font-size:14px;color:var(--muted);margin:0}
+.date{font-size:12px;font-weight:700;color:#3e6177}
+.sharebar{display:flex;gap:9px;flex-wrap:wrap;padding:16px;background:#fff;border:1px solid var(--line);border-radius:12px;margin:0 0 18px}
+.action{border:0;border-radius:8px;background:var(--azure);color:white;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;padding:12px 17px;font-size:13px;font-weight:800;min-height:44px}
+.action.secondary{background:var(--deep)}
+.action.light{background:#e6f1f7;color:var(--navy)}
+.sharebar label{flex:1 1 100%;font-size:12px;font-weight:700;color:#476777}
+.sharebar input{display:block;width:100%;border:1px solid var(--line);border-radius:7px;padding:11px;margin:5px 0 0;background:#f7fbfd;font-size:12px;color:var(--navy)}
+.feedback{min-height:18px;font-size:12px;color:var(--navy);font-weight:700;flex:1 1 100%}
+.sheet{background:#fff;box-shadow:0 14px 38px #06243e1c;border-radius:12px;overflow:hidden;margin:0 0 22px}
+.sheet-caption{font-size:12px;font-weight:800;color:#286480;background:#e3f0f7;border-bottom:1px solid var(--line);padding:10px 15px}
+.front{display:grid;grid-template-columns:1fr 1fr;min-height:620px}
+.panel-a5{display:flex;flex-direction:column;padding:43px 39px 35px;position:relative;overflow:hidden;isolation:isolate}
+.panel-a5>*{position:relative;z-index:1}
+.panel-a5.sell{background:var(--navy);color:white}
+.panel-a5.sell:before{content:"";position:absolute;width:310px;height:310px;right:-155px;top:-80px;border:36px solid #ffffff1b;border-radius:50%;z-index:0}
+.panel-a5.buy{background:linear-gradient(150deg,#f4fbff,#d9eef7);border-left:2px solid #82bbd3}
+.panel-a5.buy:before{content:"";position:absolute;width:260px;height:260px;border:30px solid #0c8cb016;border-radius:50%;left:-145px;bottom:-120px;z-index:0}
+.panel-a5 .agency{font-size:23px;font-weight:900;line-height:1.05;letter-spacing:.01em}
+.panel-a5 .agency span{display:block;color:#76d6f4}
+.panel-a5.buy .agency{color:var(--navy)}
+.panel-a5.buy .agency span{color:var(--azure)}
+.eyebrow{font-size:12px;letter-spacing:.16em;font-weight:800;text-transform:uppercase;margin:30px 0 15px}
+.sell .eyebrow{color:#8ae2fa}
+.buy .eyebrow{color:#0876a7}
+.panel-a5 h2{font-size:clamp(31px,4vw,51px);letter-spacing:-.035em;line-height:1.03;margin:0 0 25px}
+.panel-a5 p{font-size:16px;line-height:1.65;max-width:410px}
+.separator{width:72px;height:4px;background:var(--gold);border-radius:2px;margin:4px 0 24px}
+.a5-bottom{margin-top:auto}
+.a5-bottom strong{display:block;font-size:15px;margin-bottom:10px}
+.a5-bottom a{font-weight:900;text-decoration:none}
+.a5-bottom a.phone{font-size:21px}
+.a5-bottom a.site{display:block;font-size:14px;margin-top:12px;text-decoration:underline}
+.sell .a5-bottom a{color:white}
+.buy .a5-bottom a{color:#066e9e}
+.info{margin-top:10px;max-width:400px;font-size:12px!important;line-height:1.5!important;opacity:.88}
+.back{padding:38px;min-height:580px;display:flex;flex-direction:column}
+.back-banner{background:var(--navy);color:#fff;border-radius:10px;padding:25px 29px}
+.back-banner .kicker{color:#85d6f5;margin:0 0 7px}
+.back-banner h2{font-size:clamp(26px,4vw,42px);line-height:1.05;margin:0 0 9px}
+.back-banner p{color:#c9eaf8;margin:0}
+.back-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:20px 0}
+.service{background:#eef7fb;border-left:5px solid var(--cyan);border-radius:8px;padding:22px 23px}
+.service h3{font-size:19px;color:var(--navy);margin-bottom:9px}
+.service p{font-size:14px;line-height:1.6;margin:0}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:auto 0 13px}
+.contact{border-top:1px solid var(--line);padding-top:15px}
+.contact b,.contact span,.contact a{display:block}
+.contact b{font-size:16px;color:var(--navy);margin-bottom:6px}
+.contact span{font-size:13px;color:var(--muted)}
+.contact a{font-weight:800;color:#086f9e;text-decoration:none;font-size:14px;margin-top:6px;overflow-wrap:anywhere}
+.notice{border-top:1px solid var(--line);padding-top:10px;color:var(--muted);font-size:11px;margin-top:5px}
+.foot{font-size:12px;color:var(--muted);text-align:center;margin-top:10px}
+@media(max-width:700px){
+main{margin-top:18px}
+.front{display:block}
+.panel-a5{min-height:500px;padding:31px 27px}
+.panel-a5.buy{border-left:0;border-top:3px solid #82bbd3}
+.panel-a5 h2{font-size:clamp(33px,9vw,49px)}
+.back{padding:19px}
+.back-banner{padding:21px}
+.back-grid,.contact-grid{grid-template-columns:1fr}
+.sharebar .action{flex:1 1 180px}
+}
+@page{size:A4 landscape;margin:0}
+@media print{
+*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+body{background:white}
+.topbar,.intro,.sharebar,.sheet-caption,.foot{display:none!important}
+main{width:100%;margin:0}
+.sheet{width:297mm;height:210mm;border-radius:0;box-shadow:none;margin:0;break-after:page;page-break-after:always}
+.sheet:last-of-type{break-after:auto;page-break-after:auto}
+.front{display:grid;grid-template-columns:1fr 1fr;min-height:0;height:210mm}
+.panel-a5{height:210mm;padding:18mm 11mm}
+.panel-a5 h2{font-size:34pt}
+.panel-a5 p{font-size:12pt}
+.panel-a5 .agency{font-size:16pt}
+.back{height:210mm;padding:10mm}
+.back-banner{padding:7mm 9mm}
+.back-banner h2{font-size:28pt}
+.back-grid{grid-template-columns:1fr 1fr;gap:5mm;margin:6mm 0}
+.service{padding:6mm}
+.service p{font-size:10pt}
+.contact-grid{grid-template-columns:1fr 1fr;gap:5mm}
+.contact b{font-size:11pt}
+.notice{font-size:8pt}
+}
+</style>
+<script defer src="../branding-logo.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><img id="officialLogo" alt="Logo ufficiale Immobiliare La Sacra"><span>IMMOBILIARE LA SACRA<small>VALLE DI SUSA · PIEMONTE</small></span></div>
+  <a href="https://lasacraimmobiliare.it/" target="_blank" rel="noopener noreferrer">Sito ufficiale</a>
+</header>
+<main>
+  <div class="intro">
+    <div><div class="kicker">VOLANTINO DIGITALE · IMMOBILIARE LA SACRA</div><h1>La casa giusta. La scelta giusta.</h1><p>Presentazione dei servizi per chi desidera vendere o acquistare casa nella Valle di Susa.</p></div>
+    <span class="date">Edizione 17 novembre 2026</span>
+  </div>
+  <div class="sharebar" aria-label="Condivisione del volantino">
+    <a id="shareWhatsapp" class="action" target="_blank" rel="noopener noreferrer" href="https://wa.me/">Invia il volantino su WhatsApp</a>
+    <button type="button" class="action secondary" id="copyMessage">Copia messaggio e link</button>
+    <button type="button" class="action light" id="printFlyer">Stampa / Salva PDF</button>
+    <label for="flyerUrl">Link pubblico del volantino<input type="url" id="flyerUrl" readonly></label>
+    <div id="feedback" class="feedback" role="status"></div>
+  </div>
+  <section class="sheet" aria-label="Fronte del volantino A4: due volantini A5 affiancati">
+    <div class="sheet-caption">FRONTE · 2 A5 affiancati · A4 orizzontale</div>
+    <div class="front">
+      <article class="panel-a5 sell">
+        <div class="agency">IMMOBILIARE<span>LA SACRA</span></div>
+        <div class="eyebrow">La tua casa merita visibilità</div>
+        <h2>VUOI<br>VENDERE<br>CASA?</h2>
+        <div class="separator"></div>
+        <p>Ogni immobile ha una storia. Scopri un percorso di presentazione e promozione pensato per valorizzarlo sul mercato della Valle di Susa.</p>
+        <div class="a5-bottom"><strong>Parla con Immobiliare La Sacra</strong>
+          <a class="phone" href="tel:+393462568685">346 256 8685</a>
+          <a class="site" href="https://lasacraimmobiliare.it/" target="_blank" rel="noopener noreferrer">lasacraimmobiliare.it</a>
+        </div>
+      </article>
+      <article class="panel-a5 buy">
+        <div class="agency">IMMOBILIARE<span>LA SACRA</span></div>
+        <div class="eyebrow">Valle di Susa e dintorni</div>
+        <h2>CERCHI<br>CASA?</h2>
+        <div class="separator"></div>
+        <p>La prossima casa potrebbe essere più vicina di quanto pensi. Esplora gli annunci dell'agenzia e richiedi informazioni sui tuoi criteri di ricerca.</p>
+        <div class="a5-bottom"><strong>Scopri gli annunci pubblicati</strong>
+          <a class="site" href="https://lasacraimmobiliare.it/" target="_blank" rel="noopener noreferrer">Apri il sito Immobiliare La Sacra</a>
+          <p class="info">Prezzi, disponibilità e caratteristiche degli immobili devono essere confermati con l'agenzia.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+  <section class="sheet" aria-label="Retro del volantino con servizi e contatti">
+    <div class="sheet-caption">RETRO · Servizi e contatti · A4 orizzontale</div>
+    <div class="back">
+      <div class="back-banner"><div class="kicker">IL TUO RIFERIMENTO SUL TERRITORIO</div><h2>IMMOBILIARE LA SACRA</h2><p>Valle di Susa · Promozione immobiliare, vendita e ricerca casa</p></div>
+      <div class="back-grid">
+        <article class="service"><h3>Hai un immobile da vendere?</h3><p>Parliamo delle caratteristiche della tua casa, degli obiettivi e delle modalità di presentazione e promozione dell'immobile.</p></article>
+        <article class="service"><h3>Stai cercando casa?</h3><p>Consulta gli annunci ufficiali dell'agenzia e comunica zona, tipologia e budget per richiedere informazioni mirate.</p></article>
+      </div>
+      <div class="contact-grid">
+        <div class="contact"><b>Immobiliare La Sacra</b><span>Geom. Christian Raimondi · Titolare</span><a href="tel:+393462568685">346 256 8685</a><a href="mailto:immobiliarelasacra@gmail.com">immobiliarelasacra@gmail.com</a></div>
+        <div class="contact"><b>Contatta direttamente l'agenzia</b><span>Sant'Ambrogio di Torino · Valle di Susa</span><a id="contactWhatsApp" href="https://wa.me/393462568685" target="_blank" rel="noopener noreferrer">Scrivici su WhatsApp</a><a href="https://lasacraimmobiliare.it/" target="_blank" rel="noopener noreferrer">Consulta il sito ufficiale</a></div>
+      </div>
+      <p class="notice">Materiale informativo di Immobiliare La Sacra. Non contiene schede, prezzi o dati energetici di singoli immobili. Disponibilità e informazioni immobiliari vanno confermate direttamente con l'agenzia. La mediazione e le trattative sono gestite da professionisti abilitati.</p>
+    </div>
+  </section>
+  <p class="foot">Immobiliare La Sacra · Volantino digitale informativo · Valle di Susa · 17/11/2026</p>
+</main>
+<script>
+(function(){
+'use strict';
+var url=location.origin+location.pathname;
+var message='Buongiorno, ti invio il volantino digitale aggiornato di Immobiliare La Sacra per la Valle di Susa.\\n\\nPuoi consultarlo qui: '+url+'\\n\\nSe desideri informazioni per vendere o cercare casa, rispondi a questo messaggio.';
+var $=function(id){return document.getElementById(id);};
+$('flyerUrl').value=url;
+$('shareWhatsapp').href='https://wa.me/?text='+encodeURIComponent(message);
+$('contactWhatsApp').href='https://wa.me/393462568685?text='+encodeURIComponent('Buongiorno, ho consultato il vostro volantino digitale e vorrei informazioni su vendere o cercare casa nella Valle di Susa.');
+$('printFlyer').onclick=function(){window.print();};
+$('copyMessage').onclick=async function(){
+  var copied=false;
+  try{if(navigator.clipboard&&navigator.clipboard.writeText){await navigator.clipboard.writeText(message);copied=true;}}catch(e){}
+  if(!copied){
+    var field=$('flyerUrl');field.focus();field.select();
+    try{copied=!!document.execCommand('copy');}catch(e){}
+    $('feedback').textContent=copied?'Copiato il link; per inviare anche il testo usa il pulsante WhatsApp.':'Seleziona e copia il link dal campo.';
+    return;
+  }
+  $('feedback').textContent='Messaggio e link copiati: incollali su WhatsApp o email.';
+};
+var logo=$('officialLogo');
+if(window.CASE247_LA_SACRA_LOGO){
+  logo.src=window.CASE247_LA_SACRA_LOGO;
+  logo.classList.add('ready');
+  logo.onerror=function(){logo.classList.remove('ready');};
+}
+})();
+</script>
+</body>
+</html>
