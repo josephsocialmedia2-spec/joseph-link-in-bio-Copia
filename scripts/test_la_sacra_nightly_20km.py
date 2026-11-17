@@ -5,6 +5,24 @@ import la_sacra_nightly_20km as m
 from decrypt_la_sacra_batch import decrypt
 
 class NightlyChecks(unittest.TestCase):
+    def test_scheduled_night_window_rome(self):
+        from zoneinfo import ZoneInfo
+        rome=ZoneInfo("Europe/Rome")
+        cases=[
+            (dt.datetime(2026,11,17,22,59,tzinfo=rome),None),
+            (dt.datetime(2026,11,17,23,10,tzinfo=rome),dt.date(2026,11,17)),
+            (dt.datetime(2026,11,18,0,10,tzinfo=rome),dt.date(2026,11,17)),
+            (dt.datetime(2026,11,18,3,54,tzinfo=rome),dt.date(2026,11,17)),
+            (dt.datetime(2026,11,18,3,55,tzinfo=rome),None),
+            (dt.datetime(2026,11,18,4,36,tzinfo=rome),None),
+            (dt.datetime(2026,7,17,23,10,tzinfo=rome),dt.date(2026,7,17)),
+            (dt.datetime(2026,7,18,2,10,tzinfo=rome),dt.date(2026,7,17)),
+        ]
+        for instant, expected in cases:
+            with self.subTest(instant=instant):
+                result=m.scheduled_night(instant)
+                self.assertEqual(result[0] if result else None,expected)
+                if result:self.assertEqual(result[1].hour,3)
     def test_radius_boundary(self):
         self.assertLess(m.dist(45.0800,7.3980),0.01)
         self.assertGreater(m.dist(46,7.398),20)

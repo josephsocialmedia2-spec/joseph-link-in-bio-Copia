@@ -271,6 +271,24 @@ def package(rows,day):
         z.writestr("RIEPILOGO.json",json.dumps(summary,ensure_ascii=False,indent=2))
     return o.getvalue(),summary
 
+def scheduled_night(now):
+    """Nightly collection window in Rome, including the after-midnight hours.
+
+    Return (night_start_date, local_deadline) or None. Group 23:00-03:55
+    under a single night identifier, avoiding two lots around midnight.
+    """
+    local=now.astimezone(ROME)
+    if local.hour>=23:
+        night_date=local.date()
+    elif local.hour<4:
+        night_date=local.date()-dt.timedelta(days=1)
+    else:
+        return None
+    end=dt.datetime.combine(night_date+dt.timedelta(days=1),dt.time(3,55),ROME)
+    if local>=end:
+        return None
+    return night_date,end
+
 def main(argv=None):
     p=argparse.ArgumentParser()
     p.add_argument("--guard-rome",action="store_true");p.add_argument("--dry-run",action="store_true")
@@ -278,10 +296,19 @@ def main(argv=None):
     p.add_argument("--out",default="artifacts/la-sacra-nightly");p.add_argument("--public-key",default="config/la-sacra-census-public.pem")
     p.add_argument("--max-rows",type=int,default=280);args=p.parse_args(argv)
     if not 1<=args.max_rows<=280:p.error("max-rows deve essere 1..280")
-    now=dt.datetime.now(ROME);day=now.date()
-    if args.guard_rome and now.hour!=23 and not args.fixture:
-        print("SKIP non sono le 23 a Roma",now.isoformat());return 0
-    deadline=time.monotonic()+max(0,min(4*3600+50*60,(dt.datetime.combine(day+dt.timedelta(days=1),dt.time(3,55),ROME)-now).total_seconds()))
+    now=dt.datetime.now(ROME)
+    if args.guard_rome and not args.fixture:
+        window=scheduled_night(now)
+        if window is None:
+            print("SKIP fuori finestra 23:00-03:55 Europe/Rome",now.isoformat());return 0
+        day,end=window
+        remaining=(end-now).total_seconds()
+        if remaining<300:
+            print("SKIP finestra quasi terminata; servono almeno 5 minuti",now.isoformat());return 0
+    else:
+        day=now.date()
+        remaining=4*3600+50*60
+    deadline=time.monotonic()+max(0,min(4*3600+50*60,remaining))
     statepath=Path(args.state)
     state=json.loads(statepath.read_text(encoding="utf-8")) if statepath.exists() else {"seen":[],"batches":[]}
     if any(x.get("date")==str(day) for x in state["batches"]) and not args.fixture:
