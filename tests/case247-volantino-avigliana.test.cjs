@@ -28,21 +28,17 @@ test('Unsourced and unchecked listings cannot be exported',()=>{
  assert.match(app,/LaSacraRules\?\.isEligible/);
  const rules=require('../catalogo-premium/property-rules.js');
  const candidates=rules.filterListings(catalog.items);
- assert.ok(candidates.every(p=>rules.originalUrl(p.url)));
- assert.equal(candidates.length,catalog.items.length);
+ assert.ok(candidates.every(p=>p.availability_status==='AVAILABLE'&&p.location_status==='VERIFICATO_FONTE'));
  assert.match(app,/annunci non verificati nel catalogo ufficiale/);
  assert.match(app,/Lo ZIP non può includere annunci assenti/);
  assert.match(app,/schede senza riscontro rimosse dalla selezione/);
 });
-test('Studio keeps the entire source catalogue and allows up to eighteen URL selections',()=>{
+test('Studio uses only whitelist residential source listings and up to eighteen slots',()=>{
  const rules=require('../catalogo-premium/property-rules.js');
  const candidates=rules.filterListings(catalog.items);
  assert.ok(candidates.length>=18);
- assert.ok(candidates.some(x=>x.category==='Impresa'));
- assert.ok(candidates.some(x=>!x.municipality));
+ assert.ok(candidates.every(x=>x.category==='Residenziale'&&rules.ALLOWED_TOWN_IDS.has(x.town_id)));
  assert.ok(candidates.some(x=>x.municipality==='Sant’Ambrogio di Torino'));
  assert.equal(new Set(candidates.map(x=>x.url)).size,candidates.length);
  assert.match(app,/chosen\.length&&!selectedIds\.length/);
- for(const id of ['publicCategoryFilter','publicTownFilter','publicStatusFilter'])assert.ok(html.includes('id="'+id+'"'));
- assert.match(app,/url\.searchParams\.set\('categoria',filters\.category\)/);
 });
