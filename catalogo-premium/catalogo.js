@@ -4,8 +4,17 @@
 (()=>{
 'use strict';
 let pageNodes=[...document.querySelectorAll('.page')];
-let pageNames=['Copertina','Il nostro metodo','Indice immobili','Altre proposte','Contatti'];
-const rootUrl=new URL('./',location.href).href.split('#')[0].split('?')[0];
+let pageNames=['Copertina','Valutazione gratuita'];
+// The one client URL can optionally carry a conservative allowlist of product IDs
+// selected from existing official URLs in Studio Volantini Premium.
+const publicUrl=new URL(location.href);
+publicUrl.hash='';
+for(const key of [...publicUrl.searchParams.keys()])if(key!=='immobili')publicUrl.searchParams.delete(key);
+const rootUrl=publicUrl.href;
+const rawIds=publicUrl.searchParams.get('immobili');
+const wantedIds=rawIds&&/^\d{10,20}(,\d{10,20}){0,17}$/.test(rawIds)?
+  new Set(rawIds.split(',')):null;
+const selectionInvalid=Boolean(rawIds&&!wantedIds);
 let selected=0;
 const $=id=>document.getElementById(id);
 const toast=message=>{const node=$('toast');node.textContent=message;node.classList.add('show');setTimeout(()=>node.classList.remove('show'),3200)};
@@ -40,7 +49,7 @@ let touchX=null,touchY=null;
 const frame=document.querySelector('.reader-frame');
 frame.addEventListener('touchstart',e=>{if(e.touches.length!==1)return;touchX=e.touches[0].clientX;touchY=e.touches[0].clientY},{passive:true});
 frame.addEventListener('touchend',e=>{if(touchX===null||e.changedTouches.length!==1)return;const dx=e.changedTouches[0].clientX-touchX,dy=e.changedTouches[0].clientY-touchY;touchX=null;touchY=null;if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*1.4)showPage(selected+(dx<0?1:-1))},{passive:true});
-const shareText='Immobiliare La Sacra | Catalogo digitale. Sfoglia la brochure e contatta direttamente l’agenzia: '+rootUrl;
+const shareText='Buongiorno, come concordato le invio il catalogo immobiliare sfogliabile di Immobiliare La Sacra: quattro proposte per pagina, fotografie e schede ufficiali.\n\n'+rootUrl+'\n\nPrezzi e disponibilità sono da confermare con l’agenzia.';
 for(const btn of document.querySelectorAll('[data-share]'))btn.addEventListener('click',async()=>{
   const t=btn.dataset.share;
   if(t==='print'){print();return}
@@ -94,62 +103,39 @@ function card(p,compact=false){
   const body=cell('div','content');
   const locality=p.municipality||'Località da confermare';
   body.append(cell('span','location',locality),cell('h3','',p.title),cell('strong','price',formatPrice(p.price)));
-  if(p.surface)body.append(cell('span','property-feature',p.surface+' m²'));
+  const facts=cell('div','property-features');
+  if(Number(p.surface)>0)facts.append(cell('span','property-feature',p.surface+' m²'));
+  if(Number(p.rooms)>0)facts.append(cell('span','property-feature',p.rooms+' locali'));
+  if(p.contract)facts.append(cell('span','property-feature',p.contract));
+  if(facts.childElementCount)body.append(facts);
   body.append(cell('p','energy','Prestazione energetica: dato non riportato nella fonte catalogo'));
   const link=cell('a','','Apri scheda ufficiale ↗');link.href=p.url;link.target='_blank';link.rel='noopener noreferrer';body.append(link);
   a.append(body);return a;
 }
-function renderListings(){
-  const city=$('cityFilter').value,needle=escText($('queryFilter').value).toLocaleLowerCase('it');
-  const filtered=listings.filter(x=>(!city||x.municipality===city)&&(!needle||[x.title,x.municipality,x.description].some(t=>escText(t).toLocaleLowerCase('it').includes(needle))));
-  const container=$('propertyResults');container.replaceChildren();
-  if(!filtered.length){
-    const box=cell('div','empty-state');box.append(cell('h3','','Nessun immobile per questa ricerca'));
-    box.append(cell('p','','Prova a modificare il comune o le parole cercate.'));container.append(box);
-  }else{
-    const heading=cell('p','results-note',filtered.length+' immobili nell’indice · seleziona un annuncio per aprirlo sul sito ufficiale.');
-    container.append(heading);
-    const grid=cell('div','property-grid');
-    for(const p of filtered)grid.append(card(p));
-    container.append(grid);
-  }
-  $('listingCount').textContent=listings.length+' ANNUNCI IN ARCHIVIO';
-}
-function renderMoreProperties(){
-  const container=$('morePropertyResults');
-  container.replaceChildren();
-  // Reuse original, publicly linked proposals only. Never fabricate a property or its APE.
-  const more=listings.filter(p=>hostOK(p.url)&&p.availability_status==='AVAILABLE').slice(0,3);
-  if(!more.length){
-    container.append(cell('p','results-note','Nessun annuncio disponibile in questo momento. Consulta il sito ufficiale dell’agenzia.'));
-    return;
-  }
-  for(const property of more)container.append(card(property));
-}
 function addSheets(items){
   const frame=document.querySelector('.reader-frame');
   for(const old of frame.querySelectorAll('.page-listing-sheet'))old.remove();
-  // Insert six properties per page, before the territory page.
-  const before=frame.querySelector('.page-more-properties');
-  const pageSize=6;
+  // Exactly four REAL official property links per catalogue spread, 2 x 2.
+  const before=frame.querySelector('.page-end');
+  const pageSize=4;
   for(let offset=0;offset<items.length;offset+=pageSize){
     const sheet=cell('article','page page-listing-sheet');sheet.hidden=true;
     const content=cell('div','page-inner');
     const num=Math.floor(offset/pageSize)+1;
-    content.append(cell('p','eyebrow','03 / IL PORTAFOGLIO IMMOBILIARE · '+String(num).padStart(2,'0')));
+    content.append(cell('p','eyebrow','IMMOBILIARE LA SACRA · LE NOSTRE PROPOSTE · '+String(num).padStart(2,'0')));
     content.append(cell('h2','sheet-title','Le nostre proposte'));
-    const intro=cell('p','sheet-subtitle','Consulta ogni annuncio sul sito ufficiale La Sacra. Prezzo e disponibilità possono variare; richiedi conferma all’agenzia.');
+    const intro=cell('p','sheet-subtitle','4 immobili per pagina · immagini originali e link ufficiali · prezzi e disponibilità da confermare con l’agenzia.');
     content.append(intro);
     const grid=cell('div','sheet-grid');
     for(const p of items.slice(offset,offset+pageSize))grid.append(card(p,true));
     content.append(grid);
-    const foot=cell('div','page-tail','IMMOBILIARE LA SACRA · CATALOGO IMMOBILI');
+    const foot=cell('div','page-tail','IMMOBILIARE LA SACRA · VALLE DI SUSA E TORINO');
     foot.append(cell('span','','ANNUNCI '+(offset+1)+'–'+Math.min(offset+pageSize,items.length)+' / '+items.length));
     content.append(foot);
     sheet.append(content);frame.insertBefore(sheet,before);
   }
   pageNodes=[...document.querySelectorAll('.page')];
-  pageNames=['Copertina','Il nostro metodo','Indice immobili',...Array.from({length:Math.ceil(items.length/pageSize)},(_,i)=>'Immobili '+(i*pageSize+1)+'–'+Math.min((i+1)*pageSize,items.length)),'Altre proposte','Contatti'];
+  pageNames=['Copertina',...Array.from({length:Math.ceil(items.length/pageSize)},(_,i)=>'Immobili '+(i*pageSize+1)+'–'+Math.min((i+1)*pageSize,items.length)),'Valutazione gratuita'];
   pageNodes.forEach((p,i)=>{p.dataset.page=String(i)});
   resetDots();
   showPage(selected,false);
@@ -161,19 +147,26 @@ async function load(){
     const data=await res.json();
     if(!Array.isArray(data.items))throw Error('Formato catalogo non valido');
     // Archived/draft are not in this source. Do not infer energy certification from marketing descriptions.
-    listings=data.items.filter(p=>p&&hostOK(p.url)&&p.availability_status==='AVAILABLE')
-      .sort((a,b)=>(a.municipality||'ZZZ').localeCompare(b.municipality||'ZZZ','it')||a.title.localeCompare(b.title,'it'));
-    const city=$('cityFilter');
-    for(const name of [...new Set(listings.map(x=>x.municipality).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'it'))){
-      const opt=document.createElement('option');opt.value=name;opt.textContent=name;city.append(opt);
+    if(selectionInvalid)throw Error('Selezione immobili non valida. Richiedi un nuovo link all’agenzia.');
+    listings=data.items.filter(p=>p&&hostOK(p.url)&&p.availability_status==='AVAILABLE'&&(!wantedIds||wantedIds.has(String(p.id))))
+      .sort((a,b)=>wantedIds?
+        [...wantedIds].indexOf(String(a.id))-[...wantedIds].indexOf(String(b.id)):
+        (a.municipality||'ZZZ').localeCompare(b.municipality||'ZZZ','it')||a.title.localeCompare(b.title,'it'));
+    if(wantedIds&&!listings.length)throw Error('Il link non contiene immobili ancora presenti nel catalogo ufficiale.');
+    if(wantedIds){
+      // A pre-generated PDF always contains the full archive. For a restricted,
+      // user-selected flyer print exactly the visible set with native print-to-PDF.
+      const fullPdf=document.querySelector('.pdf-download');
+      if(fullPdf)fullPdf.hidden=true;
+      const printButton=document.querySelector('[data-share="print"]');
+      if(printButton)printButton.textContent='Scarica PDF della selezione';
     }
-    renderListings();
-    renderMoreProperties();
+    // Cover uses one fixed, existing image from the La Sacra photo archive.
     addSheets(listings);
   }catch(error){
-    const container=$('propertyResults');container.replaceChildren();
-    container.append(cell('p','results-error','Caricamento annunci non riuscito. '+error.message));
-    $('listingCount').textContent='ERRORE CARICAMENTO';
+    const frame=document.querySelector('.reader-frame');
+    frame.setAttribute('data-catalog-error',error.message);
+    toast('Impossibile caricare le proposte. Consulta il sito ufficiale.');
     console.error(error);
   }
 }
@@ -233,7 +226,5 @@ $('requestByEmail').addEventListener('click',()=>{
   $('requestFeedback').textContent='Email predisposta: per trasmetterla premi Invia nel programma di posta.';
   window.location.href=href;
 });
-$('cityFilter').addEventListener('change',renderListings);
-$('queryFilter').addEventListener('input',renderListings);
 load();
 })();

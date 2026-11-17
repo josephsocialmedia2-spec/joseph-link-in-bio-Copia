@@ -157,3 +157,134 @@
  .request-choice{padding:15px;margin:15px 0}
 }
 @media print{.request-choice{display:none!important}.more-property-request{display:none!important}}
+
+
+/* 17 NOV 2026: ONE PRINTABLE CATALOGUE · poster cover, 4 REAL official properties per spread, valuation finale. */
+:root{--catalog-navy:#052b50;--catalog-blue:#087ec4;--catalog-sky:#d8f2ff}
+.reader{border-radius:14px;border:1px solid #b8cfdb;box-shadow:0 24px 65px rgba(4,31,58,.21)}
+.reader-frame{height:min(66vw,760px);min-height:600px;max-height:770px}
+.page-listing-sheet{background:linear-gradient(145deg,#f7fbff 0%,#eaf4fa 60%,#fdfefe 100%)}
+.page-listing-sheet .page-inner{padding:20px 28px 13px}
+.page-listing-sheet .eyebrow{font-size:11px;letter-spacing:.11em;color:#164e79;margin:0 0 4px}
+.page-listing-sheet .sheet-title{font-family:Arial,sans-serif;font-size:clamp(27px,3.5vw,43px);font-weight:900;letter-spacing:-.026em;color:#063967;text-transform:uppercase;line-height:1.06;margin:0 0 3px}
+.page-listing-sheet .sheet-subtitle{margin:0 0 12px;color:#365b73;font-size:12px;line-height:1.35}
+.page-listing-sheet .page-tail{font-size:10px;letter-spacing:.08em;border-top:2px solid #83c9ed;padding-top:7px;color:#0a4b7d}
+.sheet-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:12px;flex:1;min-height:0}
+.sheet-card{display:flex;flex-direction:column;min-width:0;min-height:0;border:2px solid #d3e7f4;border-radius:12px;background:#fff;box-shadow:0 5px 14px #0b345d1c;overflow:hidden}
+.sheet-card .property-photo{width:100%;height:59%;flex:0 0 59%;overflow:hidden;position:relative;border-bottom:3px solid #2d9bdb}
+.sheet-card .property-photo img{width:100%;height:100%;max-height:none;object-fit:cover;display:block}
+.sheet-card .content{padding:9px 13px;min-height:0;flex:1;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto auto auto;column-gap:8px;align-content:start}
+.sheet-card .location{grid-column:1;font-size:10px;font-weight:800;text-transform:uppercase;color:#2474a2;line-height:1.2}
+.sheet-card h3{grid-column:1/-1;font-size:clamp(13px,1.45vw,18px);font-weight:900;font-family:Arial,sans-serif;line-height:1.18;color:#092d4d;margin:4px 0;max-height:2.36em;overflow:hidden}
+.sheet-card .price{grid-column:2;grid-row:1;margin:0;background:linear-gradient(110deg,#084878,#1687d1);color:#fff;font-size:15px;padding:5px 11px;border-radius:999px;white-space:nowrap;align-self:start}
+.sheet-card .property-features{display:flex;gap:7px;align-items:center;flex-wrap:wrap;grid-column:1/-1;margin-top:3px}
+.sheet-card .property-feature{font-size:10px;color:#28516d;background:#eff6fb;border:1px solid #d0e4f0;padding:3px 6px;border-radius:5px;margin:0}
+.sheet-card .energy{grid-column:1/-1;font-size:9px;color:#657889;line-height:1.25;margin:3px 0 0}
+.sheet-card a{grid-column:1/-1;color:#0671b7;font-size:11px;font-weight:900;margin-top:4px;text-decoration:underline}
+.reader-bottom .pager .dots{max-width:360px}
+.reader-bottom{background:#f8fbfd}
+
+/* Cover: creative style evokes approved La Sacra reference, photographs come only from the REAL source catalogue. */
+.catalog-cover-photo,.catalog-end-scene{position:absolute;inset:0;background-image:linear-gradient(130deg,rgba(4,39,76,.14),rgba(0,70,124,.12)),url('./photos/10549571617095.jpg');background-size:cover;background-position:center}
+.catalog-cover-veil,.catalog-end-veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,52,94,.40) 0%,rgba(2,51,91,.84) 26%,rgba(2,45,84,.65) 63%,rgba(1,30,61,.94) 100%)}
+.catalog-cover-waves{position:absolute;inset:-8% -3%;pointer-events:none;background:radial-gradient(ellipse at 16% 10%,rgba(255,255,255,.22),transparent 30%),linear-gradient(158deg,rgba(255,255,255,.08) 8%,transparent 9%,transparent 90%,rgba(34,170,236,.22) 91%);border-top:6px solid rgba(111,206,249,.45);transform:skewY(-3deg)}
+.page-cover{background:#034979;color:white}
+.catalog-cover-top,.catalog-end-top{position:absolute;top:3.3%;left:4.5%;right:4.5%;display:flex;align-items:center;justify-content:space-between;gap:14px;z-index:3}
+.catalog-cover-top>span{letter-spacing:.18em;font-size:12px;font-weight:800;color:#caecff}
+.catalog-cover-logo,.catalog-end-logo{width:clamp(210px,32vw,420px);height:92px;object-fit:contain;object-position:left center;background:rgba(255,255,255,.96);border-radius:9px;padding:11px 22px;box-shadow:0 9px 22px #001e3866;max-width:60%}
+.catalog-cover-content,.catalog-end-content{position:absolute;left:5.5%;right:5.5%;top:24%;z-index:3;text-align:center}
+.catalog-roof{font:900 80px Arial,sans-serif;color:white;line-height:.7;display:block;text-shadow:0 3px 11px #002e5e}
+.catalog-tagline{color:#8ad7ff;font-size:14px;letter-spacing:.22em;font-weight:900;margin:12px 0 7px}
+.catalog-cover-content h2{font:900 clamp(54px,8vw,116px)/.96 Arial,sans-serif;color:white;letter-spacing:-.035em;text-shadow:0 5px 24px #00182a;margin:0 0 12px}
+.catalog-cover-content h2 em{display:inline-block;background:linear-gradient(100deg,#f3fbff,#b8e8ff);color:#063c6d;padding:.01em .18em;border-radius:12px;font-style:italic;text-shadow:none;box-shadow:0 6px 21px rgba(0,22,46,.22)}
+.catalog-cover-content>p:last-child,.catalog-end-content>p{font-size:clamp(17px,2.6vw,34px);font-style:italic;line-height:1.24;color:#fff;margin:0;text-shadow:0 2px 10px #001d3c}
+.catalog-cover-content>p:last-child strong,.catalog-end-content>p strong{background:#effbff;color:#06538b;padding:2px 9px;border-radius:7px;font-weight:900;text-shadow:none}
+.catalog-cover-benefits,.catalog-end-benefits{position:absolute;bottom:11%;left:3.5%;right:3.5%;z-index:4;display:flex;justify-content:space-around;gap:9px;background:rgba(243,250,255,.96);color:#0b3862;border:2px solid #9edbfa;padding:14px 11px;border-radius:18px;box-shadow:0 4px 20px #012f4b66}
+.catalog-cover-benefits span,.catalog-end-benefits span{display:block;font-size:clamp(10px,1.4vw,19px);font-weight:900;text-align:center;line-height:1.2}
+.catalog-cover-benefits span+span,.catalog-end-benefits span+span{border-left:1px solid #74a5bf;padding-left:10px}
+.catalog-cover-bottom,.catalog-end-contacts{position:absolute;bottom:2%;left:4.5%;right:4.5%;z-index:4;display:flex;justify-content:space-between;gap:15px;color:#eefaff;align-items:center;font-size:clamp(11px,1.2vw,16px);font-weight:800}
+.catalog-cover-bottom b{font-size:25px;vertical-align:middle}
+.catalog-end-scene{background-position:center 58%;filter:saturate(1.03)}
+.catalog-end-veil{background:linear-gradient(180deg,rgba(3,61,108,.4),rgba(2,49,94,.93) 25%,rgba(1,34,70,.70) 69%,rgba(2,31,64,.94))}
+.catalog-end-content{top:27%}
+.catalog-end-content h2{font:900 clamp(42px,6.6vw,91px)/1 Arial,sans-serif;color:white;text-align:center;margin:8px 0 17px;text-shadow:0 3px 14px #07233d}
+.catalog-end-content h2 em{display:inline-block;background:linear-gradient(105deg,#fafdff,#b7e9ff);color:#073864;font-weight:900;border-radius:9px;font-size:.91em;padding:.025em .12em;text-shadow:none}
+.catalog-valuation-button{display:inline-flex;gap:16px;align-items:center;justify-content:center;color:white;background:linear-gradient(100deg,#0b8cd4,#074575);border:2px solid #b5ebff;padding:13px 21px;border-radius:100px;text-decoration:none;text-transform:uppercase;font-weight:900;font-size:clamp(12px,1.4vw,17px);box-shadow:0 8px 23px #01254899;margin-top:17px}
+.catalog-end-contacts{gap:14px;justify-content:space-around;flex-wrap:wrap}
+.catalog-end-contacts a{color:white;text-decoration:none;overflow-wrap:anywhere}
+
+/* Keep two rows and two columns on phones as requested. */
+@media(max-width:800px){
+ .reader-frame{height:920px;min-height:920px;max-height:none}
+ .page-listing-sheet .page-inner{padding:16px 10px 11px}
+ .page-listing-sheet .eyebrow{font-size:9px;letter-spacing:.04em}
+ .page-listing-sheet .sheet-title{font-size:26px;margin-bottom:5px}
+ .page-listing-sheet .sheet-subtitle{font-size:10px;margin-bottom:10px}
+ .sheet-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:8px}
+ .sheet-card{border-radius:10px;border-width:1px}
+ .sheet-card .property-photo{height:55%;flex-basis:55%}
+ .sheet-card .content{padding:7px;display:block;overflow:hidden}
+ .sheet-card h3{font-size:12px;line-height:1.22;max-height:2.45em;margin:5px 0}
+ .sheet-card .location{font-size:9px}
+ .sheet-card .price{display:inline-block;font-size:13px;padding:4px 8px;margin:4px 0}
+ .sheet-card .property-features{margin-top:4px;gap:3px}
+ .sheet-card .property-feature{font-size:9px;padding:3px}
+ .sheet-card .energy{font-size:8px}
+ .sheet-card a{display:block;font-size:10px;margin:4px 0}
+ .catalog-cover-logo,.catalog-end-logo{width:230px;max-width:78%;height:80px}
+ .catalog-cover-top>span{font-size:8px;max-width:35%;line-height:1.4}
+ .catalog-cover-content{top:29%;left:3%;right:3%}
+ .catalog-cover-content h2{font-size:clamp(37px,9vw,69px);letter-spacing:-.045em}
+ .catalog-cover-content>p:last-child{font-size:clamp(14px,4vw,23px)}
+ .catalog-roof{font-size:55px}
+ .catalog-tagline{font-size:10px}
+ .catalog-cover-benefits,.catalog-end-benefits{bottom:12%;padding:11px 6px;border-radius:11px;gap:4px}
+ .catalog-cover-benefits span,.catalog-end-benefits span{font-size:10px}
+ .catalog-cover-bottom,.catalog-end-contacts{flex-wrap:wrap;font-size:10px}
+ .catalog-end-content{top:30%;left:4%;right:4%}
+ .catalog-end-content h2{font-size:clamp(32px,8vw,59px)}
+ .catalog-end-content>p{font-size:16px}
+ .catalog-valuation-button{padding:12px 13px;font-size:12px}
+ .reader-bottom .pager .dots{max-width:260px}
+}
+@media(max-width:460px){
+ .reader-frame{height:880px;min-height:880px}
+ .sheet-card .property-photo{height:52%;flex-basis:52%}
+ .sheet-card .content{padding:5px}
+ .sheet-card h3{font-size:11px}
+ .sheet-card .price{font-size:12px}
+}
+/* One complete PDF: cover + all spreads + valuation close, none of the interactive form. */
+@media print{
+ @page{size:A4 landscape;margin:0}
+ .page,.page[hidden]{width:297mm!important;height:210mm!important;break-after:page!important;page-break-after:always!important}
+ .page:last-child{break-after:auto!important;page-break-after:auto!important}
+ .page-cover,.catalog-end,.catalog-cover-photo,.catalog-end-scene{print-color-adjust:exact!important;-webkit-print-color-adjust:exact!important}
+ .page-listing-sheet .page-inner{padding:8mm 10mm 5mm!important}
+ .page-listing-sheet .eyebrow{font-size:8pt!important}
+ .page-listing-sheet .sheet-title{font-size:23pt!important;margin:0 0 2mm!important}
+ .page-listing-sheet .sheet-subtitle{font-size:8.5pt!important;margin:0 0 3mm!important}
+ .sheet-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:repeat(2,minmax(0,1fr))!important;gap:4mm!important}
+ .sheet-card{box-shadow:none!important;break-inside:avoid}
+ .sheet-card .property-photo{height:58%!important;flex:0 0 58%!important}
+ .sheet-card .property-photo img{width:100%!important;height:100%!important;max-height:none!important}
+ .sheet-card .content{padding:2mm 3mm!important}
+ .sheet-card h3{font-size:12pt!important;line-height:1.15!important;max-height:2.3em!important}
+ .sheet-card .location{font-size:8pt!important}
+ .sheet-card .price{font-size:11pt!important;margin:0!important}
+ .sheet-card .energy{font-size:7pt!important}
+ .sheet-card a{font-size:8pt!important}
+ .page-listing-sheet .page-tail{font-size:7pt!important}
+ .catalog-cover-logo,.catalog-end-logo{width:87mm!important;height:23mm!important}
+ .catalog-cover-content h2{font-size:46pt!important}
+ .catalog-end-content h2{font-size:43pt!important}
+ .catalog-cover-benefits,.catalog-end-benefits{bottom:10%}
+ .catalog-cover-benefits span,.catalog-end-benefits span{font-size:11pt}
+ .catalog-cover-bottom,.catalog-end-contacts{font-size:10pt}
+ .catalog-end-content>p,.catalog-cover-content>p:last-child{font-size:18pt}
+ .catalog-valuation-button{font-size:9pt!important}
+ .request-section,.request-choice{display:none!important}
+}
+
+/* Selected client flyer is printed from the filtered flipbook, never from the all-listings PDF. */
+.reader-tools .pdf-download[hidden]{display:none!important}
