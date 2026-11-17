@@ -211,3 +211,17 @@ button.primary{background:linear-gradient(150deg,#008ccf,#07589f);border-color:#
 #preflight .preflight-open{display:block;width:100%;max-width:100%;text-align:left;white-space:normal;overflow-wrap:anywhere;border-radius:6px;padding:9px 12px;background:#174c75;color:#fff;border:1px solid #174c75;cursor:pointer;font-size:14px;line-height:1.35}
 #preflight .preflight-open:focus-visible{outline:3px solid #e79e40;outline-offset:2px}
 #preflight li{margin:4px 0;overflow-wrap:anywhere}
+
+/* Volantino digitale pubblico: accesso immediato senza OAuth, distinto dal PDF Premium da validare. */
+.public-flyer-panel{background:#e9f6fb;color:#082b49;padding:18px 20px;border:2px solid #1189b5;border-radius:12px;margin:0 0 18px}
+.public-flyer-panel h2{color:#063455;font-size:20px;line-height:1.2;margin:0 0 9px}
+.public-flyer-panel p{font-size:13px;line-height:1.5;color:#264f64;margin:0 0 12px}
+.public-flyer-panel label{display:block;font-size:12px;font-weight:800;color:#174765;margin:10px 0 4px}
+.public-flyer-panel input{width:100%;background:#fff;color:#072d4a;border:1px solid #7cb3cd;border-radius:8px;padding:11px;font-size:13px}
+.public-flyer-actions{display:flex;flex-wrap:wrap;gap:9px;margin:12px 0}
+.public-flyer-action{appearance:none;border:0;display:inline-flex;align-items:center;justify-content:center;min-height:43px;padding:11px 15px;font-weight:800;font-size:13px;border-radius:8px;color:#fff;background:#007eaf;text-decoration:none;cursor:pointer}
+.public-flyer-action.dark{background:#092c4a}
+.public-flyer-action.pale{background:#d4edf9;color:#073653}
+.public-flyer-action:hover{filter:brightness(.92)}
+.public-flyer-panel #publicFlyerStatus{margin-top:7px;margin-bottom:0}
+@media(max-width:670px){.public-flyer-panel{padding:14px}.public-flyer-actions .public-flyer-action{flex:1 1 100%}}
