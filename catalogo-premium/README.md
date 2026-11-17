@@ -1,54 +1,32 @@
-# Catalogo integrale · Immobiliare La Sacra
+# Catalogo digitale unico — Immobiliare La Sacra
 
-Link pubblico: https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/catalogo-premium/
+URL cliente: https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/catalogo-premium/
 
-Studio: https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/volantini-premium/
+Studio parametri: https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/volantini-premium/
 
-## Fonte e filtri
+## Catalogo sfogliabile
 
-Il sito, lo Studio e il PDF condividono le regole contenute in catalogo-premium/property-rules.js.
-La fonte è immobili/catalogo.json, alimentata dalle schede ufficiali https://lasacraimmobiliare.it/products/...
-Il feed attuale contiene **58 record**. Non vengono esclusi per categoria commerciale, comune non ricavabile, superficie,
-numero di locali, APE o fotografia mancante.
+- **Un solo catalogo** per cliente. Le precedenti tre varianti per referente non fanno parte della condivisione.
+- Prima pagina: copertina grafica Immobiliare La Sacra nello stile blu/bianco, con sfondo fotografico tratto dall'archivio dell'agenzia.
+- Pagine centrali: **quattro immobili residenziali idonei per pagina**, sempre in griglia 2×2, con fotografie 16:10, comune e prezzo come riportati nella fonte, link originale sempre visibile e caratteristiche esplicite; nessuna superficie, numero di locali o classe APE inventata.
+- Ultima pagina: **RICHIEDI LA TUA VALUTAZIONE ORA**, telefono dell'agenzia e WhatsApp.
+- La pagina mantiene il modulo facoltativo per richiedere altre proposte, con consenso separato.
+- Il cliente può navigare con «Precedente/Successiva», touch-swipe o frecce e **stampare/salvare il PDF** dalla pagina. Per l'intero catalogo è disponibile anche un PDF statico rigenerato con GitHub Actions.
 
-Senza parametri il catalogo mostra tutte le schede. I filtri sono **facoltativi** e si scelgono
-dal sito o dallo Studio per quello specifico link:
+## Origine dei dati e URL selezionati
 
-- ?immobili=ID1,ID2: ID ufficiali selezionati (al massimo 18 nello Studio).
-- ?categoria=Commerciale: categoria riconosciuta dalla fonte ufficiale.
-- ?comune=Avigliana: comune riconosciuto dai metadati.
-- ?comune=Comune%20da%20verificare: gli annunci privi di comune ricavabile.
-- ?stato=Disponibile: stato dell'immobile riportato dall'agenzia.
+Le schede provengono da `immobili/catalogo.json` (sincronizzazione Shopify La Sacra). Il modulo condiviso `catalogo-premium/property-rules.js` applica congiuntamente **categoria Residenziale**, esclusioni testuali per attività/terreni/strutture non pertinenti, stato `AVAILABLE`, immagine HTTPS, URL diretto ufficiale e **comune esplicitamente compreso nella whitelist e con `location_status=VERIFICATO_FONTE`**. I record privi di comune verificato, anche se il titolo suggerisce una località, non vengono indovinati. Il filtro opera sia sul sito sia nello Studio e nel generatore PDF. Il feed contiene oggi 58 record, di cui 27 ammessi (dato contingente, non fissato nel software). Il criterio è editoriale, **non una verifica documentale della disponibilità o dell'APE**; prezzi, disponibilità e caratteristiche vanno confermati prima di prendere impegni.
 
-Lo stato deriva esclusivamente dai campi agency_status, listing_status, availability_status o status,
-in quest'ordine. Il nome della fotografia e la descrizione NON modificano lo stato.
-Se il file fotografico contiene una dicitura diversa, è necessario verificare la fonte presso l'agenzia.
+Lo Studio Premium permette di inserire fino a 18 URL ufficiali in un ordine scelto. Il link cliente include un parametro `immobili=ID1,ID2,...` (massimo 18 ID Shopify) per mostrare **solo i record ancora presenti nell'archivio**, sempre verificati contro i record pubblici al caricamento. Il parametro non permette di iniettare dati o URL di terze parti. Il client vede esclusivamente il catalogo sfogliabile, mai lo Studio Premium.
 
-I dati mancanti sono segnalati in scheda (Superficie n.d., Locali n.d., APE da verificare).
-I titoli sono normalizzati con concordanza corretta, per esempio Appartamento ristrutturato
-e Casa semindipendente ristrutturata. Il sistema preferisce una fotografia dell'immobile
-rispetto a planimetrie e ritratti quando immagini alternative sono presenti in images o gallery.
-**Nel feed attuale è presente soltanto il campo image**: per sostituire una foto impropria
-la fonte deve fornire l'alternativa.
+**Titoli e metadati:** la tipologia, i locali e fino a due caratteristiche sono estratti soltanto quando esplicitamente documentati dal titolo/descrizione o dai campi sorgente. I campi assenti sono rappresentati come `Superficie n.d.`, `Locali n.d.` e `APE da verificare`, non vengono inventati. Il flag facoltativo `solo_verificati=1` mostra soltanto annunci con APE documentato: se la fonte non ne contiene, il catalogo segnala l'assenza di immobili idonei e non propone il PDF completo.
 
-## Catalogo e PDF
+**Navigazione e stampa:** barra numerica `Pagina N di M`, selezione diretta della pagina e pulsanti ad area cliccabile ≥48px. Sul web le schede sono elastiche, senza taglio di titoli, caratteristiche o link; nel PDF A4 orizzontale restano due colonne e due righe per pagina. La stampa da browser usa il DOM stesso del catalogo. Il builder Playwright verifica il numero **dinamico** di pagine (`ceil(n / 4) + 2`) e la corrispondenza degli URL.
 
-Copertina blu La Sacra, quattro schede per pagina (griglia 2 × 2), finale
-«RICHIEDI LA TUA VALUTAZIONE ORA». Ogni scheda mostra fotografia, comune, prezzo,
-titolo, caratteristiche, stato, APE e URL ufficiale.
+**Attenzione al PDF della selezione:** con il parametro `immobili`, il pulsante per il PDF integrale statico viene nascosto per non scaricare per errore tutti gli annunci. Il cliente usa **«Scarica PDF della selezione»**, che apre la stampa del proprio browser: scegliere *Salva come PDF*, con tutte le pagine della selezione. Il PDF statico completo `La_Sacra_Catalogo_Tutti_Immobili.pdf` è generato dal workflow e contiene soltanto gli annunci residenziali ammissibili (`ceil(n/4)` pagine di annunci, più copertina e finale), ricompilati dal feed ufficiale al momento dell'esecuzione.
 
-L'interfaccia web e la stampa usano lo stesso DOM, stessa tipografia, palette e componenti.
-Il PDF è A4 landscape 297 × 210 mm. La visualizzazione mobile adatta le dimensioni
-allo schermo: l'identità grafica rimane uguale, non la scala fisica del foglio.
+## Validazione e privacy
 
-Stampa / Salva PDF usa la funzione di stampa del browser. Per selezioni filtrate
-il pulsante del PDF completo statico è nascosto, così da non includere schede estranee.
-Il builder scripts/build-la-sacra-catalogo-pdf.cjs usa Playwright sullo stesso HTML,
-verifica gli URL e richiede esattamente ceil(numero_annunci/4) + 2 pagine
-(copertina + griglie + pagina finale). I dati non vengono duplicati in un secondo template.
+Nessun numero o email cliente viene raccolto dal lettore: la condivisione apre l'app locale. Il modulo di richiesta compila solo un messaggio WhatsApp/email, da inviare manualmente. Il consenso per comunicazioni future è facoltativo e richiede verifica e registrazione da parte dell'agenzia.
 
-## Privacy e controlli
-
-Il modulo per richiedere altre proposte è facoltativo: prepara un messaggio WhatsApp
-o email da inviare manualmente. Il consenso per comunicazioni successive è separato.
-I test automatici verificano filtri, titoli, foto, stati, PDF e browser desktop/mobile.
+La whitelist `immobili-verificati.json` rimane un archivio separato per annunci **documentalmente verificati**. Non impostare falsi campi `apeVerified` o `availabilityConfirmed`. Consultare l'informativa in `privacy-richiesta.html`.
