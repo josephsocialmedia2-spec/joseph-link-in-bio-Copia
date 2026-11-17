@@ -1,7 +1,8 @@
 name: LA SACRA - Ricerca notturna 23-04 - 280 aziende giornaliere
 on:
   schedule:
-    - cron: "0 21,22 * * *"
+    # Retry during Rome night; the script guards 23:00-03:55, with DST handled locally.
+    - cron: "10 0-3,21-23 * * *"
   workflow_dispatch:
     inputs:
       collect:
