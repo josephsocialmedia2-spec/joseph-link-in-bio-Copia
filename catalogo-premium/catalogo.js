@@ -213,7 +213,7 @@ async function load(){
     listings=Rules.filterListings(data.items,{
       ids:wantedIds?[...wantedIds]:null,
       category:categoryFilter,
-      municipality:municipalityFilter==='Comune da verificare'?'':municipalityFilter,
+      municipality:municipalityFilter,
       status:statusFilter
     });
     // All 58 official product URLs remain in the feed; no automatic status/APE
