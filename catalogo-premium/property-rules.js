@@ -24,6 +24,9 @@
   const OFFICIAL_HOSTS=new Set(['lasacraimmobiliare.it','www.lasacraimmobiliare.it']);
   const BAD_TITLE=/^(?:da verificare|immobile|proposta|senza titolo|non disponibile|titolo da inserire)$/i;
   const EXCLUDED_TITLE=/\b(?:terren[oi]|magazzin[oi]|capannon[ei]|negozi[oi]|attivit[aà]|cessione\s+d['’]attivit[aà]|bar|ristorant[ei]|tabacch[ei]|uffic[io]|commercial[ei]|artigianal[ei]|laboratori[oi]|deposit[oi]|chalet|casett[ae]\s+in\s+legno|struttur[ae]\s+(?:temporane[ae]|precarie?|in\s+legno)|prefabbricat[oi]|camping|campegg[io]|garage\s+singol[oi])\b/i;
+  // A marketing image labelled "in trattativa" contradicts AVAILABLE in the feed.
+  // Fail closed instead of promoting a potentially unavailable listing.
+  const UNAVAILABLE_MARKER=/in[-_ ]trattativa|vendut[oa]|gi[aà][-_ ]vendut[oa]|non[-_ ]disponibile/i;
   const POSITIVE_TYPE=/\b(?:appartament[oi]|allogg[io]|bilocal[ei]|trilocal[ei]|quadrilocal[ei]|monolocal[ei]|[23456]\s+locali|due\s+locali|tre\s+locali|quattro\s+locali|cas[ae]|ville?|villa|bifamiliar[ei]|semindipendent[ei]|indipendent[ei]|attic[oi]|rustic[oi]|porzione\s+di\s+villa|mansard[ae]|piano\s+terra)\b/i;
   const trim=value=>typeof value==='string'?value.trim():'';
   function originalUrl(value){
@@ -39,6 +42,7 @@
   function isEligible(p,options){
     if(!p||p.category!=='Residenziale'||p.availability_status!=='AVAILABLE')return false;
     if(!originalUrl(p.url)||!trim(p.image).startsWith('https://'))return false;
+    if(UNAVAILABLE_MARKER.test(trim(p.image))||UNAVAILABLE_MARKER.test(trim(p.title)))return false;
     if(p.location_status!=='VERIFICATO_FONTE'||!trim(p.municipality)||!ALLOWED_TOWN_IDS.has(trim(p.town_id)))return false;
     const title=trim(p.title),fallback=trim(p.description).slice(0,500);
     const generic=!title||BAD_TITLE.test(title);
