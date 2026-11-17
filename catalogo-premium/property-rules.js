@@ -38,10 +38,12 @@
   }
   function isEligible(p,options){
     if(!p||p.category!=='Residenziale'||p.availability_status!=='AVAILABLE')return false;
-    if(!originalUrl(p.url)||!trim(p.image).startsWith('https://')||!trim(p.title))return false;
+    if(!originalUrl(p.url)||!trim(p.image).startsWith('https://'))return false;
     if(p.location_status!=='VERIFICATO_FONTE'||!trim(p.municipality)||!ALLOWED_TOWN_IDS.has(trim(p.town_id)))return false;
-    const title=trim(p.title);
-    if(BAD_TITLE.test(title)||EXCLUDED_TITLE.test(title)||!POSITIVE_TYPE.test(title))return false;
+    const title=trim(p.title),fallback=trim(p.description).slice(0,500);
+    const generic=!title||BAD_TITLE.test(title);
+    if(EXCLUDED_TITLE.test(title)||generic&&EXCLUDED_TITLE.test(fallback))return false;
+    if(!POSITIVE_TYPE.test(generic?fallback:title))return false;
     // Rustico is allowed only if the source expressly describes it as habitable.
     if(/\brustic[oi]\b/i.test(title)&&!/\b(?:abitabil[ei]|ristrutturat[oi]|uso\s+abitativo|residenzial[ei])\b/i.test(title+' '+trim(p.description)))return false;
     if(options&&options.onlyVerified&&!hasVerifiedApe(p))return false;
@@ -63,7 +65,7 @@
     return null;
   }
   function typeName(p){
-    const t=normalize(p.title);
+    const t=normalize(p.title)||normalize(p.description).slice(0,320);
     if(/\bporzione\s+di\s+villa\b/.test(t))return 'Porzione di villa';
     if(/\bvilla\b/.test(t))return 'Villa';
     if(/\bsemindipendente\b/.test(t))return 'Casa semindipendente';
