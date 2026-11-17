@@ -12,7 +12,7 @@ publicUrl.hash='';
 for(const key of [...publicUrl.searchParams.keys()])if(key!=='immobili')publicUrl.searchParams.delete(key);
 const rootUrl=publicUrl.href;
 const rawIds=publicUrl.searchParams.get('immobili');
-const wantedIds=rawIds&&/^\\d{10,20}(,\\d{10,20}){0,17}$/.test(rawIds)?
+const wantedIds=rawIds&&/^\d{10,20}(,\d{10,20}){0,17}$/.test(rawIds)?
   new Set(rawIds.split(',')):null;
 const selectionInvalid=Boolean(rawIds&&!wantedIds);
 let selected=0;
