@@ -101,7 +101,12 @@ test('Public client flyer offers a WhatsApp message and never exposes unverified
   }
   assert.ok(app.includes("new URL('../../catalogo-premium/',global.location.href)"));
   assert.ok(html.includes('href="../../catalogo-premium/"'));
-  assert.ok(app.includes('catalogo immobiliare residenziale sfogliabile'));
+  assert.ok(app.includes('catalogo sfogliabile di Immobiliare La Sacra'));
+  assert.ok(app.includes('url.searchParams.set(\'categoria\',filters.category)'));
+  assert.ok(app.includes('url.searchParams.set(\'comune\',filters.municipality)'));
+  assert.ok(app.includes('url.searchParams.set(\'stato\',filters.status)'));
+  assert.ok(html.includes('id="publicCategoryFilter"'));
+  assert.ok(html.includes('id="publicTownFilter"'));
   assert.ok(html.includes('property-rules.js'));
   assert.ok(app.includes('LaSacraRules?.isEligible'));
   assert.ok(app.includes('chosen.length&&!selectedIds.length'));
