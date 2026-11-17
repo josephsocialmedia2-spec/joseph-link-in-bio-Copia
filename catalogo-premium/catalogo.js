@@ -3,44 +3,65 @@
  * Solo schede di export espressamente convalidate possono apparire al cliente. */
 (()=>{
 'use strict';
+const Rules=window.LaSacraRules;
+if(!Rules)throw Error('Regole di selezione immobili non caricate.');
 let pageNodes=[...document.querySelectorAll('.page')];
 let pageNames=['Copertina','Valutazione gratuita'];
 // The one client URL can optionally carry a conservative allowlist of product IDs
 // selected from existing official URLs in Studio Volantini Premium.
 const publicUrl=new URL(location.href);
 publicUrl.hash='';
-for(const key of [...publicUrl.searchParams.keys()])if(key!=='immobili')publicUrl.searchParams.delete(key);
+for(const key of [...publicUrl.searchParams.keys()])if(!['immobili','solo_verificati'].includes(key))publicUrl.searchParams.delete(key);
 const rootUrl=publicUrl.href;
 const rawIds=publicUrl.searchParams.get('immobili');
 const wantedIds=rawIds&&/^\d{10,20}(,\d{10,20}){0,17}$/.test(rawIds)?
   new Set(rawIds.split(',')):null;
 const selectionInvalid=Boolean(rawIds&&!wantedIds);
+const onlyVerified=publicUrl.searchParams.get('solo_verificati')==='1';
 let selected=0;
 const $=id=>document.getElementById(id);
 const toast=message=>{const node=$('toast');node.textContent=message;node.classList.add('show');setTimeout(()=>node.classList.remove('show'),3200)};
-const dots=$('pageDots');
+const select=$('pageSelect');
 function showPage(index,updateUrl=true){
   selected=Math.max(0,Math.min(pageNodes.length-1,index));
   for(let i=0;i<pageNodes.length;i++){
     pageNodes[i].hidden=i!==selected;
     pageNodes[i].classList.toggle('active',i===selected);
   }
-  $('pageCounter').textContent=(selected+1)+' / '+pageNodes.length;
-  $('pageLabel').textContent=pageNames[selected];
+  $('pageCounter').textContent='Pagina '+(selected+1)+' di '+pageNodes.length;
+  $('pageLabel').textContent=pageNames[selected]||'Pagina';
+  select.value=String(selected);
   $('prevPage').disabled=selected===0;
   $('nextPage').disabled=selected===pageNodes.length-1;
-  for(const [i,b] of [...dots.children].entries()){b.classList.toggle('active',i===selected);b.setAttribute('aria-current',i===selected?'page':'false');}
   if(updateUrl)history.replaceState(null,'',rootUrl+'#pagina-'+(selected+1));
 }
 function resetDots(){
-  dots.replaceChildren();
-  pageNodes.forEach((_,i)=>{const b=document.createElement('button');b.type='button';b.title=pageNames[i];b.setAttribute('aria-label','Vai a '+pageNames[i]);b.onclick=()=>showPage(i);dots.append(b)});
+  select.replaceChildren();
+  pageNodes.forEach((_,i)=>{
+    const option=document.createElement('option');
+    option.value=String(i);
+    option.textContent=(i+1)+' · '+(pageNames[i]||'Pagina');
+    select.append(option);
+  });
 }
 resetDots();
+select.addEventListener('change',()=>showPage(Number(select.value)));
 $('prevPage').onclick=()=>showPage(selected-1);
 $('nextPage').onclick=()=>showPage(selected+1);
-const match=location.hash.match(/^#pagina-(\d+)$/);showPage(match?Number(match[1])-1:0,false);
-addEventListener('hashchange',()=>{const m=location.hash.match(/^#pagina-(\d+)$/);if(m)showPage(Number(m[1])-1,false)});
+const match=location.hash.match(/^#pagina-(\d+)$/);
+showPage(match?Number(match[1])-1:0,false);
+addEventListener('hashchange',()=>{
+  const m=location.hash.match(/^#pagina-(\d+)$/);
+  if(m)showPage(Number(m[1])-1,false);
+});
+$('verifiedOnly').checked=onlyVerified;
+$('verifiedOnly').addEventListener('change',()=>{
+  const url=new URL(location.href);
+  if($('verifiedOnly').checked)url.searchParams.set('solo_verificati','1');
+  else url.searchParams.delete('solo_verificati');
+  url.hash='';
+  location.assign(url.href);
+});
 document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey||['INPUT','SELECT','TEXTAREA'].includes(document.activeElement?.tagName))return;
   if(e.key==='ArrowRight'){e.preventDefault();showPage(selected+1)}
   if(e.key==='ArrowLeft'){e.preventDefault();showPage(selected-1)}
