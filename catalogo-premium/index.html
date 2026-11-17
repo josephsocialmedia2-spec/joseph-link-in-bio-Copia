@@ -11,8 +11,9 @@
 <meta property="og:url" content="https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/catalogo-premium/">
 <title>Immobiliare La Sacra · Catalogo Premium</title>
 <link rel="canonical" href="https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/catalogo-premium/">
-<link rel="stylesheet" href="./style.css?v=20261117-quattro-immobili-v2">
-<script defer src="./catalogo.js?v=20261117-quattro-immobili-v2"></script>
+<link rel="stylesheet" href="./style.css?v=20261117-residential-v1">
+<script defer src="./property-rules.js?v=20261117-residential-v1"></script>
+<script defer src="./catalogo.js?v=20261117-residential-v1"></script>
 </head>
 <body>
 <a class="skip-link" href="#pagina">Vai al catalogo</a>
@@ -27,7 +28,7 @@
 </header>
 <main class="shell" id="pagina">
   <div class="reader-top">
-    <div><p class="eyebrow">UN SOLO CATALOGO · IMMOBILIARE LA SACRA</p><h1>Il catalogo immobiliare da sfogliare.</h1><p class="rep-line"><b>Referente e funzionario: Malafronte Joseph</b> · <a href="tel:+393713708294">371 370 8294</a></p></div>
+    <div><p class="eyebrow">UN SOLO CATALOGO RESIDENZIALE · IMMOBILIARE LA SACRA</p><h1>Il catalogo immobiliare da sfogliare.</h1><p class="rep-line"><b>Referente e funzionario: Malafronte Joseph</b> · <a href="tel:+393713708294">371 370 8294</a></p></div>
     <div class="reader-tools" aria-label="Condivisione catalogo">
       <a class="representative-action" href="tel:+393713708294" title="Chiama Malafronte Joseph">Chiama Joseph</a>
       <a class="representative-action" href="https://wa.me/393713708294?text=Buongiorno%20Joseph%2C%20vorrei%20informazioni%20sugli%20immobili%20La%20Sacra." target="_blank" rel="noopener noreferrer">WhatsApp Joseph</a>
@@ -37,6 +38,13 @@
       <button type="button" data-share="copy" title="Copia il collegamento">Copia link</button>
       <a class="pdf-download" href="./La_Sacra_Catalogo_Tutti_Immobili.pdf" download="Immobiliare_La_Sacra_Catalogo_Immobili.pdf" title="Scarica PDF con tutte le proposte">Scarica catalogo PDF</a><button type="button" data-share="print" title="Stampa o salva in PDF">Stampa / Salva PDF</button>
     </div>
+  </div>
+  <div class="catalogue-controls" aria-label="Filtri e qualità degli annunci">
+    <p id="catalogStatus" role="status" aria-live="polite">Caricamento delle proposte immobiliari residenziali…</p>
+    <label for="verifiedOnly" class="verified-toggle">
+      <input type="checkbox" id="verifiedOnly" name="solo_verificati">
+      <span>Solo annunci con APE verificato</span>
+    </label>
   </div>
   <section class="reader" aria-label="Catalogo sfogliabile">
     <div class="reader-frame">
@@ -89,7 +97,17 @@
         </div>
       </article>
     </div>
-    <div class="reader-bottom"><button type="button" id="prevPage" aria-label="Pagina precedente">← Precedente</button><div class="pager"><span id="pageLabel">Copertina</span><span id="pageCounter">1 / …</span><div id="pageDots" class="dots" aria-label="Pagine del catalogo"></div></div><button type="button" id="nextPage" aria-label="Pagina successiva">Successiva →</button></div>
+    <nav class="reader-bottom" aria-label="Navigazione del catalogo">
+      <button type="button" id="prevPage" aria-label="Pagina precedente">← Precedente</button>
+      <div class="pager">
+        <strong id="pageCounter" role="status" aria-live="polite">Pagina 1</strong>
+        <span id="pageLabel">Copertina</span>
+        <label class="page-quick-label" for="pageSelect">Vai alla pagina
+          <select id="pageSelect" aria-label="Scegli una pagina del catalogo"><option value="0">Copertina</option></select>
+        </label>
+      </div>
+      <button type="button" id="nextPage" aria-label="Pagina successiva">Successiva →</button>
+    </nav>
   </section>
 
   <section class="request-choice" id="richiesta-altre-proposte" aria-labelledby="requestChoiceTitle">
