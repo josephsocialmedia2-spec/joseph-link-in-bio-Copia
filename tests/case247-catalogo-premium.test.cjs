@@ -30,7 +30,7 @@ test('only direct official urls; do not fabricate energy class',()=>{
  assert.match(js,/hostOK\(p\.url\)/);
  assert.match(js,/p\.availability_status==='AVAILABLE'/);
  assert.match(js,/Prestazione energetica: dato non riportato nella fonte catalogo/);
- assert.match(html,/informazioni energetiche mancanti/i);
+ assert.match(html,/dati energetici non presenti/i);
 });
 test('official agency contact and property links exist',()=>{
  assert.match(html,/IMMOBILIARE LA SACRA/);assert.match(html,/346 256 8685/);
