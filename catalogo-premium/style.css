@@ -383,7 +383,7 @@
  .page-listing-sheet .page-tail{padding-top:1mm!important;margin-top:2mm!important;font-size:7pt!important}
  .sheet-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:repeat(2,minmax(0,1fr))!important;flex:1 1 auto!important;min-height:0!important;gap:3mm!important}
  .sheet-card{display:flex!important;flex-direction:column!important;justify-content:space-between!important;overflow:visible!important;break-inside:avoid!important;page-break-inside:avoid!important;max-height:none!important;min-height:0!important;border-radius:3mm!important;box-shadow:none!important}
- .sheet-card .property-photo{width:100%!important;height:34mm!important;min-height:34mm!important;flex:0 0 34mm!important;aspect-ratio:auto!important;overflow:hidden!important;border-radius:3mm 3mm 0 0!important}
+ .sheet-card .property-photo{width:100%!important;height:44mm!important;min-height:44mm!important;flex:0 0 44mm!important;aspect-ratio:auto!important;overflow:hidden!important;border-radius:3mm 3mm 0 0!important}
  .sheet-card .property-photo img{height:100%!important;width:100%!important;max-height:none!important;object-fit:cover!important}
  .sheet-card .content{display:flex!important;flex-direction:column!important;justify-content:space-between!important;flex:1 1 auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;padding:2mm 3mm 2mm!important;gap:1mm!important}
  .sheet-card .property-main{display:flex!important;flex-direction:column!important;min-width:0!important;gap:1mm!important}
