@@ -85,3 +85,9 @@ La versione pubblicata utilizza il ritratto JPEG predefinito incluso in `./portr
 
 
 Nota: i comandi di pianificazione festività presenti nella versione precedente non sono ancora inclusi nello Studio Premium.
+
+## Invio link al cliente (aggiornamento 17 novembre 2026)
+
+Questa pagina è l'**editor interno**, da non inviare come volantino. Il PDF fronte/retro viene reso condivisibile soltanto attraverso il comando **PDF definitivo + Drive** dopo il preflight completo e con OAuth Drive concesso al browser. Il link restituito da Google Drive è pubblico in sola lettura; viene visualizzato in un campo selezionabile con pulsanti **Copia link cliente** e **Condividi su WhatsApp**. Dopo un refresh bisogna autorizzare nuovamente Drive: lo Studio verifica il permesso dell'ultimo PDF prima di riproporre il link, etichettandolo come versione precedente.
+
+La brochure informativa `/cliente-avigliana/` è un materiale separato: non sostituisce il volantino Premium con 18 schede. La pagina pubblicata su GitHub Pages si aggiorna solo dopo l'integrazione delle modifiche su `main` e la successiva distribuzione; una pull request non equivale alla messa online. Controllare la procedura in `GOOGLE-DRIVE-SETUP.md` e i test `test-link-cliente.cjs`.
