@@ -27,10 +27,7 @@
   const POSITIVE_TYPE=/\b(?:appartament[oi]|allogg[io]|bilocal[ei]|trilocal[ei]|quadrilocal[ei]|monolocal[ei]|[23456]\s+locali|due\s+locali|tre\s+locali|quattro\s+locali|cas[ae]|ville?|villa|bifamiliar[ei]|semindipendent[ei]|indipendent[ei]|attic[oi]|rustic[oi]|porzione\s+di\s+villa|mansard[ae]|piano\s+terra)\b/i;
   const trim=value=>typeof value==='string'?value.trim():'';
   function originalUrl(value){
-    try{
-      const u=new URL(value);
-      return u.protocol==='https:'&&OFFICIAL_HOSTS.has(u.hostname)&&/^\/products\/[a-z0-9-]+\/?$/.test(u.pathname);
-    }catch(_){return false}
+    return /^https:\/\/(?:www\.)?lasacraimmobiliare\.it\/products\/[a-z0-9-]+\/?$/.test(trim(value));
   }
   function hasVerifiedApe(p){
     if(!p)return false;
