@@ -76,7 +76,7 @@
     if(n===2)return 'Bilocale';
     if(n===3)return 'Trilocale';
     if(n===4)return 'Quadrilocale';
-    if(/\bmansarda\b/.test(t))return 'Appartamento con mansarda';
+    if(/\bmansarda\b/.test(t))return 'Appartamento';
     if(/\bappartamento\b|\balloggio\b|\bpiano terra\b/.test(t))return 'Appartamento';
     return 'Abitazione';
   }
