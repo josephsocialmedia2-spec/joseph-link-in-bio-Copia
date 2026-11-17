@@ -537,8 +537,31 @@
     $('outerDescription').textContent=count===2?'Fronte A4 composto da 2 A5 verticali: SINISTRA '+externalLeft.name+' + DESTRA '+externalRight.name:
       'Fronte incompleto: carica A5 SINISTRA e A5 DESTRA. Non verrà generata una pagina fronte con un solo A5.';
   }
+  function initPublicFlyerShare(){
+    const url=new URL('./volantino-digitale/',global.location.href).href;
+    const message='Buongiorno, ti invio il volantino digitale aggiornato di Immobiliare La Sacra per la Valle di Susa.\n\nPuoi consultarlo qui: '+url+'\n\nSe desideri informazioni per vendere o cercare casa, rispondi a questo messaggio.';
+    $('publicFlyerOpen').href=url;
+    $('publicFlyerLink').value=url;
+    $('publicFlyerWhatsApp').href='https://wa.me/?text='+encodeURIComponent(message);
+    $('publicFlyerCopy').onclick=async()=>{
+      let copied=false;
+      try{
+        if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(message);copied=true;}
+      }catch(_){}
+      if(!copied){
+        const field=$('publicFlyerLink');
+        field.focus();field.select();
+        try{copied=Boolean(document.execCommand?.('copy'));}catch(_){}
+        $('publicFlyerStatus').textContent=copied?
+          'Link copiato. Per inviare anche il testo usa il pulsante WhatsApp.':
+          'Seleziona il link dal campo e copialo manualmente.';
+      }else{
+        $('publicFlyerStatus').textContent='Messaggio e link copiati: puoi incollarli su WhatsApp o email.';
+      }
+    };
+  }
   function init(){
-    initDrive();showStaff();showThemes();render();syncCatalog();restorePortraits();
+    initPublicFlyerShare();initDrive();showStaff();showThemes();render();syncCatalog();restorePortraits();
     window.addEventListener('resize',resizePreview);
     $('addUrls').onclick=async()=>{if(loading)return;loading=true;try{
       const urls=$('listingUrls').value.split(/\s+/).map(x=>x.trim()).filter(Boolean);
