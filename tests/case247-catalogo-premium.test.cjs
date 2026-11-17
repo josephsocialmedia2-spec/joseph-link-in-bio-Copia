@@ -30,6 +30,8 @@ test('strict residential filter excludes business, land, chalet and town outside
   assert.ok(eligible.every(p=>Rules.originalUrl(p.url)));
   assert.equal(eligible.some(p=>/terren|magazzin|chalet|attivit|bar|ristorant|capannon/i.test(p.title)),false);
   assert.equal(eligible.some(p=>p.municipality==='Borgaro Torinese'),false);
+  assert.equal(eligible.some(p=>/in[-_ ]trattativa|venduto/i.test(p.image||'')),false);
+  assert.ok(items.some(p=>/in[-_ ]trattativa/i.test(p.image||'')&&p.availability_status==='AVAILABLE'),'Source conflict example missing');
   const offTown={...eligible[0],town_id:'borgaro-torinese',municipality:'Borgaro Torinese'};
   assert.equal(Rules.isEligible(offTown),false);
   const bareLand={...eligible[0],title:'TERRENO EDIFICABILE CON PROGETTO',category:'Residenziale'};
@@ -97,6 +99,7 @@ test('content-first web cards keep links visible; A4 PDF 2x2 retains cover and f
   assert.match(css,/justify-content:space-between!important/);
   assert.match(css,/@media print/);
   assert.match(css,/break-inside:avoid!important/);
+  assert.match(css,/height:44mm!important;min-height:44mm!important;flex:0 0 44mm!important/);
   assert.match(css,/grid-template-columns:repeat\(2,minmax\(0,1fr\)\)!important/);
   assert.match(html,/class="page page-cover active"/);
   assert.match(html,/CATALOGO<br><em>IMMOBILIARE<\/em>/);
