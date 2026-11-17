@@ -1,0 +1,21 @@
+/* CASE247 — Sistema di acquisizione immobiliare, scoped tabs */
+.sv-tab-box{--sv-primary:#0f172a;--sv-accent:#0284c7;--sv-accent-bg:#e0f2fe;--sv-bg:#f8fafc;--sv-card:#fff;--sv-border:#e2e8f0;--sv-muted:#64748b;font-family:inherit;background:var(--sv-bg);color:var(--sv-primary);padding:1.75rem 1.25rem;border-radius:12px;max-width:920px;margin:1.5rem auto;border:1px solid var(--sv-border);box-sizing:border-box}
+.sv-tab-box *{box-sizing:border-box}
+.sv-tab-box .sv-header-compact{text-align:center;font-size:1.45rem;line-height:1.25;margin:0 0 1.25rem;color:var(--sv-primary)}
+.sv-tab-box .sv-nav-buttons{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem;margin-bottom:1.5rem}
+.sv-tab-box .sv-btn-tab{appearance:none;background:var(--sv-card);border:1px solid var(--sv-border);color:var(--sv-muted);padding:.85rem .6rem;border-radius:8px;font-weight:700;font-size:.88rem;cursor:pointer;transition:background .2s ease,border-color .2s ease,color .2s ease;text-align:center;line-height:1.3;min-height:50px}
+.sv-tab-box .sv-btn-tab:hover{border-color:var(--sv-accent);color:var(--sv-accent)}
+.sv-tab-box .sv-btn-tab[aria-selected="true"]{background:var(--sv-accent);color:#fff;border-color:var(--sv-accent);box-shadow:0 4px 10px rgba(2,132,199,.2)}
+.sv-tab-box .sv-btn-tab:focus-visible{outline:3px solid #0ea5e9;outline-offset:3px}
+.sv-tab-box .sv-panel[hidden]{display:none!important}
+.sv-tab-box .sv-panel{animation:svFadeIn .25s ease}
+@keyframes svFadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.sv-tab-box .sv-grid-compact{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr));gap:1rem}
+.sv-tab-box .sv-card-mini{background:var(--sv-card);border:1px solid var(--sv-border);border-radius:8px;padding:1rem 1.15rem;min-width:0}
+.sv-tab-box .sv-card-mini h3{font-size:.98rem;margin:0 0 .65rem;color:var(--sv-accent);border-bottom:1px solid var(--sv-border);padding-bottom:.4rem}
+.sv-tab-box .sv-list-mini{list-style:none;padding:0;margin:0}
+.sv-tab-box .sv-list-mini li{font-size:.86rem;padding:.35rem 0;border-bottom:1px dashed var(--sv-border);line-height:1.4}
+.sv-tab-box .sv-list-mini li:last-child{border-bottom:0}
+.sv-tab-box .sv-vtag{font-size:.7rem;font-weight:700;color:var(--sv-accent);text-transform:uppercase;display:block}
+@media(max-width:600px){.sv-tab-box{padding:1.1rem .8rem;margin:1rem 12px}.sv-tab-box .sv-nav-buttons{grid-template-columns:1fr}.sv-tab-box .sv-header-compact{font-size:1.2rem}}
+@media(prefers-reduced-motion:reduce){.sv-tab-box .sv-panel{animation:none}.sv-tab-box .sv-btn-tab{transition:none}}
