@@ -99,7 +99,10 @@ test('Public client flyer offers a WhatsApp message and never exposes unverified
     assert.ok(html.includes('id="'+id+'"'),'Missing studio control '+id);
     assert.ok(app.includes("$('"+id+"')"),'Missing control handler '+id);
   }
-  assert.ok(app.includes("new URL('./volantino-digitale/',global.location.href)"));
+  assert.ok(app.includes("new URL('../../catalogo-premium/',global.location.href)"));
+  assert.ok(html.includes('href="../../catalogo-premium/"'));
+  assert.ok(app.includes('con le proposte immobiliari'));
+  assert.ok(!app.includes("new URL('./volantino-digitale/',global.location.href)"));
   assert.ok(app.includes('https://wa.me/?text='));
   for(const id of ['shareWhatsapp','copyMessage','flyerUrl','printFlyer','officialLogo']){
     assert.ok(flyer.includes('id="'+id+'"'),'Missing public flyer control '+id);
