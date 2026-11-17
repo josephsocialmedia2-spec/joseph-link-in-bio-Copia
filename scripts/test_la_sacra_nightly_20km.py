@@ -5,6 +5,23 @@ import la_sacra_nightly_20km as m
 from decrypt_la_sacra_batch import decrypt
 
 class NightlyChecks(unittest.TestCase):
+    def test_night_window_is_local_and_spans_midnight(self):
+        z=m.ROME
+        a,b=m.night_window(dt.datetime(2026,11,17,23,2,tzinfo=z))
+        self.assertEqual(str(a),"2026-11-17")
+        self.assertEqual(b.hour,3)
+        self.assertEqual(str(b.date()),"2026-11-18")
+        a,b=m.night_window(dt.datetime(2026,11,18,2,15,tzinfo=z))
+        self.assertEqual(str(a),"2026-11-17")
+        self.assertEqual(b.hour,3)
+        self.assertEqual(str(b.date()),"2026-11-18")
+        self.assertEqual(m.night_window(dt.datetime(2026,11,18,4,36,tzinfo=z)),(None,None))
+        self.assertEqual(m.night_window(dt.datetime(2026,11,17,22,0,tzinfo=z)),(None,None))
+    def test_night_window_dst_summer(self):
+        z=m.ROME
+        a,b=m.night_window(dt.datetime(2027,7,1,1,0,tzinfo=z))
+        self.assertEqual(str(a),"2027-06-30")
+        self.assertEqual(str(b.date()),"2027-07-01")
     def test_radius_boundary(self):
         self.assertLess(m.dist(45.0800,7.3980),0.01)
         self.assertGreater(m.dist(46,7.398),20)
