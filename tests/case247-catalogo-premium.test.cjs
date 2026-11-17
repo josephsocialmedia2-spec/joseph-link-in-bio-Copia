@@ -9,18 +9,18 @@ test('real-estate flipbook Javascript parses and catalog has source listings',()
  assert.ok(catalog.items.length>=50);
  assert.equal(catalog.items.length,58);
 });
-test('flipbook dynamically spreads all inventory records into six-card sheets',()=>{
+test('one catalogue spreads all real inventory records into four-card spreads with cover + finale',()=>{
  assert.match(js,/fetch\('\.\.\/immobili\/catalogo\.json'/);
- assert.match(js,/const pageSize=6/);
+ assert.match(js,/const pageSize=4/);
  assert.match(js,/addSheets\(listings\)/);
  assert.match(js,/frame\.insertBefore\(sheet,before\)/);
- assert.match(js,/listings\.length\+' ANNUNCI IN ARCHIVIO'/);
+ assert.match(js,/pageNames=\['Copertina',\.\.\.Array\.from/);
  assert.match(js,/resetDots\(\)/);
- assert.match(js,/renderListings\(\)/);
+ assert.match(js,/frame\.querySelector\('\.page-end'\)/);
  assert.match(css,/\.sheet-grid/);
 });
 test('mobile responsive navigation, PDF print and sharing',()=>{
- for(const id of ['prevPage','nextPage','pageCounter','pageDots','propertyResults','cityFilter','queryFilter'])assert.match(html,new RegExp('id="'+id+'"'));
+ for(const id of ['prevPage','nextPage','pageCounter','pageDots','requestMoreToggle'])assert.match(html,new RegExp('id="'+id+'"'));
  assert.match(js,/touchstart/);assert.match(js,/touchend/);assert.match(js,/ArrowRight/);
  for(const item of ['whatsapp','email','sms','copy','print'])assert.match(html,new RegExp('data-share="'+item+'"'));
  assert.match(js,/https:\/\/wa\.me\/\?text=/);assert.match(js,/mailto:\?subject=/);
@@ -45,18 +45,23 @@ test('official logo, Joseph as referente e funzionario, direct telephone WhatsAp
  assert.match(html,/https:\/\/wa\.me\/393713708294/);
  assert.match(html,/La_Sacra_Catalogo_Tutti_Immobili\.pdf/);
 });
-test('page 03 shows actual estate proposals instead of generic territory marketing',()=>{
- assert.match(html,/03 \/ ALTRE PROPOSTE IMMOBILIARI/);
- assert.match(html,/id="morePropertyResults"/);
- assert.match(html,/page-more-properties/);
- assert.doesNotMatch(html,/03 \/ IL TERRITORIO|La Valle di Susa<br><em>è casa nostra|UN TERRITORIO, TANTE STORIE/);
- assert.match(js,/function renderMoreProperties\(\)/);
- assert.match(js,/renderMoreProperties\(\)/);
- assert.match(js,/for\(const property of more\)container\.append\(card\(property\)\)/);
- assert.match(js,/frame\.querySelector\('\.page-more-properties'\)/);
- assert.match(css,/\.more-property-grid/);
+test('premium blue cover, four large photo properties per spread, seller valuation finale',()=>{
+ assert.match(html,/class="page page-cover active"/);
+ assert.match(html,/CATALOGO<br><em>IMMOBILIARE<\/em>/);
+ assert.match(html,/class="catalog-cover-logo"/);
+ assert.match(html,/class="page page-end catalog-end"/);
+ assert.match(html,/RICHIEDI LA TUA/);
+ assert.match(html,/VALUTAZIONE ORA/);
+ assert.match(html,/https:\/\/wa\.me\/393462568685/);
+ assert.doesNotMatch(html,/page page-intro|page page-properties|page page-more-properties|03 \/ IL TERRITORIO/);
+ assert.match(js,/const pageSize=4/);
+ assert.match(js,/grid\.append\(card\(p,true\)\)/);
+ assert.match(css,/\.sheet-grid\{display:grid;grid-template-columns:repeat\(2/);
+ assert.match(css,/@media print/);
+ assert.match(css,/\.catalog-cover-photo/);
+ const pdf=read('scripts/build-la-sacra-catalogo-pdf.cjs');
+ assert.match(pdf,/inventory\.sheets!==15\|\|inventory\.pages!==17/);
 });
-
 test('checkbox reveals further-property-request form without enrolling automatically',()=>{
  for(const id of ['requestMoreToggle','richiesta-materiale','materialRequest','reqName','reqEmail','reqPhone','reqMaterial','reqType','reqBudget','reqCity','reqMessage','reqPrivacySeen','reqMoreOffersConsent','requestByWhatsApp','requestByEmail','requestFeedback']){
    assert.ok(html.includes('id="'+id+'"'),'Missing checkbox or form control: '+id);
