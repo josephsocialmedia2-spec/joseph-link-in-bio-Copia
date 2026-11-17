@@ -11,8 +11,8 @@
 <meta property="og:url" content="https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/catalogo-premium/">
 <title>Immobiliare La Sacra · Catalogo Premium</title>
 <link rel="canonical" href="https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/catalogo-premium/">
-<link rel="stylesheet" href="./style.css?v=20261116-privacy-joseph-v2">
-<script defer src="./catalogo.js?v=20261116-privacy-joseph-v2"></script>
+<link rel="stylesheet" href="./style.css?v=20261117-proposte-richiesta-v1">
+<script defer src="./catalogo.js?v=20261117-proposte-richiesta-v1"></script>
 </head>
 <body>
 <a class="skip-link" href="#pagina">Vai al catalogo</a>
@@ -67,13 +67,21 @@
           </div><div class="page-tail">ANNUNCI COLLEGATI AL SITO UFFICIALE <span id="listingCount">AGGIORNAMENTO IN CORSO</span></div>
         </div>
       </article>
-      <article class="page page-territory" data-page="3" aria-label="Il territorio" hidden>
+
+      <article class="page page-more-properties" data-page="3" aria-label="Altre proposte immobiliari" hidden>
         <div class="page-inner">
-          <p class="eyebrow">03 / IL TERRITORIO</p><h2>La Valle di Susa<br><em>è casa nostra.</em></h2>
-          <p class="lead">Dai centri storici alle nuove opportunità abitative, ogni comune ha un'identità. Parti dalla zona che senti tua.</p>
-          <div class="towns"><span>Sant’Ambrogio di Torino</span><span>Avigliana</span><span>Almese</span><span>Condove</span><span>Villar Dora</span><span>Caprie</span><span>Rivoli</span><span>Altri comuni del territorio</span></div>
-          <div class="territory-call"><b>Hai un immobile da vendere?</b><p>Parliamo della tua casa e della sua presentazione sul mercato.</p><a class="button-dark" href="https://wa.me/393462568685?text=Buongiorno%2C%20desidero%20informazioni%20per%20vendere%20un%20immobile." target="_blank" rel="noopener noreferrer">Richiedi un contatto</a></div>
-          <div class="page-tail">UN TERRITORIO, TANTE STORIE <span>LA SACRA</span></div>
+          <p class="eyebrow">03 / ALTRE PROPOSTE IMMOBILIARI</p>
+          <h2>Altre case<br><em>da scoprire.</em></h2>
+          <p class="lead smaller">Queste proposte provengono dal catalogo dell'agenzia. Apri ogni scheda ufficiale per maggiori dettagli e verifica prezzo, disponibilità e documentazione con Immobiliare La Sacra.</p>
+          <div id="morePropertyResults" class="more-property-grid" aria-live="polite">
+            <p class="results-note">Caricamento delle proposte immobiliari in corso...</p>
+          </div>
+          <div class="more-property-request">
+            <b>Non hai trovato la casa che cerchi?</b>
+            <p>Puoi richiedere altre proposte indicando comune, tipologia e budget.</p>
+            <a href="#richiesta-altre-proposte" class="button-dark">Richiedi altre proposte</a>
+          </div>
+          <div class="page-tail">SOLO PROPOSTE IMMOBILIARI <span>LA SACRA</span></div>
         </div>
       </article>
       <article class="page page-end" data-page="4" aria-label="Contatti" hidden>
@@ -85,38 +93,65 @@
     </div>
     <div class="reader-bottom"><button type="button" id="prevPage" aria-label="Pagina precedente">← Precedente</button><div class="pager"><span id="pageLabel">Copertina</span><span id="pageCounter">1 / …</span><div id="pageDots" class="dots" aria-label="Pagine del catalogo"></div></div><button type="button" id="nextPage" aria-label="Pagina successiva">Successiva →</button></div>
   </section>
-  <section class="request-section" id="richiesta-materiale" aria-labelledby="requestTitle">
+
+  <section class="request-choice" id="richiesta-altre-proposte" aria-labelledby="requestChoiceTitle">
+    <h2 id="requestChoiceTitle">Desideri ricevere altre proposte immobiliari?</h2>
+    <label class="request-choice-label" for="requestMoreToggle">
+      <input id="requestMoreToggle" type="checkbox" aria-controls="richiesta-materiale">
+      <span><strong>Sì, voglio richiedere altre proposte immobiliari</strong><small>Spunta la casella per aprire il modulo e indicare che tipo di immobile stai cercando.</small></span>
+    </label>
+    <p>La casella apre soltanto il modulo. Non iscrive automaticamente a comunicazioni periodiche e non invia dati senza un'azione successiva.</p>
+  </section>
+  <section class="request-section" id="richiesta-materiale" aria-labelledby="requestTitle" hidden>
     <div class="request-intro">
-      <p class="eyebrow">CONTATTA IL REFERENTE · MATERIALE INFORMATIVO</p>
-      <h2 id="requestTitle">Hai un’attività da vendere? Richiedi il materiale pubblicitario</h2>
-      <p>Richiedi la presentazione dei servizi di promozione di Immobiliare La Sacra, il catalogo oppure informazioni per la vendita di un’attività commerciale. Compila i campi, scegli WhatsApp o email e conferma personalmente l’invio. Non è un’iscrizione automatica a campagne promozionali.</p>
+      <p class="eyebrow">RICHIESTA IMMOBILI · IMMOBILIARE LA SACRA</p>
+      <h2 id="requestTitle">Ricevi proposte immobiliari più adatte alla tua ricerca.</h2>
+      <p>Descrivi zona, tipologia di immobile e budget. Prepareremo una richiesta da inviare personalmente all'agenzia via WhatsApp o email. Nessun immobile aggiuntivo e nessuna newsletter viene inviato automaticamente.</p>
       <div class="request-direct">
-        <a class="cta-primary" href="https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/catalogo-premium/La_Sacra_Catalogo_Tutti_Immobili.pdf" download>Scarica il PDF immobili</a>
-        <a href="https://wa.me/393713708294?text=Buongiorno%20Joseph%2C%20desidero%20ricevere%20materiale%20informativo%20Immobiliare%20La%20Sacra." target="_blank" rel="noopener noreferrer">WhatsApp Joseph</a>
-        <a href="tel:+393713708294">Chiama Joseph</a>
+        <a class="cta-primary" href="https://lasacraimmobiliare.it/collections/all" target="_blank" rel="noopener noreferrer">Vedi gli annunci ufficiali</a>
+        <a href="https://wa.me/393713708294?text=Buongiorno%20Joseph%2C%20cerco%20altre%20proposte%20immobiliari." target="_blank" rel="noopener noreferrer">WhatsApp Joseph</a>
       </div>
     </div>
     <form id="materialRequest" class="request-form" novalidate>
       <div class="request-fields">
         <label>Nome e cognome <span aria-hidden="true">*</span><input id="reqName" name="name" type="text" autocomplete="name" maxlength="100" required placeholder="Nome e cognome"></label>
-        <label>Quale materiale desideri? <span aria-hidden="true">*</span>
+        <label>Quale richiesta desideri inviare? <span aria-hidden="true">*</span>
           <select id="reqMaterial" name="material" required>
-            <option value="Catalogo immobiliare digitale">Catalogo immobiliare digitale</option>
+            <option value="Altre proposte immobiliari">Altre proposte immobiliari</option>
             <option value="Informazioni su un immobile">Informazioni su un immobile specifico</option>
-            <option value="Materiale per vendere casa">Materiale per vendere un immobile</option>
-            <option value="Materiale per vendere attività commerciale">Materiale pubblicitario per vendere un’attività commerciale</option>
-            <option value="Presentazione dei servizi">Presentazione dei servizi dell’agenzia</option>
           </select>
         </label>
-        <label>Attività / ragione sociale (facoltativo)<input id="reqBusiness" name="business" autocomplete="organization" maxlength="130" placeholder="Nome attività"></label>
-        <label>Comune dell’attività (facoltativo)<input id="reqCity" name="city" autocomplete="address-level2" maxlength="90" placeholder="Es. Avigliana"></label>
-        <label>Email (per risposta via email)<input id="reqEmail" name="email" type="email" autocomplete="email" maxlength="150" placeholder="nome@email.it"></label>
-        <label>Cellulare (per risposta su WhatsApp)<input id="reqPhone" name="phone" type="tel" autocomplete="tel" maxlength="25" placeholder="+39 ..."></label>
-        <label class="request-wide">Messaggio facoltativo<textarea id="reqMessage" name="message" rows="3" maxlength="450" placeholder="Indica l’immobile o la tua richiesta, senza documenti personali."></textarea></label>
+        <label>Tipologia di immobile
+          <select id="reqType" name="property_type">
+            <option value="Qualsiasi tipologia">Qualsiasi tipologia</option>
+            <option value="Appartamento">Appartamento</option>
+            <option value="Casa indipendente">Casa indipendente</option>
+            <option value="Villa">Villa</option>
+            <option value="Terreno">Terreno</option>
+            <option value="Immobile commerciale">Immobile commerciale</option>
+          </select>
+        </label>
+        <label>Comune o zona di interesse<input id="reqCity" name="city" autocomplete="address-level2" maxlength="90" placeholder="Es. Avigliana, Almese, Condove"></label>
+        <label>Budget massimo
+          <select id="reqBudget" name="max_budget">
+            <option value="Da definire">Da definire</option>
+            <option value="Fino a 100.000 euro">Fino a 100.000 €</option>
+            <option value="Fino a 150.000 euro">Fino a 150.000 €</option>
+            <option value="Fino a 200.000 euro">Fino a 200.000 €</option>
+            <option value="Fino a 250.000 euro">Fino a 250.000 €</option>
+            <option value="Fino a 350.000 euro">Fino a 350.000 €</option>
+            <option value="Fino a 500.000 euro">Fino a 500.000 €</option>
+            <option value="Oltre 500.000 euro">Oltre 500.000 €</option>
+          </select>
+        </label>
+        <label>Email (per ricevere una risposta via email)<input id="reqEmail" name="email" type="email" autocomplete="email" maxlength="150" placeholder="nome@email.it"></label>
+        <label>Cellulare (per essere ricontattato su WhatsApp)<input id="reqPhone" name="phone" type="tel" autocomplete="tel" maxlength="25" placeholder="+39 ..."></label>
+        <label class="request-wide">Ulteriori preferenze (facoltative)<textarea id="reqMessage" name="message" rows="3" maxlength="450" placeholder="Es. trilocale con box, terrazzo, piano terra..."></textarea></label>
       </div>
-      <p class="privacy-context">I dati compilati, compresi eventuali ragione sociale e comune, servono esclusivamente per rispondere alla richiesta che decidi di inviare. Il modulo non registra dati nel sito e non attiva invii pubblicitari periodici. <a href="./privacy-richiesta.html" target="_blank" rel="noopener noreferrer">Informativa sulla richiesta e sui canali utilizzati</a>.</p>
-      <label class="privacy-check"><input id="reqPrivacySeen" type="checkbox" required> <span>Ho letto l’informativa sul trattamento dei dati per questa richiesta. <b>(Obbligatorio per preparare il messaggio)</b></span></label>
-      <p class="privacy-separate">L’eventuale consenso a future comunicazioni promozionali è distinto dalla richiesta e non viene raccolto con questo modulo. La risposta a questa richiesta non autorizza l’invio di newsletter, SMS o offerte periodiche.</p>
+      <p class="privacy-context">Le informazioni inserite vengono usate per preparare una richiesta inviata da te, non vengono archiviate in questo sito. Consulta l'<a href="./privacy-richiesta.html" target="_blank" rel="noopener noreferrer">informativa sulla privacy e sulle ulteriori proposte immobiliari</a>.</p>
+      <label class="privacy-check"><input id="reqPrivacySeen" type="checkbox" required> <span>Confermo di aver letto l'informativa privacy relativa alla richiesta. <b>(Obbligatorio per preparare il messaggio)</b></span></label>
+      <label class="privacy-check marketing-check"><input id="reqMoreOffersConsent" type="checkbox"> <span><strong>Facoltativo:</strong> acconsento a essere ricontattato in futuro per ricevere ulteriori proposte immobiliari pertinenti alla mia ricerca, ai recapiti indicati. Posso revocare il consenso contattando l'agenzia.</span></label>
+      <p class="privacy-separate">La casella sulle comunicazioni future è facoltativa e inizialmente non selezionata. La tua scelta sarà riportata nella richiesta inviata, ma <strong>non attiva da sola alcun invio automatico o iscrizione</strong>: l'agenzia dovrà verificare e registrare il consenso prima di eventuali comunicazioni successive.</p>
       <div class="form-actions">
         <button type="button" id="requestByWhatsApp">Prepara richiesta WhatsApp</button>
         <button type="button" id="requestByEmail">Prepara richiesta email</button>

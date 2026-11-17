@@ -45,9 +45,23 @@ fs.mkdirSync(out,{recursive:true});
    assert.ok(await page.locator('#queryFilter').inputValue()==='Avigliana');
    for(const t of ['whatsapp','email','sms','copy','print'])assert.equal(await page.locator('[data-share="'+t+'"]').count(),1);
    assert.match(await page.locator('.contact-block').innerText(),/346 256 8685/);
-   // One-time request: no sending without acknowledgement, no mailing list subscription.
+   // Only property offers appear in the former 03 / IL TERRITORIO page.
+   await page.locator('#pageDots button').nth(13).click();
+   assert.equal((await page.locator('#pageLabel').innerText()).trim(),'Altre proposte');
+   assert.equal(await page.locator('.page-more-properties .property-card').count(),3);
+   assert.equal(await page.locator('.page-more-properties .towns').count(),0);
+   assert.match(await page.locator('.page-more-properties').innerText(),/ALTRE PROPOSTE IMMOBILIARI/);
+   // Checkbox toggles the dedicated form; future offers consent remains unchecked.
+   assert.equal(await page.locator('#requestMoreToggle').isChecked(),false);
+   assert.equal(await page.locator('#richiesta-materiale').isVisible(),false);
+   await page.locator('#requestMoreToggle').check();
+   assert.equal(await page.locator('#richiesta-materiale').isVisible(),true);
    assert.equal(await page.locator('#reqPrivacySeen').isChecked(),false);
+   assert.equal(await page.locator('#reqMoreOffersConsent').isChecked(),false);
    await page.locator('#reqName').fill('Cliente Collaudo');
+   await page.locator('#reqCity').fill('Avigliana');
+   await page.locator('#reqType').selectOption('Appartamento');
+   await page.locator('#reqBudget').selectOption('Fino a 200.000 euro');
    await page.locator('#requestByWhatsApp').click();
    assert.match(await page.locator('#requestFeedback').innerText(),/informativa/i);
    await page.locator('#reqPrivacySeen').check();
@@ -56,6 +70,12 @@ fs.mkdirSync(out,{recursive:true});
    const composed=await page.evaluate(()=>window.__requestTestUrl);
    assert.ok(composed.includes('wa.me/393713708294'));
    assert.ok(decodeURIComponent(composed).includes('Cliente Collaudo'));
+   assert.ok(decodeURIComponent(composed).includes('Avigliana'));
+   assert.ok(decodeURIComponent(composed).includes('NO, non autorizzo comunicazioni periodiche'));
+   await page.locator('#reqMoreOffersConsent').check();
+   await page.locator('#requestByWhatsApp').click();
+   const futureComposed=await page.evaluate(()=>window.__requestTestUrl);
+   assert.ok(decodeURIComponent(futureComposed).includes('SÌ, chiedo di essere ricontattato'));
    await page.locator('#reqEmail').fill('cliente@example.com');
    assert.equal(await page.locator('#requestByEmail').count(),1);
    assert.equal(await page.locator('a[href^="tel:+393713708294"]').count()>0,true);

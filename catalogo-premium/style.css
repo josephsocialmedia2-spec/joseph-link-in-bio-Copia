@@ -110,3 +110,50 @@
 @media(max-width:900px){.request-section{grid-template-columns:1fr;padding:22px}.request-form{border:0;border-top:1px solid #d8e3e9;padding:19px 0 0}}
 @media(max-width:600px){.request-fields{grid-template-columns:1fr}.request-section{margin:15px 0;padding:18px}.request-direct a{font-size:11px}.topbar .official-logo{width:48px;height:48px}.reader-top{margin-bottom:18px}.representative-action{padding:8px 9px;font-size:10px}.rep-line{font-size:11px}.privacy-document{margin:8px;padding:20px}.privacy-document h1{font-size:28px}}
 @media print{.request-section,.rep-line{display:none!important}}
+
+/* Page 03 now displays actual property offers (no generic territorial panels). */
+.page-more-properties{background:#f9fbfc}
+.page-more-properties .page-inner{padding:27px clamp(25px,4vw,55px) 18px}
+.page-more-properties h2{font-size:clamp(33px,4vw,51px);margin-bottom:9px}
+.page-more-properties .lead{margin:0 0 12px;font-size:13px;line-height:1.5}
+.more-property-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;flex:1;min-height:0}
+.more-property-grid .property-card{display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.more-property-grid .property-photo{height:115px;flex:0 0 115px}
+.more-property-grid .content{padding:8px 11px;min-height:0;overflow:auto}
+.more-property-grid .property-card h3{font-size:12px;line-height:1.25;margin:3px 0}
+.more-property-grid .property-card .price{font-size:14px;margin:3px 0}
+.more-property-grid .property-card .energy{font-size:9px;margin:3px 0}
+.more-property-grid .property-card .location,.more-property-grid .property-card a{font-size:10px}
+.more-property-request{display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-top:1px solid #cad8df;margin-top:13px;padding:12px 0}
+.more-property-request b{color:#123f60;font-size:14px}
+.more-property-request p{color:#4a6171;margin:0;flex:1 1 200px;font-size:12px;line-height:1.4}
+.more-property-request .button-dark{padding:11px 14px;border-radius:4px;white-space:nowrap;font-size:11px}
+.request-choice{scroll-margin-top:24px;background:#e8f4f9;border:1px solid #a7ccdd;padding:19px 25px;margin:22px 0 12px}
+.request-choice h2{font:500 clamp(23px,3vw,31px)/1.15 Georgia,serif;color:#0b3858;margin:0 0 12px}
+.request-choice p{font-size:12px;color:#416075;line-height:1.6;margin:10px 0 0}
+.request-choice-label{display:flex;gap:14px;align-items:flex-start;background:white;border:1px solid #9ebecf;padding:16px;cursor:pointer;border-radius:6px}
+.request-choice-label input{width:22px;height:22px;flex-shrink:0;accent-color:#096da0;margin:0}
+.request-choice-label strong{display:block;font-size:15px;color:#093c5c}
+.request-choice-label small{display:block;font-size:12px;line-height:1.5;color:#426076;margin-top:4px}
+#richiesta-materiale{scroll-margin-top:20px}
+#richiesta-materiale[hidden]{display:none!important}
+.marketing-check{margin-top:10px;background:#f0f8fc}
+@media(max-width:800px){
+ .page-more-properties .page-inner{padding:21px 17px 13px}
+ .page-more-properties h2{font-size:30px}
+ .page-more-properties .lead{font-size:11px;margin-bottom:9px}
+ .more-property-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+ .more-property-grid .property-card:nth-child(3){display:none}
+ .more-property-grid .property-photo{height:100px;flex-basis:100px}
+ .more-property-grid .content{padding:5px 7px}
+ .more-property-grid .property-card h3{font-size:10px}
+ .more-property-grid .property-card .price{font-size:12px}
+ .more-property-grid .property-card .location{font-size:9px}
+ .more-property-grid .property-card .energy{font-size:8px}
+ .more-property-request{padding:8px 0;gap:6px}
+ .more-property-request b{font-size:12px}
+ .more-property-request p{font-size:10px}
+ .more-property-request .button-dark{font-size:10px;padding:9px 11px}
+ .request-choice{padding:15px;margin:15px 0}
+}
+@media print{.request-choice{display:none!important}.more-property-request{display:none!important}}
