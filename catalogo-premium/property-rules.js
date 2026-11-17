@@ -140,7 +140,7 @@
    const ids=opts.ids?.length?new Set(opts.ids.map(String)):null;
    const a=(Array.isArray(items)?items:[]).filter(p=>originalUrl(p?.url)&&
      (!ids||ids.has(String(p.id)))&&(!opts.category||categoryOf(p)===opts.category)&&
-     (!opts.municipality||municipalityOf(p)===opts.municipality)&&
+     (!opts.municipality||(municipalityOf(p)||'Comune da verificare')===opts.municipality)&&
      (!opts.status||statusOf(p)===opts.status));
    if(ids){const order=[...ids];a.sort((x,y)=>order.indexOf(String(x.id))-order.indexOf(String(y.id)));}
    else a.sort((x,y)=>municipalityOf(x).localeCompare(municipalityOf(y),'it')||trim(x.title).localeCompare(trim(y.title),'it'));
