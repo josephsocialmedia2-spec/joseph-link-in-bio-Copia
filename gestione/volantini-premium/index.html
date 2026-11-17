@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>Studio Volantini · Joseph, Christian, Ylenia</title>
-<link rel="stylesheet" href="./styles.css?v=20261117-link-cliente-digital">
+<link rel="stylesheet" href="./styles.css?v=20261117-catalogo-unico">
 <!-- Librerie client-side, versioni fissate: installare copie locali per produzione offline. -->
 <script defer src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -19,7 +19,7 @@
 <script defer src="./portrait-default.js"></script>
 <script defer src="https://accounts.google.com/gsi/client"></script>
 <script defer src="./drive-publisher.js?v=20261117-link-cliente"></script>
-<script defer src="./app.js?v=20261117-share-proposte"></script>
+<script defer src="./app.js?v=20261117-catalogo-unico"></script>
 </head>
 <body>
 <header class="workspace-head no-print">
@@ -28,26 +28,26 @@
 </header>
 <div class="studio no-print">
   <aside class="panel left-panel">
-    <h2>00 · Seleziona il referente</h2>
-    <p class="hint">Un massimo di 18 annunci immobiliari verificati nel catalogo, in priorità Avigliana e comuni limitrofi. Logo, referente e WhatsApp cambiano per ogni versione.</p>
-    <div id="staffPicker" class="staff-picker" role="group" aria-label="Referenti del volantino">
+    <h2>00 · Un unico catalogo cliente</h2>
+    <p class="hint">Il cliente riceve <strong>un solo catalogo sfogliabile</strong>, con copertina La Sacra, <strong>quattro immobili e fotografie grandi per pagina</strong>, finale «Richiedi la tua valutazione ora» e pulsante «Stampa / Salva PDF». Gli annunci provengono dagli URL ufficiali. Puoi selezionarne fino a 18 per il link cliente; senza selezione si apre il catalogo completo.</p>
+    <div id="staffPicker" class="staff-picker" hidden role="group" aria-label="Referenti del volantino">
       <button type="button" data-staff="joseph">Joseph · Comunicazione immobiliare La Sacra</button>
       <button type="button" data-staff="cristian">Christian · Immobiliare La Sacra</button>
       <button type="button" data-staff="ylenia">Ylenia · Immobiliare La Sacra</button>
     </div>
-    <button id="generateAll" class="primary" type="button">Genera tutti e 3 i volantini (ZIP)</button>
+    <button id="generateAll" class="primary" type="button" hidden>Generazione multipla non utilizzata</button>
     <p class="hint" id="staffHint">Ogni referente utilizza la propria fotografia memorizzata, quando disponibile.</p>
     <hr>
-    <h2>01 · Modello premium</h2><p class="hint">Seleziona una grafica. I dati immobiliari e i QR rimangono invariati.</p>
-    <div id="templatePicker" class="template-picker" aria-label="Selezione template"></div>
+    <h2>01 · Grafica unica La Sacra</h2><p class="hint">La grafica pubblica è quella del catalogo cliente: copertina blu La Sacra, quattro schede con fotografie grandi per schermata e pagina finale di valutazione. Le vecchie varianti A4 non vengono condivise con il cliente.</p>
+    <div id="templatePicker" class="template-picker" hidden aria-label="Modelli tecnici precedenti"></div>
     <hr>
-    <h2>02 · Immobili</h2><p class="hint">Incolla URL esatti La Sacra, uno per riga. Schede non presenti nel catalogo ufficiale: escluse dalla stampa.</p>
+    <h2>02 · Seleziona gli annunci tramite URL</h2><p class="hint">Incolla fino a 18 URL diretti <strong>lasacraimmobiliare.it/products/...</strong>, uno per riga, e premi «Importa URL». Il <strong>link cliente</strong> sotto si aggiorna con gli immobili selezionati presenti nel catalogo ufficiale. Il cliente può sfogliarli e stamparli in PDF.</p>
     <label for="listingUrls">URL annunci</label><textarea id="listingUrls" rows="4" placeholder="https://lasacraimmobiliare.it/products/..."></textarea>
     <div class="action-row"><button id="addUrls" class="primary">Importa URL</button><button id="loadCatalog">Dal catalogo</button></div>
     <div class="action-row"><button id="addManual">+ Scheda da verificare</button><button id="clearAll">Svuota le 18 posizioni</button></div><p id="catalogAudit" class="hint" role="status">Verifica annunci dal catalogo non ancora eseguita.</p>
     <hr>
     <h2>03 · Materiale grafico</h2>
-    <div class="staff-photo-inputs">
+    <div class="staff-photo-inputs" hidden>
       <p class="hint">Una foto diversa per ogni referente. Le fotografie vengono memorizzate in questo browser e riutilizzate automaticamente quando selezioni il referente; non sono pubblicate online.</p>
       <label>Fotografia Joseph (PNG trasparente consigliato)<input id="portraitJosephInput" type="file" accept="image/png,image/jpeg,image/webp"></label><small id="portraitJosephStatus" class="hint" role="status">Fotografia da verificare.</small>
       <label>Fotografia Christian · Titolare<input id="portraitCristianInput" type="file" accept="image/png,image/jpeg,image/webp"></label><small id="portraitCristianStatus" class="hint" role="status">Nessuna fotografia memorizzata.</small>
@@ -65,16 +65,16 @@
   </aside>
   <main class="panel preview-panel">
     <section class="public-flyer-panel no-print" aria-label="Catalogo delle proposte immobiliari: link pubblico e invio">
-      <h2>Proposte immobiliari La Sacra · catalogo cliente</h2>
-      <p>Questo è il <strong>catalogo sfogliabile realizzato il 16 novembre</strong>: annunci, fotografie, prezzi indicativi, filtri per comune e collegamenti alle schede ufficiali. Condividi <strong>questo link</strong> con chi ha richiesto le proposte, non la brochure informativa. Il <strong>PDF Premium fronte/retro con 18 QR</strong> è un documento separato, soggetto alle verifiche complete prima della pubblicazione.</p>
+      <h2>Catalogo unico cliente · 4 immobili per pagina</h2>
+      <p>Questo è il <strong>solo link da inviare al cliente</strong>. Apre il catalogo impaginato con copertina La Sacra, quattro immobili reali per schermata e pagina finale per richiedere una valutazione. Gli URL importati selezionano le proposte: se non ne selezioni, il cliente vede l'intero catalogo. <strong>Stampa / Salva PDF</strong> è disponibile nel catalogo stesso, senza accesso alla pagina di gestione.</p>
       <div class="public-flyer-actions">
-        <a id="publicFlyerOpen" class="public-flyer-action" target="_blank" rel="noopener noreferrer" href="../../catalogo-premium/">Apri le proposte immobiliari</a>
-        <a id="publicFlyerWhatsApp" class="public-flyer-action dark" target="_blank" rel="noopener noreferrer" href="https://wa.me/">Invia proposte su WhatsApp</a>
+        <a id="publicFlyerOpen" class="public-flyer-action" target="_blank" rel="noopener noreferrer" href="../../catalogo-premium/">Apri catalogo sfogliabile</a>
+        <a id="publicFlyerWhatsApp" class="public-flyer-action dark" target="_blank" rel="noopener noreferrer" href="https://wa.me/">Invia catalogo su WhatsApp</a>
         <button id="publicFlyerCopy" type="button" class="public-flyer-action pale">Copia messaggio e link</button>
       </div>
       <label for="publicFlyerLink">Link pubblico del catalogo con le proposte immobiliari</label>
       <input id="publicFlyerLink" type="url" readonly>
-      <p id="publicFlyerStatus" class="hint" role="status">Le proposte derivano dal catalogo La Sacra. Confermare prezzo, disponibilità e dati energetici prima di considerare definitiva una singola scheda.</p>
+      <p id="publicFlyerStatus" class="hint" role="status">Catalogo in preparazione: seleziona URL ufficiali per generare il link cliente.</p>
     </section>
     <nav class="flyer-side-nav no-print" aria-label="Seleziona la facciata del volantino">
       <a href="#fronte-volantino" class="flyer-side-link">01 · FRONTE <small>Facciata esterna</small></a>
