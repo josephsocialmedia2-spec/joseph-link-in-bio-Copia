@@ -299,3 +299,101 @@
  .page,.page[hidden]{display:block!important;visibility:visible!important;position:relative!important;top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;float:none!important;transform:none!important;animation:none!important;overflow:hidden!important;width:297mm!important;height:210mm!important;max-height:210mm!important;break-before:auto!important;break-after:page!important;page-break-after:always!important}
  .page:last-child{break-after:auto!important;page-break-after:auto!important}
 }
+
+
+/* 2026-11-17 · Editorial catalogue QA: content-first responsive cards.
+ * The flipbook expands to its actual content; no fixed viewport-height clips URLs.
+ */
+.catalogue-controls{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin:0 0 14px;padding:13px 19px;background:#f7fbfd;border:1px solid #bed8e6;border-radius:10px}
+.catalogue-controls p{margin:0;font-size:13px;font-weight:700;color:#124d71}
+.verified-toggle{display:inline-flex;align-items:center;gap:9px;min-height:44px;color:#083b61;font-size:13px;font-weight:800;cursor:pointer}
+.verified-toggle input{width:20px;height:20px;accent-color:#056eab;flex-shrink:0}
+.reader-bottom{grid-template-columns:minmax(130px,1fr) minmax(160px,1.8fr) minmax(130px,1fr);gap:12px;padding:15px 22px;min-height:98px}
+.reader-bottom button{min-height:48px;padding:12px 14px;font-size:14px;font-weight:800;border-radius:8px;touch-action:manipulation}
+.reader-bottom button[disabled]{opacity:.42}
+.reader-bottom>.pager{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+#pageCounter{display:block;font-size:17px;line-height:1.2;color:#05395e;letter-spacing:.015em}
+#pageLabel{font-size:12px;color:#37607b;margin:0;text-align:center}
+.page-quick-label{display:flex;align-items:center;gap:9px;font-size:11px;font-weight:700;color:#396079}
+#pageSelect{max-width:230px;min-height:42px;padding:8px 10px;border:1px solid #aec7d8;border-radius:7px;color:#073b60;background:#fff;font-size:12px;font-weight:700}
+.dots,#pageDots{display:none!important}
+
+@media screen{
+ .reader{overflow:visible}
+ .reader-frame{position:relative;overflow:visible!important;height:auto!important;min-height:0!important;max-height:none!important}
+ .reader-frame .page{position:relative!important;inset:auto!important;overflow:visible!important;min-height:0;height:auto!important;max-height:none!important;animation:pageIn .25s ease both}
+ .reader-frame .page[hidden]{display:none!important}
+ .reader-frame .page-cover,.reader-frame .catalog-end{height:700px!important;min-height:700px!important;overflow:hidden!important}
+ .page-listing-sheet .page-inner{height:auto;min-height:0;display:flex;flex-direction:column;padding:25px 30px 19px}
+ .page-listing-sheet .sheet-title{font-size:clamp(30px,3.1vw,42px)}
+ .page-listing-sheet .sheet-subtitle{font-size:13px;margin:4px 0 14px}
+ .sheet-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(max-content,1fr));align-items:stretch;gap:16px;min-height:0;height:auto;flex:none}
+ .sheet-card{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;display:flex;flex-direction:column;justify-content:space-between;border-radius:12px}
+ .sheet-card .property-photo{height:auto!important;min-height:0!important;flex:0 0 auto!important;aspect-ratio:16/10;overflow:hidden;border-radius:11px 11px 0 0;border-bottom:3px solid #2d9bdb}
+ .sheet-card .property-photo img{height:100%!important;min-height:0!important;max-height:none!important;aspect-ratio:16/10;object-fit:cover}
+ .sheet-card .content{display:flex!important;flex-direction:column!important;justify-content:space-between!important;flex:1 1 auto!important;height:auto!important;min-height:145px!important;max-height:none!important;overflow:visible!important;padding:13px 15px!important;gap:9px}
+ .sheet-card .property-main{display:flex;flex-direction:column;gap:6px;flex:1 1 auto;min-width:0}
+ .sheet-card .property-heading{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:7px}
+ .sheet-card .location{display:block;font-size:12px;font-weight:900;letter-spacing:.045em;text-transform:uppercase;color:#135d89}
+ .sheet-card .price{display:inline-block;align-self:flex-start;background:linear-gradient(105deg,#07508c,#0a85c8);color:white;font-size:clamp(12px,1.28vw,17px);border-radius:999px;padding:5px 12px;margin:0;white-space:normal;line-height:1.2}
+ .sheet-card .property-title{display:block;font-size:clamp(16px,1.55vw,21px);font-weight:900;line-height:1.19;margin:0;color:#062f52;max-height:none!important;overflow:visible!important}
+ .sheet-card .property-features{display:flex;align-items:center;flex-wrap:wrap;gap:5px;margin:2px 0 0}
+ .sheet-card .property-feature{display:inline-flex;font-size:11px;line-height:1.25;font-weight:650;padding:4px 7px;margin:0;color:#25516c;background:#eff7fc;border:1px solid #d1e4f0;border-radius:5px}
+ .sheet-card .ape-badge{display:inline-flex;align-self:flex-start;font-size:10px;line-height:1.25;font-weight:700;color:#67788a;background:#f4f6f9;border:1px solid #e1e8ed;border-radius:5px;padding:4px 7px}
+ .sheet-card .ape-badge.verified{background:#e7f5ef;color:#216149;border-color:#b5decd}
+ .sheet-card .property-link{display:inline-flex!important;align-items:center;align-self:flex-start;min-height:32px;padding:5px 0;margin-top:auto;font-size:12px;font-weight:900;text-decoration:underline;text-underline-offset:3px;color:#0568a1;line-height:1.35}
+ .page-listing-sheet .page-tail{margin-top:17px}
+}
+@media screen and (max-width:800px){
+ .catalogue-controls{padding:11px 12px}
+ .reader-frame .page-cover,.reader-frame .catalog-end{height:620px!important;min-height:620px!important}
+ .page-listing-sheet .page-inner{padding:16px 10px 14px}
+ .page-listing-sheet .sheet-subtitle{font-size:10px;margin:4px 0 10px}
+ .sheet-grid{gap:9px}
+ .sheet-card .property-photo{aspect-ratio:16/10}
+ .sheet-card .content{padding:9px!important;gap:7px;min-height:0!important}
+ .sheet-card .location{font-size:10px}
+ .sheet-card .price{font-size:12px;padding:4px 8px}
+ .sheet-card .property-title{font-size:13px;line-height:1.2}
+ .sheet-card .property-feature{font-size:9px;padding:3px 4px}
+ .sheet-card .ape-badge{font-size:9px}
+ .sheet-card .property-link{font-size:10px;min-height:32px}
+ .reader-bottom{grid-template-columns:minmax(80px,1fr) minmax(128px,1.4fr) minmax(80px,1fr);gap:5px;padding:12px 8px}
+ .reader-bottom button{font-size:11px;padding:7px;min-height:48px}
+ #pageCounter{font-size:14px}
+ #pageLabel{font-size:10px}
+ .page-quick-label{font-size:10px;display:flex;flex-direction:column;gap:3px}
+ #pageSelect{max-width:146px;min-height:40px;font-size:10px}
+}
+@media screen and (max-width:390px){
+ .page-listing-sheet .sheet-title{font-size:25px}
+ .sheet-card .property-title{font-size:12px}
+ .sheet-card .content{padding:7px!important}
+ .sheet-card .property-feature{font-size:8.5px}
+}
+
+/* Same DOM, same order and data as web: print uses compact proportions for A4.
+   No clipping of title, metadata, APE badge or official link. */
+@media print{
+ .catalogue-controls,.reader-bottom,.page-quick-label{display:none!important}
+ .page-listing-sheet .page-inner{height:210mm!important;box-sizing:border-box;padding:7mm 10mm 6mm!important}
+ .page-listing-sheet .sheet-title{font-size:22pt!important;line-height:1.05!important;margin:0 0 1mm!important}
+ .page-listing-sheet .sheet-subtitle{font-size:8pt!important;line-height:1.2!important;margin:0 0 2mm!important}
+ .page-listing-sheet .eyebrow{font-size:8pt!important;margin:0!important}
+ .page-listing-sheet .page-tail{padding-top:1mm!important;margin-top:2mm!important;font-size:7pt!important}
+ .sheet-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:repeat(2,minmax(0,1fr))!important;flex:1 1 auto!important;min-height:0!important;gap:3mm!important}
+ .sheet-card{display:flex!important;flex-direction:column!important;justify-content:space-between!important;overflow:visible!important;break-inside:avoid!important;page-break-inside:avoid!important;max-height:none!important;min-height:0!important;border-radius:3mm!important;box-shadow:none!important}
+ .sheet-card .property-photo{width:100%!important;height:34mm!important;min-height:34mm!important;flex:0 0 34mm!important;aspect-ratio:auto!important;overflow:hidden!important;border-radius:3mm 3mm 0 0!important}
+ .sheet-card .property-photo img{height:100%!important;width:100%!important;max-height:none!important;object-fit:cover!important}
+ .sheet-card .content{display:flex!important;flex-direction:column!important;justify-content:space-between!important;flex:1 1 auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;padding:2mm 3mm 2mm!important;gap:1mm!important}
+ .sheet-card .property-main{display:flex!important;flex-direction:column!important;min-width:0!important;gap:1mm!important}
+ .sheet-card .property-heading{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:2mm!important}
+ .sheet-card .location{font-size:8pt!important;line-height:1.1!important;font-weight:900!important;text-transform:uppercase!important;color:#145a82!important}
+ .sheet-card .price{font-size:9.5pt!important;padding:1mm 2.5mm!important;line-height:1.2!important;margin:0!important;white-space:nowrap}
+ .sheet-card .property-title{font-size:11pt!important;line-height:1.13!important;max-height:none!important;overflow:visible!important;margin:0!important}
+ .sheet-card .property-features{display:flex!important;gap:1mm!important;flex-wrap:wrap!important;align-items:center!important;margin:0!important}
+ .sheet-card .property-feature{font-size:7.3pt!important;line-height:1.1!important;padding:.7mm 1.4mm!important;margin:0!important;border-radius:1mm!important}
+ .sheet-card .ape-badge{display:inline-flex!important;align-self:flex-start!important;font-size:7pt!important;line-height:1.1!important;padding:.7mm 1.4mm!important;margin:0!important;border-radius:1mm!important;color:#65788b!important}
+ .sheet-card .property-link{display:block!important;min-height:0!important;font-size:8pt!important;line-height:1.25!important;margin-top:auto!important;padding:1mm 0 0!important;text-decoration:underline!important;color:#035d9a!important}
+ .page-listing-sheet .page-inner,.sheet-grid,.sheet-card,.sheet-card .content{break-inside:avoid!important}
+}
