@@ -26,15 +26,18 @@ const countPdfPages=buf=>{
        const feed=await (await fetch('../immobili/catalogo.json')).json();
        return window.LaSacraRules.filterListings(feed.items).length;
      });
-     assert.ok(expected>=10,'Filtered feed unexpectedly empty');
+     assert.equal(expected,58,'Default catalogue must contain all 58 official URLs');
      const sheets=Math.ceil(expected/4),pages=sheets+2;
      await page.waitForFunction(n=>document.querySelectorAll('.sheet-card').length===n,expected,{timeout:20000});
      assert.equal(await page.locator('.page').count(),pages);
      assert.equal(await page.locator('.page-listing-sheet').count(),sheets);
      assert.equal(await page.locator('.sheet-card').count(),expected);
      assert.equal(await page.locator('.page:not([hidden])').count(),1);
-     assert.match(await page.locator('#catalogStatus').innerText(),/proposte residenziali/);
-     assert.equal(await page.locator('#verifiedOnly').isChecked(),false);
+     assert.match(await page.locator('#catalogStatus').innerText(),/proposte visualizzate/);
+     assert.equal(await page.locator('#categoryFilter').inputValue(),'');
+     assert.equal(await page.locator('#townFilter').inputValue(),'');
+     assert.equal(await page.locator('#statusFilter').inputValue(),'');
+     assert.equal(await page.locator('#categoryFilter option').count()>2,true);
      await page.screenshot({path:path.join(out,label+'-copertina.png'),fullPage:true});
      assert.equal(await page.locator('#pageSelect option').count(),pages);
      await page.locator('#nextPage').click();
@@ -50,7 +53,7 @@ const countPdfPages=buf=>{
          imageWidth:imageRect.width,linkBottom:linkRect.bottom,
          cardBottom:cardRect.bottom,linkVisible:linkRect.width>20&&linkRect.height>12,
          title:card.querySelector('h3')?.textContent, url:link.href,
-         isResidential:!/\b(?:terreno|bar|magazzino|chalet|attivit[aà])\b/i.test(card.querySelector('h3')?.textContent||'')
+         state:card.querySelector('.listing-status')?.textContent
        };
      }));
      assert.equal(diagnostics.length,4);
@@ -59,7 +62,7 @@ const countPdfPages=buf=>{
        assert.ok(d.linkBottom<=d.cardBottom+3,'Listing link clipped: '+JSON.stringify(d));
        assert.ok(d.imageHeight>=90,'Photo too small: '+JSON.stringify(d));
        assert.ok(d.imageWidth>100,'Photo too narrow: '+JSON.stringify(d));
-       assert.ok(d.isResidential,'Nonresidential listing rendered: '+JSON.stringify(d));
+       assert.ok(d.state,'Source listing status missing: '+JSON.stringify(d));
        assert.ok(d.url.startsWith('https://lasacraimmobiliare.it/products/'));
        assert.ok(!/da verificare/i.test(d.title));
      }
@@ -99,13 +102,23 @@ const countPdfPages=buf=>{
      }
      await chosen.close();
 
-     const apeOnly=await context.newPage();
-     await apeOnly.goto(base+'?solo_verificati=1',{waitUntil:'load'});
-     await apeOnly.waitForFunction(()=>document.querySelector('#catalogStatus')?.textContent.includes('Nessun annuncio'),{timeout:20000});
-     assert.equal(await apeOnly.locator('.sheet-card').count(),0);
-     assert.equal(await apeOnly.locator('#verifiedOnly').isChecked(),true);
-     assert.equal(await apeOnly.locator('.pdf-download').isVisible(),false);
-     await apeOnly.close();
+     // A category or town filter is opt-in and does not change the default catalogue.
+     const commercial=await context.newPage();
+     await commercial.goto(base+'?categoria=Commerciale',{waitUntil:'load'});
+     await commercial.waitForFunction(()=>document.querySelector('#catalogStatus')?.textContent.includes('proposte visualizzate'),{timeout:20000});
+     const commercialCount=await commercial.locator('.sheet-card').count();
+     assert.ok(commercialCount>0&&commercialCount<expected);
+     assert.equal(await commercial.locator('#categoryFilter').inputValue(),'Commerciale');
+     assert.equal(await commercial.locator('.pdf-download').isVisible(),false);
+     assert.ok((await commercial.locator('.sheet-card .listing-status').allTextContents()).every(x=>x==='Disponibile'));
+     await commercial.close();
+
+     const unlocated=await context.newPage();
+     await unlocated.goto(base+'?comune='+encodeURIComponent('Comune da verificare'),{waitUntil:'load'});
+     await unlocated.waitForFunction(()=>document.querySelector('#catalogStatus')?.textContent.includes('proposte visualizzate'),{timeout:20000});
+     assert.ok(await unlocated.locator('.sheet-card').count()>0);
+     assert.ok((await unlocated.locator('.sheet-card .location').allTextContents()).every(t=>t==='Comune da verificare'));
+     await unlocated.close();
 
      // Privacy request remains optional, not a newsletter opt-in.
      assert.equal(await page.locator('#requestMoreToggle').isChecked(),false);
@@ -123,6 +136,14 @@ const countPdfPages=buf=>{
 
      if(!isMobile){
        await page.emulateMedia({media:'print'});
+       const printBounds=await page.locator('.sheet-card').evaluateAll(cards=>cards.slice(0,4).map(c=>{
+         const a=c.querySelector('.property-link').getBoundingClientRect();
+         const b=c.getBoundingClientRect();
+         return {linkBottom:a.bottom,cardBottom:b.bottom,linkWidth:a.width};
+       }));
+       for(const item of printBounds){
+         assert.ok(item.linkWidth>0&&item.linkBottom<=item.cardBottom+3,'Print link clipped: '+JSON.stringify(item));
+       }
        const pdf=await page.pdf({printBackground:true,preferCSSPageSize:true,timeout:120000});
        fs.writeFileSync(path.join(out,'desktop-full-print.pdf'),pdf);
        assert.equal(countPdfPages(pdf),pages,'Full printed PDF must include all selected offers');
@@ -131,7 +152,7 @@ const countPdfPages=buf=>{
      assert.equal(errors.length,0,'Browser errors '+errors.join(' | '));
      const dims=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,width:document.documentElement.clientWidth}));
      assert.ok(dims.scroll<=dims.width+3,'Horizontal overflow '+JSON.stringify(dims));
-     console.log('PASS '+label+': '+expected+' residential offers, '+sheets+' complete 2x2 spreads, printable PDF and accessible navigation.');
+     console.log('PASS '+label+': '+expected+' official offers, '+sheets+' complete 2x2 spreads, optional filters, printable PDF and accessible navigation.');
    }catch(e){
      failures.push(label+': '+e.message);
      console.error('FAIL '+label,e);
