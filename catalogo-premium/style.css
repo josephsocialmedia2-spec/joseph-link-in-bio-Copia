@@ -285,3 +285,6 @@
  .catalog-valuation-button{font-size:9pt!important}
  .request-section,.request-choice{display:none!important}
 }
+
+/* Selected client flyer is printed from the filtered flipbook, never from the all-listings PDF. */
+.reader-tools .pdf-download[hidden]{display:none!important}
