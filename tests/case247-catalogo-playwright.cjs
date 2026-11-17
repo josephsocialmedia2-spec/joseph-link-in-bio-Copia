@@ -100,8 +100,22 @@ fs.mkdirSync(out,{recursive:true});
    assert.match(await selectedPage.locator('[data-share="print"]').innerText(),/PDF della selezione/);
    await selectedPage.locator('#nextPage').click();
    assert.ok(new URL(await selectedPage.url()).searchParams.get('immobili')?.includes(officialIds[0]));
+   if(!isMobile){
+     await selectedPage.emulateMedia({media:'print'});
+     const pickedPdf=await selectedPage.pdf({printBackground:true,preferCSSPageSize:true,timeout:120000});
+     const selectedPages=pickedPdf.toString('latin1').split('/Type /Page').length-1;
+     assert.equal(selectedPages,4,'Filtered customer print must include cover + two proposal pages + valuation');
+   }
    await selectedPage.close();
    await page.screenshot({path:path.join(out,label+'-richiesta-materiale.png'),fullPage:true});
+   if(!isMobile){
+     await page.emulateMedia({media:'print'});
+     const pdf=await page.pdf({printBackground:true,preferCSSPageSize:true,timeout:120000});
+     const pages=pdf.toString('latin1').split('/Type /Page').length-1;
+     assert.equal(pages,17,'Full customer print must include 17 A4 pages, not just the cover');
+     await page.emulateMedia({media:'screen'});
+   }
+
 
    assert.equal(errors.length,0,'Browser errors: '+errors.join(' | '));
    // CSS does not allow horizontal scrolling at normal viewport.
