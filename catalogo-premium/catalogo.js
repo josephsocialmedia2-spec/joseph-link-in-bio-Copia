@@ -149,7 +149,9 @@ async function load(){
     // Archived/draft are not in this source. Do not infer energy certification from marketing descriptions.
     if(selectionInvalid)throw Error('Selezione immobili non valida. Richiedi un nuovo link all’agenzia.');
     listings=data.items.filter(p=>p&&hostOK(p.url)&&p.availability_status==='AVAILABLE'&&(!wantedIds||wantedIds.has(String(p.id))))
-      .sort((a,b)=>(a.municipality||'ZZZ').localeCompare(b.municipality||'ZZZ','it')||a.title.localeCompare(b.title,'it'));
+      .sort((a,b)=>wantedIds?
+        [...wantedIds].indexOf(String(a.id))-[...wantedIds].indexOf(String(b.id)):
+        (a.municipality||'ZZZ').localeCompare(b.municipality||'ZZZ','it')||a.title.localeCompare(b.title,'it'));
     if(wantedIds&&!listings.length)throw Error('Il link non contiene immobili ancora presenti nel catalogo ufficiale.');
     if(wantedIds){
       // A pre-generated PDF always contains the full archive. For a restricted,
@@ -159,13 +161,7 @@ async function load(){
       const printButton=document.querySelector('[data-share="print"]');
       if(printButton)printButton.textContent='Scarica PDF della selezione';
     }
-    const firstPhoto=listings.find(p=>p.image&&p.id);
-    if(firstPhoto){
-      const photo='./photos/'+encodeURIComponent(String(firstPhoto.id))+'.jpg';
-      for(const node of document.querySelectorAll('.catalog-cover-photo,.catalog-end-scene')){
-        node.style.backgroundImage='linear-gradient(115deg,rgba(5,40,79,.25),rgba(4,61,97,.18)),url("'+photo+'")';
-      }
-    }
+    // Cover uses one fixed, existing image from the La Sacra photo archive.
     addSheets(listings);
   }catch(error){
     const frame=document.querySelector('.reader-frame');
