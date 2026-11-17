@@ -538,8 +538,10 @@
       'Fronte incompleto: carica A5 SINISTRA e A5 DESTRA. Non verrà generata una pagina fronte con un solo A5.';
   }
   function initPublicFlyerShare(){
-    const url=new URL('./volantino-digitale/',global.location.href).href;
-    const message='Buongiorno, ti invio il volantino digitale aggiornato di Immobiliare La Sacra per la Valle di Susa.\n\nPuoi consultarlo qui: '+url+'\n\nSe desideri informazioni per vendere o cercare casa, rispondi a questo messaggio.';
+    // The client-facing catalogue with actual property proposals lives at the repo root.
+    // Do not substitute the general-purpose brochure in ./volantino-digitale/.
+    const url=new URL('../../catalogo-premium/',global.location.href).href;
+    const message='Buongiorno, come concordato ti invio il catalogo digitale aggiornato di Immobiliare La Sacra con le proposte immobiliari nella Valle di Susa e nel Torinese.\n\nSfoglia le proposte qui: '+url+'\n\nPrezzi e disponibilità sono da confermare con l’agenzia. Se vuoi informazioni su un immobile, rispondi a questo messaggio.';
     $('publicFlyerOpen').href=url;
     $('publicFlyerLink').value=url;
     $('publicFlyerWhatsApp').href='https://wa.me/?text='+encodeURIComponent(message);
