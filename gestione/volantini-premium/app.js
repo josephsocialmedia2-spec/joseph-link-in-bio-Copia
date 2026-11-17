@@ -78,7 +78,7 @@
   }
   const NEARBY=[["avigliana"],["buttigliera alta","sant ambrogio di torino","villar dora","almese"],["caprie","rubiana","caselette","rosta","chiusa di san michele","vaie"],["rivoli","valgioie","sant antonino di susa","condove"]];
   const fold=s=>String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase("it").replace(/[^a-z0-9]+/g," ").trim();
-  const propertyEligible=x=>Core.canonicalUrl(x?.url)&&x.availability_status==="AVAILABLE"&&x.location_status==="VERIFICATO_FONTE"&&x.municipality&&x.image&&!/attivit|azienda|negozio|bar|tabacchi|ristorante|locale commerciale|magazzino|terreno|capannone|autorimessa/i.test(String(x.title||"")+" "+String(x.category||""));
+  const propertyEligible=x=>global.LaSacraRules?.isEligible(x)===true;
   const priority=x=>{const name=fold(x.municipality);const i=NEARBY.findIndex(group=>group.includes(name));return i<0?99:i;};
   const eligibleListings=items=>{
     const eligible=items.filter(propertyEligible),groups=new Map();
@@ -541,28 +541,40 @@
   // used by Studio Premium. The URL carries only product IDs, never private data.
   function clientCatalogueUrl(){
     const url=new URL('../../catalogo-premium/',global.location.href);
-    if(!Array.isArray(catalog))return {url:url.href,count:0};
+    const chosen=model.properties.filter(x=>x?.url);
+    if(!Array.isArray(catalog))return {url:'',count:0,ignored:chosen.length,ready:false};
     const selectedIds=[];
-    for(const picked of model.properties){
-      if(!picked?.url)continue;
+    for(const picked of chosen){
       const matched=catalog.find(item=>Core.canonicalUrl(item.url)===Core.canonicalUrl(picked.url));
       if(!matched||!propertyEligible(matched)||!(/^\d{10,20}$/.test(String(matched.id))))continue;
       if(!selectedIds.includes(String(matched.id)))selectedIds.push(String(matched.id));
       if(selectedIds.length>=18)break;
     }
+    if(chosen.length&&!selectedIds.length)return {url:'',count:0,ignored:chosen.length,ready:true};
     if(selectedIds.length)url.searchParams.set('immobili',selectedIds.join(','));
-    return {url:url.href,count:selectedIds.length};
+    return {url:url.href,count:selectedIds.length,ignored:chosen.length-selectedIds.length,ready:true};
   }
   function refreshClientCatalogueShare(){
     const state=clientCatalogueUrl(),url=state.url;
-    const message='Buongiorno, come concordato ti invio il catalogo immobiliare sfogliabile di Immobiliare La Sacra con fotografie, prezzi e schede ufficiali.\n\nApri il catalogo: '+url+'\n\nOgni pagina contiene fino a quattro immobili. Puoi anche stamparlo o salvarlo in PDF. Prezzi e disponibilità sono da confermare con l’agenzia.';
-    $('publicFlyerOpen').href=url;
+    const message='Buongiorno, come concordato ti invio il catalogo immobiliare residenziale sfogliabile di Immobiliare La Sacra.\n\nApri il catalogo: '+url+'\n\nQuattro immobili per pagina, fotografie grandi e link alle schede ufficiali. Puoi stamparlo o salvarlo in PDF. Prezzi e disponibilità sono da confermare con l’agenzia.';
+    const disabled=!url;
+    $('publicFlyerOpen').toggleAttribute('aria-disabled',disabled);
+    $('publicFlyerWhatsApp').toggleAttribute('aria-disabled',disabled);
+    $('publicFlyerCopy').disabled=disabled;
+    if(disabled){
+      $('publicFlyerOpen').removeAttribute('href');
+      $('publicFlyerWhatsApp').removeAttribute('href');
+    }else{
+      $('publicFlyerOpen').href=url;
+      $('publicFlyerWhatsApp').href='https://wa.me/?text='+encodeURIComponent(message);
+    }
     $('publicFlyerLink').value=url;
-    $('publicFlyerWhatsApp').href='https://wa.me/?text='+encodeURIComponent(message);
-    $('publicFlyerStatus').textContent=state.count?
-      'Catalogo unico con '+state.count+' annunci selezionati dagli URL del catalogo ufficiale. Il cliente vede solo questi e può stamparli in PDF.':
-      'Catalogo unico con gli annunci attuali del sito ufficiale. Importa gli URL per ottenere un link limitato alla selezione.';
-    return message;
+    $('publicFlyerStatus').textContent=!state.ready?
+      'Caricamento degli annunci ufficiali. Non inviare il link prima della verifica.':
+      disabled?'Gli URL selezionati non contengono immobili residenziali idonei. Correggi la selezione: non verrà inviato il catalogo completo per errore.':
+      state.count?'Catalogo con '+state.count+' immobili residenziali selezionati. '+(state.ignored?'Esclusi '+state.ignored+' URL fuori categoria, territorio o senza dati verificati.':'Tutti gli URL selezionati risultano ammessi.'):
+      'Catalogo pubblico di soli immobili residenziali nei comuni ammessi. Importa URL ufficiali per una selezione limitata.';
+    return disabled?'':message;
   }
   function initPublicFlyerShare(){
     refreshClientCatalogueShare();

@@ -101,7 +101,11 @@ test('Public client flyer offers a WhatsApp message and never exposes unverified
   }
   assert.ok(app.includes("new URL('../../catalogo-premium/',global.location.href)"));
   assert.ok(html.includes('href="../../catalogo-premium/"'));
-  assert.ok(app.includes('catalogo immobiliare sfogliabile'));
+  assert.ok(app.includes('catalogo immobiliare residenziale sfogliabile'));
+  assert.ok(html.includes('property-rules.js'));
+  assert.ok(app.includes('LaSacraRules?.isEligible'));
+  assert.ok(app.includes('chosen.length&&!selectedIds.length'));
+
   assert.ok(app.includes("url.searchParams.set('immobili',selectedIds.join(','))"));
   assert.ok(app.includes("Core.canonicalUrl(item.url)===Core.canonicalUrl(picked.url)"));
   assert.ok(html.includes('id="generateAll" class="primary" type="button" hidden'));

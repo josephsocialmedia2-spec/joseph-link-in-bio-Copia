@@ -3,44 +3,65 @@
  * Solo schede di export espressamente convalidate possono apparire al cliente. */
 (()=>{
 'use strict';
+const Rules=window.LaSacraRules;
+if(!Rules)throw Error('Regole di selezione immobili non caricate.');
 let pageNodes=[...document.querySelectorAll('.page')];
 let pageNames=['Copertina','Valutazione gratuita'];
 // The one client URL can optionally carry a conservative allowlist of product IDs
 // selected from existing official URLs in Studio Volantini Premium.
 const publicUrl=new URL(location.href);
 publicUrl.hash='';
-for(const key of [...publicUrl.searchParams.keys()])if(key!=='immobili')publicUrl.searchParams.delete(key);
+for(const key of [...publicUrl.searchParams.keys()])if(!['immobili','solo_verificati'].includes(key))publicUrl.searchParams.delete(key);
 const rootUrl=publicUrl.href;
 const rawIds=publicUrl.searchParams.get('immobili');
 const wantedIds=rawIds&&/^\d{10,20}(,\d{10,20}){0,17}$/.test(rawIds)?
   new Set(rawIds.split(',')):null;
 const selectionInvalid=Boolean(rawIds&&!wantedIds);
+const onlyVerified=publicUrl.searchParams.get('solo_verificati')==='1';
 let selected=0;
 const $=id=>document.getElementById(id);
 const toast=message=>{const node=$('toast');node.textContent=message;node.classList.add('show');setTimeout(()=>node.classList.remove('show'),3200)};
-const dots=$('pageDots');
+const select=$('pageSelect');
 function showPage(index,updateUrl=true){
   selected=Math.max(0,Math.min(pageNodes.length-1,index));
   for(let i=0;i<pageNodes.length;i++){
     pageNodes[i].hidden=i!==selected;
     pageNodes[i].classList.toggle('active',i===selected);
   }
-  $('pageCounter').textContent=(selected+1)+' / '+pageNodes.length;
-  $('pageLabel').textContent=pageNames[selected];
+  $('pageCounter').textContent='Pagina '+(selected+1)+' di '+pageNodes.length;
+  $('pageLabel').textContent=pageNames[selected]||'Pagina';
+  select.value=String(selected);
   $('prevPage').disabled=selected===0;
   $('nextPage').disabled=selected===pageNodes.length-1;
-  for(const [i,b] of [...dots.children].entries()){b.classList.toggle('active',i===selected);b.setAttribute('aria-current',i===selected?'page':'false');}
   if(updateUrl)history.replaceState(null,'',rootUrl+'#pagina-'+(selected+1));
 }
 function resetDots(){
-  dots.replaceChildren();
-  pageNodes.forEach((_,i)=>{const b=document.createElement('button');b.type='button';b.title=pageNames[i];b.setAttribute('aria-label','Vai a '+pageNames[i]);b.onclick=()=>showPage(i);dots.append(b)});
+  select.replaceChildren();
+  pageNodes.forEach((_,i)=>{
+    const option=document.createElement('option');
+    option.value=String(i);
+    option.textContent=(i+1)+' · '+(pageNames[i]||'Pagina');
+    select.append(option);
+  });
 }
 resetDots();
+select.addEventListener('change',()=>showPage(Number(select.value)));
 $('prevPage').onclick=()=>showPage(selected-1);
 $('nextPage').onclick=()=>showPage(selected+1);
-const match=location.hash.match(/^#pagina-(\d+)$/);showPage(match?Number(match[1])-1:0,false);
-addEventListener('hashchange',()=>{const m=location.hash.match(/^#pagina-(\d+)$/);if(m)showPage(Number(m[1])-1,false)});
+const match=location.hash.match(/^#pagina-(\d+)$/);
+showPage(match?Number(match[1])-1:0,false);
+addEventListener('hashchange',()=>{
+  const m=location.hash.match(/^#pagina-(\d+)$/);
+  if(m)showPage(Number(m[1])-1,false);
+});
+$('verifiedOnly').checked=onlyVerified;
+$('verifiedOnly').addEventListener('change',()=>{
+  const url=new URL(location.href);
+  if($('verifiedOnly').checked)url.searchParams.set('solo_verificati','1');
+  else url.searchParams.delete('solo_verificati');
+  url.hash='';
+  location.assign(url.href);
+});
 document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey||['INPUT','SELECT','TEXTAREA'].includes(document.activeElement?.tagName))return;
   if(e.key==='ArrowRight'){e.preventDefault();showPage(selected+1)}
   if(e.key==='ArrowLeft'){e.preventDefault();showPage(selected-1)}
@@ -78,16 +99,18 @@ const formatPrice=value=>Number(value)>0?new Intl.NumberFormat('it-IT',{style:'c
 const escText=x=>typeof x==='string'?x.trim():'';
 function cell(tag,className,value){const el=document.createElement(tag);el.className=className;if(value!==undefined)el.textContent=String(value);return el}
 function card(p,compact=false){
-  const a=cell('article',compact?'property-card sheet-card':'property-card');
-  const original=escText(p.image),photo=cell('div','property-photo');
+  const data=Rules.displayData(p);
+  const article=cell('article',compact?'property-card sheet-card':'property-card');
+  article.setAttribute('data-property-id',String(p.id));
+  const photo=cell('div','property-photo');
+  const original=escText(p.image);
   if(original){
     const image=document.createElement('img');
-    image.alt='Fotografia immobile: '+p.title;
+    image.alt='Fotografia: '+data.title+' a '+data.locality;
     image.loading=compact?'eager':'lazy';
     image.decoding='async';
     image.referrerPolicy='no-referrer';
     image.onerror=()=>{
-      // Local thumbnails are preferred. If not yet published, try the official Shopify original once.
       if(image.dataset.source==='local'){
         image.dataset.source='shopify';
         image.src=original;
@@ -102,20 +125,27 @@ function card(p,compact=false){
     photo.append(image);
   }else{
     photo.classList.add('photo-unavailable');
-    photo.append(cell('span','photo-fallback','Fotografia da inserire'));
+    photo.append(cell('span','photo-fallback','Fotografia non disponibile'));
   }
-  a.append(photo);
   const body=cell('div','content');
-  const locality=p.municipality||'Località da confermare';
-  body.append(cell('span','location',locality),cell('h3','',p.title),cell('strong','price',formatPrice(p.price)));
+  const main=cell('div','property-main');
+  const heading=cell('div','property-heading');
+  heading.append(cell('span','location',data.locality));
+  heading.append(cell('strong','price',formatPrice(p.price)));
+  main.append(heading,cell('h3','property-title',data.title));
   const facts=cell('div','property-features');
-  if(Number(p.surface)>0)facts.append(cell('span','property-feature',p.surface+' m²'));
-  if(Number(p.rooms)>0)facts.append(cell('span','property-feature',p.rooms+' locali'));
-  if(p.contract)facts.append(cell('span','property-feature',p.contract));
-  if(facts.childElementCount)body.append(facts);
-  body.append(cell('p','energy','Prestazione energetica: dato non riportato nella fonte catalogo'));
-  const link=cell('a','','Apri scheda ufficiale ↗');link.href=p.url;link.target='_blank';link.rel='noopener noreferrer';body.append(link);
-  a.append(body);return a;
+  const values=[data.surface,data.rooms,data.type,...data.features];
+  for(const value of values)facts.append(cell('span','property-feature',value));
+  main.append(facts);
+  main.append(cell('span',data.apeVerified?'ape-badge verified':'ape-badge',data.ape));
+  const link=cell('a','property-link','Apri scheda ufficiale ↗');
+  link.href=p.url;
+  link.target='_blank';
+  link.rel='noopener noreferrer';
+  link.setAttribute('aria-label','Apri scheda ufficiale: '+data.title+' a '+data.locality);
+  body.append(main,link);
+  article.append(photo,body);
+  return article;
 }
 function addSheets(items){
   const frame=document.querySelector('.reader-frame');
@@ -153,24 +183,30 @@ async function load(){
     if(!Array.isArray(data.items))throw Error('Formato catalogo non valido');
     // Archived/draft are not in this source. Do not infer energy certification from marketing descriptions.
     if(selectionInvalid)throw Error('Selezione immobili non valida. Richiedi un nuovo link all’agenzia.');
-    listings=data.items.filter(p=>p&&hostOK(p.url)&&p.availability_status==='AVAILABLE'&&(!wantedIds||wantedIds.has(String(p.id))))
-      .sort((a,b)=>wantedIds?
-        [...wantedIds].indexOf(String(a.id))-[...wantedIds].indexOf(String(b.id)):
-        (a.municipality||'ZZZ').localeCompare(b.municipality||'ZZZ','it')||a.title.localeCompare(b.title,'it'));
-    if(wantedIds&&!listings.length)throw Error('Il link non contiene immobili ancora presenti nel catalogo ufficiale.');
-    if(wantedIds){
-      // A pre-generated PDF always contains the full archive. For a restricted,
-      // user-selected flyer print exactly the visible set with native print-to-PDF.
+    listings=Rules.filterListings(data.items,{
+      ids:wantedIds?[...wantedIds]:null,
+      onlyVerified
+    });
+    // Public feed eligibility is editorial, not proof of the APE or legal availability.
+    // The professional checks the original URL before accepting an appointment.
+    const message=listings.length?
+      listings.length+' proposte residenziali nei comuni ammessi · quattro immobili per pagina.':
+      onlyVerified?'Nessun annuncio con APE documentato e verificato in questo momento.':
+      wantedIds?'La selezione non contiene annunci residenziali idonei e localizzati nei comuni ammessi.':
+      'Nessun annuncio residenziale idoneo disponibile nel territorio selezionato.';
+    $('catalogStatus').textContent=message;
+    if(wantedIds||onlyVerified){
+      // Never expose the whole archive PDF for a filtered client selection.
       const fullPdf=document.querySelector('.pdf-download');
       if(fullPdf)fullPdf.hidden=true;
       const printButton=document.querySelector('[data-share="print"]');
-      if(printButton)printButton.textContent='Scarica PDF della selezione';
+      if(printButton)printButton.textContent='Stampa / Salva PDF di questa selezione';
     }
-    // Cover uses one fixed, existing image from the La Sacra photo archive.
     addSheets(listings);
   }catch(error){
     const frame=document.querySelector('.reader-frame');
     frame.setAttribute('data-catalog-error',error.message);
+    $('catalogStatus').textContent='Caricamento non riuscito: '+error.message;
     toast('Impossibile caricare le proposte. Consulta il sito ufficiale.');
     console.error(error);
   }

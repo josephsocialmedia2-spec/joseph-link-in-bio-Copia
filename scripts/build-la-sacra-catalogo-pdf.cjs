@@ -3,6 +3,7 @@ const {chromium}=require('playwright');
 const sharp=require('sharp');
 const fs=require('node:fs');
 const path=require('node:path');
+const Rules=require('../catalogo-premium/property-rules.js');
 (async()=>{
  const browser=await chromium.launch({headless:true});
  try{
@@ -21,8 +22,21 @@ const path=require('node:path');
    const response=await page.goto(url,{waitUntil:'domcontentloaded',timeout:30000});
    if(response.status()!==200)throw Error('Catalogo non raggiungibile');
    await page.waitForFunction(()=>document.querySelectorAll('.page-listing-sheet').length>=1,{timeout:30000});
-   const inventory=await page.evaluate(()=>({sheets:document.querySelectorAll('.page-listing-sheet').length,cards:document.querySelectorAll('.sheet-card').length,pages:document.querySelectorAll('.page').length}));
-   if(inventory.cards!==58||inventory.sheets!==15||inventory.pages!==17)throw Error('Inventario o impaginazione 4-per-pagina incompleti '+JSON.stringify(inventory));
+   const source=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../immobili/catalogo.json'),'utf8'));
+   const expected=Rules.filterListings(source.items);
+   const expectedSheets=Math.ceil(expected.length/4),expectedPages=expectedSheets+2;
+   if(!expected.length)throw Error('Nessun immobile residenziale idoneo: non generare un PDF vuoto.');
+   const inventory=await page.evaluate(()=>({
+     sheets:document.querySelectorAll('.page-listing-sheet').length,
+     cards:document.querySelectorAll('.sheet-card').length,
+     pages:document.querySelectorAll('.page').length,
+     links:[...document.querySelectorAll('.sheet-card .property-link')].map(a=>a.href),
+     statuses:[...document.querySelectorAll('.sheet-card .ape-badge')].map(el=>el.textContent)
+   }));
+   if(inventory.cards!==expected.length||inventory.sheets!==expectedSheets||inventory.pages!==expectedPages)
+     throw Error('Inventario filtrato o impaginazione 2×2 incompleti '+JSON.stringify({expected:expected.length,expectedSheets,expectedPages,observed:inventory}));
+   if(inventory.links.some((url,i)=>url!==expected[i].url)||inventory.statuses.some(s=>s.includes('Prestazione energetica: dato non riportato')))
+     throw Error('Contenuto annunci o URL incoerenti con la selezione valida.');
    await page.emulateMedia({media:'print'});
    await page.evaluate(async()=>{
      await document.fonts.ready;
@@ -49,7 +63,7 @@ const path=require('node:path');
    // Detect silently clipped Chromium output BEFORE pushing the PDF to main.
    const pdfData=fs.readFileSync(dest).toString('latin1');
    const pageCount=(pdfData.match(/\/Type\s*\/Page\b/g)||[]).length;
-   if(pageCount!==inventory.pages)throw Error('PDF incompleto: '+pageCount+' pagine anziché '+inventory.pages+'. Pubblicazione bloccata.');
+   if(pageCount!==expectedPages)throw Error('PDF incompleto: '+pageCount+' pagine anziché '+expectedPages+'. Pubblicazione bloccata.');
    console.log('PDF multipagina generato',inventory,size,'immagini ottimizzate',compressed);
    if(size>25000000)throw Error('PDF troppo pesante per invio clienti: '+size+' bytes');
  }finally{await browser.close()}
