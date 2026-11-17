@@ -225,3 +225,6 @@ button.primary{background:linear-gradient(150deg,#008ccf,#07589f);border-color:#
 .public-flyer-action:hover{filter:brightness(.92)}
 .public-flyer-panel #publicFlyerStatus{margin-top:7px;margin-bottom:0}
 @media(max-width:670px){.public-flyer-panel{padding:14px}.public-flyer-actions .public-flyer-action{flex:1 1 100%}}
+
+/* Un unico catalogo cliente: le vecchie varianti triple restano disattivate nella UI. */
+#staffPicker[hidden],#generateAll[hidden],#templatePicker[hidden],.staff-photo-inputs[hidden]{display:none!important}
