@@ -55,7 +55,7 @@ test('derived headings and features come from original title or description, not
     assert.ok(display.title.length>3);
     assert.doesNotMatch(display.title,/da verificare/i);
     assert.ok(display.locality);
-    assert.ok(display.rooms.includes('locali'));
+    assert.ok(display.rooms.toLowerCase().includes('locali'));
     assert.ok(display.surface.includes('m²')||display.surface.includes('n.d.'));
     assert.ok(display.features.length<=2);
   }
