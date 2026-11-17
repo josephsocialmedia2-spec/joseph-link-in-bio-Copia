@@ -19,7 +19,7 @@
 <script defer src="./portrait-default.js"></script>
 <script defer src="https://accounts.google.com/gsi/client"></script>
 <script defer src="./drive-publisher.js?v=20261117-link-cliente"></script>
-<script defer src="./app.js?v=20261117-link-cliente-digital"></script>
+<script defer src="./app.js?v=20261117-share-proposte"></script>
 </head>
 <body>
 <header class="workspace-head no-print">
@@ -64,17 +64,17 @@
     <button type="button" id="clearOuter">Rimuovi entrambi gli A5</button>
   </aside>
   <main class="panel preview-panel">
-    <section class="public-flyer-panel no-print" aria-label="Link pubblico e invio del volantino digitale">
-      <h2>Volantino digitale · pronto da condividere</h2>
-      <p>Per l'invio immediato ai clienti usa il <strong>volantino informativo pubblico</strong>, con fronte (due A5), retro, contatti e messaggio WhatsApp precompilato. Il <strong>PDF Premium con 18 immobili</strong> resta separato e si pubblica solo dopo la verifica completa dei dati.</p>
+    <section class="public-flyer-panel no-print" aria-label="Catalogo delle proposte immobiliari: link pubblico e invio">
+      <h2>Proposte immobiliari La Sacra · catalogo cliente</h2>
+      <p>Questo è il <strong>catalogo sfogliabile realizzato il 16 novembre</strong>: annunci, fotografie, prezzi indicativi, filtri per comune e collegamenti alle schede ufficiali. Condividi <strong>questo link</strong> con chi ha richiesto le proposte, non la brochure informativa. Il <strong>PDF Premium fronte/retro con 18 QR</strong> è un documento separato, soggetto alle verifiche complete prima della pubblicazione.</p>
       <div class="public-flyer-actions">
-        <a id="publicFlyerOpen" class="public-flyer-action" target="_blank" rel="noopener noreferrer" href="./volantino-digitale/">Apri il volantino del cliente</a>
-        <a id="publicFlyerWhatsApp" class="public-flyer-action dark" target="_blank" rel="noopener noreferrer" href="https://wa.me/">Invia su WhatsApp</a>
+        <a id="publicFlyerOpen" class="public-flyer-action" target="_blank" rel="noopener noreferrer" href="../../catalogo-premium/">Apri le proposte immobiliari</a>
+        <a id="publicFlyerWhatsApp" class="public-flyer-action dark" target="_blank" rel="noopener noreferrer" href="https://wa.me/">Invia proposte su WhatsApp</a>
         <button id="publicFlyerCopy" type="button" class="public-flyer-action pale">Copia messaggio e link</button>
       </div>
-      <label for="publicFlyerLink">Link diretto, pubblico e non modificabile dal cliente</label>
+      <label for="publicFlyerLink">Link pubblico del catalogo con le proposte immobiliari</label>
       <input id="publicFlyerLink" type="url" readonly>
-      <p id="publicFlyerStatus" class="hint" role="status">Il volantino informativo non contiene prezzi o schede immobiliari non validati.</p>
+      <p id="publicFlyerStatus" class="hint" role="status">Le proposte derivano dal catalogo La Sacra. Confermare prezzo, disponibilità e dati energetici prima di considerare definitiva una singola scheda.</p>
     </section>
     <nav class="flyer-side-nav no-print" aria-label="Seleziona la facciata del volantino">
       <a href="#fronte-volantino" class="flyer-side-link">01 · FRONTE <small>Facciata esterna</small></a>
