@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>Studio Volantini · Joseph, Christian, Ylenia</title>
-<link rel="stylesheet" href="./styles.css?v=20261117-link-cliente">
+<link rel="stylesheet" href="./styles.css?v=20261117-link-cliente-digital">
 <!-- Librerie client-side, versioni fissate: installare copie locali per produzione offline. -->
 <script defer src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -19,7 +19,7 @@
 <script defer src="./portrait-default.js"></script>
 <script defer src="https://accounts.google.com/gsi/client"></script>
 <script defer src="./drive-publisher.js?v=20261117-link-cliente"></script>
-<script defer src="./app.js?v=20261117-link-cliente"></script>
+<script defer src="./app.js?v=20261117-link-cliente-digital"></script>
 </head>
 <body>
 <header class="workspace-head no-print">
@@ -64,6 +64,18 @@
     <button type="button" id="clearOuter">Rimuovi entrambi gli A5</button>
   </aside>
   <main class="panel preview-panel">
+    <section class="public-flyer-panel no-print" aria-label="Link pubblico e invio del volantino digitale">
+      <h2>Volantino digitale · pronto da condividere</h2>
+      <p>Per l'invio immediato ai clienti usa il <strong>volantino informativo pubblico</strong>, con fronte (due A5), retro, contatti e messaggio WhatsApp precompilato. Il <strong>PDF Premium con 18 immobili</strong> resta separato e si pubblica solo dopo la verifica completa dei dati.</p>
+      <div class="public-flyer-actions">
+        <a id="publicFlyerOpen" class="public-flyer-action" target="_blank" rel="noopener noreferrer" href="./volantino-digitale/">Apri il volantino del cliente</a>
+        <a id="publicFlyerWhatsApp" class="public-flyer-action dark" target="_blank" rel="noopener noreferrer" href="https://wa.me/">Invia su WhatsApp</a>
+        <button id="publicFlyerCopy" type="button" class="public-flyer-action pale">Copia messaggio e link</button>
+      </div>
+      <label for="publicFlyerLink">Link diretto, pubblico e non modificabile dal cliente</label>
+      <input id="publicFlyerLink" type="url" readonly>
+      <p id="publicFlyerStatus" class="hint" role="status">Il volantino informativo non contiene prezzi o schede immobiliari non validati.</p>
+    </section>
     <nav class="flyer-side-nav no-print" aria-label="Seleziona la facciata del volantino">
       <a href="#fronte-volantino" class="flyer-side-link">01 · FRONTE <small>Facciata esterna</small></a>
       <a href="#retro-volantino" class="flyer-side-link">02 · RETRO <small>18 immobili + QR</small></a>
