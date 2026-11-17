@@ -271,6 +271,22 @@ def package(rows,day):
         z.writestr("RIEPILOGO.json",json.dumps(summary,ensure_ascii=False,indent=2))
     return o.getvalue(),summary
 
+def night_window(now):
+    """Return (batch_date, closing_time) for a Rome-local 23:00–03:55 window.
+
+    The batch belongs to the evening on which the window opened, even after
+    midnight. A delayed scheduled event outside the window remains a no-op.
+    """
+    if now.hour == 23:
+        batch_day = now.date()
+        closing = dt.datetime.combine(batch_day + dt.timedelta(days=1), dt.time(3,55), ROME)
+        return batch_day, closing
+    if now.hour < 3 or (now.hour == 3 and now.minute < 55):
+        batch_day = now.date() - dt.timedelta(days=1)
+        closing = dt.datetime.combine(now.date(), dt.time(3,55), ROME)
+        return batch_day, closing
+    return None, None
+
 def main(argv=None):
     p=argparse.ArgumentParser()
     p.add_argument("--guard-rome",action="store_true");p.add_argument("--dry-run",action="store_true")
@@ -278,10 +294,19 @@ def main(argv=None):
     p.add_argument("--out",default="artifacts/la-sacra-nightly");p.add_argument("--public-key",default="config/la-sacra-census-public.pem")
     p.add_argument("--max-rows",type=int,default=280);args=p.parse_args(argv)
     if not 1<=args.max_rows<=280:p.error("max-rows deve essere 1..280")
-    now=dt.datetime.now(ROME);day=now.date()
-    if args.guard_rome and now.hour!=23 and not args.fixture:
-        print("SKIP non sono le 23 a Roma",now.isoformat());return 0
-    deadline=time.monotonic()+max(0,min(4*3600+50*60,(dt.datetime.combine(day+dt.timedelta(days=1),dt.time(3,55),ROME)-now).total_seconds()))
+    now=dt.datetime.now(ROME)
+    window_day, closing = night_window(now)
+    if args.guard_rome and not args.fixture:
+        if window_day is None:
+            print("SKIP fuori finestra 23:00-03:55 Europe/Rome",now.isoformat(),flush=True)
+            return 0
+        if (closing-now).total_seconds() < 900:
+            print("SKIP meno di 15 minuti prima della chiusura",now.isoformat(),flush=True)
+            return 0
+    day=window_day if args.guard_rome and window_day is not None else now.date()
+    if closing is None:
+        closing=dt.datetime.combine(day+dt.timedelta(days=1),dt.time(3,55),ROME)
+    deadline=time.monotonic()+max(0,min(4*3600+50*60,(closing-now).total_seconds()))
     statepath=Path(args.state)
     state=json.loads(statepath.read_text(encoding="utf-8")) if statepath.exists() else {"seen":[],"batches":[]}
     if any(x.get("date")==str(day) for x in state["batches"]) and not args.fixture:
