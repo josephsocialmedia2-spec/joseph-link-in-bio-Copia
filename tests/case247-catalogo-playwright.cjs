@@ -84,6 +84,23 @@ fs.mkdirSync(out,{recursive:true});
    assert.equal(await page.locator('a[href$="privacy-richiesta.html"]').count()>0,true);
    const imgs=await page.locator('.sheet-card .property-photo img').count();
    assert.equal(imgs,54);
+   // Studio-selected URL parameters must produce ONE scoped flyer and a matching print-to-PDF action.
+   const officialIds=await page.evaluate(async()=>{
+     const r=await fetch('../immobili/catalogo.json');
+     const data=await r.json();
+     return data.items.filter(p=>p.availability_status==='AVAILABLE'&&/^https:\/\/lasacraimmobiliare.it\/products\//.test(p.url)).slice(0,5).map(p=>String(p.id));
+   });
+   assert.equal(officialIds.length,5);
+   const selectedPage=await context.newPage();
+   await selectedPage.goto(base+'?immobili='+officialIds.join(','),{waitUntil:'load',timeout:30000});
+   await selectedPage.waitForFunction(()=>document.querySelectorAll('.page-listing-sheet').length===2,{timeout:20000});
+   assert.equal(await selectedPage.locator('.page').count(),4);
+   assert.equal(await selectedPage.locator('.sheet-card').count(),5);
+   assert.equal(await selectedPage.locator('.pdf-download').isVisible(),false);
+   assert.match(await selectedPage.locator('[data-share="print"]').innerText(),/PDF della selezione/);
+   await selectedPage.locator('#nextPage').click();
+   assert.ok(new URL(await selectedPage.url()).searchParams.get('immobili')?.includes(officialIds[0]));
+   await selectedPage.close();
    await page.screenshot({path:path.join(out,label+'-richiesta-materiale.png'),fullPage:true});
 
    assert.equal(errors.length,0,'Browser errors: '+errors.join(' | '));
