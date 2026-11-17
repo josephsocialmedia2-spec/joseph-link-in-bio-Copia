@@ -21,9 +21,10 @@ const path=require('node:path');
    const response=await page.goto(url,{waitUntil:'domcontentloaded',timeout:30000});
    if(response.status()!==200)throw Error('Catalogo non raggiungibile');
    await page.waitForFunction(()=>document.querySelectorAll('.page-listing-sheet').length>=1,{timeout:30000});
-   const inventory=await page.evaluate(()=>({sheets:document.querySelectorAll('.page-listing-sheet').length,cards:document.querySelectorAll('.sheet-card').length}));
-   if(inventory.cards!==58||inventory.sheets!==10)throw Error('Inventario incompleto '+JSON.stringify(inventory));
+   const inventory=await page.evaluate(()=>({sheets:document.querySelectorAll('.page-listing-sheet').length,cards:document.querySelectorAll('.sheet-card').length,pages:document.querySelectorAll('.page').length}));
+   if(inventory.cards!==58||inventory.sheets!==15||inventory.pages!==17)throw Error('Inventario o impaginazione 4-per-pagina incompleti '+JSON.stringify(inventory));
    await page.emulateMedia({media:'print'});
+   await page.evaluate(()=>document.fonts.ready);
    await page.evaluate(()=>document.querySelectorAll('.sheet-card img').forEach(img=>img.loading='eager'));
    // Le immagini esterne possono richiedere più tempo: attende fino a 20 s senza bloccare la generazione.
    await page.evaluate(()=>Promise.race([
