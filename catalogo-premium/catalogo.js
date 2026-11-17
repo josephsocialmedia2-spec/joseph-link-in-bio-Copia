@@ -4,7 +4,7 @@
 (()=>{
 'use strict';
 let pageNodes=[...document.querySelectorAll('.page')];
-let pageNames=['Copertina','Il nostro metodo','Indice immobili','Il territorio','Contatti'];
+let pageNames=['Copertina','Il nostro metodo','Indice immobili','Altre proposte','Contatti'];
 const rootUrl=new URL('./',location.href).href.split('#')[0].split('?')[0];
 let selected=0;
 const $=id=>document.getElementById(id);
@@ -115,11 +115,22 @@ function renderListings(){
   }
   $('listingCount').textContent=listings.length+' ANNUNCI IN ARCHIVIO';
 }
+function renderMoreProperties(){
+  const container=$('morePropertyResults');
+  container.replaceChildren();
+  // Reuse original, publicly linked proposals only. Never fabricate a property or its APE.
+  const more=listings.filter(p=>hostOK(p.url)&&p.availability_status==='AVAILABLE').slice(0,3);
+  if(!more.length){
+    container.append(cell('p','results-note','Nessun annuncio disponibile in questo momento. Consulta il sito ufficiale dell’agenzia.'));
+    return;
+  }
+  for(const property of more)container.append(card(property));
+}
 function addSheets(items){
   const frame=document.querySelector('.reader-frame');
   for(const old of frame.querySelectorAll('.page-listing-sheet'))old.remove();
   // Insert six properties per page, before the territory page.
-  const before=frame.querySelector('.page-territory');
+  const before=frame.querySelector('.page-more-properties');
   const pageSize=6;
   for(let offset=0;offset<items.length;offset+=pageSize){
     const sheet=cell('article','page page-listing-sheet');sheet.hidden=true;
@@ -138,7 +149,7 @@ function addSheets(items){
     sheet.append(content);frame.insertBefore(sheet,before);
   }
   pageNodes=[...document.querySelectorAll('.page')];
-  pageNames=['Copertina','Il nostro metodo','Indice immobili',...Array.from({length:Math.ceil(items.length/pageSize)},(_,i)=>'Immobili '+(i*pageSize+1)+'–'+Math.min((i+1)*pageSize,items.length)),'Il territorio','Contatti'];
+  pageNames=['Copertina','Il nostro metodo','Indice immobili',...Array.from({length:Math.ceil(items.length/pageSize)},(_,i)=>'Immobili '+(i*pageSize+1)+'–'+Math.min((i+1)*pageSize,items.length)),'Altre proposte','Contatti'];
   pageNodes.forEach((p,i)=>{p.dataset.page=String(i)});
   resetDots();
   showPage(selected,false);
@@ -157,6 +168,7 @@ async function load(){
       const opt=document.createElement('option');opt.value=name;opt.textContent=name;city.append(opt);
     }
     renderListings();
+    renderMoreProperties();
     addSheets(listings);
   }catch(error){
     const container=$('propertyResults');container.replaceChildren();
@@ -166,42 +178,59 @@ async function load(){
   }
 }
 
+const requestToggle=$('requestMoreToggle');
+const requestSection=$('richiesta-materiale');
+requestToggle.addEventListener('change',()=>{
+  requestSection.hidden=!requestToggle.checked;
+  if(requestToggle.checked){
+    requestSection.scrollIntoView({behavior:'smooth',block:'start'});
+  }else{
+    $('requestFeedback').textContent='';
+  }
+});
 const requestFields={
-  name:$('reqName'),material:$('reqMaterial'),business:$('reqBusiness'),city:$('reqCity'),email:$('reqEmail'),phone:$('reqPhone'),
-  message:$('reqMessage'),privacy:$('reqPrivacySeen'),feedback:$('requestFeedback')
+  name:$('reqName'),material:$('reqMaterial'),type:$('reqType'),city:$('reqCity'),
+  budget:$('reqBudget'),email:$('reqEmail'),phone:$('reqPhone'),message:$('reqMessage'),
+  privacy:$('reqPrivacySeen'),offersConsent:$('reqMoreOffersConsent'),feedback:$('requestFeedback')
 };
 function requestMessage(channel){
- const f=requestFields;
- const name=f.name.value.trim(), email=f.email.value.trim(),phone=f.phone.value.trim();
- f.feedback.textContent='';
- if(name.length<2){f.feedback.textContent='Inserisci nome e cognome.';f.name.focus();return null}
- if(channel==='email'&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-   f.feedback.textContent='Inserisci un indirizzo email valido per la risposta.';f.email.focus();return null
- }
- if(channel==='whatsapp'&&phone&&!/^\+?[0-9 ()-]{8,25}$/.test(phone)){
-   f.feedback.textContent='Controlla il numero di cellulare oppure lascia il campo vuoto.';f.phone.focus();return null
- }
- if(!f.privacy.checked){f.feedback.textContent='Leggi l’informativa e conferma di averne preso visione.';f.privacy.focus();return null}
- return 'RICHIESTA VOLONTARIA DI MATERIALE INFORMATIVO - IMMOBILIARE LA SACRA'+
-  '\nReferente: Malafronte Joseph, 371 370 8294'+
-  '\nNome: '+name+'\nMateriale richiesto: '+f.material.value+
-  (f.business.value.trim()?'\nAttività / ragione sociale: '+f.business.value.trim().slice(0,130):'')+
-  (f.city.value.trim()?'\nComune: '+f.city.value.trim().slice(0,90):'')+
-  (email?'\nEmail per risposta: '+email:'')+(phone?'\nCellulare per risposta: '+phone:'')+
-  (f.message.value.trim()?'\nNote: '+f.message.value.trim():'')+
-  '\n\nHo preso visione dell’informativa sulla richiesta di materiale (catalogo-premium/privacy-richiesta.html).'+
-  '\nQuesta è una richiesta puntuale e NON un consenso a marketing periodico.';
+  const f=requestFields;
+  const name=f.name.value.trim(), email=f.email.value.trim(),phone=f.phone.value.trim();
+  f.feedback.textContent='';
+  if(!requestToggle.checked){f.feedback.textContent='Seleziona prima la casella per richiedere altre proposte immobiliari.';return null}
+  if(name.length<2){f.feedback.textContent='Inserisci nome e cognome.';f.name.focus();return null}
+  if(channel==='email'&&!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)){
+    f.feedback.textContent='Inserisci un indirizzo email valido per la risposta.';f.email.focus();return null
+  }
+  if(channel==='whatsapp'&&phone&&!/^\\+?[0-9 ()-]{8,25}$/.test(phone)){
+    f.feedback.textContent='Controlla il numero di cellulare oppure lascia il campo vuoto.';f.phone.focus();return null
+  }
+  if(!f.privacy.checked){f.feedback.textContent='Leggi l’informativa privacy e conferma di averne preso visione.';f.privacy.focus();return null}
+  const future=f.offersConsent.checked?
+    'SÌ, chiedo di essere ricontattato in futuro per altre proposte immobiliari pertinenti (consenso facoltativo da verificare e registrare a cura dell’agenzia).':
+    'NO, non autorizzo comunicazioni periodiche o ulteriori proposte non richieste.';
+  return 'RICHIESTA DI ALTRE PROPOSTE IMMOBILIARI - IMMOBILIARE LA SACRA'+
+    '\nReferente: Malafronte Joseph, 371 370 8294'+
+    '\nNome: '+name+'\nTipo di richiesta: '+f.material.value+
+    '\nTipologia di immobile: '+f.type.value+
+    '\nZona di interesse: '+(f.city.value.trim()||'Da definire')+
+    '\nBudget massimo: '+f.budget.value+
+    (email?'\nEmail per risposta: '+email:'')+(phone?'\nCellulare per risposta: '+phone:'')+
+    (f.message.value.trim()?'\nUlteriori preferenze: '+f.message.value.trim():'')+
+    '\n\\nConsenso per comunicazioni future: '+future+
+    '\nHo letto l’informativa privacy relativa alla richiesta immobiliare (catalogo-premium/privacy-richiesta.html).'+
+    '\nIl presente messaggio non costituisce registrazione automatica a un servizio di invio.';
 }
 $('requestByWhatsApp').addEventListener('click',()=>{
   const msg=requestMessage('whatsapp');if(!msg)return;
   const url='https://wa.me/393713708294?text='+encodeURIComponent(msg);
-  $('requestFeedback').textContent='Si apre WhatsApp. Premi Invia nella conversazione con Joseph per trasmettere davvero la richiesta.';
+  $('requestFeedback').textContent='WhatsApp aperto con la richiesta: per trasmetterla premi Invia. Nessun invio automatico.';
   window.open(url,'_blank','noopener,noreferrer');
 });
 $('requestByEmail').addEventListener('click',()=>{
   const msg=requestMessage('email');if(!msg)return;
-  const href='mailto:immobiliarelasacra@gmail.com?subject='+encodeURIComponent('Richiesta materiale La Sacra — c.a. Malafronte Joseph')+'&body='+encodeURIComponent(msg);
-  $('requestFeedback').textContent='Si apre il programma email. Per completare la richiesta premi Invia nel messaggio preparato.';
+  const href='mailto:immobiliarelasacra@gmail.com?subject='+encodeURIComponent('Richiesta altre proposte immobiliari — La Sacra')+'&body='+encodeURIComponent(msg);
+  $('requestFeedback').textContent='Email predisposta: per trasmetterla premi Invia nel programma di posta.';
   window.location.href=href;
 });
 $('cityFilter').addEventListener('change',renderListings);
