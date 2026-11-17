@@ -101,7 +101,12 @@ test('Public client flyer offers a WhatsApp message and never exposes unverified
   }
   assert.ok(app.includes("new URL('../../catalogo-premium/',global.location.href)"));
   assert.ok(html.includes('href="../../catalogo-premium/"'));
-  assert.ok(app.includes('con le proposte immobiliari'));
+  assert.ok(app.includes('catalogo immobiliare sfogliabile'));
+  assert.ok(app.includes("url.searchParams.set('immobili',selectedIds.join(','))"));
+  assert.ok(app.includes("Core.canonicalUrl(item.url)===Core.canonicalUrl(picked.url)"));
+  assert.ok(html.includes('id="generateAll" class="primary" type="button" hidden'));
+  assert.ok(html.includes('id="staffPicker" class="staff-picker" hidden'));
+  assert.match(read('gestione/volantini-premium/styles.css'),/#generateAll\\[hidden\\]/);
   assert.ok(!app.includes("new URL('./volantino-digitale/',global.location.href)"));
   assert.ok(app.includes('https://wa.me/?text='));
   for(const id of ['shareWhatsapp','copyMessage','flyerUrl','printFlyer','officialLogo']){
