@@ -116,7 +116,7 @@ main{width:100%;margin:0}
 .notice{font-size:8pt}
 }
 </style>
-<script defer src="../branding-logo.js"></script>
+<script src="../branding-logo.js"></script>
 </head>
 <body>
 <header class="topbar">
@@ -183,7 +183,7 @@ main{width:100%;margin:0}
 (function(){
 'use strict';
 var url=location.origin+location.pathname;
-var message='Buongiorno, ti invio il volantino digitale aggiornato di Immobiliare La Sacra per la Valle di Susa.\\n\\nPuoi consultarlo qui: '+url+'\\n\\nSe desideri informazioni per vendere o cercare casa, rispondi a questo messaggio.';
+var message='Buongiorno, ti invio il volantino digitale aggiornato di Immobiliare La Sacra per la Valle di Susa.\n\nPuoi consultarlo qui: '+url+'\n\nSe desideri informazioni per vendere o cercare casa, rispondi a questo messaggio.';
 var $=function(id){return document.getElementById(id);};
 $('flyerUrl').value=url;
 $('shareWhatsapp').href='https://wa.me/?text='+encodeURIComponent(message);
