@@ -539,10 +539,29 @@
   }
   // A single client catalogue is derived from the same official URL catalogue
   // used by Studio Premium. The URL carries only product IDs, never private data.
+  function setupCatalogueFilters(){
+    if(!Array.isArray(catalog)||!global.LaSacraRules?.facets)return;
+    const facets=global.LaSacraRules.facets(catalog);
+    for(const [id,values] of [
+      ['publicCategoryFilter',facets.categories],
+      ['publicTownFilter',facets.municipalities],
+      ['publicStatusFilter',facets.statuses]
+    ]){
+      const node=$(id);
+      if(node.dataset.loaded==='yes')continue;
+      const previous=node.value;
+      for(const label of values){
+        const option=document.createElement('option');
+        option.value=label;option.textContent=label;node.append(option);
+      }
+      node.value=previous;node.dataset.loaded='yes';
+    }
+  }
   function clientCatalogueUrl(){
     const url=new URL('../../catalogo-premium/',global.location.href);
     const chosen=model.properties.filter(x=>x?.url);
     if(!Array.isArray(catalog))return {url:'',count:0,ignored:chosen.length,ready:false};
+    setupCatalogueFilters();
     const selectedIds=[];
     for(const picked of chosen){
       const matched=catalog.find(item=>Core.canonicalUrl(item.url)===Core.canonicalUrl(picked.url));
@@ -552,11 +571,23 @@
     }
     if(chosen.length&&!selectedIds.length)return {url:'',count:0,ignored:chosen.length,ready:true};
     if(selectedIds.length)url.searchParams.set('immobili',selectedIds.join(','));
-    return {url:url.href,count:selectedIds.length,ignored:chosen.length-selectedIds.length,ready:true};
+    const filters={
+      category:$('publicCategoryFilter').value,
+      municipality:$('publicTownFilter').value,
+      status:$('publicStatusFilter').value
+    };
+    if(filters.category)url.searchParams.set('categoria',filters.category);
+    if(filters.municipality)url.searchParams.set('comune',filters.municipality);
+    if(filters.status)url.searchParams.set('stato',filters.status);
+    const shown=global.LaSacraRules.filterListings(catalog,{
+      ids:selectedIds.length?selectedIds:null,...filters
+    }).length;
+    if(!shown)return {url:'',count:0,ignored:chosen.length,ready:true};
+    return {url:url.href,count:shown,ignored:chosen.length-selectedIds.length,ready:true};
   }
   function refreshClientCatalogueShare(){
     const state=clientCatalogueUrl(),url=state.url;
-    const message='Buongiorno, come concordato ti invio il catalogo immobiliare residenziale sfogliabile di Immobiliare La Sacra.\n\nApri il catalogo: '+url+'\n\nQuattro immobili per pagina, fotografie grandi e link alle schede ufficiali. Puoi stamparlo o salvarlo in PDF. Prezzi e disponibilità sono da confermare con l’agenzia.';
+    const message='Buongiorno, come concordato ti invio il catalogo sfogliabile di Immobiliare La Sacra con le proposte immobiliari selezionate.\n\nApri il catalogo: '+url+'\n\nQuattro immobili per pagina, fotografie, metadati e link ufficiali. Puoi stampare o salvare il catalogo in PDF. Disponibilità e informazioni da confermare con l’agenzia.';
     const disabled=!url;
     $('publicFlyerOpen').toggleAttribute('aria-disabled',disabled);
     $('publicFlyerWhatsApp').toggleAttribute('aria-disabled',disabled);
@@ -570,13 +601,17 @@
     }
     $('publicFlyerLink').value=url;
     $('publicFlyerStatus').textContent=!state.ready?
-      'Caricamento degli annunci ufficiali. Non inviare il link prima della verifica.':
-      disabled?'Gli URL selezionati non contengono immobili residenziali idonei. Correggi la selezione: non verrà inviato il catalogo completo per errore.':
-      state.count?'Catalogo con '+state.count+' immobili residenziali selezionati. '+(state.ignored?'Esclusi '+state.ignored+' URL fuori categoria, territorio o senza dati verificati.':'Tutti gli URL selezionati risultano ammessi.'):
-      'Catalogo pubblico di soli immobili residenziali nei comuni ammessi. Importa URL ufficiali per una selezione limitata.';
+      'Caricamento degli annunci ufficiali: il link sarà disponibile dopo la lettura del feed.':
+      disabled?'Nessun annuncio corrisponde alla selezione attuale: modifica URL o filtri. Il link completo non sarà inviato per errore.':
+      'Catalogo con '+state.count+' proposte ricavate dalle URL ufficiali.'+
+      (state.ignored?' '+state.ignored+' URL non trovati nel feed ufficiale.':'')+
+      ' Stato e dati incompleti rimangono visibili come riportati dalla fonte.';
     return disabled?'':message;
   }
   function initPublicFlyerShare(){
+    for(const id of ['publicCategoryFilter','publicTownFilter','publicStatusFilter']){
+      $(id).addEventListener('change',refreshClientCatalogueShare);
+    }
     refreshClientCatalogueShare();
     $('publicFlyerCopy').onclick=async()=>{
       const message=refreshClientCatalogueShare();
