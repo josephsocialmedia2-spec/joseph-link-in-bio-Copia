@@ -84,9 +84,9 @@ test('isolation regression: existing calendar code unchanged in this feature', (
   const html = fs.readFileSync(path.join(__dirname,'../gestione/index.html'),'utf8');
   const script = fs.readFileSync(path.join(__dirname,'../gestione/agenda50.js'),'utf8');
   assert.match(html, /saas-shell\.js\?v=20261118-reorder1/);
-  assert.match(html, /agenda50\.js\?v=20261118-liveclock1/);
-  assert.match(html, /agenda50\.css\?v=20261118-liveclock1/);
-  assert.ok(html.indexOf('saas-shell.js?v=20261118-reorder1') < html.indexOf('agenda50.js?v=20261118-liveclock1'));
+  assert.match(html, /agenda50\.js\?v=20261118-sleep2230/);
+  assert.match(html, /agenda50\.css\?v=20261118-sleep2230/);
+  assert.ok(html.indexOf('saas-shell.js?v=20261118-reorder1') < html.indexOf('agenda50.js?v=20261118-sleep2230'));
   assert.match(script, /calendar\.insertBefore\(section, filters\)/);
   assert.doesNotMatch(script, /cc-week['"]?\)\.innerHTML|cc-week['"]?\)\.replaceChildren/);
   assert.match(script, /window\.confirm\(/);
