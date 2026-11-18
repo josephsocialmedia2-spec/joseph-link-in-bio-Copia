@@ -91,7 +91,7 @@ function nav(){const groups=[
  ['SOCIAL E AUTOMAZIONI',[['Regia territoriale',BASE+'gestione/regia-territoriale/'],['Canali',BASE+'gestione/canali-case247/'],['Metricool','https://app.metricool.com/'],['Meta Business Suite','https://business.facebook.com/latest/home']]],
  ['VOLANTINI',[['Studio volantini',BASE+'gestione/volantini-premium/'],['Archivio e invii',BASE+'gestione/email-volantini/']]],
  ['INFRASTRUTTURA',[['Google Drive','https://drive.google.com/drive/u/0/my-drive'],['Supabase','https://supabase.com/dashboard/projects'],['Tutte le pagine',BASE+'gestione/tutte-le-pagine/'],['GitHub',GITHUB]]]
- ];const n=$('#cc-nav');groups.forEach((g,i)=>{const d=el('details','cc-navgroup');d.open=i<3;const s=el('summary','',g[0]);d.append(s);g[1].forEach(a=>{const l=el('a','',a[0]);l.href=a[1];if(!a[1].startsWith('#')){l.target='_blank';l.rel='noopener noreferrer'}else l.addEventListener('click',()=>{$('#cc-nav').classList.remove('cc-open');$('#cc-menu-toggle').setAttribute('aria-expanded','false')});d.append(l)});n.append(d)});}
+ ];const n=$('#cc-nav');groups.forEach((g,i)=>{const d=el('details','cc-navgroup');d.open=true;const s=el('summary','',g[0]);d.append(s);g[1].forEach(a=>{const l=el('a','',a[0]);l.href=a[1];if(!a[1].startsWith('#')){l.target='_blank';l.rel='noopener noreferrer'}else l.addEventListener('click',()=>{$('#cc-nav').classList.remove('cc-open');$('#cc-menu-toggle').setAttribute('aria-expanded','false')});d.append(l)});n.append(d)});}
 function saveTasks(){store(TASKKEY,tasks);renderAll()}
 function timeM(t){const m=/^(\d{2}):(\d{2})$/.exec(t||'');return m?Number(m[1])*60+Number(m[2]):0}
 function conflict(t){return !isSunday(t.date)&&fromISO(t.date).getUTCDay()!==6&&timeM(t.time)<750&&timeM(t.time)+Number(t.duration)>570}
