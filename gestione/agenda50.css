@@ -54,3 +54,29 @@
 #case247-control-center #case247-agenda50 .a50-feedback{font-size:11px;color:var(--a50-muted);margin:6px 0 0;min-height:1em}
 @media(max-width:950px){#case247-agenda50 .a50-grid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){#case247-agenda50 *{transition:none!important;animation:none!important}}
+
+
+/* Agenda inserita sotto #cc-week: il viewport rimane fisso, si scorre SOLO dentro la scheda. */
+#saas-app[data-view="agenda"] #case247-control-center #cc-calendar{
+  overflow-x:hidden!important;overflow-y:auto!important;scrollbar-width:thin;
+}
+#saas-app[data-view="agenda"] #case247-control-center #cc-calendar #cc-week{
+  flex:0 0 auto!important;height:clamp(410px,61vh,630px)!important;
+  min-height:410px!important;overflow:hidden!important;
+}
+#saas-app[data-view="agenda"] #case247-control-center #cc-calendar #case247-agenda50{
+  flex:0 0 auto;margin:11px 0 8px;min-width:0;
+}
+#saas-app[data-view="agenda"] #case247-control-center #cc-calendar .cc-filters{
+  flex:0 0 auto;margin-top:8px;
+}
+@media(max-width:950px){
+  #saas-app[data-view="agenda"] #case247-control-center #cc-calendar #cc-week{
+    height:clamp(300px,56vh,520px)!important;min-height:300px!important;
+  }
+}
+@media(max-width:620px){
+  #saas-app[data-view="agenda"] #case247-control-center #cc-calendar #cc-week{
+    height:clamp(345px,58vh,540px)!important;min-height:345px!important;
+  }
+}
