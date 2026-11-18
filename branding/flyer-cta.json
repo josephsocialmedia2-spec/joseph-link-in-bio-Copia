@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "brand": "CASE IN PUBBLICITÀ 24/7",
+  "enabled": false,
+  "reason": "PRIVACY_NOTICE_DRAFT_AND_INTAKE_DISABLED",
+  "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/campagne/case247/volantino/",
+  "drive_file_id": "10njebDKvOjL2QmGfx9zaTNawdqPEABVO",
+  "facebook_cta": "Scarica il volantino immobiliare aggiornato: compila nome, cognome e telefono nel modulo. Link:",
+  "instagram_cta": "Volantino immobiliare aggiornato: richiesta con nome, cognome e telefono. Link nel profilo oppure copia questo indirizzo:",
+  "require_approved_privacy_notice": true,
+  "download_after_successful_registration": true,
+  "notes": "La pagina accetta invii solo dopo approvazione privacy, verifica antispam e backend funzionante; non abilitare CTA prima del test end-to-end."
+}
