@@ -98,6 +98,19 @@ async function main(){
  await evalJS("document.querySelector('[data-saas-view=agenda]').click();true");
  assert.equal(await evalJS("document.querySelector('#saas-app').dataset.view"),'agenda');
  console.log('PASS: six-day mobile grid and tab switching without document scroll');
+ await evalJS("document.querySelector('.saas-reorder-toggle').click();true");
+ await evalJS("document.querySelector('[data-saas-key=archivio] .saas-move-left').click();true");
+ assert.equal(await evalJS("document.querySelectorAll('.saas-tab-unit')[4].dataset.saasKey"),'archivio');
+ assert.equal(await evalJS("JSON.parse(localStorage.getItem('case247-saas-tab-order-v1'))[4]"),'archivio');
+ await command('Page.reload',{ignoreCache:true});
+ await until("document.querySelector('#saas-app')?.dataset.view==='agenda'",'SaaS tabs after reload');
+ assert.equal(await evalJS("document.querySelectorAll('.saas-tab-unit')[4].dataset.saasKey"),'archivio');
+ await evalJS("document.querySelector('[data-saas-view=acquisizione]').click();true");
+ assert.equal(await evalJS("Boolean(document.querySelector('.saas-workbook-action')&&document.querySelector('.saas-workbook-config'))"),true);
+ await evalJS("document.querySelector('.saas-workbook-config').click();true");
+ assert.equal(await evalJS("document.querySelector('#cc-crm-dialog').open"),true);
+ await evalJS("document.querySelector('#cc-crm-cancel').click();true");
+ console.log('PASS: tab order persists after reload and CRM workbook configuration opens');
  await command('Emulation.clearDeviceMetricsOverride');
 }
 main().catch(e=>{console.error('FAIL:',e.stack||String(e));process.exitCode=1})
