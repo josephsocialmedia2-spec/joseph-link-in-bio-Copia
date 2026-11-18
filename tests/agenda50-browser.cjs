@@ -74,7 +74,7 @@ async function smoke(){
   assert.equal(await evalJS("document.querySelectorAll('#cc-week .cc-day').length"),6);
   assert.equal(await evalJS("document.querySelectorAll('#cc-week .cc-slot.cc-fixed').length"),5);
   assert.equal(await evalJS("document.querySelectorAll('#case247-agenda50').length"),1);
-  assert.equal(await evalJS("document.querySelector('#case247-agenda50').nextElementSibling.id"),'cc-crm');
+  assert.equal(await evalJS("document.querySelector('#case247-agenda50').previousElementSibling.id"),'cc-calendar');
   console.log('PASS: original layout, 6 days, 5 acquisition slots, new panel isolated');
 
   await evalJS("document.querySelector('[data-saas-view=\"operativo\"]').click();true");
