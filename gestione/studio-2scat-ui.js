@@ -3,7 +3,7 @@
 'use strict';
 const S=window.CASE247Studio;if(!S)return;
 const KEY='case247-cc-school-2scat-v1',TIMEKEY='case247-cc-school-reminder-time-v1';
-let root,ctx,state,week,pending=null,source='',toggleForm;
+let root,ctx,state,week,pending=null,source='',toggleForm,dayFilter='all',subjectFilter='all',openedNote=null;
 const $=s=>root.querySelector(s);
 const read=(key,def)=>{try{const v=JSON.parse(localStorage.getItem(key));return v===null?def:v}catch(_){return def}};
 const save=(key,v)=>{try{localStorage.setItem(key,JSON.stringify(v));return true}catch(_){ctx.notify('Memoria locale non disponibile; esporta un backup');return false}};
@@ -14,30 +14,36 @@ const getLessons=key=>state.weeks[S.monday(key)]?.rows||[];
 const subjects=()=>[...new Set(Object.values(state.weeks).flatMap(a=>a.rows||[]).map(x=>x.subject))].sort((a,b)=>a.localeCompare(b,'it'));
 function setup(){
 const html=`<section id="cc-studio" class="cc-card cc-section" aria-label="STUDIO CLASSE 2S CAT">
- <div class="cc-head"><div><h2>STUDIO — CLASSE 2S CAT</h2><p>Orario, verifiche, interrogazioni e ripasso in un'unica agenda.</p></div></div>
- <div id="cc-school-reminder" class="cc-school-reminder cc-hidden" role="status"><b>È domenica. Carica il PDF dell'orario scolastico 2S CAT della prossima settimana per aggiornare la tua agenda.</b><div class="cc-actions"><button type="button" id="cc-reminder-upload">CARICA ORARIO PDF</button><button type="button" id="cc-reminder-view">VISUALIZZA ORARIO ATTUALE</button></div></div>
+ <div class="cc-head cc-study-header"><div class="cc-study-heading"><h2>STUDIO — CLASSE 2S CAT</h2><span id="cc-school-badge" class="cc-study-badge">16–20 nov · 13 lezioni</span></div></div>
+ <div id="cc-school-reminder" class="cc-school-reminder cc-hidden" role="status"><b>È domenica: puoi aggiornare l'orario 2S CAT.</b><div class="cc-actions"><button type="button" id="cc-reminder-upload">CARICA ORARIO PDF</button><button type="button" id="cc-reminder-view">VISUALIZZA ORARIO ATTUALE</button></div></div>
  <div class="cc-school-controls">
- <label>Settimana dal lunedì<input type="date" id="cc-school-week"></label>
- <label>Avviso nella dashboard domenica alle<input type="time" id="cc-school-time" value="09:00"></label>
- <button type="button" id="cc-school-upload">CARICA ORARIO PDF</button>
- <button type="button" id="cc-school-reference">Anteprima 16–20 novembre</button>
- <button type="button" id="cc-school-manual">Inserisci righe manualmente</button>
- <input type="file" id="cc-school-file" class="cc-hidden" accept=".pdf,.png,.jpg,.jpeg,application/pdf,image/png,image/jpeg">
+  <label>Settimana:<input type="date" id="cc-school-week"></label>
+  <label>Avviso dom: <input type="time" id="cc-school-time" value="09:00"></label>
+  <button type="button" id="cc-school-upload">Carica PDF</button>
+  <button type="button" id="cc-school-manual">+ Lezione</button>
+  <button type="button" id="cc-school-verify-all">Verifica tutte</button>
+  <button type="button" id="cc-school-reference" title="Apri l'anteprima di riferimento senza sovrascrivere le lezioni salvate">Rif. 16–20 nov</button>
+  <input type="file" id="cc-school-file" class="cc-hidden" accept=".pdf,.png,.jpg,.jpeg,application/pdf,image/png,image/jpeg">
  </div>
- <div class="cc-notice" id="cc-school-status" role="status" aria-live="polite"></div>
+ <div id="cc-study-filter-days" class="cc-study-pills" role="group" aria-label="Filtra le lezioni per giorno"></div>
+ <div id="cc-study-filter-subjects" class="cc-study-pills cc-study-subjects" role="group" aria-label="Filtra le lezioni per materia"></div>
+ <div class="cc-notice cc-study-status" id="cc-school-status" role="status" aria-live="polite"></div>
  <div id="cc-school-lessons"></div>
- <div id="cc-school-preview" class="cc-hidden"><h3>Anteprima — verifica e correggi prima di confermare</h3><p id="cc-school-source"></p>
- <div class="cc-school-table-wrap"><table class="cc-school-table"><thead><tr><th>Data</th><th>Dalle</th><th>Alle</th><th>Materia</th><th>Annotazioni</th><th>Stato riconoscimento</th><th></th></tr></thead><tbody id="cc-school-draft"></tbody></table></div>
- <div class="cc-actions"><button type="button" id="cc-school-addrow">+ Riga</button><button class="cc-primary" type="button" id="cc-school-confirm">CONFERMA E INSERISCI NELL'AGENDA</button><button type="button" id="cc-school-cancel">Annulla</button></div></div>
- <div class="cc-school-panel"><h3>Prossime verifiche e interrogazioni</h3><div id="cc-school-exams"></div></div>
- <div class="cc-school-panel"><h3>Conflitti con il lavoro</h3><div id="cc-school-overlap"></div></div>
- <div class="cc-actions"><button type="button" id="cc-school-export">Esporta orario scuola JSON</button><button type="button" id="cc-school-import">Importa orario scuola JSON</button><input id="cc-school-json" type="file" class="cc-hidden" accept=".json,application/json"></div>
- <p class="cc-sub">I file PDF vengono analizzati nel browser; per i PDF scansionati è disponibile OCR. La settimana seguente va caricata separatamente. La notifica ChatGPT esterna rimane alle 09:00; qui puoi cambiare solo l'avviso della dashboard. Nessun documento viene pubblicato su GitHub.</p>
+ <div id="cc-school-preview" class="cc-hidden"><h3>Anteprima · controlla le lezioni prima di confermare</h3><p id="cc-school-source"></p>
+  <div class="cc-school-table-wrap"><table class="cc-school-table"><thead><tr><th>Data</th><th>Dalle</th><th>Alle</th><th>Materia</th><th>Stato riconoscimento</th><th></th></tr></thead><tbody id="cc-school-draft"></tbody></table></div>
+  <div class="cc-actions"><button type="button" id="cc-school-addrow">+ Riga</button><button class="cc-primary" type="button" id="cc-school-confirm">CONFERMA E INSERISCI NELL'AGENDA</button><button type="button" id="cc-school-cancel">Annulla</button></div>
+ </div>
+ <details class="cc-study-extra"><summary>Verifiche, interrogazioni e conflitti</summary>
+  <div class="cc-school-panel"><h3>Prossime verifiche e interrogazioni</h3><div id="cc-school-exams"></div></div>
+  <div class="cc-school-panel"><h3>Conflitti con il lavoro</h3><div id="cc-school-overlap"></div></div>
+ </details>
+ <div class="cc-actions cc-study-backup"><button type="button" id="cc-school-export">Esporta orario scuola JSON</button><button type="button" id="cc-school-import">Importa orario scuola JSON</button><input id="cc-school-json" type="file" class="cc-hidden" accept=".json,application/json"></div>
+ <p class="cc-sub cc-study-privacy">PDF e dati della scuola restano nel browser. Nessun caricamento sul repository pubblico.</p>
  </section>`;
 root.querySelector('#cc-calendar').insertAdjacentHTML('afterend',html);
 $('#cc-school-week').value=week;
 $('#cc-school-time').value=read(TIMEKEY,'09:00');
-$('#cc-school-week').onchange=e=>{if(e.target.value){week=S.monday(e.target.value);e.target.value=week;pending=null;render()}};
+$('#cc-school-week').onchange=e=>{if(e.target.value){week=S.monday(e.target.value);e.target.value=week;pending=null;dayFilter='all';subjectFilter='all';openedNote=null;render()}};
 $('#cc-school-time').onchange=e=>{save(TIMEKEY,e.target.value||'09:00');render()};
 $('#cc-school-upload').onclick=()=>$('#cc-school-file').click();
 $('#cc-reminder-upload').onclick=()=>{week=S.monday(S.plusDays(S.localParts().date,1));$('#cc-school-week').value=week;$('#cc-school-file').click()};
@@ -45,6 +51,7 @@ $('#cc-reminder-view').onclick=()=>{week=S.monday(S.localParts().date);render();
 $('#cc-school-file').onchange=upload;
 $('#cc-school-reference').onclick=()=>{week='2026-11-16';pending=S.reference(week);source='Riferimento testuale fornito dall’utente, da verificare con il PDF';renderDraft();render()};
 $('#cc-school-manual').onclick=()=>{pending=getLessons(week).map(r=>({...r}));source='Inserimento manuale';pending.push(empty());renderDraft()};
+$('#cc-school-verify-all').onclick=verifyAll;
 $('#cc-school-addrow').onclick=()=>{pending.push(empty());renderDraft()};
 $('#cc-school-cancel').onclick=()=>{pending=null;renderDraft()};
 $('#cc-school-confirm').onclick=confirmDraft;
@@ -60,7 +67,7 @@ $('#cc-school-source').textContent=source+' · L’orario non viene modificato p
 const tbody=$('#cc-school-draft');tbody.replaceChildren();
 pending.forEach((r,i)=>{
  const tr=node('tr');
- [['date','date'],['start','time'],['end','time'],['subject','text'],['notes','text']].forEach(([key,type])=>{
+ [['date','date'],['start','time'],['end','time'],['subject','text']].forEach(([key,type])=>{
   const td=node('td'),input=node('input');input.type=type;input.value=r[key]||'';input.maxLength=key==='notes'?260:85;input.setAttribute('aria-label',key+' riga '+(i+1));input.oninput=()=>pending[i][key]=input.value;td.append(input);tr.append(td);
  });
  const td=node('td'),sel=node('select');[['confermato','Confermato'],['da verificare','Da verificare']].forEach(([val,label])=>{const o=node('option',label);o.value=val;sel.append(o)});sel.value=r.confidence||'da verificare';sel.onchange=()=>pending[i].confidence=sel.value;td.append(sel);tr.append(td);
@@ -95,19 +102,174 @@ function confirmDraft(){
  pending=null;renderDraft();ctx.renderAll();
  ctx.notify('Orario 2S CAT confermato per la settimana del '+fmt(week));
 }
+
+const REVIEW_STATES=[
+ {id:'pending',label:'Da verificare'},
+ {id:'verified',label:'Verificata ✓'},
+ {id:'reviewed',label:'Ripasso OK'}
+];
+const reviewKey=r=>S.lessonKey(r);
+function ensureStudyMeta(){
+ if(!state.lessonReview||typeof state.lessonReview!=='object'||Array.isArray(state.lessonReview))state.lessonReview={};
+ if(!state.lessonNotes||typeof state.lessonNotes!=='object'||Array.isArray(state.lessonNotes))state.lessonNotes={};
+}
+function reviewState(r){
+ ensureStudyMeta();
+ const id=state.lessonReview[reviewKey(r)];
+ return REVIEW_STATES.some(s=>s.id===id)?id:'pending';
+}
+function selectRows(rows){
+ return rows.filter(r=>(dayFilter==='all'||r.date===dayFilter)&&
+  (subjectFilter==='all'||S.normalize(r.subject)===S.normalize(subjectFilter)));
+}
+function renderFilters(){
+ const days=$('#cc-study-filter-days');
+ const subjectsBar=$('#cc-study-filter-subjects');
+ days.replaceChildren();subjectsBar.replaceChildren();
+ function pill(label,selected,callback){
+  const b=button(label,callback);
+  b.className='cc-study-pill';
+  b.setAttribute('aria-pressed',String(selected));
+  return b;
+ }
+ days.append(pill('Tutti',dayFilter==='all',()=>{dayFilter='all';render()}));
+ ['Lun','Mar','Mer','Gio','Ven'].forEach((label,i)=>{
+  const date=S.plusDays(week,i);
+  days.append(pill(label+' '+Number(date.slice(-2)),dayFilter===date,()=>{dayFilter=date;render()}));
+ });
+ subjectsBar.append(pill('Tutte le materie',subjectFilter==='all',()=>{subjectFilter='all';render()}));
+ S.SUBJECTS.forEach(subject=>subjectsBar.append(
+  pill(subject,subjectFilter===subject,()=>{subjectFilter=subject;render()})
+ ));
+}
+function prepareReference(){
+ week='2026-11-16';$('#cc-school-week').value=week;
+ pending=S.reference(week);
+ source='Riferimento 16–20 novembre (nessuna modifica prima della conferma)';
+ renderDraft();render();
+}
+function verifyAll(){
+ const rows=getLessons(week);
+ if(!rows.length){if(week==='2026-11-16'){prepareReference();ctx.notify('Prima conferma le 13 lezioni di riferimento; nessuna lezione è stata salvata automaticamente.')}
+  else ctx.notify('Nessuna lezione confermata da verificare.');
+  return;
+ }
+ if(!window.confirm('Segnare come Verificata ✓ tutte le '+rows.length+' lezioni di questa settimana? Le date e gli orari non cambieranno.'))return;
+ ensureStudyMeta();
+ rows.forEach(r=>{state.lessonReview[reviewKey(r)]='verified'});
+ if(save(KEY,state)){render();ctx.notify(rows.length+' lezioni segnate Verificate.')}
+}
+function changeReview(r,referenceOnly){
+ if(referenceOnly){prepareReference();ctx.notify('Conferma il riferimento prima di modificare lo stato delle lezioni.');return}
+ ensureStudyMeta();
+ const current=REVIEW_STATES.findIndex(s=>s.id===reviewState(r));
+ state.lessonReview[reviewKey(r)]=REVIEW_STATES[(current+1)%REVIEW_STATES.length].id;
+ if(save(KEY,state))render();
+}
+function deleteLesson(r,referenceOnly){
+ if(referenceOnly){prepareReference();ctx.notify('Modifica il riferimento in anteprima, poi conferma il nuovo orario.');return}
+ const item=state.weeks[week],key=reviewKey(r);
+ if(!item||!Array.isArray(item.rows))return;
+ if(!window.confirm('Eliminare solo '+r.subject+' del '+fmt(r.date)+' '+r.start+'–'+r.end+'? Le altre lezioni e attività rimarranno intatte.'))return;
+ item.rows=item.rows.filter(x=>reviewKey(x)!==key);
+ ensureStudyMeta();delete state.lessonReview[key];delete state.lessonNotes[key];
+ item.updatedAt=new Date().toISOString();
+ if(save(KEY,state)){openedNote=null;ctx.renderAll();}
+}
+function noteEditor(r,referenceOnly){
+ const tr=node('tr',undefined,'cc-study-editor-row'),td=node('td');
+ td.colSpan=5;
+ const form=node('form',undefined,'cc-study-inline-editor');
+ const type=node('select');
+ [['NOTA','Nota'],['SCUOLA VERIFICA','Verifica'],['INTERROGAZIONE','Interrogazione']].forEach(([value,label])=>{
+  const option=node('option',label);option.value=value;type.append(option);
+ });
+ type.setAttribute('aria-label','Tipo di nota o prova');
+ const time=node('input');time.type='time';time.value=r.end;time.setAttribute('aria-label','Ora verifica/interrogazione');
+ const text=node('textarea');text.rows=1;text.maxLength=250;text.placeholder='Argomento o nota (facoltativo per verifiche)';
+ text.setAttribute('aria-label','Argomento, verifica o nota');
+ ensureStudyMeta();
+ text.value=state.lessonNotes[reviewKey(r)]||'';
+ const saveButton=node('button','Salva');saveButton.type='submit';
+ const close=button('Chiudi',()=>{openedNote=null;render()});
+ type.onchange=()=>{time.hidden=type.value==='NOTA'};
+ time.hidden=true;
+ form.append(type,time,text,saveButton,close);
+ if(referenceOnly){
+  saveButton.disabled=true;
+  form.append(node('small','Conferma prima l’orario di riferimento.','cc-sub'));
+ }
+ form.addEventListener('submit',event=>{
+  event.preventDefault();
+  if(referenceOnly)return;
+  const content=text.value.trim().slice(0,250);
+  if(type.value==='NOTA'){
+   if(content)state.lessonNotes[reviewKey(r)]=content;
+   else delete state.lessonNotes[reviewKey(r)];
+   if(save(KEY,state)){openedNote=null;render();ctx.notify('Nota salvata per '+r.subject);}
+   return;
+  }
+  if(!S.minutes(time.value)&&time.value!=='00:00'){ctx.notify('Ora non valida');return}
+  const tasks=ctx.getTasks();
+  const subject=r.subject;
+  const task={
+   id:'studio-quick-'+Date.now()+'-'+Math.random().toString(36).slice(2,7),
+   date:r.date,time:time.value,duration:30,actual:0,priority:'P2',status:'open',
+   project:'STUDIO',schoolType:type.value,subject,
+   title:(type.value==='SCUOLA VERIFICA'?'Verifica ':'Interrogazione ')+subject,
+   topics:content,prepStatus:'da preparare',notes:'Inserita dal pannello Studio 2S CAT'
+  };
+  tasks.push(task);
+  openedNote=null;
+  ctx.saveTasks();
+  ctx.notify((type.value==='SCUOLA VERIFICA'?'Verifica':'Interrogazione')+' registrata per '+subject);
+ });
+ td.append(form);tr.append(td);return tr;
+}
 function render(){
  if(!$('#cc-studio'))return;
  $('#cc-school-week').value=week;
- const item=state.weeks[week],rows=getLessons(week),status=$('#cc-school-status');
- status.textContent='Settimana '+fmt(week)+' · '+(pending?'DA VERIFICARE · '+pending.length+' righe in anteprima':item?'CONFERMATO · '+rows.length+' lezioni · ultimo aggiornamento '+new Date(item.updatedAt).toLocaleString('it-IT'):'DA CARICARE · nessun orario confermato')+(state.lastUpload?' · ultimo file selezionato '+new Date(state.lastUpload).toLocaleDateString('it-IT'):'');
+ const item=state.weeks[week];
+ const savedRows=getLessons(week);
+ const referenceOnly=week==='2026-11-16'&&!item;
+ const rows=referenceOnly?S.reference(week):savedRows;
+ const month=new Intl.DateTimeFormat('it-IT',{timeZone:'UTC',month:'short'}).format(S.fromISO(S.plusDays(week,4)));
+ $('#cc-school-badge').textContent=Number(week.slice(-2))+'–'+Number(S.plusDays(week,4).slice(-2))+' '+month+' · '+rows.length+' lezioni';
+ const status=$('#cc-school-status');
+ status.textContent=pending?'Anteprima · '+pending.length+' righe da confermare':
+   referenceOnly?'13 lezioni di riferimento disponibili · non salvate su questo dispositivo':
+   item?'Orario salvato · '+savedRows.length+' lezioni':'Nessun orario salvato per questa settimana';
+ renderFilters();
  const target=$('#cc-school-lessons');target.replaceChildren();
+ const visible=selectRows(rows);
  if(rows.length){
-  const scroller=node('div',undefined,'cc-school-table-wrap'),table=node('table',undefined,'cc-school-table'),thead=node('thead'),h=node('tr');
-  ['Data','Orario','Materia','Note','Stato'].forEach(t=>h.append(node('th',t)));thead.append(h);table.append(thead);
-  const tbody=node('tbody');rows.forEach(r=>{const tr=node('tr');[fmt(r.date),r.start+'–'+r.end,r.subject,r.notes,r.confidence].forEach(value=>tr.append(node('td',value)));tbody.append(tr)});
+  const scroller=node('div',undefined,'cc-school-table-wrap cc-study-table-wrap');
+  const table=node('table',undefined,'cc-school-table cc-study-table');
+  const thead=node('thead'),h=node('tr');
+  ['Giorno/Data','Orario','Materia','Stato','Azioni'].forEach(t=>h.append(node('th',t)));
+  thead.append(h);table.append(thead);
+  const tbody=node('tbody');
+  visible.forEach(r=>{
+   const tr=node('tr',undefined,'cc-study-row');
+   tr.append(node('td',fmt(r.date)),node('td',r.start+'–'+r.end));
+   tr.append(node('td',r.subject,'cc-study-subject'));
+   const review=node('td');
+   const stage=REVIEW_STATES.find(s=>s.id===reviewState(r));
+   const stateButton=button(stage.label,()=>changeReview(r,referenceOnly));
+   stateButton.className='cc-study-state cc-study-state-'+stage.id;
+   stateButton.setAttribute('aria-label','Stato '+r.subject+': '+stage.label);
+   review.append(stateButton);tr.append(review);
+   const actions=node('td'),group=node('div',undefined,'cc-study-row-actions');
+   const note=button('+ Nota / Verifica',()=>{openedNote=openedNote===reviewKey(r)?null:reviewKey(r);render()});
+   const del=button('Elimina',()=>deleteLesson(r,referenceOnly));
+   del.className='cc-study-delete';
+   group.append(note,del);actions.append(group);tr.append(actions);
+   tbody.append(tr);
+   if(openedNote===reviewKey(r))tbody.append(noteEditor(r,referenceOnly));
+  });
   table.append(tbody);scroller.append(table);target.append(scroller);
-  target.append(node('p','Materie: '+[...new Set(rows.map(x=>x.subject))].join(', '),'cc-sub'));
- }else target.append(node('p','Nessuna lezione confermata: l’orario non viene ripetuto automaticamente nelle altre settimane.','cc-sub'));
+  if(!visible.length)target.append(node('p','Nessuna lezione per i filtri selezionati.','cc-sub'));
+ }else target.append(node('p','Nessuna lezione salvata per questa settimana.','cc-sub'));
  const now=S.localParts(),isSunday=S.fromISO(now.date).getUTCDay()===0,next=S.monday(S.plusDays(now.date,1));
  $('#cc-school-reminder').classList.toggle('cc-hidden',!(isSunday&&now.time>=($('#cc-school-time').value||'09:00')&&!getLessons(next).length));
  renderExams();renderConflicts();
@@ -146,7 +308,7 @@ function renderConflicts(){
  hits.forEach(([a,b])=>dest.append(node('p',fmt(a.date)+' · '+a.start+'–'+a.end+' '+a.title+' / '+b.start+'–'+b.end+' '+b.title,'cc-school-alert')));
 }
 function exportJSON(){
- const blob=new Blob([JSON.stringify({source:'CASE247-2SCAT',version:1,weeks:state.weeks},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=node('a');
+ const blob=new Blob([JSON.stringify({source:'CASE247-2SCAT',version:1,weeks:state.weeks,lessonReview:state.lessonReview||{},lessonNotes:state.lessonNotes||{}},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=node('a');
  a.href=url;a.download='case247-studio-2scat.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),750);
 }
 async function importJSON(e){
@@ -160,7 +322,15 @@ async function importJSON(e){
    imports[key]={rows,updatedAt:new Date().toISOString(),status:'confermato',source:'Backup importato'};
   });
   if(!window.confirm('Importare '+Object.keys(imports).length+' settimane? Le settimane già presenti saranno aggiornate, senza cancellare attività manuali.'))return;
-  state.weeks={...state.weeks,...imports};save(KEY,state);ctx.renderAll();
+  state.weeks={...state.weeks,...imports};
+  ensureStudyMeta();
+  if(data.lessonReview&&typeof data.lessonReview==='object'&&!Array.isArray(data.lessonReview)){
+   Object.entries(data.lessonReview).forEach(([key,value])=>{if(typeof key==='string'&&key.length<200&&REVIEW_STATES.some(x=>x.id===value))state.lessonReview[key]=value});
+  }
+  if(data.lessonNotes&&typeof data.lessonNotes==='object'&&!Array.isArray(data.lessonNotes)){
+   Object.entries(data.lessonNotes).forEach(([key,value])=>{if(typeof key==='string'&&key.length<200&&typeof value==='string')state.lessonNotes[key]=value.slice(0,250)});
+  }
+  save(KEY,state);ctx.renderAll();
  }catch(err){window.alert('Importazione fallita: '+err.message)}
  finally{e.target.value=''}
 }
@@ -207,8 +377,8 @@ function taskConflict(t){
 }
 function mount(context){
  root=context.root;ctx=context;state=read(KEY,{weeks:{}});if(!state||!state.weeks||typeof state.weeks!=='object')state={weeks:{}};
- week=S.monday(ctx.getWeek());setup();bindForm();render();window.setInterval(()=>{if(document.visibilityState!=='hidden')render()},60000);
- return {render,lessonsForWeek:getLessons,allLessons:()=>Object.values(state.weeks).flatMap(s=>s.rows||[]),scheduleWeekChanged:w=>{if(!pending){week=S.monday(w);render()}},populateTaskForm,enrichTask,importedTask,taskConflict};
+ week=S.monday(ctx.getWeek());ensureStudyMeta();setup();bindForm();render();window.setInterval(()=>{if(document.visibilityState!=='hidden')render()},60000);
+ return {render,lessonsForWeek:getLessons,allLessons:()=>Object.values(state.weeks).flatMap(s=>s.rows||[]),scheduleWeekChanged:w=>{if(!pending){week=S.monday(w);dayFilter='all';subjectFilter='all';openedNote=null;render()}},populateTaskForm,enrichTask,importedTask,taskConflict};
 }
 window.CASE247StudioUI={mount};
 })();

@@ -1,0 +1,82 @@
+/* CASE247 Agenda 50: SOLO il nuovo #case247-agenda50. Nessuna regola globale o sul calendario esistente. */
+#case247-control-center #case247-agenda50{
+  --a50-ink:var(--ink,var(--cc-ink,#24344a));
+  --a50-line:var(--line,var(--cc-line,#dce2ea));
+  --a50-muted:var(--muted,#637082);
+  --a50-accent:var(--accent,var(--cc-green,#2563eb));
+  display:block;
+  color:var(--a50-ink);
+  background:#fff;
+  padding:15px;
+  border:1px solid var(--a50-line);
+  border-radius:9px;
+  margin-bottom:12px;
+  font:inherit;
+}
+#case247-control-center #case247-agenda50 *{box-sizing:border-box}
+#case247-agenda50 .a50-head{display:flex;justify-content:space-between;align-items:start;gap:12px;flex-wrap:wrap}
+#case247-agenda50 .a50-kicker{font-size:10px;letter-spacing:.06em;font-weight:750;color:var(--a50-muted);margin:0 0 4px}
+#case247-control-center #case247-agenda50 h2{font-size:17px;line-height:1.4;font-weight:750;color:var(--a50-ink);margin:0}
+#case247-agenda50 .a50-grand-total{white-space:nowrap;font-variant-numeric:tabular-nums}
+#case247-agenda50 .a50-date{font-size:11px;color:var(--a50-muted);white-space:nowrap}
+#case247-agenda50 .a50-progress{display:block;width:100%;height:9px;accent-color:var(--a50-accent);margin:10px 0 13px}
+#case247-agenda50 .a50-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+#case247-agenda50 .a50-group{min-width:0;border:1px solid var(--a50-line);border-radius:8px;padding:11px;background:#fbfcfe}
+#case247-agenda50 .a50-group-head{display:flex;align-items:center;justify-content:space-between;gap:9px;border-bottom:1px solid var(--a50-line);padding-bottom:8px;margin-bottom:8px}
+#case247-control-center #case247-agenda50 h3{font-size:12px;font-weight:750;margin:0;color:var(--a50-ink)}
+#case247-agenda50 .a50-group-sum{font-size:12px;font-weight:750;white-space:nowrap;font-variant-numeric:tabular-nums}
+#case247-agenda50 .a50-item{min-width:0;padding:8px 0}
+#case247-agenda50 .a50-item + .a50-item{border-top:1px solid var(--a50-line)}
+#case247-agenda50 .a50-item-head{display:flex;align-items:start;justify-content:space-between;gap:6px}
+#case247-agenda50 .a50-item-head strong{font-size:12px;line-height:1.3;font-weight:700}
+#case247-agenda50 .a50-count{font-size:11px;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+#case247-control-center #case247-agenda50 .a50-hint{font-size:11px;line-height:1.35;color:var(--a50-muted);margin:4px 0 7px}
+#case247-agenda50 .a50-links{display:flex;flex-wrap:wrap;gap:5px}
+#case247-agenda50 .a50-link{font-size:10px;line-height:1.25;text-decoration:none;color:var(--a50-accent);border-bottom:1px solid transparent}
+#case247-agenda50 .a50-link:hover{text-decoration:underline}
+#case247-agenda50 .a50-link:focus-visible{outline:2px solid var(--a50-accent);outline-offset:2px}
+#case247-agenda50 .a50-link:not(:last-child)::after{content:" ·";color:var(--a50-muted);text-decoration:none}
+#case247-agenda50 .a50-actions{display:flex;gap:6px;margin-top:9px}
+#case247-control-center #case247-agenda50 .a50-actions button,
+#case247-control-center #case247-agenda50 .a50-toolbar button{
+  min-height:29px;border:1px solid var(--a50-line);border-radius:6px;
+  padding:5px 9px;font:inherit;font-size:11px;font-weight:650;
+  background:#fff;color:var(--a50-ink);cursor:pointer;white-space:nowrap;
+}
+#case247-control-center #case247-agenda50 .a50-actions .a50-increment{
+  color:#fff;background:var(--a50-accent);border-color:var(--a50-accent)
+}
+#case247-control-center #case247-agenda50 .a50-actions button:disabled{opacity:.45;cursor:not-allowed}
+#case247-control-center #case247-agenda50 button:focus-visible{outline:2px solid var(--a50-accent);outline-offset:2px}
+#case247-agenda50 .a50-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+#case247-control-center #case247-agenda50 .a50-toolbar .a50-reset{color:#a02936;border-color:#e7bdc3}
+#case247-control-center #case247-agenda50 .a50-disclaimer{font-size:10px;line-height:1.4;color:var(--a50-muted);margin:10px 0 0}
+#case247-control-center #case247-agenda50 .a50-feedback{font-size:11px;color:var(--a50-muted);margin:6px 0 0;min-height:1em}
+@media(max-width:950px){#case247-agenda50 .a50-grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){#case247-agenda50 *{transition:none!important;animation:none!important}}
+
+
+/* Agenda inserita sotto #cc-week: il viewport rimane fisso, si scorre SOLO dentro la scheda. */
+#saas-app[data-view="agenda"] #case247-control-center #cc-calendar{
+  overflow-x:hidden!important;overflow-y:auto!important;scrollbar-width:thin;
+}
+#saas-app[data-view="agenda"] #case247-control-center #cc-calendar #cc-week{
+  flex:0 0 auto!important;height:clamp(410px,61vh,630px)!important;
+  min-height:410px!important;overflow:hidden!important;
+}
+#saas-app[data-view="agenda"] #case247-control-center #cc-calendar #case247-agenda50{
+  flex:0 0 auto;margin:11px 0 8px;min-width:0;
+}
+#saas-app[data-view="agenda"] #case247-control-center #cc-calendar .cc-filters{
+  flex:0 0 auto;margin-top:8px;
+}
+@media(max-width:950px){
+  #saas-app[data-view="agenda"] #case247-control-center #cc-calendar #cc-week{
+    height:clamp(300px,56vh,520px)!important;min-height:300px!important;
+  }
+}
+@media(max-width:620px){
+  #saas-app[data-view="agenda"] #case247-control-center #cc-calendar #cc-week{
+    height:clamp(345px,58vh,540px)!important;min-height:345px!important;
+  }
+}
