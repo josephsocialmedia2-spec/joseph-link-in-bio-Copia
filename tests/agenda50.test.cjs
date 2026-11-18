@@ -6,7 +6,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const {
   GROUPS, ITEMS, MAX_TOTAL, romeDay, normalizeCounts, total, groupTotal,
-  nextCounts, fresh, normalizeState, report, WINDOWS, romeMinutes, activeWindow
+  nextCounts, fresh, normalizeState, report, WINDOWS, romeMinutes, activeWindow, sleepReminderActive
 } = require('../gestione/agenda50.js');
 
 test('exactly 6 independent counters and group maxima 30/10/10 = 50', () => {
@@ -84,9 +84,9 @@ test('isolation regression: existing calendar code unchanged in this feature', (
   const html = fs.readFileSync(path.join(__dirname,'../gestione/index.html'),'utf8');
   const script = fs.readFileSync(path.join(__dirname,'../gestione/agenda50.js'),'utf8');
   assert.match(html, /saas-shell\.js\?v=20261118-reorder1/);
-  assert.match(html, /agenda50\.js\?v=20261118-liveclock1/);
-  assert.match(html, /agenda50\.css\?v=20261118-liveclock1/);
-  assert.ok(html.indexOf('saas-shell.js?v=20261118-reorder1') < html.indexOf('agenda50.js?v=20261118-liveclock1'));
+  assert.match(html, /agenda50\.js\?v=20261118-sleep2230/);
+  assert.match(html, /agenda50\.css\?v=20261118-sleep2230/);
+  assert.ok(html.indexOf('saas-shell.js?v=20261118-reorder1') < html.indexOf('agenda50.js?v=20261118-sleep2230'));
   assert.match(script, /calendar\.insertBefore\(section, filters\)/);
   assert.doesNotMatch(script, /cc-week['"]?\)\.innerHTML|cc-week['"]?\)\.replaceChildren/);
   assert.match(script, /window\.confirm\(/);
@@ -141,4 +141,22 @@ test('time-driven banner and pulse preserve confirmation workflow and motion pre
  assert.match(css,/1\.5s ease-in-out infinite/);
  assert.match(css,/prefers-reduced-motion:reduce/);
  for(const label of ['−1','+1 Confermata','Copia resoconto','Azzera giornata'])assert.ok(js.includes(label));
+});
+
+test('sleep reminder switches on at 22:30 Rome time and resets after midnight',()=>{
+ const winter = value => new Date('2026-11-18T'+value+':00Z');
+ assert.equal(sleepReminderActive(winter('21:29')), false);
+ assert.equal(sleepReminderActive(winter('21:30')), true);
+ assert.equal(sleepReminderActive(winter('22:59')), true);
+ assert.equal(sleepReminderActive(new Date('2026-11-18T23:00:00Z')),false);
+ // Summer time UTC+2
+ assert.equal(sleepReminderActive(new Date('2026-07-01T20:29:00Z')),false);
+ assert.equal(sleepReminderActive(new Date('2026-07-01T20:30:00Z')),true);
+ const js=fs.readFileSync(path.join(__dirname,'../gestione/agenda50.js'),'utf8');
+ const css=fs.readFileSync(path.join(__dirname,'../gestione/agenda50.css'),'utf8');
+ assert.match(js,/22:30 · DORMIRE/);
+ assert.match(js,/sleep \? null : activeWindow\(now\)/);
+ assert.match(css,/a50-sleep-red-pulse/);
+ assert.match(css,/1\.5s ease-in-out infinite/);
+ assert.match(css,/prefers-reduced-motion:reduce/);
 });
