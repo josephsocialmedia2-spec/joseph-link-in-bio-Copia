@@ -42,7 +42,6 @@ groups.before(v);
 const counters={};
 root.querySelectorAll('.a50-item').forEach(item=>{counters[item.dataset.item]=item});
 const timeToMinutes=s=>{const [h,m]=s.split(':').map(Number);return h*60+m};
-function todayRome(){return S.localParts ? S.localParts(new Date()).date : new Intl.DateTimeFormat('en-CA',{year:'numeric',month:'2-digit',day:'2-digit',timeZone:'Europe/Rome'}).format(new Date())}
 function calendarDate(){const now=new Date();const p=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Rome',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(now);const d=Object.fromEntries(p.map(x=>[x.type,x.value]));return d.year+'-'+d.month+'-'+d.day}
 function dayOf(day){return new Date(day+'T12:00:00Z').getUTCDay()}
 function skipSunday(day,step){const candidate=S.plusDays(day,step);return dayOf(candidate)===0?S.plusDays(candidate,step):candidate}
@@ -82,14 +81,14 @@ function getLessons(day){
  try{
   const stored=JSON.parse(localStorage.getItem('case247-cc-school-2scat-v1')||'null');
   const rows=stored?.weeks?.[monday]?.rows;
-  if(Array.isArray(rows))return rows.filter(row=>row.date===day && /^\\d{2}:\\d{2}$/.test(row.start) && /^\\d{2}:\\d{2}$/.test(row.end));
+  if(Array.isArray(rows))return rows.filter(row=>row.date===day && /^\d{2}:\d{2}$/.test(row.start) && /^\d{2}:\d{2}$/.test(row.end));
  }catch(_){}
  return S.reference(monday).filter(row=>row.date===day);
 }
 function extraTasks(day){
  try{
   const saved=JSON.parse(localStorage.getItem('case247-cc-tasks-v1')||'[]');
-  return Array.isArray(saved)?saved.filter(task=>task&&task.date===day&&/^\\d{2}:\\d{2}$/.test(task.time)).map(task=>{
+  return Array.isArray(saved)?saved.filter(task=>task&&task.date===day&&/^\d{2}:\d{2}$/.test(task.time)).map(task=>{
    const begin=timeToMinutes(task.time);const finish=begin+Math.max(5,Math.min(Number(task.duration)||30,720));
    return {start:task.time,end:String(Math.floor(finish/60)%24).padStart(2,'0')+':'+String(finish%60).padStart(2,'0'),title:task.title||task.project||'Attività',status:task.status||'open',priority:task.priority||'',study:task.project==='STUDIO'};
   }):[];
