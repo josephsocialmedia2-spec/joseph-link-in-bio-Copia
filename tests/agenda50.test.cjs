@@ -87,7 +87,7 @@ test('isolation regression: existing calendar code unchanged in this feature', (
   assert.match(html, /agenda50\.js\?v=20261118-isolated1/);
   assert.match(html, /agenda50\.css\?v=20261118-isolated1/);
   assert.ok(html.indexOf('saas-shell.js?v=20261118-reorder1') < html.indexOf('agenda50.js?v=20261118-isolated1'));
-  assert.match(script, /main\.insertBefore\(section, crm\)/);
+  assert.match(script, /main\.insertBefore\(section, calendar\.nextSibling\)/);
   assert.doesNotMatch(script, /cc-week['"]?\)\.innerHTML|cc-week['"]?\)\.replaceChildren/);
   assert.match(script, /window\.confirm\(/);
   assert.match(script, /localStorage\.setItem/);
