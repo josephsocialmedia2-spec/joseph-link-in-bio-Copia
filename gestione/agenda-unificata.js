@@ -98,6 +98,7 @@ function render(){
  const day=selected(),weekday=dayOf(day),isSaturday=weekday===6;
  const label=new Intl.DateTimeFormat('it-IT',{timeZone:'UTC',day:'numeric',month:'long',year:'numeric'}).format(S.fromISO(day));
  dayLabel.textContent=days[weekday]+' '+label;
+ dayLabel.dataset.day=day;
  timeline.replaceChildren();
  root.classList.toggle('a50-day-saturday',isSaturday);
  const title=root.querySelector('#a50-title');
