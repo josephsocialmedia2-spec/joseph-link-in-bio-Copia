@@ -3,7 +3,7 @@ const read=p=>fs.readFileSync(p,'utf8');
 const html=read('gestione/index.html'),js=read('gestione/control-center.js'),css=read('gestione/control-center.css');
 test('the control center is integrated into the existing dashboard, once',()=>{
  assert.equal((html.match(/id="case247-control-center"/g)||[]).length,1);
- assert.match(html,/control-center\.js\?v=20261115-studio-2scat/);
+ assert.match(html,/control-center\.js\?v=20261118-horizontal-1/);
  assert.match(html,/control-center\.css\?v=20261115-studio-2scat/);
  assert.match(html,/id="landing-data"/);
  assert.match(html,/id="detail"/);
@@ -59,8 +59,9 @@ test('acquisition slot is a direct Excel CRM link after local one-time setup',()
 test('Agenda is structurally first and preserves the original dashboard and local persistence',()=>{
  const app=html.indexOf('id="case247-control-center"');
  const boards=html.indexOf('id="case247-two-boards"');
- const header=html.indexOf('id="case247-site-header"');
- assert.ok(header>=0&&app>header&&boards>app,'Control Center must precede the two boards');
+ const acquisition=html.indexOf('id="sv-acquisizione"');
+ assert.ok(acquisition>=0&&app>acquisition&&boards>app,'Acquisition must precede Control Center and two boards');
+ assert.doesNotMatch(html,/<header id="case247-site-header">/);
  assert.equal((html.match(/id="case247-control-center"/g)||[]).length,1);
  assert.ok(js.indexOf("'<section id=\"cc-calendar\"")<js.indexOf("'<div class=\"cc-stats\""));
  assert.ok(js.indexOf("'<section id=\"cc-calendar\"")<js.indexOf("'<section id=\"cc-overview\""));
@@ -85,10 +86,10 @@ test('Mobile Agenda has a real single-day picker and responsive CSS',()=>{
 });
 
 test('The Perché ticker is first above Agenda and uses localStorage without HTML injection',()=>{
- const header=html.indexOf('id="case247-site-header"');
  const widget=html.indexOf('id="perche-widget"');
+ const acquisition=html.indexOf('id="sv-acquisizione"');
  const agenda=html.indexOf('id="case247-control-center"');
- assert.ok(header>=0&&widget>header&&agenda>widget);
+ assert.ok(widget>=0&&acquisition>widget&&agenda>acquisition);
  assert.equal((html.match(/id="perche-widget"/g)||[]).length,1);
  assert.match(html,/id="perche-form"/);
  assert.match(html,/id="input-perche"/);
@@ -105,4 +106,17 @@ test('The Perché ticker is first above Agenda and uses localStorage without HTM
  assert.match(ticker,/new Intl\.DateTimeFormat\('it-IT'/);
  assert.match(tickerCss,/prefers-reduced-motion:reduce/);
  assert.match(tickerCss,/#perche-widget/);
+});
+
+test('Horizontal dashboard shows all six days and moves the 14 selling pillars above the agenda',()=>{
+ const layout=read('gestione/layout-orizzontale.css');
+ const pillars=read('gestione/pilastri-vendite-agenda.js');
+ assert.match(layout,/grid-template-columns:repeat\(6,minmax\(0,1fr\)\)/);
+ assert.match(layout,/\.cc-sidebar\{display:flex!important/);
+ assert.match(layout,/\.pilastri-gruppi\{display:grid;grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/);
+ assert.match(pillars,/control\.parentNode\.insertBefore\(aside, control\)/);
+ assert.match(html,/layout-orizzontale\.css\?v=/);
+ assert.match(html,/sv-acquisizione\.js\?v=/);
+ assert.match(html,/pilastri-vendite-agenda\.js\?v=/);
+ assert.doesNotMatch(html,/<header id="case247-site-header">/);
 });

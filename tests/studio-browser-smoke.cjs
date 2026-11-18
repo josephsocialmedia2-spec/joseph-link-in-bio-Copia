@@ -86,12 +86,11 @@ async function main(){
  fs.writeFileSync('/tmp/case247-studio-chrome-smoke.png',Buffer.from(screenshot.data,'base64'));
  console.log('PASS: browser screenshot produced');
  await command('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
- await until("getComputedStyle(document.querySelector('#cc-day-nav')).display!=='none'",'mobile day picker');
- assert.equal(await evalJS("[...document.querySelectorAll('#cc-week .cc-day')].filter(x=>getComputedStyle(x).display!=='none').length"),1);
- await evalJS("document.querySelectorAll('#cc-day-nav button')[1].click();true");
- assert.equal(await evalJS("document.querySelectorAll('#cc-day-nav button')[1].getAttribute('aria-pressed')"),'true');
- assert.equal(await evalJS("[...document.querySelectorAll('#cc-week .cc-day')].filter(x=>getComputedStyle(x).display!=='none').length"),1);
- console.log('PASS: one-day mobile view and day navigation');
+ await until("getComputedStyle(document.querySelector('#cc-week')).gridTemplateColumns.split(' ').length===6",'six day mobile calendar');
+ assert.equal(await evalJS("getComputedStyle(document.querySelector('#cc-day-nav')).display"),'none');
+ assert.equal(await evalJS("[...document.querySelectorAll('#cc-week .cc-day')].filter(x=>getComputedStyle(x).display!=='none').length"),6);
+ assert.equal(await evalJS("document.querySelector('#cc-calendar').scrollWidth>document.querySelector('#cc-calendar').clientWidth"),true);
+ console.log('PASS: mobile six-day agenda is horizontally scrollable');
  await command('Emulation.clearDeviceMetricsOverride');
 }
 main().catch(e=>{console.error('FAIL:',e.stack||String(e));process.exitCode=1})

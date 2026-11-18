@@ -1,0 +1,46 @@
+/* CASE247 · Dashboard orizzontale: layout senza header pubblico. */
+body.case247-unified{overflow-x:hidden}
+body.case247-unified #perche-widget,
+body.case247-unified #sv-acquisizione,
+body.case247-unified #cc-pilastri,
+body.case247-unified #case247-control-center{width:calc(100% - 32px);max-width:none;margin-left:auto;margin-right:auto}
+body.case247-unified #sv-acquisizione{max-width:none;margin-top:16px;margin-bottom:16px}
+body.case247-unified #sv-acquisizione .sv-grid-compact{grid-template-columns:repeat(auto-fit,minmax(min(340px,100%),1fr))}
+body.case247-unified #sv-acquisizione .sv-card-mini{min-width:0}
+body.case247-unified #cc-pilastri{position:static;max-height:none;overflow:visible;margin-top:16px;margin-bottom:16px;padding:18px 20px;box-shadow:0 8px 24px rgba(0,0,0,.16)}
+body.case247-unified #cc-pilastri .pilastri-gruppi{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+body.case247-unified #cc-pilastri .pilastri-gruppo{min-width:0;padding:12px;background:rgba(255,255,255,.035);border-radius:10px}
+body.case247-unified #cc-pilastri .sezione-label{margin-top:0}
+body.case247-unified #case247-control-center{max-width:none;padding:0;margin-top:16px}
+body.case247-unified #case247-control-center .cc-top{display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;gap:12px}
+body.case247-unified #case247-control-center .cc-grid{display:flex;flex-direction:column;overflow:visible;min-width:0}
+body.case247-unified #case247-control-center .cc-sidebar{display:flex!important;flex-wrap:nowrap;align-items:center;gap:12px;width:100%;max-height:none;overflow-x:auto;overflow-y:hidden;padding:12px 14px;border:0;border-bottom:1px solid var(--cc-line);scrollbar-width:thin}
+body.case247-unified #case247-control-center .cc-navgroup{display:inline-block;flex:0 0 auto;border:1px solid #d5e4d9;border-radius:9px;padding:3px 7px;background:#f6faf7;white-space:nowrap;min-width:max-content;margin:0}
+body.case247-unified #case247-control-center .cc-navgroup summary{display:inline-block;padding:7px 8px;cursor:pointer;color:#0d664a;font-size:11px}
+body.case247-unified #case247-control-center .cc-navgroup a{display:inline-block;width:auto;padding:7px 8px;margin:0 2px;color:#225640;font-size:11px;min-height:34px}
+body.case247-unified #case247-control-center #cc-menu-toggle{display:none!important}
+body.case247-unified #case247-control-center .cc-main{width:100%;padding:14px;min-width:0}
+body.case247-unified #case247-control-center #cc-calendar{width:100%;max-width:none}
+body.case247-unified #case247-control-center .cc-week{grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+body.case247-unified #case247-control-center .cc-day{display:block;min-width:0}
+body.case247-unified #case247-control-center .cc-day-nav{display:none}
+body.case247-unified #case247-control-center .cc-head .cc-actions{width:auto}
+body.case247-unified #case247-control-center #cc-new{flex:initial}
+@media(max-width:1450px){
+ body.case247-unified #case247-control-center #cc-calendar{overflow-x:auto}
+ body.case247-unified #case247-control-center .cc-week{min-width:1080px}
+}
+@media(max-width:880px){
+ body.case247-unified #cc-pilastri .pilastri-gruppi{grid-template-columns:1fr}
+ body.case247-unified #case247-control-center .cc-top{flex-direction:column;align-items:stretch}
+ body.case247-unified #case247-control-center #cc-calendar{overflow-x:auto}
+ body.case247-unified #case247-control-center .cc-week{min-width:1080px;grid-template-columns:repeat(6,minmax(0,1fr))!important}
+ body.case247-unified #case247-control-center .cc-day{display:block!important}
+ body.case247-unified #case247-control-center .cc-day-nav{display:none!important}
+}
+@media(max-width:600px){
+ body.case247-unified #perche-widget,body.case247-unified #sv-acquisizione,body.case247-unified #cc-pilastri,body.case247-unified #case247-control-center{width:calc(100% - 20px)}
+ body.case247-unified #cc-pilastri{padding:13px}
+ body.case247-unified #case247-control-center .cc-main{padding:9px}
+ body.case247-unified #case247-control-center .cc-week{min-width:1080px}
+}
