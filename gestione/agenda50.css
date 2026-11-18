@@ -112,3 +112,11 @@
     animation:none!important;border-color:#d19a35;box-shadow:0 0 0 2px rgba(245,158,11,.13);
   }
 }
+
+@keyframes a50-badge-pulse {0%,100%{opacity:1}50%{opacity:.38}}
+#case247-control-center #case247-agenda50 .fascia-attiva-lampeggiante .a50-active-badge{
+ animation:a50-badge-pulse 1.5s ease-in-out infinite;
+}
+@media(prefers-reduced-motion:reduce){
+ #case247-control-center #case247-agenda50 .fascia-attiva-lampeggiante .a50-active-badge{animation:none!important}
+}
