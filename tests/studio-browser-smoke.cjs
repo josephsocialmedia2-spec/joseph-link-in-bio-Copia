@@ -50,7 +50,10 @@ async function main(){
  await connect(await discover());await command('Page.enable');await command('Runtime.enable');
  await command('Page.navigate',{url:'http://127.0.0.1:18765/gestione/'});
  await until("Boolean(document.querySelector('#cc-studio')&&document.querySelector('#cc-school-reference')&&document.querySelector('#input-perche'))",'STUDIO and motivation widget render');
- assert.equal(await evalJS("document.querySelector('#perche-widget').compareDocumentPosition(document.querySelector('#case247-control-center')) & 4"),4);
+ await until("Boolean(document.querySelector('#saas-app')?.dataset.view==='agenda')",'SaaS shell default agenda');
+ assert.equal(await evalJS("document.scrollingElement.scrollHeight <= innerHeight"),true);
+ assert.equal(await evalJS("getComputedStyle(document.querySelector('#saas-app [data-pane=control]')).display"),'block');
+ console.log('PASS: fixed viewport with Agenda as default');
  await evalJS("(()=>{const i=document.querySelector('#input-perche');i.value='Completare la mia giornata';document.querySelector('#perche-form').requestSubmit();return true})()");
  assert.equal(await evalJS("JSON.parse(localStorage.getItem('mieiPerche')).length"),1);
  assert.equal(await evalJS("document.querySelector('#ticker-text').textContent.includes('Completare la mia giornata')"),true);
@@ -86,11 +89,15 @@ async function main(){
  fs.writeFileSync('/tmp/case247-studio-chrome-smoke.png',Buffer.from(screenshot.data,'base64'));
  console.log('PASS: browser screenshot produced');
  await command('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
- await until("getComputedStyle(document.querySelector('#cc-week')).gridTemplateColumns.split(' ').length===6",'six day mobile calendar');
- assert.equal(await evalJS("getComputedStyle(document.querySelector('#cc-day-nav')).display"),'none');
+ await until("document.querySelector('#saas-app')?.dataset.view==='agenda'",'SaaS mobile agenda');
+ assert.equal(await evalJS("document.scrollingElement.scrollHeight<=innerHeight"),true);
  assert.equal(await evalJS("[...document.querySelectorAll('#cc-week .cc-day')].filter(x=>getComputedStyle(x).display!=='none').length"),6);
- assert.equal(await evalJS("document.querySelector('#cc-calendar').scrollWidth>document.querySelector('#cc-calendar').clientWidth"),true);
- console.log('PASS: mobile six-day agenda is horizontally scrollable');
+ assert.equal(await evalJS("getComputedStyle(document.querySelector('#cc-week')).gridTemplateColumns.split(' ').length"),2);
+ await evalJS("document.querySelector('[data-saas-view=acquisizione]').click();true");
+ assert.equal(await evalJS("document.querySelector('#saas-app').dataset.view"),'acquisizione');
+ await evalJS("document.querySelector('[data-saas-view=agenda]').click();true");
+ assert.equal(await evalJS("document.querySelector('#saas-app').dataset.view"),'agenda');
+ console.log('PASS: six-day mobile grid and tab switching without document scroll');
  await command('Emulation.clearDeviceMetricsOverride');
 }
 main().catch(e=>{console.error('FAIL:',e.stack||String(e));process.exitCode=1})
