@@ -115,13 +115,20 @@ function render(){
    }
    entries.push({start,end,block:x});
   });
-  getLessons(day).forEach(row=>{
+  const schoolLessons=getLessons(day);
+  if(!schoolLessons.length){
+   const x=block('17:00','21:25','STUDIO · 2S CAT · Orario da confermare',{school:true});
+   x.body.append(make('span','a50-lesson-badge','Carica o conferma le materie nella scheda Strumenti'));
+   entries.push({start:'17:00',end:'21:25',block:x});
+  }
+  schoolLessons.forEach(row=>{
    const x=block(row.start,row.end,'STUDIO · 2S CAT · '+row.subject,{school:true});
    const meta=make('span','a50-lesson-badge',row.confidence==='confermato'?'Lezione confermata':'Orario di riferimento · da verificare');
    x.body.append(meta);entries.push({start:row.start,end:row.end,block:x});
   });
  }
  extraTasks(day).forEach(task=>{
+  if(task.study && entries.some(entry=>entry.start===task.start && entry.block.article.classList.contains('a50-school-block') && entry.block.body.textContent.toLocaleLowerCase('it').includes(task.title.toLocaleLowerCase('it'))))return;
   const x=block(task.start,task.end,task.title,{school:task.study});
   x.body.append(make('span','a50-task-status',task.priority+' · '+task.status));
   entries.push({start:task.start,end:task.end,block:x});
