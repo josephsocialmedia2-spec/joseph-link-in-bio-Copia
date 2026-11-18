@@ -178,7 +178,7 @@ function deleteLesson(r,referenceOnly){
 }
 function noteEditor(r,referenceOnly){
  const tr=node('tr',undefined,'cc-study-editor-row'),td=node('td');
- td.colSpan=6;
+ td.colSpan=5;
  const form=node('form',undefined,'cc-study-inline-editor');
  const type=node('select');
  [['NOTA','Nota'],['SCUOLA VERIFICA','Verifica'],['INTERROGAZIONE','Interrogazione']].forEach(([value,label])=>{
@@ -308,7 +308,7 @@ function renderConflicts(){
  hits.forEach(([a,b])=>dest.append(node('p',fmt(a.date)+' · '+a.start+'–'+a.end+' '+a.title+' / '+b.start+'–'+b.end+' '+b.title,'cc-school-alert')));
 }
 function exportJSON(){
- const blob=new Blob([JSON.stringify({source:'CASE247-2SCAT',version:1,weeks:state.weeks},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=node('a');
+ const blob=new Blob([JSON.stringify({source:'CASE247-2SCAT',version:1,weeks:state.weeks,lessonReview:state.lessonReview||{},lessonNotes:state.lessonNotes||{}},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=node('a');
  a.href=url;a.download='case247-studio-2scat.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),750);
 }
 async function importJSON(e){
@@ -322,7 +322,15 @@ async function importJSON(e){
    imports[key]={rows,updatedAt:new Date().toISOString(),status:'confermato',source:'Backup importato'};
   });
   if(!window.confirm('Importare '+Object.keys(imports).length+' settimane? Le settimane già presenti saranno aggiornate, senza cancellare attività manuali.'))return;
-  state.weeks={...state.weeks,...imports};save(KEY,state);ctx.renderAll();
+  state.weeks={...state.weeks,...imports};
+  ensureStudyMeta();
+  if(data.lessonReview&&typeof data.lessonReview==='object'&&!Array.isArray(data.lessonReview)){
+   Object.entries(data.lessonReview).forEach(([key,value])=>{if(typeof key==='string'&&key.length<200&&REVIEW_STATES.some(x=>x.id===value))state.lessonReview[key]=value});
+  }
+  if(data.lessonNotes&&typeof data.lessonNotes==='object'&&!Array.isArray(data.lessonNotes)){
+   Object.entries(data.lessonNotes).forEach(([key,value])=>{if(typeof key==='string'&&key.length<200&&typeof value==='string')state.lessonNotes[key]=value.slice(0,250)});
+  }
+  save(KEY,state);ctx.renderAll();
  }catch(err){window.alert('Importazione fallita: '+err.message)}
  finally{e.target.value=''}
 }
@@ -369,8 +377,8 @@ function taskConflict(t){
 }
 function mount(context){
  root=context.root;ctx=context;state=read(KEY,{weeks:{}});if(!state||!state.weeks||typeof state.weeks!=='object')state={weeks:{}};
- week=S.monday(ctx.getWeek());setup();bindForm();render();window.setInterval(()=>{if(document.visibilityState!=='hidden')render()},60000);
- return {render,lessonsForWeek:getLessons,allLessons:()=>Object.values(state.weeks).flatMap(s=>s.rows||[]),scheduleWeekChanged:w=>{if(!pending){week=S.monday(w);render()}},populateTaskForm,enrichTask,importedTask,taskConflict};
+ week=S.monday(ctx.getWeek());ensureStudyMeta();setup();bindForm();render();window.setInterval(()=>{if(document.visibilityState!=='hidden')render()},60000);
+ return {render,lessonsForWeek:getLessons,allLessons:()=>Object.values(state.weeks).flatMap(s=>s.rows||[]),scheduleWeekChanged:w=>{if(!pending){week=S.monday(w);dayFilter='all';subjectFilter='all';openedNote=null;render()}},populateTaskForm,enrichTask,importedTask,taskConflict};
 }
 window.CASE247StudioUI={mount};
 })();
