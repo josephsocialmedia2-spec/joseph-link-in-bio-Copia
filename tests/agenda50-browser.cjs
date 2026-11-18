@@ -79,6 +79,21 @@ async function smoke(){
   assert.equal(await evalJS("document.querySelector('#case247-agenda50').nextElementSibling.classList.contains('cc-filters')"),true);
   assert.equal(await evalJS("['cc-export','cc-ics','cc-import'].every(id=>Boolean(document.getElementById(id)))"),true);
   console.log('PASS: original layout, 6 days, 5 acquisition slots, new panel isolated');
+  // The legacy weekly grid stays in the DOM for backward compatibility, but only the daily timeline is visible.
+  assert.equal(await evalJS("getComputedStyle(document.querySelector('#cc-week')).display"),'none');
+  assert.equal(await evalJS("document.querySelector('#a50-unified-timeline .a50-block-title').textContent"),'Acquisizione Digitale');
+  assert.equal(await evalJS("document.querySelectorAll('#a50-unified-timeline .a50-item').length"),6);
+  assert.equal(await evalJS("Boolean(document.querySelector('#a50-unified-view .a50-crm-quick'))"),true);
+  await evalJS("(()=>{for(let i=0;i<6&&new Date(CASE247Agenda50.getDay()+'T12:00:00Z').getUTCDay()!==6;i++)document.querySelectorAll('.a50-day-button')[2].click();return true})()");
+  assert.equal(await evalJS("document.querySelector('#case247-agenda50').classList.contains('a50-day-saturday')"),true);
+  assert.equal(await evalJS("getComputedStyle(document.querySelector('#a50-grand-total, .a50-grand-total')).display"),'none');
+  assert.equal(await evalJS("document.querySelectorAll('#a50-unified-timeline .a50-time-block').length"),4);
+  assert.equal(await evalJS("document.querySelectorAll('#a50-unified-timeline .a50-item').length"),0);
+  await evalJS("document.querySelector('.a50-today-button').click();true");
+  assert.equal(await evalJS("document.querySelector('#case247-agenda50').classList.contains('a50-day-saturday')"),false);
+  assert.equal(await evalJS("document.querySelectorAll('#a50-unified-timeline .a50-item').length"),6);
+  console.log('PASS: Saturday has exactly four blocks and weekday counters restore without duplicates');
+
 
   assert.equal(await evalJS("document.querySelector('#saas-app').dataset.view"),'agenda');
   assert.equal(await evalJS("getComputedStyle(document.querySelector('#case247-agenda50')).display!=='none'"),true);

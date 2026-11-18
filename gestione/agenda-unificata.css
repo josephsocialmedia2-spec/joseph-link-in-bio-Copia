@@ -1,0 +1,60 @@
+/* CASE247 · Unica agenda giornaliera cronologica, senza duplicati visibili. */
+#saas-app[data-view="agenda"] #case247-control-center #cc-calendar>.cc-head,
+#saas-app[data-view="agenda"] #case247-control-center #cc-calendar>.cc-agenda-shortcuts,
+#saas-app[data-view="agenda"] #case247-control-center #cc-calendar>#cc-day-nav,
+#saas-app[data-view="agenda"] #case247-control-center #cc-calendar>#cc-week,
+#saas-app[data-view="agenda"] #case247-agenda50>.a50-grid{display:none!important}
+#saas-app[data-view="agenda"] #case247-control-center #cc-calendar{
+ overflow-x:hidden!important;overflow-y:auto!important;display:block!important;
+ scrollbar-width:thin;padding:12px;
+}
+#saas-app #case247-agenda50{
+ --a50-line:var(--line,#dce2ea);--a50-ink:var(--ink,#172334);--a50-muted:var(--muted,#637082);
+ margin:0!important;border:0!important;border-radius:0!important;padding:0!important;background:transparent!important;
+ box-shadow:none!important
+}
+#saas-app #case247-agenda50 .a50-head{margin:0 0 7px}
+#saas-app #case247-agenda50 .a50-kicker{display:none}
+#saas-app #case247-agenda50 .a50-progress{height:5px;margin:7px 0 10px}
+#saas-app #case247-agenda50 .a50-live-banner{margin:7px 0 9px}
+#saas-app #case247-agenda50 .a50-unified-nav{display:flex;align-items:center;gap:7px;margin:11px 0 12px;padding:8px 10px;background:#f8fafc;border:1px solid var(--a50-line);border-radius:7px;flex-wrap:wrap}
+#saas-app #case247-agenda50 .a50-day-button{min-height:34px;min-width:38px;padding:6px 11px;background:#fff;border:1px solid var(--a50-line);color:#334155;border-radius:5px;font-weight:700;cursor:pointer}
+#saas-app #case247-agenda50 .a50-today-button{background:#eaf1ff;color:#1d4ed8;border-color:#c7d9ff}
+#saas-app #case247-agenda50 .a50-selected-day{font-size:13px;color:#1d2939;margin-left:8px}
+#saas-app #case247-agenda50 .a50-selected-sub{font-size:10px;color:var(--a50-muted);margin-left:auto}
+#saas-app #case247-agenda50 .a50-unified-timeline{display:grid;gap:7px}
+#saas-app #case247-agenda50 .a50-time-block{display:grid;grid-template-columns:112px minmax(0,1fr);gap:0;border:1px solid var(--a50-line);border-radius:7px;background:#fff;min-width:0}
+#saas-app #case247-agenda50 .a50-block-time{background:#f4f7fb;color:#41536b;font-variant-numeric:tabular-nums;font-weight:750;padding:11px 9px;border-right:1px solid var(--a50-line);font-size:12px;white-space:nowrap}
+#saas-app #case247-agenda50 .a50-block-body{padding:9px 12px;min-width:0}
+#saas-app #case247-agenda50 .a50-block-head{display:flex;align-items:center;flex-wrap:wrap;justify-content:space-between;gap:7px}
+#saas-app #case247-agenda50 .a50-block-title{font-size:12px;font-weight:750;color:#1d2939}
+#saas-app #case247-agenda50 .a50-block-badge{font-size:10px;font-weight:800;color:#b45309}
+#saas-app #case247-agenda50 .a50-block-badge[hidden]{display:none!important}
+#saas-app #case247-agenda50 .a50-block-counters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:8px}
+#saas-app #case247-agenda50 .a50-item{border:1px solid var(--a50-line)!important;border-radius:6px;background:#fbfcfe;padding:8px!important;margin:0!important;min-width:0}
+#saas-app #case247-agenda50 .a50-item-head strong{font-size:11px}
+#saas-app #case247-agenda50 .a50-actions{margin-top:6px}
+#saas-app #case247-agenda50 .a50-hint{font-size:10px;margin:3px 0}
+#saas-app #case247-agenda50 .a50-quick-links{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+#saas-app #case247-agenda50 .a50-quick-link{display:inline-flex;justify-content:center;align-items:center;min-height:28px;padding:5px 9px;font:inherit;font-size:10px;font-weight:650;line-height:1.2;background:#eef3fa;color:#31506f;border:1px solid #dce4ef;border-radius:5px;text-decoration:none;cursor:pointer}
+#saas-app #case247-agenda50 .a50-crm-quick{background:#e8f4f0;border-color:#c7e4d8;color:#146344}
+#saas-app #case247-agenda50 .a50-quick-link:hover{text-decoration:underline}
+#saas-app #case247-agenda50 .a50-school-block{border-left:4px solid #7765c8;background:#f8f7ff}
+#saas-app #case247-agenda50 .a50-school-block .a50-block-time{background:#eeeafd;color:#5442a5}
+#saas-app #case247-agenda50 .a50-lesson-badge{display:inline-block;font-size:10px;font-weight:650;margin-top:4px;color:#6554a5}
+#saas-app #case247-agenda50 .a50-task-status{display:inline-block;font-size:10px;color:var(--a50-muted);margin-top:4px}
+#saas-app #case247-agenda50 .a50-unified-actions{display:flex;margin:9px 0 4px}
+#saas-app #case247-agenda50 .a50-add-activity{font:inherit;font-size:11px;font-weight:700;padding:7px 11px;border:1px solid var(--a50-line);border-radius:5px;background:#fff;color:#31506f;cursor:pointer}
+#saas-app #case247-agenda50 .a50-time-block.fascia-attiva-lampeggiante{animation:a50-active-glow 1.5s ease-in-out infinite}
+#saas-app #case247-agenda50.a50-day-saturday .a50-grand-total,
+#saas-app #case247-agenda50.a50-day-saturday .a50-progress{display:none!important}
+#saas-app #case247-agenda50.a50-day-saturday .a50-live-banner:not(.a50-sleep-alert){display:none!important}
+#saas-app #case247-agenda50 .a50-disclaimer{font-size:10px}
+@media(max-width:850px){
+ #saas-app #case247-agenda50 .a50-block-counters{grid-template-columns:1fr}
+ #saas-app #case247-agenda50 .a50-time-block{grid-template-columns:86px minmax(0,1fr)}
+ #saas-app #case247-agenda50 .a50-block-time{font-size:10px;padding:10px 5px}
+ #saas-app #case247-agenda50 .a50-block-body{padding:9px}
+ #saas-app #case247-agenda50 .a50-selected-sub{display:none}
+}
+@media(prefers-reduced-motion:reduce){#saas-app #case247-agenda50 .a50-time-block.fascia-attiva-lampeggiante{animation:none!important;border-color:#e4a63a;box-shadow:0 0 0 2px #f59e0b20}}

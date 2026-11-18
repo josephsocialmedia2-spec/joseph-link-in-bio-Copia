@@ -29,7 +29,7 @@
           ['WhatsApp 371 370 8294', 'https://wa.me/393713708294']
         ] }
     ] },
-    { id: 'afternoon', time: 'Pomeriggio · 14:30 – 15:30 / 17:30 – 18:00 · Sviluppo e Follow-up', limit: 10, items: [
+    { id: 'afternoon', time: 'Pomeriggio · 14:00 – 15:30 / 15:30 – 16:30 · Sviluppo e Follow-up', limit: 10, items: [
       { id: 'comments', label: 'Commenti sui profili social', limit: 5, hint: 'Interazioni pertinenti sui profili collegati', links: [
         ['Canali CASE247', './canali-case247/'],
         ['Quadro 2 · Social', './quadro-social/']
@@ -44,8 +44,8 @@
   const WINDOWS = [
     { group: 'morning', start: 9 * 60 + 30, end: 11 * 60 + 30, label: '09:30–11:30', priority: 'Completa Acquisizione Mattina' },
     { group: 'calls', start: 11 * 60 + 30, end: 12 * 60 + 30, label: '11:30–12:30', priority: 'Completa Acquisizione diretta' },
-    { group: 'afternoon', start: 14 * 60 + 30, end: 15 * 60 + 30, label: '14:30–15:30', priority: 'Completa Sviluppo e Follow-up' },
-    { group: 'afternoon', start: 17 * 60 + 30, end: 18 * 60, label: '17:30–18:00', priority: 'Completa Sviluppo e Follow-up' }
+    { group: 'afternoon', item: 'comments', start: 14 * 60, end: 15 * 60 + 30, label: '14:00–15:30', priority: 'Completa i Commenti Social' },
+    { group: 'afternoon', item: 'followups', start: 15 * 60 + 30, end: 16 * 60 + 30, label: '15:30–16:30', priority: 'Completa i Follow-up' }
   ];
   function romeMinutes(now) {
     const parts = new Intl.DateTimeFormat('it-IT', {
@@ -130,6 +130,7 @@
   if (typeof document === 'undefined') return;
 
   let date = romeDay();
+  let todayDate = date;
   let state = fresh(date);
   let memoryOnly = false;
   const storageKey = day => PREFIX + day;
@@ -292,10 +293,14 @@
     function status(value) { feedback.textContent = value; }
     function rollover() {
       const current = romeDay();
-      if (current === date) return;
-      date = current;
-      state = load(date);
-      status('Nuova giornata: caricati i contatori del ' + date + '.');
+      if (current === todayDate) return;
+      const wasToday = date === todayDate;
+      todayDate = current;
+      if (wasToday) {
+        date = current;
+        state = load(date);
+        status('Nuova giornata: caricati i contatori del ' + date + '.');
+      }
       render();
     }
     function change(item, direction) {
@@ -317,10 +322,14 @@
         'Operazione aggiornata. Nessun messaggio è stato inviato automaticamente.');
     }
     function updateTiming(now) {
-      const sleep = sleepReminderActive(now);
-      const active = sleep ? null : activeWindow(now);
+      const isToday = date === romeDay(now);
+      const sleep = isToday && sleepReminderActive(now);
+      const active = isToday && !sleep ? activeWindow(now) : null;
       const group = active && GROUPS.find(entry => entry.id === active.group);
-      const done = !!group && groupTotal(state.counters, group) >= group.limit;
+      const item = active && active.item && ITEMS.find(entry => entry.id === active.item);
+      const target = item ? item.limit : (group ? group.limit : 0);
+      const achieved = item ? state.counters[item.id] : (group ? groupTotal(state.counters, group) : 0);
+      const done = !!group && achieved >= target;
       section.querySelectorAll('.a50-group').forEach(card => {
         const shouldPulse = !!active && !done && card.dataset.group === active.group;
         card.classList.toggle('fascia-attiva-lampeggiante', shouldPulse);
@@ -336,9 +345,9 @@
         ? '22:30 · DORMIRE — È ora di riposare'
         : active
         ? (done
-          ? 'Fascia completata (' + active.label + '): ' + group.limit + '/' + group.limit
+          ? 'Fascia completata (' + active.label + '): ' + target + '/' + target
           : 'Fascia attiva (' + active.label + '): ' + active.priority +
-            ' · ' + groupTotal(state.counters, group) + '/' + group.limit)
+            ' · ' + achieved + '/' + target)
         : 'Nessuna fascia operativa attiva in questo momento';
     }
     function render() {
@@ -358,7 +367,19 @@
           state.counters[item.id] >= item.limit;
       });
       updateTiming();
+      document.dispatchEvent(new CustomEvent('case247:agenda50-render', {detail:{date,counts:{...state.counters}}}));
     }
+    window.CASE247Agenda50 = {
+      selectDay(day) {
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) return false;
+        const d = new Date(day + 'T12:00:00Z');
+        if (Number.isNaN(d.getTime()) || d.toISOString().slice(0,10)!==day || d.getUTCDay()===0) return false;
+        date = day; state = load(date); render(); return true;
+      },
+      getDay:()=>date,
+      getCounts:()=>({...state.counters}),
+      refresh:()=>render()
+    };
     render();
     document.addEventListener('visibilitychange', () => {
       if (!document.hidden) { rollover(); if (!memoryOnly) { state = load(date); render(); } }

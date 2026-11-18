@@ -75,7 +75,7 @@ test('report contains 3 group totals, all 6 counters and final 50', () => {
   assert.match(output, /2026-11-18/);
   assert.match(output, /Mattina · 09:30 – 11:30 · Acquisizione — 30\/30/);
   assert.match(output, /Tarda mattina · 11:30 – 12:30 · Acquisizione diretta — 10\/10/);
-  assert.match(output, /Pomeriggio · 14:30 – 15:30 \/ 17:30 – 18:00 · Sviluppo e Follow-up — 10\/10/);
+  assert.match(output, /Pomeriggio · 14:00 – 15:30 \/ 15:30 – 16:30 · Sviluppo e Follow-up — 10\/10/);
   assert.match(output, /TOTALE CONFERMATE: 50\/50/);
   for (const item of ITEMS) assert.ok(output.includes(item.label));
 });
@@ -84,9 +84,9 @@ test('isolation regression: existing calendar code unchanged in this feature', (
   const html = fs.readFileSync(path.join(__dirname,'../gestione/index.html'),'utf8');
   const script = fs.readFileSync(path.join(__dirname,'../gestione/agenda50.js'),'utf8');
   assert.match(html, /saas-shell\.js\?v=20261118-reorder1/);
-  assert.match(html, /agenda50\.js\?v=20261118-sleep2230/);
-  assert.match(html, /agenda50\.css\?v=20261118-sleep2230/);
-  assert.ok(html.indexOf('saas-shell.js?v=20261118-reorder1') < html.indexOf('agenda50.js?v=20261118-sleep2230'));
+  assert.match(html, /agenda50\.js\?v=20261118-unified1/);
+  assert.match(html, /agenda50\.css\?v=20261118-unified1/);
+  assert.ok(html.indexOf('saas-shell.js?v=20261118-reorder1') < html.indexOf('agenda50.js?v=20261118-unified1'));
   assert.match(script, /calendar\.insertBefore\(section, filters\)/);
   assert.doesNotMatch(script, /cc-week['"]?\)\.innerHTML|cc-week['"]?\)\.replaceChildren/);
   assert.match(script, /window\.confirm\(/);
@@ -119,19 +119,19 @@ test('time windows use Europe/Rome minutes with exclusive end boundaries, includ
  assert.equal(activeWindow(atRome('2026-11-18','10:29')).group,'morning');
  assert.equal(activeWindow(atRome('2026-11-18','10:30')).group,'calls');
  assert.equal(activeWindow(atRome('2026-11-18','11:30')),null);
- assert.equal(activeWindow(atRome('2026-11-18','13:30')).group,'afternoon');
- assert.equal(activeWindow(atRome('2026-11-18','14:30')),null);
- assert.equal(activeWindow(atRome('2026-11-18','16:30')).group,'afternoon');
+ assert.equal(activeWindow(atRome('2026-11-18','13:00')).group,'afternoon');
+ assert.equal(activeWindow(atRome('2026-11-18','14:30')).item,'followups');
+ assert.equal(activeWindow(atRome('2026-11-18','15:30')),null);
  assert.equal(activeWindow(atRome('2026-11-18','17:00')),null);
  // Summer UTC+2
  assert.equal(activeWindow(atRome('2026-07-01','07:30')).group,'morning');
- assert.equal(activeWindow(atRome('2026-07-01','15:30')).group,'afternoon');
+ assert.equal(activeWindow(atRome('2026-07-01','12:00')).item,'comments');
 });
 test('time-driven banner and pulse preserve confirmation workflow and motion preferences',()=>{
  const js=fs.readFileSync(path.join(__dirname,'../gestione/agenda50.js'),'utf8');
  const css=fs.readFileSync(path.join(__dirname,'../gestione/agenda50.css'),'utf8');
  assert.match(js,/window\.setInterval\(\(\) => \{ rollover\(\); updateTiming\(\); \}, 20000\)/);
- assert.match(js,/groupTotal\(state\.counters, group\) >= group\.limit/);
+ assert.match(js,/const done = !!group && achieved >= target/);
  assert.match(js,/classList\.toggle\('fascia-attiva-lampeggiante'/);
  assert.match(js,/badge\.hidden = !shouldPulse/);
  assert.match(js,/render\(\)/);
@@ -155,8 +155,23 @@ test('sleep reminder switches on at 22:30 Rome time and resets after midnight',(
  const js=fs.readFileSync(path.join(__dirname,'../gestione/agenda50.js'),'utf8');
  const css=fs.readFileSync(path.join(__dirname,'../gestione/agenda50.css'),'utf8');
  assert.match(js,/22:30 · DORMIRE/);
- assert.match(js,/sleep \? null : activeWindow\(now\)/);
+ assert.match(js,/isToday && !sleep \? activeWindow\(now\) : null/);
  assert.match(css,/a50-sleep-red-pulse/);
  assert.match(css,/1\.5s ease-in-out infinite/);
  assert.match(css,/prefers-reduced-motion:reduce/);
+});
+
+test('one integrated chronological day contains all operational blocks and preserves core actions',()=>{
+ const html=fs.readFileSync(path.join(__dirname,'../gestione/index.html'),'utf8');
+ const script=fs.readFileSync(path.join(__dirname,'../gestione/agenda-unificata.js'),'utf8');
+ const css=fs.readFileSync(path.join(__dirname,'../gestione/agenda-unificata.css'),'utf8');
+ assert.match(html,/agenda-unificata\.js\?v=20261118-1/);
+ assert.match(html,/agenda-unificata\.css\?v=20261118-1/);
+ assert.match(script,/Agenda integrata/);
+ for(const label of ['Acquisizione Digitale','Acquisizione Diretta','Sviluppo Prioritario & Commenti Social','Contenuti, Materiali & Follow-up','Test, Verifiche & Chiusura Operativa','STUDIO · 2S CAT','Revisione lavori aperti','KPI e scadenze','Pianificazione settimana','CRM Excel','Seller Radar','WhatsApp'])assert.ok(script.includes(label),label);
+ assert.match(script,/A\.selectDay\(day\)/);
+ assert.match(script,/case247-cc-school-2scat-v1/);
+ assert.match(script,/case247-cc-tasks-v1/);
+ assert.match(css,/#cc-calendar>#cc-week/);
+ assert.match(css,/\.a50-day-saturday/);
 });

@@ -92,12 +92,14 @@ async function main(){
  await until("document.querySelector('#saas-app')?.dataset.view==='agenda'",'SaaS mobile agenda');
  assert.equal(await evalJS("document.scrollingElement.scrollHeight<=innerHeight"),true);
  assert.equal(await evalJS("[...document.querySelectorAll('#cc-week .cc-day')].filter(x=>getComputedStyle(x).display!=='none').length"),6);
- assert.equal(await evalJS("getComputedStyle(document.querySelector('#cc-week')).gridTemplateColumns.split(' ').length"),2);
+ assert.equal(await evalJS("getComputedStyle(document.querySelector('#cc-week')).display"),'none');
+ assert.equal(await evalJS("document.querySelectorAll('#a50-unified-timeline .a50-time-block').length>=6"),true);
+ assert.equal(await evalJS("getComputedStyle(document.querySelector('#a50-unified-view')).display!=='none'"),true);
  await evalJS("document.querySelector('[data-saas-view=acquisizione]').click();true");
  assert.equal(await evalJS("document.querySelector('#saas-app').dataset.view"),'acquisizione');
  await evalJS("document.querySelector('[data-saas-view=agenda]').click();true");
  assert.equal(await evalJS("document.querySelector('#saas-app').dataset.view"),'agenda');
- console.log('PASS: six-day mobile grid and tab switching without document scroll');
+ console.log('PASS: single chronological mobile agenda, hidden legacy grid and tab switching');
  await evalJS("document.querySelector('.saas-reorder-toggle').click();true");
  await evalJS("document.querySelector('[data-saas-key=archivio] .saas-move-left').click();true");
  assert.equal(await evalJS("document.querySelectorAll('.saas-tab-unit')[4].dataset.saasKey"),'archivio');
