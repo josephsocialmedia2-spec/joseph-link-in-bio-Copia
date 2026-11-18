@@ -102,19 +102,174 @@ function confirmDraft(){
  pending=null;renderDraft();ctx.renderAll();
  ctx.notify('Orario 2S CAT confermato per la settimana del '+fmt(week));
 }
+
+const REVIEW_STATES=[
+ {id:'pending',label:'Da verificare'},
+ {id:'verified',label:'Verificata ✓'},
+ {id:'reviewed',label:'Ripasso OK'}
+];
+const reviewKey=r=>S.lessonKey(r);
+function ensureStudyMeta(){
+ if(!state.lessonReview||typeof state.lessonReview!=='object'||Array.isArray(state.lessonReview))state.lessonReview={};
+ if(!state.lessonNotes||typeof state.lessonNotes!=='object'||Array.isArray(state.lessonNotes))state.lessonNotes={};
+}
+function reviewState(r){
+ ensureStudyMeta();
+ const id=state.lessonReview[reviewKey(r)];
+ return REVIEW_STATES.some(s=>s.id===id)?id:'pending';
+}
+function selectRows(rows){
+ return rows.filter(r=>(dayFilter==='all'||r.date===dayFilter)&&
+  (subjectFilter==='all'||S.normalize(r.subject)===S.normalize(subjectFilter)));
+}
+function renderFilters(){
+ const days=$('#cc-study-filter-days');
+ const subjectsBar=$('#cc-study-filter-subjects');
+ days.replaceChildren();subjectsBar.replaceChildren();
+ function pill(label,selected,callback){
+  const b=button(label,callback);
+  b.className='cc-study-pill';
+  b.setAttribute('aria-pressed',String(selected));
+  return b;
+ }
+ days.append(pill('Tutti',dayFilter==='all',()=>{dayFilter='all';render()}));
+ ['Lun','Mar','Mer','Gio','Ven'].forEach((label,i)=>{
+  const date=S.plusDays(week,i);
+  days.append(pill(label+' '+Number(date.slice(-2)),dayFilter===date,()=>{dayFilter=date;render()}));
+ });
+ subjectsBar.append(pill('Tutte le materie',subjectFilter==='all',()=>{subjectFilter='all';render()}));
+ S.SUBJECTS.forEach(subject=>subjectsBar.append(
+  pill(subject,subjectFilter===subject,()=>{subjectFilter=subject;render()})
+ ));
+}
+function prepareReference(){
+ week='2026-11-16';$('#cc-school-week').value=week;
+ pending=S.reference(week);
+ source='Riferimento 16–20 novembre (nessuna modifica prima della conferma)';
+ renderDraft();render();
+}
+function verifyAll(){
+ const rows=getLessons(week);
+ if(!rows.length){if(week==='2026-11-16'){prepareReference();ctx.notify('Prima conferma le 13 lezioni di riferimento; nessuna lezione è stata salvata automaticamente.')}
+  else ctx.notify('Nessuna lezione confermata da verificare.');
+  return;
+ }
+ if(!window.confirm('Segnare come Verificata ✓ tutte le '+rows.length+' lezioni di questa settimana? Le date e gli orari non cambieranno.'))return;
+ ensureStudyMeta();
+ rows.forEach(r=>{state.lessonReview[reviewKey(r)]='verified'});
+ if(save(KEY,state)){render();ctx.notify(rows.length+' lezioni segnate Verificate.')}
+}
+function changeReview(r,referenceOnly){
+ if(referenceOnly){prepareReference();ctx.notify('Conferma il riferimento prima di modificare lo stato delle lezioni.');return}
+ ensureStudyMeta();
+ const current=REVIEW_STATES.findIndex(s=>s.id===reviewState(r));
+ state.lessonReview[reviewKey(r)]=REVIEW_STATES[(current+1)%REVIEW_STATES.length].id;
+ if(save(KEY,state))render();
+}
+function deleteLesson(r,referenceOnly){
+ if(referenceOnly){prepareReference();ctx.notify('Modifica il riferimento in anteprima, poi conferma il nuovo orario.');return}
+ const item=state.weeks[week],key=reviewKey(r);
+ if(!item||!Array.isArray(item.rows))return;
+ if(!window.confirm('Eliminare solo '+r.subject+' del '+fmt(r.date)+' '+r.start+'–'+r.end+'? Le altre lezioni e attività rimarranno intatte.'))return;
+ item.rows=item.rows.filter(x=>reviewKey(x)!==key);
+ ensureStudyMeta();delete state.lessonReview[key];delete state.lessonNotes[key];
+ item.updatedAt=new Date().toISOString();
+ if(save(KEY,state)){openedNote=null;ctx.renderAll();}
+}
+function noteEditor(r,referenceOnly){
+ const tr=node('tr',undefined,'cc-study-editor-row'),td=node('td');
+ td.colSpan=6;
+ const form=node('form',undefined,'cc-study-inline-editor');
+ const type=node('select');
+ [['NOTA','Nota'],['SCUOLA VERIFICA','Verifica'],['INTERROGAZIONE','Interrogazione']].forEach(([value,label])=>{
+  const option=node('option',label);option.value=value;type.append(option);
+ });
+ type.setAttribute('aria-label','Tipo di nota o prova');
+ const time=node('input');time.type='time';time.value=r.end;time.setAttribute('aria-label','Ora verifica/interrogazione');
+ const text=node('textarea');text.rows=1;text.maxLength=250;text.placeholder='Argomento o nota (facoltativo per verifiche)';
+ text.setAttribute('aria-label','Argomento, verifica o nota');
+ ensureStudyMeta();
+ text.value=state.lessonNotes[reviewKey(r)]||'';
+ const saveButton=node('button','Salva');saveButton.type='submit';
+ const close=button('Chiudi',()=>{openedNote=null;render()});
+ type.onchange=()=>{time.hidden=type.value==='NOTA'};
+ time.hidden=true;
+ form.append(type,time,text,saveButton,close);
+ if(referenceOnly){
+  saveButton.disabled=true;
+  form.append(node('small','Conferma prima l’orario di riferimento.','cc-sub'));
+ }
+ form.addEventListener('submit',event=>{
+  event.preventDefault();
+  if(referenceOnly)return;
+  const content=text.value.trim().slice(0,250);
+  if(type.value==='NOTA'){
+   if(content)state.lessonNotes[reviewKey(r)]=content;
+   else delete state.lessonNotes[reviewKey(r)];
+   if(save(KEY,state)){openedNote=null;render();ctx.notify('Nota salvata per '+r.subject);}
+   return;
+  }
+  if(!S.minutes(time.value)&&time.value!=='00:00'){ctx.notify('Ora non valida');return}
+  const tasks=ctx.getTasks();
+  const subject=r.subject;
+  const task={
+   id:'studio-quick-'+Date.now()+'-'+Math.random().toString(36).slice(2,7),
+   date:r.date,time:time.value,duration:30,actual:0,priority:'P2',status:'open',
+   project:'STUDIO',schoolType:type.value,subject,
+   title:(type.value==='SCUOLA VERIFICA'?'Verifica ':'Interrogazione ')+subject,
+   topics:content,prepStatus:'da preparare',notes:'Inserita dal pannello Studio 2S CAT'
+  };
+  tasks.push(task);
+  openedNote=null;
+  ctx.saveTasks();
+  ctx.notify((type.value==='SCUOLA VERIFICA'?'Verifica':'Interrogazione')+' registrata per '+subject);
+ });
+ td.append(form);tr.append(td);return tr;
+}
 function render(){
  if(!$('#cc-studio'))return;
  $('#cc-school-week').value=week;
- const item=state.weeks[week],rows=getLessons(week),status=$('#cc-school-status');
- status.textContent='Settimana '+fmt(week)+' · '+(pending?'DA VERIFICARE · '+pending.length+' righe in anteprima':item?'CONFERMATO · '+rows.length+' lezioni · ultimo aggiornamento '+new Date(item.updatedAt).toLocaleString('it-IT'):'DA CARICARE · nessun orario confermato')+(state.lastUpload?' · ultimo file selezionato '+new Date(state.lastUpload).toLocaleDateString('it-IT'):'');
+ const item=state.weeks[week];
+ const savedRows=getLessons(week);
+ const referenceOnly=week==='2026-11-16'&&!item;
+ const rows=referenceOnly?S.reference(week):savedRows;
+ const month=new Intl.DateTimeFormat('it-IT',{timeZone:'UTC',month:'short'}).format(S.fromISO(S.plusDays(week,4)));
+ $('#cc-school-badge').textContent=Number(week.slice(-2))+'–'+Number(S.plusDays(week,4).slice(-2))+' '+month+' · '+rows.length+' lezioni';
+ const status=$('#cc-school-status');
+ status.textContent=pending?'Anteprima · '+pending.length+' righe da confermare':
+   referenceOnly?'13 lezioni di riferimento disponibili · non salvate su questo dispositivo':
+   item?'Orario salvato · '+savedRows.length+' lezioni':'Nessun orario salvato per questa settimana';
+ renderFilters();
  const target=$('#cc-school-lessons');target.replaceChildren();
+ const visible=selectRows(rows);
  if(rows.length){
-  const scroller=node('div',undefined,'cc-school-table-wrap'),table=node('table',undefined,'cc-school-table'),thead=node('thead'),h=node('tr');
-  ['Data','Orario','Materia','Note','Stato'].forEach(t=>h.append(node('th',t)));thead.append(h);table.append(thead);
-  const tbody=node('tbody');rows.forEach(r=>{const tr=node('tr');[fmt(r.date),r.start+'–'+r.end,r.subject,r.notes,r.confidence].forEach(value=>tr.append(node('td',value)));tbody.append(tr)});
+  const scroller=node('div',undefined,'cc-school-table-wrap cc-study-table-wrap');
+  const table=node('table',undefined,'cc-school-table cc-study-table');
+  const thead=node('thead'),h=node('tr');
+  ['Giorno/Data','Orario','Materia','Stato','Azioni'].forEach(t=>h.append(node('th',t)));
+  thead.append(h);table.append(thead);
+  const tbody=node('tbody');
+  visible.forEach(r=>{
+   const tr=node('tr',undefined,'cc-study-row');
+   tr.append(node('td',fmt(r.date)),node('td',r.start+'–'+r.end));
+   tr.append(node('td',r.subject,'cc-study-subject'));
+   const review=node('td');
+   const stage=REVIEW_STATES.find(s=>s.id===reviewState(r));
+   const stateButton=button(stage.label,()=>changeReview(r,referenceOnly));
+   stateButton.className='cc-study-state cc-study-state-'+stage.id;
+   stateButton.setAttribute('aria-label','Stato '+r.subject+': '+stage.label);
+   review.append(stateButton);tr.append(review);
+   const actions=node('td'),group=node('div',undefined,'cc-study-row-actions');
+   const note=button('+ Nota / Verifica',()=>{openedNote=openedNote===reviewKey(r)?null:reviewKey(r);render()});
+   const del=button('Elimina',()=>deleteLesson(r,referenceOnly));
+   del.className='cc-study-delete';
+   group.append(note,del);actions.append(group);tr.append(actions);
+   tbody.append(tr);
+   if(openedNote===reviewKey(r))tbody.append(noteEditor(r,referenceOnly));
+  });
   table.append(tbody);scroller.append(table);target.append(scroller);
-  target.append(node('p','Materie: '+[...new Set(rows.map(x=>x.subject))].join(', '),'cc-sub'));
- }else target.append(node('p','Nessuna lezione confermata: l’orario non viene ripetuto automaticamente nelle altre settimane.','cc-sub'));
+  if(!visible.length)target.append(node('p','Nessuna lezione per i filtri selezionati.','cc-sub'));
+ }else target.append(node('p','Nessuna lezione salvata per questa settimana.','cc-sub'));
  const now=S.localParts(),isSunday=S.fromISO(now.date).getUTCDay()===0,next=S.monday(S.plusDays(now.date,1));
  $('#cc-school-reminder').classList.toggle('cc-hidden',!(isSunday&&now.time>=($('#cc-school-time').value||'09:00')&&!getLessons(next).length));
  renderExams();renderConflicts();
