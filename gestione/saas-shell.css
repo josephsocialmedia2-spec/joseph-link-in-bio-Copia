@@ -82,3 +82,20 @@ body:has(#saas-app)>.saas-legacy-hidden{display:none!important}
 #saas-app #cc-pilastri .comandamento p{font-size:11px;line-height:1.5;margin:0}
 #saas-app #cc-pilastri .comandamento:hover{transform:none!important}
 @media(max-width:850px){#saas-app #cc-pilastri .pilastri-gruppi{grid-template-columns:1fr}}
+
+/* Tabs: drag & drop on desktop, accessible arrow controls on touch devices. */
+#saas-app .saas-tabs{gap:2px;padding-right:9px;overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;align-items:stretch}
+#saas-app .saas-tab-unit{display:flex;flex:0 0 auto;align-items:stretch;min-width:0;border-bottom:2px solid transparent}
+#saas-app .saas-tab-unit.saas-dragging{opacity:.5}
+#saas-app .saas-tab-unit>.saas-tab{flex:1 1 auto;border-bottom:0}
+#saas-app .saas-tab-unit:has(.saas-tab[aria-pressed="true"]){border-bottom-color:var(--accent);background:#f5f8ff}
+#saas-app .saas-tab-unit .saas-move-left,#saas-app .saas-tab-unit .saas-move-right{display:none;width:22px;min-width:22px;padding:0;border:0;border-radius:0;background:#eaf0fb;color:#1d4ed8;font-size:19px;cursor:pointer}
+#saas-app .saas-tab-unit.saas-sort-mode .saas-move-left,#saas-app .saas-tab-unit.saas-sort-mode .saas-move-right{display:block}
+#saas-app .saas-tab-unit .saas-move-left:disabled,#saas-app .saas-tab-unit .saas-move-right:disabled{opacity:.25;cursor:default}
+#saas-app .saas-reorder-toggle{align-self:center;flex:0 0 auto;margin-left:auto;padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:#405067;font-weight:650;font-size:11px;cursor:pointer;white-space:nowrap}
+#saas-app .saas-reorder-toggle[aria-pressed="true"]{background:#edf3ff;color:#1d4ed8;border-color:#b4c7ef}
+#saas-app .saas-workbook-bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 14px;margin-bottom:12px;background:#fff;border:1px solid var(--line);border-radius:8px}
+#saas-app .saas-workbook-bar span{margin-right:auto;font-weight:750;color:var(--ink)}
+#saas-app .saas-workbook-action,#saas-app .saas-workbook-config{min-height:34px;padding:7px 12px;border-radius:6px;border:1px solid var(--line);background:#fff;color:#31506d;font-weight:650;cursor:pointer}
+#saas-app .saas-workbook-action{background:#2563eb;color:white;border-color:#2563eb}
+@media(max-width:620px){#saas-app .saas-tabs{flex-wrap:nowrap;overflow-x:auto;padding:0 5px}#saas-app .saas-tab-unit{height:100%;flex:0 0 auto}#saas-app .saas-tab-unit>.saas-tab{height:100%;min-width:auto;padding:0 12px}#saas-app .saas-reorder-toggle{margin-left:6px}#saas-app .saas-workbook-bar{gap:7px}#saas-app .saas-workbook-bar span{flex:1 1 100%}}
