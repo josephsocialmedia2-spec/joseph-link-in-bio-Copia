@@ -59,6 +59,11 @@
     const minutes = romeMinutes(now);
     return WINDOWS.find(window => minutes >= window.start && minutes < window.end) || null;
   }
+  // Promemoria serale, indipendente dalle 50 azioni e dai loro contatori.
+  const SLEEP_START = 22 * 60 + 30;
+  function sleepReminderActive(now) {
+    return romeMinutes(now) >= SLEEP_START;
+  }
   const ITEMS = GROUPS.flatMap(group => group.items);
   const CAPS = Object.fromEntries(ITEMS.map(item => [item.id, item.limit]));
   const MAX_TOTAL = ITEMS.reduce((sum, item) => sum + item.limit, 0);
@@ -120,7 +125,7 @@
   // Le funzioni pure sono verificabili con i test Node senza istanziare il DOM.
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = { GROUPS, ITEMS, CAPS, MAX_TOTAL, romeDay, normalizeCounts,
-      total, groupTotal, nextCounts, fresh, normalizeState, report, WINDOWS, romeMinutes, activeWindow };
+      total, groupTotal, nextCounts, fresh, normalizeState, report, WINDOWS, romeMinutes, activeWindow, sleepReminderActive };
   }
   if (typeof document === 'undefined') return;
 
@@ -312,7 +317,8 @@
         'Operazione aggiornata. Nessun messaggio è stato inviato automaticamente.');
     }
     function updateTiming(now) {
-      const active = activeWindow(now);
+      const sleep = sleepReminderActive(now);
+      const active = sleep ? null : activeWindow(now);
       const group = active && GROUPS.find(entry => entry.id === active.group);
       const done = !!group && groupTotal(state.counters, group) >= group.limit;
       section.querySelectorAll('.a50-group').forEach(card => {
@@ -321,11 +327,14 @@
         const badge = card.querySelector('.a50-active-badge');
         if (badge) badge.hidden = !shouldPulse;
       });
+      liveBanner.classList.toggle('a50-sleep-alert', sleep);
       liveBanner.classList.toggle('fascia-attiva-lampeggiante', !!active && !done);
       liveBanner.classList.toggle('a50-live-complete', !!active && done);
-      liveBanner.classList.toggle('a50-live-idle', !active);
-      liveIcon.textContent = active ? (done ? '✓' : '●') : '✓';
-      liveText.textContent = active
+      liveBanner.classList.toggle('a50-live-idle', !active && !sleep);
+      liveIcon.textContent = sleep ? '●' : (active ? (done ? '✓' : '●') : '✓');
+      liveText.textContent = sleep
+        ? '22:30 · DORMIRE — È ora di riposare'
+        : active
         ? (done
           ? 'Fascia completata (' + active.label + '): ' + group.limit + '/' + group.limit
           : 'Fascia attiva (' + active.label + '): ' + active.priority +
