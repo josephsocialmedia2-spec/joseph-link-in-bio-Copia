@@ -40,6 +40,25 @@
       ] }
     ] }
   ];
+  // Fasce orarie in minuti locali (Europe/Rome). Fine intervallo esclusa.
+  const WINDOWS = [
+    { group: 'morning', start: 9 * 60 + 30, end: 11 * 60 + 30, label: '09:30–11:30', priority: 'Completa Acquisizione Mattina' },
+    { group: 'calls', start: 11 * 60 + 30, end: 12 * 60 + 30, label: '11:30–12:30', priority: 'Completa Acquisizione diretta' },
+    { group: 'afternoon', start: 14 * 60 + 30, end: 15 * 60 + 30, label: '14:30–15:30', priority: 'Completa Sviluppo e Follow-up' },
+    { group: 'afternoon', start: 17 * 60 + 30, end: 18 * 60, label: '17:30–18:00', priority: 'Completa Sviluppo e Follow-up' }
+  ];
+  function romeMinutes(now) {
+    const parts = new Intl.DateTimeFormat('it-IT', {
+      timeZone: 'Europe/Rome', hour: '2-digit', minute: '2-digit',
+      hourCycle: 'h23'
+    }).formatToParts(now || new Date());
+    const values = Object.fromEntries(parts.map(part => [part.type, part.value]));
+    return Number(values.hour) * 60 + Number(values.minute);
+  }
+  function activeWindow(now) {
+    const minutes = romeMinutes(now);
+    return WINDOWS.find(window => minutes >= window.start && minutes < window.end) || null;
+  }
   const ITEMS = GROUPS.flatMap(group => group.items);
   const CAPS = Object.fromEntries(ITEMS.map(item => [item.id, item.limit]));
   const MAX_TOTAL = ITEMS.reduce((sum, item) => sum + item.limit, 0);
@@ -101,7 +120,7 @@
   // Le funzioni pure sono verificabili con i test Node senza istanziare il DOM.
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = { GROUPS, ITEMS, CAPS, MAX_TOTAL, romeDay, normalizeCounts,
-      total, groupTotal, nextCounts, fresh, normalizeState, report };
+      total, groupTotal, nextCounts, fresh, normalizeState, report, WINDOWS, romeMinutes, activeWindow };
   }
   if (typeof document === 'undefined') return;
 
@@ -157,6 +176,15 @@
     heading.append(title);
     const dayLabel = node('div', 'a50-date');
     header.append(heading, dayLabel);
+    // Notifica compatta sotto il titolo. I contatori continuano a rappresentare solo conferme reali.
+    const liveBanner = node('div', 'a50-live-banner');
+    liveBanner.id = 'a50-live-banner';
+    liveBanner.setAttribute('role', 'status');
+    liveBanner.setAttribute('aria-live', 'off'); // Evita annunci ripetuti ogni 20 secondi.
+    const liveIcon = node('span', 'a50-live-icon', '●');
+    liveIcon.setAttribute('aria-hidden', 'true');
+    const liveText = node('span', 'a50-live-text', 'Nessuna fascia operativa attiva in questo momento');
+    liveBanner.append(liveIcon, liveText);
     const progress = node('progress', 'a50-progress');
     progress.max = MAX_TOTAL;
     progress.value = 0;
@@ -167,6 +195,10 @@
       card.dataset.group = group.id;
       const row = node('div', 'a50-group-head');
       row.append(node('h3', '', group.time));
+      const activeBadge = node('span', 'a50-active-badge', '● ORA IN CORSO');
+      activeBadge.hidden = true;
+      activeBadge.setAttribute('aria-hidden', 'true');
+      row.append(activeBadge);
       const sum = node('output', 'a50-group-sum', '0 / ' + group.limit);
       sum.dataset.subtotal = group.id;
       row.append(sum);
@@ -213,7 +245,7 @@
     feedback.setAttribute('role', 'status');
     feedback.setAttribute('aria-live', 'polite');
     toolbar.append(copy, reset);
-    section.append(header, progress, groupsGrid, toolbar, note, feedback);
+    section.append(header, liveBanner, progress, groupsGrid, toolbar, note, feedback);
     // Pannello aggiuntivo sotto la griglia settimanale, prima dei comandi export/import.
     // Non modifica, sposta o ricrea alcuna card esistente.
     calendar.insertBefore(section, filters);
@@ -279,6 +311,27 @@
         'Conferma registrata in questa scheda. Memoria locale non disponibile.' :
         'Operazione aggiornata. Nessun messaggio è stato inviato automaticamente.');
     }
+    function updateTiming(now) {
+      const active = activeWindow(now);
+      const group = active && GROUPS.find(entry => entry.id === active.group);
+      const done = !!group && groupTotal(state.counters, group) >= group.limit;
+      section.querySelectorAll('.a50-group').forEach(card => {
+        const shouldPulse = !!active && !done && card.dataset.group === active.group;
+        card.classList.toggle('fascia-attiva-lampeggiante', shouldPulse);
+        const badge = card.querySelector('.a50-active-badge');
+        if (badge) badge.hidden = !shouldPulse;
+      });
+      liveBanner.classList.toggle('fascia-attiva-lampeggiante', !!active && !done);
+      liveBanner.classList.toggle('a50-live-complete', !!active && done);
+      liveBanner.classList.toggle('a50-live-idle', !active);
+      liveIcon.textContent = active ? (done ? '✓' : '●') : '✓';
+      liveText.textContent = active
+        ? (done
+          ? 'Fascia completata (' + active.label + '): ' + group.limit + '/' + group.limit
+          : 'Fascia attiva (' + active.label + '): ' + active.priority +
+            ' · ' + groupTotal(state.counters, group) + '/' + group.limit)
+        : 'Nessuna fascia operativa attiva in questo momento';
+    }
     function render() {
       bigTotal.textContent = total(state.counters) + ' / ' + MAX_TOTAL;
       progress.value = total(state.counters);
@@ -295,6 +348,7 @@
         section.querySelector('[data-direction="1"][data-for-item="' + item.id + '"]').disabled =
           state.counters[item.id] >= item.limit;
       });
+      updateTiming();
     }
     render();
     document.addEventListener('visibilitychange', () => {
@@ -303,7 +357,8 @@
     window.addEventListener('storage', event => {
       if (event.key === storageKey(date)) { state = load(date); render(); }
     });
-    window.setInterval(rollover, 60000);
+    // Rilevamento regolare, indipendente da click, refresh o modifiche ai contatori.
+    window.setInterval(() => { rollover(); updateTiming(); }, 20000);
     return true;
   }
   if (!mount()) {
