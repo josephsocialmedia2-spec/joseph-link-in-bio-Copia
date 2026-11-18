@@ -30,25 +30,27 @@
     return node;
   }
   function mount() {
-    const calendar = document.getElementById('cc-calendar');
-    if (!calendar || !calendar.parentNode || document.getElementById('cc-pilastri')) return !!document.getElementById('cc-pilastri');
-    const layout = create('div', 'cc-agenda-pilastri-layout');
+    const control = document.getElementById('case247-control-center');
+    if (!control || !control.parentNode || document.getElementById('cc-pilastri')) return !!document.getElementById('cc-pilastri');
     const aside = create('aside', 'sidebar-comandamenti');
     aside.id = 'cc-pilastri';
     aside.setAttribute('aria-label', 'I Pilastri delle Vendite');
     aside.append(create('h2', '', 'I Pilastri delle Vendite'));
+    const columns = create('div', 'pilastri-gruppi');
     for (const [label, items] of groups) {
-      aside.append(create('div', 'sezione-label', label));
+      const group = create('section', 'pilastri-gruppo');
+      group.append(create('div', 'sezione-label', label));
       for (const [numeral, title, description] of items) {
         const card = create('article', 'comandamento');
         const header = create('div', 'comandamento-header');
         header.append(create('span', 'numero-romano', numeral), create('span', 'concetto-titolo', title));
         card.append(header, create('p', '', description));
-        aside.append(card);
+        group.append(card);
       }
+      columns.append(group);
     }
-    calendar.parentNode.insertBefore(layout, calendar);
-    layout.append(aside, calendar);
+    aside.append(columns);
+    control.parentNode.insertBefore(aside, control);
     return true;
   }
   if (mount()) return;
