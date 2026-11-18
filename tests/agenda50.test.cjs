@@ -6,7 +6,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const {
   GROUPS, ITEMS, MAX_TOTAL, romeDay, normalizeCounts, total, groupTotal,
-  nextCounts, fresh, normalizeState, report
+  nextCounts, fresh, normalizeState, report, WINDOWS, romeMinutes, activeWindow
 } = require('../gestione/agenda50.js');
 
 test('exactly 6 independent counters and group maxima 30/10/10 = 50', () => {
@@ -84,9 +84,9 @@ test('isolation regression: existing calendar code unchanged in this feature', (
   const html = fs.readFileSync(path.join(__dirname,'../gestione/index.html'),'utf8');
   const script = fs.readFileSync(path.join(__dirname,'../gestione/agenda50.js'),'utf8');
   assert.match(html, /saas-shell\.js\?v=20261118-reorder1/);
-  assert.match(html, /agenda50\.js\?v=20261118-weekfit2/);
-  assert.match(html, /agenda50\.css\?v=20261118-weekfit2/);
-  assert.ok(html.indexOf('saas-shell.js?v=20261118-reorder1') < html.indexOf('agenda50.js?v=20261118-weekfit2'));
+  assert.match(html, /agenda50\.js\?v=20261118-liveclock1/);
+  assert.match(html, /agenda50\.css\?v=20261118-liveclock1/);
+  assert.ok(html.indexOf('saas-shell.js?v=20261118-reorder1') < html.indexOf('agenda50.js?v=20261118-liveclock1'));
   assert.match(script, /calendar\.insertBefore\(section, filters\)/);
   assert.doesNotMatch(script, /cc-week['"]?\)\.innerHTML|cc-week['"]?\)\.replaceChildren/);
   assert.match(script, /window\.confirm\(/);
@@ -107,4 +107,38 @@ test('placement is after weekly grid, before export/import, preserving original 
  for(const label of ['Esporta attività JSON','Esporta calendario ICS','Importa JSON']){
   assert.ok(core.includes(label),'original action missing: '+label);
  }
+});
+
+test('time windows use Europe/Rome minutes with exclusive end boundaries, including DST',()=>{
+ assert.equal(WINDOWS.length,4);
+ const atRome=(day,time)=>new Date(day+'T'+time+':00Z');
+ // Winter UTC+1
+ assert.equal(romeMinutes(atRome('2026-11-18','08:29')),9*60+29);
+ assert.equal(activeWindow(atRome('2026-11-18','08:29')),null);
+ assert.equal(activeWindow(atRome('2026-11-18','08:30')).group,'morning');
+ assert.equal(activeWindow(atRome('2026-11-18','10:29')).group,'morning');
+ assert.equal(activeWindow(atRome('2026-11-18','10:30')).group,'calls');
+ assert.equal(activeWindow(atRome('2026-11-18','11:30')),null);
+ assert.equal(activeWindow(atRome('2026-11-18','13:30')).group,'afternoon');
+ assert.equal(activeWindow(atRome('2026-11-18','14:30')),null);
+ assert.equal(activeWindow(atRome('2026-11-18','16:30')).group,'afternoon');
+ assert.equal(activeWindow(atRome('2026-11-18','17:00')),null);
+ // Summer UTC+2
+ assert.equal(activeWindow(atRome('2026-07-01','07:30')).group,'morning');
+ assert.equal(activeWindow(atRome('2026-07-01','15:30')).group,'afternoon');
+});
+test('time-driven banner and pulse preserve confirmation workflow and motion preferences',()=>{
+ const js=fs.readFileSync(path.join(__dirname,'../gestione/agenda50.js'),'utf8');
+ const css=fs.readFileSync(path.join(__dirname,'../gestione/agenda50.css'),'utf8');
+ assert.match(js,/window\.setInterval\(\(\) => \{ rollover\(\); updateTiming\(\); \}, 20000\)/);
+ assert.match(js,/groupTotal\(state\.counters, group\) >= group\.limit/);
+ assert.match(js,/classList\.toggle\('fascia-attiva-lampeggiante'/);
+ assert.match(js,/badge\.hidden = !shouldPulse/);
+ assert.match(js,/render\(\)/);
+ assert.match(js,/a50-live-banner/);
+ assert.match(js,/ORA IN CORSO/);
+ assert.match(css,/@keyframes a50-active-glow/);
+ assert.match(css,/1\.5s ease-in-out infinite/);
+ assert.match(css,/prefers-reduced-motion:reduce/);
+ for(const label of ['−1','+1 Confermata','Copia resoconto','Azzera giornata'])assert.ok(js.includes(label));
 });

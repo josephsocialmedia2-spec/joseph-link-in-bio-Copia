@@ -80,3 +80,43 @@
     height:clamp(345px,58vh,540px)!important;min-height:345px!important;
   }
 }
+
+/* Notifiche temporizzate dell'Agenda 50: isolate dal tema chiaro/scuro e dalla SPA. */
+#case247-control-center #case247-agenda50 .a50-live-banner{
+  display:flex;align-items:center;gap:9px;margin:10px 0 8px;
+  padding:9px 12px;border:1px solid var(--a50-line);
+  border-radius:7px;color:var(--a50-ink);background:transparent;
+  font-weight:650;font-size:12px;line-height:1.35;
+}
+#case247-control-center #case247-agenda50 .a50-live-icon{font-size:12px;flex:0 0 auto}
+#case247-control-center #case247-agenda50 .a50-live-idle{opacity:.8}
+#case247-control-center #case247-agenda50 .a50-live-complete{
+  border-color:#47a478;color:#18734b;background:rgba(39,174,96,.07);
+}
+#case247-control-center #case247-agenda50 .a50-group-head{flex-wrap:wrap}
+#case247-control-center #case247-agenda50 .a50-active-badge{
+  font-size:10px;font-weight:800;white-space:nowrap;
+  color:#b45309;letter-spacing:.025em;
+}
+#case247-control-center #case247-agenda50 .a50-active-badge[hidden]{display:none!important}
+@keyframes a50-active-glow {
+  0%,100% { border-color:#cf8e37;box-shadow:0 0 0 0 rgba(245,158,11,.10),0 0 0 1px rgba(245,158,11,.10) inset; }
+  50% { border-color:#f59e0b;box-shadow:0 0 0 3px rgba(245,158,11,.13),0 0 14px 2px rgba(245,158,11,.17); }
+}
+#case247-control-center #case247-agenda50 .fascia-attiva-lampeggiante{
+  animation:a50-active-glow 1.5s ease-in-out infinite;
+  border:1px solid #cf8e37;
+}
+@media(prefers-reduced-motion:reduce){
+  #case247-control-center #case247-agenda50 .fascia-attiva-lampeggiante{
+    animation:none!important;border-color:#d19a35;box-shadow:0 0 0 2px rgba(245,158,11,.13);
+  }
+}
+
+@keyframes a50-badge-pulse {0%,100%{opacity:1}50%{opacity:.38}}
+#case247-control-center #case247-agenda50 .fascia-attiva-lampeggiante .a50-active-badge{
+ animation:a50-badge-pulse 1.5s ease-in-out infinite;
+}
+@media(prefers-reduced-motion:reduce){
+ #case247-control-center #case247-agenda50 .fascia-attiva-lampeggiante .a50-active-badge{animation:none!important}
+}
