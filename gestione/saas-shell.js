@@ -20,7 +20,78 @@ function boot(){
  const nav=document.createElement('nav');nav.className='saas-tabs';nav.setAttribute('aria-label','Sezioni della dashboard');
  const labels=[['agenda','Agenda'],['acquisizione','Acquisizione'],['pilastri','Pilastri vendite'],['motivazione','Il mio Perché'],['operativo','Strumenti'],['archivio','Archivio']];
  const tabs=new Map();
- for(const [key,label] of labels){const b=document.createElement('button');b.type='button';b.className='saas-tab';b.dataset.saasView=key;b.textContent=label;b.setAttribute('aria-pressed',String(key==='agenda'));b.addEventListener('click',()=>activate(key));tabs.set(key,b);nav.append(b)}
+ const ORDER_KEY='case247-saas-tab-order-v1';
+ const validKeys=labels.map(([key])=>key);
+ function readOrder(){
+  try{
+   const saved=JSON.parse(localStorage.getItem(ORDER_KEY)||'null');
+   if(Array.isArray(saved)&&saved.length===validKeys.length&&new Set(saved).size===validKeys.length&&saved.every(key=>validKeys.includes(key)))return saved;
+  }catch(_){}
+  return validKeys.slice();
+ }
+ let order=readOrder();
+ let sorting=false;
+ let dragKey=null;
+ const reorderToggle=document.createElement('button');
+ reorderToggle.type='button';reorderToggle.className='saas-reorder-toggle';
+ reorderToggle.textContent='Riordina schede';
+ reorderToggle.setAttribute('aria-pressed','false');
+ function persistOrder(){try{localStorage.setItem(ORDER_KEY,JSON.stringify(order))}catch(_){}}
+ function redrawTabs(){
+  order.forEach(key=>{
+   const unit=tabUnits.get(key);
+   if(!unit)return;
+   nav.append(unit);
+   unit.classList.toggle('saas-sort-mode',sorting);
+   const current=order.indexOf(key);
+   unit.querySelector('.saas-move-left').disabled=current===0;
+   unit.querySelector('.saas-move-right').disabled=current===order.length-1;
+  });
+  nav.append(reorderToggle);
+  reorderToggle.setAttribute('aria-pressed',String(sorting));
+  reorderToggle.textContent=sorting?'Fine riordino':'Riordina schede';
+ }
+ function moveTab(from,to){
+  const fromIndex=order.indexOf(from);
+  const toIndex=order.indexOf(to);
+  if(fromIndex<0||toIndex<0||fromIndex===toIndex)return;
+  order.splice(fromIndex,1);order.splice(toIndex,0,from);
+  persistOrder();redrawTabs();
+ }
+ function moveRelative(key,direction){
+  const current=order.indexOf(key),next=current+direction;
+  if(next<0||next>=order.length)return;
+  moveTab(key,order[next]);tabs.get(key)?.focus();
+ }
+ const tabUnits=new Map();
+ for(const [key,label] of labels){
+  const unit=document.createElement('div');unit.className='saas-tab-unit';unit.draggable=true;unit.dataset.saasKey=key;
+  const b=document.createElement('button');b.type='button';b.className='saas-tab';b.dataset.saasView=key;b.textContent=label;b.setAttribute('aria-pressed',String(key==='agenda'));
+  b.addEventListener('click',()=>activate(key));
+  b.addEventListener('keydown',event=>{
+   if(event.altKey&&event.key==='ArrowLeft'){event.preventDefault();moveRelative(key,-1)}
+   else if(event.altKey&&event.key==='ArrowRight'){event.preventDefault();moveRelative(key,1)}
+  });
+  tabs.set(key,b);unit.append(b);
+  for(const [direction,sign,description] of [[-1,'‹','Sposta a sinistra'],[1,'›','Sposta a destra']]){
+   const move=document.createElement('button');
+   move.type='button';move.className=direction<0?'saas-move-left':'saas-move-right';
+   move.textContent=sign;move.title=description+': '+label;
+   move.setAttribute('aria-label',description+': '+label);
+   move.addEventListener('click',()=>moveRelative(key,direction));
+   unit.append(move);
+  }
+  unit.addEventListener('dragstart',event=>{
+   dragKey=key;unit.classList.add('saas-dragging');
+   if(event.dataTransfer){event.dataTransfer.effectAllowed='move';event.dataTransfer.setData('text/plain',key)}
+  });
+  unit.addEventListener('dragover',event=>{event.preventDefault();if(event.dataTransfer)event.dataTransfer.dropEffect='move'});
+  unit.addEventListener('drop',event=>{event.preventDefault();if(dragKey)moveTab(dragKey,key)});
+  unit.addEventListener('dragend',()=>{dragKey=null;unit.classList.remove('saas-dragging')});
+  tabUnits.set(key,unit);
+ }
+ reorderToggle.addEventListener('click',()=>{sorting=!sorting;redrawTabs()});
+ redrawTabs();
  const content=document.createElement('main');content.id='saas-content';
  const primary=document.createElement('div');primary.className='saas-pane saas-control';primary.dataset.pane='control';primary.append(control);
  const acquisitionPane=document.createElement('div');acquisitionPane.className='saas-pane';acquisitionPane.dataset.pane='acquisizione';acquisitionPane.append(acquisition);
@@ -32,9 +103,15 @@ function boot(){
  document.body.prepend(app);
  const oldParts=Array.from(document.body.children).filter(n=>n!==app&&n.tagName!=='SCRIPT'&&n.tagName!=='DIALOG');
  oldParts.forEach(n=>{if(n.id!=='case247-control-center')n.classList.add('saas-legacy-hidden')});
- const sections={
-  agenda:[],acquisizione:[],pilastri:[],motivazione:[],operativo:[],archivio:[]
- };
+ // The CRM workbook link is stored only in the existing local, device-specific CRM configuration.
+ const workbookBar=document.createElement('div');workbookBar.className='saas-workbook-bar';
+ const workbookLabel=document.createElement('span');workbookLabel.textContent='Foglio di lavoro · CRM Excel';
+ const workbookOpen=document.createElement('button');workbookOpen.type='button';workbookOpen.className='saas-workbook-action';workbookOpen.textContent='Apri foglio Excel';
+ workbookOpen.addEventListener('click',()=>document.getElementById('cc-crm-open')?.click());
+ const workbookConfig=document.createElement('button');workbookConfig.type='button';workbookConfig.className='saas-workbook-config';workbookConfig.textContent='Collega / modifica';
+ workbookConfig.addEventListener('click',()=>document.getElementById('cc-crm-config')?.click());
+ workbookBar.append(workbookLabel,workbookOpen,workbookConfig);
+ acquisitionPane.prepend(workbookBar);
  function activate(view){
   if(!tabs.has(view))view='agenda';
   app.dataset.view=view;
@@ -48,12 +125,13 @@ function boot(){
   if(node&&node.scrollTop)node.scrollTop=0;
  }
  nav.addEventListener('keydown',event=>{
-  const current=labels.findIndex(x=>x[0]===app.dataset.view);
+  if(event.altKey)return;
+  const current=order.indexOf(app.dataset.view);
   let next=current;
-  if(event.key==='ArrowRight')next=(current+1)%labels.length;
-  else if(event.key==='ArrowLeft')next=(current+labels.length-1)%labels.length;
+  if(event.key==='ArrowRight')next=(current+1)%order.length;
+  else if(event.key==='ArrowLeft')next=(current+order.length-1)%order.length;
   else return;
-  event.preventDefault();activate(labels[next][0]);tabs.get(labels[next][0]).focus();
+  event.preventDefault();activate(order[next]);tabs.get(order[next]).focus();
  });
  document.addEventListener('click',event=>{
   const anchor=event.target.closest('a[href^="#cc-"]');
