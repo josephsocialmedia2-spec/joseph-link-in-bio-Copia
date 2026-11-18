@@ -29,7 +29,7 @@
           ['WhatsApp 371 370 8294', 'https://wa.me/393713708294']
         ] }
     ] },
-    { id: 'afternoon', time: 'Pomeriggio · 14:30 – 15:30 / 17:30 – 18:00 · Sviluppo e Follow-up', limit: 10, items: [
+    { id: 'afternoon', time: 'Pomeriggio · 14:00 – 15:30 / 15:30 – 16:30 · Sviluppo e Follow-up', limit: 10, items: [
       { id: 'comments', label: 'Commenti sui profili social', limit: 5, hint: 'Interazioni pertinenti sui profili collegati', links: [
         ['Canali CASE247', './canali-case247/'],
         ['Quadro 2 · Social', './quadro-social/']
