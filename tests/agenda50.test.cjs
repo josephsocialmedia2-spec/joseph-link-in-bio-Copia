@@ -73,9 +73,9 @@ test('report contains 3 group totals, all 6 counters and final 50', () => {
   const counts = normalizeCounts({email:10,linkedin:10,dm:10,calls:10,comments:5,followups:5});
   const output = report('2026-11-18', counts);
   assert.match(output, /2026-11-18/);
-  assert.match(output, /08:30 – 10:00 — 30\/30/);
-  assert.match(output, /10:30 – 11:30 — 10\/10/);
-  assert.match(output, /14:30 – 15:15 — 10\/10/);
+  assert.match(output, /Mattina · 09:30 – 11:30 · Acquisizione — 30\/30/);
+  assert.match(output, /Tarda mattina · 11:30 – 12:30 · Acquisizione diretta — 10\/10/);
+  assert.match(output, /Pomeriggio · 14:30 – 15:30 \/ 17:30 – 18:00 · Sviluppo e Follow-up — 10\/10/);
   assert.match(output, /TOTALE CONFERMATE: 50\/50/);
   for (const item of ITEMS) assert.ok(output.includes(item.label));
 });
@@ -84,12 +84,27 @@ test('isolation regression: existing calendar code unchanged in this feature', (
   const html = fs.readFileSync(path.join(__dirname,'../gestione/index.html'),'utf8');
   const script = fs.readFileSync(path.join(__dirname,'../gestione/agenda50.js'),'utf8');
   assert.match(html, /saas-shell\.js\?v=20261118-reorder1/);
-  assert.match(html, /agenda50\.js\?v=20261118-isolated1/);
-  assert.match(html, /agenda50\.css\?v=20261118-isolated1/);
-  assert.ok(html.indexOf('saas-shell.js?v=20261118-reorder1') < html.indexOf('agenda50.js?v=20261118-isolated1'));
-  assert.match(script, /main\.insertBefore\(section, calendar\.nextSibling\)/);
+  assert.match(html, /agenda50\.js\?v=20261118-weekfit2/);
+  assert.match(html, /agenda50\.css\?v=20261118-weekfit2/);
+  assert.ok(html.indexOf('saas-shell.js?v=20261118-reorder1') < html.indexOf('agenda50.js?v=20261118-weekfit2'));
+  assert.match(script, /calendar\.insertBefore\(section, filters\)/);
   assert.doesNotMatch(script, /cc-week['"]?\)\.innerHTML|cc-week['"]?\)\.replaceChildren/);
   assert.match(script, /window\.confirm\(/);
   assert.match(script, /localStorage\.setItem/);
   assert.match(script, /case247_agenda_/);
+});
+
+
+test('placement is after weekly grid, before export/import, preserving original calendar controls',()=>{
+ const html=fs.readFileSync(path.join(__dirname,'../gestione/index.html'),'utf8');
+ const agenda=fs.readFileSync(path.join(__dirname,'../gestione/agenda50.js'),'utf8');
+ assert.match(agenda,/calendar\.insertBefore\(section, filters\)/);
+ assert.match(html,/studio-compact\.css\?v=20261118-compact1/);
+ assert.match(agenda,/#cc-week/);
+ assert.match(agenda,/Copia resoconto/);
+ assert.match(agenda,/Azzera giornata/);
+ const core=fs.readFileSync(path.join(__dirname,'../gestione/control-center.js'),'utf8');
+ for(const label of ['Esporta attività JSON','Esporta calendario ICS','Importa JSON']){
+  assert.ok(core.includes(label),'original action missing: '+label);
+ }
 });
