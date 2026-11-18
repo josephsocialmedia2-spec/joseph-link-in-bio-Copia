@@ -6,7 +6,7 @@
   const PREFIX = 'case247_agenda_';
   const TIME_ZONE = 'Europe/Rome';
   const GROUPS = [
-    { id: 'morning', time: '08:30 – 10:00', limit: 30, items: [
+    { id: 'morning', time: 'Mattina · 09:30 – 11:30 · Acquisizione', limit: 30, items: [
       { id: 'email', label: 'Email ad aziende', limit: 10, hint: 'Censimento, distribuzione e Gmail', links: [
         ['Censimento aziende', './censimento-aziende/'],
         ['Email volantini', './email-volantini/'],
@@ -21,7 +21,7 @@
         ['Quadro 2 · Social', './quadro-social/']
       ] }
     ] },
-    { id: 'calls', time: '10:30 – 11:30', limit: 10, items: [
+    { id: 'calls', time: 'Tarda mattina · 11:30 – 12:30 · Acquisizione diretta', limit: 10, items: [
       { id: 'calls', label: 'Telefonate, vocali o visite', limit: 10,
         hint: 'CRM proprietari / Seller Radar · invia volantino soltanto dopo il contatto', links: [
           ['CRM / Seller Radar', './case247-operazioni/'],
@@ -29,7 +29,7 @@
           ['WhatsApp 371 370 8294', 'https://wa.me/393713708294']
         ] }
     ] },
-    { id: 'afternoon', time: '14:30 – 15:15', limit: 10, items: [
+    { id: 'afternoon', time: 'Pomeriggio · 14:30 – 15:30 / 17:30 – 18:00 · Sviluppo e Follow-up', limit: 10, items: [
       { id: 'comments', label: 'Commenti sui profili social', limit: 5, hint: 'Interazioni pertinenti sui profili collegati', links: [
         ['Canali CASE247', './canali-case247/'],
         ['Quadro 2 · Social', './quadro-social/']
@@ -138,16 +138,17 @@
     if (document.getElementById('case247-agenda50')) return true;
     const center = document.getElementById('case247-control-center');
     const main = center && center.querySelector('.cc-main');
-    const crm = main && main.querySelector('#cc-crm');
     const calendar = main && main.querySelector('#cc-calendar');
-    if (!main || !crm || !calendar) return false;
+    const weekGrid = calendar && calendar.querySelector('#cc-week');
+    const filters = calendar && calendar.querySelector('.cc-filters');
+    if (!main || !weekGrid || !filters) return false;
 
     const section = node('section', 'cc-card a50-panel');
     section.id = 'case247-agenda50';
     section.setAttribute('aria-labelledby', 'a50-title');
     const header = node('div', 'a50-head');
     const heading = node('div', 'a50-heading');
-    heading.append(node('p', 'a50-kicker', 'STRUMENTI · CASE IN PUBBLICITÀ 24/7'));
+    heading.append(node('p', 'a50-kicker', 'AGENDA · CASE IN PUBBLICITÀ 24/7'));
     const title = node('h2', '', 'Agenda Operativa Giornaliera · Obiettivo ');
     title.id = 'a50-title';
     const bigTotal = node('output', 'a50-grand-total', '0 / 50');
@@ -213,8 +214,9 @@
     feedback.setAttribute('aria-live', 'polite');
     toolbar.append(copy, reset);
     section.append(header, progress, groupsGrid, toolbar, note, feedback);
-    // Primo pannello della scheda Strumenti; il calendario e gli altri moduli restano intatti.
-    main.insertBefore(section, calendar.nextSibling);
+    // Pannello aggiuntivo sotto la griglia settimanale, prima dei comandi export/import.
+    // Non modifica, sposta o ricrea alcuna card esistente.
+    calendar.insertBefore(section, filters);
     section.addEventListener('click', event => {
       const button = event.target.closest('button[data-for-item]');
       if (!button || !section.contains(button)) return;
