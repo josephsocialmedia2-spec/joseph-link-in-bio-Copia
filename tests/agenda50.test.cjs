@@ -131,7 +131,7 @@ test('time-driven banner and pulse preserve confirmation workflow and motion pre
  const js=fs.readFileSync(path.join(__dirname,'../gestione/agenda50.js'),'utf8');
  const css=fs.readFileSync(path.join(__dirname,'../gestione/agenda50.css'),'utf8');
  assert.match(js,/window\.setInterval\(\(\) => \{ rollover\(\); updateTiming\(\); \}, 20000\)/);
- assert.match(js,/groupTotal\(state\.counters, group\) >= group\.limit/);
+ assert.match(js,/const done = !!group && achieved >= target/);
  assert.match(js,/classList\.toggle\('fascia-attiva-lampeggiante'/);
  assert.match(js,/badge\.hidden = !shouldPulse/);
  assert.match(js,/render\(\)/);
@@ -155,7 +155,7 @@ test('sleep reminder switches on at 22:30 Rome time and resets after midnight',(
  const js=fs.readFileSync(path.join(__dirname,'../gestione/agenda50.js'),'utf8');
  const css=fs.readFileSync(path.join(__dirname,'../gestione/agenda50.css'),'utf8');
  assert.match(js,/22:30 · DORMIRE/);
- assert.match(js,/sleep \? null : activeWindow\(now\)/);
+ assert.match(js,/isToday && !sleep \? activeWindow\(now\) : null/);
  assert.match(css,/a50-sleep-red-pulse/);
  assert.match(css,/1\.5s ease-in-out infinite/);
  assert.match(css,/prefers-reduced-motion:reduce/);
