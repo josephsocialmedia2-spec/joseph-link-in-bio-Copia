@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-11-17T13:38:15.834940+00:00",
-  "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00",
-  "count": 43,
+  "generated_at": "2026-11-18T13:12:19.229771+00:00",
+  "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00",
+  "count": 42,
   "auto_publish": false,
   "drafts": [
     {
@@ -17,7 +17,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "avigliana:11025377689927",
@@ -32,7 +32,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "avigliana:10886810075463",
@@ -47,7 +47,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "rubiana:10770991481159",
@@ -62,7 +62,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "rubiana:10759305756999",
@@ -77,7 +77,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "villar-dora:10826816553287",
@@ -92,7 +92,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "villar-dora:10781715595591",
@@ -107,7 +107,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "villar-dora:10596910858567",
@@ -122,7 +122,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "caprie:10816074056007",
@@ -137,7 +137,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "caprie:10777477611847",
@@ -152,7 +152,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "caprie:10552816369991",
@@ -167,7 +167,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "caprie:10552768561479",
@@ -182,7 +182,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "sant-ambrogio-di-torino:11230406017351",
@@ -191,28 +191,13 @@
       "listing_id": "11230406017351",
       "source_url": "https://lasacraimmobiliare.it/products/appartamento-sa-santambrogio",
       "media_url": "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG-20250816-WA0022_-_Copia.jpg?v=1790535476",
-      "caption": "Sant’Ambrogio di Torino · Dal catalogo La Sacra Immobiliare\n\nAPPARTAMENTO SA SANT'AMBROGIO\n95.000 €\n\nComune dichiarato nella descrizione della fonte: Sant’Ambrogio di Torino. Caratteristiche e disponibilità nella scheda originale.\nhttps://lasacraimmobiliare.it/products/appartamento-sa-santambrogio\nCatalogo locale: https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/\n\nCase in Pubblicità 24/7 · Comunicazione immobiliare. Intermediazione: La Sacra Immobiliare.",
+      "caption": "Sant’Ambrogio di Torino · Dal catalogo La Sacra Immobiliare\n\nAPPARTAMENTO SANT'AMBROGIO\n95.000 €\n\nComune dichiarato nella descrizione della fonte: Sant’Ambrogio di Torino. Caratteristiche e disponibilità nella scheda originale.\nhttps://lasacraimmobiliare.it/products/appartamento-sa-santambrogio\nCatalogo locale: https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/\n\nCase in Pubblicità 24/7 · Comunicazione immobiliare. Intermediazione: La Sacra Immobiliare.",
       "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
       "status": "BOZZA_DA_REVISIONARE",
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
-    },
-    {
-      "id": "sant-ambrogio-di-torino:10716674720071",
-      "town_id": "sant-ambrogio-di-torino",
-      "town": "Sant’Ambrogio di Torino",
-      "listing_id": "10716674720071",
-      "source_url": "https://lasacraimmobiliare.it/products/cessione-attivita-alimentare-storica-a-sant-ambrogio-di-torino",
-      "media_url": "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-03-26at15.47.02-Copia.jpg?v=1774537722",
-      "caption": "Sant’Ambrogio di Torino · Dal catalogo La Sacra Immobiliare\n\nCESSIONE ATTIVITÀ ALIMENTARE STORICA A SANT’AMBROGIO DI TORINO\nPrezzo su richiesta\n\nComune dichiarato nella descrizione della fonte: Sant’Ambrogio di Torino. Caratteristiche e disponibilità nella scheda originale.\nhttps://lasacraimmobiliare.it/products/cessione-attivita-alimentare-storica-a-sant-ambrogio-di-torino\nCatalogo locale: https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/\n\nCase in Pubblicità 24/7 · Comunicazione immobiliare. Intermediazione: La Sacra Immobiliare.",
-      "landing_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/paesi/sant-ambrogio-di-torino/",
-      "status": "BOZZA_DA_REVISIONARE",
-      "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
-      "approved": false,
-      "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "sant-ambrogio-di-torino:10680937873735",
@@ -227,7 +212,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "sant-ambrogio-di-torino:10673635721543",
@@ -242,7 +227,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "sant-ambrogio-di-torino:10640300179783",
@@ -257,7 +242,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "sant-ambrogio-di-torino:10577002398023",
@@ -272,7 +257,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "sant-ambrogio-di-torino:10574285603143",
@@ -287,7 +272,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "sant-ambrogio-di-torino:10564873093447",
@@ -302,7 +287,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "sant-ambrogio-di-torino:10564780753223",
@@ -317,7 +302,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "sant-ambrogio-di-torino:10555969765703",
@@ -332,7 +317,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "sant-ambrogio-di-torino:10555043021127",
@@ -347,7 +332,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "sant-ambrogio-di-torino:10552805753159",
@@ -362,7 +347,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "sant-ambrogio-di-torino:10552748212551",
@@ -377,7 +362,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "sant-ambrogio-di-torino:10552683856199",
@@ -392,7 +377,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "sant-ambrogio-di-torino:10552459985223",
@@ -407,7 +392,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "sant-ambrogio-di-torino:10549582070087",
@@ -422,7 +407,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "sant-ambrogio-di-torino:10549571617095",
@@ -437,7 +422,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "sant-antonino-di-susa:11038271897927",
@@ -452,7 +437,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "sant-antonino-di-susa:10577000005959",
@@ -467,7 +452,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "rivoli:11190682255687",
@@ -482,7 +467,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "rivoli:10808056250695",
@@ -497,7 +482,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "rivoli:10790750257479",
@@ -512,7 +497,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "grugliasco:11228888760647",
@@ -527,7 +512,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "grugliasco:10903112876359",
@@ -542,7 +527,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "torino:10974704042311",
@@ -557,7 +542,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "torino:10552842780999",
@@ -572,7 +557,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "moncalieri:11101300195655",
@@ -587,7 +572,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "collegno:10671726395719",
@@ -602,7 +587,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "pianezza:10666264625479",
@@ -617,7 +602,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "borgaro-torinese:11421589602631",
@@ -632,7 +617,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     },
     {
       "id": "valgioie:11203075113287",
@@ -647,7 +632,7 @@
       "publishing_status": "DESTINAZIONE_TERRITORIALE_DA_COLLEGARE",
       "approved": false,
       "auto_publish": false,
-      "source_snapshot_at": "2026-11-17T13:38:15.784703+00:00"
+      "source_snapshot_at": "2026-11-18T13:12:19.154324+00:00"
     }
   ]
 }
