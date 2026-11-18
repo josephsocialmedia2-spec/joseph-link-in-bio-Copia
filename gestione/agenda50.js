@@ -139,7 +139,8 @@
     const center = document.getElementById('case247-control-center');
     const main = center && center.querySelector('.cc-main');
     const crm = main && main.querySelector('#cc-crm');
-    if (!main || !crm) return false;
+    const calendar = main && main.querySelector('#cc-calendar');
+    if (!main || !crm || !calendar) return false;
 
     const section = node('section', 'cc-card a50-panel');
     section.id = 'case247-agenda50';
@@ -212,8 +213,8 @@
     feedback.setAttribute('aria-live', 'polite');
     toolbar.append(copy, reset);
     section.append(header, progress, groupsGrid, toolbar, note, feedback);
-    // Solo aggiunta di un nuovo fratello al CRM: il calendario e gli altri moduli rimangono intatti.
-    main.insertBefore(section, crm);
+    // Primo pannello della scheda Strumenti; il calendario e gli altri moduli restano intatti.
+    main.insertBefore(section, calendar.nextSibling);
     section.addEventListener('click', event => {
       const button = event.target.closest('button[data-for-item]');
       if (!button || !section.contains(button)) return;
