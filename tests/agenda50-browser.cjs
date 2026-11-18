@@ -74,18 +74,22 @@ async function smoke(){
   assert.equal(await evalJS("document.querySelectorAll('#cc-week .cc-day').length"),6);
   assert.equal(await evalJS("document.querySelectorAll('#cc-week .cc-slot.cc-fixed').length"),5);
   assert.equal(await evalJS("document.querySelectorAll('#case247-agenda50').length"),1);
-  assert.equal(await evalJS("document.querySelector('#case247-agenda50').previousElementSibling.id"),'cc-calendar');
+  assert.equal(await evalJS("document.querySelector('#case247-agenda50').parentElement.id"),'cc-calendar');
+  assert.equal(await evalJS("document.querySelector('#case247-agenda50').previousElementSibling.id"),'cc-week');
+  assert.equal(await evalJS("document.querySelector('#case247-agenda50').nextElementSibling.classList.contains('cc-filters')"),true);
+  assert.equal(await evalJS("['cc-export','cc-ics','cc-import'].every(id=>Boolean(document.getElementById(id)))"),true);
   console.log('PASS: original layout, 6 days, 5 acquisition slots, new panel isolated');
 
-  await evalJS("document.querySelector('[data-saas-view=\"operativo\"]').click();true");
-  assert.equal(await evalJS("document.querySelector('#saas-app').dataset.view"),'operativo');
+  assert.equal(await evalJS("document.querySelector('#saas-app').dataset.view"),'agenda');
   assert.equal(await evalJS("getComputedStyle(document.querySelector('#case247-agenda50')).display!=='none'"),true);
   assert.equal(await evalJS("document.querySelector('#a50-title').textContent.includes('0 / 50')"),true);
   assert.equal(await evalJS("document.querySelectorAll('#case247-agenda50 .a50-group').length"),3);
   assert.equal(await evalJS("document.querySelectorAll('#case247-agenda50 .a50-item').length"),6);
+  await evalJS("document.querySelector('#case247-agenda50').scrollIntoView({block:'start'});true");
+  await wait(150);
   const screenshot=await command('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});
   fs.writeFileSync('/tmp/case247-agenda50-preview-desktop.png',Buffer.from(screenshot.data,'base64'));
-  console.log('PASS: visual preview generated in Strumenti tab');
+  console.log('PASS: agenda 50 screenshot below original week grid');
 
   await evalJS("(()=>{const b=document.querySelector('[data-direction=\"1\"][data-for-item=\"email\"]');for(let i=0;i<12;i++)b.click();return true})()");
   assert.equal(await evalJS("document.querySelector('[data-counter=\"email\"]').textContent.trim()"),'10 / 10');
@@ -108,6 +112,56 @@ async function smoke(){
   assert.equal(await evalJS("document.querySelector('[data-counter=\"followups\"]').textContent.trim()"),'1 / 5');
   assert.equal(await evalJS("document.querySelectorAll('#cc-week .cc-slot.cc-fixed').length"),5);
   console.log('PASS: localStorage survives refresh, calendar unchanged');
+
+  // Existing school localStorage remains untouched until an explicit schedule confirmation.
+  await evalJS("document.querySelector('[data-saas-view=\"operativo\"]').click();true");
+  await until("Boolean(document.querySelector('#cc-school-reference')&&document.querySelector('#cc-school-badge'))",'Studio tab');
+  assert.equal(await evalJS("document.querySelector('#saas-app').dataset.view"),'operativo');
+  assert.equal(await evalJS("document.querySelector('#cc-school-badge').textContent.includes('13 lezioni')"),true);
+  assert.equal(await evalJS("document.querySelectorAll('#cc-school-lessons .cc-study-row').length"),13);
+  assert.equal(await evalJS("Boolean(JSON.parse(localStorage.getItem('case247-cc-school-2scat-v1')||'{\"weeks\":{}}').weeks['2026-11-16'])"),false);
+  assert.equal(await evalJS("document.querySelector('#cc-school-lessons').textContent.includes('Riferimento fornito dall')"),false);
+  console.log('PASS: 13 2SCAT reference lessons available without overwriting saved data');
+
+  await evalJS("document.querySelector('#cc-school-reference').click();true");
+  assert.equal(await evalJS("document.querySelectorAll('#cc-school-draft tr').length"),13);
+  await evalJS("window.confirm=()=>true;document.querySelector('#cc-school-confirm').click();true");
+  assert.equal(await evalJS("JSON.parse(localStorage.getItem('case247-cc-school-2scat-v1')).weeks['2026-11-16'].rows.length"),13);
+  assert.equal(await evalJS("document.querySelectorAll('#cc-school-lessons .cc-study-row').length"),13);
+  await evalJS("document.querySelector('#cc-school-verify-all').click();true");
+  assert.equal(await evalJS("document.querySelectorAll('#cc-school-lessons .cc-study-state-verified').length"),13);
+  await evalJS("document.querySelector('#cc-school-lessons .cc-study-state').click();true");
+  assert.equal(await evalJS("document.querySelector('#cc-school-lessons .cc-study-state').textContent"),'Ripasso OK');
+  await evalJS("document.querySelector('#cc-school-lessons .cc-study-state').click();true");
+  assert.equal(await evalJS("document.querySelector('#cc-school-lessons .cc-study-state').textContent"),'Da verificare');
+  console.log('PASS: 13 confirmed lessons intact; stage cycle independently persisted');
+
+  await evalJS("([...document.querySelectorAll('#cc-study-filter-days button')].find(b=>b.textContent.includes('Lun 16'))).click();true");
+  assert.equal(await evalJS("document.querySelectorAll('#cc-school-lessons .cc-study-row').length"),2);
+  await evalJS("document.querySelector('#cc-study-filter-days button').click();true");
+  await evalJS("([...document.querySelectorAll('#cc-study-filter-subjects button')].find(b=>b.textContent==='Topografia')).click();true");
+  assert.equal(await evalJS("document.querySelectorAll('#cc-school-lessons .cc-study-row').length"),2);
+  await evalJS("document.querySelector('#cc-study-filter-subjects button').click();true");
+  assert.equal(await evalJS("document.querySelectorAll('#cc-school-lessons .cc-study-row').length"),13);
+  console.log('PASS: day and subject pills filter 13 lessons without data mutation');
+
+  await evalJS("document.querySelector('#cc-school-lessons .cc-study-row-actions button').click();true");
+  assert.equal(await evalJS("Boolean(document.querySelector('.cc-study-inline-editor textarea'))"),true);
+  await evalJS("(()=>{const a=document.querySelector('.cc-study-inline-editor textarea');a.value='Ripassare rilievo topografico';document.querySelector('.cc-study-inline-editor').requestSubmit();return true})()");
+  assert.equal(await evalJS("Object.values(JSON.parse(localStorage.getItem('case247-cc-school-2scat-v1')).lessonNotes).some(v=>v==='Ripassare rilievo topografico')"),true);
+  await evalJS("window.confirm=()=>false;document.querySelector('#cc-school-lessons .cc-study-delete').click();true");
+  assert.equal(await evalJS("JSON.parse(localStorage.getItem('case247-cc-school-2scat-v1')).weeks['2026-11-16'].rows.length"),13);
+  await command('Page.reload',{ignoreCache:true});
+  await until("Boolean(document.querySelector('#cc-school-badge')&&document.querySelector('#case247-agenda50'))",'after school reload');
+  assert.equal(await evalJS("JSON.parse(localStorage.getItem('case247-cc-school-2scat-v1')).weeks['2026-11-16'].rows.length"),13);
+  assert.equal(await evalJS("document.querySelectorAll('#cc-school-lessons .cc-study-row').length"),13);
+  assert.equal(await evalJS("Boolean(document.querySelector('#cc-crm')&&document.querySelector('#case247-two-boards')&&document.querySelector('#cc-school-export'))"),true);
+  await evalJS("document.querySelector('[data-saas-view=\"operativo\"]').click();document.querySelector('#cc-studio').scrollIntoView({block:'start'});true");
+  await wait(180);
+  const schoolScreenshot=await command('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});
+  fs.writeFileSync('/tmp/case247-studio-compact-preview.png',Buffer.from(schoolScreenshot.data,'base64'));
+  console.log('PASS: Studio UI, 13 saved lessons, notes and business modules preserved after refresh');
+
 }
 smoke().then(()=>{
   console.log('CASE247 Agenda 50 browser QA succeeded');
