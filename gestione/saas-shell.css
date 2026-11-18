@@ -1,0 +1,70 @@
+/* CASE247 · 100vh modern SaaS shell, no document scrolling. */
+html:has(#saas-app),body:has(#saas-app){height:100%;overflow:hidden!important;margin:0!important}
+body:has(#saas-app){background:#f4f6f9!important;color:#1d2939;font:13px/1.4 Inter,ui-sans-serif,system-ui,"Segoe UI",sans-serif!important}
+body:has(#saas-app)>.saas-legacy-hidden{display:none!important}
+#saas-app{--surface:#fff;--canvas:#f4f6f9;--line:#dce2ea;--ink:#172334;--muted:#637082;--accent:#2563eb;position:fixed;inset:0;width:100vw;height:100vh;height:100dvh;display:grid;grid-template-rows:56px 47px minmax(0,1fr);background:var(--canvas);color:var(--ink);z-index:10000;overflow:hidden;font:13px/1.4 Inter,ui-sans-serif,system-ui,"Segoe UI",sans-serif}
+#saas-app *{box-sizing:border-box}
+#saas-app .saas-header{background:var(--surface);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 18px;gap:12px;min-width:0}
+#saas-app .saas-identity{display:flex;align-items:center;gap:10px}
+#saas-app .saas-mark{width:29px;height:29px;background:#1f3655;color:white;border-radius:6px;display:grid;place-items:center;font-weight:750}
+#saas-app .saas-identity strong{display:block;font-size:13px;line-height:1.1;letter-spacing:.06em}
+#saas-app .saas-identity small{display:block;font-size:10px;color:var(--muted)}
+#saas-app .saas-header-right{font-size:11px;color:var(--muted)}
+#saas-app .saas-tabs{display:flex;align-items:stretch;gap:0;padding:0 14px;border-bottom:1px solid var(--line);background:#fff;min-width:0;overflow:hidden}
+#saas-app .saas-tab{flex:0 1 auto;min-width:0;background:transparent;border:0;border-bottom:2px solid transparent;border-radius:0;padding:0 16px;color:#596579;cursor:pointer;font-size:12px;font-weight:650;white-space:nowrap}
+#saas-app .saas-tab[aria-pressed=true]{border-bottom-color:var(--accent);background:#f5f8ff;color:#1d4ed8}
+#saas-app .saas-tab:hover{background:#f5f7fb;color:#1f3655}
+#saas-app .saas-tab:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}
+#saas-app #saas-content{min-height:0;min-width:0;overflow:hidden;padding:12px 14px}
+#saas-app .saas-pane{height:100%;min-height:0;min-width:0;display:none}
+#saas-app[data-view="agenda"] [data-pane="control"],
+#saas-app[data-view="operativo"] [data-pane="control"],
+#saas-app[data-view="acquisizione"] [data-pane="acquisizione"],
+#saas-app[data-view="pilastri"] [data-pane="pilastri"],
+#saas-app[data-view="motivazione"] [data-pane="motivazione"],
+#saas-app[data-view="archivio"] [data-pane="archivio"]{display:block}
+#saas-app .saas-pane:not(.saas-control){overflow:auto;scrollbar-width:thin}
+#saas-app #perche-widget,#saas-app #sv-acquisizione,#saas-app #cc-pilastri{width:100%;max-width:none;margin:0;border:1px solid var(--line);box-shadow:none;border-radius:9px}
+#saas-app #perche-widget{background:#fff;color:var(--ink)}
+#saas-app #perche-widget h2{color:var(--ink)}
+#saas-app #perche-widget #ticker-container{animation:none!important;transform:none!important;padding-inline-start:0!important}
+#saas-app #sv-acquisizione{background:#fff;color:var(--ink)}
+#saas-app #cc-pilastri{background:#fff;color:var(--ink)}
+#saas-app #cc-pilastri .pilastri-gruppo{background:#f7f8fa;border:1px solid var(--line)}
+#saas-app #cc-pilastri .sezione-label{color:#40526a}
+#saas-app #cc-pilastri .comandamento{background:white;border:1px solid var(--line)}
+#saas-app #cc-pilastri .concetto-titolo{color:var(--ink)}
+#saas-app #cc-pilastri .comandamento p{color:#586678}
+#saas-app #cc-pilastri .numero-romano{background:#e9efff;color:#1d4ed8}
+#saas-app #case247-control-center{height:100%;width:100%;margin:0;padding:0;max-width:none;min-height:0;overflow:hidden;--cc-green:#2563eb;--cc-green2:#2563eb;--cc-ink:#24344a;--cc-surface:#fff;--cc-soft:#f7f8fa;--cc-line:#dce2ea}
+#saas-app #case247-control-center .cc-top,
+#saas-app #case247-control-center .cc-sidebar{display:none!important}
+#saas-app #case247-control-center .cc-grid{height:100%;display:block;min-height:0;border:0;border-radius:0;overflow:hidden;background:transparent}
+#saas-app #case247-control-center .cc-main{height:100%;min-height:0;padding:0;overflow:hidden}
+#saas-app #case247-control-center .cc-card{border-radius:8px;border:1px solid var(--line);box-shadow:none;background:#fff;margin-bottom:9px}
+#saas-app[data-view="agenda"] #case247-control-center .cc-main > :not(#cc-calendar):not(.cc-agenda-pilastri-layout){display:none!important}
+#saas-app[data-view="operativo"] #case247-control-center #cc-calendar{display:none!important}
+#saas-app[data-view="operativo"] #case247-control-center .cc-main{overflow:auto;scrollbar-width:thin;padding-right:2px}
+#saas-app #case247-control-center #cc-calendar{height:100%;display:flex;flex-direction:column;padding:11px 12px;overflow:hidden!important}
+#saas-app #case247-control-center #cc-calendar .cc-head{flex:0 0 auto;margin-bottom:5px;align-items:center}
+#saas-app #case247-control-center #cc-calendar .cc-head h2{font-size:17px;letter-spacing:-.02em;color:var(--ink)}
+#saas-app #case247-control-center #cc-calendar .cc-agenda-shortcuts{flex:0 0 auto;margin:5px 0 9px;gap:5px}
+#saas-app #case247-control-center #cc-calendar .cc-agenda-link{min-height:30px;padding:6px 10px;font-size:11px;background:#f6f8fa;color:#35475b;border-color:var(--line)}
+#saas-app #case247-control-center #cc-calendar .cc-week{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:6px;min-width:0!important;min-height:0;flex:1 1 auto;overflow:hidden}
+#saas-app #case247-control-center #cc-calendar .cc-day{display:block!important;min-width:0;min-height:0;overflow-y:auto;scrollbar-width:thin;border-radius:6px;border-color:var(--line);background:#fff}
+#saas-app #case247-control-center #cc-calendar .cc-dayhead{position:sticky;top:0;z-index:2;background:#f4f6f9;color:#324155;border-bottom:1px solid var(--line);font-size:11px;padding:7px}
+#saas-app #case247-control-center #cc-calendar .cc-dayhead b{font-size:11px}
+#saas-app #case247-control-center #cc-calendar .cc-slot{font-size:10px;line-height:1.3;min-height:0;padding:6px;margin:4px;border-radius:4px}
+#saas-app #case247-control-center #cc-calendar .cc-slot b{font-size:10px}
+#saas-app #case247-control-center #cc-calendar .cc-filters{flex:0 0 auto;margin-top:5px}
+#saas-app #case247-control-center #cc-calendar .cc-filters button{min-height:28px;padding:4px 8px;font-size:10px}
+#saas-app #case247-control-center #cc-calendar .cc-sub{flex:0 0 auto;font-size:10px}
+#saas-app #case247-control-center #cc-calendar .cc-day-nav{display:none!important}
+#saas-app #case247-control-center #cc-calendar .cc-actions button{min-height:32px;padding:5px 8px;font-size:11px}
+#saas-app #case247-control-center .cc-dialog{z-index:10030}
+#saas-app #case247-control-center dialog::backdrop{background:#11182788}
+#saas-app #case247-two-boards{max-width:none;margin:0}
+@media(max-width:900px){#saas-app .saas-tab{padding:0 9px;font-size:11px}#saas-app #case247-control-center #cc-calendar .cc-slot{font-size:9px;padding:4px}#saas-app #saas-content{padding:8px}}
+@media(max-width:620px){#saas-app{grid-template-rows:50px 88px minmax(0,1fr)}#saas-app .saas-tabs{flex-wrap:wrap;align-content:stretch;padding:0 5px}#saas-app .saas-tab{height:44px;flex:1 0 30%;padding:0 5px}#saas-app .saas-header-right{display:none}#saas-app #case247-control-center #cc-calendar .cc-week{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:repeat(3,minmax(0,1fr))}#saas-app #case247-control-center #cc-calendar .cc-day{overflow:auto}#saas-app #case247-control-center #cc-calendar .cc-agenda-shortcuts{display:none}#saas-app #case247-control-center #cc-calendar .cc-sub{display:none}}
+@media(max-height:650px){#saas-app #case247-control-center #cc-calendar .cc-agenda-shortcuts{display:none}#saas-app #case247-control-center #cc-calendar .cc-sub{display:none}}
+@media(prefers-reduced-motion:reduce){#saas-app *,#saas-app *::before,#saas-app *::after{animation:none!important;transition:none!important}}
