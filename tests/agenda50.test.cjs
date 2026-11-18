@@ -75,7 +75,7 @@ test('report contains 3 group totals, all 6 counters and final 50', () => {
   assert.match(output, /2026-11-18/);
   assert.match(output, /Mattina · 09:30 – 11:30 · Acquisizione — 30\/30/);
   assert.match(output, /Tarda mattina · 11:30 – 12:30 · Acquisizione diretta — 10\/10/);
-  assert.match(output, /Pomeriggio · 14:30 – 15:30 \/ 17:30 – 18:00 · Sviluppo e Follow-up — 10\/10/);
+  assert.match(output, /Pomeriggio · 14:00 – 15:30 \/ 15:30 – 16:30 · Sviluppo e Follow-up — 10\/10/);
   assert.match(output, /TOTALE CONFERMATE: 50\/50/);
   for (const item of ITEMS) assert.ok(output.includes(item.label));
 });
