@@ -84,7 +84,7 @@ async function smoke(){
   assert.equal(await evalJS("document.querySelector('#a50-unified-timeline .a50-block-title').textContent"),'Acquisizione Digitale');
   assert.equal(await evalJS("document.querySelectorAll('#a50-unified-timeline .a50-item').length"),6);
   assert.equal(await evalJS("Boolean(document.querySelector('#a50-unified-view .a50-crm-quick'))"),true);
-  await evalJS("(()=>{for(let i=0;i<6&&new Date(CASE247Agenda50.getDay()+'T12:00:00Z').getUTCDay()!==6;i++)document.querySelector('[aria-label=\\\"Giorno successivo\\\"]').click();return true})()");
+  await evalJS("(()=>{for(let i=0;i<6&&new Date(CASE247Agenda50.getDay()+'T12:00:00Z').getUTCDay()!==6;i++)document.querySelectorAll('.a50-day-button')[2].click();return true})()");
   assert.equal(await evalJS("document.querySelector('#case247-agenda50').classList.contains('a50-day-saturday')"),true);
   assert.equal(await evalJS("getComputedStyle(document.querySelector('#a50-grand-total, .a50-grand-total')).display"),'none');
   assert.equal(await evalJS("document.querySelectorAll('#a50-unified-timeline .a50-time-block').length"),4);
