@@ -371,7 +371,7 @@
     }
     window.CASE247Agenda50 = {
       selectDay(day) {
-        if (!/^\\d{4}-\\d{2}-\\d{2}$/.test(day)) return false;
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) return false;
         const d = new Date(day + 'T12:00:00Z');
         if (Number.isNaN(d.getTime()) || d.toISOString().slice(0,10)!==day || d.getUTCDay()===0) return false;
         date = day; state = load(date); render(); return true;
