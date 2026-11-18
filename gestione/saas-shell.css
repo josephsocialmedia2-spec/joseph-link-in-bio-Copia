@@ -68,3 +68,17 @@ body:has(#saas-app)>.saas-legacy-hidden{display:none!important}
 @media(max-width:620px){#saas-app{grid-template-rows:50px 88px minmax(0,1fr)}#saas-app .saas-tabs{flex-wrap:wrap;align-content:stretch;padding:0 5px}#saas-app .saas-tab{height:44px;flex:1 0 30%;padding:0 5px}#saas-app .saas-header-right{display:none}#saas-app #case247-control-center #cc-calendar .cc-week{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:repeat(3,minmax(0,1fr))}#saas-app #case247-control-center #cc-calendar .cc-day{overflow:auto}#saas-app #case247-control-center #cc-calendar .cc-agenda-shortcuts{display:none}#saas-app #case247-control-center #cc-calendar .cc-sub{display:none}}
 @media(max-height:650px){#saas-app #case247-control-center #cc-calendar .cc-agenda-shortcuts{display:none}#saas-app #case247-control-center #cc-calendar .cc-sub{display:none}}
 @media(prefers-reduced-motion:reduce){#saas-app *,#saas-app *::before,#saas-app *::after{animation:none!important;transition:none!important}}
+
+/* Quiet card system for pillars, scoped outside the existing Control Center. */
+#saas-app #cc-pilastri{padding:16px;overflow:hidden}
+#saas-app #cc-pilastri>h2{font-size:17px;line-height:1.3;font-weight:750;margin:0 0 14px;color:var(--ink)}
+#saas-app #cc-pilastri .pilastri-gruppi{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+#saas-app #cc-pilastri .pilastri-gruppo{padding:12px;min-width:0;border-radius:7px}
+#saas-app #cc-pilastri .sezione-label{font-size:11px;font-weight:750;letter-spacing:.07em;margin-bottom:10px;text-transform:uppercase}
+#saas-app #cc-pilastri .comandamento{border-radius:6px;padding:10px;margin:7px 0}
+#saas-app #cc-pilastri .comandamento-header{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+#saas-app #cc-pilastri .numero-romano{min-width:28px;border-radius:4px;padding:3px 5px;font-size:10px;font-weight:750;text-align:center}
+#saas-app #cc-pilastri .concetto-titolo{font-size:12px;font-weight:750}
+#saas-app #cc-pilastri .comandamento p{font-size:11px;line-height:1.5;margin:0}
+#saas-app #cc-pilastri .comandamento:hover{transform:none!important}
+@media(max-width:850px){#saas-app #cc-pilastri .pilastri-gruppi{grid-template-columns:1fr}}
