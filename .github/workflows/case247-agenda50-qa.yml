@@ -5,6 +5,8 @@ on:
       - 'gestione/index.html'
       - 'gestione/agenda50.js'
       - 'gestione/agenda50.css'
+      - 'gestione/studio-2scat-ui.js'
+      - 'gestione/studio-compact.css'
       - 'tests/agenda50.test.cjs'
       - 'tests/agenda50-browser.cjs'
       - '.github/workflows/case247-agenda50-qa.yml'
@@ -14,6 +16,8 @@ on:
       - 'gestione/index.html'
       - 'gestione/agenda50.js'
       - 'gestione/agenda50.css'
+      - 'gestione/studio-2scat-ui.js'
+      - 'gestione/studio-compact.css'
       - 'tests/agenda50.test.cjs'
       - 'tests/agenda50-browser.cjs'
       - '.github/workflows/case247-agenda50-qa.yml'
@@ -32,6 +36,7 @@ jobs:
       - name: JavaScript syntax
         run: |
           node --check gestione/agenda50.js
+          node --check gestione/studio-2scat-ui.js
           node --check tests/agenda50.test.cjs
           node --check tests/agenda50-browser.cjs
       - name: Unit test - date, caps, persistence and export
@@ -43,6 +48,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: case247-agenda50-preview
-          path: /tmp/case247-agenda50-preview-desktop.png
+          path: |
+            /tmp/case247-agenda50-preview-desktop.png
+            /tmp/case247-studio-compact-preview.png
           if-no-files-found: ignore
           retention-days: 14
