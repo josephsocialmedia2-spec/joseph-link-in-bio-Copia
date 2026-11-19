@@ -58,3 +58,6 @@
  #saas-app #case247-agenda50 .a50-selected-sub{display:none}
 }
 @media(prefers-reduced-motion:reduce){#saas-app #case247-agenda50 .a50-time-block.fascia-attiva-lampeggiante{animation:none!important;border-color:#e4a63a;box-shadow:0 0 0 2px #f59e0b20}}
+
+#saas-app #case247-agenda50 .a50-agenda-build{display:inline-flex;align-items:center;white-space:nowrap;font-size:10px;letter-spacing:.015em;font-weight:750;color:#146454;background:#e5f6f0;border:1px solid #c7e6db;border-radius:5px;padding:5px 8px}
+@media(max-width:620px){#saas-app #case247-agenda50 .a50-agenda-build{margin-left:auto;font-size:9px}}
