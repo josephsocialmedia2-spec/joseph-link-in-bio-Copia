@@ -1,0 +1,112 @@
+{
+  "version": "1.0",
+  "portfolio_2026": "https://www.canva.com/d/5qxN6njkKHMKAUU",
+  "note": "Per aggiungere lavori, inserire un oggetto nell'array lavori; i contenuti di partenza sono stati ricavati dal PDF originale fornito dall'autore.",
+  "lavori": [
+    {
+      "title": "Volantino Immobiliare La Sacra",
+      "category": "Immobiliare",
+      "description": "Promozione vendi casa / cerchi casa: composizione fronte e retro.",
+      "page": 3,
+      "url": "https://www.canva.com/d/5qxN6njkKHMKAUU"
+    },
+    {
+      "title": "Volantino: contatti e servizi",
+      "category": "Immobiliare",
+      "description": "Impaginazione commerciale con informazioni, QR code e call to action.",
+      "page": 4,
+      "url": "https://www.canva.com/d/5qxN6njkKHMKAUU"
+    },
+    {
+      "title": "Catalogo immobiliare: copertina",
+      "category": "Immobiliare",
+      "description": "Direzione grafica e copertina editoriale del catalogo La Sacra.",
+      "page": 5,
+      "url": "https://www.canva.com/d/5qxN6njkKHMKAUU"
+    },
+    {
+      "title": "Catalogo immobiliare: schede",
+      "category": "Immobiliare",
+      "description": "Layout delle schede degli immobili e organizzazione visiva dei contenuti.",
+      "page": 6,
+      "url": "https://www.canva.com/d/5qxN6njkKHMKAUU"
+    },
+    {
+      "title": "Catalogo premium",
+      "category": "Immobiliare",
+      "description": "Identità editoriale, tipografia, composizione e impaginazione.",
+      "page": 7,
+      "url": "https://www.canva.com/d/5qxN6njkKHMKAUU"
+    },
+    {
+      "title": "Valutazione immobiliare",
+      "category": "Immobiliare",
+      "description": "Volantino pubblicitario per la ricerca di proprietari.",
+      "page": 8,
+      "url": "https://www.canva.com/d/5qxN6njkKHMKAUU"
+    },
+    {
+      "title": "Cenone di Capodanno",
+      "category": "Ristorazione",
+      "description": "Menù di sala A5 per Ristorante Antica Cappella.",
+      "page": 9,
+      "url": "https://www.canva.com/d/5qxN6njkKHMKAUU"
+    },
+    {
+      "title": "Menù di Natale 2026",
+      "category": "Ristorazione",
+      "description": "Locandina promozionale con proposta menù baby.",
+      "page": 10,
+      "url": "https://www.canva.com/d/5qxN6njkKHMKAUU"
+    },
+    {
+      "title": "Cena con delitto",
+      "category": "Ristorazione",
+      "description": "Locandina evento e grafica pubblicitaria tematica.",
+      "page": 11,
+      "url": "https://www.canva.com/d/5qxN6njkKHMKAUU"
+    },
+    {
+      "title": "Weekend del Fungo Ubriaco",
+      "category": "Ristorazione",
+      "description": "Creatività promozionale per eventi gastronomici.",
+      "page": 12,
+      "url": "https://www.canva.com/d/5qxN6njkKHMKAUU"
+    },
+    {
+      "title": "TintaUNITA — 18 matite colorate",
+      "category": "Retail e packaging",
+      "description": "Etichetta commerciale e packaging visivo.",
+      "page": 13,
+      "url": "https://www.canva.com/d/5qxN6njkKHMKAUU"
+    },
+    {
+      "title": "Yankee Candle",
+      "category": "Retail e packaging",
+      "description": "Grafica promozionale per offerta retail.",
+      "page": 14,
+      "url": "https://www.canva.com/d/5qxN6njkKHMKAUU"
+    },
+    {
+      "title": "Mini evidenziatori",
+      "category": "Retail e packaging",
+      "description": "Visual merchandising e comunicazione del prezzo.",
+      "page": 15,
+      "url": "https://www.canva.com/d/5qxN6njkKHMKAUU"
+    },
+    {
+      "title": "Giuly Cakes",
+      "category": "Brochure e impaginazione",
+      "description": "Brochure A4 per pasticceria artigianale.",
+      "page": 16,
+      "url": "https://www.canva.com/d/5qxN6njkKHMKAUU"
+    },
+    {
+      "title": "Natale in tre pagine",
+      "category": "Ristorazione",
+      "description": "Adattamenti grafici e varianti del menù A5.",
+      "page": 17,
+      "url": "https://www.canva.com/d/5qxN6njkKHMKAUU"
+    }
+  ]
+}
