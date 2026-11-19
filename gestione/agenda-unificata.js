@@ -36,6 +36,8 @@ const next=make('button','a50-day-button','→');next.type='button';next.setAttr
 const dayLabel=make('strong','a50-selected-day');
 const navCaption=make('span','a50-selected-sub','Europe/Rome · v19.11.3 · Agenda unica');
 nav.append(prev,today,next,dayLabel,navCaption);
+const buildMarker=make('span','a50-agenda-build','AGGIORNATA · 19.11.3');
+nav.append(buildMarker);
 const timeline=make('div','a50-unified-timeline');timeline.id='a50-unified-timeline';
 const addButton=make('button','a50-add-activity','+ Nuova attività');addButton.type='button';
 addButton.addEventListener('click',()=>document.getElementById('cc-new')?.click());
