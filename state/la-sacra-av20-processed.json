@@ -19,6 +19,7 @@
     "node/11153287091",
     "node/1124101996",
     "node/11251268160",
+    "node/11335553434",
     "node/11374940695",
     "node/11404182137",
     "node/11418611869",
@@ -79,6 +80,7 @@
     "node/13981565501",
     "node/14067930483",
     "node/14169637322",
+    "node/14318647409",
     "node/1453627246",
     "node/1474953540",
     "node/1588836640",
@@ -116,6 +118,7 @@
     "node/3376599928",
     "node/3376603756",
     "node/3437811254",
+    "node/3625784738",
     "node/3645140894",
     "node/3657572641",
     "node/3657572659",
@@ -145,6 +148,7 @@
     "node/4581533289",
     "node/4601229494",
     "node/4676267373",
+    "node/4734597325",
     "node/5139587917",
     "node/5253958471",
     "node/5305973018",
@@ -157,6 +161,7 @@
     "node/5488322171",
     "node/5525318162",
     "node/5525318163",
+    "node/5525358580",
     "node/553002525",
     "node/5690667369",
     "node/5858554012",
@@ -181,6 +186,7 @@
     "node/6433756035",
     "node/6552934993",
     "node/6879259549",
+    "node/6880471859",
     "node/6880598984",
     "node/6924270671",
     "node/7291575617",
@@ -256,6 +262,7 @@
     "way/1333828822",
     "way/1346912730",
     "way/1358439087",
+    "way/1361432516",
     "way/1376131974",
     "way/1449901767",
     "way/1458594521",
@@ -316,6 +323,7 @@
     "way/675456740",
     "way/762678164",
     "way/80031302",
+    "way/804086831",
     "way/80996989",
     "way/813058556",
     "way/83606693",
@@ -330,7 +338,23 @@
     "way/865322070",
     "way/870979658"
   ],
-  "seen_fingerprints": [],
-  "batches": [],
+  "seen_fingerprints": [
+    "075a8df531f6ae49ee0ee9a31b6353b2e9b0ece0bce91bba73146feba2559578",
+    "28fb58cf9df7e6cf946a33bb0f4cbbbd2b94736396c4a660aa15b809ee76f558",
+    "2cfbfc94bb810b957677c19a1e78bb6aca8c82736616d17f955e424239f8a5a7",
+    "4d805bddf680306251e23769c73b203619372671ec65ea14e0ec1445f54c7b88",
+    "5957d7e397373aaf095816deed2da0f2cf502f313fc09ae3fba6529967af460d",
+    "bd2970bd91073126514dba87c1b0a4ba986b6310eb37b9d84c286e20b9cc6efe",
+    "cf22db09e3b42a9aaebb054bc65ea5765e4e753bb272e4c2f79eef054b3fbdd0",
+    "da59bcd0b5074ea15f5ae6b3a1d8144b48056ccbcdaf46bafa35258ad150e022"
+  ],
+  "batches": [
+    {
+      "date": "2026-11-18",
+      "count": 8,
+      "file": "LA_SACRA_AV20_2026-11-18_008.case247",
+      "source_tiles_ok": 9
+    }
+  ],
   "seed_note": "Solo identificativi OSM già presenti negli archivi precedenti; nessuna email, PIVA, nome o telefono salvati."
 }
