@@ -7,8 +7,8 @@
   const TIME_ZONE = 'Europe/Rome';
   const GROUPS = [
     { id: 'morning', time: 'Mattina · 09:30 – 11:30 · Acquisizione', limit: 30, items: [
-      { id: 'email', label: 'Email ad aziende', limit: 10, hint: 'Censimento, distribuzione e Gmail', links: [
-        ['Censimento aziende', './censimento-aziende/'],
+      { id: 'email', label: 'Email ad aziende', limit: 10, hint: 'Ricerca manuale su Google e Gmail; nessuna raccolta automatica aziende', links: [
+        ['Partita IVA Avigliana', 'https://www.google.com/search?q=partita+iva+avigliana'],
         ['Email volantini', './email-volantini/'],
         ['Gmail', 'https://mail.google.com/']
       ] },
