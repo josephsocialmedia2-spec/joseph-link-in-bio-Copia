@@ -166,7 +166,7 @@ test('one integrated chronological day contains all operational blocks and prese
  const script=fs.readFileSync(path.join(__dirname,'../gestione/agenda-unificata.js'),'utf8');
  const css=fs.readFileSync(path.join(__dirname,'../gestione/agenda-unificata.css'),'utf8');
  assert.match(html,/agenda-unificata\.js\?v=20261119-inline3/);
- assert.match(html,/agenda-unificata\.css\?v=20261118-1/);
+ assert.match(html,/agenda-unificata\.css\?v=20261119-inline3/);
  assert.match(script,/Agenda integrata/);
  for(const label of ['Acquisizione Digitale','Acquisizione Diretta','Sviluppo Prioritario & Commenti Social','Contenuti, Materiali & Follow-up','Test, Verifiche & Chiusura Operativa','STUDIO · 2S CAT','Revisione lavori aperti','KPI e scadenze','Pianificazione settimana','CRM Excel','Seller Radar','WhatsApp'])assert.ok(script.includes(label),label);
  assert.match(script,/A\.selectDay\(day\)/);
