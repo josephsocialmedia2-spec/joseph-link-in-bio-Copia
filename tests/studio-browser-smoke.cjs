@@ -54,6 +54,10 @@ async function main(){
  assert.equal(await evalJS("document.scrollingElement.scrollHeight <= innerHeight"),true);
  assert.equal(await evalJS("getComputedStyle(document.querySelector('#saas-app [data-pane=control]')).display"),'block');
  console.log('PASS: fixed viewport with Agenda as default');
+ assert.equal(await evalJS("Boolean(document.querySelector('#a50-unified-view a.a50-quick-link[href=\\\"https://www.google.com/search?q=partita+iva+avigliana\\\"]'))"),true);
+ assert.equal(await evalJS("document.querySelector('#a50-unified-view a.a50-quick-link[href*=\\\"partita+iva+avigliana\\\"]').target"),'_blank');
+ console.log('PASS: click-ready manual Google Partita IVA Avigliana shortcut in daily agenda');
+
  await until("Boolean(document.querySelector('#saas-app > #case247-routine03'))",'03:00 routine mounted beneath SaaS header');
  assert.equal(await evalJS("document.querySelector('#saas-app').children[1].id"),'case247-routine03');
  assert.equal(await evalJS("document.querySelectorAll('#case247-routine03 .r03-card').length"),3);
