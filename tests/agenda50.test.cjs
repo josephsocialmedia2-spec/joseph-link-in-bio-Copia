@@ -166,7 +166,7 @@ test('one integrated chronological day contains all operational blocks and prese
  const script=fs.readFileSync(path.join(__dirname,'../gestione/agenda-unificata.js'),'utf8');
  const css=fs.readFileSync(path.join(__dirname,'../gestione/agenda-unificata.css'),'utf8');
  assert.match(html,/agenda-unificata\.js\?v=20261119-remove-ops1/);
- assert.match(html,/agenda-unificata\.css\?v=20261119-remove-ops1/);
+ assert.match(html,/agenda-unificata\.css\?v=20261119-inline3/);
  assert.match(script,/Agenda integrata/);
  for(const label of ['Acquisizione Digitale','Acquisizione Diretta','Sviluppo Prioritario & Commenti Social','Contenuti, Materiali & Follow-up','Test, Verifiche & Chiusura Operativa','STUDIO · 2S CAT','Revisione lavori aperti','KPI e scadenze','Pianificazione settimana','CRM Excel','WhatsApp'])assert.ok(script.includes(label),label);
  assert.match(script,/A\.selectDay\(day\)/);
@@ -210,9 +210,9 @@ test('new acquisition tools are mounted directly in existing day blocks',()=>{
  const js=fs.readFileSync(path.join(__dirname,'../gestione/agenda-strumenti-acquisizione.js'),'utf8');
  const css=fs.readFileSync(path.join(__dirname,'../gestione/agenda-strumenti-acquisizione.css'),'utf8');
  assert.match(base,/agenda-strumenti-acquisizione\.js\?v=20261119-remove-ops1/);
- assert.match(base,/agenda-strumenti-acquisizione\.css\?v=20261119-remove-ops1/);
+ assert.match(base,/agenda-strumenti-acquisizione\.css\?v=20261119-inline3/);
  assert.match(base,/agenda-unificata\.js\?v=20261119-remove-ops1/);
- assert.match(base,/agenda-unificata\.css\?v=20261119-remove-ops1/);
+ assert.match(base,/agenda-unificata\.css\?v=20261119-inline3/);
  assert.match(timeline,/AGGIORNATA · 19\.11\.3/);
  assert.match(timeline,/Mappatura annunci privati/);
  assert.match(timeline,/Colazione strategica/);
