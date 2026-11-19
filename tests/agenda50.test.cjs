@@ -84,7 +84,7 @@ test('isolation regression: existing calendar code unchanged in this feature', (
   const html = fs.readFileSync(path.join(__dirname,'../gestione/index.html'),'utf8');
   const script = fs.readFileSync(path.join(__dirname,'../gestione/agenda50.js'),'utf8');
   assert.match(html, /saas-shell\.js\?v=20261119-piva-google/);
-  assert.match(html, /agenda50\.js\?v=20261119-piva-google/);
+  assert.match(html, /agenda50\.js\?v=20261119-remove-ops1/);
   assert.match(html, /agenda50\.css\?v=20261118-unified1/);
   assert.ok(html.indexOf('saas-shell.js?v=20261119-piva-google') < html.indexOf('agenda50.js?v=20261119-remove-ops1'));
   assert.match(script, /calendar\.insertBefore\(section, filters\)/);
@@ -165,8 +165,8 @@ test('one integrated chronological day contains all operational blocks and prese
  const html=fs.readFileSync(path.join(__dirname,'../gestione/index.html'),'utf8');
  const script=fs.readFileSync(path.join(__dirname,'../gestione/agenda-unificata.js'),'utf8');
  const css=fs.readFileSync(path.join(__dirname,'../gestione/agenda-unificata.css'),'utf8');
- assert.match(html,/agenda-unificata\.js\?v=20261119-inline3/);
- assert.match(html,/agenda-unificata\.css\?v=20261119-inline3/);
+ assert.match(html,/agenda-unificata\.js\?v=20261119-remove-ops1/);
+ assert.match(html,/agenda-unificata\.css\?v=20261119-remove-ops1/);
  assert.match(script,/Agenda integrata/);
  for(const label of ['Acquisizione Digitale','Acquisizione Diretta','Sviluppo Prioritario & Commenti Social','Contenuti, Materiali & Follow-up','Test, Verifiche & Chiusura Operativa','STUDIO · 2S CAT','Revisione lavori aperti','KPI e scadenze','Pianificazione settimana','CRM Excel','WhatsApp'])assert.ok(script.includes(label),label);
  assert.match(script,/A\.selectDay\(day\)/);
@@ -209,10 +209,10 @@ test('new acquisition tools are mounted directly in existing day blocks',()=>{
  const timeline=fs.readFileSync(path.join(__dirname,'../gestione/agenda-unificata.js'),'utf8');
  const js=fs.readFileSync(path.join(__dirname,'../gestione/agenda-strumenti-acquisizione.js'),'utf8');
  const css=fs.readFileSync(path.join(__dirname,'../gestione/agenda-strumenti-acquisizione.css'),'utf8');
- assert.match(base,/agenda-strumenti-acquisizione\.js\?v=20261119-inline3/);
- assert.match(base,/agenda-strumenti-acquisizione\.css\?v=20261119-inline3/);
- assert.match(base,/agenda-unificata\.js\?v=20261119-inline3/);
- assert.match(base,/agenda-unificata\.css\?v=20261119-inline3/);
+ assert.match(base,/agenda-strumenti-acquisizione\.js\?v=20261119-remove-ops1/);
+ assert.match(base,/agenda-strumenti-acquisizione\.css\?v=20261119-remove-ops1/);
+ assert.match(base,/agenda-unificata\.js\?v=20261119-remove-ops1/);
+ assert.match(base,/agenda-unificata\.css\?v=20261119-remove-ops1/);
  assert.match(timeline,/AGGIORNATA · 19\.11\.3/);
  assert.match(timeline,/Mappatura annunci privati/);
  assert.match(timeline,/Colazione strategica/);
