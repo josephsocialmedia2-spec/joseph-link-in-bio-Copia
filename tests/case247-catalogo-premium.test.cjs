@@ -124,3 +124,26 @@ test('privacy and communication flow remains optional and unautomated',()=>{
   assert.match(html,/346 256 8685/);
   assert.match(html,/immobiliarelasacra@gmail\.com/);
 });
+
+test('GitHub Pages /catalogo/ redirect has branded Open Graph and safe manual fallback',()=>{
+ const page=read('catalogo/index.html');
+ const link='https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/catalogo/';
+ const target='https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/catalogo-premium/';
+ const officialLogo='lasacraimmobiliare.it/cdn/shop/files/Untitled_design_14.png';
+ assert.match(page,/<html lang="it">/);
+ assert.match(page,/http-equiv="refresh" content="0;url=/);
+ assert.ok(page.includes('window.location.replace('));
+ assert.ok(page.includes(target));
+ assert.ok(page.includes('<meta property="og:url" content="'+link+'">'));
+ for(const prop of ['og:title','og:description','og:image','og:image:alt','og:site_name']){
+   assert.ok(page.includes('property="'+prop+'"'),prop);
+ }
+ assert.ok(page.includes(officialLogo));
+ assert.ok(page.includes('Apri il catalogo immobiliare'));
+ assert.ok(page.includes('rel="noopener"'));
+ assert.ok(page.includes('https://'));
+ assert.doesNotMatch(page,/bit\.ly|utm_source|eval\(|document\.write\(/);
+ assert.ok(html.includes('property="og:image"'),'Redirect followers need same logo OG on destination');
+ assert.ok(html.includes(officialLogo),'Destination uses the same La Sacra logo');
+ assert.ok(html.includes('Immobiliare La Sacra | Catalogo Immobili'));
+});
