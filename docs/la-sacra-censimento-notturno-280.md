@@ -1,5 +1,8 @@
 # Immobiliare La Sacra | Censimento notturno Avigliana 20 km
 
+**STATO DAL 19/11/2026: RICERCA AUTOMATICA SOSPESA SU RICHIESTA DELL'UTENTE.** Il workflow non ha più un trigger `schedule` né un job di raccolta. La dashboard contiene ora il pulsante **Partita IVA Avigliana · Apri Google**, che apre manualmente la ricerca `https://www.google.com/search?q=partita+iva+avigliana`. Le istruzioni sottostanti descrivono soltanto il funzionamento storico; i vecchi artefatti cifrati rimangono consultabili secondo la conservazione prevista da GitHub.
+
+
 ## Stato tecnico
 
 Ricerca programmata alle **23:00 Europe/Rome** (cron GitHub UTC 21:00/22:00, filtro automatico fuso e ora legale). Il job si svolge all'interno della finestra fino alle **03:55**, massimo cinque ore e **280 attivita nuove per notte**. Se trova meno risultati, crea un lotto ridotto: mai record inventati.
