@@ -99,3 +99,9 @@ body:has(#saas-app)>.saas-legacy-hidden{display:none!important}
 #saas-app .saas-workbook-action,#saas-app .saas-workbook-config{min-height:34px;padding:7px 12px;border-radius:6px;border:1px solid var(--line);background:#fff;color:#31506d;font-weight:650;cursor:pointer}
 #saas-app .saas-workbook-action{background:#2563eb;color:white;border-color:#2563eb}
 @media(max-width:620px){#saas-app .saas-tabs{flex-wrap:nowrap;overflow-x:auto;padding:0 5px}#saas-app .saas-tab-unit{height:100%;flex:0 0 auto}#saas-app .saas-tab-unit>.saas-tab{height:100%;min-width:auto;padding:0 12px}#saas-app .saas-reorder-toggle{margin-left:6px}#saas-app .saas-workbook-bar{gap:7px}#saas-app .saas-workbook-bar span{flex:1 1 100%}}
+
+/* Ricerca partita IVA su Google: pulsante sempre visibile nell'intestazione SaaS. */
+#saas-app .saas-google-piva{display:inline-flex;align-items:center;justify-content:center;margin-left:auto;min-height:30px;padding:6px 11px;border:1px solid #c6d6ed;background:#edf4ff;color:#1d4ed8;border-radius:6px;font-size:11px;line-height:1.15;font-weight:700;text-decoration:none;white-space:nowrap}
+#saas-app .saas-google-piva:hover,#saas-app .saas-google-piva:focus-visible{background:#dceaff;border-color:#9eb8eb}
+#saas-app .saas-google-piva:focus-visible{outline:2px solid #2563eb;outline-offset:2px}
+@media(max-width:620px){#saas-app .saas-google-piva{font-size:10px;padding:6px 7px;min-height:28px}}
