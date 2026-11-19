@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
-<meta name="theme-color" content="#081a30"><title>Immobiliare La Sacra | Censimento aziende 20 km</title>
+<meta name="theme-color" content="#081a30"><title>Immobiliare La Sacra | Partita IVA Avigliana su Google</title>
 <style>
 :root{font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:dark;--bg:#071526;--p:#11283d;--edge:#35516b;--text:#ecf4ff;--muted:#b1c7d8;--gold:#dfbd7b}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(140deg,#082640,var(--bg) 45%);color:var(--text)}
@@ -20,10 +20,16 @@ th{color:var(--gold)}.scroll{overflow:auto;max-height:520px}
 .stats b{font-size:24px;display:block}.stats small{display:block}
 #message{white-space:pre-wrap;min-height:50px}#pdfPreview{width:100%;height:550px;border:1px solid var(--edge);border-radius:8px}
 [hidden]{display:none!important}@media(max-width:720px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.panel{padding:14px}#pdfPreview{height:380px}}
+.google-search{display:inline-flex;align-items:center;justify-content:center;background:#e9eef7;color:#173b5f;text-decoration:none;border-radius:9px;padding:12px 19px;font-weight:800;border:1px solid #94b9d6}
+.google-search:hover,.google-search:focus-visible{background:#dbeafa;color:#0e3356}
+.archive-summary{cursor:pointer;font-weight:750;color:#b5dcfa}
+.archive-summary:focus-visible{outline:2px solid #d8c28e;outline-offset:4px}
 </style></head><body>
-<header><a href="../">← Dashboard Immobiliare La Sacra</a><p class="eyebrow">AREA OPERATIVA / IMPORTAZIONE PRIVATA LOCALE</p><h1>Censimento aziende · 20 km da Avigliana</h1><p class="muted">Caricamento PDF, CSV e manifest. Controlli di integrità, deduplicazione e idoneità. Nessun invio email automatico.</p></header>
+<header><a href="../">← Dashboard Immobiliare La Sacra</a><p class="eyebrow">AREA OPERATIVA / RICERCA MANUALE</p><h1>Partita IVA Avigliana</h1><p class="muted">La ricerca automatica di aziende è stata sospesa. La ricerca su Google parte soltanto quando premi il pulsante.</p></header>
 <main>
-<section class="panel"><h2>Lotti notturni · 280 aziende</h2><p>Il lotto giornaliero viene conservato su GitHub Actions in forma cifrata. Puoi decifrarlo qui nel browser con la tua chiave privata, senza inviare file a un server.</p><p><a href="./decripta-lotto.html">Apri e scarica il lotto notturno in Excel + CSV</a></p></section>
+<section class="panel" id="ricerca-manuale"><h2>Ricerca manuale su Google</h2><p>Il pulsante apre la ricerca esatta <strong>partita iva avigliana</strong> su Google in una nuova scheda. Non esegue raccolte notturne né salva contatti.</p><p><a class="google-search" href="https://www.google.com/search?q=partita+iva+avigliana" target="_blank" rel="noopener noreferrer" aria-label="Apri su Google la ricerca Partita IVA Avigliana">Partita IVA Avigliana · Apri Google ↗</a></p></section>
+<details class="panel" id="storico-censimento"><summary class="archive-summary">Archivio storico · importazioni locali e vecchi lotti (facoltativo)</summary>
+<section class="panel"><h2>Lotti precedenti</h2><p>Le nuove raccolte automatiche sono disattivate. Puoi ancora decifrare i lotti storici già disponibili in GitHub Actions usando la tua chiave privata.</p><p><a href="./decripta-lotto.html">Apri solo l’archivio dei lotti cifrati precedenti</a></p></section>
 <section class="note"><strong>Protezione dati:</strong> i file sono letti esclusivamente nel browser su questo dispositivo; non vengono inviati a GitHub Pages e non vengono salvati sul server. La pagina, pur pubblicamente accessibile, non contiene il database aziendale. Tutti gli invii commerciali restano disattivati.</section>
 <div class="grid">
 <section class="panel"><h2>1. Carica il lotto</h2>
@@ -51,7 +57,7 @@ th{color:var(--gold)}.scroll{overflow:auto;max-height:520px}
 </section>
 <section class="panel" id="preview" hidden><h2>4. Anteprima PDF locale</h2><iframe id="pdfPreview" title="Documento PDF selezionato"></iframe></section>
 <section class="panel" id="list" hidden><h2>5. Prime 50 righe del CSV</h2><p class="muted">L'intero CSV rimane elaborato in memoria. La tabella qui sotto è una sola anteprima, non un limite alle schede.</p><div class="scroll"><table><thead><tr><th>Ragione sociale</th><th>Comune</th><th>Partita IVA</th><th>Email</th><th>Stato campagna</th></tr></thead><tbody id="tbody"></tbody></table></div></section>
-</main>
+</details></main>
 <script type="module">
 import {parseSemicolonCSV,validateManifest,analyzeRecords,sha256Hex} from "./validator.mjs";
 const $=id=>document.getElementById(id);

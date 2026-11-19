@@ -54,6 +54,18 @@ async function main(){
  assert.equal(await evalJS("document.scrollingElement.scrollHeight <= innerHeight"),true);
  assert.equal(await evalJS("getComputedStyle(document.querySelector('#saas-app [data-pane=control]')).display"),'block');
  console.log('PASS: fixed viewport with Agenda as default');
+ await until("Boolean(document.querySelector('#saas-app .saas-google-piva'))",'SaaS Google shortcut');
+ assert.equal(await evalJS("document.querySelector('#saas-app .saas-google-piva').href"),'https://www.google.com/search?q=partita+iva+avigliana');
+ assert.equal(await evalJS("document.querySelector('#saas-app .saas-google-piva').target"),'_blank');
+ await until("Boolean(window.CASE247Agenda50&&document.querySelector('#a50-unified-view'))",'unified agenda');
+ const beforeSearchDay=await evalJS("CASE247Agenda50.getDay()");
+ await evalJS("CASE247Agenda50.selectDay('2026-11-17');true");
+ await until("[...document.querySelectorAll('#a50-unified-view .a50-quick-link')].some(a=>a.textContent==='Partita IVA Avigliana')",'manual Google shortcut on weekday');
+ assert.equal(await evalJS("[...document.querySelectorAll('#a50-unified-view .a50-quick-link')].find(a=>a.textContent==='Partita IVA Avigliana')?.href"),'https://www.google.com/search?q=partita+iva+avigliana');
+ assert.equal(await evalJS("[...document.querySelectorAll('#a50-unified-view .a50-quick-link')].find(a=>a.textContent==='Partita IVA Avigliana')?.target"),'_blank');
+ await evalJS("CASE247Agenda50.selectDay('"+beforeSearchDay+"');true");
+ console.log('PASS: click-ready manual Google Partita IVA Avigliana shortcut in daily agenda');
+
  await until("Boolean(document.querySelector('#saas-app > #case247-routine03'))",'03:00 routine mounted beneath SaaS header');
  assert.equal(await evalJS("document.querySelector('#saas-app').children[1].id"),'case247-routine03');
  assert.equal(await evalJS("document.querySelectorAll('#case247-routine03 .r03-card').length"),3);

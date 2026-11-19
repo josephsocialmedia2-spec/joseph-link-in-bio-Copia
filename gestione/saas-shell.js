@@ -16,7 +16,10 @@ function boot(){
  const mark=document.createElement('span');mark.className='saas-mark';mark.textContent='C';
  const name=document.createElement('div');name.innerHTML='<strong>CASE247</strong><small>Workspace · Immobiliare La Sacra</small>';identity.append(mark,name);
  const date=document.createElement('div');date.className='saas-header-right';date.textContent='Pannello operativo';
- header.append(identity,date);
+ const googlePiva=document.createElement('a');googlePiva.className='saas-google-piva';
+ googlePiva.href='https://www.google.com/search?q=partita+iva+avigliana';googlePiva.target='_blank';googlePiva.rel='noopener noreferrer';
+ googlePiva.textContent='Partita IVA Avigliana';googlePiva.setAttribute('aria-label','Cerca Partita IVA Avigliana su Google');
+ header.append(identity,googlePiva,date);
  const nav=document.createElement('nav');nav.className='saas-tabs';nav.setAttribute('aria-label','Sezioni della dashboard');
  const labels=[['agenda','Agenda'],['acquisizione','Acquisizione'],['pilastri','Pilastri vendite'],['motivazione','Il mio Perché'],['operativo','Strumenti'],['archivio','Archivio']];
  const tabs=new Map();
