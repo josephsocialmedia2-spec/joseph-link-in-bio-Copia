@@ -1,37 +1,15 @@
 {
   "source": "Metricool brand 7844901 (Facebook/Instagram), read-only scheduled posts",
-  "checked_at": "2026-11-18",
+  "checked_at": "2026-11-19",
   "note": "Solo post draft=false e autoPublish=true con URL originali lasacraimmobiliare.it/products/. PENDING non equivale a pubblicato. Nessun post creato o modificato; controllo territoriale delle 18:00 autonomo.",
   "reservations": {
-    "2026-11-18": [
-      {
-        "url": "https://lasacraimmobiliare.it/products/bilocale-in-vendita-a-sant-ambrogio-disponibile-subito",
-        "metricool_id": 421948195,
-        "status": {
-          "facebook": "PUBLISHED",
-          "instagram": "PUBLISHED"
-        },
-        "draft": false,
-        "autoPublish": true
-      },
-      {
-        "url": "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq",
-        "metricool_id": 421948273,
-        "status": {
-          "facebook": "PENDING",
-          "instagram": "PENDING"
-        },
-        "draft": false,
-        "autoPublish": true
-      }
-    ],
     "2026-11-19": [
       {
         "url": "https://lasacraimmobiliare.it/products/casa-in-vendita-a-sant-ambrogio-con-doppia-esposizione-e-riscaldamento-autonomo",
         "metricool_id": 421948352,
         "status": {
-          "facebook": "PENDING",
-          "instagram": "PENDING"
+          "facebook": "PUBLISHED",
+          "instagram": "PUBLISHED"
         },
         "draft": false,
         "autoPublish": true
