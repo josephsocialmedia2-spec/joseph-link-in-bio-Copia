@@ -1,119 +1,13 @@
-name: LA SACRA - Ricerca notturna 23-04 - 280 aziende giornaliere
+name: LA SACRA - Censimento aziende automatico sospeso
+# Raccolta notturna 280 aziende disattivata per richiesta dell'utente.
+# Le precedenti esecuzioni e i relativi artefatti rimangono nello storico Actions.
 on:
-  schedule:
-    # Retry during Rome night; the script guards 23:00-03:55, with DST handled locally.
-    - cron: "10 0-3,21-23 * * *"
   workflow_dispatch:
-    inputs:
-      collect:
-        description: "Esegui raccolta adesso, lotto cifrato senza email marketing"
-        type: boolean
-        default: false
-      max_rows:
-        description: "Righe massime, da 1 a 280"
-        type: number
-        default: 280
-  push:
-    branches:
-      - main
-      - case247/ricerca-notturna-av20-280-20261116
-    paths:
-      - scripts/la_sacra_nightly_20km.py
-      - scripts/decrypt_la_sacra_batch.py
-      - scripts/test_la_sacra_nightly_20km.py
-      - config/la-sacra-census-public.pem
-      - .github/workflows/la-sacra-nightly-280.yml
-  pull_request:
-    paths:
-      - scripts/la_sacra_nightly_20km.py
-      - scripts/decrypt_la_sacra_batch.py
-      - scripts/test_la_sacra_nightly_20km.py
-      - config/la-sacra-census-public.pem
-      - .github/workflows/la-sacra-nightly-280.yml
 permissions:
   contents: read
-concurrency:
-  group: la-sacra-nightly-280
-  cancel-in-progress: false
 jobs:
-  qa:
-    name: Test coordinate, XLSX, cifratura e sicurezza
+  censimento_sospeso:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - name: Dipendenze crittografia
-        run: python -m pip install --disable-pip-version-check cryptography==46.0.4
-      - name: Test sintassi e QA
-        run: |
-          python -m py_compile scripts/la_sacra_nightly_20km.py scripts/decrypt_la_sacra_batch.py
-          python -m unittest discover -s scripts -p test_la_sacra_nightly_20km.py -v
-
-  research:
-    name: Raccolta aziende 20 km - lotto cifrato 280
-    needs: qa
-    if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.collect == true) }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 300
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: true
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - name: Dipendenza cifratura
-        run: python -m pip install --disable-pip-version-check cryptography==46.0.4
-      - name: Cerca e crea batch
-        shell: bash
-        env:
-          EVENT_NAME: ${{ github.event_name }}
-          INPUT_MAX: ${{ inputs.max_rows }}
-        run: |
-          set -euo pipefail
-          if [ "$EVENT_NAME" = "schedule" ]; then
-            python scripts/la_sacra_nightly_20km.py --guard-rome --max-rows 280
-          else
-            python scripts/la_sacra_nightly_20km.py --max-rows "$INPUT_MAX"
-          fi
-      - name: Carica solo dati CIFRATI in artefatto Actions
-        if: ${{ hashFiles('artifacts/la-sacra-nightly/*.case247') != '' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: LA-SACRA-CIFRATO-${{ github.run_id }}
-          path: artifacts/la-sacra-nightly/*.case247
-          if-no-files-found: error
-          retention-days: 90
-      - name: Salva rotazione solo ID OSM, mai recapiti in chiaro
-        shell: bash
-        run: |
-          set -euo pipefail
-          if [ ! -f state/la-sacra-av20-processed.json ]; then
-            echo "Nessun lotto nuovo"
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- state/la-sacra-av20-processed.json
-          if git diff --cached --quiet; then
-            exit 0
-          fi
-          git commit -m "CASE247: aggiorna IDs censiti [skip ci]"
-          git pull --rebase origin main
-          git push origin HEAD:main
-      - name: Report pubblico SENZA contatti
-        if: always()
-        run: |
-          {
-            echo "## Immobiliare La Sacra - censimento Avigliana 20 km"
-            echo "Ora Italia: 23:00-04:00; Google Actions cron UTC gestito nello script."
-            echo "Fino a 280 record reali / giorno, rotazione geografica e deduplicazione."
-            echo "Tutti i lotti contengono Excel e CSV in un archivio CIFRATO."
-            echo "Invii marketing effettuati: ZERO."
-            echo "Nessun elenco contatti nel repository o su GitHub Pages."
-          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Nessuna ricerca automatica di aziende
+        run: echo "Censimento notturno disattivato; nessuna raccolta né email."
