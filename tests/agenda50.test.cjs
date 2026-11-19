@@ -203,3 +203,28 @@ test('manual Google B2C Avigliana search uses the full supplied 20 km research p
  assert.match(census,/ricerca-piva-avigliana\.js\?v=20261119-fullprompt1/);
  assert.match(census,/Copia prompt completo/);
 });
+
+test('acquisition tools extend the unified agenda without adding a second 0/50 counter',()=>{
+ const base=fs.readFileSync(path.join(__dirname,'../gestione/index.html'),'utf8');
+ const js=fs.readFileSync(path.join(__dirname,'../gestione/agenda-strumenti-acquisizione.js'),'utf8');
+ const css=fs.readFileSync(path.join(__dirname,'../gestione/agenda-strumenti-acquisizione.css'),'utf8');
+ assert.match(base,/agenda-strumenti-acquisizione\.js\?v=20261119-v1/);
+ assert.match(base,/agenda-strumenti-acquisizione\.css\?v=20261119-v1/);
+ assert.match(js,/document\.getElementById\('a50-unified-view'\)/);
+ assert.match(js,/case247-acquisizione-kpi-v1/);
+ assert.match(js,/Europe\/Rome/);
+ assert.match(js,/data-pomo="50"/);
+ assert.match(js,/data-pomo="10"/);
+ assert.match(js,/Privati incontrati/);
+ assert.match(js,/Consensi documentati/);
+ assert.match(js,/Prequalifiche/);
+ assert.match(js,/data-kpi="privati"/);
+ assert.match(js,/qrcode-generator@1\.4\.4/);
+ assert.match(js,/\.isDark\(y,x\)/);
+ assert.match(js,/srcdoc=page/);
+ assert.match(js,/escapeHTML/);
+ assert.match(js,/9713708294|393713708294/);
+ assert.doesNotMatch(js,/due famiglie|QR senza URL|qrserver\.com|window\.open\('/i);
+ assert.doesNotMatch(js,/agenda-integrata-50|a50-grand-total/);
+ assert.match(css,/#case247-acq-tools/);
+});
