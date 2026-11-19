@@ -84,9 +84,9 @@ test('isolation regression: existing calendar code unchanged in this feature', (
   const html = fs.readFileSync(path.join(__dirname,'../gestione/index.html'),'utf8');
   const script = fs.readFileSync(path.join(__dirname,'../gestione/agenda50.js'),'utf8');
   assert.match(html, /saas-shell\.js\?v=20261119-piva-google/);
-  assert.match(html, /agenda50\.js\?v=20261119-piva-google/);
+  assert.match(html, /agenda50\.js\?v=20261119-remove-ops1/);
   assert.match(html, /agenda50\.css\?v=20261118-unified1/);
-  assert.ok(html.indexOf('saas-shell.js?v=20261119-piva-google') < html.indexOf('agenda50.js?v=20261119-piva-google'));
+  assert.ok(html.indexOf('saas-shell.js?v=20261119-piva-google') < html.indexOf('agenda50.js?v=20261119-remove-ops1'));
   assert.match(script, /calendar\.insertBefore\(section, filters\)/);
   assert.doesNotMatch(script, /cc-week['"]?\)\.innerHTML|cc-week['"]?\)\.replaceChildren/);
   assert.match(script, /window\.confirm\(/);
@@ -165,10 +165,10 @@ test('one integrated chronological day contains all operational blocks and prese
  const html=fs.readFileSync(path.join(__dirname,'../gestione/index.html'),'utf8');
  const script=fs.readFileSync(path.join(__dirname,'../gestione/agenda-unificata.js'),'utf8');
  const css=fs.readFileSync(path.join(__dirname,'../gestione/agenda-unificata.css'),'utf8');
- assert.match(html,/agenda-unificata\.js\?v=20261119-inline3/);
+ assert.match(html,/agenda-unificata\.js\?v=20261119-remove-ops1/);
  assert.match(html,/agenda-unificata\.css\?v=20261119-inline3/);
  assert.match(script,/Agenda integrata/);
- for(const label of ['Acquisizione Digitale','Acquisizione Diretta','Sviluppo Prioritario & Commenti Social','Contenuti, Materiali & Follow-up','Test, Verifiche & Chiusura Operativa','STUDIO · 2S CAT','Revisione lavori aperti','KPI e scadenze','Pianificazione settimana','CRM Excel','Seller Radar','WhatsApp'])assert.ok(script.includes(label),label);
+ for(const label of ['Acquisizione Digitale','Acquisizione Diretta','Sviluppo Prioritario & Commenti Social','Contenuti, Materiali & Follow-up','Test, Verifiche & Chiusura Operativa','STUDIO · 2S CAT','Revisione lavori aperti','KPI e scadenze','Pianificazione settimana','CRM Excel','WhatsApp'])assert.ok(script.includes(label),label);
  assert.match(script,/A\.selectDay\(day\)/);
  assert.match(script,/case247-cc-school-2scat-v1/);
  assert.match(script,/case247-cc-tasks-v1/);
@@ -209,9 +209,9 @@ test('new acquisition tools are mounted directly in existing day blocks',()=>{
  const timeline=fs.readFileSync(path.join(__dirname,'../gestione/agenda-unificata.js'),'utf8');
  const js=fs.readFileSync(path.join(__dirname,'../gestione/agenda-strumenti-acquisizione.js'),'utf8');
  const css=fs.readFileSync(path.join(__dirname,'../gestione/agenda-strumenti-acquisizione.css'),'utf8');
- assert.match(base,/agenda-strumenti-acquisizione\.js\?v=20261119-inline3/);
+ assert.match(base,/agenda-strumenti-acquisizione\.js\?v=20261119-remove-ops1/);
  assert.match(base,/agenda-strumenti-acquisizione\.css\?v=20261119-inline3/);
- assert.match(base,/agenda-unificata\.js\?v=20261119-inline3/);
+ assert.match(base,/agenda-unificata\.js\?v=20261119-remove-ops1/);
  assert.match(base,/agenda-unificata\.css\?v=20261119-inline3/);
  assert.match(timeline,/AGGIORNATA · 19\.11\.3/);
  assert.match(timeline,/Mappatura annunci privati/);
@@ -239,4 +239,20 @@ test('new acquisition tools are mounted directly in existing day blocks',()=>{
  assert.doesNotMatch(js,/agenda-integrata-50|a50-grand-total/);
  assert.doesNotMatch(js,/<summary>Strumenti acquisizione/);
  assert.match(css,/\.a50-inline-tool/);
+});
+
+test('removed CASE247 standalone operations page has no navigation references',()=>{
+ const fs=require('node:fs');
+ const path=require('node:path');
+ const root=path.join(__dirname,'..');
+ const removed=path.join(root,'gestione/case247-operazioni/index.html');
+ assert.equal(fs.existsSync(removed),false);
+ for(const p of ['gestione/index.html','gestione/agenda50.js','gestione/agenda-unificata.js','gestione/agenda-strumenti-acquisizione.js','gestione/control-center.js']){
+   const content=fs.readFileSync(path.join(root,p),'utf8');
+   assert.doesNotMatch(content,/case247-operazioni\//,p);
+ }
+ const html=fs.readFileSync(path.join(root,'gestione/index.html'),'utf8');
+ assert.match(html,/agenda50\.js\?v=20261119-remove-ops1/);
+ assert.match(html,/agenda-unificata\.js\?v=20261119-remove-ops1/);
+ assert.match(html,/agenda-strumenti-acquisizione\.js\?v=20261119-remove-ops1/);
 });

@@ -62,7 +62,7 @@ function quickLinks(ids){
  if(ids.includes('email')||ids.includes('linkedin')||ids.includes('dm')){
   bar.append(crmButton(),quick('Partita IVA Avigliana','https://www.google.com/search?q=partita+iva+avigliana'),quick('Gmail','https://mail.google.com/'),quick('LinkedIn','https://www.linkedin.com/'),quick('Canali CASE247','./canali-case247/'));
  }else if(ids.includes('calls')){
-  bar.append(crmButton(),quick('Seller Radar','./case247-operazioni/'),quick('WhatsApp','./whatsapp-volantini/'));
+  bar.append(crmButton(),quick('WhatsApp','./whatsapp-volantini/'));
  }else if(ids.includes('comments')||ids.includes('followups')){
   bar.append(quick('Canali CASE247','./canali-case247/'),quick('Gmail','https://mail.google.com/'));
  }

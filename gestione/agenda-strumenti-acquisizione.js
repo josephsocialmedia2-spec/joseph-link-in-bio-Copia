@@ -30,7 +30,6 @@ function init(){
  '<a href="https://www.subito.it/" target="_blank" rel="noopener noreferrer">Subito</a>',
  '<a href="https://www.google.com/maps/search/?api=1&amp;query=Avigliana%20TO" target="_blank" rel="noopener noreferrer">Google Maps</a>',
  '<button type="button" id="a50-tools-crm">CRM Excel</button>',
- '<a href="./case247-operazioni/">Seller Radar</a>',
  '<a href="./volantini-premium/">Studio Volantini</a>',
  '</div>'
  ].join(''));

@@ -13,8 +13,7 @@
         ['Gmail', 'https://mail.google.com/']
       ] },
       { id: 'linkedin', label: 'Contatti LinkedIn', limit: 10, hint: 'Registrare l’esito nel CRM B2B', links: [
-        ['LinkedIn', 'https://www.linkedin.com/'],
-        ['CRM B2B', './case247-operazioni/']
+        ['LinkedIn', 'https://www.linkedin.com/']
       ] },
       { id: 'dm', label: 'Messaggi diretti (DM)', limit: 10, hint: 'Facebook, Instagram, TikTok e YouTube', links: [
         ['Canali CASE247', './canali-case247/'],
@@ -23,8 +22,7 @@
     ] },
     { id: 'calls', time: 'Tarda mattina · 11:30 – 12:30 · Acquisizione diretta', limit: 10, items: [
       { id: 'calls', label: 'Telefonate, vocali o visite', limit: 10,
-        hint: 'CRM proprietari / Seller Radar · invia volantino soltanto dopo il contatto', links: [
-          ['CRM / Seller Radar', './case247-operazioni/'],
+        hint: 'Registra il contatto nel CRM Excel; invia il volantino soltanto dopo richiesta o consenso valido', links: [
           ['Volantini WhatsApp', './whatsapp-volantini/'],
           ['WhatsApp 371 370 8294', 'https://wa.me/393713708294']
         ] }
@@ -35,7 +33,6 @@
         ['Quadro 2 · Social', './quadro-social/']
       ] },
       { id: 'followups', label: 'Follow-up', limit: 5, hint: 'Ricontatti via social o email, registrare l’esito', links: [
-        ['CRM B2B / Proprietari', './case247-operazioni/'],
         ['Gmail', 'https://mail.google.com/']
       ] }
     ] }
