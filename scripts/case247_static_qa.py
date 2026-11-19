@@ -29,21 +29,20 @@ check(len(pages)>=50 and len({p.get("source_path") for p in pages})==len(pages),
 check(sum(p.get("owner_guess_not_verified")=="LOCAL_BUSINESS_OR_CLIENT" for p in pages)>=18,"Siti attività locali censiti separatamente")
 check(all(p.get("integration_enabled") is False for p in pages),"Nessuna integrazione massiva sui clienti")
 dashboard=read("gestione/index.html")
-regia=read("gestione/case247-operazioni/index.html")
+regia_path=ROOT/"gestione/case247-operazioni/index.html"
 review=read("campagne/case247/auto-feed/review/index.html")
 edge=read("supabase/functions/case247-crm-admin-intake/index.ts")
-check('href="./case247-operazioni/"' in dashboard,"Dashboard principale collegata alla Regia operativa")
+check(not regia_path.exists() and 'href="./case247-operazioni/"' not in dashboard,"Regia operativa obsoleta rimossa dalla pagina e dai collegamenti")
 check('href="../campagne/case247/auto-feed/review/' in dashboard,"Dashboard conserva la review editoriale")
-required=["panoramica","radar","crm","b2b","leadgen","social","review","workflow","appuntamenti","strategie","analytics","sicurezza"]
-check(all('id="'+v+'"' in regia for v in required),"Regia: 12 moduli richiesti presenti")
-check('case247_staff_members' in regia and "getUser()" in regia,"Regia protetta da autenticazione e controllo staff")
-check('case247-crm-admin-intake' in regia,"Modulo inserimento inbound collegato all'Edge Function")
+for source in ["gestione/agenda-unificata.js","gestione/agenda50.js","gestione/agenda-strumenti-acquisizione.js","gestione/control-center.js"]:
+    check("case247-operazioni/" not in read(source),"Nessun riferimento al percorso eliminato: "+source)
+check("case247-crm-admin-intake" in edge,"La funzione privata CRM rimane nel repository")
 check('case247_staff_members' in edge and 'withSupabase({auth:"user"}' in edge and 'ctx.userClaims' in edge,"Edge: autenticazione ufficiale JWT e membership server-side")
 check('eq("name","CASE IN PUBBLICITÀ 24/7")' in edge and 'eq("organization_id",org)' in edge,"Endpoint legato solo a tenant CASE247")
-check("eq('name','CASE IN PUBBLICITÀ 24/7')" in regia and "eq('organization_id',org)" in regia,"Dashboard legata solo a tenant CASE247")
+
 check('"outbound_marketing":false' in edge or 'outbound_marketing:false' in edge,"Edge: non invia comunicazioni marketing")
 check("ctx.supabaseAdmin" in edge and "@supabase/server@1" in edge,"Accesso amministrativo riservato al middleware server")
-check("SUPABASE_SERVICE_ROLE_KEY" not in regia and "service_role" not in regia.lower(),"Nessuna secret key nella pagina client")
+check("SUPABASE_SERVICE_ROLE_KEY" not in dashboard and "service_role" not in dashboard.lower(),"Nessuna secret key nella dashboard gestione")
 check("id=\"contenuti-approvati\"" in review and 'id="archivio-aziende"' in review,"Review divisa Privati/Aziende")
 check(len(set(re.findall(r'data-id="CASE247-\d{3}"',review)))==12,"Review: 12 asset statici identificati")
 queue=json.loads(read("campagne/case247/editorial-queue/2026-11-01_2026-11-04/queue.json"))
