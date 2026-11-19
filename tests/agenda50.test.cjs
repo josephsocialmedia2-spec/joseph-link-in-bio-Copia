@@ -187,3 +187,19 @@ test('company census shortcut opens manual Google P.IVA Avigliana search', () =>
  assert.doesNotMatch(integrated,/quick\('Censimento',/);
  assert.doesNotMatch(agenda,/\['Censimento aziende',/);
 });
+
+test('manual Google B2C Avigliana search uses the full supplied 20 km research prompt',()=>{
+ const script=fs.readFileSync(path.join(__dirname,'../gestione/ricerca-piva-avigliana.js'),'utf8');
+ const page=fs.readFileSync(path.join(__dirname,'../gestione/index.html'),'utf8');
+ const census=fs.readFileSync(path.join(__dirname,'../gestione/censimento-aziende/index.html'),'utf8');
+ assert.match(script,/Piazza Conte Rosso/);
+ assert.match(script,/Chiusa di San Michele/);
+ assert.match(script,/Piossasco/);
+ assert.match(script,/Non trovata/);
+ assert.match(script,/esattamente queste 7 colonne/);
+ assert.match(script,/Registro Imprese/);
+ assert.match(script,/Google\.com\/search\?q=/i);
+ assert.match(page,/ricerca-piva-avigliana\.js\?v=20261119-fullprompt1/);
+ assert.match(census,/ricerca-piva-avigliana\.js\?v=20261119-fullprompt1/);
+ assert.match(census,/Copia prompt completo/);
+});
