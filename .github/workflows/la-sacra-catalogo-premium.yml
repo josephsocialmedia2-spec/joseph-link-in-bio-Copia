@@ -2,12 +2,14 @@ name: La Sacra Catalogo Premium QA
 on:
   pull_request:
     paths:
+      - 'catalogo/**'
       - 'catalogo-premium/**'
       - 'tests/case247-catalogo-premium.test.cjs'
       - '.github/workflows/la-sacra-catalogo-premium.yml'
   push:
     branches: [main]
     paths:
+      - 'catalogo/**'
       - 'catalogo-premium/**'
       - 'tests/case247-catalogo-premium.test.cjs'
       - '.github/workflows/la-sacra-catalogo-premium.yml'
