@@ -41,7 +41,245 @@ a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit}b
 .review-hub-sector strong{display:block;font-size:17px;color:#E4F8FF}
 .review-hub-sector small{display:block;color:#A5CBEC;margin-top:5px}
 @media(max-width:640px){.review-hub-sectors{grid-template-columns:1fr}.review-hub-sector img{width:84px;height:105px}}
-</style><link rel="stylesheet" href="../case247-design.css?v=20261103-unified"><link rel="stylesheet" href="control-center.css?v=20261115-studio-2scat"><link rel="stylesheet" href="perche-widget.css?v=20261116-1"><link rel="stylesheet" href="sv-acquisizione.css?v=20261117-1"><link rel="stylesheet" href="pilastri-vendite-agenda.css?v=20261117-1"><style id="case247-two-boards-style">#case247-two-boards{max-width:1360px;margin:22px auto;padding:20px;border:1px solid #375d76;background:#11283a;border-radius:16px;color:#eaf5fa}#case247-two-boards h1{font-size:clamp(26px,4vw,38px);margin:0 0 8px}#case247-two-boards p{color:#b5cede}#case247-two-boards .board-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0}#case247-two-boards .board-card{display:block;padding:24px;border-radius:14px;background:#193d54;color:#fff;border:1px solid #47809c;text-decoration:none}#case247-two-boards .board-card b{display:block;font-size:24px;margin-bottom:7px}#case247-two-boards .board-card span{color:#c2dfec}#case247-two-boards button{color:#eef8ff;border:1px solid #58798c;background:#243d51;border-radius:9px;padding:10px 14px;cursor:pointer}body:not(.case247-show-legacy) #case247-network-41,body:not(.case247-show-legacy) #case247-studio-volantini,body:not(.case247-show-legacy) #case247-volantino-approvato,body:not(.case247-show-legacy) #case247-clienti-scheduler,body:not(.case247-show-legacy) div.app,body:not(.case247-show-legacy) section.case247-property-section{display:none!important}@media(max-width:680px){#case247-two-boards{margin:12px;padding:15px}#case247-two-boards .board-grid{grid-template-columns:1fr}}</style><link rel="stylesheet" href="layout-orizzontale.css?v=20261118-1"><link rel="stylesheet" href="saas-shell.css?v=20261118-reorder1"><link rel="stylesheet" href="agenda50.css?v=20261118-unified1"><link rel="stylesheet" href="agenda-unificata.css?v=20261118-1"><link rel="stylesheet" href="studio-compact.css?v=20261118-compact1"></head><body class="case247-unified"><section id="perche-widget" aria-labelledby="perche-title"><h2 id="perche-title">🎯 Qual è il mio Perché oggi?</h2><form id="perche-form" class="perche-form"><label for="input-perche" class="perche-sr-only" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">La mia motivazione di oggi</label><input type="text" id="input-perche" class="perche-input" placeholder="Scrivi qui la tua motivazione di oggi..." maxlength="500" autocomplete="off" required><button type="submit" class="perche-save">Salva</button></form><p id="perche-status" class="perche-status" role="status" aria-live="polite"></p><div class="perche-ticker-viewport" aria-label="Motivazioni salvate"><div id="ticker-container"><span id="ticker-text">Inserisci il tuo primo "Perché" qui sopra per iniziare...</span></div></div></section><section class="sv-tab-box" id="sv-acquisizione" aria-labelledby="sv-title"><h2 class="sv-header-compact" id="sv-title">Sistema di Acquisizione Immobiliare</h2>
+</style><link rel="stylesheet" href="../case247-design.css?v=20261103-unified"><link rel="stylesheet" href="control-center.css?v=20261115-studio-2scat"><link rel="stylesheet" href="perche-widget.css?v=20261116-1"><link rel="stylesheet" href="sv-acquisizione.css?v=20261117-1"><link rel="stylesheet" href="pilastri-vendite-agenda.css?v=20261117-1"><style id="case247-two-boards-style">#case247-two-boards{max-width:1360px;margin:22px auto;padding:20px;border:1px solid #375d76;background:#11283a;border-radius:16px;color:#eaf5fa}#case247-two-boards h1{font-size:clamp(26px,4vw,38px);margin:0 0 8px}#case247-two-boards p{color:#b5cede}#case247-two-boards .board-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0}#case247-two-boards .board-card{display:block;padding:24px;border-radius:14px;background:#193d54;color:#fff;border:1px solid #47809c;text-decoration:none}#case247-two-boards .board-card b{display:block;font-size:24px;margin-bottom:7px}#case247-two-boards .board-card span{color:#c2dfec}#case247-two-boards button{color:#eef8ff;border:1px solid #58798c;background:#243d51;border-radius:9px;padding:10px 14px;cursor:pointer}body:not(.case247-show-legacy) #case247-network-41,body:not(.case247-show-legacy) #case247-studio-volantini,body:not(.case247-show-legacy) #case247-volantino-approvato,body:not(.case247-show-legacy) #case247-clienti-scheduler,body:not(.case247-show-legacy) div.app,body:not(.case247-show-legacy) section.case247-property-section{display:none!important}@media(max-width:680px){#case247-two-boards{margin:12px;padding:15px}#case247-two-boards .board-grid{grid-template-columns:1fr}}</style><link rel="stylesheet" href="layout-orizzontale.css?v=20261118-1"><link rel="stylesheet" href="saas-shell.css?v=20261118-reorder1"><link rel="stylesheet" href="agenda50.css?v=20261118-unified1"><link rel="stylesheet" href="agenda-unificata.css?v=20261118-1"><link rel="stylesheet" href="studio-compact.css?v=20261118-compact1"></head><body class="case247-unified"><!-- CASE247 · Routine delle 03:00. Blocco autonomo, senza dipendenze. -->
+<style>
+#case247-routine03{--r03-ink:#283341;--r03-line:#dce3ea;--r03-muted:#6b7887;--r03-fill:#e8eef5;--r03-stroke:#3b434e;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--r03-ink);background:#fff;border:1px solid var(--r03-line);border-radius:10px;box-shadow:0 2px 10px rgba(26,42,62,.045);padding:10px 14px;margin:9px 14px;min-width:0}
+#case247-routine03 *{box-sizing:border-box}
+#case247-routine03 .r03-header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+#case247-routine03 h2{font-size:14px;line-height:1.3;font-weight:760;letter-spacing:-.015em;margin:0;color:#243346}
+#case247-routine03 .r03-subtitle{font-size:10px;margin:2px 0 0;color:var(--r03-muted)}
+#case247-routine03 .r03-metrics{display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end}
+#case247-routine03 .r03-calories{font-size:12px;font-weight:750;font-variant-numeric:tabular-nums;white-space:nowrap}
+#case247-routine03 .r03-today{font-size:10px;font-weight:500;color:var(--r03-muted);margin-left:4px}
+#case247-routine03 .r03-reset{font:inherit;font-size:10px;color:var(--r03-muted);border:1px solid var(--r03-line);border-radius:5px;background:#fff;padding:5px 8px;cursor:pointer}
+#case247-routine03 .r03-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+#case247-routine03 .r03-card{display:flex;align-items:center;gap:9px;min-width:0;min-height:84px;padding:7px 9px;border:1px solid var(--r03-line);background:#fafbfd;border-radius:8px;opacity:1;transform:translateY(0);transition:opacity .28s ease,transform .28s ease}
+#case247-routine03 .r03-card.r03-completing{opacity:0;transform:translateY(-9px);pointer-events:none}
+#case247-routine03 .r03-card[hidden],#case247-routine03 .r03-grid[hidden]{display:none!important}
+#case247-routine03 .r03-art{display:block;flex:0 0 86px;width:86px;height:67px;overflow:visible}
+#case247-routine03 .r03-art .r03-shape{fill:var(--r03-fill);stroke:var(--r03-stroke);stroke-width:5.2;stroke-linecap:round;stroke-linejoin:round}
+#case247-routine03 .r03-art .r03-line{fill:none;stroke:var(--r03-stroke);stroke-width:5.2;stroke-linecap:round;stroke-linejoin:round}
+#case247-routine03 .r03-copy{flex:1;min-width:0}
+#case247-routine03 .r03-name{display:block;font-size:12px;font-weight:750;line-height:1.25;color:#2a3442}
+#case247-routine03 .r03-prescription{display:block;font-size:10px;color:var(--r03-muted);margin-top:4px}
+#case247-routine03 .r03-estimate{font-size:10px;color:#5a6d80;white-space:nowrap;margin-top:3px}
+#case247-routine03 .r03-check{display:flex;align-items:center;gap:4px;font-size:11px;font-weight:700;white-space:nowrap;cursor:pointer}
+#case247-routine03 .r03-check input{accent-color:#247c61;width:16px;height:16px;margin:0;cursor:pointer}
+#case247-routine03 .r03-complete{font-size:11px;font-weight:650;color:#166b4d;background:#eff9f3;border:1px solid #c5e8d4;padding:10px 12px;border-radius:7px}
+#case247-routine03 .r03-complete[hidden]{display:none!important}
+#case247-routine03 .r03-notice{font-size:10px;color:#a04d34;margin:4px 0 0;min-height:0}
+#case247-routine03 .r03-total.r03-pop{animation:r03-count-pop .38s ease-out}
+@keyframes r03-push{0%,100%{transform:translateY(-1px)}50%{transform:translateY(7px)}}
+@keyframes r03-crunch-upper{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(12deg)}}
+@keyframes r03-crunch-lower{0%,100%{transform:rotate(9deg)}50%{transform:rotate(-9deg)}}
+@keyframes r03-run-leg-a{0%,100%{transform:rotate(29deg)}50%{transform:rotate(-29deg)}}
+@keyframes r03-run-leg-b{0%,100%{transform:rotate(-29deg)}50%{transform:rotate(29deg)}}
+@keyframes r03-wheel{to{transform:rotate(360deg)}}
+@keyframes r03-belt{to{transform:translateX(10px)}}
+@keyframes r03-count-pop{0%{transform:scale(1)}50%{transform:scale(1.16);color:#188462}100%{transform:scale(1)}}
+#case247-routine03 .r03-push-torso{animation:r03-push 1.6s ease-in-out infinite}
+#case247-routine03 .r03-crunch-upper{transform-origin:61px 70px;animation:r03-crunch-upper 1.8s ease-in-out infinite}
+#case247-routine03 .r03-crunch-lower{transform-origin:81px 72px;animation:r03-crunch-lower 1.8s ease-in-out infinite}
+#case247-routine03 .r03-run-leg-a{transform-origin:88px 51px;animation:r03-run-leg-a .55s ease-in-out infinite}
+#case247-routine03 .r03-run-leg-b{transform-origin:88px 51px;animation:r03-run-leg-b .55s ease-in-out infinite}
+#case247-routine03 .r03-wheel{transform-box:fill-box;transform-origin:center;animation:r03-wheel 1s linear infinite}
+#case247-routine03 .r03-belt{animation:r03-belt .5s linear infinite}
+#saas-app:has(> #case247-routine03){grid-template-rows:56px auto 47px minmax(0,1fr)!important}
+#saas-app > #case247-routine03{margin:6px 14px 4px;box-shadow:none}
+@media(max-width:790px){
+ #case247-routine03 .r03-card{gap:6px;padding:7px}
+ #case247-routine03 .r03-art{width:61px;height:53px;flex-basis:61px}
+ #case247-routine03 .r03-name{font-size:11px}
+ #case247-routine03 .r03-prescription{font-size:9px}
+ #case247-routine03 .r03-check{font-size:10px}
+}
+@media(max-width:620px){
+ #saas-app:has(> #case247-routine03){grid-template-rows:50px auto 88px minmax(0,1fr)!important}
+ #saas-app > #case247-routine03{margin:4px 8px 2px;padding:8px}
+ #case247-routine03 .r03-header{gap:3px;margin-bottom:6px}
+ #case247-routine03 .r03-metrics{width:100%;justify-content:space-between}
+ #case247-routine03 .r03-grid{grid-template-columns:1fr;gap:5px}
+ #case247-routine03 .r03-card{min-height:55px;padding:3px 7px}
+ #case247-routine03 .r03-art{height:46px;width:57px;flex-basis:57px}
+ #case247-routine03 .r03-check{margin-left:auto}
+}
+@media(max-height:650px){
+ #case247-routine03 .r03-grid{grid-template-columns:repeat(3,minmax(165px,1fr));overflow-x:auto}
+ #case247-routine03 .r03-card{min-height:60px}
+}
+@media(prefers-reduced-motion:reduce){
+ #case247-routine03 *,#case247-routine03 *::before,#case247-routine03 *::after{animation:none!important;transition:none!important}
+}
+</style>
+<section id="case247-routine03" aria-labelledby="r03-title">
+  <div class="r03-header">
+    <div>
+      <h2 id="r03-title">⏰ Routine Mattutina • Ore 03:00</h2>
+      <p class="r03-subtitle">Attivazione giornaliera prima di iniziare</p>
+    </div>
+    <div class="r03-metrics">
+      <div class="r03-calories" role="status" aria-live="polite">🔥 Calorie bruciate totali: <span class="r03-total" id="r03-total">0</span> kcal <span class="r03-today">(Oggi: <span id="r03-today">0</span> / 188 kcal)</span></div>
+      <button type="button" class="r03-reset" id="r03-reset" title="Azzera lo storico: le attività completate oggi restano confermate">Azzera totale</button>
+    </div>
+  </div>
+  <div class="r03-grid" id="r03-grid">
+    <article class="r03-card" data-r03-id="flessioni">
+      <svg class="r03-art" viewBox="0 0 160 94" aria-hidden="true" focusable="false">
+        <path class="r03-line" d="M6 85H154"/>
+        <path class="r03-shape" d="M15 79L28 65 48 59 63 48 85 43 111 51 124 75 128 82H117L103 65 85 60 59 70 30 81Z"/>
+        <g class="r03-push-torso">
+          <path class="r03-shape" d="M20 70L46 57 70 44 97 35 118 43 109 55 84 54 63 61 35 75Z"/>
+          <circle class="r03-shape" cx="135" cy="32" r="12"/>
+        </g>
+      </svg>
+      <div class="r03-copy"><strong class="r03-name">Flessioni</strong><span class="r03-prescription">20 rip. × 2</span><span class="r03-estimate">16 kcal</span></div>
+      <label class="r03-check"><input type="checkbox" data-r03-check="flessioni" aria-label="Fatto: flessioni"> Fatto</label>
+    </article>
+    <article class="r03-card" data-r03-id="addominali">
+      <svg class="r03-art" viewBox="0 0 160 94" aria-hidden="true" focusable="false">
+        <path class="r03-line" d="M8 85H152"/>
+        <path class="r03-shape" d="M49 75Q64 83 80 73L92 68 98 79 75 85H53Z"/>
+        <g class="r03-crunch-upper">
+          <circle class="r03-shape" cx="53" cy="24" r="12"/>
+          <path class="r03-shape" d="M52 39L68 53 79 70 66 77 43 58 39 46Z"/>
+          <path class="r03-line" d="M68 51L89 35"/>
+        </g>
+        <g class="r03-crunch-lower">
+          <path class="r03-shape" d="M81 72L109 47 129 52 118 63 93 83Z"/>
+        </g>
+      </svg>
+      <div class="r03-copy"><strong class="r03-name">Addominali</strong><span class="r03-prescription">20 rip. × 2</span><span class="r03-estimate">12 kcal</span></div>
+      <label class="r03-check"><input type="checkbox" data-r03-check="addominali" aria-label="Fatto: addominali"> Fatto</label>
+    </article>
+    <article class="r03-card" data-r03-id="tapis">
+      <svg class="r03-art" viewBox="0 0 160 94" aria-hidden="true" focusable="false">
+        <rect class="r03-shape" x="7" y="71" width="145" height="19" rx="10"/>
+        <g class="r03-wheel"><circle class="r03-line" cx="22" cy="80" r="6"/><path class="r03-line" d="M22 74V86M16 80H28"/></g>
+        <g class="r03-wheel"><circle class="r03-line" cx="137" cy="80" r="6"/><path class="r03-line" d="M137 74V86M131 80H143"/></g>
+        <path class="r03-line" d="M128 70L126 42 136 27 151 39"/>
+        <path class="r03-line r03-belt" d="M39 80h10M60 80h10M81 80h10M102 80h10"/>
+        <circle class="r03-shape" cx="87" cy="17" r="10"/>
+        <path class="r03-shape" d="M85 30L78 47 90 54 99 40Z"/>
+        <path class="r03-line" d="M80 35L65 40 62 53M96 34L111 40 118 35"/>
+        <g class="r03-run-leg-a"><path class="r03-line" d="M89 51L80 61 65 70"/></g>
+        <g class="r03-run-leg-b"><path class="r03-line" d="M89 51L97 60 109 70"/></g>
+      </svg>
+      <div class="r03-copy"><strong class="r03-name">Tapis Roulant</strong><span class="r03-prescription">20 min</span><span class="r03-estimate">160 kcal</span></div>
+      <label class="r03-check"><input type="checkbox" data-r03-check="tapis" aria-label="Fatto: tapis roulant"> Fatto</label>
+    </article>
+  </div>
+  <p class="r03-complete" id="r03-complete" hidden>✅ Routine delle 03:00 completata per oggi! Ci vediamo domani mattina.</p>
+  <p class="r03-notice" id="r03-notice" role="status" aria-live="polite"></p>
+</section>
+<script>
+(function(){
+  'use strict';
+  const root=document.getElementById('case247-routine03');
+  if(!root||root.dataset.r03Init)return;
+  root.dataset.r03Init='1';
+  const key='case247-routine03-v1';
+  const kcal={flessioni:16,addominali:12,tapis:160};
+  const keys=Object.keys(kcal);
+  const getDate=()=>{
+    const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Rome',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+    const data=Object.fromEntries(parts.map(x=>[x.type,x.value]));
+    return data.year+'-'+data.month+'-'+data.day;
+  };
+  const fresh=()=>({day:getDate(),historyTotal:0,done:[]});
+  const daily=state=>state.done.reduce((sum,id)=>sum+kcal[id],0);
+  let state;
+  let canSave=true;
+  function load(){
+    try{
+      const raw=JSON.parse(localStorage.getItem(key));
+      if(!raw||typeof raw!=='object')return fresh();
+      const done=Array.isArray(raw.done)?[...new Set(raw.done.filter(id=>keys.includes(id)))]:[];
+      return {day:/^\d{4}-\d{2}-\d{2}$/.test(raw.day||'')?raw.day:getDate(),
+        historyTotal:Number.isSafeInteger(raw.historyTotal)&&raw.historyTotal>=0?raw.historyTotal:0,done};
+    }catch(_){canSave=false;return fresh()}
+  }
+  function save(){
+    try{localStorage.setItem(key,JSON.stringify(state));canSave=true}
+    catch(_){canSave=false}
+    root.querySelector('#r03-notice').textContent=canSave?'':'Memoria locale non disponibile: le spunte potrebbero non conservarsi.';
+  }
+  function rollover(){
+    const today=getDate();
+    if(state.day===today)return false;
+    if(state.day<today)state.historyTotal+=daily(state);
+    state.day=today;state.done=[];
+    save();
+    return true;
+  }
+  function render(animate){
+    const today=daily(state),value=state.historyTotal+today;
+    const total=root.querySelector('#r03-total');
+    total.textContent=String(value);
+    root.querySelector('#r03-today').textContent=String(today);
+    if(animate){
+      total.classList.remove('r03-pop');
+      void total.offsetWidth;
+      total.classList.add('r03-pop');
+    }
+    keys.forEach(id=>{
+      const card=root.querySelector('[data-r03-id="'+id+'"]');
+      const completed=state.done.includes(id);
+      card.hidden=completed;
+      card.classList.remove('r03-completing');
+      const field=card.querySelector('input');
+      field.checked=completed;field.disabled=completed;
+    });
+    const complete=state.done.length===keys.length;
+    root.querySelector('#r03-complete').hidden=!complete;
+    root.querySelector('#r03-grid').hidden=complete;
+  }
+  state=load();
+  rollover();
+  render(false);
+  root.addEventListener('change',event=>{
+    const input=event.target.closest('input[data-r03-check]');
+    if(!input||!input.checked)return;
+    state=load();rollover();
+    const id=input.dataset.r03Check;
+    if(!Object.prototype.hasOwnProperty.call(kcal,id)||state.done.includes(id)){render(false);return}
+    state.done.push(id);save();
+    const card=input.closest('.r03-card');
+    card.classList.add('r03-completing');
+    input.disabled=true;
+    const today=daily(state);
+    const total=root.querySelector('#r03-total');
+    total.textContent=String(state.historyTotal+today);
+    root.querySelector('#r03-today').textContent=String(today);
+    total.classList.remove('r03-pop');void total.offsetWidth;total.classList.add('r03-pop');
+    window.setTimeout(()=>render(false),290);
+  });
+  root.querySelector('#r03-reset').addEventListener('click',()=>{
+    if(!window.confirm('Azzerare lo storico delle calorie mantenendo gli esercizi già completati oggi?'))return;
+    state=load();rollover();state.historyTotal=0;save();render(true);
+  });
+  function refresh(){state=load();rollover();render(false)}
+  window.addEventListener('storage',event=>{if(event.key===key)refresh()});
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh()});
+  window.addEventListener('focus',refresh);
+  window.setInterval(()=>{if(getDate()!==state.day)refresh()},30000);
+  // CASE247 ora usa una shell 100vh: il widget viene montato sotto l'header
+  // della shell, prima del contenuto e del widget «Il mio Perché».
+  function placeBelowHeader(){
+    const app=document.getElementById('saas-app');
+    const header=app&&app.querySelector('.saas-header');
+    if(!header)return false;
+    if(root.parentNode!==app)header.insertAdjacentElement('afterend',root);
+    root.classList.remove('saas-legacy-hidden');
+    return true;
+  }
+  if(!placeBelowHeader()){
+    const observer=new MutationObserver(()=>{if(placeBelowHeader())observer.disconnect()});
+    observer.observe(document.documentElement,{childList:true,subtree:true});
+    document.addEventListener('DOMContentLoaded',()=>{if(placeBelowHeader())observer.disconnect()},{once:true});
+  }
+})();
+</script>
+<section id="perche-widget" aria-labelledby="perche-title"><h2 id="perche-title">🎯 Qual è il mio Perché oggi?</h2><form id="perche-form" class="perche-form"><label for="input-perche" class="perche-sr-only" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">La mia motivazione di oggi</label><input type="text" id="input-perche" class="perche-input" placeholder="Scrivi qui la tua motivazione di oggi..." maxlength="500" autocomplete="off" required><button type="submit" class="perche-save">Salva</button></form><p id="perche-status" class="perche-status" role="status" aria-live="polite"></p><div class="perche-ticker-viewport" aria-label="Motivazioni salvate"><div id="ticker-container"><span id="ticker-text">Inserisci il tuo primo "Perché" qui sopra per iniziare...</span></div></div></section><section class="sv-tab-box" id="sv-acquisizione" aria-labelledby="sv-title"><h2 class="sv-header-compact" id="sv-title">Sistema di Acquisizione Immobiliare</h2>
 <div class="sv-nav-buttons" role="tablist" aria-label="Quadri del sistema di acquisizione">
 <button type="button" class="sv-btn-tab" id="sv-tab-button-1" role="tab" aria-selected="true" aria-controls="sv-tab-1" tabindex="0">1. Standard Venditore &amp; Segreti</button>
 <button type="button" class="sv-btn-tab" id="sv-tab-button-2" role="tab" aria-selected="false" aria-controls="sv-tab-2" tabindex="-1">2. Networking &amp; WhatsApp</button>
