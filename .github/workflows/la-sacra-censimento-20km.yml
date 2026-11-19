@@ -10,4 +10,4 @@ jobs:
       - name: Non esportare CSV di contatti in chiaro dal repository pubblico
         run: |
           echo "Workflow legacy disattivato per sicurezza."
-          echo "Utilizzare LA SACRA - Ricerca notturna 23-04 - 280 aziende giornaliere."
+          echo "Il censimento automatico delle aziende è sospeso. Usare solo la ricerca manuale Google su richiesta."
