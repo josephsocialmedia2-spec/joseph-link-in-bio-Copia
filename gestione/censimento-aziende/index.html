@@ -27,7 +27,7 @@ th{color:var(--gold)}.scroll{overflow:auto;max-height:520px}
 </style></head><body>
 <header><a href="../">← Dashboard Immobiliare La Sacra</a><p class="eyebrow">AREA OPERATIVA / RICERCA MANUALE</p><h1>Partita IVA Avigliana</h1><p class="muted">La ricerca automatica di aziende è stata sospesa. La ricerca su Google parte soltanto quando premi il pulsante.</p></header>
 <main>
-<section class="panel" id="ricerca-manuale"><h2>Ricerca manuale su Google</h2><p>Il pulsante apre la ricerca esatta <strong>partita iva avigliana</strong> su Google in una nuova scheda. Non esegue raccolte notturne né salva contatti.</p><p><a class="google-search" href="https://www.google.com/search?q=partita+iva+avigliana" target="_blank" rel="noopener noreferrer" aria-label="Apri su Google la ricerca Partita IVA Avigliana">Partita IVA Avigliana · Apri Google ↗</a></p></section>
+<section class="panel" id="ricerca-manuale"><h2>Ricerca manuale su Google</h2><p>Il pulsante apre Google con la tua <strong>richiesta completa di mappatura B2C entro 20 km da Avigliana</strong>: comuni, categorie, Partite IVA verificabili, siti, social e sette colonne. Non esegue raccolte automatiche né salva contatti.</p><p class="muted">Google Search può non interpretare il testo come istruzioni. Per ottenere la tabella richiesta puoi copiare il prompt e usarlo in un assistente di ricerca.</p><p><button type="button" class="secondary" data-case247-copy-prompt>Copia prompt completo</button></p><p><a class="google-search" href="https://www.google.com/search?q=partita+iva+avigliana" target="_blank" rel="noopener noreferrer" aria-label="Apri su Google la ricerca Partita IVA Avigliana">Partita IVA Avigliana · Apri Google ↗</a></p></section>
 <details class="panel" id="storico-censimento"><summary class="archive-summary">Archivio storico · importazioni locali e vecchi lotti (facoltativo)</summary>
 <section class="panel"><h2>Lotti precedenti</h2><p>Le nuove raccolte automatiche sono disattivate. Puoi ancora decifrare i lotti storici già disponibili in GitHub Actions usando la tua chiave privata.</p><p><a href="./decripta-lotto.html">Apri solo l’archivio dei lotti cifrati precedenti</a></p></section>
 <section class="note"><strong>Protezione dati:</strong> i file sono letti esclusivamente nel browser su questo dispositivo; non vengono inviati a GitHub Pages e non vengono salvati sul server. La pagina, pur pubblicamente accessibile, non contiene il database aziendale. Tutti gli invii commerciali restano disattivati.</section>
@@ -110,4 +110,4 @@ $("export").addEventListener("click",()=>{
   const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}));
   const a=document.createElement("a");a.href=url;a.download="esito_importazione_"+lastManifest.lotto+".json";a.click();setTimeout(()=>URL.revokeObjectURL(url),500);
 });
-</script></body></html>
+</script><script src="../ricerca-piva-avigliana.js?v=20261119-fullprompt1" defer></script></body></html>
