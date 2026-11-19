@@ -36,7 +36,7 @@ check(not regia_path.exists() and 'href="./case247-operazioni/"' not in dashboar
 check('href="../campagne/case247/auto-feed/review/' in dashboard,"Dashboard conserva la review editoriale")
 for source in ["gestione/agenda-unificata.js","gestione/agenda50.js","gestione/agenda-strumenti-acquisizione.js","gestione/control-center.js"]:
     check("case247-operazioni/" not in read(source),"Nessun riferimento al percorso eliminato: "+source)
-check("case247-crm-admin-intake" in edge,"La funzione privata CRM rimane nel repository")
+check((ROOT/"supabase/functions/case247-crm-admin-intake/index.ts").is_file(),"La funzione privata CRM rimane nel repository")
 check('case247_staff_members' in edge and 'withSupabase({auth:"user"}' in edge and 'ctx.userClaims' in edge,"Edge: autenticazione ufficiale JWT e membership server-side")
 check('eq("name","CASE IN PUBBLICITÀ 24/7")' in edge and 'eq("organization_id",org)' in edge,"Endpoint legato solo a tenant CASE247")
 
