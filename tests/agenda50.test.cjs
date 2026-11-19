@@ -204,12 +204,19 @@ test('manual Google B2C Avigliana search uses the full supplied 20 km research p
  assert.match(census,/Copia prompt completo/);
 });
 
-test('acquisition tools extend the unified agenda without adding a second 0/50 counter',()=>{
+test('new acquisition tools are mounted directly in existing day blocks',()=>{
  const base=fs.readFileSync(path.join(__dirname,'../gestione/index.html'),'utf8');
+ const timeline=fs.readFileSync(path.join(__dirname,'../gestione/agenda-unificata.js'),'utf8');
  const js=fs.readFileSync(path.join(__dirname,'../gestione/agenda-strumenti-acquisizione.js'),'utf8');
  const css=fs.readFileSync(path.join(__dirname,'../gestione/agenda-strumenti-acquisizione.css'),'utf8');
- assert.match(base,/agenda-strumenti-acquisizione\.js\?v=20261119-v1/);
- assert.match(base,/agenda-strumenti-acquisizione\.css\?v=20261119-v1/);
+ assert.match(base,/agenda-strumenti-acquisizione\.js\?v=20261119-inline3/);
+ assert.match(base,/agenda-strumenti-acquisizione\.css\?v=20261119-inline3/);
+ assert.match(base,/agenda-unificata\.js\?v=20261119-inline3/);
+ assert.match(base,/agenda-unificata\.css\?v=20261119-inline3/);
+ assert.match(timeline,/AGGIORNATA · 19\.11\.3/);
+ assert.match(timeline,/Mappatura annunci privati/);
+ assert.match(timeline,/Colazione strategica/);
+ assert.match(timeline,/case247:timeline-rendered/);
  assert.match(js,/document\.getElementById\('a50-unified-view'\)/);
  assert.match(js,/case247-acquisizione-kpi-v1/);
  assert.match(js,/Europe\/Rome/);
@@ -222,9 +229,14 @@ test('acquisition tools extend the unified agenda without adding a second 0/50 c
  assert.match(js,/qrcode-generator@1\.4\.4/);
  assert.match(js,/\.isDark\(y,x\)/);
  assert.match(js,/srcdoc=page/);
- assert.match(js,/escapeHTML/);
- assert.match(js,/9713708294|393713708294/);
+ assert.match(js,/htmlEscape/);
+ assert.match(js,/393713708294/);
+ assert.match(js,/case247:timeline-rendered/);
+ for(const [name,time] of [['portals','09:00'],['timer','09:30'],['scripts','11:30'],['qr','15:30'],['kpi','16:30']]){
+   assert.ok(js.includes(name+":'"+time+"'"),name+' must be mounted at '+time);
+ }
  assert.doesNotMatch(js,/due famiglie|QR senza URL|qrserver\.com|window\.open\('/i);
  assert.doesNotMatch(js,/agenda-integrata-50|a50-grand-total/);
- assert.match(css,/#case247-acq-tools/);
+ assert.doesNotMatch(js,/<summary>Strumenti acquisizione/);
+ assert.match(css,/\.a50-inline-tool/);
 });
