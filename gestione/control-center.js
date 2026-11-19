@@ -22,7 +22,6 @@ const PROJECTS=[
  ['Invio volantini','Volantini','gestione/email-volantini/','Strumenti per invii controllati'],
  ['Comunicazioni','Volantini','gestione/case247-comunicazioni/','Strumenti di comunicazione'],
  ['Panoramica pagine','Infrastruttura','gestione/tutte-le-pagine/','Inventario delle applicazioni pubblicate'],
- ['Operazioni','Infrastruttura','gestione/case247-operazioni/','Controlli delle operazioni'],
  ['Mattino','Organizzazione','gestione/mattino/','Strumenti per il briefing'],
  ['WhatsApp volantini','Volantini','gestione/whatsapp-volantini/','Comunicazioni materiale commerciale']
 ];
