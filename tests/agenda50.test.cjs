@@ -86,7 +86,7 @@ test('isolation regression: existing calendar code unchanged in this feature', (
   assert.match(html, /saas-shell\.js\?v=20261118-reorder1/);
   assert.match(html, /agenda50\.js\?v=20261118-unified1/);
   assert.match(html, /agenda50\.css\?v=20261118-unified1/);
-  assert.ok(html.indexOf('saas-shell.js?v=20261118-reorder1') < html.indexOf('agenda50.js?v=20261118-unified1'));
+  assert.ok(html.indexOf('saas-shell.js?v=20261118-reorder1') < html.indexOf('agenda50.js?v=20261119-piva-google'));
   assert.match(script, /calendar\.insertBefore\(section, filters\)/);
   assert.doesNotMatch(script, /cc-week['"]?\)\.innerHTML|cc-week['"]?\)\.replaceChildren/);
   assert.match(script, /window\.confirm\(/);
@@ -174,4 +174,16 @@ test('one integrated chronological day contains all operational blocks and prese
  assert.match(script,/case247-cc-tasks-v1/);
  assert.match(css,/#cc-calendar>#cc-week/);
  assert.match(css,/\.a50-day-saturday/);
+});
+
+test('company census shortcut opens manual Google P.IVA Avigliana search', () => {
+ const html=fs.readFileSync(path.join(__dirname,'../gestione/index.html'),'utf8');
+ const integrated=fs.readFileSync(path.join(__dirname,'../gestione/agenda-unificata.js'),'utf8');
+ const agenda=fs.readFileSync(path.join(__dirname,'../gestione/agenda50.js'),'utf8');
+ const query='https://www.google.com/search?q=partita+iva+avigliana';
+ assert.ok(html.includes(query));
+ assert.ok(integrated.includes(query));
+ assert.ok(agenda.includes(query));
+ assert.doesNotMatch(integrated,/quick\('Censimento',/);
+ assert.doesNotMatch(agenda,/\['Censimento aziende',/);
 });
