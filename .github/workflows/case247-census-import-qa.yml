@@ -44,5 +44,9 @@ jobs:
           assert 'Avvia campagna email (non disponibile)' in p
           assert 'disabled title=' in p
           assert 'fetch(' not in p and 'XMLHttpRequest' not in p
+          nightly=Path('.github/workflows/la-sacra-nightly-280.yml').read_text(encoding='utf-8')
+          assert 'Censimento aziende automatico sospeso' in nightly
+          assert 'schedule:' not in nightly
+          assert 'scripts/la_sacra_nightly_20km.py' not in nightly
           print('PASS: ricerca Google manuale, importazione storica locale, invio disabilitato')
           PY
