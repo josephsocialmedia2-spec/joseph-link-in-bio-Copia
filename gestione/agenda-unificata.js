@@ -11,8 +11,11 @@ const groups=root.querySelector('.a50-grid');
 if(!groups)return;
 const days=['Domenica','Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'];
 const WEEKDAYS=[
+ ['08:30','09:00','Colazione strategica · Centri di influenza',[]],
+ ['09:00','09:30','Mappatura annunci privati · Avigliana',[]],
  ['09:30','11:30','Acquisizione Digitale',['email','linkedin','dm']],
  ['11:30','12:30','Acquisizione Diretta',['calls']],
+ ['12:30','14:00','Pausa e preparazione',[]],
  ['14:00','15:30','Sviluppo Prioritario & Commenti Social',['comments']],
  ['15:30','16:30','Contenuti, Materiali & Follow-up',['followups']],
  ['16:30','17:00','Test, Verifiche & Chiusura Operativa',[]]
@@ -31,8 +34,10 @@ const prev=make('button','a50-day-button','←');prev.type='button';prev.setAttr
 const today=make('button','a50-day-button a50-today-button','Oggi');today.type='button';
 const next=make('button','a50-day-button','→');next.type='button';next.setAttribute('aria-label','Giorno successivo');
 const dayLabel=make('strong','a50-selected-day');
-const navCaption=make('span','a50-selected-sub','Europe/Rome · lunedì–sabato');
+const navCaption=make('span','a50-selected-sub','Europe/Rome · v19.11.3 · Agenda unica');
 nav.append(prev,today,next,dayLabel,navCaption);
+const buildMarker=make('span','a50-agenda-build','AGGIORNATA · 19.11.3');
+nav.append(buildMarker);
 const timeline=make('div','a50-unified-timeline');timeline.id='a50-unified-timeline';
 const addButton=make('button','a50-add-activity','+ Nuova attività');addButton.type='button';
 addButton.addEventListener('click',()=>document.getElementById('cc-new')?.click());
@@ -74,6 +79,7 @@ function block(start,end,title,opts={}){
  body.append(topline);article.append(times,body);
  if(opts.school)article.classList.add('a50-school-block');
  if(opts.saturday)article.classList.add('a50-saturday-block');
+ if(opts.silent)article.classList.add('a50-no-alert');
  return {article,body};
 }
 function getLessons(day){
@@ -108,7 +114,7 @@ function render(){
   SATURDAY.forEach(([start,end,text])=>{entries.push({start,end,block:block(start,end,text,{saturday:true})})});
  }else{
   WEEKDAYS.forEach(([start,end,text,ids])=>{
-   const x=block(start,end,text,{window:ids[0]||''});
+   const x=block(start,end,text,{window:ids[0]||'',silent:start==='12:30'});
    if(ids.length){
     const body=make('div','a50-block-counters');
     ids.forEach(id=>{if(counters[id])body.append(counters[id])});
@@ -136,6 +142,7 @@ function render(){
  });
  entries.sort((a,b)=>timeToMinutes(a.start)-timeToMinutes(b.start)||timeToMinutes(a.end)-timeToMinutes(b.end));
  entries.forEach(entry=>timeline.append(entry.block.article));
+ document.dispatchEvent(new CustomEvent('case247:timeline-rendered',{detail:{date:day,weekday}}));
  // Keep the existing counters mounted in the same Agenda 50 section, even on Saturday.
  if(isSaturday)groups.append(...Object.values(counters));
  showCurrent();
@@ -152,7 +159,7 @@ function showCurrent(){
   const windowId=el.dataset.window;
   const ids=windowId==='email'?['email','linkedin','dm']:windowId==='calls'?['calls']:windowId==='comments'?['comments']:windowId==='followups'?['followups']:[];
   const complete=ids.length>0&&ids.every(id=>(counts[id]||0)>=caps[id]);
-  const active=isToday&&minute>=start&&minute<end&&!complete;
+  const active=isToday&&minute>=start&&minute<end&&!complete&&!el.classList.contains('a50-no-alert');
   el.classList.toggle('fascia-attiva-lampeggiante',active);
   const badge=el.querySelector('.a50-block-badge');
   if(badge)badge.hidden=!active;
