@@ -34,7 +34,9 @@ jobs:
           p=Path('gestione/censimento-aziende/index.html').read_text(encoding='utf-8')
           home=Path('gestione/index.html').read_text(encoding='utf-8')
           validator=Path('gestione/censimento-aziende/validator.mjs').read_text(encoding='utf-8')
-          assert './censimento-aziende/' in home
+          assert 'https://www.google.com/search?q=partita+iva+avigliana' in home
+          assert 'Partita IVA Avigliana' in p
+          assert '<details class="panel" id="storico-censimento">' in p
           assert 'validator.mjs' in p
           assert 'crypto.subtle.digest' in validator
           assert 'sending_enabled!==false' in validator
@@ -42,5 +44,5 @@ jobs:
           assert 'Avvia campagna email (non disponibile)' in p
           assert 'disabled title=' in p
           assert 'fetch(' not in p and 'XMLHttpRequest' not in p
-          print('PASS: importazione locale, nessuna chiamata remota, invio disabilitato')
+          print('PASS: ricerca Google manuale, importazione storica locale, invio disabilitato')
           PY
