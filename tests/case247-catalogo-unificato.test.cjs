@@ -25,7 +25,13 @@ test('la pagina principale include PDF, 10 volantini e modulo guida dopo il cata
 test('dieci prodotti fronte/retro e reader PDF con navigazione reale',()=>{
   const src=read('catalogo-premium/campagna-volantini.js');
   assert.equal((src.match(/\{title:/g)||[]).length,10);
-  assert.match(src,/class="poster-back"/);
+  const art=read('catalogo-premium/volantini-originali.js');
+  assert.match(read('catalogo-premium/index.html'),/src="\.\/volantini-originali\.js/);
+  assert.match(src,/window\.CASE247_ORIGINAL_FLYERS/);
+  assert.match(src,/flyer-visuals/);
+  assert.match(src,/flyer-lightbox/);
+  assert.equal((art.match(/data:image\/webp;base64,/g)||[]).length,20);
+  assert.ok(art.length>200000,'Original flyers asset unexpectedly empty');
   assert.match(src,/getDocument\(/);
   assert.match(src,/\.getPage\(/);
   assert.match(src,/pdf\.numPages/);
@@ -33,6 +39,7 @@ test('dieci prodotti fronte/retro e reader PDF con navigazione reale',()=>{
   assert.match(src,/setFallback\(/);
   assert.match(src,/withCredentials:false/);
   execFileSync(process.execPath,['--check',path.join(__dirname,'..','catalogo-premium','campagna-volantini.js')]);
+  execFileSync(process.execPath,['--check',path.join(__dirname,'..','catalogo-premium','volantini-originali.js')]);
 });
 
 test('vecchi URL confluiscono in un solo catalogo preservando i collegamenti',()=>{
