@@ -39,7 +39,7 @@ small{font-size:12px}#auth-panel input{max-width:350px}
 <div class="metric"><strong>1</strong><small>Landing territoriale</small></div>
 <div class="metric"><strong id="fb-count">0</strong><small>Facebook verificati</small></div>
 <div class="metric"><strong id="ig-count">0</strong><small>Instagram verificati</small></div>
-<div class="metric"><strong>20 km</strong><small>Raggio massimo immobili</small></div>
+<div class="metric"><strong>10 km</strong><small>Raggio massimo immobili</small></div>
 </div>
 <section class="panel" id="auth-panel">
 <h2>1. Accedi alla Regia</h2>
@@ -175,7 +175,7 @@ el("check-pages").addEventListener("click",async()=>{
  try{
   const r=await fetch("../../../immobili/catalogo.json",{cache:"no-store"}),json=await r.json();
   const items=(json.items||[]).filter(x=>x.town_id==="avigliana"&&x.location_status==="VERIFICATO_FONTE");
-  log("catalog-check","Annunci con comune Avigliana verificato: "+items.length+". La distribuzione entro 20 km è calcolata dalla Regia territoriale.");
+  log("catalog-check","Annunci con comune Avigliana verificato: "+items.length+". La distribuzione entro 10 km è calcolata dalla Regia territoriale.");
  }catch{log("catalog-check","Catalogo non disponibile in questo momento.","danger")}
  await checkLogin();
 })();
