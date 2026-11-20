@@ -25,7 +25,7 @@ test('la pagina principale include PDF, 10 volantini e modulo guida dopo il cata
 test('dieci prodotti fronte/retro e reader PDF con navigazione reale',()=>{
   const src=read('catalogo-premium/campagna-volantini.js');
   assert.equal((src.match(/\{title:/g)||[]).length,10);
-  assert.match(src,/\.poster-back/);
+  assert.match(src,/class="poster-back"/);
   assert.match(src,/getDocument\(/);
   assert.match(src,/\.getPage\(/);
   assert.match(src,/pdf\.numPages/);
