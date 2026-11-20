@@ -40,6 +40,8 @@ on:
       - scripts/case247_territorial_engine.py
       - scripts/test_case247_territorial_engine.py
       - scripts/case247_quality_gate.py
+      - scripts/case247_publish_readiness.py
+      - scripts/test_case247_publish_readiness.py
       - scripts/test_case247_quality_gate.py
       - scripts/test_case247_publisher_safety.py
       - scripts/test_case247_territorial_publisher_policy.py
