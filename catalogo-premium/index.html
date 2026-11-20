@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#06294d">
-<meta name="description" content="Immobiliare La Sacra — catalogo digitale e servizi immobiliari in Valle di Susa. Scopri gli immobili e contatta il nostro ufficio.">
+<meta name="description" content="Catalogo immobiliare sfogliabile, 10 volantini pubblicitari A5 fronte/retro e guida OMI gratuita per Avigliana. Immobiliare La Sacra.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Immobiliare La Sacra | Catalogo Immobili">
 <meta property="og:description" content="Scopri gli immobili in vendita in Valle di Susa e Torino. Consulta gratuitamente il nostro catalogo immobiliare digitale.">
@@ -41,6 +41,9 @@
 .joseph-specialties span{font-size:12px;background:rgba(255,255,255,.1);padding:8px 12px;border:1px solid rgba(255,255,255,.15);border-radius:100px}
 @media(max-width:760px){.joseph-portfolio-head{grid-template-columns:1fr}.joseph-portfolio .joseph-preview{min-height:190px;transform:none}.joseph-actions a{width:100%;text-align:center}}
 </style>
+<link rel="stylesheet" href="./campagna-volantini.css?v=20261120">
+<script defer src="./campagna-volantini.js?v=20261120"></script>
+<script defer src="../gestione/volantini-premium/volantino-digitale/guida-download.js?v=20261120"></script>
 </head>
 <body>
 <a class="skip-link" href="#pagina">Vai al catalogo</a>
@@ -49,7 +52,7 @@
     <img class="official-logo" src="https://lasacraimmobiliare.it/cdn/shop/files/Untitled_design_14.png?height=108&v=1766316153" alt="Logo ufficiale Immobiliare La Sacra" width="86" height="58"><span><strong>IMMOBILIARE LA SACRA</strong><small>SANT’AMBROGIO DI TORINO · VALLE DI SUSA</small></span>
   </a>
   <nav aria-label="Azioni rapide" class="topactions">
-    <a class="textlink" href="#portfolio-joseph">Portfolio Joseph</a>
+    <a class="textlink" href="#catalogo-pdf">PDF sfogliabile</a><a class="textlink" href="#vetrina-volantini">Volantini A5</a><a class="textlink" href="#guide">Guide gratuite</a><a class="textlink" href="#portfolio-joseph">Portfolio Joseph</a>
     <a class="textlink" href="https://lasacraimmobiliare.it" target="_blank" rel="noopener noreferrer">Sito ufficiale <span aria-hidden="true">↗</span></a>
     <a class="contact-pill" href="https://wa.me/393713708294?text=Buongiorno%20Joseph%2C%20ho%20consultato%20il%20catalogo%20La%20Sacra%20e%20vorrei%20informazioni." target="_blank" rel="noopener noreferrer">WhatsApp Joseph</a>
   </nav>
@@ -137,6 +140,109 @@
       <button type="button" id="nextPage" aria-label="Pagina successiva">Successiva →</button>
     </nav>
   </section>
+
+  
+<div class="case247-unified" id="catalogo-unificato">
+  <section class="pdf-section" id="catalogo-pdf" aria-labelledby="pdfTitle">
+    <div class="u-heading">
+      <div><p class="u-eyebrow">CATALOGO IMMOBILIARE · FORMATO PDF</p>
+        <h2 id="pdfTitle">Sfoglia anche il catalogo PDF.</h2>
+        <p>Consulta le pagine del catalogo direttamente qui, con i comandi Precedente e Successiva. La versione PDF è quella pubblicata dall'agenzia; disponibilità e prezzi vanno confermati.</p>
+      </div>
+      <div class="u-actions">
+        <button class="u-pill red" id="pdfStart" type="button" aria-controls="pdfBook">Apri il catalogo sfogliabile</button>
+        <a class="u-pill light" href="./La_Sacra_Catalogo_Tutti_Immobili.pdf" target="_blank" rel="noopener">Apri PDF originale</a>
+        <a class="u-pill light" href="./La_Sacra_Catalogo_Tutti_Immobili.pdf" download="Immobiliare_La_Sacra_Catalogo_Immobili.pdf">Scarica PDF</a>
+      </div>
+    </div>
+    <div id="pdfBook" class="pdf-book" tabindex="0" aria-label="Visualizzatore PDF sfogliabile" hidden>
+      <div class="pdf-paper" id="pdfPaper"><canvas id="pdfCanvas" aria-label="Pagina corrente del catalogo PDF"></canvas></div>
+      <div class="pdf-toolbar" role="group" aria-label="Sfoglia le pagine PDF">
+        <button type="button" id="pdfPrev">← Precedente</button>
+        <label for="pdfJump">Pagina <input id="pdfJump" type="number" min="1" value="1" inputmode="numeric" aria-label="Numero pagina PDF"></label>
+        <strong id="pdfCount" aria-live="polite">Pagina 1</strong>
+        <button type="button" id="pdfNext">Successiva →</button>
+      </div>
+      <p class="pdf-status" id="pdfStatus" role="status">Pronto per lo sfoglio.</p>
+    </div>
+    <p class="pdf-note">Il PDF completo può differire da eventuali filtri o selezioni applicati al catalogo web. Per una selezione personalizzata usa «Stampa / Salva PDF» del catalogo sopra.</p>
+  </section>
+  <section class="flyer-section" id="vetrina-volantini" aria-labelledby="flyerGalleryTitle">
+    <div class="u-heading">
+      <div><p class="u-eyebrow">MATERIALE PUBBLICITARIO · IMMOBILIARE LA SACRA</p>
+        <h2 id="flyerGalleryTitle">Vetrina dei 10 volantini pubblicitari A5.</h2>
+        <p>Una collezione di campagne per proprietari di Avigliana. Ogni modello si consulta dal fronte al retro, come un prodotto in esposizione, e permette di contattare direttamente il Geom. Christian Raimondi.</p>
+      </div>
+      <div class="u-actions"><a class="u-pill" href="tel:+393462568685">Chiama 346 256 86 85</a></div>
+    </div>
+    <div class="flyer-filters" aria-label="Filtra le grafiche">
+      <button class="flyer-filter" type="button" data-filter="all" aria-pressed="true">Tutti i 10 volantini</button>
+      <button class="flyer-filter" type="button" data-filter="valore" aria-pressed="false">Valore e denaro</button>
+      <button class="flyer-filter" type="button" data-filter="scelte" aria-pressed="false">Decisioni di vendita</button>
+      <button class="flyer-filter" type="button" data-filter="metodo" aria-pressed="false">Promozione e tempi</button>
+    </div>
+    <div id="flyerProducts" class="flyer-grid" aria-live="polite"></div>
+    <p class="flyer-legal">Anteprime digitali illustrative A5 fronte/retro: fotografie di supporto dall'archivio immobiliare, senza indicazione di un immobile specifico in vendita. Le grafiche sono materiale promozionale, non annunci né offerte vincolanti. Eventuali richieste di acquirenti devono essere documentate prima di inserirle in comunicazioni definitive.</p>
+  </section>
+  <section id="guide" aria-labelledby="guideTitle">
+    <div class="guide-promo">
+      <div>
+        <p class="u-eyebrow">GUIDA GRATUITA · AVIGLIANA</p>
+        <h2 id="guideTitle">Tre guide in un unico PDF.</h2>
+        <p>Vendere casa da soli · Vendere attraverso i social · Mercato immobiliare OMI di Avigliana 2026. Raccolta di 16 pagine.</p>
+        <p>Con la guida trovi anche le quotazioni OMI di riferimento: valori indicativi per zona e tipologia, non una valutazione personalizzata dell'immobile.</p>
+        <p class="guide-stock">Copie scaricabili rimaste: <strong id="guideCount" aria-live="polite">—</strong> / 12</p>
+        <p class="guide-counter-note" id="guideAvailabilityNote">Verifica della disponibilità in corso.</p>
+      </div>
+      <button type="button" id="guideOpen" class="u-pill red" aria-controls="guideGate">SCARICA LA GUIDA · PREMI QUI</button>
+    </div>
+    <section id="guideGate" class="guide-gate" aria-labelledby="guideFormTitle" hidden>
+    <h2 id="guideFormTitle">Scarica la raccolta completa</h2>
+    <p>Inserisci i tuoi recapiti: riceverai un link personale valido 24 ore. La raccolta gratuita include le strategie di vendita e le quotazioni OMI di Avigliana.</p>
+    <form id="guideRequest">
+      <div class="guide-fields">
+        <label for="guideName">Nome e cognome *
+          <input id="guideName" name="nome" type="text" autocomplete="name" required minlength="3" maxlength="140">
+        </label>
+        <label for="guideEmail">Email *
+          <input id="guideEmail" name="email" type="email" autocomplete="email" required maxlength="200">
+        </label>
+        <label for="guidePhone">Cellulare *
+          <input id="guidePhone" name="telefono" type="tel" autocomplete="tel" required minlength="6" maxlength="36">
+        </label>
+      </div>
+      <label class="guide-hidden-field" aria-hidden="true">Lascia vuoto
+        <input type="text" id="guideWebsite" tabindex="-1" autocomplete="off">
+      </label>
+      <div class="guide-privacy">
+        <strong>Informativa per la richiesta della guida.</strong>
+        Il titolare del trattamento è Immobiliare La Sacra. Nome, email e telefono sono raccolti per
+        gestire la richiesta e consentire il download del documento. La scelta relativa a comunicazioni
+        promozionali è distinta e facoltativa. Per informazioni e per esercitare i tuoi diritti:
+        <a href="mailto:immobiliarelasacra@gmail.com">immobiliarelasacra@gmail.com</a>.
+      </div>
+      <label class="guide-check" for="guidePrivacy">
+        <input id="guidePrivacy" type="checkbox" required>
+        <span>Ho letto l'informativa sul trattamento dei dati per la richiesta della guida. *</span>
+      </label>
+      <label class="guide-check" for="guideMarketing">
+        <input id="guideMarketing" type="checkbox">
+        <span>Desidero ricevere comunicazioni promozionali e approfondimenti immobiliari (facoltativo).</span>
+      </label>
+      <div class="guide-actions">
+        <button type="submit" id="guideSubmit" class="action">Conferma i dati e ottieni il PDF</button>
+        <small>* Campi obbligatori</small>
+      </div>
+    </form>
+    <p id="guideStatus" class="guide-status" role="status" aria-live="polite"></p>
+    <div id="guideSuccess" class="guide-success" hidden>
+      <p>La tua guida è pronta. Premi il pulsante per scaricarla sul dispositivo.</p>
+      <a id="guideDownload" href="#" rel="nofollow">Scarica ora il PDF completo (16 pagine)</a>
+    </div>
+  </section>
+  
+  </section>
+</div>
 
   <section class="joseph-portfolio" id="portfolio-joseph" aria-labelledby="josephPortfolioTitle">
     <div class="joseph-portfolio-head">
