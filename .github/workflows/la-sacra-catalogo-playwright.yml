@@ -34,6 +34,8 @@ jobs:
           python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/la-sacra-qa-http.log 2>&1 &
           sleep 2
           curl -fsS http://127.0.0.1:8765/catalogo-premium/ >/dev/null
+      - name: Test integrazione catalogo, volantini, guida e PDF
+        run: node tests/case247-catalogo-unificato.test.cjs
       - name: Test browser desktop e mobile
         run: node tests/case247-catalogo-playwright.cjs
       - name: Screenshot QA
