@@ -15,7 +15,7 @@ Il modulo è ospitato sotto `gestione/acquisizione-farming/index.html` con stess
 1. Oggi & Farming: checklist per data, zone A/B/C/D e B2B.
 2. Notizie & Contatti: registro, fonte, indirizzo, stato, eventuale data di richiamo; import/export CSV. Le righe dimostrative dei fogli non vengono importate.
 3. Follow-up 14:30–16:15 da lunedì a venerdì: crea attività della sola categoria `case247-farming-avigliana` nella chiave Agenda già esistente `case247-cc-tasks-v1`; gli altri compiti non sono sovrascritti. Nessuna chiamata automatica.
-4. Lettere & Stampa: quattro modelli informativi, A4/A5 tramite stampa del browser, registro di richiesta stampa e conferma manuale consegna.
+4. Lettere & Stampa: quattro modelli informativi con QR catalogo generato localmente (licenza MIT), A4/A5 tramite stampa del browser, registro di richiesta stampa e conferma manuale consegna.
 5. OMI & Dossier: valori €/m² da trascrivere da fonte ufficiale verificata (codice zona, semestre, tipologia, stato, min/max e fonte). Intervallo indicativo = superficie commerciale × valori €/m². Non è una perizia né un prezzo consigliato. Stampa/PDF via browser.
 6. Tracker 90 giorni: KPI manuali, conversioni, CSV.
 7. Verifica funzioni: elenco controlli e limiti dichiarati.
@@ -29,3 +29,5 @@ Il modulo è ospitato sotto `gestione/acquisizione-farming/index.html` con stess
 
 ## QA
 `node --test tests/acquisizione-farming.test.cjs` e `node tests/studio-browser-smoke.cjs` nel workflow `case247-studio-browser.yml`.
+
+QR stampabile: libreria qrcode-generator (MIT) salvata in `qrcode.js`; testo di licenza in `QR-LICENSE.txt`. Nessun servizio QR di terzi viene chiamato durante la generazione.
