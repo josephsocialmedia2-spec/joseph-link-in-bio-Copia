@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>CASE247 · Account Facebook e Instagram · 42 comuni</title>
+<link rel="stylesheet" href="../../../case247-design.css?v=20261103-unified">
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#0b1725;color:#edf5f8}
+*{box-sizing:border-box}
+body{margin:0;background:#0b1725;color:#edf5f8}
+main{max-width:1400px;margin:auto;padding:24px 16px 70px}
+a{color:#91d9ff}
+nav{font-size:13px;margin-bottom:19px}
+h1{font-size:clamp(25px,3.4vw,38px);line-height:1.16;margin:6px 0 12px}
+h2{font-size:19px;margin:0 0 10px}
+p{line-height:1.55;color:#c4d7e1}
+small{color:#a8bdca}
+.panel{background:#112736;border:1px solid #345468;border-radius:13px;padding:18px;margin:15px 0}
+.flex{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+button,input,select{font:inherit}
+button,.action{display:inline-flex;align-items:center;justify-content:center;padding:10px 13px;background:#224759;border:1px solid #48758b;border-radius:8px;color:#edf8fd;font-weight:650;text-decoration:none;cursor:pointer}
+button.primary{background:#60e2ba;color:#063529;border-color:#60e2ba}
+button:disabled{opacity:.44;cursor:not-allowed}
+input,select{background:#081c29;border:1px solid #42677b;border-radius:8px;color:#eff8fb;padding:10px;max-width:100%}
+#auth-email,#auth-password{width:280px}
+#search{width:min(350px,100%)}
+.counts{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px;margin:18px 0}
+.count{border:1px solid #365870;border-radius:10px;background:#132c3b;padding:13px}
+.count strong{font-size:28px;display:block;color:#eafffa}
+.count span{font-size:12px;color:#b1ccd9}
+.notice{border-left:3px solid #dfbb72;padding:10px 13px;background:#233642;border-radius:7px}
+#status,#oauth-result,#registry-result{white-space:pre-wrap;overflow-wrap:anywhere}
+.table-shell{overflow-x:auto;border:1px solid #365569;border-radius:10px}
+table{border-collapse:collapse;min-width:1060px;width:100%;font-size:13px}
+th{background:#17384b;color:#e0f1f6;text-align:left;white-space:nowrap;position:sticky;top:0}
+th,td{padding:12px 10px;border-bottom:1px solid #304a5a;vertical-align:middle}
+td:first-child{min-width:160px}
+td input{width:245px;min-width:200px;font-size:12px;padding:9px}
+td .landing{font-size:12px;display:block}
+td .mini{font-size:12px;padding:7px 10px}
+td .buttons{display:flex;gap:6px;flex-wrap:wrap;min-width:120px}
+.tag{display:inline-block;padding:4px 7px;border-radius:6px;font-size:11px;background:#334653;color:#dbe7ec;white-space:nowrap}
+.tag.verified{color:#8bf4ca;background:#174636}
+.table-note{font-size:12px}
+@media(max-width:700px){main{padding:16px 10px 55px}.panel{padding:12px}.counts{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body><main>
+<nav><a href="../../">Regia CASE247</a> · <a href="../">Gestione territori</a> · <a href="../../../paesi/">Landing dei comuni</a></nav>
+<header>
+<p><strong>CASE IN PUBBLICITÀ 24/7 · REGISTRO SOCIALE</strong></p>
+<h1>Account Facebook e Instagram per 42 comuni</h1>
+<p>Associa ogni account reale alla landing del proprio comune. L'inserimento dei link non autorizza la pubblicazione: la verifica avviene separatamente tramite l'app Meta già esistente.</p>
+</header>
+<section class="counts" aria-label="Riepilogo account">
+<div class="count"><strong id="town-count">42</strong><span>Landing territoriali</span></div>
+<div class="count"><strong id="saved-count">0</strong><span>Comuni con URL registrati</span></div>
+<div class="count"><strong id="facebook-count">0</strong><span>Facebook verificati da Meta</span></div>
+<div class="count"><strong id="instagram-count">0</strong><span>Instagram verificati da Meta</span></div>
+</section>
+<section class="panel">
+<h2>1. Accesso amministratore</h2>
+<form id="login-form" class="flex">
+<input id="auth-email" type="email" autocomplete="username" placeholder="Email amministratore" aria-label="Email amministratore" required>
+<input id="auth-password" type="password" autocomplete="current-password" placeholder="Password CASE247" aria-label="Password CASE247" required>
+<button type="submit" class="primary">Accedi</button>
+</form>
+<div class="flex"><button id="logout" disabled>Esci</button><button id="sync" disabled>Aggiorna collegamenti</button></div>
+<p id="status" role="status">Verifica sessione in corso.</p>
+</section>
+<section class="panel">
+<h2>2. OAuth Facebook ufficiale</h2>
+<p>App Meta CASE247 esistente: <code>1639756567549382</code>. Prima verifica il server, poi avvia l'autorizzazione Facebook. Ti verrà chiesto il consenso nel sito ufficiale di Meta; non inserire mai password Facebook in questa dashboard.</p>
+<div class="flex">
+<button id="oauth-check" disabled>Verifica OAuth</button>
+<button id="oauth-start" class="primary" disabled>Collega Facebook con OAuth</button>
+<a class="action" href="https://business.facebook.com/" target="_blank" rel="noopener noreferrer">Apri Meta Business Suite</a>
+</div>
+<p class="notice" id="oauth-result" role="status">L'autorizzazione Meta non è ancora confermata. La pubblicazione automatica rimane disattivata.</p>
+</section>
+<section class="panel">
+<h2>3. Registro account e landing</h2>
+<p>Inserisci un link Facebook e/o Instagram per ciascun comune, poi premi <strong>Salva</strong>. Per rimuovere entrambi i link svuota i campi e salva. <strong>Verifica Meta</strong> controlla invece la coppia ufficiale disponibile nell'account autorizzato.</p>
+<div class="flex">
+<input id="search" type="search" aria-label="Cerca comune" placeholder="Cerca comune..." />
+<select id="filter" aria-label="Filtra stato"><option value="all">Tutti</option><option value="saved">Con URL registrati</option><option value="verified">Verificati da Meta</option><option value="missing">Da completare</option></select>
+<span id="visible-count" class="table-note"></span>
+</div>
+<p id="registry-result" role="status" class="table-note">Accedi per caricare i link archiviati in Supabase.</p>
+<div class="table-shell"><table>
+<thead><tr><th>#</th><th>Comune / landing</th><th>Account Facebook</th><th>Account Instagram</th><th>Verifica Meta</th><th>Azioni</th></tr></thead>
+<tbody id="rows"></tbody>
+</table></div>
+<p class="table-note">Stato dei link: URL salvato non significa account autorizzato. Le Pagine territoriali che non esistono o non sono collegate ufficialmente rimangono da verificare. Nessun post viene inviato da questa pagina.</p>
+</section>
+<section class="panel">
+<h2>Contenuti futuri</h2>
+<p>Hashtag aggiunto alle nuove caption generate dalla Regia: <strong>#JosephMalafronte</strong>. Le pubblicazioni già programmate in Metricool non vengono modificate.</p>
+</section>
+</main>
+<script type="module">
+import {createClient} from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+const BASE="https://qmeftxsdfeyqozwoivzo.supabase.co";
+const KEY="sb_publishable_KNgvCUxECyBFtd5MUrwDYg_BI5Z6Nsy";
+const API=BASE+"/functions/v1/case247-territory-connect";
+const OAUTH=BASE+"/functions/v1/case247-meta-callback";
+const client=createClient(BASE,KEY);
+const E=id=>document.getElementById(id);
+let session=null,admin=false,towns=[],links=new Map(),verified=[];
+const setStatus=(id,text)=>E(id).textContent=text;
+function validUrl(raw,network){
+ if(!raw)return null;
+ let u;try{u=new URL(raw)}catch{throw Error("Indirizzo "+network+" non valido")}
+ const hosts=network==="facebook"?["facebook.com","www.facebook.com","m.facebook.com"]:["instagram.com","www.instagram.com"];
+ if(u.protocol!=="https:"||!hosts.includes(u.hostname)||u.username||u.password||u.hash||u.pathname==="/"||raw.length>500)
+   throw Error("Inserisci un URL ufficiale "+network+" https valido");
+ if(network==="instagram"&&u.search)throw Error("Rimuovi parametri dall'URL Instagram");
+ return u.href;
+}
+const verifiedAccount=(town,network)=>verified.find(x=>x.town_id===town&&x.platform===network&&x.status==="VERIFIED_PENDING_DISPATCH");
+const isVerified=town=>!!(verifiedAccount(town,"facebook")&&verifiedAccount(town,"instagram"));
+async function securedRequest(path,method="GET",body=null){
+ if(!session||!admin)throw Error("Accesso amministratore richiesto");
+ const r=await fetch(API+path,{method,headers:{
+   authorization:"Bearer "+session.access_token,apikey:KEY,...(body?{"content-type":"application/json"}:{})
+ },...(body?{body:JSON.stringify(body)}:{})});
+ const data=await r.json().catch(()=>({}));
+ if(!r.ok)throw Error(data.error||"HTTP_"+r.status);
+ return data;
+}
+async function reload(){
+ if(!session||!admin)return;
+ const [result,accounts]=await Promise.all([
+   client.from("case247_town_social_links").select("town_id,facebook_url,instagram_url").order("town_id"),
+   securedRequest("?action=status&town_id=all")
+ ]);
+ if(result.error)throw Error(result.error.message);
+ links=new Map((result.data||[]).map(row=>[row.town_id,row]));
+ verified=accounts.accounts||[];
+ setStatus("registry-result","Registro aggiornato. Gli account salvati non risultano verificati senza autorizzazione Meta.");
+ draw();
+}
+function draw(){
+ const needle=E("search").value.trim().toLowerCase(),filter=E("filter").value;
+ const tbody=E("rows");tbody.replaceChildren();
+ E("town-count").textContent=towns.length;
+ E("saved-count").textContent=links.size;
+ E("facebook-count").textContent=verified.filter(x=>x.platform==="facebook"&&x.status==="VERIFIED_PENDING_DISPATCH").length;
+ E("instagram-count").textContent=verified.filter(x=>x.platform==="instagram"&&x.status==="VERIFIED_PENDING_DISPATCH").length;
+ let shown=0;
+ for(const [index,town] of towns.entries()){
+   const row=links.get(town.town_id)||{},approved=isVerified(town.town_id);
+   if(needle&&!town.name.toLowerCase().includes(needle)&&!town.town_id.includes(needle))continue;
+   if(filter==="saved"&&!links.has(town.town_id))continue;
+   if(filter==="verified"&&!approved)continue;
+   if(filter==="missing"&&approved)continue;
+   shown++;
+   const tr=document.createElement("tr");
+   const num=document.createElement("td");num.textContent=String(index+1);tr.append(num);
+   const name=document.createElement("td"),title=document.createElement("strong");title.textContent=town.name;name.append(title);
+   const landing=document.createElement("a");landing.className="landing";landing.href=town.landing_url;
+   landing.target="_blank";landing.rel="noopener noreferrer";landing.textContent="Apri landing";name.append(landing);tr.append(name);
+   const fields={};
+   for(const network of ["facebook","instagram"]){
+     const td=document.createElement("td"),input=document.createElement("input");
+     input.type="url";input.setAttribute("aria-label",network+" "+town.name);
+     input.placeholder=network==="facebook"?"https://www.facebook.com/...":"https://www.instagram.com/...";
+     const account=verifiedAccount(town.town_id,network);
+     input.value=row[network+"_url"]||account?.public_url||"";
+     input.disabled=!admin;fields[network]=input;
+     td.append(input);tr.append(td);
+   }
+   const status=document.createElement("td");
+   const tag=document.createElement("span");tag.className="tag"+(approved?" verified":"");
+   tag.textContent=approved?"Facebook + Instagram verificati":
+     verifiedAccount(town.town_id,"facebook")?"Solo Facebook verificato":"Da verificare";
+   status.append(tag);tr.append(status);
+   const buttons=document.createElement("td"),group=document.createElement("div");group.className="buttons";
+   const save=document.createElement("button");save.type="button";save.className="mini";
+   save.textContent="Salva";save.disabled=!admin;
+   save.addEventListener("click",async()=>{
+     save.disabled=true;
+     try{
+       const fb=validUrl(fields.facebook.value.trim(),"facebook");
+       const ig=validUrl(fields.instagram.value.trim(),"instagram");
+       let result;
+       if(fb||ig){
+         result=await client.from("case247_town_social_links").upsert({
+           town_id:town.town_id,facebook_url:fb,instagram_url:ig,
+           updated_by:session.user.id,updated_at:new Date().toISOString()
+         },{onConflict:"town_id"});
+       }else{
+         result=await client.from("case247_town_social_links").delete().eq("town_id",town.town_id);
+       }
+       if(result.error)throw Error(result.error.message);
+       if(fb||ig)links.set(town.town_id,{town_id:town.town_id,facebook_url:fb,instagram_url:ig});
+       else links.delete(town.town_id);
+       setStatus("registry-result",town.name+": link aggiornati. Stato Meta invariato.");
+       draw();
+     }catch(error){setStatus("registry-result",town.name+": "+error.message)}
+     finally{save.disabled=!admin}
+   });
+   const check=document.createElement("button");check.type="button";check.className="mini";
+   check.textContent="Verifica Meta";check.disabled=!admin;
+   check.addEventListener("click",async()=>{
+     check.disabled=true;
+     try{
+       const candidates=await securedRequest("?action=pages&town_id="+encodeURIComponent(town.town_id));
+       const eligible=(candidates.matching_pages||[]).filter(p=>p.can_create_content&&p.instagram&&candidates.facebook_permissions_granted&&candidates.instagram_permissions_granted);
+       if(eligible.length!==1){
+         const missing=(candidates.missing_permissions||[]).join(", ");
+         throw Error(missing?"Permessi mancanti: "+missing:"Pagina o Instagram territoriale non trovati in Meta (oppure più identità corrispondenti)");
+       }
+       const r=await securedRequest("","POST",{town_id:town.town_id,page_id:eligible[0].page_id});
+       setStatus("registry-result",town.name+": account verificati da Meta; nessuna pubblicazione inviata.");
+       await reload();
+     }catch(error){setStatus("registry-result",town.name+": "+error.message)}
+     finally{check.disabled=!admin}
+   });
+   group.append(save,check);buttons.append(group);tr.append(buttons);tbody.append(tr);
+ }
+ E("visible-count").textContent=shown+" comuni visibili su "+towns.length;
+}
+function setAdmin(enabled){
+ admin=enabled;
+ for(const id of ["sync","oauth-check","oauth-start"])E(id).disabled=!admin;
+ E("logout").disabled=!session;
+ E("login-form").hidden=!!session;
+}
+async function refreshAuth(){
+ const response=await client.auth.getSession();
+ session=response.data.session;
+ if(!session){setAdmin(false);links.clear();verified=[];setStatus("status","Accedi con le credenziali della Regia.");draw();return}
+ const {data,error}=await client.from("case247_admins").select("user_id").eq("user_id",session.user.id).maybeSingle();
+ setAdmin(!error&&!!data);
+ setStatus("status",admin?"Amministratore autenticato; puoi salvare link e avviare OAuth.":"Sessione attiva, ma l'account non ha privilegi amministratore.");
+ if(admin)try{await reload()}catch(error){setStatus("registry-result","Errore caricamento: "+error.message)}
+ else draw();
+}
+E("login-form").addEventListener("submit",async event=>{
+ event.preventDefault();
+ const email=E("auth-email").value.trim(),password=E("auth-password").value;
+ const {error}=await client.auth.signInWithPassword({email,password});
+ E("auth-password").value="";
+ if(error){setStatus("status","Accesso negato: "+error.message);return}
+ await refreshAuth();
+});
+E("logout").addEventListener("click",async()=>{await client.auth.signOut();session=null;await refreshAuth()});
+E("sync").addEventListener("click",async()=>{try{await reload()}catch(error){setStatus("registry-result","Sincronizzazione fallita: "+error.message)}});
+E("search").addEventListener("input",draw);
+E("filter").addEventListener("change",draw);
+async function oauth(action){
+ if(!admin||!session){setStatus("oauth-result","Accesso amministratore richiesto.");return}
+ const button=E(action==="check"?"oauth-check":"oauth-start");button.disabled=true;
+ try{
+   setStatus("oauth-result",action==="check"?"Controllo configurazione server Meta…":"Richiesta di autorizzazione a Meta…");
+   const r=await fetch(OAUTH+"?action="+action,{
+     headers:{authorization:"Bearer "+session.access_token,apikey:KEY},cache:"no-store"
+   });
+   const data=await r.json().catch(()=>({}));
+   if(!r.ok|| (action==="start"&&!data.authorization_url))throw Error(data.error||"HTTP_"+r.status);
+   if(action==="check"){
+     setStatus("oauth-result","Configurazione OAuth: "+(data.meta_config_ready&&data.token_encryption_ready?"pronta. Ora premi Collega Facebook con OAuth.":"incompleta: verificare secret Meta e cifratura nel backend."));
+     return;
+   }
+   const destination=new URL(data.authorization_url);
+   if(destination.protocol!=="https:"||destination.hostname!=="www.facebook.com"||
+     !/^\/v\d+\.\d+\/dialog\/oauth$/.test(destination.pathname))throw Error("Destinazione OAuth non valida");
+   window.location.assign(destination.href);
+ }catch(error){
+   const hints={
+     META_APP_ID_NOT_CONFIGURED_CORRECTLY:"App Meta non configurata correttamente",
+     META_APP_SECRET_NOT_CONFIGURED:"Secret Meta mancante nel backend",
+     TOKEN_ENCRYPTION_MATERIAL_MISSING:"Chiave crittografica Meta mancante",
+     ADMIN_REQUIRED:"Non sei autorizzato come amministratore",
+     AUTH_INVALID:"Sessione scaduta",
+     STATE_STORAGE_FAILED:"Errore nella creazione dello stato OAuth"
+   };
+   setStatus("oauth-result","OAuth non avviato: "+(hints[error.message]||error.message)+". Nessun post inviato.");
+ }finally{button.disabled=!admin}
+}
+E("oauth-check").addEventListener("click",()=>oauth("check"));
+E("oauth-start").addEventListener("click",()=>oauth("start"));
+(async()=>{
+ try{
+   const response=await fetch("../../../config/case247-territorial-social-setup.json",{cache:"no-store"});
+   if(!response.ok)throw Error("Configurazione dei 42 comuni non disponibile");
+   const config=await response.json();
+   if(config.territorial_landing_count!==42||config.towns?.length!==42)throw Error("Configurazione incompleta: servono 42 landing");
+   towns=config.towns;
+   await refreshAuth();
+ }catch(error){setStatus("registry-result","Pannello non disponibile: "+error.message)}
+})();
+</script>
+</body></html>
