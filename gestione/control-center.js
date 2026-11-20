@@ -179,7 +179,7 @@ window.addEventListener('storage',event=>{
  if(event.key!==TASKKEY)return;
  const latest=load(TASKKEY,[]);
  if(!Array.isArray(latest))return;
- tasks=latest.filter(t=>t&&typeof t.id==='string'&&/^\\d{4}-\\d{2}-\\d{2}$/.test(t.date));
+ tasks=latest.filter(t=>t&&typeof t.id==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(t.date));
  renderAll();
 });
 renderAll();refreshCrmLinks();refreshBranches();refreshPRs();
