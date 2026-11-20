@@ -10,6 +10,7 @@ const PROJECTS=[
  ['Catalogo immobili','Immobiliare La Sacra','immobili/','Annunci e schede immobiliari'],
  ['Mappa dei comuni','Immobiliare La Sacra','paesi/','Esplorazione territoriale'],
  ['Richieste immobiliari','Acquisizione','campagne/case247/richieste-immobili/','Pagina pubblica richieste'],
+ ['Dimostra il valore · pre-incarico','Acquisizione','gestione/dimostra-il-valore/','Dossier, Open House, preventivo e dimostrazione pre-contratto'],
  ['Registro consensi - interfaccia','Acquisizione','gestione/case247-conformita/','Strumento tecnico; dati riservati non pubblici'],
  ['Regia territoriale','Social e automazioni','gestione/regia-territoriale/','Gestione editoriale per territorio'],
  ['Canali CASE247','Social e automazioni','gestione/canali-case247/','Controllo delle destinazioni social'],
@@ -84,7 +85,7 @@ let studyUI=null;
 function nav(){const groups=[
  ['AGENDA',[['Agenda settimanale','#cc-calendar'],['Attività e priorità','#cc-priorities'],['Panoramica','#cc-overview'],['Menu rapido',BASE+'gestione/menu-operativo/']]],
  ['GITHUB',[['Archivio branch',BASE+'gestione/archivio-branch/'],['Repository',GITHUB],['Pull request',GITHUB+'/pulls'],['Workflow falliti',GITHUB+'/actions?query=conclusion%3Afailure'],['GitHub Actions',GITHUB+'/actions']]],
- ['ACQUISIZIONE',[['CRM Excel','#cc-crm'],['Richieste immobiliari',BASE+'campagne/case247/richieste-immobili/'],['Consensi',BASE+'gestione/case247-conformita/']]],
+ ['ACQUISIZIONE',[['CRM Excel','#cc-crm'],['Richieste immobiliari',BASE+'campagne/case247/richieste-immobili/'],['Dimostra il valore',BASE+'gestione/dimostra-il-valore/'],['Consensi',BASE+'gestione/case247-conformita/']]],
  ['STUDIO',[['STUDIO — CLASSE 2S CAT','#cc-studio'],['Agenda settimanale','#cc-calendar']]],
  ['IMMOBILIARE LA SACRA',[['Catalogo immobili',BASE+'immobili/'],['Mappa comuni',BASE+'paesi/'],['Pilota Avigliana',BASE+'gestione/territori/avigliana/']]],
  ['SOCIAL E AUTOMAZIONI',[['Regia territoriale',BASE+'gestione/regia-territoriale/'],['Canali',BASE+'gestione/canali-case247/'],['Metricool','https://app.metricool.com/'],['Meta Business Suite','https://business.facebook.com/latest/home']]],
