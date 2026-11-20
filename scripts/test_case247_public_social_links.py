@@ -28,7 +28,7 @@ class SocialLinksTests(unittest.TestCase):
         import json
         cfg=json.loads(f('config/case247-territorio.json'))
         self.assertEqual(len(cfg['towns']),42)
-        self.assertEqual({t['id'] for t in cfg['towns'] if not t.get('social_onboarding')}, {'beinasco'})
+        self.assertEqual({t['id'] for t in cfg['towns'] if not t.get('social_onboarding')}, set())
         for t in cfg['towns']:
             self.assertFalse(t['auto_publish'])
             self.assertFalse(t.get('social_onboarding',{}).get('publishing_enabled',False))
