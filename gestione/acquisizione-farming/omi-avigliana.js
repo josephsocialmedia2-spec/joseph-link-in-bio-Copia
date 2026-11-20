@@ -69,7 +69,7 @@ function allQuotations(){
   surfaceRent:q.rentSurface,
   source:'File OMI 2026/1 forniti: QIP_1475977_1_20261_VALORI.csv',
   sourceType:'CSV_OMI'
- })):[]).concat(registered.map(q=>({...q,sourceType:'USER'})));
+ })):[]).concat(registered.map(q=>({...q,condition:String(q.condition||'').trim().toUpperCase(),sourceType:'USER'})));
 }
 function chosenQuote(){return allQuotations().find(x=>x.id===document.getElementById('dOmi').value);}
 const colors={B1:'#e6ae35',C1:'#8dd0bf',C2:'#92b3eb',D1:'#cc9bd9',D3:'#e8a5a0',D4:'#89c0d5',E1:'#a5d397'};
