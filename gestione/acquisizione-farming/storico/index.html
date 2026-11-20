@@ -22,7 +22,7 @@
 </main><script>
 (function(){
 'use strict';
-const KEY='case247-farming-daily-history-v1';const DBKEY='case247-lab-avigliana-v1';
+const KEY='case247-farming-daily-history-v1';
 const day=document.getElementById('day'),form=document.getElementById('entryForm'),filter=document.getElementById('zoneFilter');
 const today=()=>new Date().toLocaleDateString('sv-SE',{timeZone:'Europe/Rome'});
 day.value=today();form.elements.date.value=day.value;
@@ -49,7 +49,7 @@ document.getElementById('printDay').onclick=()=>window.print();
 document.getElementById('exportAll').onclick=()=>download('CASE247_Farming_Storico.csv',toCsv(entries),'text/csv;charset=utf-8');
 document.getElementById('exportDay').onclick=()=>download('CASE247_Farming_'+day.value+'.csv',toCsv(selected()),'text/csv;charset=utf-8');
 document.getElementById('exportBackup').onclick=()=>download('CASE247_Farming_Backup.json',JSON.stringify({schema:1,exportedAt:new Date().toISOString(),entries},null,2),'application/json');
-document.getElementById('importCSV').addEventListener('change',async e=>{let f=e.target.files[0];if(!f)return;try{let rows=parseCsv(await f.text());let head=rows.shift()||[];if(!['date','address'].every(k=>head.includes(k)))throw Error('Il CSV deve avere almeno le colonne date e address');let seen=new Set(entries.map(x=>x.id)),n=0;for(let row of rows){let x=readRow(Object.fromEntries(head.map((k,i)=>[k,row[i]||''])));if(!x.date||!x.address||seen.has(x.id))continue;entries.push(x);seen.add(x.id);n++}save();notice('Importate '+n+' attività. Le righe con ID già presenti sono state ignorate.')}catch(err){notice(err.message)}e.target.value=''});
+document.getElementById('importCSV').addEventListener('change',async e=>{let f=e.target.files[0];if(!f)return;try{let rows=parseCsv(await f.text());let head=rows.shift()||[];if(!['date','address'].every(k=>head.includes(k)))throw Error('Il CSV deve avere almeno le colonne date e address');let seen=new Set(entries.map(x=>x.id)),n=0;for(let row of rows){let raw=Object.fromEntries(head.map((k,i)=>[k,row[i]||'']));if(!raw.type&&raw.action)raw.type=raw.action;if(!raw.outcome&&raw.status)raw.outcome=raw.status;if(!raw.id)raw.id='csv-'+[raw.date,raw.address,raw.type,raw.notes].join('|').toLowerCase();let x=readRow(raw);if(!x.date||!x.address||seen.has(x.id))continue;entries.push(x);seen.add(x.id);n++}save();notice('Importate '+n+' attività. Le righe con ID già presenti sono state ignorate.')}catch(err){notice(err.message)}e.target.value=''});
 document.getElementById('importJSON').addEventListener('change',async e=>{let f=e.target.files[0];if(!f)return;try{let x=JSON.parse(await f.text());if(x.schema!==1||!Array.isArray(x.entries))throw Error('Backup non valido');let known=new Set(entries.map(y=>y.id));let n=0;x.entries.forEach(y=>{let v=readRow(y);if(v.date&&v.address&&!known.has(v.id)){entries.push(v);known.add(v.id);n++}});save();notice('Ripristinate '+n+' nuove attività senza cancellare le esistenti.')}catch(err){notice(err.message)}e.target.value=''});
 render();
 })();
