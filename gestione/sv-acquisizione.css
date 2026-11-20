@@ -19,3 +19,13 @@
 .sv-tab-box .sv-vtag{font-size:.7rem;font-weight:700;color:var(--sv-accent);text-transform:uppercase;display:block}
 @media(max-width:600px){.sv-tab-box{padding:1.1rem .8rem;margin:1rem 12px}.sv-tab-box .sv-nav-buttons{grid-template-columns:1fr}.sv-tab-box .sv-header-compact{font-size:1.2rem}}
 @media(prefers-reduced-motion:reduce){.sv-tab-box .sv-panel{animation:none}.sv-tab-box .sv-btn-tab{transition:none}}
+
+/* CASE247 · All farming functions integrated in the Acquisizione tab */
+#sv-acquisizione.sv-tab-box .sv-nav-buttons{grid-template-columns:repeat(4,minmax(0,1fr))}
+#sv-acquisizione .sv-farming-panel{min-width:0}
+#sv-acquisizione .sv-farming-info{background:#e9f5fc;color:#315a72;padding:12px 14px;border-left:4px solid #1580aa;font-size:12px;line-height:1.5;border-radius:6px;margin:0 0 10px}
+#sv-acquisizione #sv-farming-frame{display:block;width:100%;height:960px;min-width:0;border:1px solid #dbe5ee;border-radius:10px;background:#edf2f8}
+#sv-acquisizione .sv-farming-fallback{color:#5b7188;font-size:11px;margin:8px 0}
+#sv-acquisizione .sv-farming-fallback a{color:#075d91;text-decoration:underline}
+@media(max-width:950px){#sv-acquisizione.sv-tab-box .sv-nav-buttons{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){#sv-acquisizione.sv-tab-box .sv-nav-buttons{grid-template-columns:1fr 1fr;gap:6px}#sv-acquisizione .sv-btn-tab{font-size:11px;padding:7px 6px;min-height:54px}#sv-acquisizione.sv-tab-box{padding:10px}#sv-acquisizione #sv-farming-frame{height:1000px}}
