@@ -13,10 +13,10 @@ class AviglianaPilotTests(unittest.TestCase):
     def test_single_existing_app_and_no_live_flip(self):
         cfg=doc("config/case247-territorio.json")
         setup=doc("config/case247-territorial-social-setup.json")
-        self.assertEqual(len(setup["towns"]),41)
+        self.assertEqual(len(setup["towns"]),42)
         self.assertEqual(
             {t["id"] for t in cfg["towns"]}-{t["town_id"] for t in setup["towns"]},
-            {"beinasco"})
+            set())
         beinasco=next(t for t in cfg["towns"] if t["id"]=="beinasco")
         self.assertFalse(beinasco["auto_publish"])
         self.assertFalse(beinasco.get("social_onboarding",{}).get("publishing_enabled",False))
