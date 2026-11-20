@@ -1,27 +1,22 @@
 {
-  "source": "Metricool brand 7844901 (Facebook/Instagram), read-only scheduled posts",
-  "checked_at": "2026-11-19",
-  "note": "Solo post draft=false e autoPublish=true con URL originali lasacraimmobiliare.it/products/. PENDING non equivale a pubblicato. Nessun post creato o modificato; controllo territoriale delle 18:00 autonomo.",
+  "source": "Metricool brand 7844901 (Facebook, Instagram)",
+  "checked_at": "2026-11-20",
+  "note": "Riconciliazione di sola lettura Metricool; PENDING non equivale a pubblicato. Finestra 2026-11-20/2026-12-20 Europe/Rome. Nessuna programmazione aggiunta. Autorizzazioni Meta territoriali non certificate.",
   "reservations": {
-    "2026-11-19": [
-      {
-        "url": "https://lasacraimmobiliare.it/products/casa-in-vendita-a-sant-ambrogio-con-doppia-esposizione-e-riscaldamento-autonomo",
-        "metricool_id": 421948352,
-        "status": {
-          "facebook": "PUBLISHED",
-          "instagram": "PUBLISHED"
-        },
-        "draft": false,
-        "autoPublish": true
-      }
-    ],
     "2026-11-20": [
       {
         "url": "https://lasacraimmobiliare.it/products/casa-indipendente-in-vendita-a-santambrogio-di-torino-con-terrazzo-e-giardino",
         "metricool_id": 421948438,
-        "status": {
-          "facebook": "PENDING",
-          "instagram": "PENDING"
+        "status": "PUBLISHED",
+        "providers": {
+          "facebook": {
+            "status": "PUBLISHED",
+            "public_url": "https://facebook.com/122098132731539346/posts/122111284875539346"
+          },
+          "instagram": {
+            "status": "PUBLISHED",
+            "public_url": "https://www.instagram.com/p/Df9SzYjCOaL/"
+          }
         },
         "draft": false,
         "autoPublish": true
@@ -31,9 +26,16 @@
       {
         "url": "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq",
         "metricool_id": 421948510,
-        "status": {
-          "facebook": "PENDING",
-          "instagram": "PENDING"
+        "status": "PENDING",
+        "providers": {
+          "facebook": {
+            "status": "PENDING",
+            "public_url": null
+          },
+          "instagram": {
+            "status": "PENDING",
+            "public_url": null
+          }
         },
         "draft": false,
         "autoPublish": true
@@ -43,9 +45,16 @@
       {
         "url": "https://lasacraimmobiliare.it/products/porzione-di-villa-in-vendita-a-sant-ambrogio-con-giardino-e-piscina",
         "metricool_id": 421948632,
-        "status": {
-          "facebook": "PENDING",
-          "instagram": "PENDING"
+        "status": "PENDING",
+        "providers": {
+          "facebook": {
+            "status": "PENDING",
+            "public_url": null
+          },
+          "instagram": {
+            "status": "PENDING",
+            "public_url": null
+          }
         },
         "draft": false,
         "autoPublish": true
@@ -55,9 +64,16 @@
       {
         "url": "https://lasacraimmobiliare.it/products/terreno-agricolo-in-vendita-a-sant-ambrogio-di-torino-di-circa-2-000-mq",
         "metricool_id": 421948730,
-        "status": {
-          "facebook": "PENDING",
-          "instagram": "PENDING"
+        "status": "PENDING",
+        "providers": {
+          "facebook": {
+            "status": "PENDING",
+            "public_url": null
+          },
+          "instagram": {
+            "status": "PENDING",
+            "public_url": null
+          }
         },
         "draft": false,
         "autoPublish": true
@@ -67,9 +83,16 @@
       {
         "url": "https://lasacraimmobiliare.it/products/terreno-edificabile-in-vendita-a-sant-ambrogio-di-torino-di-10-000-mq",
         "metricool_id": 421948833,
-        "status": {
-          "facebook": "PENDING",
-          "instagram": "PENDING"
+        "status": "PENDING",
+        "providers": {
+          "facebook": {
+            "status": "PENDING",
+            "public_url": null
+          },
+          "instagram": {
+            "status": "PENDING",
+            "public_url": null
+          }
         },
         "draft": false,
         "autoPublish": true
@@ -77,9 +100,16 @@
       {
         "url": "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq",
         "metricool_id": 421948922,
-        "status": {
-          "facebook": "PENDING",
-          "instagram": "PENDING"
+        "status": "PENDING",
+        "providers": {
+          "facebook": {
+            "status": "PENDING",
+            "public_url": null
+          },
+          "instagram": {
+            "status": "PENDING",
+            "public_url": null
+          }
         },
         "draft": false,
         "autoPublish": true
@@ -89,9 +119,16 @@
       {
         "url": "https://lasacraimmobiliare.it/products/appartamento-in-vendita-a-villar-dora-libero-subito-con-cortile-privato",
         "metricool_id": 421949008,
-        "status": {
-          "facebook": "PENDING",
-          "instagram": "PENDING"
+        "status": "PENDING",
+        "providers": {
+          "facebook": {
+            "status": "PENDING",
+            "public_url": null
+          },
+          "instagram": {
+            "status": "PENDING",
+            "public_url": null
+          }
         },
         "draft": false,
         "autoPublish": true
@@ -101,9 +138,16 @@
       {
         "url": "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq",
         "metricool_id": 421949123,
-        "status": {
-          "facebook": "PENDING",
-          "instagram": "PENDING"
+        "status": "PENDING",
+        "providers": {
+          "facebook": {
+            "status": "PENDING",
+            "public_url": null
+          },
+          "instagram": {
+            "status": "PENDING",
+            "public_url": null
+          }
         },
         "draft": false,
         "autoPublish": true
@@ -113,9 +157,16 @@
       {
         "url": "https://lasacraimmobiliare.it/products/appartamento-in-vendita-a-caprie-ultimo-piano-con-ascensore",
         "metricool_id": 421949230,
-        "status": {
-          "facebook": "PENDING",
-          "instagram": "PENDING"
+        "status": "PENDING",
+        "providers": {
+          "facebook": {
+            "status": "PENDING",
+            "public_url": null
+          },
+          "instagram": {
+            "status": "PENDING",
+            "public_url": null
+          }
         },
         "draft": false,
         "autoPublish": true
@@ -125,9 +176,16 @@
       {
         "url": "https://lasacraimmobiliare.it/products/appartamento-4-locali-arredato-in-affitto-a-sant-ambrogio",
         "metricool_id": 421949340,
-        "status": {
-          "facebook": "PENDING",
-          "instagram": "PENDING"
+        "status": "PENDING",
+        "providers": {
+          "facebook": {
+            "status": "PENDING",
+            "public_url": null
+          },
+          "instagram": {
+            "status": "PENDING",
+            "public_url": null
+          }
         },
         "draft": false,
         "autoPublish": true
@@ -137,9 +195,16 @@
       {
         "url": "https://lasacraimmobiliare.it/products/appartamento-in-vendita-a-sant-ambrogio-di-torino-appena-ribassato",
         "metricool_id": 421949627,
-        "status": {
-          "facebook": "PENDING",
-          "instagram": "PENDING"
+        "status": "PENDING",
+        "providers": {
+          "facebook": {
+            "status": "PENDING",
+            "public_url": null
+          },
+          "instagram": {
+            "status": "PENDING",
+            "public_url": null
+          }
         },
         "draft": false,
         "autoPublish": true
@@ -147,9 +212,16 @@
       {
         "url": "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq",
         "metricool_id": 421949736,
-        "status": {
-          "facebook": "PENDING",
-          "instagram": "PENDING"
+        "status": "PENDING",
+        "providers": {
+          "facebook": {
+            "status": "PENDING",
+            "public_url": null
+          },
+          "instagram": {
+            "status": "PENDING",
+            "public_url": null
+          }
         },
         "draft": false,
         "autoPublish": true
@@ -159,9 +231,16 @@
       {
         "url": "https://lasacraimmobiliare.it/products/appartamento-in-vendita-a-sant-ambrogio-di-torino-in-piazza-del-comune",
         "metricool_id": 421950888,
-        "status": {
-          "facebook": "PENDING",
-          "instagram": "PENDING"
+        "status": "PENDING",
+        "providers": {
+          "facebook": {
+            "status": "PENDING",
+            "public_url": null
+          },
+          "instagram": {
+            "status": "PENDING",
+            "public_url": null
+          }
         },
         "draft": false,
         "autoPublish": true
@@ -171,9 +250,16 @@
       {
         "url": "https://lasacraimmobiliare.it/products/bilocale-in-affitto-a-santambrogio-di-torino-con-box-e-posto-auto",
         "metricool_id": 421951012,
-        "status": {
-          "facebook": "PENDING",
-          "instagram": "PENDING"
+        "status": "PENDING",
+        "providers": {
+          "facebook": {
+            "status": "PENDING",
+            "public_url": null
+          },
+          "instagram": {
+            "status": "PENDING",
+            "public_url": null
+          }
         },
         "draft": false,
         "autoPublish": true
@@ -183,9 +269,16 @@
       {
         "url": "https://lasacraimmobiliare.it/products/bilocale-in-vendita-a-sant-ambrogio",
         "metricool_id": 421951238,
-        "status": {
-          "facebook": "PENDING",
-          "instagram": "PENDING"
+        "status": "PENDING",
+        "providers": {
+          "facebook": {
+            "status": "PENDING",
+            "public_url": null
+          },
+          "instagram": {
+            "status": "PENDING",
+            "public_url": null
+          }
         },
         "draft": false,
         "autoPublish": true
@@ -193,9 +286,16 @@
       {
         "url": "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq",
         "metricool_id": 421951337,
-        "status": {
-          "facebook": "PENDING",
-          "instagram": "PENDING"
+        "status": "PENDING",
+        "providers": {
+          "facebook": {
+            "status": "PENDING",
+            "public_url": null
+          },
+          "instagram": {
+            "status": "PENDING",
+            "public_url": null
+          }
         },
         "draft": false,
         "autoPublish": true
@@ -205,9 +305,16 @@
       {
         "url": "https://lasacraimmobiliare.it/products/bilocale-in-vendita-a-sant-ambrogio-disponibile-subito",
         "metricool_id": 421952809,
-        "status": {
-          "facebook": "PENDING",
-          "instagram": "PENDING"
+        "status": "PENDING",
+        "providers": {
+          "facebook": {
+            "status": "PENDING",
+            "public_url": null
+          },
+          "instagram": {
+            "status": "PENDING",
+            "public_url": null
+          }
         },
         "draft": false,
         "autoPublish": true
@@ -217,9 +324,16 @@
       {
         "url": "https://lasacraimmobiliare.it/products/casa-in-vendita-a-sant-ambrogio-con-doppia-esposizione-e-riscaldamento-autonomo",
         "metricool_id": 421953063,
-        "status": {
-          "facebook": "PENDING",
-          "instagram": "PENDING"
+        "status": "PENDING",
+        "providers": {
+          "facebook": {
+            "status": "PENDING",
+            "public_url": null
+          },
+          "instagram": {
+            "status": "PENDING",
+            "public_url": null
+          }
         },
         "draft": false,
         "autoPublish": true
@@ -229,9 +343,16 @@
       {
         "url": "https://lasacraimmobiliare.it/products/casa-indipendente-in-vendita-a-santambrogio-di-torino-con-terrazzo-e-giardino",
         "metricool_id": 421953181,
-        "status": {
-          "facebook": "PENDING",
-          "instagram": "PENDING"
+        "status": "PENDING",
+        "providers": {
+          "facebook": {
+            "status": "PENDING",
+            "public_url": null
+          },
+          "instagram": {
+            "status": "PENDING",
+            "public_url": null
+          }
         },
         "draft": false,
         "autoPublish": true
@@ -239,9 +360,16 @@
       {
         "url": "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq",
         "metricool_id": 421953285,
-        "status": {
-          "facebook": "PENDING",
-          "instagram": "PENDING"
+        "status": "PENDING",
+        "providers": {
+          "facebook": {
+            "status": "PENDING",
+            "public_url": null
+          },
+          "instagram": {
+            "status": "PENDING",
+            "public_url": null
+          }
         },
         "draft": false,
         "autoPublish": true
@@ -251,9 +379,16 @@
       {
         "url": "https://lasacraimmobiliare.it/products/porzione-di-villa-in-vendita-a-sant-ambrogio-con-giardino-e-piscina",
         "metricool_id": 421953396,
-        "status": {
-          "facebook": "PENDING",
-          "instagram": "PENDING"
+        "status": "PENDING",
+        "providers": {
+          "facebook": {
+            "status": "PENDING",
+            "public_url": null
+          },
+          "instagram": {
+            "status": "PENDING",
+            "public_url": null
+          }
         },
         "draft": false,
         "autoPublish": true
@@ -263,9 +398,16 @@
       {
         "url": "https://lasacraimmobiliare.it/products/terreno-agricolo-in-vendita-a-sant-ambrogio-di-torino-di-circa-2-000-mq",
         "metricool_id": 421953530,
-        "status": {
-          "facebook": "PENDING",
-          "instagram": "PENDING"
+        "status": "PENDING",
+        "providers": {
+          "facebook": {
+            "status": "PENDING",
+            "public_url": null
+          },
+          "instagram": {
+            "status": "PENDING",
+            "public_url": null
+          }
         },
         "draft": false,
         "autoPublish": true
@@ -273,9 +415,16 @@
       {
         "url": "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq",
         "metricool_id": 421953701,
-        "status": {
-          "facebook": "PENDING",
-          "instagram": "PENDING"
+        "status": "PENDING",
+        "providers": {
+          "facebook": {
+            "status": "PENDING",
+            "public_url": null
+          },
+          "instagram": {
+            "status": "PENDING",
+            "public_url": null
+          }
         },
         "draft": false,
         "autoPublish": true
