@@ -190,6 +190,29 @@ async function main(){
  assert.equal(await evalJS("document.querySelector('#cc-crm-dialog').open"),true);
  await evalJS("document.querySelector('#cc-crm-cancel').click();true");
  console.log('PASS: tab order persists after reload and CRM workbook configuration opens');
+
+ // Integrated Farming Avigliana workspace: verify actual browser actions in the fourth Acquisition panel.
+ await evalJS("document.querySelector('#sv-tab-button-4').click();true");
+ await until("Boolean(document.querySelector('#sv-farming-frame')?.contentDocument?.querySelector('#contactForm'))",'Avigliana Farming iframe loaded');
+ assert.equal(await evalJS("document.querySelector('#sv-tab-button-4').getAttribute('aria-selected')"),'true');
+ assert.equal(await evalJS("document.querySelectorAll('#sv-acquisizione [role=tab]').length"),4);
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelectorAll('#nav button').length"),7);
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelectorAll('#omiRows tr').length>=1"),true);
+ await evalJS("(()=>{const frame=document.querySelector('#sv-farming-frame'),w=frame.contentWindow,f=w.document.querySelector('#contactForm');w.alert=()=>{};w.confirm=()=>true;f.elements.date.value='2026-11-20';f.elements.address.value='Via Test QA 1';f.elements.name.value='';f.elements.source.value='Annuncio pubblico';f.elements.followDate.value='2026-11-23';f.elements.followTime.value='14:30';f.requestSubmit();return true})()");
+ assert.equal(await evalJS("JSON.parse(localStorage.getItem('case247-lab-avigliana-v1')).contacts.some(x=>x.address==='Via Test QA 1')"),true);
+ assert.equal(await evalJS("JSON.parse(localStorage.getItem('case247-cc-tasks-v1')).some(x=>x.source==='case247-farming-avigliana'&&x.date==='2026-11-23'&&x.time==='14:30')"),true);
+ await until("document.querySelector('#sv-farming-frame').style.height.endsWith('px')",'same-origin embedded height adjusted');
+ await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow;w.goto('omi');const f=w.document.querySelector('#omiForm');for(const [k,v] of Object.entries({city:'Avigliana',zone:'TEST-OMI',semester:'2026/1',type:'Abitazioni civili',condition:'Normale',min:'1000',max:'2000',source:'TEST QA - dati non ufficiali'}))f.elements[k].value=v;f.requestSubmit();w.document.querySelector('#dMq').value='100';w.document.querySelector('#dOmi').selectedIndex=1;w.previewDossier();return true})()");
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#dossierPreview').textContent.includes('100.000')"),true);
+ await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow;w.goto('lettere');w.print=()=>{w.__printTest=true};w.document.querySelector('#letterZone').value='Via Prova Stampa';w.printLetter();return true})()");
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentWindow.__printTest===true"),true);
+ assert.equal(await evalJS("JSON.parse(localStorage.getItem('case247-lab-avigliana-v1')).printJobs.some(x=>x.status==='Stampa richiesta')"),true);
+ await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow;w.goto('tracker');const f=w.document.querySelector('#trackerForm');f.elements.date.value='2026-11-20';f.elements.news.value='2';f.elements.contacts.value='1';f.elements.appointments.value='1';f.elements.incarichi.value='0';f.requestSubmit();return true})()");
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#kNews').textContent"),'2');
+ await evalJS("document.querySelector('[data-saas-view=agenda]').click();CASE247Agenda50.selectDay('2026-11-23');true");
+ await until("document.querySelector('#a50-unified-timeline')?.textContent.includes('Follow-up Avigliana · Via Test QA 1')",'Farming reminder visible in existing Agenda');
+ console.log('PASS: Farming + OMI + PDF print + tracker + Agenda follow-up browser integration');
+
  await command('Emulation.clearDeviceMetricsOverride');
 }
 main().catch(e=>{console.error('FAIL:',e.stack||String(e));process.exitCode=1})
