@@ -61,6 +61,11 @@ test('letter print and daily tracker are locally auditable',()=>{
  assert.match(page,/Stampa richiesta/);
  assert.match(page,/markLetterDelivered/);
  assert.match(page,/printHtml/);
+ assert.match(page,/makeLetterQr/);
+ assert.match(page,/src="\.\/qrcode\.js"/);
+ assert.match(get('gestione/acquisizione-farming/qrcode.js'),/var qrcode = function/);
+ assert.match(get('gestione/acquisizione-farming/QR-LICENSE.txt'),/MIT License/);
+
  assert.match(page,/Salva come PDF/);
  assert.match(page,/setUTCDate\(start\.getUTCDate\(\)-89\)/);
  assert.match(page,/function exportTracker/);
