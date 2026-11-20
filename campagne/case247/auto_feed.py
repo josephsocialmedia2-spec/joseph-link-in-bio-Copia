@@ -193,7 +193,7 @@ def main():
                  "CASE IN PUBBLICITÀ 24/7: comunicazione e promozione immobiliare "
                  "tra Avigliana e la Valle di Susa. L'intermediazione resta riservata ai professionisti abilitati.\n\n"
                  "Scrivici indicando il tuo Comune: WhatsApp 371 370 8294 — https://wa.me/393713708294\n\n"
-                 "#CaseInPubblicita247 #Avigliana #ValleDiSusa #MarketingImmobiliare")
+                 "#CaseInPubblicita247 #Avigliana #ValleDiSusa #MarketingImmobiliare #JosephMalafronte")
         if news:caption+="\n\nSpunto di attualità (approfondimento): "+news["url"]
         candidates=[]
         for i,(p,photo) in enumerate(selected):
