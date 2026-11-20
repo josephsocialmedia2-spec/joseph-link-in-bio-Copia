@@ -2111,7 +2111,19 @@
         "status": "DA_COLLEGARE"
       },
       "operational_status": "PAGINA_WEB_OPERATIVA_SOCIAL_NON_ATTIVI",
-      "bio": "Immobili a Beinasco. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare."
+      "bio": "Immobili a Beinasco. Comunicazione: Case in Pubblicità 24/7. Annunci e intermediazione: La Sacra Immobiliare.",
+      "social_onboarding": {
+        "status": "PREPARED_NOT_CREATED",
+        "facebook_page_name": "Case in Pubblicità 24/7 - Beinasco",
+        "instagram_suggested_username": "case247_beinasco",
+        "administration_url": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/territori/?town=beinasco",
+        "provider": "META_GRAPH_API_DIRECT",
+        "meta_app_existing": "1639756567549382",
+        "requires_official_meta_consent": true,
+        "radius_km": 10,
+        "publishing_enabled": false
+      },
+      "blocker": "Pagina Facebook e Instagram di Beinasco non ancora identificati e autorizzati via Meta. Nessuna pubblicazione automatica."
     }
   ]
 }
