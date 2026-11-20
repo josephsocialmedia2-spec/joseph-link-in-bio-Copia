@@ -4,12 +4,20 @@ on:
     paths:
       - 'catalogo-premium/**'
       - 'tests/case247-catalogo-playwright.cjs'
+      - 'tests/case247-catalogo-unificato.test.cjs'
+      - 'catalogo/index.html'
+      - 'gestione/volantini-premium/volantino-digitale/index.html'
+      - 'scripts/build-la-sacra-photos.cjs'
       - '.github/workflows/la-sacra-catalogo-playwright.yml'
   push:
     branches: [main]
     paths:
       - 'catalogo-premium/**'
       - 'tests/case247-catalogo-playwright.cjs'
+      - 'tests/case247-catalogo-unificato.test.cjs'
+      - 'catalogo/index.html'
+      - 'gestione/volantini-premium/volantino-digitale/index.html'
+      - 'scripts/build-la-sacra-photos.cjs'
       - '.github/workflows/la-sacra-catalogo-playwright.yml'
   workflow_dispatch:
 permissions:
