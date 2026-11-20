@@ -3,6 +3,10 @@ on:
   pull_request:
     paths:
       - 'gestione/index.html'
+      - 'gestione/acquisizione-farming/**'
+      - 'gestione/sv-acquisizione.js'
+      - 'gestione/sv-acquisizione.css'
+      - 'tests/acquisizione-farming.test.cjs'
       - 'gestione/control-center.js'
       - 'gestione/studio-2scat.js'
       - 'gestione/studio-2scat-ui.js'
@@ -15,6 +19,10 @@ on:
     branches: [main]
     paths:
       - 'gestione/index.html'
+      - 'gestione/acquisizione-farming/**'
+      - 'gestione/sv-acquisizione.js'
+      - 'gestione/sv-acquisizione.css'
+      - 'tests/acquisizione-farming.test.cjs'
       - 'gestione/control-center.js'
       - 'gestione/studio-2scat.js'
       - 'gestione/studio-2scat-ui.js'
@@ -39,6 +47,8 @@ jobs:
         run: google-chrome --version
       - name: Verify browser script
         run: node --check tests/studio-browser-smoke.cjs
+      - name: Test Farming Avigliana source and existing Agenda bridge
+        run: node --test tests/acquisizione-farming.test.cjs
       - name: Run browser integration test against local static site
         run: node tests/studio-browser-smoke.cjs
       - name: Preserve smoke screenshot

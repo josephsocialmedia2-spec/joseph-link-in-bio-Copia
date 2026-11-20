@@ -7,6 +7,16 @@
     box.dataset.svReady='1';
     const tabs=Array.from(box.querySelectorAll('[role="tab"]'));
     const panels=Array.from(box.querySelectorAll('[role="tabpanel"]'));
+    const farmingFrame=box.querySelector('#sv-farming-frame');
+    if(farmingFrame){
+      window.addEventListener('message',event=>{
+        if(event.origin!==window.location.origin || event.source!==farmingFrame.contentWindow)return;
+        if(event.data?.type!=='case247:farming-height')return;
+        const height=Number(event.data.height);
+        if(Number.isFinite(height)&&height>200)farmingFrame.style.height=Math.max(620,Math.min(5200,Math.ceil(height)+26))+'px';
+      });
+    }
+
     function activate(tab,focus){
       tabs.forEach(button=>{
         const selected=button===tab;

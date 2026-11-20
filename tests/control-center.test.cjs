@@ -3,7 +3,7 @@ const read=p=>fs.readFileSync(p,'utf8');
 const html=read('gestione/index.html'),js=read('gestione/control-center.js'),css=read('gestione/control-center.css');
 test('the control center is integrated into the existing dashboard, once',()=>{
  assert.equal((html.match(/id="case247-control-center"/g)||[]).length,1);
- assert.match(html,/control-center\.js\?v=20261119-remove-ops1/);
+ assert.match(html,/control-center\.js\?v=20261120-farming1/);
  assert.match(html,/control-center\.css\?v=20261115-studio-2scat/);
  assert.match(html,/id="landing-data"/);
  assert.match(html,/id="detail"/);
