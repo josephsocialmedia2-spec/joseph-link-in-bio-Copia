@@ -109,8 +109,7 @@ async function main(){
  await evalJS("document.querySelector('input[data-r03-check=flessioni]').click();true");
  assert.equal(await evalJS("document.querySelector('#r03-total').textContent"),'16');
  assert.equal(await evalJS("document.querySelector('#r03-today').textContent"),'16');
- await sleep(350);
- assert.equal(await evalJS("document.querySelector('[data-r03-id=flessioni]').hidden"),true);
+ await until("document.querySelector('[data-r03-id=flessioni]').hidden",'routine completed item becomes hidden');
  await command('Page.reload',{ignoreCache:true});
  await until("Boolean(document.querySelector('#saas-app > #case247-routine03'))",'routine after reload');
  assert.equal(await evalJS("document.querySelector('#r03-total').textContent"),'16');
