@@ -206,6 +206,7 @@ async function main(){
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#dossierPreview').textContent.includes('100.000')"),true);
  await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow;w.goto('lettere');w.print=()=>{w.__printTest=true};w.document.querySelector('#letterZone').value='Via Prova Stampa';w.printLetter();return true})()");
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentWindow.__printTest===true"),true);
+ assert.equal(await evalJS("Boolean(document.querySelector('#sv-farming-frame').contentDocument.querySelector('#letterPreview svg'))"),true);
  assert.equal(await evalJS("JSON.parse(localStorage.getItem('case247-lab-avigliana-v1')).printJobs.some(x=>x.status==='Stampa richiesta')"),true);
  await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow;w.goto('tracker');const f=w.document.querySelector('#trackerForm');f.elements.date.value='2026-11-20';f.elements.news.value='2';f.elements.contacts.value='1';f.elements.appointments.value='1';f.elements.incarichi.value='0';f.requestSubmit();return true})()");
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#kNews').textContent"),'2');
