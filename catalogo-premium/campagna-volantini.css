@@ -1,0 +1,89 @@
+
+/* CASE247 - catalogo unificato, vetrina A5, guida e PDF sfogliabile */
+.case247-unified{--u-blue:#07548c;--u-dark:#072e54;--u-red:#ce1728;--u-line:#d9e5ef;--u-bg:#f7fafc;color:#12324d;margin:32px 0}
+.case247-unified *{box-sizing:border-box}
+.case247-unified a{color:inherit}
+.case247-unified button{cursor:pointer}
+.case247-unified .u-eyebrow{margin:0 0 8px;color:#b3192a;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:900}
+.case247-unified h2{font:700 clamp(23px,3.5vw,36px)/1.17 system-ui,sans-serif;color:#07395e;margin:0 0 12px}
+.case247-unified p{line-height:1.62}
+.case247-unified .u-heading{display:flex;justify-content:space-between;gap:24px;align-items:end;flex-wrap:wrap;margin:0 0 18px}
+.case247-unified .u-heading p:last-child{max-width:680px;margin:0 0 10px;color:#4c6575}
+.case247-unified .u-pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 18px;border-radius:9px;background:#07548c;color:white;text-decoration:none;font-weight:800;font-size:14px;border:0;min-height:46px}
+.case247-unified .u-pill.red{background:#bf1629}
+.case247-unified .u-pill.light{background:#fff;color:#08436c;border:1px solid #b5ccdc}
+.case247-unified .u-pill:focus-visible,.case247-unified button:focus-visible{outline:3px solid #e8b82c;outline-offset:3px}
+.case247-unified .u-actions{display:flex;gap:10px;flex-wrap:wrap}
+.case247-unified .pdf-section{padding:clamp(20px,3vw,34px);background:#fff;border:1px solid var(--u-line);border-radius:18px;box-shadow:0 12px 40px #0a3a5814}
+.case247-unified .pdf-book{margin-top:18px;border-radius:14px;background:linear-gradient(145deg,#071d34,#15466b);padding:16px;display:none}
+.case247-unified .pdf-book.is-open{display:block}
+.case247-unified .pdf-paper{min-height:160px;display:grid;place-items:center;padding:12px;background:#d5e3ed;border-radius:8px;overflow:hidden}
+.case247-unified .pdf-paper canvas{display:block;max-width:100%;height:auto;background:white;box-shadow:0 8px 25px #001c3266}
+.case247-unified .pdf-paper iframe{height:min(70vh,680px);width:100%;border:none;background:white}
+.case247-unified .pdf-toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:center;padding:14px 2px 0;color:#fff}
+.case247-unified .pdf-toolbar button{border:1px solid #b4d3e3;padding:11px 16px;border-radius:8px;background:#fff;color:#103d62;font-weight:800;min-height:44px}
+.case247-unified .pdf-toolbar button:disabled{opacity:.45;cursor:default}
+.case247-unified .pdf-toolbar input{width:75px;border-radius:8px;padding:10px;border:1px solid #aac8db}
+.case247-unified .pdf-status{color:#b9d5ea;text-align:center;font-size:13px;margin:9px 0 0}
+.case247-unified .pdf-note{margin:12px 0 0;font-size:12px;color:#6a7987}
+.case247-unified .flyer-section{padding:30px 0}
+.case247-unified .flyer-filters{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 22px}
+.case247-unified .flyer-filter{border:1px solid #b5cbdc;color:#0c446b;background:white;border-radius:40px;padding:9px 15px;font-weight:800}
+.case247-unified .flyer-filter[aria-pressed=true]{background:#0a527d;color:#fff;border-color:#0a527d}
+.case247-unified .flyer-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:19px}
+.case247-unified .flyer-product{padding:13px;background:#fff;border:1px solid #d5e4ee;border-radius:15px;box-shadow:0 9px 30px #062c4913;min-width:0}
+.case247-unified .flyer-product[hidden]{display:none}
+.case247-unified .flyer-product .flyer-label{font-size:12px;font-weight:900;letter-spacing:.07em;color:#bf1f31;margin:2px 0 9px}
+.case247-unified .flyer-product h3{font-size:16px;color:#0b3456;line-height:1.28;min-height:41px;margin:12px 3px 4px}
+.case247-unified .flyer-product .flyer-summary{font-size:12px;color:#526c7f;margin:0 3px 11px;min-height:38px}
+.case247-unified .poster{position:relative;overflow:hidden;aspect-ratio:148/210;border:2px solid #e4e7eb;background:#fff;box-shadow:0 3px 13px #08294720;display:flex;flex-direction:column}
+.case247-unified .poster:not(.backside) .poster-back{display:none}
+.case247-unified .poster.backside .poster-front{display:none}
+.case247-unified .poster-back,.case247-unified .poster-front{display:flex;flex-direction:column;flex:1;min-height:0}
+.case247-unified .poster-logo{padding:8% 6% 4%;border-top:4px solid #bd1727;border-bottom:3px solid #bd1727;display:flex;align-items:center;gap:7px;color:#0066a5;font-size:clamp(11px,1vw,16px);font-weight:950}
+.case247-unified .poster-logo img{width:22%;height:37px;object-fit:contain}
+.case247-unified .poster-logo b{font-size:1.08em;letter-spacing:.01em;line-height:1}
+.case247-unified .poster-logo small{display:block;font-family:Georgia,serif;font-weight:500;font-size:1.12em}
+.case247-unified .poster-head{padding:8% 6% 5%;font-size:clamp(16px,1.7vw,29px);line-height:1.08;font-weight:1000;color:#073e71;text-transform:uppercase;overflow-wrap:anywhere}
+.case247-unified .poster-head em{font-style:normal;background:#c10e25;color:#fff;display:inline-block;padding:3px 7px;margin-top:5px}
+.case247-unified .poster-scenery{flex:1;min-height:44px;background:linear-gradient(155deg,#d8f1fa88,#eaf5f966),var(--property-photo) center/cover no-repeat;position:relative;display:flex;align-items:end;justify-content:flex-end}
+.case247-unified .poster-scenery:after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,#061f3a88,transparent 64%)}
+.case247-unified .poster-symbol{z-index:1;margin:0 10% 9%;border:4px solid #fff;background:#bd1228;border-radius:50%;display:grid;place-items:center;width:32%;aspect-ratio:1;color:white;font-size:clamp(29px,4vw,55px);box-shadow:0 0 0 4px #075c9a}
+.case247-unified .poster-footcopy{padding:7% 7% 5%;font-size:clamp(10px,1vw,13px);line-height:1.4;color:#083f73;font-weight:650}
+.case247-unified .poster-contact{background:#075a94;color:#fff;text-align:center;padding:3.6% 2%;font-weight:900;font-size:clamp(11px,1vw,14px)}
+.case247-unified .poster-back .back-title{margin:5% 5% 4%;font-size:clamp(16px,1.6vw,24px);font-weight:900;color:#0b4b80}
+.case247-unified .poster-back .back-photo{height:26%;background:var(--property-photo) center/cover no-repeat;min-height:50px}
+.case247-unified .poster-back ul{margin:0 6% 4%;padding:0;list-style:none;display:grid;gap:8px;color:#093f70;font-weight:800;font-size:clamp(11px,1vw,14px)}
+.case247-unified .poster-back li{border-bottom:1px solid #d8e3ea;padding-bottom:7px}
+.case247-unified .poster-back li:before{content:'✓';color:#cf1526;font-weight:900;margin-right:8px}
+.case247-unified .poster-back .back-summary{color:#0a4876;margin:auto 6% 5%;font-size:clamp(10px,1vw,13px);line-height:1.45}
+.case247-unified .flyer-controls{display:flex;gap:8px;margin-top:10px}
+.case247-unified .flyer-controls button{flex:1;min-height:43px;border-radius:8px;border:1px solid #aac5d7;background:#e9f4fa;color:#0b4b78;font-weight:800;font-size:12px}
+.case247-unified .flyer-controls a{flex:1;min-height:43px;border-radius:8px;display:grid;place-items:center;text-align:center;background:#c11729;color:#fff;text-decoration:none;font-size:12px;font-weight:900;padding:6px}
+.case247-unified .flyer-legal{font-size:12px;color:#536c7c;line-height:1.5;margin:15px 0}
+.case247-unified .guide-promo{background:linear-gradient(120deg,#072a49,#0a618b);color:#fff;border-radius:17px;padding:clamp(22px,3vw,35px);display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:center}
+.case247-unified .guide-promo h2{color:#fff;margin:2px 0 10px}
+.case247-unified .guide-promo p{color:#e6f3fa;margin:8px 0;max-width:670px}
+.case247-unified .guide-promo .u-eyebrow{color:#94e9fe}
+.case247-unified .guide-stock{font-weight:750}
+.case247-unified .guide-stock strong{font-size:24px}
+.case247-unified .guide-counter-note{font-size:12px}
+.case247-unified .guide-gate{background:white;border:1px solid #c1dae7;border-radius:13px;padding:clamp(18px,3vw,30px);margin-top:16px;color:#113953}
+.case247-unified .guide-gate[hidden],.case247-unified .guide-success[hidden]{display:none!important}
+.case247-unified .guide-gate h2{font-size:24px}
+.case247-unified .guide-gate p{font-size:14px}
+.case247-unified .guide-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:18px 0}
+.case247-unified .guide-fields label{font-size:14px;font-weight:800;display:block}
+.case247-unified .guide-fields input{display:block;width:100%;min-width:0;padding:12px;border:1px solid #9ebccd;border-radius:7px;margin-top:7px}
+.case247-unified .guide-hidden-field{position:absolute!important;left:-9999px;width:1px;height:1px}
+.case247-unified .guide-privacy{background:#e9f6fa;border-left:4px solid #0078a8;padding:13px;font-size:13px;line-height:1.6}
+.case247-unified .guide-check{display:flex;align-items:flex-start;gap:10px;font-size:13px;margin:12px 0}
+.case247-unified .guide-check input{margin-top:3px}
+.case247-unified .guide-actions{display:flex;align-items:center;gap:13px;flex-wrap:wrap;margin:15px 0}
+.case247-unified .guide-actions button{background:#ba192e;color:#fff;border:none;border-radius:9px;padding:14px 18px;font-weight:900}
+.case247-unified .guide-actions button:disabled{opacity:.6;cursor:wait}
+.case247-unified .guide-success a{display:inline-block;background:#0a7859;color:#fff;border-radius:8px;padding:12px 17px;text-decoration:none;font-weight:850}
+.case247-unified .guide-status{min-height:18px;font-weight:700}
+@media(max-width:980px){.case247-unified .flyer-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.case247-unified .poster-head{font-size:clamp(16px,3vw,25px)}.case247-unified .poster-logo{font-size:13px}.case247-unified .poster-footcopy{font-size:12px}}
+@media(max-width:620px){.case247-unified .flyer-grid{grid-template-columns:1fr}.case247-unified .flyer-product{max-width:440px;margin:auto;width:100%}.case247-unified .poster-head{font-size:clamp(20px,6vw,30px)}.case247-unified .poster-logo{font-size:15px}.case247-unified .poster-footcopy{font-size:13px}.case247-unified .guide-fields{grid-template-columns:1fr}.case247-unified .pdf-section{padding:14px}.case247-unified .pdf-paper{padding:2px}.case247-unified .pdf-toolbar{gap:6px}.case247-unified .pdf-toolbar button{padding:9px 12px}}
+@media print{.case247-unified{display:none!important}main.shell > :not(.reader){display:none!important}.reader-frame > .page:last-child{page-break-after:auto!important;break-after:auto!important}}
