@@ -175,5 +175,12 @@ $('#cc-import').onclick=()=>$('#cc-import-file').click();$('#cc-import-file').on
 $('#cc-refresh').onclick=()=>{refreshBranches();refreshPRs()};
 $('#cc-branch-refresh').onclick=refreshBranches;
 $('#cc-preview-close').onclick=()=>{$('#cc-frame').src='about:blank';$('#cc-preview').classList.add('cc-hidden')};
+window.addEventListener('storage',event=>{
+ if(event.key!==TASKKEY)return;
+ const latest=load(TASKKEY,[]);
+ if(!Array.isArray(latest))return;
+ tasks=latest.filter(t=>t&&typeof t.id==='string'&&/^\\d{4}-\\d{2}-\\d{2}$/.test(t.date));
+ renderAll();
+});
 renderAll();refreshCrmLinks();refreshBranches();refreshPRs();
 })();
