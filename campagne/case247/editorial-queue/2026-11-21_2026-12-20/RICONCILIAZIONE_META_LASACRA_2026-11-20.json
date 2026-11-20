@@ -1,0 +1,46 @@
+{
+  "campaign": "Immobiliare La Sacra — 30 giorni di annunci immobiliari",
+  "reconciliation_date": "2026-11-20",
+  "period": {
+    "from": "2026-11-21",
+    "to": "2026-12-20",
+    "timezone": "Europe/Rome"
+  },
+  "target": {
+    "brand": "Immobiliare La Sacra",
+    "meta_business_id": "1413220527054730",
+    "meta_asset_id": "903213839549093"
+  },
+  "source": {
+    "branch": "case247/shopify-12-campagna-2026-11-21",
+    "post_calendar": "calendario_30_post.json",
+    "shopify_catalog": "catalogo_shopify_12.json",
+    "source_posts": 30,
+    "source_products": 12
+  },
+  "access_checks": {
+    "meta_business_suite": "NOT_AUTHENTICATED_IN_CONTROLLED_BROWSER",
+    "meta_browser_connection": "AUTHORIZATION_FLOW_OPENED_NOT_YET_SAVED",
+    "metricool_lasacra": "BRAND_NOT_CONNECTED",
+    "metricool_case247": "CONNECTED",
+    "metricool_case247_brand_id": 7844901
+  },
+  "results": {
+    "meta_scheduled_posts_verified": 0,
+    "metricool_lasacra_scheduled_posts_verified": 0,
+    "meta_published_posts_verified": 0,
+    "autopublishing_enabled_verified": false,
+    "duplicate_check_lasacra": "NOT_POSSIBLE_UNTIL_AUTHORIZED"
+  },
+  "quality_control": {
+    "shopify_real_world_availability": "REVERIFY_BEFORE_SCHEDULING",
+    "media_rights_and_authenticity": "REVERIFY_BEFORE_SCHEDULING",
+    "conflicts_to_review": [
+      "LS-001 floor and garage contradictory fields",
+      "LS-003 property activity visuals not confirmed"
+    ]
+  },
+  "status": "BLOCKED_ON_META_LOGIN",
+  "next_action": "Complete secure Facebook sign-in in browser authorization card, save session, inspect Business Suite Planner for Immobiliare La Sacra, then schedule and verify posts.",
+  "comments": "No posting, no ad spend, and no changes to CASE247 channel schedule were made by this reconciliation."
+}
