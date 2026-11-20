@@ -86,4 +86,4 @@
 .case247-unified .guide-status{min-height:18px;font-weight:700}
 @media(max-width:980px){.case247-unified .flyer-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.case247-unified .poster-head{font-size:clamp(16px,3vw,25px)}.case247-unified .poster-logo{font-size:13px}.case247-unified .poster-footcopy{font-size:12px}}
 @media(max-width:620px){.case247-unified .flyer-grid{grid-template-columns:1fr}.case247-unified .flyer-product{max-width:440px;margin:auto;width:100%}.case247-unified .poster-head{font-size:clamp(20px,6vw,30px)}.case247-unified .poster-logo{font-size:15px}.case247-unified .poster-footcopy{font-size:13px}.case247-unified .guide-fields{grid-template-columns:1fr}.case247-unified .pdf-section{padding:14px}.case247-unified .pdf-paper{padding:2px}.case247-unified .pdf-toolbar{gap:6px}.case247-unified .pdf-toolbar button{padding:9px 12px}}
-@media print{.case247-unified{display:none!important}}
+@media print{.case247-unified{display:none!important}main.shell > :not(.reader){display:none!important}.reader-frame > .page:last-child{page-break-after:auto!important;break-after:auto!important}}
