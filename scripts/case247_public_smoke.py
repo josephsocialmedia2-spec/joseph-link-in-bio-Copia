@@ -59,13 +59,23 @@ def main():
 
   main_page=request(SITE+"gestione/?smoke=case247")
   check("MAIN_DASHBOARD_HTTP_200",main_page["status"]==200,main_page["status"])
-  check("MAIN_LINKS_CRM",main_page["status"]==200 and "case247-operazioni/" in main_page["body"],"CRM entry link visible")
+  check("MAIN_LINKS_ACCOUNT_REGISTRY",main_page["status"]==200 and 'href="./territori/account-social/"' in main_page["body"],"42-town account panel link visible")
 
-  op=request(SITE+"gestione/case247-operazioni/?smoke=case247")
-  check("REGIA_HTTP_200",op["status"]==200,op["status"])
-  check("REGIA_CRM_INTAKE_PRESENT",op["status"]==200 and 'id="intake-form"' in op["body"] and "case247-crm-admin-intake" in op["body"],"form+edge route")
-  check("REGIA_12_MODULES",op["status"]==200 and all('id="'+module+'"' in op["body"] for module in
-    ["panoramica","radar","crm","b2b","leadgen","social","review","workflow","appuntamenti","strategie","analytics","sicurezza"]),"12 section identifiers")
+  op=request_with_retry(SITE+"gestione/territori/account-social/?smoke=case247")
+  check("SOCIAL_REGISTRY_HTTP_200",op["status"]==200,op["status"])
+  check("SOCIAL_REGISTRY_META_OAUTH_PRESENT",op["status"]==200 and
+    all(x in op["body"] for x in ['id="oauth-check"','id="oauth-start"','case247-meta-callback','case247_town_social_links']),
+    "OAuth button, protected registry and backend callback are linked")
+  town_config=request_with_retry(SITE+"config/case247-territorial-social-setup.json?smoke=case247")
+  try:
+    config=json.loads(town_config["body"]) if town_config["status"]==200 else {}
+    towns=config.get("towns",[])
+  except (ValueError,TypeError):
+    towns=[]
+  check("SOCIAL_REGISTRY_42_TOWNS",
+        town_config["status"]==200 and len(towns)==42 and
+        "beinasco" in {t.get("town_id") for t in towns},
+        "42 official landing records including Beinasco")
 
   review=request(SITE+"campagne/case247/auto-feed/review/?smoke=case247")
   check("REVIEW_HTTP_200",review["status"]==200,review["status"])
@@ -107,9 +117,9 @@ def main():
   if op["status"]==200:
     extract=ScriptExtractor();extract.feed(op["body"])
     Path("/tmp/case247-inline.mjs").write_text("\n".join(extract.scripts),encoding="utf-8")
-    check("REGIA_INLINE_JS_EXTRACTED",bool(extract.scripts),"module script extracted for Node parse check")
+    check("SOCIAL_REGISTRY_JS_EXTRACTED",bool(extract.scripts),"account registry module extracted for Node parse check")
   else:
-    check("REGIA_INLINE_JS_EXTRACTED",False,"page unavailable")
+    check("SOCIAL_REGISTRY_JS_EXTRACTED",False,"account registry page unavailable")
 
   report={"project":"CASE IN PUBBLICITÀ 24/7","test_type":"non-destructive/public", "checks":checks,
           "passed":sum(x["passed"] for x in checks),"failed":sum(not x["passed"] for x in checks),
