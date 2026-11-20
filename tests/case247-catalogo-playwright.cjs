@@ -22,6 +22,22 @@ const countPdfPages=buf=>{
      const response=await page.goto(base,{waitUntil:'load',timeout:30000});
      assert.equal(response.status(),200);
      assert.match(await page.title(),/Immobiliare La Sacra/i);
+
+     // Ogni campagna mostra entrambe le facciate originali senza HTML ricostruito.
+     assert.equal(await page.locator('#flyerProducts .flyer-product').count(),10);
+     assert.equal(await page.locator('#flyerProducts .flyer-preview img').count(),20);
+     const sourceOk=await page.locator('#flyerProducts .flyer-preview img').evaluateAll(images=>images.every(img=>img.src.startsWith('data:image/webp;base64,')));
+     assert.equal(sourceOk,true,'Vetrina non collegata agli originali');
+     await page.locator('#flyerProducts .flyer-preview').first().scrollIntoViewIfNeeded();
+     await page.waitForFunction(()=>document.querySelector('.flyer-preview img')?.naturalWidth>0,{timeout:15000});
+     await page.locator('#flyerProducts .flyer-preview').first().click();
+     assert.equal(await page.locator('.flyer-lightbox').isVisible(),true);
+     assert.match(await page.locator('.flyer-lightbox-image').getAttribute('alt'),/fronte/i);
+     await page.locator('.flyer-lightbox [data-side="1"]').click();
+     assert.match(await page.locator('.flyer-lightbox-image').getAttribute('alt'),/retro/i);
+     await page.locator('.flyer-lightbox-close').click();
+     assert.equal(await page.locator('.flyer-lightbox').isVisible(),false);
+
      const expected=await page.evaluate(async()=>{
        const feed=await (await fetch('../immobili/catalogo.json')).json();
        return window.LaSacraRules.filterListings(feed.items).length;
