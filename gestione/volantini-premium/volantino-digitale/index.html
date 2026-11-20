@@ -115,8 +115,50 @@ main{width:100%;margin:0}
 .contact b{font-size:11pt}
 .notice{font-size:8pt}
 }
+
+/* Raccolta guide — non stampata nel volantino A4 */
+.guide-promo{background:linear-gradient(125deg,#052d4d,#075e84);color:#fff;border-radius:14px;
+  padding:24px 27px;margin:0 0 18px;display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+  box-shadow:0 10px 25px #06243e25}
+.guide-promo .guide-kicker{font-size:12px;font-weight:900;color:#a5efff;letter-spacing:.11em}
+.guide-promo h2{font-size:clamp(22px,3vw,29px);margin:5px 0 8px;line-height:1.18;color:white}
+.guide-promo p{font-size:14px;margin:0 0 9px;color:#d8f2fc;max-width:720px}
+.guide-promo .guide-left{flex:1 1 330px}
+.guide-counter{font-weight:700!important;color:#fff!important}
+.guide-counter strong{font-size:27px;color:#fff;vertical-align:middle}
+.guide-flash{border:2px solid #fff;background:#f4bb2e;color:#12314c;min-height:60px;
+  padding:15px 20px;font-size:17px;font-weight:900;border-radius:10px;max-width:310px;
+  animation:guidePulse 1.8s ease-in-out infinite}
+.guide-flash:hover,.guide-flash:focus-visible{animation:none;opacity:1;outline-offset:3px}
+@keyframes guidePulse{0%,100%{box-shadow:0 0 0 1px #ffffff20;opacity:1}
+  50%{box-shadow:0 0 0 7px #f4bb2e40;opacity:.75}}
+.guide-gate{background:white;border:1px solid var(--line);border-radius:12px;padding:24px;
+  margin:0 0 20px;box-shadow:0 7px 19px #092c4a12}
+.guide-gate[hidden],.guide-success[hidden]{display:none!important}
+.guide-gate h2{font-size:23px;margin:0 0 7px}
+.guide-gate p{font-size:13px;color:var(--muted)}
+.guide-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:15px 0}
+.guide-fields label{display:block;font-size:13px;font-weight:700}
+.guide-fields input{display:block;width:100%;padding:12px;margin:6px 0 0;border:1px solid #aac8db;border-radius:7px}
+.guide-check{display:flex;gap:9px;align-items:flex-start;margin:11px 0;font-size:12px}
+.guide-check input{width:16px;height:16px;flex:none;margin:2px 0 0}
+.guide-privacy{font-size:12px;border-left:3px solid var(--azure);background:#edf7fb;
+  padding:11px 13px;line-height:1.5}
+.guide-hidden-field{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important}
+.guide-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:16px}
+.guide-actions button:disabled{opacity:.55;cursor:wait}
+.guide-status{min-height:22px;margin:10px 0;font-weight:700;color:var(--navy);font-size:13px}
+.guide-success{border-top:1px solid var(--line);padding-top:13px}
+.guide-success a{display:inline-block;font-weight:900;background:#086b49;color:white;padding:13px 18px;
+  border-radius:8px;text-decoration:none}
+@media(max-width:700px){.guide-promo{padding:20px}.guide-flash{width:100%;max-width:none}
+  .guide-fields{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.guide-flash{animation:none}}
+@media print{.guide-promo,.guide-gate{display:none!important}}
+
 </style>
 <script src="../branding-logo.js"></script>
+<script src="./guida-download.js" defer></script>
 </head>
 <body>
 <header class="topbar">
@@ -135,6 +177,61 @@ main{width:100%;margin:0}
     <label for="flyerUrl">Link pubblico del volantino<input type="url" id="flyerUrl" readonly></label>
     <div id="feedback" class="feedback" role="status"></div>
   </div>
+
+  <section class="guide-promo" aria-labelledby="guideTitle">
+    <div class="guide-left">
+      <span class="guide-kicker">STRATEGIE IMMOBILIARI 2.0 · RACCOLTA GRATUITA</span>
+      <h2 id="guideTitle">Tre guide in un unico PDF</h2>
+      <p>Vendere casa da soli · Trovare clienti grazie ai social · Mercato immobiliare OMI Avigliana 2026. 16 pagine.</p>
+      <p class="guide-counter">Guide scaricabili rimaste: <strong id="guideCount" aria-live="polite">—</strong> / 12</p>
+      <p id="guideAvailabilityNote">Il contatore viene aggiornato in tempo reale.</p>
+    </div>
+    <button type="button" id="guideOpen" class="guide-flash" aria-controls="guideGate">SCARICA LA GUIDA, PREMI QUI!</button>
+  </section>
+  <section id="guideGate" class="guide-gate" aria-labelledby="guideFormTitle" hidden>
+    <h2 id="guideFormTitle">Scarica la raccolta completa</h2>
+    <p>Inserisci i tuoi recapiti: riceverai un link personale valido 24 ore. La guida è gratuita e comprende tutte e tre le sezioni.</p>
+    <form id="guideRequest">
+      <div class="guide-fields">
+        <label for="guideName">Nome e cognome *
+          <input id="guideName" name="nome" type="text" autocomplete="name" required minlength="3" maxlength="140">
+        </label>
+        <label for="guideEmail">Email *
+          <input id="guideEmail" name="email" type="email" autocomplete="email" required maxlength="200">
+        </label>
+        <label for="guidePhone">Cellulare *
+          <input id="guidePhone" name="telefono" type="tel" autocomplete="tel" required minlength="6" maxlength="36">
+        </label>
+      </div>
+      <label class="guide-hidden-field" aria-hidden="true">Lascia vuoto
+        <input type="text" id="guideWebsite" tabindex="-1" autocomplete="off">
+      </label>
+      <div class="guide-privacy">
+        <strong>Informativa per la richiesta della guida.</strong>
+        Il titolare del trattamento è Immobiliare La Sacra. Nome, email e telefono sono raccolti per
+        gestire la richiesta e consentire il download del documento. La scelta relativa a comunicazioni
+        promozionali è distinta e facoltativa. Per informazioni e per esercitare i tuoi diritti:
+        <a href="mailto:immobiliarelasacra@gmail.com">immobiliarelasacra@gmail.com</a>.
+      </div>
+      <label class="guide-check" for="guidePrivacy">
+        <input id="guidePrivacy" type="checkbox" required>
+        <span>Ho letto l'informativa sul trattamento dei dati per la richiesta della guida. *</span>
+      </label>
+      <label class="guide-check" for="guideMarketing">
+        <input id="guideMarketing" type="checkbox">
+        <span>Desidero ricevere comunicazioni promozionali e approfondimenti immobiliari (facoltativo).</span>
+      </label>
+      <div class="guide-actions">
+        <button type="submit" id="guideSubmit" class="action">Conferma i dati e ottieni il PDF</button>
+        <small>* Campi obbligatori</small>
+      </div>
+    </form>
+    <p id="guideStatus" class="guide-status" role="status" aria-live="polite"></p>
+    <div id="guideSuccess" class="guide-success" hidden>
+      <p>La tua guida è pronta. Premi il pulsante per scaricarla sul dispositivo.</p>
+      <a id="guideDownload" href="#" rel="nofollow">Scarica ora il PDF completo (16 pagine)</a>
+    </div>
+  </section>
   <section class="sheet" aria-label="Fronte del volantino A4: due volantini A5 affiancati">
     <div class="sheet-caption">FRONTE · 2 A5 affiancati · A4 orizzontale</div>
     <div class="front">
