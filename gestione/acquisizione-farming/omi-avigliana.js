@@ -119,7 +119,7 @@ function selectZone(code){
 }
 function renderOmi(){
  const zoneEl=document.getElementById('omi-zone'),typeEl=document.getElementById('omi-type'),stateEl=document.getElementById('omi-condition');
- const current=zoneEl.value||selectedZone;
+ const current=zoneEl.value; // Empty means 'all zones'; never restore a stale map selection.
  if(official&&zoneEl.options.length===1)options(zoneEl,official.zones.map(z=>z.code),'Tutte le zone');
  if(current&&Array.from(zoneEl.options).some(o=>o.value===current))zoneEl.value=current;
  selectedZone=zoneEl.value;
