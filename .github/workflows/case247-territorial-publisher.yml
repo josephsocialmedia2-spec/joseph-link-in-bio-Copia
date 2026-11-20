@@ -13,6 +13,8 @@ on:
       - scripts/case247_territorial_publisher.py
       - scripts/case247_territorial_engine.py
       - scripts/case247_quality_gate.py
+      - scripts/case247_publish_readiness.py
+      - scripts/test_case247_publish_readiness.py
       - scripts/test_case247_quality_gate.py
       - scripts/test_case247_territorial_publisher_policy.py
       - config/case247-territorio.json
@@ -38,6 +40,8 @@ on:
       - scripts/case247_territorial_engine.py
       - scripts/test_case247_territorial_engine.py
       - scripts/case247_quality_gate.py
+      - scripts/case247_publish_readiness.py
+      - scripts/test_case247_publish_readiness.py
       - scripts/test_case247_quality_gate.py
       - scripts/test_case247_publisher_safety.py
       - scripts/test_case247_territorial_publisher_policy.py
@@ -54,6 +58,8 @@ concurrency:
 jobs:
   syntax-test:
     runs-on: ubuntu-latest
+    outputs:
+      can_publish: ${{ steps.readiness.outputs.can_publish }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -61,13 +67,19 @@ jobs:
           python-version: "3.12"
       - name: Verify syntax without credentials
         run: |
-          python -m py_compile scripts/case247_territorial_publisher.py scripts/case247_territorial_engine.py scripts/case247_legacy_transition.py scripts/case247_quality_gate.py
+          python -m py_compile scripts/case247_territorial_publisher.py scripts/case247_territorial_engine.py scripts/case247_legacy_transition.py scripts/case247_quality_gate.py scripts/case247_publish_readiness.py
           python -m unittest discover -s scripts -p test_case247_territorial_engine.py -v
           python -m unittest discover -s scripts -p test_case247_legacy_transition.py -v
           python -m unittest discover -s scripts -p test_case247_quality_gate.py -v
           python -m unittest discover -s scripts -p test_case247_publisher_safety.py -v
           python -m unittest discover -s scripts -p test_case247_territorial_publisher_policy.py -v
           python -m unittest discover -s scripts -p test_case247_supabase_meta_bridge.py -v
+          python -m unittest discover -s scripts -p test_case247_publish_readiness.py -v
+      - name: Explain blocked publishing without touching Meta
+        id: readiness
+        env:
+          CASE247_TERRITORIAL_LIVE: ${{ vars.CASE247_TERRITORIAL_LIVE }}
+        run: python scripts/case247_publish_readiness.py
 
   publish:
     permissions:
@@ -76,6 +88,7 @@ jobs:
     if: >
       github.ref == 'refs/heads/main' &&
       vars.CASE247_TERRITORIAL_LIVE == 'true' &&
+      needs.syntax-test.outputs.can_publish == 'true' &&
       (github.event_name == 'schedule' ||
       (github.event_name == 'workflow_dispatch' && inputs.dry_run == false))
     runs-on: ubuntu-latest
