@@ -18,7 +18,7 @@ test('la pagina principale include PDF, 10 volantini e modulo guida dopo il cata
   assert.ok(catalogue>=0&&pdf>catalogue&&gallery>pdf&&guide>gallery);
   assert.match(html,/campagna-volantini\.css/);
   assert.match(html,/campagna-volantini\.js/);
-  assert.match(html,/guida-download\.js/);
+  assert.match(read('catalogo-premium/campagna-volantini.js'),/guida-download\.js/);
   assert.ok(fs.existsSync(path.join(__dirname,'..','catalogo-premium','La_Sacra_Catalogo_Tutti_Immobili.pdf')));
 });
 
