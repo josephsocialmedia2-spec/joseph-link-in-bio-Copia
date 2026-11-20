@@ -7,6 +7,7 @@ on:
       - 'gestione/sv-acquisizione.js'
       - 'gestione/sv-acquisizione.css'
       - 'tests/acquisizione-farming.test.cjs'
+      - 'tests/omi-avigliana.test.cjs'
       - 'gestione/control-center.js'
       - 'gestione/studio-2scat.js'
       - 'gestione/studio-2scat-ui.js'
@@ -23,6 +24,7 @@ on:
       - 'gestione/sv-acquisizione.js'
       - 'gestione/sv-acquisizione.css'
       - 'tests/acquisizione-farming.test.cjs'
+      - 'tests/omi-avigliana.test.cjs'
       - 'gestione/control-center.js'
       - 'gestione/studio-2scat.js'
       - 'gestione/studio-2scat-ui.js'
@@ -48,7 +50,7 @@ jobs:
       - name: Verify browser script
         run: node --check tests/studio-browser-smoke.cjs
       - name: Test Farming Avigliana source and existing Agenda bridge
-        run: node --test tests/acquisizione-farming.test.cjs
+        run: node --test tests/acquisizione-farming.test.cjs tests/omi-avigliana.test.cjs
       - name: Run browser integration test against local static site
         run: node tests/studio-browser-smoke.cjs
       - name: Preserve smoke screenshot
