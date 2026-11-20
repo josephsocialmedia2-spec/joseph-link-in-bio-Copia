@@ -1,0 +1,825 @@
+{
+  "campaign": "CASE247 Shopify 12",
+  "period": "2026-11-21/2026-12-20",
+  "timezone": "Europe/Rome",
+  "source_count": 12,
+  "posts": [
+    {
+      "post_id": "CASE247-SHOP12-2026-11-21-LS-001-PRESENTAZIONE",
+      "date": "2026-11-21",
+      "time": "11:00",
+      "timezone": "Europe/Rome",
+      "product_id": "11283256508743",
+      "reference": "LS-001",
+      "city": "Sant'Ambrogio di Torino",
+      "angle": "PRESENTAZIONE",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "media_selected": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5606.jpg?v=1791272576"
+      ],
+      "media_status": "FOTO_CANDIDATA_ORIGINALE_DA_VERIFICARE",
+      "facebook": "Trilocale a Sant'Ambrogio di Torino: Tre locali luminosi e due balconi panoramici.\n\n80 mq · prezzo richiesto 83.000 €.\n\nScopri le caratteristiche e le immagini nella scheda ufficiale.\n\nRiferimento LS-001 · Scheda: https://lasacraimmobiliare.it/products/trilocale-con-il-box\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #SantAmbrogiodiTorino #Immobiliare",
+      "instagram": "Tre locali luminosi e due balconi panoramici.\n\nTrilocale a Sant'Ambrogio di Torino.\n80 mq · prezzo richiesto 83.000 €.\n\nScrivici in DM con Riferimento LS-001 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #SantAmbrogiodiTorino #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Sant'Ambrogio di Torino una soluzione di tipo trilocale. Tre locali luminosi e due balconi panoramici.\n\n80 mq · prezzo richiesto 83.000 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/trilocale-con-il-box. Riferimento LS-001. Condizioni e disponibilità soggette a verifica.",
+      "video_script": null,
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE",
+        "Piano 2/3 e presenza box discordanti tra descrizione e metaobject"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-11-22-LS-002-PRESENTAZIONE",
+      "date": "2026-11-22",
+      "time": "18:30",
+      "timezone": "Europe/Rome",
+      "product_id": "11203075113287",
+      "reference": "LS-002",
+      "city": "Valgioie",
+      "angle": "PRESENTAZIONE",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "media_selected": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-09-22at11.04.28_1.jpg?v=1790070788"
+      ],
+      "media_status": "FOTO_CANDIDATA_ORIGINALE_DA_VERIFICARE",
+      "facebook": "Bilocale a Valgioie: Bilocale ristrutturato con zona giorno e camera.\n\nprezzo richiesto 63.000 €.\n\nScopri le caratteristiche e le immagini nella scheda ufficiale.\n\nRiferimento LS-002 · Scheda: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Valgioie #Immobiliare",
+      "instagram": "Bilocale ristrutturato con zona giorno e camera.\n\nBilocale a Valgioie.\nprezzo richiesto 63.000 €.\n\nScrivici in DM con Riferimento LS-002 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Valgioie #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Valgioie una soluzione di tipo bilocale. Bilocale ristrutturato con zona giorno e camera.\n\nprezzo richiesto 63.000 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie. Riferimento LS-002. Condizioni e disponibilità soggette a verifica.",
+      "video_script": "Video disponibile nella descrizione della scheda: verificare autorizzazione e formato; hook: Bilocale ristrutturato con zona giorno e camera.",
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-11-23-LS-003-PRESENTAZIONE",
+      "date": "2026-11-23",
+      "time": "11:00",
+      "timezone": "Europe/Rome",
+      "product_id": "11190682255687",
+      "reference": "LS-003",
+      "city": "Rivoli",
+      "angle": "PRESENTAZIONE",
+      "networks": [
+        "facebook"
+      ],
+      "media_selected": [],
+      "media_status": "NESSUNA_FOTO_ORIGINALE_IDENTIFICATA",
+      "facebook": "Cessione attività a Rivoli: Caffetteria e pasticceria attiva da oltre 15 anni.\n\nprezzo richiesto 180.000 €.\n\nScopri le caratteristiche e le immagini nella scheda ufficiale.\n\nRiferimento LS-003 · Scheda: https://lasacraimmobiliare.it/products/attivita-caffetteria-pasticceria-a-rivoli\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Rivoli #Immobiliare",
+      "instagram": "Caffetteria e pasticceria attiva da oltre 15 anni.\n\nCessione attività a Rivoli.\nprezzo richiesto 180.000 €.\n\nScrivici in DM con Riferimento LS-003 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Rivoli #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Rivoli una soluzione di tipo cessione attività. Caffetteria e pasticceria attiva da oltre 15 anni.\n\nprezzo richiesto 180.000 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/attivita-caffetteria-pasticceria-a-rivoli. Riferimento LS-003. Condizioni e disponibilità soggette a verifica.",
+      "video_script": "Video disponibile nella descrizione della scheda: verificare autorizzazione e formato; hook: Caffetteria e pasticceria attiva da oltre 15 anni.",
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE",
+        "Solo immagini con nomi riconducibili a rendering/generazione IA",
+        "Nessuna fotografia originale identificabile per nome: verificare media"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-11-24-LS-004-PRESENTAZIONE",
+      "date": "2026-11-24",
+      "time": "18:30",
+      "timezone": "Europe/Rome",
+      "product_id": "11136591069511",
+      "reference": "LS-004",
+      "city": "Avigliana",
+      "angle": "PRESENTAZIONE",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "media_selected": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-09-08at10.47.51_4.jpg?v=1788964302"
+      ],
+      "media_status": "FOTO_CANDIDATA_ORIGINALE_DA_VERIFICARE",
+      "facebook": "Cessione attività a Avigliana: Bar, ristorante e tabacchi con una lunga storia.\n\n350 mq · prezzo richiesto 150.000 €.\n\nScopri le caratteristiche e le immagini nella scheda ufficiale.\n\nRiferimento LS-004 · Scheda: https://lasacraimmobiliare.it/products/attivita-bar-ristorante-tabacchi-lotto\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Avigliana #Immobiliare",
+      "instagram": "Bar, ristorante e tabacchi con una lunga storia.\n\nCessione attività a Avigliana.\n350 mq · prezzo richiesto 150.000 €.\n\nScrivici in DM con Riferimento LS-004 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Avigliana #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Avigliana una soluzione di tipo cessione attività. Bar, ristorante e tabacchi con una lunga storia.\n\n350 mq · prezzo richiesto 150.000 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/attivita-bar-ristorante-tabacchi-lotto. Riferimento LS-004. Condizioni e disponibilità soggette a verifica.",
+      "video_script": "Video disponibile nella descrizione della scheda: verificare autorizzazione e formato; hook: Bar, ristorante e tabacchi con una lunga storia.",
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE",
+        "Data di disponibilità indicata 'settembre 27': verificare"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-11-25-LS-005-PRESENTAZIONE",
+      "date": "2026-11-25",
+      "time": "11:00",
+      "timezone": "Europe/Rome",
+      "product_id": "11038271897927",
+      "reference": "LS-005",
+      "city": "Sant'Antonino di Susa",
+      "angle": "PRESENTAZIONE",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "media_selected": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-08-17at15.07.15.jpg?v=1787300936"
+      ],
+      "media_status": "FOTO_CANDIDATA_ORIGINALE_DA_VERIFICARE",
+      "facebook": "Appartamento a Sant'Antonino di Susa: Appartamento al piano terra con spazio esterno.\n\n90 mq · prezzo richiesto 125.000 €.\n\nScopri le caratteristiche e le immagini nella scheda ufficiale.\n\nRiferimento LS-005 · Scheda: https://lasacraimmobiliare.it/products/appartamento-al-piano-terra-a-santantonino-di-di-susa\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #SantAntoninodiSusa #Immobiliare",
+      "instagram": "Appartamento al piano terra con spazio esterno.\n\nAppartamento a Sant'Antonino di Susa.\n90 mq · prezzo richiesto 125.000 €.\n\nScrivici in DM con Riferimento LS-005 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #SantAntoninodiSusa #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Sant'Antonino di Susa una soluzione di tipo appartamento. Appartamento al piano terra con spazio esterno.\n\n90 mq · prezzo richiesto 125.000 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/appartamento-al-piano-terra-a-santantonino-di-di-susa. Riferimento LS-005. Condizioni e disponibilità soggette a verifica.",
+      "video_script": null,
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-11-26-LS-006-PRESENTAZIONE",
+      "date": "2026-11-26",
+      "time": "18:30",
+      "timezone": "Europe/Rome",
+      "product_id": "10903112876359",
+      "reference": "LS-006",
+      "city": "Grugliasco",
+      "angle": "PRESENTAZIONE",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "media_selected": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-10at17.35.46_2.jpg?v=1783927765"
+      ],
+      "media_status": "FOTO_CANDIDATA_ORIGINALE_DA_VERIFICARE",
+      "facebook": "Appartamento a Grugliasco: Secondo piano con ascensore e due balconi.\n\n75 mq · prezzo richiesto 175.000 €.\n\nScopri le caratteristiche e le immagini nella scheda ufficiale.\n\nRiferimento LS-006 · Scheda: https://lasacraimmobiliare.it/products/appartamento-a-grugliasco-1\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Grugliasco #Immobiliare",
+      "instagram": "Secondo piano con ascensore e due balconi.\n\nAppartamento a Grugliasco.\n75 mq · prezzo richiesto 175.000 €.\n\nScrivici in DM con Riferimento LS-006 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Grugliasco #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Grugliasco una soluzione di tipo appartamento. Secondo piano con ascensore e due balconi.\n\n75 mq · prezzo richiesto 175.000 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/appartamento-a-grugliasco-1. Riferimento LS-006. Condizioni e disponibilità soggette a verifica.",
+      "video_script": null,
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-11-27-LS-007-PRESENTAZIONE",
+      "date": "2026-11-27",
+      "time": "11:00",
+      "timezone": "Europe/Rome",
+      "product_id": "10886810075463",
+      "reference": "LS-007",
+      "city": "Avigliana",
+      "angle": "PRESENTAZIONE",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "media_selected": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_13.jpg?v=1782999775"
+      ],
+      "media_status": "FOTO_CANDIDATA_ORIGINALE_DA_VERIFICARE",
+      "facebook": "Chalet a Avigliana: Chalet con cortile privato e terrazzino.\n\nprezzo richiesto 24.000 €.\n\nScopri le caratteristiche e le immagini nella scheda ufficiale.\n\nRiferimento LS-007 · Scheda: https://lasacraimmobiliare.it/products/chalet-ad-avigliana\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Avigliana #Immobiliare",
+      "instagram": "Chalet con cortile privato e terrazzino.\n\nChalet a Avigliana.\nprezzo richiesto 24.000 €.\n\nScrivici in DM con Riferimento LS-007 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Avigliana #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Avigliana una soluzione di tipo chalet. Chalet con cortile privato e terrazzino.\n\nprezzo richiesto 24.000 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/chalet-ad-avigliana. Riferimento LS-007. Condizioni e disponibilità soggette a verifica.",
+      "video_script": null,
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE",
+        "Precisare il tipo di cessione e l'uso consentito"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-11-28-LS-008-PRESENTAZIONE",
+      "date": "2026-11-28",
+      "time": "18:30",
+      "timezone": "Europe/Rome",
+      "product_id": "10808056250695",
+      "reference": "LS-008",
+      "city": "Rivoli",
+      "angle": "PRESENTAZIONE",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "media_selected": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsApp_Image_2026-05-21_at_09.35.23_13.jpg?v=1779351767"
+      ],
+      "media_status": "FOTO_CANDIDATA_ORIGINALE_DA_VERIFICARE",
+      "facebook": "Quadrilocale a Rivoli: 100 mq e vista sul Castello di Rivoli.\n\n100 mq · prezzo richiesto 185.000 €.\n\nScopri le caratteristiche e le immagini nella scheda ufficiale.\n\nRiferimento LS-008 · Scheda: https://lasacraimmobiliare.it/products/appartamento-a-rivvoli-quattro-locali\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Rivoli #Immobiliare",
+      "instagram": "100 mq e vista sul Castello di Rivoli.\n\nQuadrilocale a Rivoli.\n100 mq · prezzo richiesto 185.000 €.\n\nScrivici in DM con Riferimento LS-008 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Rivoli #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Rivoli una soluzione di tipo quadrilocale. 100 mq e vista sul Castello di Rivoli.\n\n100 mq · prezzo richiesto 185.000 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/appartamento-a-rivvoli-quattro-locali. Riferimento LS-008. Condizioni e disponibilità soggette a verifica.",
+      "video_script": null,
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-11-29-LS-009-PRESENTAZIONE",
+      "date": "2026-11-29",
+      "time": "11:00",
+      "timezone": "Europe/Rome",
+      "product_id": "10770991481159",
+      "reference": "LS-009",
+      "city": "Rubiana",
+      "angle": "PRESENTAZIONE",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "media_selected": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-04-28at17.54.54_3.jpg?v=1777393953"
+      ],
+      "media_status": "FOTO_CANDIDATA_ORIGINALE_DA_VERIFICARE",
+      "facebook": "Monolocale a Rubiana: Monolocale con balcone in Via Roma.\n\n30 mq · prezzo richiesto 19.500 €.\n\nScopri le caratteristiche e le immagini nella scheda ufficiale.\n\nRiferimento LS-009 · Scheda: https://lasacraimmobiliare.it/products/appartamento-a-rubiana\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Rubiana #Immobiliare",
+      "instagram": "Monolocale con balcone in Via Roma.\n\nMonolocale a Rubiana.\n30 mq · prezzo richiesto 19.500 €.\n\nScrivici in DM con Riferimento LS-009 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Rubiana #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Rubiana una soluzione di tipo monolocale. Monolocale con balcone in Via Roma.\n\n30 mq · prezzo richiesto 19.500 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/appartamento-a-rubiana. Riferimento LS-009. Condizioni e disponibilità soggette a verifica.",
+      "video_script": null,
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-11-30-LS-010-PRESENTAZIONE",
+      "date": "2026-11-30",
+      "time": "18:30",
+      "timezone": "Europe/Rome",
+      "product_id": "10671726395719",
+      "reference": "LS-010",
+      "city": "Collegno",
+      "angle": "PRESENTAZIONE",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "media_selected": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsApp_Image_2026-02-20_at_17.22.01_1.jpg?v=1775654030"
+      ],
+      "media_status": "FOTO_CANDIDATA_ORIGINALE_DA_VERIFICARE",
+      "facebook": "Bilocale a Collegno: Alloggio in zona Terracorta vicino a Corso Francia.\n\n55 mq · prezzo richiesto 100.000 €.\n\nScopri le caratteristiche e le immagini nella scheda ufficiale.\n\nRiferimento LS-010 · Scheda: https://lasacraimmobiliare.it/products/alloggio-di-due-locali-collegno\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Collegno #Immobiliare",
+      "instagram": "Alloggio in zona Terracorta vicino a Corso Francia.\n\nBilocale a Collegno.\n55 mq · prezzo richiesto 100.000 €.\n\nScrivici in DM con Riferimento LS-010 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Collegno #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Collegno una soluzione di tipo bilocale. Alloggio in zona Terracorta vicino a Corso Francia.\n\n55 mq · prezzo richiesto 100.000 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/alloggio-di-due-locali-collegno. Riferimento LS-010. Condizioni e disponibilità soggette a verifica.",
+      "video_script": "Video disponibile nella descrizione della scheda: verificare autorizzazione e formato; hook: Alloggio in zona Terracorta vicino a Corso Francia.",
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-01-LS-011-PRESENTAZIONE",
+      "date": "2026-12-01",
+      "time": "11:00",
+      "timezone": "Europe/Rome",
+      "product_id": "10705715855687",
+      "reference": "LS-011",
+      "city": "Sant'Ambrogio di Torino",
+      "angle": "PRESENTAZIONE",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "media_selected": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-03-18at15.45.27_1.jpg?v=1773849435"
+      ],
+      "media_status": "FOTO_CANDIDATA_ORIGINALE_DA_VERIFICARE",
+      "facebook": "Bilocale a Sant'Ambrogio di Torino: Due locali in centro paese.\n\n50 mq · prezzo richiesto 69.000 €.\n\nScopri le caratteristiche e le immagini nella scheda ufficiale.\n\nRiferimento LS-011 · Scheda: https://lasacraimmobiliare.it/products/due-locali-in-centro-paese-con-posizione-strategica\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #SantAmbrogiodiTorino #Immobiliare",
+      "instagram": "Due locali in centro paese.\n\nBilocale a Sant'Ambrogio di Torino.\n50 mq · prezzo richiesto 69.000 €.\n\nScrivici in DM con Riferimento LS-011 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #SantAmbrogiodiTorino #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Sant'Ambrogio di Torino una soluzione di tipo bilocale. Due locali in centro paese.\n\n50 mq · prezzo richiesto 69.000 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/due-locali-in-centro-paese-con-posizione-strategica. Riferimento LS-011. Condizioni e disponibilità soggette a verifica.",
+      "video_script": null,
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-02-LS-012-PRESENTAZIONE",
+      "date": "2026-12-02",
+      "time": "18:30",
+      "timezone": "Europe/Rome",
+      "product_id": "11573197111623",
+      "reference": "LS-012",
+      "city": "Torino",
+      "angle": "PRESENTAZIONE",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "media_selected": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-17at18.22.25_4.jpg?v=1795165808"
+      ],
+      "media_status": "FOTO_CANDIDATA_ORIGINALE_DA_VERIFICARE",
+      "facebook": "Appartamento a Torino: A Torino, in Corso Francia, con cucina abitabile.\n\nprezzo richiesto 163.000 €.\n\nScopri le caratteristiche e le immagini nella scheda ufficiale.\n\nRiferimento LS-012 · Scheda: https://lasacraimmobiliare.it/products/corso-francia-torino\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Torino #Immobiliare",
+      "instagram": "A Torino, in Corso Francia, con cucina abitabile.\n\nAppartamento a Torino.\nprezzo richiesto 163.000 €.\n\nScrivici in DM con Riferimento LS-012 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Torino #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Torino una soluzione di tipo appartamento. A Torino, in Corso Francia, con cucina abitabile.\n\nprezzo richiesto 163.000 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/corso-francia-torino. Riferimento LS-012. Condizioni e disponibilità soggette a verifica.",
+      "video_script": null,
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-03-LS-007-APPROFONDIMENTO",
+      "date": "2026-12-03",
+      "time": "11:00",
+      "timezone": "Europe/Rome",
+      "product_id": "10886810075463",
+      "reference": "LS-007",
+      "city": "Avigliana",
+      "angle": "APPROFONDIMENTO",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "media_selected": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_1.jpg?v=1782999776"
+      ],
+      "media_status": "FOTO_CANDIDATA_ORIGINALE_DA_VERIFICARE",
+      "facebook": "Chalet a Avigliana: Soggiorno con cucina a vista e stufa a pellet.\n\nprezzo richiesto 24.000 €.\n\nUn approfondimento su una delle caratteristiche distintive della proposta.\n\nRiferimento LS-007 · Scheda: https://lasacraimmobiliare.it/products/chalet-ad-avigliana\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Avigliana #Immobiliare",
+      "instagram": "Soggiorno con cucina a vista e stufa a pellet.\n\nChalet a Avigliana.\nprezzo richiesto 24.000 €.\n\nScrivici in DM con Riferimento LS-007 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Avigliana #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Avigliana una soluzione di tipo chalet. Soggiorno con cucina a vista e stufa a pellet.\n\nprezzo richiesto 24.000 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/chalet-ad-avigliana. Riferimento LS-007. Condizioni e disponibilità soggette a verifica.",
+      "video_script": null,
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE",
+        "Precisare il tipo di cessione e l'uso consentito"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-04-LS-008-APPROFONDIMENTO",
+      "date": "2026-12-04",
+      "time": "18:30",
+      "timezone": "Europe/Rome",
+      "product_id": "10808056250695",
+      "reference": "LS-008",
+      "city": "Rivoli",
+      "angle": "APPROFONDIMENTO",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "media_selected": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsApp_Image_2026-05-21_at_09.35.23_14.jpg?v=1779351767"
+      ],
+      "media_status": "FOTO_CANDIDATA_ORIGINALE_DA_VERIFICARE",
+      "facebook": "Quadrilocale a Rivoli: Terzo piano con ascensore, luminoso su tre lati.\n\n100 mq · prezzo richiesto 185.000 €.\n\nUn approfondimento su una delle caratteristiche distintive della proposta.\n\nRiferimento LS-008 · Scheda: https://lasacraimmobiliare.it/products/appartamento-a-rivvoli-quattro-locali\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Rivoli #Immobiliare",
+      "instagram": "Terzo piano con ascensore, luminoso su tre lati.\n\nQuadrilocale a Rivoli.\n100 mq · prezzo richiesto 185.000 €.\n\nScrivici in DM con Riferimento LS-008 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Rivoli #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Rivoli una soluzione di tipo quadrilocale. Terzo piano con ascensore, luminoso su tre lati.\n\n100 mq · prezzo richiesto 185.000 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/appartamento-a-rivvoli-quattro-locali. Riferimento LS-008. Condizioni e disponibilità soggette a verifica.",
+      "video_script": null,
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-05-LS-009-APPROFONDIMENTO",
+      "date": "2026-12-05",
+      "time": "11:00",
+      "timezone": "Europe/Rome",
+      "product_id": "10770991481159",
+      "reference": "LS-009",
+      "city": "Rubiana",
+      "angle": "APPROFONDIMENTO",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "media_selected": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-04-28at18.14.33.jpg?v=1777393953"
+      ],
+      "media_status": "FOTO_CANDIDATA_ORIGINALE_DA_VERIFICARE",
+      "facebook": "Monolocale a Rubiana: 30 mq con bagno e disimpegno.\n\n30 mq · prezzo richiesto 19.500 €.\n\nUn approfondimento su una delle caratteristiche distintive della proposta.\n\nRiferimento LS-009 · Scheda: https://lasacraimmobiliare.it/products/appartamento-a-rubiana\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Rubiana #Immobiliare",
+      "instagram": "30 mq con bagno e disimpegno.\n\nMonolocale a Rubiana.\n30 mq · prezzo richiesto 19.500 €.\n\nScrivici in DM con Riferimento LS-009 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Rubiana #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Rubiana una soluzione di tipo monolocale. 30 mq con bagno e disimpegno.\n\n30 mq · prezzo richiesto 19.500 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/appartamento-a-rubiana. Riferimento LS-009. Condizioni e disponibilità soggette a verifica.",
+      "video_script": null,
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-06-LS-010-APPROFONDIMENTO",
+      "date": "2026-12-06",
+      "time": "18:30",
+      "timezone": "Europe/Rome",
+      "product_id": "10671726395719",
+      "reference": "LS-010",
+      "city": "Collegno",
+      "angle": "APPROFONDIMENTO",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "media_selected": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsApp_Image_2026-05-30_at_09.47.18.jpg?v=1780127407"
+      ],
+      "media_status": "FOTO_CANDIDATA_ORIGINALE_DA_VERIFICARE",
+      "facebook": "Bilocale a Collegno: 55 mq con due locali e cantina da verificare.\n\n55 mq · prezzo richiesto 100.000 €.\n\nUn approfondimento su una delle caratteristiche distintive della proposta.\n\nRiferimento LS-010 · Scheda: https://lasacraimmobiliare.it/products/alloggio-di-due-locali-collegno\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Collegno #Immobiliare",
+      "instagram": "55 mq con due locali e cantina da verificare.\n\nBilocale a Collegno.\n55 mq · prezzo richiesto 100.000 €.\n\nScrivici in DM con Riferimento LS-010 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Collegno #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Collegno una soluzione di tipo bilocale. 55 mq con due locali e cantina da verificare.\n\n55 mq · prezzo richiesto 100.000 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/alloggio-di-due-locali-collegno. Riferimento LS-010. Condizioni e disponibilità soggette a verifica.",
+      "video_script": "Video disponibile nella descrizione della scheda: verificare autorizzazione e formato; hook: Alloggio in zona Terracorta vicino a Corso Francia.",
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-07-LS-011-APPROFONDIMENTO",
+      "date": "2026-12-07",
+      "time": "11:00",
+      "timezone": "Europe/Rome",
+      "product_id": "10705715855687",
+      "reference": "LS-011",
+      "city": "Sant'Ambrogio di Torino",
+      "angle": "APPROFONDIMENTO",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "media_selected": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-03-18at15.45.27_2.jpg?v=1773849435"
+      ],
+      "media_status": "FOTO_CANDIDATA_ORIGINALE_DA_VERIFICARE",
+      "facebook": "Bilocale a Sant'Ambrogio di Torino: 50 mq, balcone e servizi a portata di mano.\n\n50 mq · prezzo richiesto 69.000 €.\n\nUn approfondimento su una delle caratteristiche distintive della proposta.\n\nRiferimento LS-011 · Scheda: https://lasacraimmobiliare.it/products/due-locali-in-centro-paese-con-posizione-strategica\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #SantAmbrogiodiTorino #Immobiliare",
+      "instagram": "50 mq, balcone e servizi a portata di mano.\n\nBilocale a Sant'Ambrogio di Torino.\n50 mq · prezzo richiesto 69.000 €.\n\nScrivici in DM con Riferimento LS-011 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #SantAmbrogiodiTorino #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Sant'Ambrogio di Torino una soluzione di tipo bilocale. 50 mq, balcone e servizi a portata di mano.\n\n50 mq · prezzo richiesto 69.000 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/due-locali-in-centro-paese-con-posizione-strategica. Riferimento LS-011. Condizioni e disponibilità soggette a verifica.",
+      "video_script": null,
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-08-LS-012-APPROFONDIMENTO",
+      "date": "2026-12-08",
+      "time": "18:30",
+      "timezone": "Europe/Rome",
+      "product_id": "11573197111623",
+      "reference": "LS-012",
+      "city": "Torino",
+      "angle": "APPROFONDIMENTO",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "media_selected": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-08-06at14.38.06_1.jpg?v=1795165808"
+      ],
+      "media_status": "FOTO_CANDIDATA_ORIGINALE_DA_VERIFICARE",
+      "facebook": "Appartamento a Torino: Due camere, bagno e cantina, al terzo piano.\n\nprezzo richiesto 163.000 €.\n\nUn approfondimento su una delle caratteristiche distintive della proposta.\n\nRiferimento LS-012 · Scheda: https://lasacraimmobiliare.it/products/corso-francia-torino\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Torino #Immobiliare",
+      "instagram": "Due camere, bagno e cantina, al terzo piano.\n\nAppartamento a Torino.\nprezzo richiesto 163.000 €.\n\nScrivici in DM con Riferimento LS-012 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Torino #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Torino una soluzione di tipo appartamento. Due camere, bagno e cantina, al terzo piano.\n\nprezzo richiesto 163.000 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/corso-francia-torino. Riferimento LS-012. Condizioni e disponibilità soggette a verifica.",
+      "video_script": null,
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-09-LS-001-APPROFONDIMENTO",
+      "date": "2026-12-09",
+      "time": "11:00",
+      "timezone": "Europe/Rome",
+      "product_id": "11283256508743",
+      "reference": "LS-001",
+      "city": "Sant'Ambrogio di Torino",
+      "angle": "APPROFONDIMENTO",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "media_selected": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5586.jpg?v=1791272576"
+      ],
+      "media_status": "FOTO_CANDIDATA_ORIGINALE_DA_VERIFICARE",
+      "facebook": "Trilocale a Sant'Ambrogio di Torino: Esposizione su tre lati e cantina.\n\n80 mq · prezzo richiesto 83.000 €.\n\nUn approfondimento su una delle caratteristiche distintive della proposta.\n\nRiferimento LS-001 · Scheda: https://lasacraimmobiliare.it/products/trilocale-con-il-box\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #SantAmbrogiodiTorino #Immobiliare",
+      "instagram": "Esposizione su tre lati e cantina.\n\nTrilocale a Sant'Ambrogio di Torino.\n80 mq · prezzo richiesto 83.000 €.\n\nScrivici in DM con Riferimento LS-001 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #SantAmbrogiodiTorino #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Sant'Ambrogio di Torino una soluzione di tipo trilocale. Esposizione su tre lati e cantina.\n\n80 mq · prezzo richiesto 83.000 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/trilocale-con-il-box. Riferimento LS-001. Condizioni e disponibilità soggette a verifica.",
+      "video_script": null,
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE",
+        "Piano 2/3 e presenza box discordanti tra descrizione e metaobject"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-10-LS-002-APPROFONDIMENTO",
+      "date": "2026-12-10",
+      "time": "18:30",
+      "timezone": "Europe/Rome",
+      "product_id": "11203075113287",
+      "reference": "LS-002",
+      "city": "Valgioie",
+      "angle": "APPROFONDIMENTO",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "media_selected": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-09-22at11.04.28_1.jpg?v=1790070788"
+      ],
+      "media_status": "FOTO_CANDIDATA_ORIGINALE_DA_VERIFICARE",
+      "facebook": "Bilocale a Valgioie: Pompa di calore, posto auto e cantina.\n\nprezzo richiesto 63.000 €.\n\nUn approfondimento su una delle caratteristiche distintive della proposta.\n\nRiferimento LS-002 · Scheda: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Valgioie #Immobiliare",
+      "instagram": "Pompa di calore, posto auto e cantina.\n\nBilocale a Valgioie.\nprezzo richiesto 63.000 €.\n\nScrivici in DM con Riferimento LS-002 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Valgioie #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Valgioie una soluzione di tipo bilocale. Pompa di calore, posto auto e cantina.\n\nprezzo richiesto 63.000 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie. Riferimento LS-002. Condizioni e disponibilità soggette a verifica.",
+      "video_script": "Video disponibile nella descrizione della scheda: verificare autorizzazione e formato; hook: Bilocale ristrutturato con zona giorno e camera.",
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-11-LS-003-APPROFONDIMENTO",
+      "date": "2026-12-11",
+      "time": "11:00",
+      "timezone": "Europe/Rome",
+      "product_id": "11190682255687",
+      "reference": "LS-003",
+      "city": "Rivoli",
+      "angle": "APPROFONDIMENTO",
+      "networks": [
+        "facebook"
+      ],
+      "media_selected": [],
+      "media_status": "NESSUNA_FOTO_ORIGINALE_IDENTIFICATA",
+      "facebook": "Cessione attività a Rivoli: Attività specializzata anche in prodotti senza glutine.\n\nprezzo richiesto 180.000 €.\n\nUn approfondimento su una delle caratteristiche distintive della proposta.\n\nRiferimento LS-003 · Scheda: https://lasacraimmobiliare.it/products/attivita-caffetteria-pasticceria-a-rivoli\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Rivoli #Immobiliare",
+      "instagram": "Attività specializzata anche in prodotti senza glutine.\n\nCessione attività a Rivoli.\nprezzo richiesto 180.000 €.\n\nScrivici in DM con Riferimento LS-003 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Rivoli #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Rivoli una soluzione di tipo cessione attività. Attività specializzata anche in prodotti senza glutine.\n\nprezzo richiesto 180.000 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/attivita-caffetteria-pasticceria-a-rivoli. Riferimento LS-003. Condizioni e disponibilità soggette a verifica.",
+      "video_script": "Video disponibile nella descrizione della scheda: verificare autorizzazione e formato; hook: Caffetteria e pasticceria attiva da oltre 15 anni.",
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE",
+        "Solo immagini con nomi riconducibili a rendering/generazione IA",
+        "Nessuna fotografia originale identificabile per nome: verificare media"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-12-LS-004-APPROFONDIMENTO",
+      "date": "2026-12-12",
+      "time": "18:30",
+      "timezone": "Europe/Rome",
+      "product_id": "11136591069511",
+      "reference": "LS-004",
+      "city": "Avigliana",
+      "angle": "APPROFONDIMENTO",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "media_selected": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-09-08at10.47.51_5.jpg?v=1788964302"
+      ],
+      "media_status": "FOTO_CANDIDATA_ORIGINALE_DA_VERIFICARE",
+      "facebook": "Cessione attività a Avigliana: Attività avviata con locali già arredati.\n\n350 mq · prezzo richiesto 150.000 €.\n\nUn approfondimento su una delle caratteristiche distintive della proposta.\n\nRiferimento LS-004 · Scheda: https://lasacraimmobiliare.it/products/attivita-bar-ristorante-tabacchi-lotto\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Avigliana #Immobiliare",
+      "instagram": "Attività avviata con locali già arredati.\n\nCessione attività a Avigliana.\n350 mq · prezzo richiesto 150.000 €.\n\nScrivici in DM con Riferimento LS-004 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Avigliana #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Avigliana una soluzione di tipo cessione attività. Attività avviata con locali già arredati.\n\n350 mq · prezzo richiesto 150.000 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/attivita-bar-ristorante-tabacchi-lotto. Riferimento LS-004. Condizioni e disponibilità soggette a verifica.",
+      "video_script": "Video disponibile nella descrizione della scheda: verificare autorizzazione e formato; hook: Bar, ristorante e tabacchi con una lunga storia.",
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE",
+        "Data di disponibilità indicata 'settembre 27': verificare"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-13-LS-005-APPROFONDIMENTO",
+      "date": "2026-12-13",
+      "time": "11:00",
+      "timezone": "Europe/Rome",
+      "product_id": "11038271897927",
+      "reference": "LS-005",
+      "city": "Sant'Antonino di Susa",
+      "angle": "APPROFONDIMENTO",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "media_selected": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-08-17at15.07.15.jpg?v=1787300936"
+      ],
+      "media_status": "FOTO_CANDIDATA_ORIGINALE_DA_VERIFICARE",
+      "facebook": "Appartamento a Sant'Antonino di Susa: 90 mq e quattro locali secondo i dati Shopify.\n\n90 mq · prezzo richiesto 125.000 €.\n\nUn approfondimento su una delle caratteristiche distintive della proposta.\n\nRiferimento LS-005 · Scheda: https://lasacraimmobiliare.it/products/appartamento-al-piano-terra-a-santantonino-di-di-susa\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #SantAntoninodiSusa #Immobiliare",
+      "instagram": "90 mq e quattro locali secondo i dati Shopify.\n\nAppartamento a Sant'Antonino di Susa.\n90 mq · prezzo richiesto 125.000 €.\n\nScrivici in DM con Riferimento LS-005 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #SantAntoninodiSusa #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Sant'Antonino di Susa una soluzione di tipo appartamento. 90 mq e quattro locali secondo i dati Shopify.\n\n90 mq · prezzo richiesto 125.000 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/appartamento-al-piano-terra-a-santantonino-di-di-susa. Riferimento LS-005. Condizioni e disponibilità soggette a verifica.",
+      "video_script": null,
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-14-LS-006-APPROFONDIMENTO",
+      "date": "2026-12-14",
+      "time": "18:30",
+      "timezone": "Europe/Rome",
+      "product_id": "10903112876359",
+      "reference": "LS-006",
+      "city": "Grugliasco",
+      "angle": "APPROFONDIMENTO",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "media_selected": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-10at17.35.46_4.jpg?v=1783927765"
+      ],
+      "media_status": "FOTO_CANDIDATA_ORIGINALE_DA_VERIFICARE",
+      "facebook": "Appartamento a Grugliasco: 75 mq, due camere e cantina.\n\n75 mq · prezzo richiesto 175.000 €.\n\nUn approfondimento su una delle caratteristiche distintive della proposta.\n\nRiferimento LS-006 · Scheda: https://lasacraimmobiliare.it/products/appartamento-a-grugliasco-1\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Grugliasco #Immobiliare",
+      "instagram": "75 mq, due camere e cantina.\n\nAppartamento a Grugliasco.\n75 mq · prezzo richiesto 175.000 €.\n\nScrivici in DM con Riferimento LS-006 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Grugliasco #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Grugliasco una soluzione di tipo appartamento. 75 mq, due camere e cantina.\n\n75 mq · prezzo richiesto 175.000 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/appartamento-a-grugliasco-1. Riferimento LS-006. Condizioni e disponibilità soggette a verifica.",
+      "video_script": null,
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-15-LS-001-FOCUS",
+      "date": "2026-12-15",
+      "time": "11:00",
+      "timezone": "Europe/Rome",
+      "product_id": "11283256508743",
+      "reference": "LS-001",
+      "city": "Sant'Ambrogio di Torino",
+      "angle": "FOCUS",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "media_selected": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5586.jpg?v=1791272576"
+      ],
+      "media_status": "FOTO_CANDIDATA_ORIGINALE_DA_VERIFICARE",
+      "facebook": "Trilocale a Sant'Ambrogio di Torino: Tre locali luminosi e due balconi panoramici. Esposizione su tre lati e cantina.\n\n80 mq · prezzo richiesto 83.000 €.\n\nPer valutare se questa proposta risponde alle tue esigenze, richiedi la scheda completa.\n\nRiferimento LS-001 · Scheda: https://lasacraimmobiliare.it/products/trilocale-con-il-box\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #SantAmbrogiodiTorino #Immobiliare",
+      "instagram": "Focus su trilocale a Sant'Ambrogio di Torino.\n\nTrilocale a Sant'Ambrogio di Torino.\n80 mq · prezzo richiesto 83.000 €.\n\nScrivici in DM con Riferimento LS-001 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #SantAmbrogiodiTorino #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Sant'Ambrogio di Torino una soluzione di tipo trilocale. Tre locali luminosi e due balconi panoramici. Esposizione su tre lati e cantina.\n\n80 mq · prezzo richiesto 83.000 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/trilocale-con-il-box. Riferimento LS-001. Condizioni e disponibilità soggette a verifica.",
+      "video_script": null,
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE",
+        "Piano 2/3 e presenza box discordanti tra descrizione e metaobject"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-16-LS-004-FOCUS",
+      "date": "2026-12-16",
+      "time": "18:30",
+      "timezone": "Europe/Rome",
+      "product_id": "11136591069511",
+      "reference": "LS-004",
+      "city": "Avigliana",
+      "angle": "FOCUS",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "media_selected": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-09-08at10.47.51_5.jpg?v=1788964302"
+      ],
+      "media_status": "FOTO_CANDIDATA_ORIGINALE_DA_VERIFICARE",
+      "facebook": "Cessione attività a Avigliana: Bar, ristorante e tabacchi con una lunga storia. Attività avviata con locali già arredati.\n\n350 mq · prezzo richiesto 150.000 €.\n\nPer valutare se questa proposta risponde alle tue esigenze, richiedi la scheda completa.\n\nRiferimento LS-004 · Scheda: https://lasacraimmobiliare.it/products/attivita-bar-ristorante-tabacchi-lotto\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Avigliana #Immobiliare",
+      "instagram": "Focus su cessione attività a Avigliana.\n\nCessione attività a Avigliana.\n350 mq · prezzo richiesto 150.000 €.\n\nScrivici in DM con Riferimento LS-004 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Avigliana #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Avigliana una soluzione di tipo cessione attività. Bar, ristorante e tabacchi con una lunga storia. Attività avviata con locali già arredati.\n\n350 mq · prezzo richiesto 150.000 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/attivita-bar-ristorante-tabacchi-lotto. Riferimento LS-004. Condizioni e disponibilità soggette a verifica.",
+      "video_script": "Video disponibile nella descrizione della scheda: verificare autorizzazione e formato; hook: Bar, ristorante e tabacchi con una lunga storia.",
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE",
+        "Data di disponibilità indicata 'settembre 27': verificare"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-17-LS-007-FOCUS",
+      "date": "2026-12-17",
+      "time": "11:00",
+      "timezone": "Europe/Rome",
+      "product_id": "10886810075463",
+      "reference": "LS-007",
+      "city": "Avigliana",
+      "angle": "FOCUS",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "media_selected": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_1.jpg?v=1782999776"
+      ],
+      "media_status": "FOTO_CANDIDATA_ORIGINALE_DA_VERIFICARE",
+      "facebook": "Chalet a Avigliana: Chalet con cortile privato e terrazzino. Soggiorno con cucina a vista e stufa a pellet.\n\nprezzo richiesto 24.000 €.\n\nPer valutare se questa proposta risponde alle tue esigenze, richiedi la scheda completa.\n\nRiferimento LS-007 · Scheda: https://lasacraimmobiliare.it/products/chalet-ad-avigliana\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Avigliana #Immobiliare",
+      "instagram": "Focus su chalet a Avigliana.\n\nChalet a Avigliana.\nprezzo richiesto 24.000 €.\n\nScrivici in DM con Riferimento LS-007 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Avigliana #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Avigliana una soluzione di tipo chalet. Chalet con cortile privato e terrazzino. Soggiorno con cucina a vista e stufa a pellet.\n\nprezzo richiesto 24.000 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/chalet-ad-avigliana. Riferimento LS-007. Condizioni e disponibilità soggette a verifica.",
+      "video_script": null,
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE",
+        "Precisare il tipo di cessione e l'uso consentito"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-18-LS-008-FOCUS",
+      "date": "2026-12-18",
+      "time": "18:30",
+      "timezone": "Europe/Rome",
+      "product_id": "10808056250695",
+      "reference": "LS-008",
+      "city": "Rivoli",
+      "angle": "FOCUS",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "media_selected": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsApp_Image_2026-05-21_at_09.35.23_14.jpg?v=1779351767"
+      ],
+      "media_status": "FOTO_CANDIDATA_ORIGINALE_DA_VERIFICARE",
+      "facebook": "Quadrilocale a Rivoli: 100 mq e vista sul Castello di Rivoli. Terzo piano con ascensore, luminoso su tre lati.\n\n100 mq · prezzo richiesto 185.000 €.\n\nPer valutare se questa proposta risponde alle tue esigenze, richiedi la scheda completa.\n\nRiferimento LS-008 · Scheda: https://lasacraimmobiliare.it/products/appartamento-a-rivvoli-quattro-locali\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Rivoli #Immobiliare",
+      "instagram": "Focus su quadrilocale a Rivoli.\n\nQuadrilocale a Rivoli.\n100 mq · prezzo richiesto 185.000 €.\n\nScrivici in DM con Riferimento LS-008 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Rivoli #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Rivoli una soluzione di tipo quadrilocale. 100 mq e vista sul Castello di Rivoli. Terzo piano con ascensore, luminoso su tre lati.\n\n100 mq · prezzo richiesto 185.000 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/appartamento-a-rivvoli-quattro-locali. Riferimento LS-008. Condizioni e disponibilità soggette a verifica.",
+      "video_script": null,
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-19-LS-009-FOCUS",
+      "date": "2026-12-19",
+      "time": "11:00",
+      "timezone": "Europe/Rome",
+      "product_id": "10770991481159",
+      "reference": "LS-009",
+      "city": "Rubiana",
+      "angle": "FOCUS",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "media_selected": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-04-28at18.14.33.jpg?v=1777393953"
+      ],
+      "media_status": "FOTO_CANDIDATA_ORIGINALE_DA_VERIFICARE",
+      "facebook": "Monolocale a Rubiana: Monolocale con balcone in Via Roma. 30 mq con bagno e disimpegno.\n\n30 mq · prezzo richiesto 19.500 €.\n\nPer valutare se questa proposta risponde alle tue esigenze, richiedi la scheda completa.\n\nRiferimento LS-009 · Scheda: https://lasacraimmobiliare.it/products/appartamento-a-rubiana\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Rubiana #Immobiliare",
+      "instagram": "Focus su monolocale a Rubiana.\n\nMonolocale a Rubiana.\n30 mq · prezzo richiesto 19.500 €.\n\nScrivici in DM con Riferimento LS-009 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Rubiana #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Rubiana una soluzione di tipo monolocale. Monolocale con balcone in Via Roma. 30 mq con bagno e disimpegno.\n\n30 mq · prezzo richiesto 19.500 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/appartamento-a-rubiana. Riferimento LS-009. Condizioni e disponibilità soggette a verifica.",
+      "video_script": null,
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE"
+      ]
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-20-LS-012-FOCUS",
+      "date": "2026-12-20",
+      "time": "18:30",
+      "timezone": "Europe/Rome",
+      "product_id": "11573197111623",
+      "reference": "LS-012",
+      "city": "Torino",
+      "angle": "FOCUS",
+      "networks": [
+        "facebook",
+        "instagram"
+      ],
+      "media_selected": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-08-06at14.38.06_1.jpg?v=1795165808"
+      ],
+      "media_status": "FOTO_CANDIDATA_ORIGINALE_DA_VERIFICARE",
+      "facebook": "Appartamento a Torino: A Torino, in Corso Francia, con cucina abitabile. Due camere, bagno e cantina, al terzo piano.\n\nprezzo richiesto 163.000 €.\n\nPer valutare se questa proposta risponde alle tue esigenze, richiedi la scheda completa.\n\nRiferimento LS-012 · Scheda: https://lasacraimmobiliare.it/products/corso-francia-torino\nPer informazioni, scrivici in privato e indica il riferimento.\nPrezzo e disponibilità da confermare con l'agenzia.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Torino #Immobiliare",
+      "instagram": "Focus su appartamento a Torino.\n\nAppartamento a Torino.\nprezzo richiesto 163.000 €.\n\nScrivici in DM con Riferimento LS-012 per ricevere la scheda e organizzare una visita. Disponibilità e condizioni da confermare.\n\n#ImmobiliareLaSacra #CaseInPubblicita247 #JosephMalafronte #Torino #Immobiliare",
+      "linkedin": "Immobiliare La Sacra propone a Torino una soluzione di tipo appartamento. A Torino, in Corso Francia, con cucina abitabile. Due camere, bagno e cantina, al terzo piano.\n\nprezzo richiesto 163.000 €. Per dettagli e documentazione: https://lasacraimmobiliare.it/products/corso-francia-torino. Riferimento LS-012. Condizioni e disponibilità soggette a verifica.",
+      "video_script": null,
+      "status": "PRONTO_PER_REVISIONE_MANUALE",
+      "auto_publish": false,
+      "notes": [
+        "VERIFICA DISPONIBILITA' REALE"
+      ]
+    }
+  ]
+}
