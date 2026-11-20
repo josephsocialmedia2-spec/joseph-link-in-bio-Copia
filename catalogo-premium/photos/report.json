@@ -1,8 +1,8 @@
 {
-  "date": "2026-11-16T13:33:15.456Z",
+  "date": "2026-11-20T12:23:34.502Z",
   "source": "Shopify La Sacra",
-  "total": 58,
-  "photosAvailable": 54,
+  "total": 56,
+  "photosAvailable": 52,
   "missingSourcePhoto": [
     {
       "id": "10826816553287",
@@ -22,6 +22,12 @@
     }
   ],
   "created": 0,
-  "reused": 54,
-  "failed": []
+  "reused": 51,
+  "failed": [
+    {
+      "id": "11567350939975",
+      "title": "VILLA A SCHIERA A RIVOLI",
+      "error": "HTTP 403"
+    }
+  ]
 }
