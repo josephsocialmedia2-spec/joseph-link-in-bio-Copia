@@ -109,8 +109,7 @@ async function main(){
  await evalJS("document.querySelector('input[data-r03-check=flessioni]').click();true");
  assert.equal(await evalJS("document.querySelector('#r03-total').textContent"),'16');
  assert.equal(await evalJS("document.querySelector('#r03-today').textContent"),'16');
- await sleep(350);
- assert.equal(await evalJS("document.querySelector('[data-r03-id=flessioni]').hidden"),true);
+ await until("document.querySelector('[data-r03-id=flessioni]').hidden",'routine completed item becomes hidden');
  await command('Page.reload',{ignoreCache:true});
  await until("Boolean(document.querySelector('#saas-app > #case247-routine03'))",'routine after reload');
  assert.equal(await evalJS("document.querySelector('#r03-total').textContent"),'16');
@@ -202,7 +201,17 @@ async function main(){
  assert.equal(await evalJS("JSON.parse(localStorage.getItem('case247-lab-avigliana-v1')).contacts.some(x=>x.address==='Via Test QA 1')"),true);
  assert.equal(await evalJS("JSON.parse(localStorage.getItem('case247-cc-tasks-v1')).some(x=>x.source==='case247-farming-avigliana'&&x.date==='2026-11-23'&&x.time==='14:30')"),true);
  await until("document.querySelector('#sv-farming-frame').style.height.endsWith('px')",'same-origin embedded height adjusted');
- await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow;w.goto('omi');const f=w.document.querySelector('#omiForm');for(const [k,v] of Object.entries({city:'Avigliana',zone:'TEST-OMI',semester:'2026/1',type:'Abitazioni civili',condition:'Normale',min:'1000',max:'2000',source:'TEST QA - dati non ufficiali'}))f.elements[k].value=v;f.requestSubmit();w.document.querySelector('#dMq').value='100';w.document.querySelector('#dOmi').selectedIndex=1;w.previewDossier();return true})()");
+ await until("document.querySelector('#sv-farming-frame')?.contentWindow?.CASE247OMI?.getData()?.quotations?.length===35",'all 35 sourced OMI quotes loaded');
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentWindow.CASE247OMI.getData().zones.length"),7);
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelectorAll('#omi-map path').length"),7);
+ await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow;w.goto('omi');w.CASE247OMI.selectZone('C2');const d=w.document;d.querySelector('#omi-type').value='Abitazioni civili';w.renderOmi();d.querySelector('#omi-condition').value='OTTIMO';w.renderOmi();d.querySelector('#dOmi').selectedIndex=1;d.querySelector('#dMq').value='100';w.previewDossier();return true})()");
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentWindow.CASE247OMI.getSelectedQuote()?.min"),1450);
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#dossierPreview').textContent.includes('145.000')"),true);
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#dossierPreview').textContent.includes('215.000')"),true);
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#dossierPreview').textContent.includes('5.9')"),true);
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#omi-zone').value"),'C2');
+ await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow,d=w.document;d.querySelector('#omi-zone').value='';w.renderOmi();d.querySelector('#omi-type').value='';w.renderOmi();d.querySelector('#omi-condition').value='';w.renderOmi();return d.querySelector('#omi-zone').value===''})()");
+ await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow;w.goto('omi');const f=w.document.querySelector('#omiForm');for(const [k,v] of Object.entries({city:'Avigliana',zone:'TEST-OMI',semester:'2026/1',type:'Abitazioni civili',condition:'Normale',min:'1000',max:'2000',source:'TEST QA - dati non ufficiali'}))f.elements[k].value=v;f.requestSubmit();w.document.querySelector('#dMq').value='100';w.document.querySelector('#dOmi').value=Array.from(w.document.querySelector('#dOmi').options).find(o=>o.textContent.includes('TEST-OMI'))?.value||'';w.previewDossier();return true})()");
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#dossierPreview').textContent.includes('100.000')"),true);
  await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow;w.goto('lettere');w.print=()=>{w.__printTest=true};w.document.querySelector('#letterZone').value='Via Prova Stampa';w.printLetter();return true})()");
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentWindow.__printTest===true"),true);

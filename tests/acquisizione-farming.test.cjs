@@ -14,7 +14,7 @@ test('farming is first Acquisition subtab and preserves the original three',()=>
  assert.match(home,/id="sv-acquisizione"/);
  assert.match(home,/id="sv-tab-button-4"[^>]*aria-controls="sv-tab-4"/);
  assert.match(home,/id="sv-tab-4"[^>]*role="tabpanel"/);
- assert.match(home,/id="sv-farming-frame"[^>]*src="\.\/acquisizione-farming\/"/);
+ assert.match(home,/id="sv-farming-frame"[^>]*src="\.\/acquisizione-farming\/\?omi=20261120-1"/);
  for(let id=1;id<=3;id++)assert.match(home,new RegExp('id="sv-tab-button-'+id+'"'));
  assert.match(home,/sv-acquisizione\.js\?v=20261120-farming1/);
  assert.match(home,/sv-acquisizione\.css\?v=20261120-farming1/);
@@ -71,4 +71,10 @@ test('letter print and daily tracker are locally auditable',()=>{
  assert.match(page,/function exportTracker/);
  assert.match(page,/function downloadBackup/);
  assert.match(page,/function parseCSV/);
+});
+
+test('OMI 2026/1 sources are linked in the integrated Farming tab',()=>{
+ assert.match(page,/src="\.\/omi-avigliana\.js\?v=20261120-omi1"/);
+ assert.match(home,/src="\.\/acquisizione-farming\/\?omi=20261120-1"/);
+ assert.match(get('gestione/acquisizione-farming/omi-avigliana.js'),/omi-avigliana-2026-1\.json/);
 });
