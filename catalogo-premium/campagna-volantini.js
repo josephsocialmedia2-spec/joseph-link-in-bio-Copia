@@ -82,9 +82,10 @@
     page=Math.min(pdf.numPages,Math.max(1,n)); update();
     if(rendering){nextRequested=page;return;}
     rendering=true;
-    status.textContent="Caricamento pagina "+page+"…";
+    const targetPage=page;
+    status.textContent="Caricamento pagina "+targetPage+"…";
     try{
-      const p=await pdf.getPage(page), natural=p.getViewport({scale:1});
+      const p=await pdf.getPage(targetPage), natural=p.getViewport({scale:1});
       const available=Math.max(220, paper.clientWidth-26);
       const ratio=Math.min(2,window.devicePixelRatio||1);
       const scale=Math.min(2.4,available/natural.width)*ratio;
@@ -94,13 +95,14 @@
       canvas.style.width=(viewport.width/ratio)+"px";
       canvas.style.height=(viewport.height/ratio)+"px";
       await p.render({canvasContext:canvas.getContext("2d",{alpha:false}),viewport}).promise;
-      status.textContent="Pagina "+page+" di "+pdf.numPages+". Usa le frecce o scorri con il dito.";
+      status.textContent="Pagina "+targetPage+" di "+pdf.numPages+". Usa le frecce o scorri con il dito.";
+      if (targetPage!==page) nextRequested=page;
     }catch(err){
       status.textContent="Visualizzatore non disponibile. Puoi aprire il PDF originale.";
       setFallback();
     }finally{
       rendering=false;
-      if(nextRequested!==null){const n=nextRequested;nextRequested=null;if(n!==page)render(n);}
+      if(nextRequested!==null){const n=nextRequested;nextRequested=null;if(n!==targetPage)render(n);}
     }
   }
   function setFallback(){
