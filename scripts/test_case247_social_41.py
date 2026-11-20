@@ -1,4 +1,4 @@
-"""41-town network checks: no synthetic Meta accounts, fail-closed 10km routing."""
+"""42-town network checks: no synthetic Meta accounts, fail-closed 10km routing."""
 import json
 import re
 import unittest
@@ -6,33 +6,28 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 def read(path):return (ROOT/path).read_text(encoding="utf-8")
 def load(path):return json.loads(read(path))
-class SocialNetwork41Tests(unittest.TestCase):
+class SocialNetwork42Tests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.original=load("config/case247-territorio.json")
         cls.setup=load("config/case247-territorial-social-setup.json")
         cls.by_id={t["town_id"]:t for t in cls.setup["towns"]}
-    def test_41_towns_and_82_reserved_destinations(self):
+    def test_42_towns_and_84_reserved_destinations(self):
         a={x["id"] for x in self.original["towns"]}
         b={x["town_id"] for x in self.setup["towns"]}
-        self.assertEqual(len(b),41)
-        # The 42nd geographic landing is Beinasco, without a planned Meta
-        # identity. Never create a fictitious 42nd Facebook/Instagram account.
-        self.assertEqual(a-b,{"beinasco"})
+        self.assertEqual(len(b),42)
+        # Beinasco is the 42nd real landing, but no account is claimed to exist.
+        self.assertEqual(a,b)
         self.assertEqual(len(a),42)
-        self.assertEqual(self.setup["desired_facebook_pages"],41)
-        self.assertEqual(self.setup["desired_instagram_professional_accounts"],41)
+        self.assertEqual(self.setup["desired_facebook_pages"],42)
+        self.assertEqual(self.setup["desired_instagram_professional_accounts"],42)
         self.assertEqual(self.setup["distribution_radius_km"],10)
         for t in self.original["towns"]:
             self.assertFalse(t["auto_publish"])
             self.assertTrue((ROOT/("paesi/"+t["id"]+"/index.html")).is_file())
-            if t["id"] in b:
-                self.assertEqual(t["social_onboarding"]["status"],"PREPARED_NOT_CREATED")
-                self.assertEqual(t["social_onboarding"]["radius_km"],10)
-                self.assertFalse(t["social_onboarding"]["publishing_enabled"])
-            else:
-                self.assertEqual(t["operational_status"],"PAGINA_WEB_OPERATIVA_SOCIAL_NON_ATTIVI")
-                self.assertFalse(t.get("social_onboarding",{}).get("publishing_enabled",False))
+            self.assertEqual(t["social_onboarding"]["status"],"PREPARED_NOT_CREATED")
+            self.assertEqual(t["social_onboarding"]["radius_km"],10)
+            self.assertFalse(t["social_onboarding"]["publishing_enabled"])
     def test_no_created_pages_claimed_and_unique_handles(self):
         handles=set()
         for t in self.setup["towns"]:
@@ -46,15 +41,15 @@ class SocialNetwork41Tests(unittest.TestCase):
             self.assertRegex(handle,r"^[a-z0-9_.]{1,30}$")
             self.assertNotIn(handle,handles)
             handles.add(handle)
-        self.assertEqual(len(handles),41)
+        self.assertEqual(len(handles),42)
     def test_secure_bulk_meta_linker(self):
         edge=read("supabase/functions/case247-territory-connect/index.ts")
         self.assertIn("const TOWNS=",edge)
-        # Only 41 reviewed on-boarding records belong to the Meta connector.
+        # All 42 prepared towns belong to the Meta connector; no fake accounts.
         verified_ids={row["town_id"] for row in self.setup["towns"]}
         edge_towns=json.loads(edge.split("const TOWNS=",1)[1].split(";",1)[0])
         self.assertEqual({row["id"] for row in edge_towns},verified_ids)
-        self.assertNotIn("beinasco",{row["id"] for row in edge_towns})
+        self.assertIn("beinasco",{row["id"] for row in edge_towns})
         self.assertIn('body?.mode==="scan"',edge)
         self.assertIn('case247_admins',edge)
         self.assertIn("getUser(access)",edge)

@@ -37,7 +37,7 @@ def build():
             drafts.append({
                 'id': f"{town['id']}:{item['id']}", 'town_id': town['id'], 'town': town['name'],
                 'listing_id': item['id'], 'source_url': item['url'], 'media_url': item['image'],
-                'caption': f"{town['name']} · Dal catalogo La Sacra Immobiliare\n\n{item['title']}\n{price}\n\nComune dichiarato nella descrizione della fonte: {town['name']}. Caratteristiche e disponibilità nella scheda originale.\n{item['url']}\nCatalogo locale: {town['landing_url']}\n\nCase in Pubblicità 24/7 · Comunicazione immobiliare. Intermediazione: La Sacra Immobiliare.",
+                'caption': f"{town['name']} · Dal catalogo La Sacra Immobiliare\n\n{item['title']}\n{price}\n\nComune dichiarato nella descrizione della fonte: {town['name']}. Caratteristiche e disponibilità nella scheda originale.\n{item['url']}\nCatalogo locale: {town['landing_url']}\n\nCase in Pubblicità 24/7 · Comunicazione immobiliare. Intermediazione: La Sacra Immobiliare.\n\n#JosephMalafronte",
                 'landing_url': town['landing_url'], 'status': 'BOZZA_DA_REVISIONARE',
                 'publishing_status': 'DESTINAZIONE_TERRITORIALE_DA_COLLEGARE',
                 'approved': False, 'auto_publish': False,

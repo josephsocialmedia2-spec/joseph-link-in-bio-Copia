@@ -18,8 +18,8 @@ class GuidedMetaCreationTests(unittest.TestCase):
  def test_no_fake_success_and_one_original_meta_app(self):
   page=content("gestione/territori/index.html")
   cfg=json.loads(content("config/case247-territorial-social-setup.json"))
-  self.assertEqual(len(cfg["towns"]),41)
-  self.assertEqual(len({t["instagram"]["suggested_username"] for t in cfg["towns"]}),41)
+  self.assertEqual(len(cfg["towns"]),42)
+  self.assertEqual(len({t["instagram"]["suggested_username"] for t in cfg["towns"]}),42)
   self.assertIn('non ha creato pagine o post',page)
   self.assertIn('non ancora attiva',page)
   self.assertIn('if(!town||!session)return;',page)

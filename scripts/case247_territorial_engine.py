@@ -211,7 +211,7 @@ def make_plan(day, items, towns, geo, graphics, previous=None, reserved_urls=Non
                 + f"Dettagli e disponibilità: {p['url']}\n"
                 + f"Immobili del territorio: {town['landing_url']}\n"
                 + "Case in Pubblicità 24/7 · Comunicazione pubblicitaria. "
-                  "La mediazione immobiliare è svolta dai professionisti abilitati.",
+                  "La mediazione immobiliare è svolta dai professionisti abilitati.\n\n#JosephMalafronte",
         })
     # Graphics rotate in distinct accounts, at most one presentation of each
     # graphic per day across the network. Never fill empty capacity with duplicates.
@@ -240,7 +240,7 @@ def make_plan(day, items, towns, geo, graphics, previous=None, reserved_urls=Non
                 "caption": f"{candidate.get('topic', 'Come funziona la promozione immobiliare')}\n\n"
                            "Ricostruzione illustrativa generata con IA: non documenta attività realmente svolte.\n"
                            f"Scopri gli immobili del territorio: {town['landing_url']}\n"
-                           "Case in Pubblicità 24/7 · Solo pubblicità, non intermediazione.",
+                           "Case in Pubblicità 24/7 · Solo pubblicità, non intermediazione.\n\n#JosephMalafronte",
             })
     assignments.sort(key=lambda p: (p["date"], p["time"], p["town_id"], p["network"]))
     unique = [x["listing_id"] for x in assignments if x["type"] == "IMMOBILE"]
@@ -301,7 +301,7 @@ def repair_future_today(day, items, towns, geo, old_plan, now_hour=18):
                     + f"Dettagli e disponibilità: {listing['url']}\n"
                     + f"Immobili del territorio: {dest['landing_url']}\n"
                     + "Case in Pubblicità 24/7 · Comunicazione pubblicitaria. "
-                      "La mediazione immobiliare è svolta dai professionisti abilitati."
+                      "La mediazione immobiliare è svolta dai professionisti abilitati.\n\n#JosephMalafronte"
                 )
                 changes["updated"] += 1
             repaired.append(refreshed)
@@ -325,7 +325,7 @@ def repair_future_today(day, items, towns, geo, old_plan, now_hour=18):
                            + f"Dettagli e disponibilità: {substitute['url']}\n"
                            + f"Immobili del territorio: {dest['landing_url']}\n"
                            + "Case in Pubblicità 24/7 · Comunicazione pubblicitaria; "
-                             "intermediazione a cura di professionisti abilitati.")
+                             "intermediazione a cura di professionisti abilitati.\n\n#JosephMalafronte")
         updated["distance_upper_bound_km"] = next(km for t,km in eligible_towns(substitute,towns,geo)
                                                   if t["id"] == a["town_id"])
         repaired.append(updated)

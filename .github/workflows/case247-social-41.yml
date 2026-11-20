@@ -1,4 +1,4 @@
-name: CASE247 · Social network 41 towns safe rollout
+name: CASE247 · Social network 42 towns safe rollout
 on:
   pull_request:
     paths:
@@ -13,6 +13,7 @@ on:
       - scripts/test_case247_public_social_links.py
       - scripts/test_case247_social_41.py
       - scripts/test_case247_guided_meta_creation.py
+      - scripts/test_case247_social_registry.py
       - .github/workflows/case247-social-41.yml
   push:
     branches: [main]
@@ -28,6 +29,7 @@ on:
       - scripts/test_case247_public_social_links.py
       - scripts/test_case247_social_41.py
       - scripts/test_case247_guided_meta_creation.py
+      - scripts/test_case247_social_registry.py
   workflow_dispatch:
 permissions:
   contents: read
@@ -43,7 +45,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Verify 41 towns, 82 proposed identities and no fictitious accounts
+      - name: Verify 42 towns, 84 proposed identities and no fictitious accounts
         run: python -m unittest discover -s scripts -p test_case247_social_41.py -v
       - name: Preserve Avigliana OAuth pilot and no-send safety checks
         run: python -m unittest discover -s scripts -p test_case247_avigliana_pilot.py -v
@@ -58,6 +60,15 @@ jobs:
           Path("/tmp/case247-guided-meta-creation.mjs").write_text(module)
           PY
           node --check /tmp/case247-guided-meta-creation.mjs
+          python -m unittest discover -s scripts -p test_case247_social_registry.py -v
+          python - <<'PY'
+          from pathlib import Path
+          src=Path("gestione/territori/account-social/index.html").read_text()
+          assert src.count('<script type="module">')==1
+          module=src.split('<script type="module">',1)[1].split('</script>',1)[0]
+          Path("/tmp/case247-account-social.mjs").write_text(module)
+          PY
+          node --check /tmp/case247-account-social.mjs
       - name: Verify public links safety and shared 10km landing catalog JS
         run: |
           python -m unittest discover -s scripts -p test_case247_public_social_links.py -v
