@@ -61,6 +61,31 @@
       });
     });
   }
+  // Download form backend loads only after a visitor explicitly requests the guide.
+  // This avoids an unsolicited API request while browsing the property catalog.
+  const guideOpen = $("guideOpen");
+  if (guideOpen) {
+    let guideBoot = null;
+    guideOpen.addEventListener("click", () => {
+      if (guideBoot) return;
+      guideOpen.disabled = true;
+      guideBoot = new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = "../gestione/volantini-premium/volantino-digitale/guida-download.js?v=20261120";
+        script.onload = resolve;
+        script.onerror = () => reject(new Error("Impossibile caricare il modulo guida."));
+        document.body.appendChild(script);
+      });
+      guideBoot.then(() => {
+        guideOpen.disabled = false;
+        guideOpen.click();
+      }).catch(() => {
+        guideBoot = null;
+        guideOpen.disabled = false;
+        $("guideAvailabilityNote").textContent = "Modulo temporaneamente non disponibile. Riprova.";
+      });
+    });
+  }
   const reader = $("pdfBook"), open = $("pdfStart");
   if(!reader || !open) return;
   const prev = $("pdfPrev"), next = $("pdfNext"), count = $("pdfCount"), status = $("pdfStatus"), jump = $("pdfJump");
