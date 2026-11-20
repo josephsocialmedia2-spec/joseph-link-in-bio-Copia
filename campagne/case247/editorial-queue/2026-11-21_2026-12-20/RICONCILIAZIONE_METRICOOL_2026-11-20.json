@@ -1,0 +1,436 @@
+{
+  "campaign": "CASE247 SHOPIFY 12",
+  "reconciled_at": "2026-11-20",
+  "period": "2026-11-21/2026-12-20",
+  "metricool_brand_id": "7844901",
+  "source_records": 12,
+  "slots_total": 52,
+  "scheduled_campaign_posts": 30,
+  "facebook_posts": 30,
+  "instagram_posts": 28,
+  "linkedin_posts": 0,
+  "contact": "Joseph",
+  "whatsapp": "371 370 8294",
+  "auto_publish_enabled": 0,
+  "status": "PROGRAMMATO_CON_CONFERMA_MANUALE",
+  "entries": [
+    {
+      "post_id": "CASE247-SHOP12-2026-11-21-LS-001-PRESENTAZIONE",
+      "date": "2026-11-21",
+      "time": "11:00",
+      "shopify_product_id": "11283256508743",
+      "metricool_post_id": 435704056,
+      "metricool_uuid": "-3892548957171136242",
+      "providers": [
+        "facebook",
+        "instagram"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-11-22-LS-002-PRESENTAZIONE",
+      "date": "2026-11-22",
+      "time": "18:30",
+      "shopify_product_id": "11203075113287",
+      "metricool_post_id": 435704693,
+      "metricool_uuid": "3184701701314726790",
+      "providers": [
+        "facebook",
+        "instagram"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-11-23-LS-003-PRESENTAZIONE",
+      "date": "2026-11-23",
+      "time": "11:00",
+      "shopify_product_id": "11190682255687",
+      "metricool_post_id": 435704712,
+      "metricool_uuid": "2018019813699830505",
+      "providers": [
+        "facebook"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-11-24-LS-004-PRESENTAZIONE",
+      "date": "2026-11-24",
+      "time": "18:30",
+      "shopify_product_id": "11136591069511",
+      "metricool_post_id": 435704773,
+      "metricool_uuid": "-5034584456381380083",
+      "providers": [
+        "facebook",
+        "instagram"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-11-25-LS-005-PRESENTAZIONE",
+      "date": "2026-11-25",
+      "time": "11:00",
+      "shopify_product_id": "11038271897927",
+      "metricool_post_id": 435704827,
+      "metricool_uuid": "8241844219582759690",
+      "providers": [
+        "facebook",
+        "instagram"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-11-26-LS-006-PRESENTAZIONE",
+      "date": "2026-11-26",
+      "time": "18:30",
+      "shopify_product_id": "10903112876359",
+      "metricool_post_id": 435704861,
+      "metricool_uuid": "8306670030586724790",
+      "providers": [
+        "facebook",
+        "instagram"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-11-27-LS-007-PRESENTAZIONE",
+      "date": "2026-11-27",
+      "time": "11:00",
+      "shopify_product_id": "10886810075463",
+      "metricool_post_id": 435704919,
+      "metricool_uuid": "-5435965686677356163",
+      "providers": [
+        "facebook",
+        "instagram"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-11-28-LS-008-PRESENTAZIONE",
+      "date": "2026-11-28",
+      "time": "18:30",
+      "shopify_product_id": "10808056250695",
+      "metricool_post_id": 435704973,
+      "metricool_uuid": "-8537868183390633506",
+      "providers": [
+        "facebook",
+        "instagram"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-11-29-LS-009-PRESENTAZIONE",
+      "date": "2026-11-29",
+      "time": "11:00",
+      "shopify_product_id": "10770991481159",
+      "metricool_post_id": 435705809,
+      "metricool_uuid": "433021497712790974",
+      "providers": [
+        "facebook",
+        "instagram"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-11-30-LS-010-PRESENTAZIONE",
+      "date": "2026-11-30",
+      "time": "18:30",
+      "shopify_product_id": "10671726395719",
+      "metricool_post_id": 435705861,
+      "metricool_uuid": "151114410738142271",
+      "providers": [
+        "facebook",
+        "instagram"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-01-LS-011-PRESENTAZIONE",
+      "date": "2026-12-01",
+      "time": "11:00",
+      "shopify_product_id": "10705715855687",
+      "metricool_post_id": 435705896,
+      "metricool_uuid": "7698451383338723",
+      "providers": [
+        "facebook",
+        "instagram"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-02-LS-012-PRESENTAZIONE",
+      "date": "2026-12-02",
+      "time": "18:30",
+      "shopify_product_id": "11573197111623",
+      "metricool_post_id": 435705940,
+      "metricool_uuid": "-387295738233403285",
+      "providers": [
+        "facebook",
+        "instagram"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-03-LS-007-APPROFONDIMENTO",
+      "date": "2026-12-03",
+      "time": "11:00",
+      "shopify_product_id": "10886810075463",
+      "metricool_post_id": 435706732,
+      "metricool_uuid": "-2572054192644274134",
+      "providers": [
+        "facebook",
+        "instagram"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-04-LS-008-APPROFONDIMENTO",
+      "date": "2026-12-04",
+      "time": "18:30",
+      "shopify_product_id": "10808056250695",
+      "metricool_post_id": 435706793,
+      "metricool_uuid": "-6929980179064403786",
+      "providers": [
+        "facebook",
+        "instagram"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-05-LS-009-APPROFONDIMENTO",
+      "date": "2026-12-05",
+      "time": "11:00",
+      "shopify_product_id": "10770991481159",
+      "metricool_post_id": 435705985,
+      "metricool_uuid": "-803544902629045539",
+      "providers": [
+        "facebook",
+        "instagram"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-06-LS-010-APPROFONDIMENTO",
+      "date": "2026-12-06",
+      "time": "18:30",
+      "shopify_product_id": "10671726395719",
+      "metricool_post_id": 435706038,
+      "metricool_uuid": "-1589803767617597982",
+      "providers": [
+        "facebook",
+        "instagram"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-07-LS-011-APPROFONDIMENTO",
+      "date": "2026-12-07",
+      "time": "11:00",
+      "shopify_product_id": "10705715855687",
+      "metricool_post_id": 435706082,
+      "metricool_uuid": "8581905445328211313",
+      "providers": [
+        "facebook",
+        "instagram"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-08-LS-012-APPROFONDIMENTO",
+      "date": "2026-12-08",
+      "time": "18:30",
+      "shopify_product_id": "11573197111623",
+      "metricool_post_id": 435706124,
+      "metricool_uuid": "7909833423526316430",
+      "providers": [
+        "facebook",
+        "instagram"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-09-LS-001-APPROFONDIMENTO",
+      "date": "2026-12-09",
+      "time": "11:00",
+      "shopify_product_id": "11283256508743",
+      "metricool_post_id": 435706891,
+      "metricool_uuid": "-4002259787627082361",
+      "providers": [
+        "facebook",
+        "instagram"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-10-LS-002-APPROFONDIMENTO",
+      "date": "2026-12-10",
+      "time": "18:30",
+      "shopify_product_id": "11203075113287",
+      "metricool_post_id": 435706965,
+      "metricool_uuid": "5529956904486912209",
+      "providers": [
+        "facebook",
+        "instagram"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-11-LS-003-APPROFONDIMENTO",
+      "date": "2026-12-11",
+      "time": "11:00",
+      "shopify_product_id": "11190682255687",
+      "metricool_post_id": 435707012,
+      "metricool_uuid": "-7472570698284972367",
+      "providers": [
+        "facebook"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-12-LS-004-APPROFONDIMENTO",
+      "date": "2026-12-12",
+      "time": "18:30",
+      "shopify_product_id": "11136591069511",
+      "metricool_post_id": 435707084,
+      "metricool_uuid": "1831865704566310930",
+      "providers": [
+        "facebook",
+        "instagram"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-13-LS-005-APPROFONDIMENTO",
+      "date": "2026-12-13",
+      "time": "11:00",
+      "shopify_product_id": "11038271897927",
+      "metricool_post_id": 435707124,
+      "metricool_uuid": "-3093241596697754903",
+      "providers": [
+        "facebook",
+        "instagram"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-14-LS-006-APPROFONDIMENTO",
+      "date": "2026-12-14",
+      "time": "18:30",
+      "shopify_product_id": "10903112876359",
+      "metricool_post_id": 435707186,
+      "metricool_uuid": "-2318888965078233430",
+      "providers": [
+        "facebook",
+        "instagram"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-15-LS-001-FOCUS",
+      "date": "2026-12-15",
+      "time": "11:00",
+      "shopify_product_id": "11283256508743",
+      "metricool_post_id": 435707226,
+      "metricool_uuid": "-7828665376665222508",
+      "providers": [
+        "facebook",
+        "instagram"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-16-LS-004-FOCUS",
+      "date": "2026-12-16",
+      "time": "18:30",
+      "shopify_product_id": "11136591069511",
+      "metricool_post_id": 435707260,
+      "metricool_uuid": "-651195985038717915",
+      "providers": [
+        "facebook",
+        "instagram"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-17-LS-007-FOCUS",
+      "date": "2026-12-17",
+      "time": "11:00",
+      "shopify_product_id": "10886810075463",
+      "metricool_post_id": 435707306,
+      "metricool_uuid": "117750439494371994",
+      "providers": [
+        "facebook",
+        "instagram"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-18-LS-008-FOCUS",
+      "date": "2026-12-18",
+      "time": "18:30",
+      "shopify_product_id": "10808056250695",
+      "metricool_post_id": 435707345,
+      "metricool_uuid": "-3071297871235756613",
+      "providers": [
+        "facebook",
+        "instagram"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-19-LS-009-FOCUS",
+      "date": "2026-12-19",
+      "time": "11:00",
+      "shopify_product_id": "10770991481159",
+      "metricool_post_id": 435706161,
+      "metricool_uuid": "2640670260701316453",
+      "providers": [
+        "facebook",
+        "instagram"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    },
+    {
+      "post_id": "CASE247-SHOP12-2026-12-20-LS-012-FOCUS",
+      "date": "2026-12-20",
+      "time": "18:30",
+      "shopify_product_id": "11573197111623",
+      "metricool_post_id": 435706201,
+      "metricool_uuid": "-4221913933521599707",
+      "providers": [
+        "facebook",
+        "instagram"
+      ],
+      "contact_whatsapp": "+39 371 370 8294",
+      "auto_publish": false
+    }
+  ]
+}
