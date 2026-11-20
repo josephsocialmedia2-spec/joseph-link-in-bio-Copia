@@ -46,7 +46,7 @@ test('same zone/type has distinct NORMALE and OTTIMO price ranges',()=>{
  const c2=q('C2','Abitazioni civili','OTTIMO');
  assert.deepEqual([c2.rentMin,c2.rentMax],[5.9,8.7]);
 });
-test('web module preserves user's saved manual OMI rows, sources, and prints',()=>{
+test("web module preserves user-saved manual OMI rows, sources, and prints",()=>{
  const html=get('gestione/acquisizione-farming/index.html');
  const script=get('gestione/acquisizione-farming/omi-avigliana.js');
  new vm.Script(script,{filename:'omi-avigliana.js'});
