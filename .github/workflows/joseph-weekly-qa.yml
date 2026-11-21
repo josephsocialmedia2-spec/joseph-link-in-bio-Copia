@@ -31,6 +31,28 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Controlla YAML di pubblicazione e collegamenti del lettore
+        run: |
+          python3 -m pip install --disable-pip-version-check PyYAML
+          python3 - <<'PY'
+          import yaml
+          from pathlib import Path
+          workflow=Path('.github/workflows/joseph-weekly-pubblica.yml')
+          data=yaml.load(workflow.read_text(encoding='utf-8'),Loader=yaml.BaseLoader)
+          assert data['on']['push']['paths']==['gestione/rivista/data/approved.json']
+          assert 'workflow_dispatch' in data['on']
+          steps=data['jobs']['publish']['steps']
+          commands='\n'.join(str(step.get('run','')) for step in steps)
+          assert '--approved-json' in commands
+          assert "joseph_weekly_editorial.py validate" in commands
+          assert "gestione/lettere-stampa" in commands
+          assert 'git push' in commands
+          html=Path('gestione/rivista/sfoglia/index.html').read_text(encoding='utf-8')
+          for link in ('rivista-latest.pdf','seller-letter-latest.pdf','doppie-pagine-latest.pdf'):
+              assert link in html,link
+          assert "m.status!=='approved'" in html
+          print('PASS: gate di pubblicazione, formato YAML e collegamenti verificati')
+          PY
       - name: Python e JavaScript sintassi
         run: |
           python3 -m py_compile scripts/joseph_weekly_collect.py scripts/joseph_weekly_editorial.py scripts/joseph_weekly_preflight.py
