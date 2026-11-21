@@ -167,6 +167,7 @@ async function main(){
  const screenshot=await command('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});
  fs.writeFileSync('/tmp/case247-studio-chrome-smoke.png',Buffer.from(screenshot.data,'base64'));
  console.log('PASS: browser screenshot produced');
+ await evalJS("CASE247Agenda50.selectDay('2026-11-17');true");
  await command('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
  await until("document.querySelector('#saas-app')?.dataset.view==='agenda'",'SaaS mobile agenda');
  assert.equal(await evalJS("document.scrollingElement.scrollHeight<=innerHeight"),true);
