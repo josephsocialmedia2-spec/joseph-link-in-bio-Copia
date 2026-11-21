@@ -97,3 +97,13 @@ test('farming VBA genera solo Acquisizione e PESA, senza contatti reali',()=>{
  assert.match(bas,/GetSaveAsFilename/);
  assert.doesNotMatch(bas,/95[.,]70|Registro Peso|371 370 8294|telefono_fisso|cellulare/);
 });
+
+test('Farming risultati CSV esposto nella scheda Excel, senza importazioni automatiche',()=>{
+ assert.match(page,/src="\.\/farming-results\.js"/);
+ assert.match(page,/function exportCompletedFarming/);
+ assert.match(page,/Esporta risultati raggiunti \(CSV\)/);
+ const vba=get('gestione/acquisizione-farming/excel/CASE247_Acquisizione_Installer.bas');
+ assert.match(vba,/Public Sub AggiornaRisultatiFarmingDaCSV/);
+ assert.match(vba,/Set wb = ThisWorkbook/);
+ assert.match(vba,/ws\.Name = "PESA"/);
+});
