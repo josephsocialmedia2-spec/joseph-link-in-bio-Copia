@@ -74,6 +74,8 @@ jobs:
         if: steps.clock.outputs.run == 'true'
         env:
           SEED: ${{ steps.clock.outputs.seed }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: ${{ vars.OPENAI_MODEL || 'gpt-6-luna' }}
         run: |
           if [ "$SEED" = "true" ]; then
             python3 scripts/real_estate_weekly_autopub.py --seed --issue 2026-11-21
