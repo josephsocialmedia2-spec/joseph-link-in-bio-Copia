@@ -38,7 +38,7 @@
         event.preventDefault();activate(tabs[next],true);
       });
     });
-    if(tabs.length)activate(tabs[0],false);
+    activate(tabs[0],false);
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
   else init();

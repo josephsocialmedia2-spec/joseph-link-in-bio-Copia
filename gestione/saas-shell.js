@@ -106,6 +106,15 @@ function boot(){
  document.body.prepend(app);
  const oldParts=Array.from(document.body.children).filter(n=>n!==app&&n.tagName!=='SCRIPT'&&n.tagName!=='DIALOG');
  oldParts.forEach(n=>{if(n.id!=='case247-control-center')n.classList.add('saas-legacy-hidden')});
+ // The CRM workbook link is stored only in the existing local, device-specific CRM configuration.
+ const workbookBar=document.createElement('div');workbookBar.className='saas-workbook-bar';
+ const workbookLabel=document.createElement('span');workbookLabel.textContent='Foglio di lavoro · CRM Excel';
+ const workbookOpen=document.createElement('button');workbookOpen.type='button';workbookOpen.className='saas-workbook-action';workbookOpen.textContent='Apri foglio Excel';
+ workbookOpen.addEventListener('click',()=>document.getElementById('cc-crm-open')?.click());
+ const workbookConfig=document.createElement('button');workbookConfig.type='button';workbookConfig.className='saas-workbook-config';workbookConfig.textContent='Collega / modifica';
+ workbookConfig.addEventListener('click',()=>document.getElementById('cc-crm-config')?.click());
+ workbookBar.append(workbookLabel,workbookOpen,workbookConfig);
+ acquisitionPane.prepend(workbookBar);
  function activate(view){
   if(!tabs.has(view))view='agenda';
   app.dataset.view=view;
