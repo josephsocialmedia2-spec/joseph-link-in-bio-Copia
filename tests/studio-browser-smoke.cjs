@@ -200,8 +200,10 @@ async function main(){
  await until("Boolean(document.querySelector('#sv-farming-frame')?.contentDocument?.querySelector('#contactForm'))",'Avigliana Farming iframe loaded');
  assert.equal(await evalJS("document.querySelector('#sv-tab-button-4').getAttribute('aria-selected')"),'true');
  assert.equal(await evalJS("document.querySelectorAll('#sv-acquisizione [role=tab]').length"),4);
- assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelectorAll('#nav button').length"),7);
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelectorAll('#nav button').length"),8);
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelectorAll('#omiRows tr').length>=1"),true);
+ assert.equal(await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow;w.goto('excelvba');return w.document.querySelector('#excelvba')?.classList.contains('on') && w.document.querySelector('#excelvba a[download]')?.getAttribute('href')==='./excel/CASE247_Acquisizione_Installer.bas'})()"),true);
+ await evalJS("document.querySelector('#sv-farming-frame').contentWindow.goto('oggi');true");
  await evalJS("(()=>{const frame=document.querySelector('#sv-farming-frame'),w=frame.contentWindow,f=w.document.querySelector('#contactForm');w.alert=()=>{};w.confirm=()=>true;f.elements.date.value='2026-11-20';f.elements.address.value='Via Test QA 1';f.elements.name.value='';f.elements.source.value='Annuncio pubblico';f.elements.followDate.value='2026-11-23';f.elements.followTime.value='14:30';f.requestSubmit();return true})()");
  assert.equal(await evalJS("JSON.parse(localStorage.getItem('case247-lab-avigliana-v1')).contacts.some(x=>x.address==='Via Test QA 1')"),true);
  assert.equal(await evalJS("JSON.parse(localStorage.getItem('case247-cc-tasks-v1')).some(x=>x.source==='case247-farming-avigliana'&&x.date==='2026-11-23'&&x.time==='14:30')"),true);

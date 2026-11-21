@@ -38,3 +38,15 @@ QR stampabile: libreria qrcode-generator (MIT) salvata in `qrcode.js`; testo di 
 - Esempio: C2 · Abitazioni civili, `NORMALE` 900–1350 €/m²; `OTTIMO` 1450–2150 €/m². Per lo stesso record OTTIMO, locazione 5,9–8,7 €/m²/mese.
 - Il modello peritale deve essere compilato selezionando manualmente zona, tipologia e stato, a seguito di verifica della corrispondenza con l'immobile. Senza selezione non effettua calcoli.
 - Test di regressione dedicati: `tests/omi-avigliana.test.cjs` e browser smoke.
+
+
+## Installatore Excel VBA per Acquisizione (21/11/2026)
+
+La scheda «Excel · VBA» all'interno del laboratorio mostra il modulo [CASE247_Acquisizione_Installer.bas](excel/CASE247_Acquisizione_Installer.bas).
+
+- Importare il modulo in Excel desktop, salvare il workbook come `.xlsm` e avviare `InstallaAcquisizioneCASE247`.
+- Il foglio «Acquisizione» usa 10 campi; la macro esporta CSV UTF-8 con le chiavi `date;zone;address;name;source;status;action;followDate;followTime;notes` riconosciute dall'importatore web.
+- Le righe vengono create soltanto dall'utente; non ci sono esempi con contatti personali. Se il nome «Acquisizione» esiste, viene creato un foglio nuovo senza cancellare quello originale.
+- Esportazione e importazione sono manuali; non esiste sincronizzazione diretta né esecuzione di macro sul sito GitHub Pages.
+- La macro è dedicata all'**acquisizione immobiliare**; il registro personale del peso non è stato pubblicato nel repository.
+- Prova statica CI: `node --test tests/acquisizione-farming.test.cjs`. La prova effettiva della macro richiede Microsoft Excel desktop per Windows.
