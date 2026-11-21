@@ -61,3 +61,11 @@ test('PESA cifrata e workbook due fogli, senza dati personali pubblici',()=>{
  assert.doesNotMatch(html,/input[^>]*type="tel"/);
  assert.doesNotMatch(html,/371 370 8294|95,70|169 cm/);
 });
+
+test('redazione recapiti di almeno sette cifre dal CRM',()=>{
+ const rows=engine.consolidate([
+  {date:'2026-11-21',comune:'Avigliana',address:'Via Test 4',immobile:'Cliente 123 4567',type:'Incontro svolto',quantity:1,outcome:'Completato'}
+ ],[]);
+ assert.equal(rows.length,1);
+ assert.doesNotMatch(JSON.stringify(rows),/123 4567/);
+});
