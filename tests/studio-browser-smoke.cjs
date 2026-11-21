@@ -200,7 +200,7 @@ async function main(){
  await until("Boolean(document.querySelector('#sv-farming-frame')?.contentDocument?.querySelector('#contactForm'))",'Avigliana Farming iframe loaded');
  assert.equal(await evalJS("document.querySelector('#sv-tab-button-4').getAttribute('aria-selected')"),'true');
  assert.equal(await evalJS("document.querySelectorAll('#sv-acquisizione [role=tab]').length"),4);
- assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelectorAll('#nav button').length"),8);
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelectorAll('#nav button').length"),9);
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelectorAll('#omiRows tr').length>=1"),true);
  assert.equal(await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow;w.goto('excelvba');return w.document.querySelector('#excelvba')?.classList.contains('on') && w.document.querySelector('#excelvba a[download]')?.getAttribute('href')==='./excel/CASE247_Acquisizione_Installer.bas'})()"),true);
  await evalJS("document.querySelector('#sv-farming-frame').contentWindow.goto('oggi');true");
@@ -231,6 +231,27 @@ async function main(){
  console.log('PASS: Farming + OMI + PDF print + tracker + Agenda follow-up browser integration');
 
  await command('Emulation.clearDeviceMetricsOverride');
+
+  await command('Page.navigate',{url:'http://127.0.0.1:18765/gestione/acquisizione-farming/crm/'});
+  await until("Boolean(document.querySelector('#resultForm')&&document.querySelector('#tabPesa')&&window.CASE247CRMLogic)",'CRM Farming live');
+  assert.equal(await evalJS("document.querySelectorAll('[role=tab]').length"),2);
+  await evalJS("(()=>{const f=document.querySelector('#resultForm');f.elements.date.value='2026-11-21';f.elements.comune.value='Avigliana';f.elements.zone.value='A';f.elements.address.value='Via Prova CRM 22';f.elements.immobile.value='Appartamento A';f.elements.type.value='Volantino consegnato';f.elements.quantity.value='7';f.requestSubmit();return true})()");
+  await until("document.querySelector('#acqRows')?.textContent.includes('Via Prova CRM 22')",'CRM captures farming result');
+  assert.equal(await evalJS("document.querySelector('#acqRows').textContent.includes('Volantini 7')"),true);
+  await evalJS("(()=>{const k='case247-farming-daily-history-v1',h=JSON.parse(localStorage.getItem(k));h.push({date:'2026-11-21',comune:'Avigliana',zone:'A',address:'Via Prova CRM 22',immobile:'Appartamento A',type:'Lettera consegnata',quantity:3,outcome:'Completato'});localStorage.setItem(k,JSON.stringify(h));window.dispatchEvent(new StorageEvent('storage',{key:k}));return true})()");
+  await until("document.querySelector('#acqRows')?.textContent.includes('Lettere 3')",'automatic farming refresh');
+  await evalJS("document.querySelector('#tabPesa').click();document.querySelector('#pesaPassword').value='TestPassword_2026!';document.querySelector('#unlockPesa').click();true");
+  await until("document.querySelector('#pesaPrivate')?.hidden===false",'PESA encrypted unlock');
+  await evalJS("(()=>{const f=document.querySelector('#heightCm');f.value='169';f.dispatchEvent(new Event('change',{bubbles:true}));return true})()");
+  await until("document.querySelector('#pesaMessage')?.textContent.length>3",'height saved');
+  await evalJS("(()=>{const f=document.querySelector('#pesaRows input[data-date=\"2026-11-21\"]');f.value='95.7';f.dispatchEvent(new Event('change',{bubbles:true}));return true})()");
+  await until("document.querySelector('#pesaKpis')?.textContent.includes('33,5')",'BMI displayed');
+  assert.equal(await evalJS("(()=>{const v=localStorage.getItem('case247-pesa-aes-gcm-v1')||'';return v.includes('payload')&&!v.includes('95.7')&&!v.includes('TestPassword_2026!')})()"),true);
+  await evalJS("(()=>{window.XLSX={utils:{aoa_to_sheet:()=>({}),book_new:()=>({names:[]}),book_append_sheet:(b,s,n)=>b.names.push(n)},writeFile:(b,name)=>{window.__exported={names:b.names,name}}};document.querySelector('#tabAcq').click();document.querySelector('#xlsxExport').click();return true})()");
+  await until("Boolean(window.__exported)",'two-sheet XLSX workbook');
+  assert.deepEqual(await evalJS("window.__exported.names"),['Acquisizione','PESA']);
+  console.log('PASS: CRM Farming live, AES-GCM PESA, BMI, Excel exactly two sheets');
+
 }
 main().catch(e=>{console.error('FAIL:',e.stack||String(e));process.exitCode=1})
  .finally(async()=>{try{socket?.close()}catch(_){}server.kill('SIGTERM');browser.kill('SIGTERM');});

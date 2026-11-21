@@ -15,7 +15,7 @@
   function plain(v,max=150){
     let s=String(v??'').replace(/[\r\n\t;]/g,' ').trim();
     // Rimuove sequenze riconoscibili come recapiti telefonici, anche con spazi.
-    s=s.replace(/(?:\+?\d[\s().-]*){8,}/g,'[recapito omesso]');
+    s=s.replace(/(?:\+?\d[\s().-]*){7,}/g,'[recapito omesso]');
     if(/^[=+\-@]/.test(s))s="'"+s;
     return s.slice(0,max);
   }
@@ -52,6 +52,9 @@
       if(outcome==='Completato'&&type==='Lettera consegnata') delta.letters=positive(x.quantity);
       if(outcome==='Completato'&&/^(Osservazione \/ notizia|Immobile in vendita osservato|Immobile in costruzione osservato)$/.test(type))delta.news=1;
       if(type==='Contatto spontaneo'&&(outcome==='Interessato'||outcome==='Completato'))delta.replies=1;
+      if(type==='Notizia verificata'&&outcome==='Completato')delta.news=positive(x.quantity);
+      if(type==='Risposta ricevuta'&&outcome==='Completato')delta.replies=positive(x.quantity);
+      if(type==='Incontro svolto'&&outcome==='Completato')delta.meetings=positive(x.quantity);
       if(Object.values(delta).some(Boolean))register(x,delta,'Diario farming');
     }
     for(const x of Array.isArray(contacts)?contacts:[]){
