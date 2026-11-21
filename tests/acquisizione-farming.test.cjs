@@ -80,16 +80,20 @@ test('OMI 2026/1 sources are linked in the integrated Farming tab',()=>{
 });
 
 
-test('download VBA Acquisizione integra una scheda senza pubblicare dati',()=>{
+test('farming VBA genera solo Acquisizione e PESA, senza contatti reali',()=>{
  const bas=get('gestione/acquisizione-farming/excel/CASE247_Acquisizione_Installer.bas');
  assert.match(page,/id="excelvba"/);
- assert.match(page,/Excel · VBA/);
+ assert.match(page,/2 sole schede: Acquisizione \+ PESA/);
  assert.match(page,/excel\/CASE247_Acquisizione_Installer\.bas/);
- for(const name of ['InstallaAcquisizioneCASE247','VerificaAcquisizioneCASE247','EsportaAcquisizioneCSV'])
-   assert.match(bas,new RegExp('Public Sub '+name));
- for(const field of ['date','zone','address','name','source','status','action','followDate','followTime','notes'])
-   assert.ok(bas.includes('"'+field+'"'),field);
- assert.match(bas,/ADODB\.Stream/);
+ assert.match(bas,/Public Sub InstallaAcquisizioneCASE247/);
+ assert.match(bas,/Workbooks\.Add\(xlWBATWorksheet\)/);
+ assert.match(bas,/zona\.Name = "Acquisizione"/);
+ assert.match(bas,/pesa\.Name = "PESA"/);
+ for(const heading of ['Volantini consegnati','Lettere consegnate','Notizie verificate','Risposte ricevute','Incontri svolti'])
+   assert.ok(bas.includes(heading),heading);
+ assert.match(bas,/INDICE DI MASSA CORPOREA/);
+ assert.match(bas,/LOOKUP\(2,1\//);
+ assert.match(bas,/ChartObjects\.Add/);
  assert.match(bas,/GetSaveAsFilename/);
- assert.doesNotMatch(bas,/95[.,]70|\b169\b|Registro Peso/);
+ assert.doesNotMatch(bas,/95[.,]70|Registro Peso|371 370 8294|telefono_fisso|cellulare/);
 });

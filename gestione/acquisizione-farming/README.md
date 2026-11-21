@@ -50,3 +50,10 @@ La scheda «Excel · VBA» all'interno del laboratorio mostra il modulo [CASE247
 - Esportazione e importazione sono manuali; non esiste sincronizzazione diretta né esecuzione di macro sul sito GitHub Pages.
 - La macro è dedicata all'**acquisizione immobiliare**; il registro personale del peso non è stato pubblicato nel repository.
 - Prova statica CI: `node --test tests/acquisizione-farming.test.cjs`. La prova effettiva della macro richiede Microsoft Excel desktop per Windows.
+
+
+## Revisione 21/11/2026 — due sole schede Excel
+
+Il collegamento pubblico al modulo VBA ora genera una **nuova cartella .xlsx con esattamente due fogli**: `Acquisizione` (solo risultati effettivamente raggiunti nel farming di zona, per riga cliente/immobile) e `PESA` (registro annuale peso, IMC, grafico). Nessuna rubrica e nessun dato di peso/altezza predefinito nel repository pubblico. I dati effettivi sono inseriti localmente tramite Excel. Nessuna sincronizzazione automatica con il CRM web. I moduli web di acquisizione e OMI restano invariati.
+
+Per lanciare l'installer: importare il `.bas` in una cartella `.xlsm`, poi premere ALT+F8 e avviare `InstallaAcquisizioneCASE247`. La macro non tocca il file di origine, apre una nuova cartella con due fogli, chiede localmente le misure e consente il salvataggio in `.xlsx`. L'esecuzione della macro non è collaudabile su GitHub Pages.
