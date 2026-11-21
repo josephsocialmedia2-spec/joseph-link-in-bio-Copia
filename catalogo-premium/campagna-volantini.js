@@ -15,97 +15,44 @@
     {title:"La prima offerta è davvero quella giusta?",red:"DAVVERO QUELLA",first:"LA PRIMA OFFERTA È",last:"GIUSTA?",lead:"Valuta prezzo, condizioni, tempi e affidabilità complessiva.",short:"Confronto delle proposte d'acquisto.",side:"Una proposta va valutata nel suo insieme",benefits:["Lettura degli elementi","Valutazione delle condizioni","Confronto delle opportunità","Supporto decisionale"],symbol:"≡",category:"scelte",photo:"10552842780999.jpg"},
     {title:"Non vendere una casa: valorizza il patrimonio",red:"VALORIZZA IL TUO",first:"NON VENDERE SOLO UNA CASA",last:"PATRIMONIO",lead:"Fotografie, comunicazione e promozione valorizzano la presentazione.",short:"Campagna di promozione integrata.",side:"Un immobile merita una presentazione all'altezza",benefits:["Fotografie e presentazione","Promozione ordinata","Selezione dei contatti","Approccio professionale"],symbol:"⌂",category:"metodo",photo:"10555043021127.jpg"}
   ];
-
-  // Le 20 facciate sono derivate dagli originali del 20/11/2026, non ricostruite in HTML.
-  const originals = window.CASE247_ORIGINAL_FLYERS;
+  const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const logo = "https://lasacraimmobiliare.it/cdn/shop/files/Untitled_design_14.png?height=108&v=1766316153";
   const root = $("flyerProducts");
-  const validOriginals = Array.isArray(originals) && originals.length===cards.length
-    && originals.every(pair => Array.isArray(pair) && pair.length===2 && pair.every(v => /^data:image\/webp;base64,[A-Za-z0-9+/=]+$/.test(v)));
-  if (root && !validOriginals) {
-    root.innerHTML = '<p class="flyer-error" role="alert">Le grafiche originali non sono disponibili. Ricarica la pagina per riprovare.</p>';
-  }
-  if (root && validOriginals) {
-    const lightbox = document.createElement("dialog");
-    lightbox.className = "flyer-lightbox";
-    lightbox.setAttribute("aria-labelledby","flyerLightboxTitle");
-    lightbox.innerHTML =
-      '<div class="flyer-lightbox-header"><div><small>IMMOBILIARE LA SACRA · ORIGINALE A5</small><h3 id="flyerLightboxTitle"></h3></div><button type="button" class="flyer-lightbox-close" aria-label="Chiudi anteprima">Chiudi ×</button></div>' +
-      '<div class="flyer-lightbox-image-wrap"><img class="flyer-lightbox-image" alt=""></div>' +
-      '<div class="flyer-lightbox-controls"><button type="button" data-side="0">Fronte</button><button type="button" data-side="1">Retro</button><button type="button" class="flyer-lightbox-prev">← Volantino precedente</button><button type="button" class="flyer-lightbox-next">Volantino successivo →</button></div>';
-    document.body.appendChild(lightbox);
-    const lightImage=lightbox.querySelector(".flyer-lightbox-image");
-    const lightTitle=lightbox.querySelector("#flyerLightboxTitle");
-    let activeIndex=0, activeSide=0;
-    function showOriginal(index,side) {
-      activeIndex=(index+cards.length)%cards.length;
-      activeSide=side===1?1:0;
-      lightImage.src=originals[activeIndex][activeSide];
-      lightImage.alt="Volantino originale "+(activeIndex+1)+" · "+(activeSide===0?"fronte":"retro")+" · "+cards[activeIndex].title;
-      lightTitle.textContent=String(activeIndex+1).padStart(2,"0")+" · "+cards[activeIndex].title;
-      lightbox.querySelectorAll("[data-side]").forEach(b=>b.setAttribute("aria-pressed",String(Number(b.dataset.side)===activeSide)));
-      if(!lightbox.open)lightbox.showModal();
-    }
-    lightbox.querySelector(".flyer-lightbox-close").addEventListener("click",()=>lightbox.close());
-    lightbox.querySelector(".flyer-lightbox-prev").addEventListener("click",()=>showOriginal(activeIndex-1,activeSide));
-    lightbox.querySelector(".flyer-lightbox-next").addEventListener("click",()=>showOriginal(activeIndex+1,activeSide));
-    lightbox.querySelectorAll("[data-side]").forEach(b=>b.addEventListener("click",()=>showOriginal(activeIndex,Number(b.dataset.side))));
-    lightbox.addEventListener("click",e=>{if(e.target===lightbox)lightbox.close();});
-    lightbox.addEventListener("keydown",e=>{
-      if(e.key==="ArrowRight"){e.preventDefault();showOriginal(activeIndex+1,activeSide);}
-      if(e.key==="ArrowLeft"){e.preventDefault();showOriginal(activeIndex-1,activeSide);}
-    });
-    const fragment=document.createDocumentFragment();
-    cards.forEach((item,index)=>{
-      const article=document.createElement("article");
+  if(root) {
+    const cardsFragment = document.createDocumentFragment();
+    cards.forEach((item,index) => {
+      const article = document.createElement("article");
       article.className="flyer-product";
       article.dataset.category=item.category;
-      const eyebrow=document.createElement("p");
-      eyebrow.className="flyer-label";
-      eyebrow.textContent="VOLANTINO ORIGINALE · "+String(index+1).padStart(2,"0")+" / 10";
-      article.appendChild(eyebrow);
-      const visuals=document.createElement("div");
-      visuals.className="flyer-visuals";
-      ["Fronte","Retro"].forEach((label,side)=>{
-        const button=document.createElement("button");
-        button.type="button";
-        button.className="flyer-preview";
-        button.setAttribute("aria-label","Ingrandisci "+label.toLowerCase()+" del volantino "+(index+1));
-        const img=document.createElement("img");
-        img.src=originals[index][side];
-        img.alt=label+" del volantino originale La Sacra: "+item.title;
-        img.loading="lazy";
-        img.decoding="async";
-        img.width=420;
-        img.height=590;
-        const caption=document.createElement("span");
-        caption.textContent=label+" · Ingrandisci";
-        button.append(img,caption);
-        button.addEventListener("click",()=>showOriginal(index,side));
-        visuals.appendChild(button);
+      article.style.setProperty("--property-photo", 'url("./photos/'+item.photo+'")');
+      const bullets = item.benefits.map(b => "<li>"+escapeHtml(b)+"</li>").join("");
+      article.innerHTML =
+        '<p class="flyer-label">CAMPAGNA A5 · MODELLO '+String(index+1).padStart(2,"0")+'</p>'+
+        '<div class="poster" role="group" aria-label="Anteprima del volantino '+(index+1)+' fronte e retro">'+
+        '<div class="poster-front"><div class="poster-logo"><img src="'+escapeHtml(logo)+'" alt=""><span><b>IMMOBILIARE</b><small>LA SACRA</small></span></div>'+
+        '<div class="poster-head">'+escapeHtml(item.first)+'<br><em>'+escapeHtml(item.red)+'</em><br>'+escapeHtml(item.last)+'</div>'+
+        '<div class="poster-scenery"><span class="poster-symbol" aria-hidden="true">'+escapeHtml(item.symbol)+'</span></div>'+
+        '<p class="poster-footcopy">'+escapeHtml(item.lead)+'</p>'+
+        '<div class="poster-contact">Geom. Christian Raimondi<br>346 256 86 85</div></div>'+
+        '<div class="poster-back"><div class="poster-logo"><img src="'+escapeHtml(logo)+'" alt=""><span><b>IMMOBILIARE</b><small>LA SACRA</small></span></div>'+
+        '<div class="back-photo" role="img" aria-label="Fotografia illustrativa"></div>'+
+        '<p class="back-title">'+escapeHtml(item.side)+'</p><ul>'+bullets+'</ul>'+
+        '<p class="back-summary">Contatta l’agenzia per un confronto senza impegno. Informazioni e valutazioni da verificare sul singolo immobile.</p>'+
+        '<div class="poster-contact">Geom. Christian Raimondi<br>346 256 86 85</div></div></div>'+
+        '<h3>'+escapeHtml(item.title)+'</h3><p class="flyer-summary">'+escapeHtml(item.short)+'</p>'+
+        '<div class="flyer-controls"><button type="button" class="flyer-turn" aria-pressed="false" aria-label="Mostra retro del volantino '+(index+1)+'">Mostra il retro ↻</button>'+
+        '<a href="https://wa.me/393462568685?text='+encodeURIComponent("Buongiorno, ho visto il volantino "+(index+1)+" «"+item.title+"» e vorrei informazioni.")+'" target="_blank" rel="noopener noreferrer">Richiedi informazioni</a></div>';
+      const turn = article.querySelector(".flyer-turn");
+      turn.addEventListener("click", () => {
+        const poster = article.querySelector(".poster");
+        const back = poster.classList.toggle("backside");
+        turn.textContent = back ? "Mostra il fronte ↻" : "Mostra il retro ↻";
+        turn.setAttribute("aria-pressed", String(back));
+        turn.setAttribute("aria-label",(back ? "Mostra fronte" : "Mostra retro")+" del volantino "+(index+1));
       });
-      article.appendChild(visuals);
-      const heading=document.createElement("h3");
-      heading.textContent=item.title;
-      const summary=document.createElement("p");
-      summary.className="flyer-summary";
-      summary.textContent=item.short;
-      article.append(heading,summary);
-      const controls=document.createElement("div");
-      controls.className="flyer-controls";
-      const view=document.createElement("button");
-      view.type="button";
-      view.textContent="Sfoglia fronte e retro";
-      view.addEventListener("click",()=>showOriginal(index,0));
-      const wa=document.createElement("a");
-      wa.href="https://wa.me/393462568685?text="+encodeURIComponent("Buongiorno, ho visto il volantino "+(index+1)+" «"+item.title+"» e vorrei informazioni.");
-      wa.target="_blank";
-      wa.rel="noopener noreferrer";
-      wa.textContent="Richiedi informazioni";
-      controls.append(view,wa);
-      article.appendChild(controls);
-      fragment.appendChild(article);
+      cardsFragment.appendChild(article);
     });
-    root.replaceChildren(fragment);
+    root.appendChild(cardsFragment);
     document.querySelectorAll(".flyer-filter").forEach(btn=>{
       btn.addEventListener("click",()=>{
         document.querySelectorAll(".flyer-filter").forEach(x=>x.setAttribute("aria-pressed",String(x===btn)));
