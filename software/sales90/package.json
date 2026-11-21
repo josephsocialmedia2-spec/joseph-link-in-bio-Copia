@@ -1,0 +1,8 @@
+{
+ "name":"joseph-sales-automation-90",
+ "private":true,
+ "version":"0.1.0",
+ "type":"module",
+ "scripts":{"test":"node --test tests.mjs"},
+ "description":"Console Sales Automation 90, isolated proof of concept"
+}
