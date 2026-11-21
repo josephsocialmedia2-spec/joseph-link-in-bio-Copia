@@ -1,0 +1,39 @@
+{
+  "issue": "02",
+  "period": "16–22 novembre 2026",
+  "cover": "Il mercato cambia. La strategia fa la differenza.",
+  "editorial": "I dati pubblicati dalle istituzioni nel novembre 2026 mostrano un mercato immobiliare da interpretare con precisione. L'andamento delle compravendite in Piemonte nel primo semestre e le opinioni degli agenti nel terzo trimestre nazionale misurano fenomeni diversi. Per presentare un immobile servono microzona, caratteristiche verificate e materiali corretti. Questa edizione distingue prezzi, volumi e aspettative senza attribuire ai singoli comuni numeri nazionali. Il mio ruolo riguarda marketing e comunicazione; mediazione e valutazioni professionali restano ai soggetti abilitati.",
+  "closed": false,
+  "items": [
+    {
+      "title": "Banca d'Italia: nel terzo trimestre gli agenti segnalano prezzi di vendita quasi stabili",
+      "source": "Banca d'Italia",
+      "date": "2026-11-18",
+      "url": "https://www.bancaditalia.it/pubblicazioni/sondaggio-abitazioni/2026-sondaggio-abitazioni/03/index.html",
+      "summary": "Nel sondaggio congiunturale relativo al terzo trimestre 2026, gli agenti immobiliari segnalano un saldo tra giudizi di aumento e diminuzione dei prezzi di vendita vicino allo zero. La Banca d'Italia rileva anche un indebolimento della domanda e dell'offerta intermediate e attese più prudenti. È un'indagine qualitativa nazionale, non una stima per Avigliana.",
+      "status": "pending",
+      "original_url_verified": true,
+      "discovery": "Redazione: fonte originale istituzionale verificata; approvazione editoriale non espressa"
+    },
+    {
+      "title": "L'economia del Piemonte: compravendite residenziali in crescita nel primo semestre 2026",
+      "source": "Banca d'Italia",
+      "date": "2026-11-17",
+      "url": "https://www.bancaditalia.it/media/notizia/l-economia-del-piemonte-aggiornamento-congiunturale-novembre-2026/",
+      "summary": "L'aggiornamento regionale della Banca d'Italia pubblicato il 17 novembre indica che il mercato residenziale piemontese ha mantenuto una dinamica positiva. Il rapporto completo riferisce un aumento del 4,3% delle compravendite nel primo semestre 2026 rispetto allo stesso periodo del 2025. È un indicatore regionale, non un dato specifico del singolo immobile o comune.",
+      "status": "pending",
+      "original_url_verified": true,
+      "discovery": "Redazione: fonte originale istituzionale verificata; approvazione editoriale non espressa"
+    },
+    {
+      "title": "ISTAT: prospettive economiche 2026–2027 e investimenti in abitazioni sotto pressione",
+      "source": "ISTAT",
+      "date": "2026-11-11",
+      "url": "https://www.istat.it/comunicato-stampa/nota-sullandamento-e-prospettive-delleconomia-italiana-anni-2026-2027-aggiornamento-novembre/",
+      "summary": "Nella nota aggiornata l'11 novembre 2026, l'ISTAT descrive un quadro di rallentamento degli investimenti e del potere d'acquisto. Nel secondo trimestre 2026 gli investimenti in abitazioni hanno registrato una contrazione dell'1,3%; per i mesi successivi si prospetta ancora debolezza, da distinguere dalle dinamiche dei prezzi di acquisto e delle compravendite.",
+      "status": "pending",
+      "original_url_verified": true,
+      "discovery": "Redazione: fonte originale istituzionale verificata; approvazione editoriale non espressa"
+    }
+  ]
+}
