@@ -54,6 +54,10 @@ async function main(){
  assert.equal(await evalJS("document.scrollingElement.scrollHeight <= innerHeight"),true);
  assert.equal(await evalJS("getComputedStyle(document.querySelector('#saas-app [data-pane=control]')).display"),'block');
  console.log('PASS: fixed viewport with Agenda as default');
+ // The site opens on today's date. Weekend schedules omit the weekday 09:00 tools.
+ // Select a known weekday before asserting weekday-only agenda blocks.
+ await until("Boolean(window.CASE247Agenda50&&document.querySelector('#a50-unified-view'))",'agenda instance ready');
+ await evalJS("CASE247Agenda50.selectDay('2026-11-17');true");
  await until("Boolean(document.querySelector('#a50-unified-timeline [data-start=\"09:00\"] #a50-tools-portals'))",'privati tools visible within 09:00 block');
  assert.equal(await evalJS("document.querySelectorAll('#a50-unified-view').length"),1);
  assert.equal(await evalJS("document.querySelectorAll('#case247-acq-tools').length"),0);
@@ -165,6 +169,7 @@ async function main(){
  fs.writeFileSync('/tmp/case247-studio-chrome-smoke.png',Buffer.from(screenshot.data,'base64'));
  console.log('PASS: browser screenshot produced');
  await command('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});
+ await evalJS("CASE247Agenda50.selectDay('2026-11-17');true");
  await until("document.querySelector('#saas-app')?.dataset.view==='agenda'",'SaaS mobile agenda');
  assert.equal(await evalJS("document.scrollingElement.scrollHeight<=innerHeight"),true);
  assert.equal(await evalJS("[...document.querySelectorAll('#cc-week .cc-day')].filter(x=>getComputedStyle(x).display!=='none').length"),6);
