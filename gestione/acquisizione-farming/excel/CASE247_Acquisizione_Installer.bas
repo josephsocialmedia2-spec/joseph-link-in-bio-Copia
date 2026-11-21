@@ -275,7 +275,7 @@ End Function
 Private Sub AddList(ByVal target As Range, ByVal choices As String)
     With target.Validation
         .Delete
-        .Add Type:=xlValidateList, AlertStyle:=xlValidAlertStop, Formula1:=choices
+        .Add Type:=xlValidateList, AlertStyle:=xlValidAlertStop, Formula1:=Replace(choices, ",", Application.International(xlListSeparator))
         .IgnoreBlank = True
         .InCellDropdown = True
         .ShowError = True
