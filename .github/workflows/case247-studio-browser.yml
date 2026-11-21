@@ -9,6 +9,7 @@ on:
       - 'tests/acquisizione-farming.test.cjs'
       - 'tests/farming-results-export.test.cjs'
       - 'tests/crm-live-farming-pesa.test.cjs'
+      - 'tests/farming-contact-sheet.test.cjs'
       - 'tests/omi-avigliana.test.cjs'
       - 'gestione/control-center.js'
       - 'gestione/studio-2scat.js'
@@ -28,6 +29,7 @@ on:
       - 'tests/acquisizione-farming.test.cjs'
       - 'tests/farming-results-export.test.cjs'
       - 'tests/crm-live-farming-pesa.test.cjs'
+      - 'tests/farming-contact-sheet.test.cjs'
       - 'tests/omi-avigliana.test.cjs'
       - 'gestione/control-center.js'
       - 'gestione/studio-2scat.js'
@@ -54,7 +56,7 @@ jobs:
       - name: Verify browser script
         run: node --check tests/studio-browser-smoke.cjs
       - name: Test Farming Avigliana source and existing Agenda bridge
-        run: node --test tests/acquisizione-farming.test.cjs tests/omi-avigliana.test.cjs tests/farming-results-export.test.cjs tests/crm-live-farming-pesa.test.cjs
+        run: node --test tests/acquisizione-farming.test.cjs tests/omi-avigliana.test.cjs tests/farming-results-export.test.cjs tests/crm-live-farming-pesa.test.cjs tests/farming-contact-sheet.test.cjs
       - name: Run browser integration test against local static site
         run: node tests/studio-browser-smoke.cjs
       - name: Preserve smoke screenshot
