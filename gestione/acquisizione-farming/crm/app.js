@@ -45,14 +45,15 @@ function refreshFarming(force=false){
  let hRaw,nRaw;
  try{
    hRaw=localStorage.getItem(HISTORY_KEY)||'[]';
-   nRaw=localStorage.getItem(NEWS_KEY)||'{}';
+   nRaw=localStorage.getItem(NEWS_KEY)||'{"contacts":[]}';
  }catch(e){notice('syncStatus','Memoria browser non disponibile: controlla le impostazioni.',true);return;}
  const signature=hRaw+'\x1f'+nRaw;
  if(!force&&signature===sourceSnapshot)return;
  let h,n;
  try{
    h=JSON.parse(hRaw);n=JSON.parse(nRaw);
-   if(!Array.isArray(h)||!n||!Array.isArray(n.contacts))throw Error('Formato non valido');
+   if(!Array.isArray(h)||!n||typeof n!=='object')throw Error('Formato non valido');
+   if(!Array.isArray(n.contacts))n.contacts=[];
  }catch(e){
    notice('syncStatus','Registri non leggibili: recupera il backup prima di procedere.',true);
    return;
