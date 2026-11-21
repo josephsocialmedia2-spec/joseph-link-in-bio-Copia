@@ -1,27 +1,8 @@
 {
   "source": "Metricool brand 7844901 (Facebook, Instagram)",
-  "checked_at": "2026-11-20",
-  "note": "Riconciliazione di sola lettura Metricool; PENDING non equivale a pubblicato. Finestra 2026-11-20/2026-12-20 Europe/Rome. Nessuna programmazione aggiunta. Autorizzazioni Meta territoriali non certificate.",
+  "checked_at": "2026-11-21",
+  "note": "Riconciliazione in sola lettura Metricool; finestra 2026-11-21/2026-12-21 Europe/Rome. Solo draft=false e autoPublish=true. PENDING non equivale a pubblicato. Post autoPublish=false esclusi. Nessun post creato o modificato. Autorizzazioni Meta territoriali non certificate.",
   "reservations": {
-    "2026-11-20": [
-      {
-        "url": "https://lasacraimmobiliare.it/products/casa-indipendente-in-vendita-a-santambrogio-di-torino-con-terrazzo-e-giardino",
-        "metricool_id": 421948438,
-        "status": "PUBLISHED",
-        "providers": {
-          "facebook": {
-            "status": "PUBLISHED",
-            "public_url": "https://facebook.com/122098132731539346/posts/122111284875539346"
-          },
-          "instagram": {
-            "status": "PUBLISHED",
-            "public_url": "https://www.instagram.com/p/Df9SzYjCOaL/"
-          }
-        },
-        "draft": false,
-        "autoPublish": true
-      }
-    ],
     "2026-11-21": [
       {
         "url": "https://lasacraimmobiliare.it/products/magazzino-in-vendita-a-sant-ambrogio-di-torino-di-40-mq",
