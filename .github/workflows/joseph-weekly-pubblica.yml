@@ -67,8 +67,7 @@ jobs:
           assert pdf.stat().st_size>10000
           shutil.copyfile(pdf,d/'latest.pdf')
           index_path=d/'index.json'
-          index=json.loads(index_path.read_text(encoding='utf-8'))
-                           ) if index_path.exists() else {'editions':[]}
+          index=json.loads(index_path.read_text(encoding='utf-8')) if index_path.exists() else {'editions':[]}
           edition={'issue':obj['issue'],'date':datetime.datetime.now(datetime.timezone.utc).date().isoformat(),'filename':pdf.name,'articles':len(obj['items']),'status':'approved'}
           index['editions']=[edition]+[x for x in index.get('editions',[]) if x.get('filename')!=pdf.name][:51]
           index_path.write_text(json.dumps(index,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
