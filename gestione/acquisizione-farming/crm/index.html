@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Joseph Malafronte · CRM Farming e PESA</title>
+<style>
+:root{font:15px/1.5 Inter,system-ui,"Segoe UI",Arial,sans-serif;color:#1b2633;background:#f3f3f0}
+*{box-sizing:border-box}body{margin:0}button,input,select{font:inherit}
+a{color:#8d6724}a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #b98d39;outline-offset:2px}
+.wrap{max-width:1380px;margin:auto;padding:22px}header{background:#151d26;color:white;border-radius:17px;padding:26px;display:flex;align-items:center;gap:22px;justify-content:space-between;flex-wrap:wrap}
+header h1{font-size:clamp(23px,4vw,32px);margin:5px 0}header p{color:#c6cbd0;margin:3px 0}header small{letter-spacing:.1em;color:#d9b46c;font-weight:800}
+header a{color:#f2d18e}h2{font-size:21px;margin:0 0 14px}h3{font-size:16px;margin:0 0 11px}
+.tabs{display:flex;gap:9px;margin:21px 0;flex-wrap:wrap}.tabs button{border:1px solid #c8b381;border-radius:10px;background:white;padding:13px 20px;color:#403729;cursor:pointer;font-weight:800}
+.tabs button[aria-selected="true"]{background:#17222f;color:white;border-color:#17222f}
+.panel{display:none}.panel.active{display:block}
+.card{background:white;border:1px solid #e1dfd6;border-radius:14px;padding:20px;margin-bottom:16px;box-shadow:0 2px 14px #14252e08}
+.card-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.note{background:#fff7e7;border-left:4px solid #a98537;padding:12px 16px;border-radius:7px;margin:14px 0;color:#56462c}
+.stats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}.stat{padding:15px;background:#faf8f0;border:1px solid #e6dcc5;border-radius:11px}
+.stat strong{font-size:27px;display:block;color:#7d5b1b;font-variant-numeric:tabular-nums}.stat span{font-size:12px}
+.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0}
+.btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:8px;background:#a77b2d;color:white;text-decoration:none;padding:11px 14px;cursor:pointer;font-weight:750;min-height:43px}
+.btn.dark{background:#1b2b3c}.btn.light{background:#ede7d8;color:#493b28}.btn:disabled{opacity:.5;cursor:not-allowed}
+.muted{font-size:12px;color:#63707c}.status{font-size:13px;min-height:21px;color:#356544}.danger{color:#a32f2f}
+.form{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}.form label{font-weight:650;font-size:13px}
+input,select{display:block;width:100%;border:1px solid #c8cbc9;border-radius:8px;padding:10px;background:white;color:#203140;margin-top:5px}
+label.inline{display:inline-block}label.inline input{margin:0 8px 0 0;width:auto}
+.wide{grid-column:1/-1}.tablewrap{overflow:auto;border:1px solid #e1dfd6;border-radius:10px}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:11px;text-align:left;border-bottom:1px solid #e8e6df;vertical-align:top}
+th{background:#f4efe4;color:#45371e;white-space:nowrap}td.num{text-align:right;font-variant-numeric:tabular-nums}
+.kpi{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.kpi>div{padding:15px;background:#f9f7ef;border-radius:10px;border:1px solid #e5dfc9}
+.kpi strong{font-size:23px;display:block}
+#pesaPrivate[hidden],#unlockArea[hidden],#pesaChart[hidden],.panel[hidden]{display:none!important}
+#pesaChart{width:100%;height:auto;max-height:310px;border:1px solid #e8e5df;border-radius:12px;background:#fff}
+.pesa-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.bmi{font-size:27px;font-weight:800;color:#84631f}
+[role=status]{overflow-wrap:anywhere}
+@media(max-width:1000px){.stats{grid-template-columns:repeat(3,minmax(0,1fr))}.pesa-grid{grid-template-columns:1fr}}
+@media(max-width:700px){.wrap{padding:9px}header{padding:19px}.card{padding:13px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.form{grid-template-columns:1fr}.kpi{grid-template-columns:repeat(2,minmax(0,1fr))}.tabs button{flex:1}}
+@media print{.tabs,.actions,.btn,.form,#unlockArea{display:none!important}.panel:not(.active){display:none}.wrap{padding:0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+ <div><small>JOSEPH MALAFRONTE · FARMING DI ZONA</small><h1>CRM operativo · Acquisizione e PESA</h1>
+ <p>Due schede · Risultati verificati per immobile · Dati conservati nel browser</p></div>
+ <a href="../">Torna al Laboratorio Avigliana</a>
+</header>
+<nav class="tabs" aria-label="Schede CRM">
+<button type="button" id="tabAcq" role="tab" aria-selected="true" aria-controls="acquisizione">1. ACQUISIZIONE</button>
+<button type="button" id="tabPesa" role="tab" aria-selected="false" aria-controls="pesa">2. PESA</button>
+</nav>
+<section class="panel active" id="acquisizione" role="tabpanel" aria-labelledby="tabAcq">
+<div class="card">
+<div class="card-head"><h2>Risultati raggiunti · Farming di zona</h2><span class="status" id="syncStatus" role="status">Lettura registro locale…</span></div>
+<p>Il CRM si aggiorna automaticamente dai risultati conclusi registrati nello <a href="../storico/">Storico Farming</a> e in <a href="../">Notizie &amp; Contatti</a>, soltanto su questo dispositivo e in questo browser. Non conta attività future o preparazioni.</p>
+<div class="stats" id="stats"></div>
+<div class="actions">
+<button class="btn dark" type="button" id="refresh">Aggiorna ora</button>
+<button class="btn" type="button" id="csvExport">Esporta risultati CSV per VBA</button>
+<button class="btn light" type="button" id="xlsxExport">Esporta Excel · 2 fogli (.xlsx)</button>
+<a class="btn light" href="../excel/CASE247_Acquisizione_Installer.bas" download>Macro Excel (.bas)</a>
+</div>
+<div class="note"><strong>Sincronizzazione locale:</strong> il CRM legge le registrazioni del farming automaticamente quando cambiano. Il file Excel sul computer non può essere modificato dal sito senza un'operazione esplicita. Per aggiornare un file <code>.xlsm</code> mantenendo le macro, usa il CSV e il pulsante «AGGIORNA RISULTATI FARMING» in Excel. L'esportazione <code>.xlsx</code> non contiene macro.</div>
+<p class="muted">I due fogli sono quelli del file Excel esportato. La pagina non pubblica nomi, indirizzi o misurazioni nel repository.</p>
+</div>
+<div class="card">
+<h3>Registra un risultato effettivamente conseguito</h3>
+<form id="resultForm" class="form">
+<label>Data del risultato<input type="date" name="date" required></label>
+<label>Comune<input name="comune" value="Avigliana" maxlength="80" required></label>
+<label>Zona / microzona<input name="zone" maxlength="90" placeholder="Es. A · Centro"></label>
+<label>Via e civico<input name="address" maxlength="120" placeholder="Indirizzo verificato" required></label>
+<label>Riferimento cliente / immobile<input name="immobile" maxlength="110" required placeholder="Es. Trilocale, riferimento interno"></label>
+<label>Risultato raggiunto<select name="type"><option>Volantino consegnato</option><option>Lettera consegnata</option><option>Notizia verificata</option><option>Risposta ricevuta</option><option>Incontro svolto</option></select></label>
+<label>Quantità realizzata<input name="quantity" type="number" min="1" max="100000" step="1" value="1" required></label>
+<div class="wide actions"><button type="submit" class="btn">Registra risultato concluso</button><span class="status" id="resultMessage" role="status"></span></div>
+</form>
+<p class="muted">Una riga per cliente/immobile in tabella: i risultati ripetuti vengono consolidati. Non inserire numeri di telefono o informazioni non necessarie.</p>
+</div>
+<div class="card">
+<div class="card-head"><h3>Schede cliente / immobile</h3><label>Cerca risultati<input id="filter" type="search" placeholder="Comune, via o riferimento"></label></div>
+<div class="tablewrap"><table><thead><tr>
+<th>Data risultato</th><th>Comune</th><th>Microzona</th><th>Via e civico</th><th>Cliente / immobile</th>
+<th>Volantini consegnati</th><th>Lettere consegnate</th><th>Notizie verificate</th><th>Risposte ricevute</th><th>Incontri svolti</th><th>Risultato</th><th>Fonte</th>
+</tr></thead><tbody id="acqRows"></tbody></table></div>
+</div>
+</section>
+<section class="panel" id="pesa" role="tabpanel" aria-labelledby="tabPesa">
+<div class="card">
+<h2>PESA · Registro annuale e IMC</h2>
+<div class="note">Dati personali riservati: le misurazioni vengono archiviate <strong>cifrate in questo browser</strong>, protette dalla password scelta da te. Non vengono inviate a GitHub. Chi ha accesso al browser o ai file esportati potrebbe comunque accedere ai dati; proteggi il dispositivo e il file Excel. Non è disponibile un recupero password.</div>
+<div id="unlockArea">
+<label>Password per creare o sbloccare PESA<input type="password" id="pesaPassword" autocomplete="new-password" minlength="10" placeholder="Almeno 10 caratteri"></label>
+<div class="actions"><button class="btn" id="unlockPesa" type="button">Sblocca / crea archivio</button><span id="unlockHint" class="muted"></span></div>
+<p id="unlockMessage" class="status" role="status"></p>
+</div>
+<div id="pesaPrivate" hidden>
+<div class="pesa-grid">
+<div>
+<div class="actions"><label>Altezza (cm)<input id="heightCm" type="number" min="50" max="250" step="0.1" placeholder="Inserisci altezza"></label>
+<label>Mese da visualizzare<select id="month"></select></label></div>
+<p class="muted">Le date annuali sono dal 21/11/2026 al 21/11/2027. Inserisci soltanto pesate realmente effettuate.</p>
+</div>
+<div class="actions">
+<button type="button" id="lockPesa" class="btn dark">Blocca PESA</button>
+<label class="btn light" style="cursor:pointer">Importa pesate da Excel<input id="xlsxImport" type="file" accept=".xlsx,.xlsm" hidden></label>
+</div>
+</div>
+<div class="kpi" id="pesaKpis"></div>
+<div class="card"><h3>Andamento del peso</h3><svg id="pesaChart" viewBox="0 0 900 280" role="img" aria-label="Grafico del peso annuale"></svg><p class="muted">IMC = kg / altezza (m)². Classificazione per adulti secondo le <a href="https://www.cdc.gov/bmi/adult-calculator/bmi-categories.html" target="_blank" rel="noopener noreferrer">categorie CDC</a>; l'IMC è un indice di screening, non una diagnosi.</p></div>
+<div class="tablewrap"><table><thead><tr><th>Data</th><th>Peso (kg)</th><th>IMC</th><th>Classificazione</th></tr></thead><tbody id="pesaRows"></tbody></table></div>
+<p id="pesaMessage" class="status" role="status"></p>
+</div>
+</div>
+</section>
+<footer class="muted" style="padding:10px 4px 35px">Joseph Malafronte · CRM Farming di zona · Funzionamento locale e senza sincronizzazione cloud.</footer>
+</div>
+<script src="../farming-results.js"></script>
+<script defer src="./app.js"></script>
+</body></html>
