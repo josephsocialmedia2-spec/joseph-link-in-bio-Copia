@@ -15,7 +15,7 @@
   function plain(v,max=150){
     let s=String(v??'').replace(/[\r\n\t;]/g,' ').trim();
     // Rimuove sequenze riconoscibili come recapiti telefonici, anche con spazi.
-    s=s.replace(/(?:\+?\d[\s().-]*){8,}/g,'[recapito omesso]');
+    s=s.replace(/(?:\+?\d[\s().-]*){7,}/g,'[recapito omesso]');
     if(/^[=+\-@]/.test(s))s="'"+s;
     return s.slice(0,max);
   }
