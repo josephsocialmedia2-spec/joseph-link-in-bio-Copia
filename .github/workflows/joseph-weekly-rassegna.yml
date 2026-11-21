@@ -1,0 +1,31 @@
+name: Joseph Weekly · raccolta articoli
+on:
+  schedule:
+    - cron: '0 7 * * 6'
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: joseph-weekly-rss
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Raccogli i candidati recenti
+        run: python3 scripts/joseph_weekly_collect.py
+      - name: Salva la rassegna senza approvarla
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gestione/rivista/data/latest.json
+          if ! git diff --cached --quiet; then
+            git commit -m "data: update Joseph Weekly article candidates"
+            git push
+          fi
