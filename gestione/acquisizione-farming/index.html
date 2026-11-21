@@ -18,20 +18,22 @@
 <h2>Excel · 2 sole schede: Acquisizione + PESA</h2>
 <p>L'installatore genera un <strong>nuovo file Excel</strong> con esattamente due fogli. Il primo contiene una riga per cliente/immobile e <strong>solo risultati effettivamente raggiunti</strong>: volantini e lettere consegnati, notizie verificate, risposte e incontri svolti. Nessuna rubrica telefonica e nessuna attività futura.</p>
 <p>La seconda scheda, <strong>PESA</strong>, è un registro annuale del peso con IMC, categoria automatica e grafico. Altezza e peso vengono richiesti solo in Excel, non memorizzati sul sito.</p>
-<a class="btn" href="./excel/CASE247_Acquisizione_Installer.bas" download>Scarica generatore VBA (.bas)</a>
+<a class="btn" href="./excel/CASE247_Acquisizione_Installer.bas" download>Scarica macro VBA (.bas)</a>
+<button class="btn secondary" type="button" onclick="exportCompletedFarming()">Esporta risultati raggiunti (CSV)</button>
+<p class="tiny">Il CSV viene creato solo nel tuo browser a partire da attività concluse e registrazioni locali. La macro nella cartella .xlsm legge il CSV, aggiorna la stessa riga cliente/immobile e lascia intatta PESA. Nessuna sincronizzazione esterna.</p>
 <p class="tiny">Compatibile con Excel desktop per Windows. Il browser non esegue VBA.</p>
 </div>
 <div class="grid">
 <div class="card"><h3>01 · Apri Excel</h3><p>In un file <strong>.xlsm</strong> importa il modulo con <strong>ALT+F11 → File → Importa file</strong>. Il file di partenza non viene modificato.</p></div>
-<div class="card"><h3>02 · Genera 2 fogli</h3><p>Premi <strong>ALT+F8</strong> ed esegui <code>InstallaAcquisizioneCASE247</code>. La macro crea Acquisizione + PESA in una <strong>nuova cartella</strong>.</p></div>
-<div class="card"><h3>03 · Registra solo i risultati</h3><p>Compila una riga per immobile, aggiorna i valori delle attività concluse e salva il nuovo <strong>.xlsx</strong>. L'IMC cambia inserendo i pesi.</p></div>
+<div class="card"><h3>02 · Genera 2 fogli</h3><p>Salva il modello con due schede in <strong>.xlsm</strong>, importa la macro e avvia <code>InstallaAcquisizioneCASE247</code>. La macro resta nel file, senza aggiungere altre schede.</p></div>
+<div class="card"><h3>03 · Registra solo i risultati</h3><p>Premi «Esporta risultati raggiunti (CSV)», poi in Excel «AGGIORNA RISULTATI FARMING». Il foglio PESA e i dati già presenti vengono conservati.</p></div>
 </div>
 <div class="card"><h3>Confine operativo: solo farming di zona</h3>
 <p>Campi del primo foglio: data risultato, comune, zona, indirizzo, riferimento cliente/immobile, volantini consegnati, lettere consegnate, notizie verificate, risposte ricevute, incontri svolti, risultato concreto, evidenza verificabile.</p>
 <p class="status warn">Nessun numero di telefono, nessun dato clinico incorporato nel repository, nessuna sincronizzazione automatica con il CRM web. Il file compilato resta sul tuo dispositivo.</p>
 </div>
 </section><section class="panel" id="verifica"><div class="card"><h2>Collaudo funzionale · ambiente virtuale</h2><p>Questa matrice verifica la presenza delle funzioni e distingue i moduli locali dai servizi esterni non collegati.</p><div id="audit"></div><button class="btn" onclick="downloadBackup()">Esporta backup JSON</button><button class="btn secondary" onclick="document.getElementById('backupFile').click()">Ripristina backup JSON</button><input type="file" id="backupFile" accept=".json" hidden><p class="status warn">Nessuna pubblicazione su GitHub, sincronizzazione CRM o accesso live a OMI: questi richiedono integrazione e credenziali separate.</p></div></section>
-</div></div><div id="printRoot"></div><script>
+</div></div><div id="printRoot"></div><script src="./farming-results.js"></script><script>
 'use strict';
 const TABS=[['oggi','Oggi & Farming'],['contatti','Notizie & Contatti'],['richiami','Follow-up'],['lettere','Lettere & Stampa'],['omi','OMI & Dossier'],['tracker','Tracker 90 giorni'],['excelvba','Excel · VBA'],['verifica','Verifica funzioni']];
 const DBKEY='case247-lab-avigliana-v1';
@@ -141,6 +143,19 @@ function csvEscape(s){return '"'+String(s??'').replace(/"/g,'""')+'"'}
 function download(name,data,type){let a=document.createElement('a'),url=URL.createObjectURL(new Blob([data],{type}));a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
 function csv(rows){return '\ufeff'+rows.map(row=>row.map(csvEscape).join(';')).join('\r\n')}
 function exportCSV(){let fields=['date','zone','address','name','source','status','action','followDate','followTime','notes'];download('CASE247_Contatti_Avigliana.csv',csv([fields,...db.contacts.map(x=>fields.map(k=>x[k]||''))]),'text/csv;charset=utf-8')}
+function exportCompletedFarming(){
+ const engine=window.CASE247FarmingResults;
+ if(!engine){alert('Modulo esportazione non disponibile: ricarica la pagina.');return;}
+ let storico;
+ try{
+   storico=JSON.parse(localStorage.getItem('case247-farming-daily-history-v1')||'[]');
+   if(!Array.isArray(storico))throw Error('formato dati non valido');
+ }catch(e){alert('Archivio storico non leggibile. Recupera il backup prima di esportare.');return;}
+ const rows=engine.consolidate(storico,db.contacts);
+ if(!rows.length){alert('Nessun risultato concluso registrato nel Farming. Non esporto righe fittizie.');return;}
+ download('CASE247_Risultati_Farming_'+today()+'.csv',engine.csv(rows),'text/csv;charset=utf-8');
+ alert('CSV creato localmente: '+rows.length+' schede cliente/immobile. Importalo nel file Excel .xlsm mediante il pulsante Aggiorna risultati farming.');
+}
 function exportTracker(){let fields=['date','letters','news','contacts','appointments','incarichi'];download('CASE247_Tracker_90_Giorni.csv',csv([fields,...Object.entries(db.tracker).map(([d,x])=>[d,...fields.slice(1).map(k=>x[k]||0)])]),'text/csv;charset=utf-8')}
 function parseCSV(text){let sep=text.split(/\r?\n/)[0].includes(';')?';':',';let rows=[],row=[],v='',quoted=false;for(let i=0;i<text.length;i++){let c=text[i];if(c==='"'){if(quoted&&text[i+1]==='"'){v+='"';i++}else quoted=!quoted}else if(c===sep&&!quoted){row.push(v);v=''}else if((c==='\n'||c==='\r')&&!quoted){if(c==='\r'&&text[i+1]==='\n')i++;row.push(v);if(row.some(x=>x.trim()))rows.push(row);row=[];v=''}else v+=c}row.push(v);if(row.some(x=>x.trim()))rows.push(row);return rows}
 document.getElementById('importCsv').addEventListener('change',async e=>{let f=e.target.files[0];if(!f)return;let rows=parseCSV((await f.text()).replace(/^\ufeff/,''));let header=rows.shift()||[];if(!['address','date','source'].every(k=>header.includes(k))){alert('CSV non valido: mancano date, address o source.');return}let count=0;for(let row of rows){let obj=Object.fromEntries(header.map((h,i)=>[h,row[i]||'']));if(!obj.address||!obj.date)continue;obj.id=String(Date.now())+'-'+count++;db.contacts.push(obj)}persist();alert('Importate '+count+' righe. Verifica i dati prima dell’uso.')});
