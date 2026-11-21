@@ -1,0 +1,95 @@
+name: Joseph Weekly · PDF definitivo approvato
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'gestione/rivista/data/approved.json'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: joseph-weekly-final-pdf
+  cancel-in-progress: false
+jobs:
+  approved-pdf:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validazione rigorosa dell'approvazione
+        run: python3 scripts/joseph_weekly_editorial.py validate
+      - name: Installa Chromium e verifica PDF
+        run: |
+          npm install --no-save playwright@1.57.0
+          google-chrome --version
+          python3 -m pip install --disable-pip-version-check pypdf
+      - name: Avvia server statico locale
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/joseph-weekly-http.log 2>&1 &
+          python3 - <<'PY'
+          import time, urllib.request
+          for _ in range(40):
+              try:
+                  urllib.request.urlopen("http://127.0.0.1:8765/gestione/rivista/stampa.html",timeout=2).close()
+                  break
+              except Exception:
+                  time.sleep(.25)
+          else:
+              raise RuntimeError("Local publisher did not start")
+          PY
+      - name: Genera rivista PDF e copertina dal JSON approvato
+        run: node scripts/joseph_weekly_render.cjs final
+      - name: Preflight PDF, crea archivio e ultimo numero
+        run: |
+          python3 - <<'PY'
+          import json, shutil, datetime
+          from pathlib import Path
+          from pypdf import PdfReader
+          d=Path('gestione/rivista/edizioni')
+          manifest=Path('gestione/rivista/data/approved.json')
+          obj=json.loads(manifest.read_text(encoding='utf-8'))
+          pdfs=sorted(d.glob('Joseph-Real-Estate-Weekly-*.pdf'))
+          assert pdfs, "No final PDF generated"
+          pdf=pdfs[-1]
+          reader=PdfReader(str(pdf))
+          assert len(reader.pages)==8, f"Page count {len(reader.pages)} != 8"
+          for i,page in enumerate(reader.pages,1):
+              b=page.mediabox
+              assert abs(float(b.width)-595.28)<2 and abs(float(b.height)-841.89)<2, f"Wrong A4 size at {i}"
+          assert pdf.stat().st_size>10000
+          shutil.copyfile(pdf,d/'latest.pdf')
+          index_path=d/'index.json'
+          index=json.loads(index_path.read_text(encoding='utf-8')) if index_path.exists() else {'editions':[]}
+          edition={'issue':obj['issue'],'date':datetime.datetime.now(datetime.timezone.utc).date().isoformat(),'filename':pdf.name,'articles':len(obj['items']),'status':'approved'}
+          index['editions']=[edition]+[x for x in index.get('editions',[]) if x.get('filename')!=pdf.name][:51]
+          index_path.write_text(json.dumps(index,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print("Final PDF approved:",pdf.name,"pages=8","bytes=",pdf.stat().st_size)
+          PY
+      - name: Archivia la copia approvata su GitHub
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gestione/rivista/edizioni/*.pdf gestione/rivista/edizioni/*.png gestione/rivista/edizioni/index.json
+          if ! git diff --cached --quiet; then
+            git commit -m "publish(weekly): archive approved magazine A4 PDF"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - name: Conserva PDF come artefatto del workflow
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: joseph-weekly-pdf-approvato
+          path: |
+            gestione/rivista/edizioni/*.pdf
+            gestione/rivista/edizioni/*-cover.png
+          retention-days: 90
+          if-no-files-found: ignore

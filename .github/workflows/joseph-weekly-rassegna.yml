@@ -1,8 +1,8 @@
-name: Joseph Weekly · raccolta articoli
+name: Joseph Weekly · raccolta e scheda lunedi
 on:
   schedule:
-    - cron: '0 7 * * 6'
-    - cron: '0 6 * * 1'
+    # Due possibili ore UTC per mantenere le 08:00 Europe/Rome in CET/CEST.
+    - cron: '0 6,7 * * 1,6'
   workflow_dispatch:
 permissions:
   contents: write
@@ -12,20 +12,56 @@ concurrency:
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 15
     steps:
+      - name: Rispetta le 08:00 di Roma (anche ora legale)
+        id: clock
+        run: |
+          python3 - <<'PY'
+          import os, datetime
+          from zoneinfo import ZoneInfo
+          now=datetime.datetime.now(ZoneInfo("Europe/Rome"))
+          manual=os.environ.get("GITHUB_EVENT_NAME")=="workflow_dispatch"
+          valid=(now.weekday() in (0,5) and now.hour==8)
+          with open(os.environ["GITHUB_OUTPUT"],"a",encoding="utf-8") as f:
+              f.write("run="+str(manual or valid).lower()+"\n")
+          print("Rome time:",now.isoformat()," run:",manual or valid)
+          PY
       - uses: actions/checkout@v4
+        if: steps.clock.outputs.run == 'true'
+        with:
+          persist-credentials: true
       - uses: actions/setup-python@v5
+        if: steps.clock.outputs.run == 'true'
         with:
           python-version: '3.12'
-      - name: Raccogli i candidati recenti
+      - name: Preleva solo articoli candidati degli ultimi 7 giorni
+        if: steps.clock.outputs.run == 'true'
         run: python3 scripts/joseph_weekly_collect.py
-      - name: Salva la rassegna senza approvarla
+      - name: Controlla HTTP e metadati fonti candidate
+        if: steps.clock.outputs.run == 'true'
+        run: python3 scripts/joseph_weekly_preflight.py
+      - name: Crea scheda editoriale con fonti non approvate
+        if: steps.clock.outputs.run == 'true'
+        run: python3 scripts/joseph_weekly_editorial.py review
+      - name: Versiona candidati e scheda revisione
+        if: steps.clock.outputs.run == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add gestione/rivista/data/latest.json
+          git add gestione/rivista/data/latest.json gestione/rivista/data/preflight.json gestione/rivista/data/review.md
           if ! git diff --cached --quiet; then
-            git commit -m "data: update Joseph Weekly article candidates"
-            git push
+            git commit -m "data(weekly): refresh seven-day candidates and editorial checklist"
+            git pull --rebase origin main
+            git push origin HEAD:main
           fi
+      - name: Conserva la scheda per revisione
+        if: steps.clock.outputs.run == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: joseph-weekly-review
+          path: |
+            gestione/rivista/data/latest.json
+            gestione/rivista/data/review.md
+            gestione/rivista/data/preflight.json
+          retention-days: 30

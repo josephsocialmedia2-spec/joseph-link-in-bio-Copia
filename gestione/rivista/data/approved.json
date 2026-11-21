@@ -1,0 +1,9 @@
+{
+  "closed": false,
+  "issue": "",
+  "period": "",
+  "cover": "",
+  "editorial": "",
+  "items": [],
+  "note": "Compilare solo dopo revisione umana. Non committare dati di test. GitHub Actions blocca la stampa fino ad approvazione e validazione."
+}
