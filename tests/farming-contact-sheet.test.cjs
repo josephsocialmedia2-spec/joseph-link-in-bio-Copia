@@ -18,8 +18,8 @@ test('notizie e contatti mantiene layout e 9 sezioni; foglio visibile per primo'
  assert.ok(start>=0&&sheet>start&&form>sheet);
  for(const id of ['contactsRows','contactsSheetTable','clientDetail','clientDetailForm','photoFiles','photoText','photoDrafts','photoConfirm','contactsExcelExport'])
   assert.match(html,new RegExp('id="'+id+'"'));
- assert.match(html,/src="\.\/contatti-normalizza\.js"/);
- assert.match(html,/src="\.\/contatti-foglio\.js"/);
+ assert.match(html,/src="\.\/contatti-normalizza\.js\?v=20261121-2"/);
+ assert.match(html,/src="\.\/contatti-foglio\.js\?v=20261121-2"/);
  assert.match(html,/contatti-foglio\.css/);
  assert.match(html,/getContacts:\(\)=>db\.contacts/);
 });
@@ -75,4 +75,12 @@ test('fogli JavaScript validi, nessun telefono come colonna',()=>{
  assert.doesNotMatch(html,/name="phone"|name="telefono"|name="cellulare"/);
  assert.match(load('contatti-foglio.js'),/CASE247ContactSheet/);
  assert.match(load('contatti-foglio.js'),/getHistory/);
+});
+
+test('dashboard aggiornata e collegamento diretto alla scheda contatti',()=>{
+ const dashboard=fs.readFileSync(path.join(folder,'../index.html'),'utf8');
+ assert.match(dashboard,/rev=20261121-contatti-v2/);
+ assert.match(dashboard,/#contatti"/);
+ assert.match(html,/window\.location\.hash\.slice\(1\)/);
+ assert.match(html,/window\.addEventListener\('hashchange'/);
 });
