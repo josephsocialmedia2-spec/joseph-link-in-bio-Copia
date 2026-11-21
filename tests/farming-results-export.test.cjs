@@ -31,9 +31,9 @@ test('azioni completate della scheda cliente, senza nomi telefonici nel CSV',()=
  const rows=mod.consolidate([],contacts);
  assert.equal(rows.length,2);
  const s=mod.csv(rows);
- assert.match(s,/Data risultato;?/);
+ assert.match(s,/"Data risultato"/);
  assert.doesNotMatch(s,/371 370 8294/);
- assert.doesNotMatch(s,/HYPERLINK/); // [should be escaped?]
+ assert.match(s,/"'=HYPERLINK/); // formula neutralizzata prima dell'importazione
 });
 test('HTML / VBA includono importazione locale e due soli fogli',()=>{
  assert.match(page,/exportCompletedFarming/);
