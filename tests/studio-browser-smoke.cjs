@@ -201,6 +201,11 @@ async function main(){
  assert.equal(await evalJS("document.querySelector('#sv-tab-button-4').getAttribute('aria-selected')"),'true');
  assert.equal(await evalJS("document.querySelectorAll('#sv-acquisizione [role=tab]').length"),4);
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelectorAll('#nav button').length"),9);
+ assert.equal(await evalJS("Boolean(document.querySelector('#sv-farming-frame').contentDocument.querySelector('#oggi #farming-onedrive-excel'))"),true);
+ assert.equal(await evalJS("(()=>{const a=document.querySelector('#sv-farming-frame').contentDocument.querySelector('#farming-onedrive-excel');return a.href.startsWith('https://1drv.ms/x/c/')&&a.target==='_blank'})()"),true);
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#oggi').textContent.includes('Agenda operativa unica · simulazione')"),false);
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#oggi').textContent.includes('Storico giornaliero Farming')"),false);
+
  assert.equal(await evalJS("getComputedStyle(document.querySelector('#sv-farming-frame').contentDocument.querySelector('header.top')).display"),'none');
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('header.top').textContent.includes('Installa VBA Acquisizione')"),true);
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#nav').getBoundingClientRect().height>0"),true);
