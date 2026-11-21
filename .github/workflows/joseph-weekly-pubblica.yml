@@ -1,4 +1,4 @@
-name: Joseph Weekly · PDF definitivo approvato
+name: Joseph Weekly · pubblica rivista, lettera e sfogliatore approvati
 on:
   push:
     branches: [main]
@@ -8,32 +8,33 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: joseph-weekly-final-pdf
+  group: joseph-weekly-approved-publication
   cancel-in-progress: false
 jobs:
   precheck:
     runs-on: ubuntu-latest
     outputs:
-      publish: ${{ steps.check.outputs.publish }}
+      publish: ${{ steps.approval.outputs.publish }}
     steps:
       - uses: actions/checkout@v4
-      - name: Controlla se esiste un numero chiuso ed approvato
-        id: check
+      - name: Controlla il gate editoriale
+        id: approval
         run: |
-          python3 - <<'PY'
-          import json, os
-          with open('gestione/rivista/data/approved.json',encoding='utf-8') as f:
-              item=json.load(f)
-          ok=item.get('closed') is True
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          p=Path('gestione/rivista/data/approved.json')
+          approved=json.loads(p.read_text(encoding='utf-8'))
+          ok=approved.get('closed') is True
           with open(os.environ['GITHUB_OUTPUT'],'a',encoding='utf-8') as f:
               f.write('publish='+str(ok).lower()+'\n')
-          print('Edizione chiusa e approvata:',ok)
+          print('Pubblicazione autorizzata dalla chiusura editoriale:',ok)
           PY
-  approved-pdf:
+  publish:
     needs: precheck
     if: needs.precheck.outputs.publish == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
         with:
@@ -41,75 +42,89 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - name: Validazione rigorosa dell'approvazione
-        run: python3 scripts/joseph_weekly_editorial.py validate
-      - name: Installa Chromium e verifica PDF
+      - name: Validazione rigorosa delle fonti originali
+        run: python scripts/joseph_weekly_editorial.py validate
+      - name: Dipendenze PDF
         run: |
-          npm install --no-save playwright@1.57.0
-          google-chrome --version
-          python3 -m pip install --disable-pip-version-check pypdf
-      - name: Avvia server statico locale
+          sudo apt-get update -qq
+          sudo apt-get install -y fonts-dejavu-core libpango-1.0-0 libharfbuzz0b libpangoft2-1.0-0
+          python -m pip install --disable-pip-version-check 'weasyprint>=62,<69' 'pypdf>=5,<8' 'qrcode[pil]>=8,<10' 'feedparser>=6,<7' 'pymupdf>=1.24,<2' 'pillow>=10,<13'
+      - name: QA generatore
         run: |
-          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/joseph-weekly-http.log 2>&1 &
-          python3 - <<'PY'
-          import time, urllib.request
-          for _ in range(40):
-              try:
-                  urllib.request.urlopen("http://127.0.0.1:8765/gestione/rivista/stampa.html",timeout=2).close()
-                  break
-              except Exception:
-                  time.sleep(.25)
-          else:
-              raise RuntimeError("Local publisher did not start")
-          PY
-      - name: Genera rivista PDF e copertina dal JSON approvato
-        run: node scripts/joseph_weekly_render.cjs final
-      - name: Preflight PDF, crea archivio e ultimo numero
+          python -m py_compile scripts/real_estate_weekly_autopub.py
+          python -m unittest discover -s tests -p real_estate_weekly_autopub_test.py -v
+      - name: Genera soltanto il numero verificato
+        run: python scripts/real_estate_weekly_autopub.py --approved-json
+      - name: Preflight, aggiorna lettera e indice delle edizioni
         run: |
-          python3 - <<'PY'
+          python - <<'PY'
           import json, shutil, datetime
           from pathlib import Path
           from pypdf import PdfReader
-          d=Path('gestione/rivista/edizioni')
-          manifest=Path('gestione/rivista/data/approved.json')
-          obj=json.loads(manifest.read_text(encoding='utf-8'))
-          pdfs=sorted(d.glob('Joseph-Real-Estate-Weekly-*.pdf'))
-          assert pdfs, "No final PDF generated"
-          pdf=pdfs[-1]
-          reader=PdfReader(str(pdf))
-          assert len(reader.pages)==8, f"Page count {len(reader.pages)} != 8"
-          for i,page in enumerate(reader.pages,1):
-              b=page.mediabox
-              assert abs(float(b.width)-595.28)<2 and abs(float(b.height)-841.89)<2, f"Wrong A4 size at {i}"
-          assert pdf.stat().st_size>10000
-          shutil.copyfile(pdf,d/'latest.pdf')
-          index_path=d/'index.json'
-          index=json.loads(index_path.read_text(encoding='utf-8')) if index_path.exists() else {'editions':[]}
-          edition={'issue':obj['issue'],'date':datetime.datetime.now(datetime.timezone.utc).date().isoformat(),'filename':pdf.name,'articles':len(obj['items']),'status':'approved'}
-          index['editions']=[edition]+[x for x in index.get('editions',[]) if x.get('filename')!=pdf.name][:51]
-          index_path.write_text(json.dumps(index,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-          print("Final PDF approved:",pdf.name,"pages=8","bytes=",pdf.stat().st_size)
+          home=Path('gestione/rivista/edizioni')
+          auto=home/'auto'
+          legacy=Path('gestione/lettere-stampa')
+          manifest=json.loads((auto/'latest.json').read_text(encoding='utf-8'))
+          assert manifest.get('status')=='approved', 'Unapproved edition cannot be released'
+          assert len(manifest['previews'])==8
+          paths=[(manifest['magazine'],8),(manifest['seller_letter'],2),(manifest['double_pages'],4)]
+          for name,count in paths:
+              pdf=PdfReader(str(auto/name))
+              assert len(pdf.pages)==count, f'{name}: {len(pdf.pages)} != {count}'
+              assert (auto/name).stat().st_size>7000
+          assert all((auto/p).stat().st_size>5000 for p in manifest['previews'])
+          assert manifest['qr_target'].endswith('/'+manifest['magazine'])
+          shutil.copy2(auto/'rivista-latest.pdf',home/'latest.pdf')
+          shutil.copy2(auto/'rivista-latest.pdf',legacy/'Real_Estate_Weekly_Joseph_Malafronte_EDITORIALE_A4.pdf')
+          shutil.copy2(auto/'doppie-pagine-latest.pdf',legacy/'Real_Estate_Weekly_DOPPIE_PAGINE.pdf')
+          shutil.copy2(auto/'seller-letter-latest.pdf',legacy/'Lettera_Joseph_Malafronte_AGGIORNATA_A4.pdf')
+          # Sostituisce il lettore statico soltanto DOPO generazione e QA riusciti.
+          shutil.copy2(Path('gestione/rivista/sfoglia/redirect-lettere-stampa.html'),legacy/'index.html')
+          index_path=home/'index.json'
+          current=json.loads(index_path.read_text(encoding='utf-8')) if index_path.exists() else {'editions':[]}
+          edition={'issue':manifest['approved_issue'],'date':manifest['issue_date'],
+                   'filename':manifest['magazine'],'articles':len(manifest['news']),'status':'approved',
+                   'url':'auto/'+manifest['magazine'],'letter_url':'auto/'+manifest['seller_letter']}
+          current['editions']=[edition]+[x for x in current.get('editions',[]) if x.get('date')!=edition['date']][:51]
+          index_path.write_text(json.dumps(current,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+          print('OK: 8 A4, 4 doppie pagine, lettera fronte/retro e sfogliatore pronto')
           PY
-      - name: Archivia la copia approvata su GitHub
+      - name: Pubblica archivi, file correnti e reader su main
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add gestione/rivista/edizioni/*.pdf gestione/rivista/edizioni/*.png gestione/rivista/edizioni/index.json
-          if ! git diff --cached --quiet; then
-            git commit -m "publish(weekly): archive approved magazine A4 PDF"
-            git pull --rebase origin main
-            git push origin HEAD:main
+          git add gestione/rivista/edizioni/auto/ gestione/rivista/edizioni/index.json gestione/rivista/edizioni/latest.pdf
+          git add gestione/lettere-stampa/index.html gestione/lettere-stampa/*.pdf
+          if git diff --cached --quiet; then
+            echo "Nessun documento da aggiornare"
+            exit 0
           fi
-      - name: Conserva PDF come artefatto del workflow
+          git commit -m "publish(weekly): rivista, doppie pagine, lettera e flipbook approvati"
+          for i in 1 2 3; do
+            git fetch origin main
+            local_approved="$(git rev-parse HEAD:gestione/rivista/data/approved.json)"
+            remote_approved="$(git rev-parse origin/main:gestione/rivista/data/approved.json)"
+            if [ "$local_approved" != "$remote_approved" ]; then
+              echo "::error::Approvazione cambiata: blocco pubblicazione di documenti obsoleti"
+              exit 1
+            fi
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              echo "Rivista e lettera aggiornate su main."
+              exit 0
+            fi
+            sleep 3
+          done
+          echo "::error::Pubblicazione GitHub non riuscita"
+          exit 1
+      - name: Artefatti del numero approvato
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: joseph-weekly-pdf-approvato
+          name: joseph-weekly-numero-approvato
           path: |
-            gestione/rivista/edizioni/*.pdf
-            gestione/rivista/edizioni/*-cover.png
+            gestione/rivista/edizioni/auto/*.pdf
+            gestione/rivista/edizioni/auto/latest.json
+            gestione/rivista/edizioni/auto/previews/**/*.jpg
           retention-days: 90
           if-no-files-found: ignore
