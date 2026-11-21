@@ -27,7 +27,7 @@ async function main(){
   const safeIssue=String(model.issue).replace(/[^a-zA-Z0-9_-]/g,'-').slice(0,40);
   const name=mode==='final'?('Joseph-Real-Estate-Weekly-'+safeIssue+'-'+now+'.pdf'):'TEST-QA-NON-PUBBLICARE.pdf';
   const pdfPath=path.join(outDir,name);
-  const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+  const browser=await chromium.launch({headless:true,executablePath:process.env.JOSEPH_CHROME||'/usr/bin/google-chrome',args:['--no-sandbox']});
   try{
     const context=await browser.newContext({viewport:{width:1200,height:900},deviceScaleFactor:1});
     await context.addInitScript(value=>{
