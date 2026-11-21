@@ -16,7 +16,7 @@
 <div class="card" style="border-left:5px solid #b78b38;background:linear-gradient(125deg,#fff 78%,#fff5d5)">
 <small style="font-weight:800;color:#8b681d">JOSEPH MALAFRONTE · FARMING DI ZONA</small>
 <h2>Excel · 2 sole schede: Acquisizione + PESA</h2>
-<p>L'installatore genera un <strong>nuovo file Excel</strong> con esattamente due fogli. Il primo contiene una riga per cliente/immobile e <strong>solo risultati effettivamente raggiunti</strong>: volantini e lettere consegnati, notizie verificate, risposte e incontri svolti. Nessuna rubrica telefonica e nessuna attività futura.</p>
+<p>La macro opera nella <strong>cartella Excel .xlsm esistente</strong> e mantiene esattamente due fogli. Il primo contiene una riga per cliente/immobile e <strong>solo risultati effettivamente raggiunti</strong>: volantini e lettere consegnati, notizie verificate, risposte e incontri svolti. Nessuna rubrica telefonica e nessuna attività futura.</p>
 <p>La seconda scheda, <strong>PESA</strong>, è un registro annuale del peso con IMC, categoria automatica e grafico. Altezza e peso vengono richiesti solo in Excel, non memorizzati sul sito.</p>
 <a class="btn" href="./excel/CASE247_Acquisizione_Installer.bas" download>Scarica macro VBA (.bas)</a>
 <button class="btn secondary" type="button" onclick="exportCompletedFarming()">Esporta risultati raggiunti (CSV)</button>
@@ -24,8 +24,8 @@
 <p class="tiny">Compatibile con Excel desktop per Windows. Il browser non esegue VBA.</p>
 </div>
 <div class="grid">
-<div class="card"><h3>01 · Apri Excel</h3><p>In un file <strong>.xlsm</strong> importa il modulo con <strong>ALT+F11 → File → Importa file</strong>. Il file di partenza non viene modificato.</p></div>
-<div class="card"><h3>02 · Genera 2 fogli</h3><p>Salva il modello con due schede in <strong>.xlsm</strong>, importa la macro e avvia <code>InstallaAcquisizioneCASE247</code>. La macro resta nel file, senza aggiungere altre schede.</p></div>
+<div class="card"><h3>01 · Apri Excel</h3><p>In un file <strong>.xlsm</strong> importa il modulo con <strong>ALT+F11 → File → Importa file</strong>. I dati presenti vengono conservati; viene aggiunto soltanto il pulsante di aggiornamento Farming.</p></div>
+<div class="card"><h3>02 · Attiva la macro</h3><p>Salva il modello con due schede in <strong>.xlsm</strong>, importa la macro e avvia <code>InstallaAcquisizioneCASE247</code>. La macro resta nel file, senza aggiungere altre schede.</p></div>
 <div class="card"><h3>03 · Registra solo i risultati</h3><p>Premi «Esporta risultati raggiunti (CSV)», poi in Excel «AGGIORNA RISULTATI FARMING». Il foglio PESA e i dati già presenti vengono conservati.</p></div>
 </div>
 <div class="card"><h3>Confine operativo: solo farming di zona</h3>
