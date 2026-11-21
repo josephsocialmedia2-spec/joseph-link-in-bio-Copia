@@ -49,10 +49,10 @@
   str=str.split(/\s+(?:cliente|proprietario|immobile|notizia|nota|note|lettera|incontro|consegnato|consegnata|esito|contatto)\s*[:=-]/iu)[0];
   str=str.split(/\s*[,;|]\s*/u)[0].split(/\s+[-–—]\s+/u)[0];
   str=str.replace(/\s+(?:Avigliana|Almese|Condove|Susa|Torino|Rivoli)\s*$/iu,'').trim();
-  return clean(str.replace(/[,.:]+$/u,''),130);
+  return clean(str.replace(/[\s,.:;–—-]+$/gu,''),130);
  }
  function extractLabel(block,label){
-  const pattern=new RegExp('(?:^|\\n)\\s*(?:'+label+')\\s*[:=]\\s*([^\\n;|]+)','iu');
+  const pattern=new RegExp('(?:^|\\n|[;|]|\\s+[-–—]\\s*)\\s*(?:'+label+')\\s*[:=]\\s*([^\\n;|]+)','iu');
   return (block.match(pattern)||[])[1]?.trim()||'';
  }
  function fromText(text,defaultDay){
