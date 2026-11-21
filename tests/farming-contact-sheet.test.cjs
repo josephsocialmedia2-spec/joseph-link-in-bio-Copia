@@ -31,6 +31,10 @@ test('normalizza due indirizzi da appunti fotografiche senza inventare risultati
  assert.equal(drafts.length,2);
  assert.match(drafts[0].address,/Via Torino 41/);
  assert.match(drafts[1].address,/Via Roma 8/);
+ assert.equal(drafts[0].name,'Trilocale A');
+ assert.equal(drafts[1].name,'Appartamento B');
+ assert.equal(drafts[0].address,'Via Torino 41');
+ assert.equal(drafts[1].address,'Via Roma 8');
  assert.equal(drafts[0].date,'2026-11-21');
  assert.equal(drafts[0].status,'Nuovo');
  assert.equal(drafts[0].action,'Nessuna');
