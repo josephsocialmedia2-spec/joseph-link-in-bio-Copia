@@ -17,7 +17,12 @@ test('due sole schede CRM e script valido',()=>{
  assert.match(html,/id="acquisizione"/);
  assert.match(html,/id="pesa"/);
  assert.match(html,/src="\.\/logic\.js"/);
- assert.match(landing,/href="\.\/crm\/"/);
+ assert.doesNotMatch(landing,/href="\.\/crm\/"/);
+ assert.match(landing,/<header class="top">/);
+ assert.match(html,/<header class="top">/);
+ assert.match(html,/<div class="shell">/);
+ assert.match(html,/#102c48/);
+ assert.match(html,/#135a85/);
  new vm.Script(script,{filename:'crm-app.js'});
  new vm.Script(get('gestione/acquisizione-farming/crm/logic.js'),{filename:'crm-logic.js'});
 });
