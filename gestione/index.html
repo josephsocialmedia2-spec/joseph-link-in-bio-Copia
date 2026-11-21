@@ -71,9 +71,29 @@ body.case247-unified{padding-top:var(--joseph-neon-header-height)!important}
 #joseph-neon-cosmos .joseph-neon-words{font-size:clamp(29px,3.5vw,53px)!important;line-height:1.09!important;color:#b5ffff!important;text-shadow:0 2px 2px #001424,0 3px 5px #001424,0 5px 9px #00233d,0 0 5px #008fff,0 0 12px #00caff,0 0 25px #00baff!important}
 @media(max-width:680px){:root{--joseph-neon-header-height:124px}#joseph-neon-cosmos .joseph-neon-float{width:96%!important;padding:13px 9px!important}#joseph-neon-cosmos .joseph-neon-words{font-size:clamp(24px,5.4vw,35px)!important}}
 @media(max-width:380px){:root{--joseph-neon-header-height:112px}#joseph-neon-cosmos .joseph-neon-words{font-size:clamp(21px,5.1vw,27px)!important}}
+
+/* Fix: una sola riga, fascia compatta, niente testo tagliato o contenuti coperti */
+:root{--joseph-neon-header-height:112px}
+#joseph-neon-cosmos{height:var(--joseph-neon-header-height)!important;overflow:visible!important}
+#joseph-neon-cosmos .joseph-neon-float{box-sizing:border-box;width:min(96%,1420px)!important;max-width:calc(100vw - 20px)!important;padding:19px 38px!important}
+#joseph-neon-cosmos .joseph-neon-acrylic{inset:5% 0!important;border-radius:60px!important}
+#joseph-neon-cosmos .joseph-neon-words{font-size:clamp(17px,3.25vw,53px)!important;white-space:nowrap!important;letter-spacing:-.025em!important;line-height:1.12!important;animation:joseph-neon-glow-contrast 4s ease-in-out infinite alternate!important}
+#joseph-neon-cosmos .joseph-neon-words span{display:inline!important;white-space:nowrap!important}
+@keyframes joseph-neon-glow-contrast{
+ from{text-shadow:0 1px 2px #00111f,0 2px 5px #001a30,0 4px 10px #00253c,0 0 7px #00dfff,0 0 18px #00a9ee}
+ to{text-shadow:0 1px 3px #00111f,0 2px 6px #001a30,0 4px 12px #00253c,0 0 11px #00ecff,0 0 26px #009fff}
+}
+@media(max-width:680px){
+ :root{--joseph-neon-header-height:80px}
+ #joseph-neon-cosmos .joseph-neon-float{width:calc(100vw - 12px)!important;padding:12px 12px!important}
+ #joseph-neon-cosmos .joseph-neon-words{font-size:clamp(14px,3.6vw,24px)!important}
+ #joseph-neon-cosmos .joseph-neon-acrylic{border-radius:35px!important}
+}
+@media(max-width:380px){:root{--joseph-neon-header-height:74px}#joseph-neon-cosmos .joseph-neon-words{font-size:clamp(12px,3.5vw,16px)!important}}
+@media(prefers-reduced-motion:reduce){#joseph-neon-cosmos .joseph-neon-words{animation:none!important}}
 </style>
 <section id="joseph-neon-cosmos" aria-label="Chi vince festeggia, chi perde spiega">
- <div class="joseph-neon-float"><div class="joseph-neon-acrylic" aria-hidden="true"></div><div class="joseph-neon-words"><span>Chi vince festeggia</span><span>chi perde spiega</span></div></div>
+ <div class="joseph-neon-float"><div class="joseph-neon-acrylic" aria-hidden="true"></div><div class="joseph-neon-words"><span>Chi vince festeggia, chi perde spiega</span></div></div>
 </section>
 <script id="joseph-neon-viewport-fix">
 /* Porta l'insegna fuori da body: i transform/filter/contain della dashboard
