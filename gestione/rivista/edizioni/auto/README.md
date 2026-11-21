@@ -1,38 +1,42 @@
-# Real Estate Weekly — produzione automatizzata
+# Real Estate Weekly — procedura di aggiornamento (novembre 2026)
 
-Questo percorso contiene le edizioni prodotte da GitHub Actions, senza modificare la rivista interattiva o il vecchio flusso ad approvazione manuale.
+## Cosa accade automaticamente
 
-## Link permanenti su GitHub Pages (radice main)
+1. **Sabato e lunedì, ore 08:00 Europe/Rome**: il workflow `joseph-weekly-rassegna.yml` raccoglie notizie candidate e rigenera `gestione/rivista/data/latest.json` con la scheda per la verifica.
+2. **Il responsabile editoriale** apre `/gestione/rivista/`, verifica titolo, data, testo, dati e fonte originale; approva da 3 a 8 articoli, compila numero, periodo, copertina ed editoriale, poi seleziona "Conferma chiusura editoriale" e "Esporta JSON".
+3. Il JSON chiuso e approvato viene riportato in `gestione/rivista/data/approved.json` sul ramo `main`. È una **operazione editoriale esplicita**: la pagina browser non può modificare da sola il repository GitHub.
+4. Il commit su `approved.json` avvia `joseph-weekly-pubblica.yml`, che convalida nuovamente tutte le fonti e, soltanto se i controlli passano, genera e pubblica i documenti.
 
-- Rivista A4, 8 pagine: https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/rivista/edizioni/auto/rivista-latest.pdf
-- Seller Letter A4, fronte/retro: https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/rivista/edizioni/auto/seller-letter-latest.pdf
-- Metadati dell'edizione: https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/rivista/edizioni/auto/latest.json
+## File aggiornati dopo approvazione
 
-Copie archiviate per data: Real-Estate-Weekly-YYYY-MM-DD.pdf e Seller-Letter-YYYY-MM-DD.pdf.
+- `gestione/rivista/edizioni/auto/rivista-latest.pdf` — otto pagine A4.
+- `gestione/rivista/edizioni/auto/doppie-pagine-latest.pdf` — quattro aperture orizzontali doppie (A3).
+- `gestione/rivista/edizioni/auto/seller-letter-latest.pdf` — lettera A4 fronte/retro.
+- `gestione/rivista/edizioni/auto/latest.json` — manifest con stato `approved`, QR, data, titoli e percorsi delle otto anteprime.
+- `gestione/rivista/sfoglia/` — lettore a libro che carica le otto immagini delle pagine realmente generate.
+- `gestione/rivista/edizioni/index.json` e `latest.pdf` — archivio e ultimo numero.
+- `gestione/lettere-stampa/` — i tre PDF dai nomi storici restano disponibili; la pagina precedente viene reindirizzata al lettore **soltanto dopo il primo rilascio approvato**.
 
-## Operatività
+Il QR della lettera punta al PDF **datato** del numero (non a una destinazione variabile), in modo che le lettere già distribuite conservino lo stesso riferimento.
 
-- Workflow: .github/workflows/real-estate-weekly-autopub.yml
-- Generatore: scripts/real_estate_weekly_autopub.py
-- Test: tests/real_estate_weekly_autopub_test.py
-- Pianificazione: ogni lunedì alle 07:00 Europe/Rome, con due cron UTC e gate CET/CEST; esecuzione manuale Actions > Run workflow.
-- Primo numero: dopo la fusione su main viene creata l'edizione di lancio 21/11/2026, senza inventare nuove notizie settimanali.
-- Fonti periodiche: feed RSS degli editori; si utilizzano titoli e descrizioni solo con URL del publisher, data e attribuzione. Un metadato RSS non equivale alla verifica del corpo completo dell'articolo.
-- PDF: WeasyPrint, due formati A4 (8 pagine + 2 pagine), QR alla copia datata, archivio e due link latest.
-- Pubblicazione: commit nella cartella gestione/rivista/edizioni/auto della radice di main. Non cambiare le impostazioni GitHub Pages da root a docs.
-- Illustrazioni: immagini vettoriali originali dichiarate, non fotografie spacciate per immobili reali. Sostituire con fotografie autorizzate, diverse per pagina, per una tiratura fotografica definitiva.
+## Stato del contenuto e regole di sicurezza
 
-## OpenAI facoltativo
+- `data/approved.json` con `closed:false` o senza tre fonti originali verificate **non pubblica nulla**.
+- Notizie RSS e testi raccolti automaticamente sono **candidati**, non contenuti approvati.
+- I PDF di lancio archiviati nel 2026 rimangono visibili nella vecchia presentazione fino al primo numero chiuso.
+- Il vecchio `real-estate-weekly-autopub.yml` è ora **solo QA**: non esiste più una pubblicazione RSS senza approvazione; il comando `--seed` produce esclusivamente copie tecniche nel runner di test.
+- Le stime OMI non equivalgono a prezzi di rogito né a valutazioni individuali; le attività di mediazione sono riservate ai professionisti abilitati.
+- Il flusso non invia messaggi WhatsApp o email e non richiede credenziali OpenAI.
 
-Per aggiungere la riscrittura editoriale assistita dai metadati RSS, impostare in Settings > Secrets and variables > Actions il secret OPENAI_API_KEY. Il motore usa Responses API con validazioni sul formato e sulle affermazioni numeriche. La variabile OPENAI_MODEL può scegliere il modello.
+## Verifica tecnica
 
-Senza secret il sistema resta eseguibile e produce contenuti deterministici e attribuiti; non inventa dati né risultati di vendita. La sottoscrizione ChatGPT non sostituisce una chiave API, che può comportare costi.
+La suite `real-estate-weekly-autopub.yml` prova sia il numero tecnico sia un'**approvazione simulata senza push** e controlla 8 pagine A4 + 4 aperture doppie + 2 pagine della lettera e le anteprime. La suite `joseph-weekly-qa.yml` verifica anche la sintassi del workflow di pubblicazione e i link del lettore.
 
-## Limiti editoriali dichiarati
+Se un test fallisce, i file approvati preesistenti rimangono invariati e non si aggiorna la pagina pubblica.
 
-- I feed RSS possono essere temporaneamente indisponibili. In tal caso l'edizione rimane un approfondimento sulle basi OMI documentate, non una falsa rassegna di nuove notizie.
-- OMI Avigliana 2026/1: intervalli per zona, tipologia e stato; non prezzi di rogito né valutazioni individuali. Non si dichiara che i valori vengano aggiornati automaticamente.
-- Pagina 7: esempi metodologici, non due vendite dimostrate. Servono casi reali con autorizzazioni fotografiche e dati documentati prima di pubblicare numeri di vendita.
-- Il QR funziona quando la copia datata è stata effettivamente distribuita da GitHub Pages; attendere la pubblicazione prima di stamparlo.
-- La rivista esistente basata su approvazione editoriale resta indipendente e non viene disabilitata.
-- Non occorrono TinyFish, Shopify o un secondo hosting.
+## Pagine utili
+
+- Centro Editoriale: https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/rivista/
+- Lettere & Stampa: https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/acquisizione-farming/#lettere
+- Nuovo lettore: https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/rivista/sfoglia/
+- Workflow approvato: https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/actions/workflows/joseph-weekly-pubblica.yml
