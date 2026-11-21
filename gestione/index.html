@@ -75,6 +75,22 @@ body.case247-unified{padding-top:var(--joseph-neon-header-height)!important}
 <section id="joseph-neon-cosmos" aria-label="Chi vince festeggia, chi perde spiega">
  <div class="joseph-neon-float"><div class="joseph-neon-acrylic" aria-hidden="true"></div><div class="joseph-neon-words"><span>Chi vince festeggia</span><span>chi perde spiega</span></div></div>
 </section>
+<script id="joseph-neon-viewport-fix">
+/* Porta l'insegna fuori da body: i transform/filter/contain della dashboard
+   non devono trasformare position:fixed in un posizionamento locale. */
+(function(){
+  var sign=document.getElementById('joseph-neon-cosmos');
+  if(!sign)return;
+  document.documentElement.appendChild(sign);
+  sign.style.setProperty('position','fixed','important');
+  sign.style.setProperty('top','0px','important');
+  sign.style.setProperty('left','0px','important');
+  sign.style.setProperty('width','100%','important');
+  sign.style.setProperty('z-index','2147483640','important');
+  sign.style.setProperty('display','grid','important');
+  sign.style.setProperty('visibility','visible','important');
+})();
+</script>
 <!-- CASE247 · Routine delle 03:00. Blocco autonomo, senza dipendenze. -->
 <style>
 #case247-routine03{--r03-ink:#283341;--r03-line:#dce3ea;--r03-muted:#6b7887;--r03-fill:#e8eef5;--r03-stroke:#3b434e;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--r03-ink);background:#fff;border:1px solid var(--r03-line);border-radius:10px;box-shadow:0 2px 10px rgba(26,42,62,.045);padding:10px 14px;margin:9px 14px;min-width:0}
