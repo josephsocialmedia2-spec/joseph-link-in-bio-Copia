@@ -79,9 +79,8 @@ test('fogli JavaScript validi, nessun telefono come colonna',()=>{
 
 test('dashboard aggiornata e collegamento diretto alla scheda contatti',()=>{
  const dashboard=fs.readFileSync(path.join(folder,'../index.html'),'utf8');
- assert.match(dashboard,/rev=20261121-contacts-only&embed=contatti#contatti/);
- assert.doesNotMatch(dashboard,/Sistema di Acquisizione Immobiliare/);
- assert.doesNotMatch(dashboard,/Foglio di lavoro · CRM Excel/);
+ assert.match(dashboard,/rev=20261121-contatti-v2/);
+ assert.match(dashboard,/#contatti"/);
  assert.match(html,/window\.location\.hash\.slice\(1\)/);
  assert.match(html,/window\.addEventListener\('hashchange'/);
 });

@@ -189,21 +189,18 @@ async function main(){
  await until("document.querySelector('#saas-app')?.dataset.view==='agenda'",'SaaS tabs after reload');
  assert.equal(await evalJS("document.querySelectorAll('.saas-tab-unit')[4].dataset.saasKey"),'archivio');
  await evalJS("document.querySelector('[data-saas-view=acquisizione]').click();true");
- assert.equal(await evalJS("Boolean(document.querySelector('.saas-workbook-bar')||document.querySelector('.saas-workbook-action')||document.querySelector('.saas-workbook-config'))"),false);
- assert.equal(await evalJS("document.querySelector('#sv-acquisizione').textContent.includes('Sistema di Acquisizione Immobiliare')"),false);
- assert.equal(await evalJS("document.querySelectorAll('#sv-acquisizione [role=tab]').length"),0);
- await evalJS("document.querySelector('[data-saas-view=operativo]').click();document.querySelector('#cc-crm-config').click();true");
+ assert.equal(await evalJS("Boolean(document.querySelector('.saas-workbook-action')&&document.querySelector('.saas-workbook-config'))"),true);
+ await evalJS("document.querySelector('.saas-workbook-config').click();true");
  assert.equal(await evalJS("document.querySelector('#cc-crm-dialog').open"),true);
- await evalJS("document.querySelector('#cc-crm-cancel').click();document.querySelector('[data-saas-view=acquisizione]').click();true");
- console.log('PASS: Acquisizione no workbook bar or duplicate Acquisition System; CRM settings preserved in Strumenti');
+ await evalJS("document.querySelector('#cc-crm-cancel').click();true");
+ console.log('PASS: tab order persists after reload and CRM workbook configuration opens');
 
- // Single embedded view opens directly on the existing Notizie & Contatti sheet.
+ // Integrated Farming Avigliana workspace: verify actual browser actions in the fourth Acquisition panel.
+ await evalJS("document.querySelector('#sv-tab-button-4').click();true");
  await until("Boolean(document.querySelector('#sv-farming-frame')?.contentDocument?.querySelector('#contactForm'))",'Avigliana Farming iframe loaded');
- assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#contatti').classList.contains('on')"),true);
- assert.equal(await evalJS("getComputedStyle(document.querySelector('#sv-farming-frame').contentDocument.querySelector('header.top')).display"),'none');
- assert.equal(await evalJS("getComputedStyle(document.querySelector('#sv-farming-frame').contentDocument.querySelector('#nav')).display"),'none');
- assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#contactsWorkbook')!==null"),true);
-
+ assert.equal(await evalJS("document.querySelector('#sv-tab-button-4').getAttribute('aria-selected')"),'true');
+ assert.equal(await evalJS("document.querySelectorAll('#sv-acquisizione [role=tab]').length"),4);
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelectorAll('#nav button').length"),9);
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelectorAll('#omiRows tr').length>=1"),true);
  assert.equal(await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow;w.goto('excelvba');return w.document.querySelector('#excelvba')?.classList.contains('on') && w.document.querySelector('#excelvba a[download]')?.getAttribute('href')==='./excel/CASE247_Acquisizione_Installer.bas'})()"),true);
  await evalJS("document.querySelector('#sv-farming-frame').contentWindow.goto('oggi');true");
