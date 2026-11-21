@@ -32,6 +32,7 @@ test('azioni completate della scheda cliente, senza nomi telefonici nel CSV',()=
  assert.equal(rows.length,2);
  const s=mod.csv(rows);
  assert.match(s,/"Data risultato"/);
+ assert.match(s,/"2026-11-21"/); // Data ISO valida nel CSV Excel
  assert.doesNotMatch(s,/371 370 8294/);
  assert.match(s,/"'=HYPERLINK/); // formula neutralizzata prima dell'importazione
 });
