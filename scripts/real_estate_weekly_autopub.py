@@ -380,8 +380,40 @@ def write_documents(today: dt.date, news: list[dict], source_log: list[dict], se
     import shutil
     shutil.copy2(mag_path,DEST/"rivista-latest.pdf")
     shutil.copy2(seller_path,DEST/"seller-letter-latest.pdf")
-    manifest={"issue_date":issue,"edition_type":"prima copia di lancio" if seed else "edizione automatica",
-              "magazine":mag_path.name,"seller_letter":seller_path.name,"qr_target":pub_url,
+    # Quattro doppie pagine in A3 orizzontale, conservando le otto A4.
+    from pypdf import PdfWriter, Transformation
+    from pypdf._page import PageObject
+    spread_writer=PdfWriter()
+    source_pages=PdfReader(str(mag_path)).pages
+    for first in range(0,8,2):
+        left,right=source_pages[first:first+2]
+        width,height=float(left.mediabox.width),float(left.mediabox.height)
+        spread=PageObject.create_blank_page(width=2*width,height=height)
+        spread.merge_transformed_page(left,Transformation())
+        spread.merge_transformed_page(right,Transformation().translate(tx=width))
+        spread_writer.add_page(spread)
+    spread_path=DEST/f"Real-Estate-Weekly-Doppie-Pagine-{issue}.pdf"
+    with spread_path.open("wb") as fd:
+        spread_writer.write(fd)
+    assert len(PdfReader(str(spread_path)).pages)==4
+    shutil.copy2(spread_path,DEST/"doppie-pagine-latest.pdf")
+    # Immagini prodotte dal PDF reale, utilizzate dallo sfogliatore pubblico.
+    import fitz
+    from PIL import Image
+    previews=[]
+    preview_dir=DEST/"previews"/issue
+    preview_dir.mkdir(parents=True,exist_ok=True)
+    with fitz.open(str(mag_path)) as document:
+        for number,pdf_page in enumerate(document,1):
+            pix=pdf_page.get_pixmap(matrix=fitz.Matrix(1.25,1.25),alpha=False)
+            jpg=preview_dir/f"pagina-{number:02d}.jpg"
+            Image.frombytes("RGB",(pix.width,pix.height),pix.samples).save(jpg,"JPEG",quality=84,optimize=True)
+            assert jpg.stat().st_size>5000
+            previews.append(f"previews/{issue}/{jpg.name}")
+    manifest={"issue_date":issue,"edition_type":"approvata" if approved else "prima copia di lancio" if seed else "edizione automatica",
+              "magazine":mag_path.name,"seller_letter":seller_path.name,"double_pages":spread_path.name,
+              "previews":previews,"status":"approved" if approved else "demonstration",
+              "approved_issue":approved["issue"] if approved else None,"qr_target":pub_url,
               "news":news[:4],"source_log":source_log,"ai_status":ai_status,
               "omi_reference":"Agenzia Entrate OMI 2026/1, Avigliana, dossier estrazione disponibile",
               "case_studies":"schema dimostrativo; vendite non verificate",
