@@ -30,6 +30,17 @@ test('solo dentro la dashboard l’intestazione richiesta non viene mostrata',()
  assert.match(page,/id="nav"/);
  assert.match(home,/&embed=hide-header"/);
 });
+test('Oggi mostra il solo accesso Excel richiesto, senza storico fittizio e contatori',()=>{
+ const oggi=page.split('<section class="panel" id="oggi">')[1].split('<section class="panel" id="contatti">')[0];
+ assert.match(oggi,/id="farming-onedrive-excel"/);
+ assert.match(oggi,/href="https:\/\/1drv\.ms\/x\/c\/56a10d0f448c4577\/IQCnZeONwGa_R4Y5xRmvpKN3Adv1lgRiNlJgoPyFFaMtmRk\?e=f3xHwd&amp;nav=MTVfe0M0RjM2MjY5LTJGNkEtNDU1Ny1CQjdFLUI2RkMzQzE1QUM3RH0"/);
+ assert.match(oggi,/target="_blank" rel="noopener noreferrer"/);
+ assert.doesNotMatch(oggi,/Storico giornaliero Farming|Apri lo storico giornaliero|Agenda operativa unica · simulazione/);
+ assert.doesNotMatch(oggi,/Contatti registrati|Follow-up da gestire|Lettere consegnate/);
+ assert.doesNotMatch(page,/getElementById\('statContacts'\)|getElementById\('statFollow'\)|getElementById\('statLetters'\)/);
+ assert.match(oggi,/id="checklist"/);
+ assert.match(oggi,/id="zones"/);
+});
 test('seven functional screens retained and embedded script parses',()=>{
  for(const id of ['oggi','contatti','richiami','lettere','omi','tracker','verifica'])assert.match(page,new RegExp('id="'+id+'"'));
  for(const text of ['Registro notizie','Follow-up pomeridiano','Lettera informativa','Dossier Valutazione Rapida','Tracker 90 giorni','Esporta CSV','Backup'])assert.ok(page.toLowerCase().includes(text.toLowerCase()),text);
