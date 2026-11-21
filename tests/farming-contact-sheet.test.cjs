@@ -14,8 +14,9 @@ test('notizie e contatti mantiene layout e 9 sezioni; foglio visibile per primo'
  assert.match(html,/#102c48/);
  const start=html.indexOf('<section class="panel" id="contatti">');
  const sheet=html.indexOf('id="contactsWorkbook"',start);
- const form=html.indexOf('id="contactForm"',start);
- assert.ok(start>=0&&sheet>start&&form>sheet);
+ const importer=html.indexOf('id="photoImportCard"',start);
+ assert.ok(start>=0&&sheet>start&&importer>sheet);
+ assert.doesNotMatch(html,/id="contactForm"|id="importCsv"|Registro notizie e proprietari · inserimento manuale/);
  for(const id of ['contactsRows','contactsSheetTable','clientDetail','clientDetailForm','photoFiles','photoText','photoDrafts','photoConfirm','contactsExcelExport'])
   assert.match(html,new RegExp('id="'+id+'"'));
  assert.match(html,/src="\.\/contatti-normalizza\.js\?v=20261121-2"/);

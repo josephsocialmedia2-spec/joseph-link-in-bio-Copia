@@ -41,9 +41,16 @@ test('Oggi mostra il solo accesso Excel richiesto, senza storico fittizio e cont
  assert.match(oggi,/id="checklist"/);
  assert.match(oggi,/id="zones"/);
 });
+test('scheda Notizie & Contatti senza inserimento manuale e vecchio CSV',()=>{
+ const section=page.split('<section class="panel" id="contatti">')[1].split('<section class="panel" id="richiami">')[0];
+ assert.doesNotMatch(section,/Registro notizie e proprietari · inserimento manuale|Salva nel registro|id="contactForm"|id="importCsv"/);
+ assert.doesNotMatch(section,/>Importa CSV<|>Esporta CSV</);
+ for(const id of ['contactsWorkbook','contactsRows','clientDetailForm','photoImportCard','photoRead','photoSave'])assert.match(section,new RegExp('id="'+id+'"'));
+ assert.doesNotMatch(page,/getElementById\('contactForm'\)|getElementById\('importCsv'\)/);
+});
 test('seven functional screens retained and embedded script parses',()=>{
  for(const id of ['oggi','contatti','richiami','lettere','omi','tracker','verifica'])assert.match(page,new RegExp('id="'+id+'"'));
- for(const text of ['Registro notizie','Follow-up pomeridiano','Lettera informativa','Dossier Valutazione Rapida','Tracker 90 giorni','Esporta CSV','Backup'])assert.ok(page.toLowerCase().includes(text.toLowerCase()),text);
+ for(const text of ['Foglio Excel · Notizie e Contatti','Follow-up pomeridiano','Lettera informativa','Dossier Valutazione Rapida','Tracker 90 giorni','Scarica foglio per Excel (CSV)','Backup'])assert.ok(page.toLowerCase().includes(text.toLowerCase()),text);
  const script=page.match(/<script>([\s\S]*?)<\/script>/);
  assert.ok(script,'inline app script exists');
  new vm.Script(script[1],{filename:'farming-ui.js'});

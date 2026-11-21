@@ -197,7 +197,7 @@ async function main(){
 
  // Integrated Farming Avigliana workspace: verify actual browser actions in the fourth Acquisition panel.
  await evalJS("document.querySelector('#sv-tab-button-4').click();true");
- await until("Boolean(document.querySelector('#sv-farming-frame')?.contentDocument?.querySelector('#contactForm'))",'Avigliana Farming iframe loaded');
+ await until("Boolean(document.querySelector('#sv-farming-frame')?.contentDocument?.querySelector('#contactsWorkbook'))",'Avigliana Farming contacts loaded');
  assert.equal(await evalJS("document.querySelector('#sv-tab-button-4').getAttribute('aria-selected')"),'true');
  assert.equal(await evalJS("document.querySelectorAll('#sv-acquisizione [role=tab]').length"),4);
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelectorAll('#nav button').length"),9);
@@ -212,8 +212,13 @@ async function main(){
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelectorAll('#omiRows tr').length>=1"),true);
  assert.equal(await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow;w.goto('excelvba');return w.document.querySelector('#excelvba')?.classList.contains('on') && w.document.querySelector('#excelvba a[download]')?.getAttribute('href')==='./excel/CASE247_Acquisizione_Installer.bas'})()"),true);
  await evalJS("document.querySelector('#sv-farming-frame').contentWindow.goto('oggi');true");
- await evalJS("(()=>{const frame=document.querySelector('#sv-farming-frame'),w=frame.contentWindow,f=w.document.querySelector('#contactForm');w.alert=()=>{};w.confirm=()=>true;f.elements.date.value='2026-11-20';f.elements.address.value='Via Test QA 1';f.elements.name.value='';f.elements.source.value='Annuncio pubblico';f.elements.followDate.value='2026-11-23';f.elements.followTime.value='14:30';f.requestSubmit();return true})()");
+ await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow,d=w.document;w.alert=()=>{};w.confirm=()=>true;w.goto('contatti');d.querySelector('#photoText').value='20/11/2026 Avigliana\\nVia Test QA 1 - Cliente: Appartamento prova';d.querySelector('#photoParse').click();d.querySelector('#photoConfirm').checked=true;d.querySelector('#photoSave').click();return true})()");
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#contactForm')===null"),true);
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#importCsv')===null"),true);
  assert.equal(await evalJS("JSON.parse(localStorage.getItem('case247-lab-avigliana-v1')).contacts.some(x=>x.address==='Via Test QA 1')"),true);
+
+ await evalJS("(()=>{const d=document.querySelector('#sv-farming-frame').contentDocument;d.querySelector('#contactsRows [data-contact-id]').click();const f=d.querySelector('#clientDetailForm');f.elements.followDate.value='2026-11-23';f.elements.followTime.value='14:30';f.requestSubmit();return true})()");
+ assert.equal(await evalJS("JSON.parse(localStorage.getItem('case247-lab-avigliana-v1')).contacts.some(x=>x.address==='Via Test QA 1'&&x.followDate==='2026-11-23')"),true);
 
   // Originale: Notizie & Contatti mostra subito il foglio Excel e le schede cliente.
   await evalJS("document.querySelector('#sv-farming-frame').contentWindow.goto('contatti');true");
