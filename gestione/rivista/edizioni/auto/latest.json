@@ -1,0 +1,18 @@
+{
+  "issue_date": "2026-11-21",
+  "edition_type": "prima copia di lancio",
+  "magazine": "Real-Estate-Weekly-2026-11-21.pdf",
+  "seller_letter": "Seller-Letter-2026-11-21.pdf",
+  "qr_target": "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/rivista/edizioni/auto/Real-Estate-Weekly-2026-11-21.pdf",
+  "news": [],
+  "source_log": [
+    {
+      "mode": "seed",
+      "reason": "Primo numero basato su analisi OMI già documentate"
+    }
+  ],
+  "ai_status": "deterministico, senza API",
+  "omi_reference": "Agenzia Entrate OMI 2026/1, Avigliana, dossier estrazione disponibile",
+  "case_studies": "schema dimostrativo; vendite non verificate",
+  "published_sources": "titoli/riassunti da metadati RSS, non fact-checking articolo completo"
+}
