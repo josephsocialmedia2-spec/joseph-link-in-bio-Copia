@@ -264,18 +264,18 @@ def write_documents(today: dt.date, news: list[dict], source_log: list[dict], se
     magazine.append(page(1,
       '<div class="cover-bg"></div><div class="cover-top"><div class="byline">JOSEPH MALAFRONTE</div>'
       '<h1>REAL ESTATE<br>WEEKLY</h1><div class="rule" style="width:60mm"></div>'
-      '<p class="cover-note">IL MAGAZINE IMMOBILIARE<br>DI AVIGLIANA E DEL TERRITORIO</p></div>'
+      f'<p class="cover-note">{esc(approved["cover"]) if approved else "IL MAGAZINE IMMOBILIARE<br>DI AVIGLIANA E DEL TERRITORIO"}</p></div>'
       +cover_visual()+
       '<div class="cover-ribbon"><h2 style="color:white;font-size:22pt">La casa, il mercato,<br>le decisioni che contano.</h2>'
       '<p class="cover-note">Dati e promozione senza promesse facili.</p>'
       +here+'</div>',"EDIZIONE SPECIALE").replace('class="page"','class="page mag-cover"',1))
     magazine.append(page(2,
       '<div class="caps" style="margin-top:9mm">Sommario ed editoriale</div>'
-      '<h1>Il mercato comincia dalle domande giuste.</h1><div class="asymmetric" style="margin-top:10mm">'
+      f'<h1>{esc(approved["cover"]) if approved else "Il mercato comincia dalle domande giuste."}</h1><div class="asymmetric" style="margin-top:10mm">'
       '<div><h3>IN QUESTO NUMERO</h3>'
       +''.join(f'<div class="lineitem"><span class="listnum">{i:02d}</span> {esc(t)}</div>' for i,t in [(3,'Analisi del mercato'),(4,'Dati OMI e credito'),(5,'Vivere il territorio'),(6,'Il metodo di promozione'),(7,'Risultati e trasparenza'),(8,'Servizi e contatti')])+
       '</div><div><div class="caps">La lettera del direttore</div><h2>Una casa non è un numero.</h2>'
-      '<p>Gentili lettori, in questa edizione di Real Estate Weekly scegliamo un criterio semplice: distinguere i dati da ciò che possiamo soltanto ipotizzare. Un prezzo pubblicato non coincide con un prezzo concluso, e un valore OMI non è una valutazione individuale.</p>'
+      f'<p>{esc(approved["editorial"]) if approved else "Gentili lettori, in questa edizione di Real Estate Weekly scegliamo un criterio semplice: distinguere i dati da ciò che possiamo soltanto ipotizzare. Un prezzo pubblicato non coincide con un prezzo concluso, e un valore OMI non è una valutazione individuale."}</p>'
       '<p>Il mercato di Avigliana e Sant’Ambrogio va interpretato con attenzione alla microzona, alle condizioni dell’immobile e alla qualità della comunicazione. Le notizie nazionali aiutano a orientarsi, ma non sostituiscono una verifica locale.</p>'
       '<p>Il mio lavoro riguarda il marketing immobiliare: costruire presentazioni chiare, organizzare la promozione e misurarne la risposta. Mediazione, valutazioni professionali e trattative restano ai soggetti abilitati.</p>'
       '<div class="signature">Joseph Malafronte</div></div></div>'
