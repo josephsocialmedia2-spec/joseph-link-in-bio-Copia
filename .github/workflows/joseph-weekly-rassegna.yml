@@ -4,6 +4,10 @@ on:
     # Due possibili ore UTC per mantenere le 08:00 Europe/Rome in CET/CEST.
     - cron: '0 6,7 * * 1,6'
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/joseph-weekly-rassegna.yml'
 permissions:
   contents: write
 concurrency:
@@ -21,7 +25,7 @@ jobs:
           import os, datetime
           from zoneinfo import ZoneInfo
           now=datetime.datetime.now(ZoneInfo("Europe/Rome"))
-          manual=os.environ.get("GITHUB_EVENT_NAME")=="workflow_dispatch"
+          manual=os.environ.get("GITHUB_EVENT_NAME") in ("workflow_dispatch","push")
           valid=(now.weekday() in (0,5) and now.hour==8)
           with open(os.environ["GITHUB_OUTPUT"],"a",encoding="utf-8") as f:
               f.write("run="+str(manual or valid).lower()+"\n")

@@ -11,7 +11,27 @@ concurrency:
   group: joseph-weekly-final-pdf
   cancel-in-progress: false
 jobs:
+  precheck:
+    runs-on: ubuntu-latest
+    outputs:
+      publish: ${{ steps.check.outputs.publish }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Controlla se esiste un numero chiuso ed approvato
+        id: check
+        run: |
+          python3 - <<'PY'
+          import json, os
+          with open('gestione/rivista/data/approved.json',encoding='utf-8') as f:
+              item=json.load(f)
+          ok=item.get('closed') is True
+          with open(os.environ['GITHUB_OUTPUT'],'a',encoding='utf-8') as f:
+              f.write('publish='+str(ok).lower()+'\n')
+          print('Edizione chiusa e approvata:',ok)
+          PY
   approved-pdf:
+    needs: precheck
+    if: needs.precheck.outputs.publish == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
