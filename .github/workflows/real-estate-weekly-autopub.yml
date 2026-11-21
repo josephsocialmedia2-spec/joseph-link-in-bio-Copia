@@ -1,0 +1,137 @@
+name: Real Estate Weekly · Magazine e Seller Letter automatici
+
+on:
+  schedule:
+    # 07:00 Europe/Rome: 05:00 UTC d'estate e 06:00 UTC d'inverno.
+    - cron: '0 5,6 * * 1'
+  workflow_dispatch:
+    inputs:
+      seed:
+        description: "Riproduci l'edizione di lancio del 21/11/2026 (senza RSS)"
+        type: boolean
+        default: false
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/real_estate_weekly_autopub.py'
+      - '.github/workflows/real-estate-weekly-autopub.yml'
+      - 'tests/real_estate_weekly_autopub_test.py'
+  pull_request:
+    paths:
+      - 'scripts/real_estate_weekly_autopub.py'
+      - '.github/workflows/real-estate-weekly-autopub.yml'
+      - 'tests/real_estate_weekly_autopub_test.py'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: real-estate-weekly-autopub
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Seleziona orario Roma ed edizione
+        id: clock
+        env:
+          EVENT: ${{ github.event_name }}
+          SEED_INPUT: ${{ inputs.seed }}
+        run: |
+          python3 - <<'PY'
+          import datetime, os
+          from zoneinfo import ZoneInfo
+          now = datetime.datetime.now(ZoneInfo('Europe/Rome'))
+          event=os.environ['EVENT']
+          scheduled=(event=='schedule' and now.weekday()==0 and now.hour==7)
+          eligible=(event in ('pull_request','push','workflow_dispatch') or scheduled)
+          seed=(event in ('pull_request','push') or
+                (event=='workflow_dispatch' and os.environ.get('SEED_INPUT','false').lower()=='true'))
+          with open(os.environ['GITHUB_OUTPUT'],'a',encoding='utf-8') as f:
+              f.write(f'run={str(eligible).lower()}\nseed={str(seed).lower()}\n')
+          print(f'Roma={now.isoformat()} event={event} run={eligible} seed={seed}')
+          PY
+      - name: Dipendenze per impaginazione A4
+        if: steps.clock.outputs.run == 'true'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y fonts-dejavu-core libpango-1.0-0 libharfbuzz0b libpangoft2-1.0-0
+          python -m pip install --disable-pip-version-check 'weasyprint>=62,<69' 'pypdf>=5,<8' 'qrcode[pil]>=8,<10' 'feedparser>=6,<7'
+      - name: Sintassi e controlli editoriali
+        if: steps.clock.outputs.run == 'true'
+        run: |
+          python3 -m py_compile scripts/real_estate_weekly_autopub.py
+          python3 -m unittest discover -s tests -p real_estate_weekly_autopub_test.py -v
+      - name: Genera prima copia o numero settimanale
+        if: steps.clock.outputs.run == 'true'
+        env:
+          SEED: ${{ steps.clock.outputs.seed }}
+        run: |
+          if [ "$SEED" = "true" ]; then
+            python3 scripts/real_estate_weekly_autopub.py --seed --issue 2026-11-21
+          else
+            python3 scripts/real_estate_weekly_autopub.py
+          fi
+      - name: QA PDF, URL QR e assenza di dati di vendita inventati
+        if: steps.clock.outputs.run == 'true'
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from pypdf import PdfReader
+          import json
+          folder=Path('gestione/rivista/edizioni/auto')
+          m=json.loads((folder/'latest.json').read_text(encoding='utf-8'))
+          assert m['qr_target'].startswith('https://josephsocialmedia2-spec.github.io/')
+          assert m['qr_target'].endswith(m['magazine'])
+          assert 'vendite non verificate' in m['case_studies']
+          for key,pages in [('magazine',8),('seller_letter',2)]:
+              pdf=PdfReader(str(folder/m[key]))
+              assert len(pdf.pages)==pages
+              for page in pdf.pages:
+                  assert abs(float(page.mediabox.width)-595.28)<2
+                  assert abs(float(page.mediabox.height)-841.89)<2
+              print(f'OK {m[key]}: {len(pdf.pages)} pagine A4')
+          assert (folder/'rivista-latest.pdf').exists()
+          assert (folder/'seller-letter-latest.pdf').exists()
+          print('QR target:',m['qr_target'])
+          PY
+      - name: Conserva i PDF del test o del rilascio
+        if: always() && steps.clock.outputs.run == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: real-estate-weekly-magazine-seller-letter
+          path: |
+            gestione/rivista/edizioni/auto/*.pdf
+            gestione/rivista/edizioni/auto/*.png
+            gestione/rivista/edizioni/auto/latest.json
+          retention-days: 90
+          if-no-files-found: warn
+      - name: Pubblica automaticamente su GitHub Pages (radice main)
+        if: steps.clock.outputs.run == 'true' && github.event_name != 'pull_request'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add gestione/rivista/edizioni/auto/
+          if git diff --cached --quiet; then
+            echo "Nessuna modifica ai PDF da pubblicare"
+            exit 0
+          fi
+          git commit -m "publish(weekly): magazine e seller letter A4 con QR"
+          for i in 1 2 3; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              echo "Rivista e lettera pubblicate nel branch main"
+              exit 0
+            fi
+            sleep 3
+          done
+          echo "::error::Impossibile aggiornare il branch main dopo tre tentativi"
+          exit 1
