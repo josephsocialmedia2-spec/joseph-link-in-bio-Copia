@@ -201,6 +201,9 @@ async function main(){
  assert.equal(await evalJS("document.querySelector('#sv-tab-button-4').getAttribute('aria-selected')"),'true');
  assert.equal(await evalJS("document.querySelectorAll('#sv-acquisizione [role=tab]').length"),4);
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelectorAll('#nav button').length"),9);
+ assert.equal(await evalJS("getComputedStyle(document.querySelector('#sv-farming-frame').contentDocument.querySelector('header.top')).display"),'none');
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('header.top').textContent.includes('Installa VBA Acquisizione')"),true);
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#nav').getBoundingClientRect().height>0"),true);
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelectorAll('#omiRows tr').length>=1"),true);
  assert.equal(await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow;w.goto('excelvba');return w.document.querySelector('#excelvba')?.classList.contains('on') && w.document.querySelector('#excelvba a[download]')?.getAttribute('href')==='./excel/CASE247_Acquisizione_Installer.bas'})()"),true);
  await evalJS("document.querySelector('#sv-farming-frame').contentWindow.goto('oggi');true");
