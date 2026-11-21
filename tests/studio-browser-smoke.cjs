@@ -218,7 +218,6 @@ async function main(){
   await evalJS("(()=>{const d=document.querySelector('#sv-farming-frame').contentDocument;d.querySelector('#photoText').value='21/11/2026 Avigliana\\nVia Torino 41 - Cliente: Trilocale A\\nVia Roma 8 - Cliente: Casa B';d.querySelector('#photoParse').click();return true})()");
   assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelectorAll('#photoDrafts fieldset').length"),2);
   await evalJS("(()=>{const d=document.querySelector('#sv-farming-frame').contentDocument;d.querySelector('#photoConfirm').checked=true;d.querySelector('#photoSave').click();return true})()");
-  console.log("PHOTO DEBUG",await evalJS("JSON.stringify({contacts:JSON.parse(localStorage.getItem(\'case247-lab-avigliana-v1\')).contacts.map(x=>({date:x.date,address:x.address,name:x.name})),status:document.querySelector(\'#sv-farming-frame\').contentDocument.querySelector(\'#photoStatus\').textContent})"));
   assert.equal(await evalJS("JSON.parse(localStorage.getItem('case247-lab-avigliana-v1')).contacts.some(x=>x.address==='Via Torino 41')"),true);
   assert.equal(await evalJS("JSON.parse(localStorage.getItem('case247-lab-avigliana-v1')).contacts.some(x=>x.address==='Via Roma 8')"),true);
   assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#contactsRows').textContent.includes('Via Torino 41')"),true);
