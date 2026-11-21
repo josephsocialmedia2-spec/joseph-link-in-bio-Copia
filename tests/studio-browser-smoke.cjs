@@ -206,6 +206,25 @@ async function main(){
  await evalJS("document.querySelector('#sv-farming-frame').contentWindow.goto('oggi');true");
  await evalJS("(()=>{const frame=document.querySelector('#sv-farming-frame'),w=frame.contentWindow,f=w.document.querySelector('#contactForm');w.alert=()=>{};w.confirm=()=>true;f.elements.date.value='2026-11-20';f.elements.address.value='Via Test QA 1';f.elements.name.value='';f.elements.source.value='Annuncio pubblico';f.elements.followDate.value='2026-11-23';f.elements.followTime.value='14:30';f.requestSubmit();return true})()");
  assert.equal(await evalJS("JSON.parse(localStorage.getItem('case247-lab-avigliana-v1')).contacts.some(x=>x.address==='Via Test QA 1')"),true);
+
+  // Originale: Notizie & Contatti mostra subito il foglio Excel e le schede cliente.
+  await evalJS("document.querySelector('#sv-farming-frame').contentWindow.goto('contatti');true");
+  await until("document.querySelector('#sv-farming-frame')?.contentDocument?.querySelector('#contactsSheetTable')?.textContent.includes('Via Test QA 1')",'foglio Acquisizione mostra contatti già salvati');
+  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelectorAll('#contactsWorkbook').length"),1);
+  await evalJS("(()=>{const d=document.querySelector('#sv-farming-frame').contentDocument;d.querySelector('#contactsRows [data-contact-id]').click();return true})()");
+  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#clientDetail').hidden"),false);
+  await evalJS("(()=>{const d=document.querySelector('#sv-farming-frame').contentDocument,f=d.querySelector('#clientDetailForm');f.elements.name.value='Appartamento QA';f.elements.notes.value='Sopralluogo registrato';f.requestSubmit();return true})()");
+  assert.equal(await evalJS("JSON.parse(localStorage.getItem('case247-lab-avigliana-v1')).contacts.some(x=>x.address==='Via Test QA 1'&&x.name==='Appartamento QA')"),true);
+  await evalJS("(()=>{const d=document.querySelector('#sv-farming-frame').contentDocument;d.querySelector('#photoText').value='21/11/2026 Avigliana\\nVia Torino 41 - Cliente: Trilocale A\\nVia Roma 8 - Cliente: Casa B';d.querySelector('#photoParse').click();return true})()");
+  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelectorAll('#photoDrafts fieldset').length"),2);
+  await evalJS("(()=>{const d=document.querySelector('#sv-farming-frame').contentDocument;d.querySelector('#photoConfirm').checked=true;d.querySelector('#photoSave').click();return true})()");
+  assert.equal(await evalJS("JSON.parse(localStorage.getItem('case247-lab-avigliana-v1')).contacts.some(x=>x.address==='Via Torino 41')"),true);
+  assert.equal(await evalJS("JSON.parse(localStorage.getItem('case247-lab-avigliana-v1')).contacts.some(x=>x.address==='Via Roma 8')"),true);
+  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#contactsRows').textContent.includes('Via Torino 41')"),true);
+  await evalJS("(()=>{const k='case247-farming-daily-history-v1',h=JSON.parse(localStorage.getItem(k)||'[]');h.push({date:'2026-11-21',comune:'Avigliana',zone:'A',address:'Via Diario QA 99',immobile:'Monolocale',type:'Notizia verificata',quantity:1,outcome:'Completato'});localStorage.setItem(k,JSON.stringify(h));const w=document.querySelector('#sv-farming-frame').contentWindow;w.dispatchEvent(new StorageEvent('storage',{key:k}));return true})()");
+  await until("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#contactsRows')?.textContent.includes('Via Diario QA 99')",'diario Farming appare senza creare contatti fittizi');
+  console.log('PASS: Notizie & Contatti foglio Excel, scheda cliente, testo foto e diario');
+
  assert.equal(await evalJS("JSON.parse(localStorage.getItem('case247-cc-tasks-v1')).some(x=>x.source==='case247-farming-avigliana'&&x.date==='2026-11-23'&&x.time==='14:30')"),true);
  await until("document.querySelector('#sv-farming-frame').style.height.endsWith('px')",'same-origin embedded height adjusted');
  await until("document.querySelector('#sv-farming-frame')?.contentWindow?.CASE247OMI?.getData()?.quotations?.length===35",'all 35 sourced OMI quotes loaded');
