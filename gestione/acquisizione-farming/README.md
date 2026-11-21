@@ -66,3 +66,14 @@ Per lanciare l'installer: importare il `.bas` in una cartella `.xlsm`, poi preme
 - Il CSV comprende soltanto 12 campi ammessi e depura sequenze che sembrano recapiti telefonici; non esporta numeri di telefono o note libere del cliente.
 - Per aggiornamenti ripetuti: aprire il file Excel locale **Acquisizione + PESA**, salvarlo come `.xlsm`, importare il modulo `CASE247_Acquisizione_Installer.bas` e lanciare `InstallaAcquisizioneCASE247` con Alt+F8. Da quel momento la macro `AggiornaRisultatiFarmingDaCSV` aggiorna la stessa riga sulla base della chiave, sostituendo (non sommando) i conteggi importati e preservando tutte le misurazioni sul foglio PESA. Il file mantiene **esattamente 2 schede**.
 - Le macro non girano su GitHub Pages e l'esecuzione desktop non è attestata dai soli test web. Per aggiornare un file su un altro dispositivo occorre esportare/importare il CSV o trasferire il file in modo protetto.
+
+
+## CRM aggiornato · Acquisizione e PESA (21/11/2026)
+
+Apri `/gestione/acquisizione-farming/crm/` dalla testata o dalla prima scheda del Laboratorio. È una nuova pagina operativa con **esattamente 2 schede**.
+
+**ACQUISIZIONE.** Il CRM legge automaticamente dallo stesso browser `case247-farming-daily-history-v1` (Storico Farming) e `case247-lab-avigliana-v1` (Notizie & Contatti), una riga per comune + via + riferimento. Mostra soltanto risultati conclusi e verificabili, senza attività pianificate. Il modulo per un nuovo risultato registra l'evento come `Completato` nello storico: non crea un secondo archivio parallelo. Aggiornamento automatico con eventi `storage`, ritorno in pagina e lettura periodica durante la visualizzazione. I telefoni non hanno campi dedicati e sequenze che sembrano recapiti sono rimosse dalle esportazioni.
+
+**PESA.** Date 21/11/2026–21/11/2027 (366), pesate, IMC per adulti, grafico SVG. La prima apertura richiede una password scelta dall'utente (almeno 10 caratteri); PBKDF2 SHA-256 e AES-GCM memorizzano nel browser soltanto il contenuto cifrato. La password non viene conservata e non è recuperabile. Il foglio PESA può essere importato da un Excel locale per ripristinare le misurazioni esistenti.
+
+**Excel.** Il comando "Esporta Excel · 2 fogli" produce uno snapshot `.xlsx` **senza macro**, comprendente Acquisizione + PESA; richiede PESA sbloccata e carica SheetJS dal CDN soltanto al momento dell'import/export. In alternativa "Esporta risultati CSV per VBA" consente di aggiornare la cartella `.xlsm` esistente mantenendo la macro. Un sito statico GitHub Pages **non può modificare automaticamente** un file Excel salvato sul PC, né sincronizzare dati privati fra dispositivi senza un backend autenticato. Questa implementazione rende automatico l'aggiornamento **del CRM nella pagina**, non la modifica autonoma del file sul disco. Dati locali e cifratura browser non sostituiscono un backup sicuro.
