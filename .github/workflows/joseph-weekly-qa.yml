@@ -68,14 +68,25 @@ jobs:
           print('PASS: relevance filter rejects lifestyle/ads and keeps real estate/local works')
           PY
           node --check scripts/joseph_weekly_render.cjs
-      - name: Blocca file approvazione incompleto
+      - name: Verifica approvazione e gate editoriale senza falsi positivi
         run: |
-          if python3 scripts/joseph_weekly_editorial.py validate; then
-            echo "::error::Placeholder approved.json passed validation!"
-            exit 1
-          else
-            echo "Approval gate: OK, placeholder is blocked"
-          fi
+          python3 - <<'PY'
+          import sys,json
+          from pathlib import Path
+          sys.path.insert(0,'scripts')
+          from joseph_weekly_editorial import validate
+          data=json.loads(Path('gestione/rivista/data/approved.json').read_text(encoding='utf-8'))
+          if data.get('closed') is True:
+              model=validate()
+              print('PASS: edizione approvata valida',model['issue'])
+          else:
+              try:
+                  validate()
+              except ValueError:
+                  print('PASS: numero non chiuso, pubblicazione bloccata')
+              else:
+                  raise AssertionError('Unapproved manifest accepted unexpectedly')
+          PY
       - name: Install Chromium Playwright and PDF checker
         run: |
           npm install --no-save playwright@1.57.0
