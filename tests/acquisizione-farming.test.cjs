@@ -80,20 +80,32 @@ test('OMI 2026/1 sources are linked in the integrated Farming tab',()=>{
 });
 
 
-test('farming VBA genera solo Acquisizione e PESA, senza contatti reali',()=>{
+test('farming VBA installa due schede nello stesso workbook, senza contatti reali',()=>{
  const bas=get('gestione/acquisizione-farming/excel/CASE247_Acquisizione_Installer.bas');
  assert.match(page,/id="excelvba"/);
  assert.match(page,/2 sole schede: Acquisizione \+ PESA/);
  assert.match(page,/excel\/CASE247_Acquisizione_Installer\.bas/);
  assert.match(bas,/Public Sub InstallaAcquisizioneCASE247/);
- assert.match(bas,/Workbooks\.Add\(xlWBATWorksheet\)/);
- assert.match(bas,/zona\.Name = "Acquisizione"/);
+ assert.match(bas,/Set wb = ThisWorkbook/);
+ assert.match(bas,/If wb.Worksheets.Count > 2 Then/);
+ assert.match(bas,/farming\.Name = "Acquisizione"/);
  assert.match(bas,/pesa\.Name = "PESA"/);
  for(const heading of ['Volantini consegnati','Lettere consegnate','Notizie verificate','Risposte ricevute','Incontri svolti'])
    assert.ok(bas.includes(heading),heading);
  assert.match(bas,/INDICE DI MASSA CORPOREA/);
  assert.match(bas,/LOOKUP\(2,1\//);
  assert.match(bas,/ChartObjects\.Add/);
- assert.match(bas,/GetSaveAsFilename/);
+ assert.match(bas,/GetOpenFilename/);
+ assert.match(bas,/AggiornaRisultatiFarmingDaCSV/);
  assert.doesNotMatch(bas,/95[.,]70|Registro Peso|371 370 8294|telefono_fisso|cellulare/);
+});
+
+test('Farming risultati CSV esposto nella scheda Excel, senza importazioni automatiche',()=>{
+ assert.match(page,/src="\.\/farming-results\.js"/);
+ assert.match(page,/function exportCompletedFarming/);
+ assert.match(page,/Esporta risultati raggiunti \(CSV\)/);
+ const vba=get('gestione/acquisizione-farming/excel/CASE247_Acquisizione_Installer.bas');
+ assert.match(vba,/Public Sub AggiornaRisultatiFarmingDaCSV/);
+ assert.match(vba,/Set wb = ThisWorkbook/);
+ assert.match(vba,/pesa\.Name = "PESA"/);
 });
