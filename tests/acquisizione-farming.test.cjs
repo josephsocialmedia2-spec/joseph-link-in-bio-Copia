@@ -14,7 +14,7 @@ test('farming is first Acquisition subtab and preserves the original three',()=>
  assert.match(home,/id="sv-acquisizione"/);
  assert.match(home,/id="sv-tab-button-4"[^>]*aria-controls="sv-tab-4"/);
  assert.match(home,/id="sv-tab-4"[^>]*role="tabpanel"/);
- assert.match(home,/id="sv-farming-frame"[^>]*src="\.\/acquisizione-farming\/\?omi=20261120-1&rev=20261121-contatti-v2"/);
+ assert.match(home,/id="sv-farming-frame"[^>]*src="\.\/acquisizione-farming\/\?omi=20261120-1&rev=20261121-headless1&embed=hide-header"/);
  for(let id=1;id<=3;id++)assert.match(home,new RegExp('id="sv-tab-button-'+id+'"'));
  assert.match(home,/sv-acquisizione\.js\?v=20261120-farming1/);
  assert.match(home,/sv-acquisizione\.css\?v=20261120-farming1/);
@@ -22,6 +22,13 @@ test('farming is first Acquisition subtab and preserves the original three',()=>
  const js=get('gestione/sv-acquisizione.js');
  assert.match(js,/case247:farming-height/);
  assert.match(js,/event\.origin!==window\.location\.origin/);
+});
+test('solo dentro la dashboard l’intestazione richiesta non viene mostrata',()=>{
+ assert.match(page,/html\.farming-header-hidden header\.top\{display:none!important\}/);
+ assert.match(page,/get\('embed'\)==='hide-header'/);
+ assert.match(page,/CASE247 \/ IMMOBILIARE LA SACRA/);
+ assert.match(page,/id="nav"/);
+ assert.match(home,/&embed=hide-header"/);
 });
 test('seven functional screens retained and embedded script parses',()=>{
  for(const id of ['oggi','contatti','richiami','lettere','omi','tracker','verifica'])assert.match(page,new RegExp('id="'+id+'"'));
@@ -75,7 +82,7 @@ test('letter print and daily tracker are locally auditable',()=>{
 
 test('OMI 2026/1 sources are linked in the integrated Farming tab',()=>{
  assert.match(page,/src="\.\/omi-avigliana\.js\?v=20261120-omi1"/);
- assert.match(home,/src="\.\/acquisizione-farming\/\?omi=20261120-1&rev=20261121-contatti-v2"/);
+ assert.match(home,/src="\.\/acquisizione-farming\/\?omi=20261120-1&rev=20261121-headless1&embed=hide-header"/);
  assert.match(get('gestione/acquisizione-farming/omi-avigliana.js'),/omi-avigliana-2026-1\.json/);
 });
 
