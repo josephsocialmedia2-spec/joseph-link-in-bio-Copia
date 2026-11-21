@@ -70,7 +70,7 @@ Per lanciare l'installer: importare il `.bas` in una cartella `.xlsm`, poi preme
 
 ## CRM aggiornato · Acquisizione e PESA (21/11/2026)
 
-Apri `/gestione/acquisizione-farming/crm/` dalla testata o dalla prima scheda del Laboratorio. È una nuova pagina operativa con **esattamente 2 schede**.
+Il CRM dedicato resta accessibile tramite l'URL diretto `/gestione/acquisizione-farming/crm/`, senza introdurre nuovi pulsanti o modifiche di impaginazione nella pagina originale del Laboratorio. È una nuova pagina operativa con **esattamente 2 schede**.
 
 **ACQUISIZIONE.** Il CRM legge automaticamente dallo stesso browser `case247-farming-daily-history-v1` (Storico Farming) e `case247-lab-avigliana-v1` (Notizie & Contatti), una riga per comune + via + riferimento. Mostra soltanto risultati conclusi e verificabili, senza attività pianificate. Il modulo per un nuovo risultato registra l'evento come `Completato` nello storico: non crea un secondo archivio parallelo. Aggiornamento automatico con eventi `storage`, ritorno in pagina e lettura periodica durante la visualizzazione. I telefoni non hanno campi dedicati e sequenze che sembrano recapiti sono rimosse dalle esportazioni.
 
