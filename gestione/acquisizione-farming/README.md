@@ -57,3 +57,12 @@ La scheda «Excel · VBA» all'interno del laboratorio mostra il modulo [CASE247
 Il collegamento pubblico al modulo VBA ora genera una **nuova cartella .xlsx con esattamente due fogli**: `Acquisizione` (solo risultati effettivamente raggiunti nel farming di zona, per riga cliente/immobile) e `PESA` (registro annuale peso, IMC, grafico). Nessuna rubrica e nessun dato di peso/altezza predefinito nel repository pubblico. I dati effettivi sono inseriti localmente tramite Excel. Nessuna sincronizzazione automatica con il CRM web. I moduli web di acquisizione e OMI restano invariati.
 
 Per lanciare l'installer: importare il `.bas` in una cartella `.xlsm`, poi premere ALT+F8 e avviare `InstallaAcquisizioneCASE247`. La macro non tocca il file di origine, apre una nuova cartella con due fogli, chiede localmente le misure e consente il salvataggio in `.xlsx`. L'esecuzione della macro non è collaudabile su GitHub Pages.
+
+## Implementazione CSV → Excel .xlsm (21/11/2026)
+
+- La scheda `Excel · VBA` offre **Esporta risultati raggiunti (CSV)**. Il file viene generato localmente da `case247-farming-daily-history-v1` (Storico Farming) e `case247-lab-avigliana-v1` (Notizie & Contatti), senza inviare dati a GitHub o a server.
+- Sono inclusi esclusivamente eventi dichiarati **conclusi**: consegne con esito `Completato`, osservazioni concluse, risposte spontanee, notizie con stato `Qualificato` e incontri registrati come effettuati. Preparazione, attività future e follow-up non contribuiscono.
+- Una riga per chiave `Comune + Via e civico + riferimento cliente/immobile`; i conteggi sono consolidati sullo stesso risultato (attenzione alle registrazioni duplicative tra registri).
+- Il CSV comprende soltanto 12 campi ammessi e depura sequenze che sembrano recapiti telefonici; non esporta numeri di telefono o note libere del cliente.
+- Per aggiornamenti ripetuti: aprire il file Excel locale **Acquisizione + PESA**, salvarlo come `.xlsm`, importare il modulo `CASE247_Acquisizione_Installer.bas` e lanciare `InstallaAcquisizioneCASE247` con Alt+F8. Da quel momento la macro `AggiornaRisultatiFarmingDaCSV` aggiorna la stessa riga sulla base della chiave, sostituendo (non sommando) i conteggi importati e preservando tutte le misurazioni sul foglio PESA. Il file mantiene **esattamente 2 schede**.
+- Le macro non girano su GitHub Pages e l'esecuzione desktop non è attestata dai soli test web. Per aggiornare un file su un altro dispositivo occorre esportare/importare il CSV o trasferire il file in modo protetto.
