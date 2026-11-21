@@ -8,6 +8,7 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/joseph-weekly-rassegna.yml'
+      - 'scripts/joseph_weekly_collect.py'
 permissions:
   contents: write
 concurrency:
