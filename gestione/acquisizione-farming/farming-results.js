@@ -82,7 +82,7 @@
     return rows;
   }
   function escapeCell(v){
-    let s=typeof v==='number'?String(v):plain(v,500);
+    let s=typeof v==='number'?String(v):(/^\d{4}-\d{2}-\d{2}$/.test(String(v))?String(v):plain(v,500));
     return '"'+s.replace(/"/g,'""')+'"';
   }
   function csv(rows){
