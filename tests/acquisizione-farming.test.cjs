@@ -50,7 +50,7 @@ test('scheda Notizie & Contatti senza inserimento manuale e vecchio CSV',()=>{
 });
 test('seven functional screens retained and embedded script parses',()=>{
  for(const id of ['oggi','contatti','richiami','lettere','omi','tracker','verifica'])assert.match(page,new RegExp('id="'+id+'"'));
- for(const text of ['Registro notizie','Follow-up pomeridiano','Lettera informativa','Dossier Valutazione Rapida','Tracker 90 giorni','Esporta CSV','Backup'])assert.ok(page.toLowerCase().includes(text.toLowerCase()),text);
+ for(const text of ['Foglio Excel · Notizie e Contatti','Follow-up pomeridiano','Lettera informativa','Dossier Valutazione Rapida','Tracker 90 giorni','Esporta CSV','Backup'])assert.ok(page.toLowerCase().includes(text.toLowerCase()),text);
  const script=page.match(/<script>([\s\S]*?)<\/script>/);
  assert.ok(script,'inline app script exists');
  new vm.Script(script[1],{filename:'farming-ui.js'});
