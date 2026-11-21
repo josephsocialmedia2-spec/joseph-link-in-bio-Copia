@@ -196,10 +196,12 @@ async function main(){
  console.log('PASS: tab order persists after reload and CRM workbook configuration opens');
 
  // Integrated Farming Avigliana workspace: verify actual browser actions in the fourth Acquisition panel.
- await evalJS("document.querySelector('#sv-tab-button-4').click();true");
  await until("Boolean(document.querySelector('#sv-farming-frame')?.contentDocument?.querySelector('#contactsWorkbook'))",'Avigliana Farming contacts loaded');
- assert.equal(await evalJS("document.querySelector('#sv-tab-button-4').getAttribute('aria-selected')"),'true');
- assert.equal(await evalJS("document.querySelectorAll('#sv-acquisizione [role=tab]').length"),4);
+ assert.equal(await evalJS("document.querySelectorAll('#sv-acquisizione [role=tab]').length"),0);
+ assert.equal(await evalJS("document.querySelector('#sv-acquisizione').textContent.includes('Sistema di Acquisizione Immobiliare')"),false);
+ assert.equal(await evalJS("document.querySelector('#sv-acquisizione').textContent.includes('Standard Venditore')"),false);
+ assert.equal(await evalJS("document.querySelector('#sv-tab-4').getBoundingClientRect().height>0"),true);
+ assert.equal(await evalJS("Boolean(document.querySelector('.saas-workbook-action')&&document.querySelector('.saas-workbook-config'))"),true);
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelectorAll('#nav button').length"),9);
  assert.equal(await evalJS("Boolean(document.querySelector('#sv-farming-frame').contentDocument.querySelector('#oggi #farming-onedrive-excel'))"),true);
  assert.equal(await evalJS("(()=>{const a=document.querySelector('#sv-farming-frame').contentDocument.querySelector('#farming-onedrive-excel');return a.href.startsWith('https://1drv.ms/x/c/')&&a.target==='_blank'})()"),true);
