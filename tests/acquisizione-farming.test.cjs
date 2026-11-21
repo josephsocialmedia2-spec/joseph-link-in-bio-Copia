@@ -16,7 +16,7 @@ test('Acquisizione senza titolo e quattro sottoschede, ma Farming sempre visibil
  assert.doesNotMatch(home,/Standard Venditore &amp; Segreti|Networking &amp; WhatsApp|Strategia Video \(8 Titoli\)/);
  assert.match(home,/id="sv-tab-4" class="sv-panel sv-farming-panel"/);
  assert.doesNotMatch(home,/id="sv-tab-4"[^>]+hidden/);
- assert.match(home,/id="sv-farming-frame"[^>]*src="\.\/acquisizione-farming\/\?omi=20261120-1&rev=20261121-headless1&embed=hide-header"/);
+ assert.match(home,/id="sv-farming-frame"[^>]*src="\.\/acquisizione-farming\/\?omi=20261120-1&rev=20261121-letters-weekly1&embed=hide-header"/);
  assert.match(home,/sv-acquisizione\.js\?v=20261121-no-quattro-tab1/);
  assert.match(home,/control-center\.js\?v=20261120-farming1/);
  const js=get('gestione/sv-acquisizione.js');
@@ -85,26 +85,31 @@ test('follow-ups write into the existing Agenda on this browser, without extra A
  assert.match(cc,/event\.key!==TASKKEY/);
  assert.equal((home.match(/id="case247-control-center"/g)||[]).length,1);
 });
-test('letter print and daily tracker are locally auditable',()=>{
- assert.match(page,/function printLetter/);
- assert.match(page,/Stampa richiesta/);
- assert.match(page,/markLetterDelivered/);
- assert.match(page,/printHtml/);
- assert.match(page,/makeLetterQr/);
- assert.match(page,/src="\.\/qrcode\.js"/);
- assert.match(get('gestione/acquisizione-farming/qrcode.js'),/var qrcode = function/);
- assert.match(get('gestione/acquisizione-farming/QR-LICENSE.txt'),/MIT License/);
-
- assert.match(page,/Salva come PDF/);
+test('Lettere & Stampa mostra il magazine sfogliabile e la lettera PDF aggiornata',()=>{
+ const section=page.split('<section class="panel" id="lettere">')[1].split('<section class="panel" id="omi">')[0];
+ for(const id of ['rew-flipbook','rew-letter-preview','rew-open-flipbook','rew-download-magazine','rew-download-spreads','rew-download-letter'])assert.match(section,new RegExp('id="'+id+'"'));
+ assert.match(section,/src="\.\.\/lettere-stampa\/"/);
+ assert.match(section,/Lettera_Joseph_Malafronte_AGGIORNATA_A4\.pdf/);
+ assert.doesNotMatch(section,/Immobiliare La Sacra|letterType|letterZone|letterPreview|Centro stampa · lettere A4\/A5/);
+ assert.doesNotMatch(page,/function previewLetter\(|function printLetter\(|function makeLetterQr\(/);
+ const viewer=get('gestione/lettere-stampa/index.html');
+ assert.match(viewer,/const PAGES=\[/);
+ assert.match(viewer,/id="next"/);
+ assert.match(viewer,/showFallback/);
+ for(const name of ['Real_Estate_Weekly_Joseph_Malafronte_EDITORIALE_A4.pdf','Real_Estate_Weekly_DOPPIE_PAGINE.pdf','Lettera_Joseph_Malafronte_AGGIORNATA_A4.pdf']){
+  const pdf=fs.readFileSync(path.join(root,'gestione/lettere-stampa',name));
+  assert.equal(pdf.subarray(0,5).toString(),'%PDF-');
+  assert.ok(pdf.length>1000000,'PDF originale deve essere completo: '+name);
+ }
+ assert.match(page,/function printHtml/);
  assert.match(page,/setUTCDate\(start\.getUTCDate\(\)-89\)/);
  assert.match(page,/function exportTracker/);
  assert.match(page,/function downloadBackup/);
- assert.match(page,/function parseCSV/);
 });
 
 test('OMI 2026/1 sources are linked in the integrated Farming tab',()=>{
  assert.match(page,/src="\.\/omi-avigliana\.js\?v=20261120-omi1"/);
- assert.match(home,/src="\.\/acquisizione-farming\/\?omi=20261120-1&rev=20261121-headless1&embed=hide-header"/);
+ assert.match(home,/src="\.\/acquisizione-farming\/\?omi=20261120-1&rev=20261121-letters-weekly1&embed=hide-header"/);
  assert.match(get('gestione/acquisizione-farming/omi-avigliana.js'),/omi-avigliana-2026-1\.json/);
 });
 
