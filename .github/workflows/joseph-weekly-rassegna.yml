@@ -38,6 +38,9 @@ jobs:
       - name: Preleva solo articoli candidati degli ultimi 7 giorni
         if: steps.clock.outputs.run == 'true'
         run: python3 scripts/joseph_weekly_collect.py
+      - name: Controlla HTTP e metadati fonti candidate
+        if: steps.clock.outputs.run == 'true'
+        run: python3 scripts/joseph_weekly_preflight.py
       - name: Crea scheda editoriale con fonti non approvate
         if: steps.clock.outputs.run == 'true'
         run: python3 scripts/joseph_weekly_editorial.py review
@@ -46,7 +49,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add gestione/rivista/data/latest.json gestione/rivista/data/review.md
+          git add gestione/rivista/data/latest.json gestione/rivista/data/preflight.json gestione/rivista/data/review.md
           if ! git diff --cached --quiet; then
             git commit -m "data(weekly): refresh seven-day candidates and editorial checklist"
             git pull --rebase origin main
@@ -60,4 +63,5 @@ jobs:
           path: |
             gestione/rivista/data/latest.json
             gestione/rivista/data/review.md
+            gestione/rivista/data/preflight.json
           retention-days: 30
