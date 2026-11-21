@@ -10,18 +10,22 @@ const get=p=>fs.readFileSync(path.join(root,p),'utf8');
 const page=get('gestione/acquisizione-farming/index.html');
 const home=get('gestione/index.html');
 
-test('farming is first Acquisition subtab and preserves the original three',()=>{
- assert.match(home,/id="sv-acquisizione"/);
- assert.match(home,/id="sv-tab-button-4"[^>]*aria-controls="sv-tab-4"/);
- assert.match(home,/id="sv-tab-4"[^>]*role="tabpanel"/);
+test('Acquisizione senza titolo e quattro sottoschede, ma Farming sempre visibile e CRM intatto',()=>{
+ assert.match(home,/id="sv-acquisizione" aria-label="Acquisizione · Farming Avigliana"/);
+ assert.doesNotMatch(home,/Sistema di Acquisizione Immobiliare|sv-tab-button-|sv-nav-buttons/);
+ assert.doesNotMatch(home,/Standard Venditore &amp; Segreti|Networking &amp; WhatsApp|Strategia Video \(8 Titoli\)/);
+ assert.match(home,/id="sv-tab-4" class="sv-panel sv-farming-panel"/);
+ assert.doesNotMatch(home,/id="sv-tab-4"[^>]+hidden/);
  assert.match(home,/id="sv-farming-frame"[^>]*src="\.\/acquisizione-farming\/\?omi=20261120-1&rev=20261121-headless1&embed=hide-header"/);
- for(let id=1;id<=3;id++)assert.match(home,new RegExp('id="sv-tab-button-'+id+'"'));
- assert.match(home,/sv-acquisizione\.js\?v=20261120-farming1/);
- assert.match(home,/sv-acquisizione\.css\?v=20261120-farming1/);
+ assert.match(home,/sv-acquisizione\.js\?v=20261121-no-quattro-tab1/);
  assert.match(home,/control-center\.js\?v=20261120-farming1/);
  const js=get('gestione/sv-acquisizione.js');
  assert.match(js,/case247:farming-height/);
  assert.match(js,/event\.origin!==window\.location\.origin/);
+ assert.match(js,/if\(tabs\.length\)activate\(tabs\[0\],false\)/);
+ const shell=get('gestione/saas-shell.js');
+ assert.match(shell,/Foglio di lavoro · CRM Excel/);
+ assert.match(shell,/acquisitionPane\.prepend\(workbookBar\)/);
 });
 test('solo dentro la dashboard l’intestazione richiesta non viene mostrata',()=>{
  assert.match(page,/html\.farming-header-hidden header\.top\{display:none!important\}/);
