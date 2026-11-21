@@ -245,14 +245,14 @@ p{font-size:9.75pt;line-height:1.48;margin:0 0 3.7mm}
 .no-photo{padding:12mm;background:#f2f5f7;color:#496b7c}
 """
 
-def write_documents(today: dt.date, news: list[dict], source_log: list[dict], seed: bool):
+def write_documents(today: dt.date, news: list[dict], source_log: list[dict], seed: bool, approved=None):
     global ISSUE
     ISSUE = today.strftime("%d/%m/%Y")
     DEST.mkdir(parents=True,exist_ok=True)
     issue=today.isoformat()
     pub_url=f"{BASE}/Real-Estate-Weekly-{issue}.pdf"
     global _AI_PARAGRAPHS
-    _AI_PARAGRAPHS, ai_status = maybe_ai_editorial(news)
+    _AI_PARAGRAPHS, ai_status = ([], 'testi approvati dal responsabile editoriale') if approved else maybe_ai_editorial(news)
     qr_img=DEST/f"qr-rivista-{issue}.png"
     qrcode.make(pub_url).save(qr_img)
     here=f'<p class="caps">Avigliana · Sant’Ambrogio di Torino · Bassa Valle di Susa</p>'
@@ -392,11 +392,25 @@ def write_documents(today: dt.date, news: list[dict], source_log: list[dict], se
 def main():
     ap=argparse.ArgumentParser()
     ap.add_argument("--seed",action="store_true",help="Numero di lancio, senza notizie RSS non verificate")
+    ap.add_argument("--approved-json",action="store_true",help="Pubblica esclusivamente il JSON chiuso e approvato")
     ap.add_argument("--issue",default=None,help="YYYY-MM-DD (solo seed/test)")
     args=ap.parse_args()
     today=dt.date.fromisoformat(args.issue) if args.issue else dt.datetime.now(ZoneInfo("Europe/Rome")).date()
-    news,log=([],[{"mode":"seed","reason":"Primo numero basato su analisi OMI già documentate"}]) if args.seed else discover_news(today)
-    pdf,letter,manifest=write_documents(today,news,log,args.seed)
+    if args.approved_json and args.seed:
+        ap.error("--seed non è ammesso con --approved-json")
+    approved=None
+    if args.approved_json:
+        from joseph_weekly_editorial import validate
+        approved=validate(now=today)
+        if len(approved["editorial"])>1100 or len(approved["cover"])>140:
+            raise ValueError("Editoriale max 1100 caratteri e titolo max 140 per evitare tagli PDF")
+        news=[{"title":item["title"],"publisher":item["source"],
+               "date":item["date"],"url":item["url"],"summary":item["summary"]}
+              for item in approved["items"]]
+        log=[{"mode":"human_approved","issue":approved["issue"],"count":len(news)}]
+    else:
+        news,log=([],[{"mode":"seed","reason":"Primo numero basato su analisi OMI già documentate"}]) if args.seed else discover_news(today)
+    pdf,letter,manifest=write_documents(today,news,log,args.seed,approved=approved)
     print(json.dumps({"magazine":str(pdf),"seller":str(letter),"sources":len(news),
                       "issue":manifest["issue_date"],"qr":manifest["qr_target"]},ensure_ascii=False))
 
