@@ -57,7 +57,7 @@ test('PESA cifrata e workbook due fogli, senza dati personali pubblici',()=>{
  assert.match(script,/localStorage\.setItem\(PESA_KEY,sealed\)/);
  assert.match(script,/X\.utils\.book_append_sheet\(wb,wsA,'Acquisizione'\)/);
  assert.match(script,/X\.utils\.book_append_sheet\(wb,wsP,'PESA'\)/);
- assert.match(html,/\.xlsx\W+non contiene macro/);
+ assert.match(html,/\.xlsx<\/code> non contiene macro/);
  assert.doesNotMatch(html,/input[^>]*type="tel"/);
  assert.doesNotMatch(html,/371 370 8294|95,70|169 cm/);
 });
