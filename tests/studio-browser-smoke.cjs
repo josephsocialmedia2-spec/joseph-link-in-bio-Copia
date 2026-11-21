@@ -254,10 +254,14 @@ async function main(){
  await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow,d=w.document;d.querySelector('#omi-zone').value='';w.renderOmi();d.querySelector('#omi-type').value='';w.renderOmi();d.querySelector('#omi-condition').value='';w.renderOmi();return d.querySelector('#omi-zone').value===''})()");
  await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow;w.goto('omi');const f=w.document.querySelector('#omiForm');for(const [k,v] of Object.entries({city:'Avigliana',zone:'TEST-OMI',semester:'2026/1',type:'Abitazioni civili',condition:'Normale',min:'1000',max:'2000',source:'TEST QA - dati non ufficiali'}))f.elements[k].value=v;f.requestSubmit();w.document.querySelector('#dMq').value='100';w.document.querySelector('#dOmi').value=Array.from(w.document.querySelector('#dOmi').options).find(o=>o.textContent.includes('TEST-OMI'))?.value||'';w.previewDossier();return true})()");
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#dossierPreview').textContent.includes('100.000')"),true);
- await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow;w.goto('lettere');w.print=()=>{w.__printTest=true};w.document.querySelector('#letterZone').value='Via Prova Stampa';w.printLetter();return true})()");
- assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentWindow.__printTest===true"),true);
- assert.equal(await evalJS("Boolean(document.querySelector('#sv-farming-frame').contentDocument.querySelector('#letterPreview svg'))"),true);
- assert.equal(await evalJS("JSON.parse(localStorage.getItem('case247-lab-avigliana-v1')).printJobs.some(x=>x.status==='Stampa richiesta')"),true);
+ await evalJS("document.querySelector('#sv-farming-frame').contentWindow.goto('lettere');true");
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#letterType')===null"),true);
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#rew-flipbook').getAttribute('src')"),'../lettere-stampa/');
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#rew-download-letter').getAttribute('href').endsWith('Lettera_Joseph_Malafronte_AGGIORNATA_A4.pdf')"),true);
+ await until("Boolean(document.querySelector('#sv-farming-frame')?.contentDocument?.querySelector('#rew-flipbook')?.contentDocument?.querySelector('#counter'))",'Sfogliatore rivista embedded caricato');
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#rew-flipbook').contentDocument.querySelectorAll('#prev,#next').length"),2);
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#rew-flipbook').contentDocument.querySelector('#counter').textContent.includes('8')"),true);
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#rew-flipbook').contentDocument.querySelector('#next').disabled"),false);
  await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow;w.goto('tracker');const f=w.document.querySelector('#trackerForm');f.elements.date.value='2026-11-20';f.elements.news.value='2';f.elements.contacts.value='1';f.elements.appointments.value='1';f.elements.incarichi.value='0';f.requestSubmit();return true})()");
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#kNews').textContent"),'2');
  await evalJS("document.querySelector('[data-saas-view=agenda]').click();CASE247Agenda50.selectDay('2026-11-23');true");
