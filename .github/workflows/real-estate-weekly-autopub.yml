@@ -50,3 +50,39 @@ jobs:
           assert all((p/n).is_file() for n in m['previews'])
           print('QA riuscito: 8 pagine, 4 aperture, lettera fronte/retro e anteprime')
           PY
+      - name: Simula approvazione sul runner senza pubblicare dati di prova
+        run: |
+          python - <<'PY'
+          import json,datetime
+          from pathlib import Path
+          today=datetime.datetime.now(datetime.timezone.utc).date().isoformat()
+          sample={
+            'closed':True,'issue':'QA-TEST','period':'Verifica tecnica',
+            'cover':'ESEMPIO QA - NON PUBBLICARE',
+            'editorial':'Test tecnico del circuito editoriale. Nessuna notizia fittizia, nessuna statistica di mercato e nessun caso di vendita viene pubblicato da questa prova.',
+            'items':[{
+              'title':f'Articolo di prova {n} esclusivamente per collaudo',
+              'source':'Fonte di test','date':today,
+              'url':f'https://www.idealista.it/news/qa-test-{n}',
+              'summary':'Questo è un contenuto sintetico per il collaudo offline della generazione. Non descrive fatti accaduti e non deve essere pubblicato sul sito. Non contiene dati immobiliari reali.',
+              'status':'approved','original_url_verified':True
+            } for n in range(1,4)]
+          }
+          Path('gestione/rivista/data/approved.json').write_text(json.dumps(sample,ensure_ascii=False,indent=2),encoding='utf-8')
+          PY
+          python scripts/joseph_weekly_editorial.py validate
+          python scripts/real_estate_weekly_autopub.py --approved-json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from pypdf import PdfReader
+          p=Path('gestione/rivista/edizioni/auto')
+          m=json.loads((p/'latest.json').read_text(encoding='utf-8'))
+          assert m['status']=='approved'
+          assert m['approved_issue']=='QA-TEST'
+          assert len(m['previews'])==8
+          assert len(PdfReader(str(p/m['magazine'])).pages)==8
+          assert len(PdfReader(str(p/m['seller_letter'])).pages)==2
+          assert len(PdfReader(str(p/m['double_pages'])).pages)==4
+          print('GATE OK: approvazione simulata e documenti di prova generati senza pubblicare')
+          PY
