@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#061a36">
+<title>Real Estate Weekly · Rivista sfogliabile | Joseph Malafronte</title>
+<meta name="description" content="Real Estate Weekly: sfoglia le edizioni approvate della rivista immobiliare di Joseph Malafronte, Avigliana e Valle di Susa.">
+<style>
+:root{font-family:Arial,Helvetica,sans-serif;color:#082c58;background:#eef3f7;--navy:#061a36;--blue:#1587e3;--gold:#c8a66d}
+*{box-sizing:border-box}body{margin:0}a{color:inherit}button{cursor:pointer;font:inherit}
+.mast{background:#031329;color:#bdd9ec;padding:10px max(16px,calc((100% - 1250px)/2));font-size:11px;letter-spacing:.12em;font-weight:bold}
+.head{background:#fff;border-bottom:1px solid #dce7ef;padding:17px max(16px,calc((100% - 1250px)/2));display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+.brand{text-decoration:none;font-weight:900;display:flex;align-items:center;gap:12px}.mark{background:var(--navy);color:#fff;border-bottom:3px solid var(--gold);padding:14px;font:22px Georgia,serif}.brand small{display:block;color:#60778d;font-size:11px;margin-top:5px;font-weight:normal}
+.head nav{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;font-weight:bold}
+main{max-width:1320px;padding:28px 18px 42px;margin:auto}
+.kicker{font-size:12px;color:#236a9e;font-weight:bold;letter-spacing:.17em}
+h1{font:500 clamp(32px,4vw,52px)/1.08 Georgia,serif;margin:11px 0;color:var(--navy)}
+.lead{color:#536d81;line-height:1.6;margin:0 0 18px}
+.toolbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin:22px 0}
+.controls,.downloads{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+button,.btn{display:inline-block;background:var(--navy);color:white;text-decoration:none;border:0;padding:12px 16px;border-radius:4px;font-weight:800;font-size:13px;min-height:43px}
+.btn.secondary{background:#e0edf6;color:var(--navy)}button:disabled{opacity:.4;cursor:not-allowed}button:hover:not(:disabled),.btn:hover{filter:brightness(1.13)}
+.reader{background:#d5e0e8;padding:clamp(13px,3.5vw,40px);box-shadow:0 20px 48px #061a361c;min-height:470px}
+.book{max-width:1090px;margin:auto;display:flex;justify-content:center;align-items:stretch;min-height:370px;gap:0;filter:drop-shadow(0 15px 18px #081c3427);perspective:1400px}
+.sheet{background:#fff;width:min(100%,510px);aspect-ratio:210/297;object-fit:contain;display:block;box-shadow:inset 0 0 8px #0d1d2a1e}
+.book.two .sheet{width:50%;max-width:510px}.book.two .sheet:first-child{border-right:1px solid #a8baca}
+.book.turn-next{animation:turnNext .38s ease both}.book.turn-prev{animation:turnPrev .38s ease both}
+@keyframes turnNext{0%{opacity:.62;transform:perspective(1300px) rotateY(-8deg) translateX(12px)}100%{opacity:1;transform:none}}
+@keyframes turnPrev{0%{opacity:.62;transform:perspective(1300px) rotateY(8deg) translateX(-12px)}100%{opacity:1;transform:none}}
+.state{padding:20px;text-align:center;line-height:1.6;color:#3d5369}
+.endbar{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-top:15px;color:#415f78;font-size:13px;flex-wrap:wrap}
+.notice{font-size:12px;color:#687d8c;line-height:1.5;margin:23px 0}
+@media(max-width:700px){.head{padding:12px 16px}.head nav{font-size:12px}.book.two{display:block;max-width:480px}.book.two .sheet{width:100%;max-width:none}.book.two .sheet:first-child{border:0;border-bottom:1px solid #a8baca}.reader{padding:10px}.controls{justify-content:space-between;width:100%}.controls button{flex:1}}
+@media(prefers-reduced-motion:reduce){.book.turn-next,.book.turn-prev{animation:none}}
+</style>
+</head>
+<body>
+<div class="mast">JOSEPH MALAFRONTE · REAL ESTATE DIGITAL STRATEGIST</div>
+<header class="head"><a class="brand" href="../../acquisizione-farming/#lettere"><span class="mark">JM</span><span>REAL ESTATE WEEKLY<small>Joseph Malafronte · Avigliana e Valle di Susa</small></span></a>
+<nav><a href="../../rivista/">Centro Editoriale</a><a href="../../acquisizione-farming/#lettere">Lettere &amp; Stampa</a></nav></header>
+<main>
+<p class="kicker">MAGAZINE IMMOBILIARE · EDIZIONI VERIFICATE</p>
+<h1>La rivista, da sfogliare.</h1>
+<p class="lead" id="issueDescription">Aperture a doppia pagina, copia A4 e lettera per i proprietari. Le edizioni nuove sono visibili soltanto dopo approvazione editoriale.</p>
+<div class="toolbar">
+<div class="controls"><button id="prev" type="button" disabled>← Precedente</button><strong id="counter" aria-live="polite">Caricamento...</strong><button id="next" type="button" disabled>Successiva →</button></div>
+<div class="downloads"><a class="btn" id="pdf" href="../edizioni/auto/rivista-latest.pdf" target="_blank" rel="noopener">Rivista PDF A4</a><a class="btn secondary" id="spreads" href="../edizioni/auto/doppie-pagine-latest.pdf" target="_blank" rel="noopener">Doppie pagine</a><a class="btn secondary" id="letter" href="../edizioni/auto/seller-letter-latest.pdf" target="_blank" rel="noopener">Lettera aggiornata</a></div>
+</div>
+<div class="reader" role="region" aria-label="Lettore sfogliabile"><div id="book" class="book"><p class="state">Verifica dell'ultima edizione approvata...</p></div></div>
+<div class="endbar"><span id="pageLabel">Solo pubblicazioni approvate · PDF per la stampa</span><span>Usa le frecce o scorri lateralmente per sfogliare</span></div>
+<p class="notice">Gli articoli sono attribuiti alle fonti originali. Prezzi di annuncio e quotazioni OMI non costituiscono prezzi di compravendita né valutazioni individuali. Le attività di mediazione sono riservate ai professionisti abilitati.</p>
+</main>
+<script>
+(()=>{
+'use strict';
+const base='../edizioni/auto/';
+const $=id=>document.getElementById(id);
+let images=[],index=0;
+const spreads=[[0],[1,2],[3,4],[5,6],[7]];
+const prev=$('prev'),next=$('next'),book=$('book');
+function render(motion){
+  if(!images.length)return;
+  const sheetNumbers=spreads[index];
+  book.replaceChildren();
+  book.className='book'+(sheetNumbers.length===2?' two':'')+(motion?' turn-'+motion:'');
+  for(const i of sheetNumbers){
+    const img=document.createElement('img');
+    img.className='sheet';
+    img.src=images[i];
+    img.alt='Real Estate Weekly · pagina '+(i+1)+' di 8';
+    img.decoding='async';
+    book.appendChild(img);
+  }
+  prev.disabled=index===0;
+  next.disabled=index===spreads.length-1;
+  $('counter').textContent='Apertura '+(index+1)+' / '+spreads.length;
+  $('pageLabel').textContent=sheetNumbers.map(i=>'Pagina '+(i+1)).join(' · ');
+}
+function move(n){const target=Math.max(0,Math.min(spreads.length-1,index+n));if(target===index)return;index=target;render(n>0?'next':'prev')}
+prev.onclick=()=>move(-1);
+next.onclick=()=>move(1);
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')move(1);if(e.key==='ArrowLeft')move(-1)});
+let touchX=null;
+book.addEventListener('touchstart',e=>{touchX=e.changedTouches[0].clientX},{passive:true});
+book.addEventListener('touchend',e=>{if(touchX===null)return;const dx=e.changedTouches[0].clientX-touchX;touchX=null;if(Math.abs(dx)>65)move(dx<0?1:-1)},{passive:true});
+fetch(base+'latest.json?v='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Archivio non disponibile');return r.json()}).then(m=>{
+  if(m.status!=='approved'||!Array.isArray(m.previews)||m.previews.length!==8){
+    throw Error('La nuova edizione non è ancora stata approvata e pubblicata');
+  }
+  images=m.previews.map(p=>new URL(base+p,location.href).href);
+  $('issueDescription').textContent='Edizione approvata '+m.issue_date+' · Numero '+(m.approved_issue||'')+' · Sfoglia le otto pagine e scarica i documenti pronti per la stampa.';
+  $('pdf').href=base+'rivista-latest.pdf';
+  $('spreads').href=base+'doppie-pagine-latest.pdf';
+  $('letter').href=base+'seller-letter-latest.pdf';
+  render();
+}).catch(e=>{
+  book.className='book';
+  book.replaceChildren();
+  const p=document.createElement('p');p.className='state';p.textContent=e.message+'. La copia precedente resta disponibile in Lettere & Stampa.';
+  const a=document.createElement('a');a.href='../../lettere-stampa/';a.className='btn secondary';a.textContent='Apri la rivista precedente';p.append(' ',a);book.append(p);
+  $('counter').textContent='Non ancora approvata';
+});
+})();
+</script></body></html>
