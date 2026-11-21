@@ -78,3 +78,18 @@ test('OMI 2026/1 sources are linked in the integrated Farming tab',()=>{
  assert.match(home,/src="\.\/acquisizione-farming\/\?omi=20261120-1"/);
  assert.match(get('gestione/acquisizione-farming/omi-avigliana.js'),/omi-avigliana-2026-1\.json/);
 });
+
+
+test('download VBA Acquisizione integra una scheda senza pubblicare dati',()=>{
+ const bas=get('gestione/acquisizione-farming/excel/CASE247_Acquisizione_Installer.bas');
+ assert.match(page,/id="excelvba"/);
+ assert.match(page,/Excel · VBA/);
+ assert.match(page,/excel\/CASE247_Acquisizione_Installer\.bas/);
+ for(const name of ['InstallaAcquisizioneCASE247','VerificaAcquisizioneCASE247','EsportaAcquisizioneCSV'])
+   assert.match(bas,new RegExp('Public Sub '+name));
+ for(const field of ['date','zone','address','name','source','status','action','followDate','followTime','notes'])
+   assert.ok(bas.includes('"'+field+'"'),field);
+ assert.match(bas,/ADODB\.Stream/);
+ assert.match(bas,/GetSaveAsFilename/);
+ assert.doesNotMatch(bas,/95[.,]70|\b169\b|Registro Peso/);
+});
