@@ -105,5 +105,5 @@ test('Farming risultati CSV esposto nella scheda Excel, senza importazioni autom
  const vba=get('gestione/acquisizione-farming/excel/CASE247_Acquisizione_Installer.bas');
  assert.match(vba,/Public Sub AggiornaRisultatiFarmingDaCSV/);
  assert.match(vba,/Set wb = ThisWorkbook/);
- assert.match(vba,/ws\.Name = "PESA"/);
+ assert.match(vba,/pesa\.Name = "PESA"/);
 });
