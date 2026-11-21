@@ -14,21 +14,21 @@
 <section class="panel" id="tracker"><div class="grid"><div class="card"><h3>Giorni di attività negli ultimi 90</h3><div class="stats" id="kDays">0</div></div><div class="card"><h3>Notizie / registrazioni</h3><div class="stats" id="kNews">0</div></div><div class="card"><h3>Incarichi dichiarati</h3><div class="stats" id="kIncarichi">0</div></div></div><div class="split"><div class="card"><h2>Tracker 90 giorni · registrazione</h2><form id="trackerForm" class="form"><label>Data<input type="date" name="date" required></label><label>Lettere consegnate<input type="number" name="letters" min="0" value="0"></label><label>Notizie qualificate<input type="number" name="news" min="0" value="0"></label><label>Contatti qualificati<input type="number" name="contacts" min="0" value="0"></label><label>Appuntamenti<input type="number" name="appointments" min="0" value="0"></label><label>Incarichi<input type="number" name="incarichi" min="0" value="0"></label><div class="wide"><button class="btn">Salva giornata</button><button class="btn secondary" type="button" onclick="exportTracker()">Esporta tracker CSV</button></div></form></div><div class="card"><h2>Conversioni 90 giorni</h2><div id="conversion"></div><p class="tiny">I valori sono inseriti manualmente e non equivalgono a incarichi verificati. Le conversioni con denominatore zero sono indicate come n.d.</p></div></div><div class="card"><h2>Storico 90 giorni</h2><div class="tablewrap"><table><thead><tr><th>Data</th><th>Lettere</th><th>Notizie</th><th>Contatti</th><th>Appuntamenti</th><th>Incarichi</th><th></th></tr></thead><tbody id="trackerRows"></tbody></table></div></div></section>
 <section class="panel" id="excelvba">
 <div class="card" style="border-left:5px solid #b78b38;background:linear-gradient(125deg,#fff 78%,#fff5d5)">
-<small style="font-weight:800;color:#8b681d">JOSEPH MALAFRONTE · CASE247</small>
-<h2>Excel · Installatore VBA per Acquisizione</h2>
-<p>Installa in <strong>Excel desktop</strong> un foglio Acquisizione con 10 campi compatibili con «Notizie &amp; Contatti», indicatori, controlli dei richiami e pulsanti di esportazione CSV. I fogli gia presenti non vengono sovrascritti.</p>
-<a class="btn" href="./excel/CASE247_Acquisizione_Installer.bas" download>Scarica modulo VBA (.bas)</a>
-<button class="btn secondary" type="button" onclick="goto('contatti')">Apri Notizie &amp; Contatti</button>
-<p class="tiny">Compatibilita: Excel desktop per Windows con macro abilitate. Il browser e GitHub Pages non eseguono VBA.</p>
+<small style="font-weight:800;color:#8b681d">JOSEPH MALAFRONTE · FARMING DI ZONA</small>
+<h2>Excel · 2 sole schede: Acquisizione + PESA</h2>
+<p>L'installatore genera un <strong>nuovo file Excel</strong> con esattamente due fogli. Il primo contiene una riga per cliente/immobile e <strong>solo risultati effettivamente raggiunti</strong>: volantini e lettere consegnati, notizie verificate, risposte e incontri svolti. Nessuna rubrica telefonica e nessuna attività futura.</p>
+<p>La seconda scheda, <strong>PESA</strong>, è un registro annuale del peso con IMC, categoria automatica e grafico. Altezza e peso vengono richiesti solo in Excel, non memorizzati sul sito.</p>
+<a class="btn" href="./excel/CASE247_Acquisizione_Installer.bas" download>Scarica generatore VBA (.bas)</a>
+<p class="tiny">Compatibile con Excel desktop per Windows. Il browser non esegue VBA.</p>
 </div>
 <div class="grid">
-<div class="card"><h3>01 · Importa il modulo</h3><p>Apri il file Excel e salvalo come <strong>.xlsm</strong>. Premi <strong>ALT+F11</strong>, quindi <strong>File → Importa file</strong> e scegli il modulo scaricato.</p></div>
-<div class="card"><h3>02 · Installa il foglio</h3><p>Premi <strong>ALT+F8</strong> ed esegui <code>InstallaAcquisizioneCASE247</code>. Il foglio dispone di filtri, menu a tendina e KPI.</p></div>
-<div class="card"><h3>03 · Importa i contatti</h3><p>Compila le righe, usa il pulsante <strong>ESPORTA CSV CASE247</strong> e carica quel file in <strong>Notizie &amp; Contatti → Importa CSV</strong>.</p></div>
+<div class="card"><h3>01 · Apri Excel</h3><p>In un file <strong>.xlsm</strong> importa il modulo con <strong>ALT+F11 → File → Importa file</strong>. Il file di partenza non viene modificato.</p></div>
+<div class="card"><h3>02 · Genera 2 fogli</h3><p>Premi <strong>ALT+F8</strong> ed esegui <code>InstallaAcquisizioneCASE247</code>. La macro crea Acquisizione + PESA in una <strong>nuova cartella</strong>.</p></div>
+<div class="card"><h3>03 · Registra solo i risultati</h3><p>Compila una riga per immobile, aggiorna i valori delle attività concluse e salva il nuovo <strong>.xlsx</strong>. L'IMC cambia inserendo i pesi.</p></div>
 </div>
-<div class="card"><h3>Campi esportati nello schema CASE247</h3><p><code>date · zone · address · name · source · status · action · followDate · followTime · notes</code></p>
-<p class="muted">La verifica segnala le righe con data o fonte mancante e i follow-up fuori dall'orario previsto (lunedi-venerdi, 14:30–16:15). I contatti non vengono sincronizzati in automatico.</p>
-<p class="status warn">Il repository pubblico contiene soltanto il codice VBA e le istruzioni, non i tuoi dati. Non caricare fogli compilati con informazioni personali su GitHub Pages.</p>
+<div class="card"><h3>Confine operativo: solo farming di zona</h3>
+<p>Campi del primo foglio: data risultato, comune, zona, indirizzo, riferimento cliente/immobile, volantini consegnati, lettere consegnate, notizie verificate, risposte ricevute, incontri svolti, risultato concreto, evidenza verificabile.</p>
+<p class="status warn">Nessun numero di telefono, nessun dato clinico incorporato nel repository, nessuna sincronizzazione automatica con il CRM web. Il file compilato resta sul tuo dispositivo.</p>
 </div>
 </section><section class="panel" id="verifica"><div class="card"><h2>Collaudo funzionale · ambiente virtuale</h2><p>Questa matrice verifica la presenza delle funzioni e distingue i moduli locali dai servizi esterni non collegati.</p><div id="audit"></div><button class="btn" onclick="downloadBackup()">Esporta backup JSON</button><button class="btn secondary" onclick="document.getElementById('backupFile').click()">Ripristina backup JSON</button><input type="file" id="backupFile" accept=".json" hidden><p class="status warn">Nessuna pubblicazione su GitHub, sincronizzazione CRM o accesso live a OMI: questi richiedono integrazione e credenziali separate.</p></div></section>
 </div></div><div id="printRoot"></div><script>
