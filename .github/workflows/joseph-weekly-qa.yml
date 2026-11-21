@@ -1,0 +1,92 @@
+name: Joseph Weekly · QA PDF e dashboard
+on:
+  pull_request:
+    paths:
+      - 'gestione/rivista/**'
+      - 'gestione/acquisizione-farming/index.html'
+      - 'scripts/joseph_weekly_*.py'
+      - 'scripts/joseph_weekly_*.cjs'
+      - '.github/workflows/joseph-weekly-*.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'gestione/rivista/index.html'
+      - 'gestione/rivista/stampa.html'
+      - 'gestione/acquisizione-farming/index.html'
+      - 'scripts/joseph_weekly_*.py'
+      - 'scripts/joseph_weekly_*.cjs'
+      - '.github/workflows/joseph-weekly-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Python e JavaScript sintassi
+        run: |
+          python3 -m py_compile scripts/joseph_weekly_collect.py scripts/joseph_weekly_editorial.py
+          node --check scripts/joseph_weekly_render.cjs
+      - name: Blocca file approvazione incompleto
+        run: |
+          if python3 scripts/joseph_weekly_editorial.py validate; then
+            echo "::error::Placeholder approved.json passed validation!"
+            exit 1
+          else
+            echo "Approval gate: OK, placeholder is blocked"
+          fi
+      - name: Install Chromium Playwright and PDF checker
+        run: |
+          npm install --no-save playwright@1.57.0
+          npx playwright install --with-deps chromium
+          python3 -m pip install --disable-pip-version-check pypdf
+      - name: Avvia server statico locale per test
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/joseph-weekly-http.log 2>&1 &
+          echo $! >/tmp/joseph-weekly-http.pid
+          python3 - <<'PY'
+          import time, urllib.request
+          for n in range(40):
+              try:
+                  with urllib.request.urlopen("http://127.0.0.1:8765/gestione/rivista/", timeout=2) as r:
+                      assert r.status == 200
+                  break
+              except Exception:
+                  time.sleep(.25)
+          else:
+              raise RuntimeError("Local magazine server not ready")
+          PY
+      - name: Render test edition (not publishable)
+        run: node scripts/joseph_weekly_render.cjs test
+      - name: Verifica 8 pagine PDF A4
+        run: |
+          python3 - <<'PY'
+          from pypdf import PdfReader
+          from pathlib import Path
+          p=Path("gestione/rivista/edizioni/TEST-QA-NON-PUBBLICARE.pdf")
+          pdf=PdfReader(str(p))
+          assert len(pdf.pages)==8, f"Expected 8 pages, got {len(pdf.pages)}"
+          for i,page in enumerate(pdf.pages,1):
+              box=page.mediabox
+              assert abs(float(box.width)-595.28)<2 and abs(float(box.height)-841.89)<2, f"Not A4 page {i}: {box}"
+          assert p.stat().st_size>10_000, "PDF unexpectedly small"
+          print("PASS:",len(pdf.pages),"A4 pages, bytes:",p.stat().st_size)
+          PY
+      - name: Carica PDF e screenshot di test
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: joseph-weekly-qa-a4
+          path: |
+            gestione/rivista/edizioni/TEST-QA-NON-PUBBLICARE.pdf
+            gestione/rivista/edizioni/TEST-QA-cover.png
+          retention-days: 10
+          if-no-files-found: ignore
