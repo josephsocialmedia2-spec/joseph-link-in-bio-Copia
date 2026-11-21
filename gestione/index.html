@@ -60,6 +60,17 @@ a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit}b
 @keyframes joseph-nebula-breathe{to{opacity:1;transform:scale(1.12) translateY(-2%)}}
 @media(max-width:600px){#joseph-neon-cosmos{min-height:220px}#joseph-neon-cosmos .joseph-neon-float{width:97%;padding:34px 7px}#joseph-neon-cosmos .joseph-neon-words{font-size:clamp(27px,6.9vw,42px)}}
 @media(prefers-reduced-motion:reduce){#joseph-neon-cosmos:before,#joseph-neon-cosmos:after,#joseph-neon-cosmos .joseph-neon-float,#joseph-neon-cosmos .joseph-neon-words{animation:none}}
+
+/* Insegna fissata alla viewport, leggibile su sfondo bianco e senza sovrapposizioni */
+:root{--joseph-neon-header-height:172px}
+body.case247-unified{padding-top:var(--joseph-neon-header-height)!important}
+#joseph-neon-cosmos{position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%!important;z-index:50!important;height:var(--joseph-neon-header-height)!important;min-height:0!important;background:#ffffff!important;background-color:#ffffff!important;border-bottom:1px solid #d5e2ed!important;box-shadow:0 8px 28px rgba(8,25,42,.22)!important}
+#joseph-neon-cosmos:before,#joseph-neon-cosmos:after{display:none!important}
+#joseph-neon-cosmos .joseph-neon-float{width:min(92%,760px)!important;padding:15px 24px!important;filter:drop-shadow(0 4px 3px rgba(0,13,30,.8)) drop-shadow(0 9px 10px rgba(0,15,34,.46))!important}
+#joseph-neon-cosmos .joseph-neon-acrylic{background:rgba(222,246,255,.2)!important;border-color:rgba(19,88,119,.48)!important;box-shadow:inset 0 0 13px rgba(0,83,124,.22),0 2px 10px rgba(0,25,48,.24)!important}
+#joseph-neon-cosmos .joseph-neon-words{font-size:clamp(29px,3.5vw,53px)!important;line-height:1.09!important;color:#b5ffff!important;text-shadow:0 2px 2px #001424,0 3px 5px #001424,0 5px 9px #00233d,0 0 5px #008fff,0 0 12px #00caff,0 0 25px #00baff!important}
+@media(max-width:680px){:root{--joseph-neon-header-height:124px}#joseph-neon-cosmos .joseph-neon-float{width:96%!important;padding:13px 9px!important}#joseph-neon-cosmos .joseph-neon-words{font-size:clamp(24px,5.4vw,35px)!important}}
+@media(max-width:380px){:root{--joseph-neon-header-height:112px}#joseph-neon-cosmos .joseph-neon-words{font-size:clamp(21px,5.1vw,27px)!important}}
 </style>
 <section id="joseph-neon-cosmos" aria-label="Chi vince festeggia, chi perde spiega">
  <div class="joseph-neon-float"><div class="joseph-neon-acrylic" aria-hidden="true"></div><div class="joseph-neon-words"><span>Chi vince festeggia</span><span>chi perde spiega</span></div></div>
