@@ -60,7 +60,7 @@
       const delta={flyers:0,letters:0,news:0,replies:0,meetings:0};
       // Azioni concluse, non intenzioni, follow-up o appuntamenti da svolgere.
       if(action==='Lettera consegnata')delta.letters=1;
-      if(action==='Biglietto consegnato')delta.flyers=1;
+      // Biglietto consegnato: non trasformarlo in un volantino (categorie distinte).
       if(action==='Risposta spontanea')delta.replies=1;
       if(action==='Incontro')delta.meetings=1;
       if(status==='Qualificato')delta.news=1;
