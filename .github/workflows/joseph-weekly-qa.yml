@@ -33,7 +33,18 @@ jobs:
           node-version: '22'
       - name: Python e JavaScript sintassi
         run: |
-          python3 -m py_compile scripts/joseph_weekly_collect.py scripts/joseph_weekly_editorial.py
+          python3 -m py_compile scripts/joseph_weekly_collect.py scripts/joseph_weekly_editorial.py scripts/joseph_weekly_preflight.py
+          python3 - <<'PY'
+          import sys
+          sys.path.insert(0,'scripts')
+          from joseph_weekly_collect import editorial_score
+          assert editorial_score('Pioggia, temporali e più freddo domenica in Italia') == 0
+          assert editorial_score('Dove vive un famoso attore?') == 0
+          assert editorial_score('Appartamento in Vendita in Via Torino a Roma') == 0
+          assert editorial_score('Mutui case all’asta: richiesta media') >= 3
+          assert editorial_score('Avigliana: lavori per la stazione ferroviaria') >= 4
+          print('PASS: relevance filter rejects lifestyle/ads and keeps real estate/local works')
+          PY
           node --check scripts/joseph_weekly_render.cjs
       - name: Blocca file approvazione incompleto
         run: |
