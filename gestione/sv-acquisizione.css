@@ -29,3 +29,7 @@
 #sv-acquisizione .sv-farming-fallback a{color:#075d91;text-decoration:underline}
 @media(max-width:950px){#sv-acquisizione.sv-tab-box .sv-nav-buttons{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){#sv-acquisizione.sv-tab-box .sv-nav-buttons{grid-template-columns:1fr 1fr;gap:6px}#sv-acquisizione .sv-btn-tab{font-size:11px;padding:7px 6px;min-height:54px}#sv-acquisizione.sv-tab-box{padding:10px}#sv-acquisizione #sv-farming-frame{height:1000px}}
+
+/* Vista Acquisizione: visualizza solo il foglio Notizie & Contatti incorporato. */
+#sv-acquisizione.sv-contacts-only{padding:0;margin:0;max-width:none;width:100%;border:0;background:transparent;box-shadow:none}
+#sv-acquisizione.sv-contacts-only #sv-farming-frame{border:0;border-radius:0;min-height:950px;width:100%;background:#edf2f8}

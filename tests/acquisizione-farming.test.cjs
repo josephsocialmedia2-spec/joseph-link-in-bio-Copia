@@ -10,25 +10,32 @@ const get=p=>fs.readFileSync(path.join(root,p),'utf8');
 const page=get('gestione/acquisizione-farming/index.html');
 const home=get('gestione/index.html');
 
-test('farming is first Acquisition subtab and preserves the original three',()=>{
+test('Acquisizione dashboard mostra solo Notizie & Contatti senza pannelli duplicati',()=>{
  assert.match(home,/id="sv-acquisizione"/);
- assert.match(home,/id="sv-tab-button-4"[^>]*aria-controls="sv-tab-4"/);
- assert.match(home,/id="sv-tab-4"[^>]*role="tabpanel"/);
- assert.match(home,/id="sv-farming-frame"[^>]*src="\.\/acquisizione-farming\/\?omi=20261120-1&rev=20261121-contatti-v2"/);
- for(let id=1;id<=3;id++)assert.match(home,new RegExp('id="sv-tab-button-'+id+'"'));
- assert.match(home,/sv-acquisizione\.js\?v=20261120-farming1/);
- assert.match(home,/sv-acquisizione\.css\?v=20261120-farming1/);
+ assert.match(home,/id="sv-farming-frame"[^>]*src="\.\/acquisizione-farming\/\?rev=20261121-contacts-only&embed=contatti#contatti"/);
+ assert.doesNotMatch(home,/Sistema di Acquisizione Immobiliare/);
+ assert.doesNotMatch(home,/Farming Avigliana · Lettere · OMI · 90 giorni/);
+ assert.doesNotMatch(home,/Standard Venditore &amp; Segreti|Networking &amp; WhatsApp|Strategia Video \(8 Titoli\)/);
+ assert.doesNotMatch(home,/id="sv-tab-button-/);
+ const saas=get('gestione/saas-shell.js');
+ assert.doesNotMatch(saas,/Foglio di lavoro · CRM Excel|saas-workbook-bar|saas-workbook-action|saas-workbook-config/);
+ assert.match(saas,/view==='acquisizione'\?acquisition/);
+ assert.match(home,/sv-acquisizione\.js\?v=20261121-only-contatti/);
+ assert.match(home,/sv-acquisizione\.css\?v=20261121-only-contatti/);
  assert.match(home,/control-center\.js\?v=20261120-farming1/);
  const js=get('gestione/sv-acquisizione.js');
  assert.match(js,/case247:farming-height/);
  assert.match(js,/event\.origin!==window\.location\.origin/);
+ assert.match(js,/if\(tabs\.length\)activate\(tabs\[0\],false\)/);
+ assert.match(page,/farming-contacts-embed/);
+ assert.match(page,/get\('embed'\)==='contatti'/);
 });
 test('seven functional screens retained and embedded script parses',()=>{
  for(const id of ['oggi','contatti','richiami','lettere','omi','tracker','verifica'])assert.match(page,new RegExp('id="'+id+'"'));
  for(const text of ['Registro notizie','Follow-up pomeridiano','Lettera informativa','Dossier Valutazione Rapida','Tracker 90 giorni','Esporta CSV','Backup'])assert.ok(page.toLowerCase().includes(text.toLowerCase()),text);
- const script=page.match(/<script>([\s\S]*?)<\/script>/);
- assert.ok(script,'inline app script exists');
- new vm.Script(script[1],{filename:'farming-ui.js'});
+ const scripts=[...page.matchAll(/<script>([\s\S]*?)<\/script>/g)];
+ assert.ok(scripts.length>=2,'embedded loader and application scripts exist');
+ for(const [i,script] of scripts.entries())new vm.Script(script[1],{filename:'farming-ui-'+i+'.js'});
 });
 test('OMI cannot be calculated without verified quotations',()=>{
  assert.match(page,/db\.omi/);
@@ -75,7 +82,7 @@ test('letter print and daily tracker are locally auditable',()=>{
 
 test('OMI 2026/1 sources are linked in the integrated Farming tab',()=>{
  assert.match(page,/src="\.\/omi-avigliana\.js\?v=20261120-omi1"/);
- assert.match(home,/src="\.\/acquisizione-farming\/\?omi=20261120-1&rev=20261121-contatti-v2"/);
+ assert.match(home,/src="\.\/acquisizione-farming\/\?rev=20261121-contacts-only&embed=contatti#contatti"/);
  assert.match(get('gestione/acquisizione-farming/omi-avigliana.js'),/omi-avigliana-2026-1\.json/);
 });
 
