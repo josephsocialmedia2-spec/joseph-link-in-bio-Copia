@@ -1,8 +1,8 @@
 {
-  "date": "2026-11-20T12:23:34.502Z",
+  "date": "2026-11-21T06:40:06.468Z",
   "source": "Shopify La Sacra",
-  "total": 56,
-  "photosAvailable": 52,
+  "total": 57,
+  "photosAvailable": 53,
   "missingSourcePhoto": [
     {
       "id": "10826816553287",
@@ -21,13 +21,7 @@
       "title": "TRILOCALE CON TERRAZZO E BOX A CAPRIE"
     }
   ],
-  "created": 0,
+  "created": 2,
   "reused": 51,
-  "failed": [
-    {
-      "id": "11567350939975",
-      "title": "VILLA A SCHIERA A RIVOLI",
-      "error": "HTTP 403"
-    }
-  ]
+  "failed": []
 }
