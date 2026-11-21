@@ -26,6 +26,7 @@ test('azioni completate della scheda cliente, senza nomi telefonici nel CSV',()=
  const contacts=[
   {date:'2026-11-21',address:'Via Portici 4',name:'Cliente 371 370 8294',status:'Nuovo',action:'Incontro'},
   {date:'2026-11-21',address:'Via Portici 5',name:'X',status:'Nuovo',action:'Lettera informativa preparata'},
+  {date:'2026-11-21',address:'Via Portici 7',name:'X',status:'Nuovo',action:'Biglietto consegnato'},
   {date:'2026-11-21',address:'Via Portici 6',name:'=HYPERLINK("X")',status:'Qualificato',action:'Nessuna'},
  ];
  const rows=mod.consolidate([],contacts);
