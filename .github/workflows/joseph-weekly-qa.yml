@@ -46,7 +46,7 @@ jobs:
       - name: Install Chromium Playwright and PDF checker
         run: |
           npm install --no-save playwright@1.57.0
-          npx playwright install --with-deps chromium
+          google-chrome --version
           python3 -m pip install --disable-pip-version-check pypdf
       - name: Avvia server statico locale per test
         run: |
