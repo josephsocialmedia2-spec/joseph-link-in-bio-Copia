@@ -15,22 +15,23 @@ table{border-collapse:collapse;width:100%;background:#fff}td,th{border:1px solid
 </style></head><body><div class="shell">
 <header><small style="color:#f2c57a">STAGING · BRANCH DI COLLAUDO · NON PRODUZIONE</small>
 <h1>Zero to Diamond — Laboratorio completo</h1>
-<p>Questo ambiente serve a provare navigazione, componenti, moduli, riviste, cataloghi e dashboard del progetto reale in isolamento. Le scritture server e le chiamate API esterne sono bloccate: non inviare dati personali reali.</p>
+<p>Questo ambiente serve a provare navigazione, componenti, moduli, riviste, cataloghi e dashboard del progetto reale in isolamento. Le API esterne sono bloccate; soltanto la API SQLite sintetica locale accetta modifiche a contatti inventati. Non inserire mai dati personali reali.</p>
 </header>
-<div class="warn"><b>Importante:</b> le pagine riportano il codice del repository, non un CRM di prova con backend sincronizzato. Alcune funzioni esterne mostreranno intenzionalmente un errore o uno stato non disponibile. <b>I QR già stampati nei PDF possono puntare al sito pubblico: non scansionarli dal telefono durante il collaudo.</b> I test automatici identificano quali sono utilizzabili e quali richiedono un backend staging separato.</div>
+<div class="warn"><b>Importante:</b> le pagine del gestionale mostrano il codice del repository e non sono ancora sincronizzate con il CRM di produzione. Il nuovo simulatore dispone di un database SQLite separato, esclusivamente con contatti TEST. Alcune funzioni esterne mostreranno intenzionalmente un errore o uno stato non disponibile. <b>I QR già stampati nei PDF possono puntare al sito pubblico: non scansionarli dal telefono durante il collaudo.</b> I test automatici identificano quali sono utilizzabili e quali richiedono un backend staging separato.</div>
 <section><h2>Accesso ai moduli del progetto</h2><div class="grid">
 <article><h3>01 · Dashboard generale</h3><p>Regia CASE247, agenda, acquisizione, attività e collegamenti a tutti i moduli.</p><a href="/joseph-link-in-bio-Copia/gestione/">Apri gestionale</a></article>
 <article><h3>02 · Farming territoriale</h3><p>Avigliana, microzone, dati OMI, registro, lettere, richiami e tracker di 90 giorni.</p><a href="/joseph-link-in-bio-Copia/gestione/acquisizione-farming/">Apri acquisizione</a></article>
 <article><h3>03 · CRM Farming</h3><p>Controlla registri, risultati, esportazione e persistenza locale con soli dati sintetici.</p><a href="/joseph-link-in-bio-Copia/gestione/acquisizione-farming/crm/">Apri CRM</a></article>
-<article><h3>04 · Lettere & Stampa</h3><p>Verifica la rivista storica, i documenti stampabili e i collegamenti del PDF.</p><a href="/joseph-link-in-bio-Copia/gestione/lettere-stampa/">Apri lettere</a></article>
-<article><h3>05 · Rivista sfogliabile</h3><p>Collaudo del gate editoriale, del manifest, delle pagine e dei download approvati.</p><a href="/joseph-link-in-bio-Copia/gestione/rivista/sfoglia/">Apri sfogliatore</a></article>
-<article><h3>06 · Centro editoriale</h3><p>Revisione delle fonti, impaginazione e approvazione locale simulata; nessuna pubblicazione.</p><a href="/joseph-link-in-bio-Copia/gestione/rivista/">Apri redazione</a></article>
-<article><h3>07 · Catalogo premium</h3><p>Catalogo immobiliare sfogliabile, download, filtri e richiesta informativa manuale.</p><a href="/joseph-link-in-bio-Copia/catalogo-premium/">Apri catalogo</a></article>
-<article><h3>08 · Volantini Premium</h3><p>Composizione, QR, stampa PDF e previsualizzazione delle campagne cartacee.</p><a href="/joseph-link-in-bio-Copia/gestione/volantini-premium/">Apri volantini</a></article>
-<article><h3>09 · Volantino digitale</h3><p>Guida e modulo: il collegamento ai servizi reali è intenzionalmente bloccato.</p><a href="/joseph-link-in-bio-Copia/gestione/volantini-premium/volantino-digitale/">Apri volantino</a></article>
-<article><h3>10 · Newsletter</h3><p>Landing newsletter e disiscrizione; invii e gestione abbonati reali disabilitati.</p><a href="/joseph-link-in-bio-Copia/newsletter/">Apri newsletter</a></article>
-<article><h3>11 · Tutte le pagine</h3><p>Inventario delle landing, stato pubblicazione e collegamenti interni.</p><a href="/joseph-link-in-bio-Copia/gestione/tutte-le-pagine/">Apri inventario</a></article>
-<article><h3>12 · Dashboard territoriale</h3><p>Controllo pagine dei comuni, routing social e stato delle campagne.</p><a href="/joseph-link-in-bio-Copia/gestione/regia-territoriale/">Apri regia</a></article>
+<article><h3>04 · Funnel e CRM sintetico</h3><p>Simula richiesta, qualificazione, follow-up, handoff, opposizione, audit e KPI in SQLite senza contatti reali.</p><a href="/__staging__/funnel.html">Apri il funnel interattivo</a></article>
+<article><h3>05 · Lettere & Stampa</h3><p>Verifica la rivista storica, i documenti stampabili e i collegamenti del PDF.</p><a href="/joseph-link-in-bio-Copia/gestione/lettere-stampa/">Apri lettere</a></article>
+<article><h3>06 · Rivista sfogliabile</h3><p>Collaudo del gate editoriale, del manifest, delle pagine e dei download approvati.</p><a href="/joseph-link-in-bio-Copia/gestione/rivista/sfoglia/">Apri sfogliatore</a></article>
+<article><h3>07 · Centro editoriale</h3><p>Revisione delle fonti, impaginazione e approvazione locale simulata; nessuna pubblicazione.</p><a href="/joseph-link-in-bio-Copia/gestione/rivista/">Apri redazione</a></article>
+<article><h3>08 · Catalogo premium</h3><p>Catalogo immobiliare sfogliabile, download, filtri e richiesta informativa manuale.</p><a href="/joseph-link-in-bio-Copia/catalogo-premium/">Apri catalogo</a></article>
+<article><h3>09 · Volantini Premium</h3><p>Composizione, QR, stampa PDF e previsualizzazione delle campagne cartacee.</p><a href="/joseph-link-in-bio-Copia/gestione/volantini-premium/">Apri volantini</a></article>
+<article><h3>10 · Volantino digitale</h3><p>Guida e modulo: il collegamento ai servizi reali è intenzionalmente bloccato.</p><a href="/joseph-link-in-bio-Copia/gestione/volantini-premium/volantino-digitale/">Apri volantino</a></article>
+<article><h3>11 · Newsletter</h3><p>Landing newsletter e disiscrizione; invii e gestione abbonati reali disabilitati.</p><a href="/joseph-link-in-bio-Copia/newsletter/">Apri newsletter</a></article>
+<article><h3>12 · Tutte le pagine</h3><p>Inventario delle landing, stato pubblicazione e collegamenti interni.</p><a href="/joseph-link-in-bio-Copia/gestione/tutte-le-pagine/">Apri inventario</a></article>
+<article><h3>13 · Dashboard territoriale</h3><p>Controllo pagine dei comuni, routing social e stato delle campagne.</p><a href="/joseph-link-in-bio-Copia/gestione/regia-territoriale/">Apri regia</a></article>
 </div></section>
 <section><h2>Protocollo di collaudo completo</h2>
 <table><thead><tr><th>Scenario</th><th>Prova richiesta</th><th>Perimetro</th></tr></thead><tbody>
@@ -39,6 +40,7 @@ table{border-collapse:collapse;width:100%;background:#fff}td,th{border:1px solid
 <tr><td>C · Newsletter</td><td>Landing → preferenze → disiscrizione</td><td>Solo UI; niente invii reali</td></tr>
 <tr><td>D · Agente abilitato</td><td>Richiesta → qualificazione → handoff</td><td>Prova simulata; nessun dato trasmesso</td></tr>
 <tr><td>E · Operatività</td><td>Agenda → Farming → CRM → KPI</td><td>Dati locali sintetici; verifica persistenza</td></tr>
+<tr><td>F · Funnel sintetico integrato</td><td>Richiesta TEST → SQLite → qualificazione → follow-up → AGENTE TEST → KPI</td><td>Transazioni persistenti di prova; nessuna comunicazione esterna</td></tr>
 </tbody></table></section>
 <p><small>Ambiente tecnico indipendente da main e dalla pubblicazione GitHub Pages. Versione lab 2026-11-22.</small></p>
 </div></body></html>
