@@ -161,11 +161,11 @@ class StagingHandler(SimpleHTTPRequestHandler):
         candidate = (ROOT / current.lstrip("/")).resolve()
         # Hidden files and checkout secrets are not exposed on the forwarded port.
         if any(part.startswith(".") for part in Path(current).parts):
-            return str(ROOT / "404.html")
+            return str(ROOT / "tools" / "staging" / "__NO_ACCESS_STAGING__")
         if candidate.suffix.lower() in (".sqlite", ".sqlite3", ".db", ".key", ".pem"):
-            return str(ROOT / "404.html")
+            return str(ROOT / "tools" / "staging" / "__NO_ACCESS_STAGING__")
         if not candidate.is_relative_to(ROOT.resolve()):
-            return str(ROOT / "404.html")
+            return str(ROOT / "tools" / "staging" / "__NO_ACCESS_STAGING__")
         return str(candidate)
 
     def send_response(self, code, message=None):
