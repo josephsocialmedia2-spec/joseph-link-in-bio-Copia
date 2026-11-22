@@ -56,6 +56,21 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
     await page.goto(base+'/__staging__/funnel.html',{waitUntil:'domcontentloaded'});
     assert.match(await page.locator('body').innerText(),/Codespace privato/);
     assert.equal(await page.locator('form').count(),0,'Static preview should not offer a writable CRM form');
+    // The static export must keep audited public assets required by key modules.
+    const assets=[
+      'case247-design.css',
+      'gestione/acquisizione-farming/contatti-foglio.css',
+      'gestione/acquisizione-farming/contatti-foglio.js',
+      'gestione/acquisizione-farming/contatti-normalizza.js',
+      'gestione/acquisizione-farming/omi-avigliana-2026-1.json',
+      'gestione/rivista/edizioni/index.json',
+      'gestione/tutte-le-pagine/pagine.json'
+    ];
+    for(const asset of assets){
+      const res=await page.request.get(base+prefix+asset);
+      assert.equal(res.status(),200,'Audited preview asset missing: '+asset);
+    }
+    console.log('PASS: public styles, contact UI scripts, OMI and page inventory delivered');
     const x=await page.request.get(base+'/__staging__/api/state');
     assert.equal(x.status(),404,'SQLite must not be exposed by static Vercel preview');
     await page.goto(base+prefix+'catalogo-premium/',{waitUntil:'domcontentloaded'});
