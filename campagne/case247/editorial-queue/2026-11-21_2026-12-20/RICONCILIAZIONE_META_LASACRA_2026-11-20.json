@@ -1,0 +1,48 @@
+{
+  "campaign": "Immobiliare La Sacra — 30 giorni di annunci immobiliari",
+  "reconciliation_date": "2026-11-20",
+  "period": {
+    "from": "2026-11-21",
+    "to": "2026-12-20",
+    "timezone": "Europe/Rome"
+  },
+  "target": {
+    "brand": "Immobiliare La Sacra",
+    "meta_business_id": "1413220527054730",
+    "meta_asset_id": "903213839549093"
+  },
+  "source": {
+    "branch": "case247/shopify-12-campagna-2026-11-21",
+    "post_calendar": "calendario_30_post.json",
+    "shopify_catalog": "catalogo_shopify_12.json",
+    "source_posts": 30,
+    "source_products": 12
+  },
+  "access_checks": {
+    "meta_business_suite": "NOT_AUTHENTICATED_IN_CONTROLLED_BROWSER",
+    "meta_browser_connection": "USER_REPORTED_TINYFISH_ACCESS_BUT_FACEBOOK_SIGN_IN_NOT_VERIFIED",
+    "metricool_lasacra": "BRAND_NOT_CONNECTED",
+    "metricool_case247": "CONNECTED",
+    "metricool_case247_brand_id": 7844901,
+    "tinyfish_run": "NOT_STARTED_INSUFFICIENT_WALLET_FUNDS",
+    "tinyfish_wallet_balance_usd": -0.168
+  },
+  "results": {
+    "meta_scheduled_posts_verified": 0,
+    "metricool_lasacra_scheduled_posts_verified": 0,
+    "meta_published_posts_verified": 0,
+    "autopublishing_enabled_verified": false,
+    "duplicate_check_lasacra": "NOT_POSSIBLE_UNTIL_AUTHORIZED"
+  },
+  "quality_control": {
+    "shopify_real_world_availability": "REVERIFY_BEFORE_SCHEDULING",
+    "media_rights_and_authenticity": "REVERIFY_BEFORE_SCHEDULING",
+    "conflicts_to_review": [
+      "LS-001 floor and garage contradictory fields",
+      "LS-003 property activity visuals not confirmed"
+    ]
+  },
+  "status": "BLOCKED_ON_TINYFISH_WALLET_AND_UNVERIFIED_META_LOGIN",
+  "next_action": "Use ChatGPT Work cloud browser with Meta authentication, or top up TinyFish wallet and finish verified Facebook sign-in; then inspect La Sacra Planner, check duplicates, schedule posts.",
+  "comments": "2026-11-20: browser run attempt failed before execution due to insufficient TinyFish wallet balance; 0 Meta La Sacra posts verified scheduled. Existing CASE247 scheduling untouched."
+}

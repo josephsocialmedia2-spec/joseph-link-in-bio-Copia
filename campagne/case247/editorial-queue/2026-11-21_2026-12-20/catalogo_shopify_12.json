@@ -1,0 +1,837 @@
+{
+  "source": "Shopify Admin API",
+  "fetched_at": "2026-11-20",
+  "count": 12,
+  "products": [
+    {
+      "id": "11283256508743",
+      "ref": "LS-001",
+      "title": "SANT'AMBROGIO TRILOCALE CON IL BOX",
+      "city": "Sant'Ambrogio di Torino",
+      "kind": "Trilocale",
+      "description": "Proponiamo in vendita un appartamento di tre locali, situato al terzo piano di uno stabile degli anni ’70, senza ascensore, recentemente riqualificato grazie agli interventi del Superbonus 110%.L’appartamento si distingue per la buona esposizione, la luminosità e la posizione libera su tre lati, con una piacevole vista panoramica.La distribuzione interna comprende un ampio disimpegno, un tinello con cucina, due camere da letto e un bagno.La proprietà dispone inoltre di due balconi:il primo con affaccio sul lato cucina;il secondo collegato alla zona notte, con affaccio sul cortile condominiale.Entrambi i balconi godono di vista panoramica e contribuiscono a rendere gli ambienti particolarmente luminosi e ariosi. Nel cortile condominiale è inoltre disponibile un posto auto.Completano la proprietà:box autocantina Riscaldamento centralizzato geotermico.",
+      "price": 83000,
+      "sqm": 80,
+      "shopify_status": "ACTIVE",
+      "product_url": "https://lasacraimmobiliare.it/products/trilocale-con-il-box",
+      "source_updated_at": "2026-11-20T09:02:56Z",
+      "features": {
+        "comune": "Sant'Ambrogio di Torino",
+        "indirizzo_immobile": "VIA TORINO,51",
+        "terrazzo": "NO",
+        "ascensore": "NO",
+        "tipo_alimentazione": "GEOTERMICO",
+        "tipo_impianto": "CENTRALIZZATO",
+        "anno_di_costruzione": "1970",
+        "ep_globale_rinnovabile": "79.26",
+        "ep_globale_non_rinnovabile": "72.44",
+        "classe_energetica": "A",
+        "numero_whatsapp": "3462568685",
+        "mq": "[\"gid://shopify/Metaobject/585041707335\"]"
+      },
+      "media_all": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5606.jpg?v=1791272576",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5586.jpg?v=1791272576",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5587.jpg?v=1791272576",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Cucinaluminosaconvistapanoramica.png?v=1791272576",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5589.jpg?v=1791272576",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5591.jpg?v=1791272576",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5592.jpg?v=1791272576",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5593.jpg?v=1791272576",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5595.jpg?v=1791272576",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5597.jpg?v=1791272576",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5600.jpg?v=1791272575",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5601.jpg?v=1791272576",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5602.jpg?v=1791272575",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5603.jpg?v=1791272575",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5598.jpg?v=1791272576",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5599.jpg?v=1791272576",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5607.jpg?v=1791272576"
+      ],
+      "media_original_candidates": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5606.jpg?v=1791272576",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5586.jpg?v=1791272576",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5587.jpg?v=1791272576",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5589.jpg?v=1791272576",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5591.jpg?v=1791272576",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5592.jpg?v=1791272576",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5593.jpg?v=1791272576",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5595.jpg?v=1791272576",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5597.jpg?v=1791272576",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5600.jpg?v=1791272575",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5601.jpg?v=1791272576",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5602.jpg?v=1791272575",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5603.jpg?v=1791272575",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5598.jpg?v=1791272576",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5599.jpg?v=1791272576",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/IMG_5607.jpg?v=1791272576"
+      ],
+      "media_ai_or_unverified": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Cucinaluminosaconvistapanoramica.png?v=1791272576"
+      ],
+      "editorial": {
+        "city": "Sant'Ambrogio di Torino",
+        "kind": "Trilocale",
+        "hook": "Tre locali luminosi e due balconi panoramici",
+        "second": "Esposizione su tre lati e cantina",
+        "flag": "Piano 2/3 e presenza box discordanti tra descrizione e metaobject"
+      },
+      "review_flags": [
+        "VERIFICA DISPONIBILITA' REALE",
+        "Piano 2/3 e presenza box discordanti tra descrizione e metaobject"
+      ],
+      "ready_for_auto_publish": false
+    },
+    {
+      "id": "11203075113287",
+      "ref": "LS-002",
+      "title": "APPARTAMENTO A VALGIOIE  DUE LOCALI",
+      "city": "Valgioie",
+      "kind": "Bilocale",
+      "description": "Scopri questo affascinante bilocale completamente ristrutturato a Valgioie, a soli 10 minuti da Giaveno. La proprietà si compone di ingresso, zona giorno, cucinotta, camera da letto, bagno e balconi privati. Dotato di impianto di riscaldamento con pompa di calore canalizzata ad alta efficienza energetica posto auto dedicato e cantina. Una soluzione moderna e confortevole, ideale per chi ricerca qualità costruttiva e praticità abitativa in una location privilegiata . https://youtu.be/RYI9YU7gd50?feature=shared",
+      "price": 63000,
+      "sqm": null,
+      "shopify_status": "ACTIVE",
+      "product_url": "https://lasacraimmobiliare.it/products/appartamento-due-locali-a-valgioie",
+      "source_updated_at": "2026-11-20T09:03:29Z",
+      "features": {
+        "comune": "VALGIOIE",
+        "indirizzo_immobile": "MODOPRATO ",
+        "terrazzo": "SI",
+        "ascensore": "NO",
+        "tipo_alimentazione": "POMPA CALORE",
+        "tipo_impianto": "ARIA",
+        "anno_di_costruzione": "1975",
+        "classe_energetica": "D",
+        "numero_whatsapp": "3462568685",
+        "funzionario": "CHRISTIAN",
+        "ep_globale_rinnovabile": "132.74",
+        "ep_globale_non_rinnovabile": "89.65"
+      },
+      "media_all": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage22set2026_11_19_23.png?v=1790070788",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage22set2026_11_07_01.png?v=1790070788",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage22set2026_11_09_53.png?v=1790070788",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage22set2026_11_11_51.png?v=1790070788",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage22set2026_11_13_07.png?v=1790070789",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage22set2026_11_15_14.png?v=1790070788",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage22set2026_11_17_01.png?v=1790070788",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage22set2026_11_18_10.png?v=1790070788",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage22set2026_11_21_02.png?v=1790070788",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage22set2026_11_25_34.png?v=1790070788",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage22set2026_11_27_11.png?v=1790070788",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage22set2026_11_32_02.png?v=1790070788",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-09-22at11.04.28_1.jpg?v=1790070788"
+      ],
+      "media_original_candidates": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-09-22at11.04.28_1.jpg?v=1790070788"
+      ],
+      "media_ai_or_unverified": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage22set2026_11_19_23.png?v=1790070788",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage22set2026_11_07_01.png?v=1790070788",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage22set2026_11_09_53.png?v=1790070788",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage22set2026_11_11_51.png?v=1790070788",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage22set2026_11_13_07.png?v=1790070789",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage22set2026_11_15_14.png?v=1790070788",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage22set2026_11_17_01.png?v=1790070788",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage22set2026_11_18_10.png?v=1790070788",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage22set2026_11_21_02.png?v=1790070788",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage22set2026_11_25_34.png?v=1790070788",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage22set2026_11_27_11.png?v=1790070788",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage22set2026_11_32_02.png?v=1790070788"
+      ],
+      "editorial": {
+        "city": "Valgioie",
+        "kind": "Bilocale",
+        "hook": "Bilocale ristrutturato con zona giorno e camera",
+        "second": "Pompa di calore, posto auto e cantina"
+      },
+      "review_flags": [
+        "VERIFICA DISPONIBILITA' REALE"
+      ],
+      "ready_for_auto_publish": false
+    },
+    {
+      "id": "11190682255687",
+      "ref": "LS-003",
+      "title": "ATTIVITA' CAFFETTERIA PASTICCERIA  A RIVOLI",
+      "city": "Rivoli",
+      "kind": "Cessione attività",
+      "description": "CESSIONE ATTIVITÀ CAFFETTERIA E PASTICCERIA – RIVOLI A Rivoli proponiamo in cessione attività di caffetteria e pasticceria presente sul territorio da oltre 15 anni, oggi specializzata nella produzione e vendita di prodotti senza glutine. L’attività rappresenta una soluzione interessante per chi desidera subentrare in un esercizio già conosciuto e avviato, con una storia commerciale consolidata e un’identità ben definita .Il locale è organizzato per l’attività di caffetteria e pasticceria e dispone di spazi dedicati alla vendita, alla somministrazione e alla lavorazione dei prodotti. Attualmente l’offerta è focalizzata in particolare sul senza glutine, settore che consente di rivolgersi sia alla clientela tradizionale sia a un pubblico con esigenze alimentari specifiche. L’attività si presta sia alla prosecuzione dell’attuale format sia allo sviluppo di nuovi progetti nel settore pasticceria, caffetteria, e somministrazione. https://youtu.be/bTgeDsbwsyo?is=BC3GuutYPYc6uRa4. Contattaci per ricevere maggiori dettagli e organizzare una visita al : 346.2568685",
+      "price": 180000,
+      "sqm": null,
+      "shopify_status": "ACTIVE",
+      "product_url": "https://lasacraimmobiliare.it/products/attivita-caffetteria-pasticceria-a-rivoli",
+      "source_updated_at": "2026-09-20T04:26:25Z",
+      "features": {
+        "comune": "RIVOLI",
+        "indirizzo_immobile": "VIA VITTORIO VENETO ",
+        "numero_whatsapp": "3462568685",
+        "funzionario": "CHRISTIAN"
+      },
+      "media_all": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage19set2026_16_35_26.png?v=1789834792",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage19set2026_17_10_00.png?v=1789834792",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage19set2026_16_55_33.png?v=1789834792",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage19set2026_16_51_55.png?v=1789834792",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage19set2026_17_17_18.png?v=1789834792",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage19set2026_18_08_47.png?v=1789834792",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage19set2026_17_53_01.png?v=1789834792",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage19set2026_16_38_06.png?v=1789834793",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage19set2026_16_42_55.png?v=1789834793",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage19set2026_17_13_04.png?v=1789834793",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage19set2026_17_45_56.png?v=1789834792",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage19set2026_17_47_34.png?v=1789834792",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Uomo_sicuro_in_ufficio_immobiliare_711e3d9f-78fc-4602-b5b8-0529f04e0858.png?v=1789835068"
+      ],
+      "media_original_candidates": [],
+      "media_ai_or_unverified": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage19set2026_16_35_26.png?v=1789834792",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage19set2026_17_10_00.png?v=1789834792",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage19set2026_16_55_33.png?v=1789834792",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage19set2026_16_51_55.png?v=1789834792",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage19set2026_17_17_18.png?v=1789834792",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage19set2026_18_08_47.png?v=1789834792",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage19set2026_17_53_01.png?v=1789834792",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage19set2026_16_38_06.png?v=1789834793",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage19set2026_16_42_55.png?v=1789834793",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage19set2026_17_13_04.png?v=1789834793",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage19set2026_17_45_56.png?v=1789834792",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage19set2026_17_47_34.png?v=1789834792",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Uomo_sicuro_in_ufficio_immobiliare_711e3d9f-78fc-4602-b5b8-0529f04e0858.png?v=1789835068"
+      ],
+      "editorial": {
+        "city": "Rivoli",
+        "kind": "Cessione attività",
+        "hook": "Caffetteria e pasticceria attiva da oltre 15 anni",
+        "second": "Attività specializzata anche in prodotti senza glutine",
+        "flag": "Solo immagini con nomi riconducibili a rendering/generazione IA"
+      },
+      "review_flags": [
+        "VERIFICA DISPONIBILITA' REALE",
+        "Solo immagini con nomi riconducibili a rendering/generazione IA",
+        "Nessuna fotografia originale identificabile per nome: verificare media"
+      ],
+      "ready_for_auto_publish": false
+    },
+    {
+      "id": "11136591069511",
+      "ref": "LS-004",
+      "title": "AVIGLIANA ATTIVITA' BAR RISTORANTE TABACCHI LOTTO",
+      "city": "Avigliana",
+      "kind": "Cessione attività",
+      "description": "Attività commerciale consolidata ad Avigliana con oltre 30 anni di storia e clientela affezionata. Bar, ristorante e tabacchi compresa di arredo situati in zona di passaggio strategica che garantisce flusso costante di avventori.Gestione provata e redditizia, pronta per il passaggio generazionale. Ideale per chi cerca un'attività già strutturata con potenziale di crescita. Vendita motivata dal raggiungimento dell'età pensionabile del titolare.Opportunità rara per chi desidera entrare nel settore con una base solida e una location privilegiata. https://youtu.be/5SYdg9thjKM?feature=shared",
+      "price": 150000,
+      "sqm": 350,
+      "shopify_status": "ACTIVE",
+      "product_url": "https://lasacraimmobiliare.it/products/attivita-bar-ristorante-tabacchi-lotto",
+      "source_updated_at": "2026-09-13T23:13:53Z",
+      "features": {
+        "comune": "AVIGLIANA",
+        "indirizzo_immobile": "VIALE NOBEL",
+        "terrazzo": "NO",
+        "ascensore": "NO",
+        "tipo_alimentazione": "RADIATORI",
+        "tipo_impianto": "metano",
+        "anno_di_costruzione": "2000",
+        "ep_globale_rinnovabile": "105.35",
+        "classe_energetica": "e",
+        "numero_whatsapp": "3462568685",
+        "funzionario": "CHRISTIAN",
+        "google_product_category": "138",
+        "mq": "[\"gid://shopify/Metaobject/546376515911\"]"
+      },
+      "media_all": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage8set2026_10_50_22.png?v=1788964303",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage8set2026_10_51_28.png?v=1788964303",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage8set2026_10_52_27.png?v=1788964303",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage8set2026_10_53_28.png?v=1788964303",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage8set2026_10_55_13.png?v=1788964303",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage8set2026_10_57_44.png?v=1788964303",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage8set2026_10_59_09.png?v=1788964304",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage8set2026_11_00_49.png?v=1788964303",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage8set2026_11_02_30.png?v=1788964304",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-09-08at10.47.51_4.jpg?v=1788964302",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-09-08at10.47.51_5.jpg?v=1788964302",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-09-08at10.47.55_3.jpg?v=1788964302",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-09-09at10.53.52_1.jpg?v=1788964301",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-09-09at10.53.52_2.jpg?v=1788964301"
+      ],
+      "media_original_candidates": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-09-08at10.47.51_4.jpg?v=1788964302",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-09-08at10.47.51_5.jpg?v=1788964302",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-09-08at10.47.55_3.jpg?v=1788964302",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-09-09at10.53.52_1.jpg?v=1788964301",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-09-09at10.53.52_2.jpg?v=1788964301"
+      ],
+      "media_ai_or_unverified": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage8set2026_10_50_22.png?v=1788964303",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage8set2026_10_51_28.png?v=1788964303",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage8set2026_10_52_27.png?v=1788964303",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage8set2026_10_53_28.png?v=1788964303",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage8set2026_10_55_13.png?v=1788964303",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage8set2026_10_57_44.png?v=1788964303",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage8set2026_10_59_09.png?v=1788964304",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage8set2026_11_00_49.png?v=1788964303",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage8set2026_11_02_30.png?v=1788964304"
+      ],
+      "editorial": {
+        "city": "Avigliana",
+        "kind": "Cessione attività",
+        "hook": "Bar, ristorante e tabacchi con una lunga storia",
+        "second": "Attività avviata con locali già arredati",
+        "flag": "Data di disponibilità indicata 'settembre 27': verificare"
+      },
+      "review_flags": [
+        "VERIFICA DISPONIBILITA' REALE",
+        "Data di disponibilità indicata 'settembre 27': verificare"
+      ],
+      "ready_for_auto_publish": false
+    },
+    {
+      "id": "11038271897927",
+      "ref": "LS-005",
+      "title": "APPARTAMENTO AL PIANO TERRA A SANT'ANTONINO DI Dì SUSA",
+      "city": "Sant'Antonino di Susa",
+      "kind": "Appartamento",
+      "description": "NOVITA' Affacciato sulla tranquilla Sant'Antonino di Susa, questo appartamento al piano terra offre la comodità di una posizione accessibile con uno spazio esterno privato. Ideale per chi cerca una soluzione abitativa senza scale, combina praticità e serenità.L'area esterna consente di godere della luce naturale e creare uno spazio esterno personale. Perfetto per famiglie, coppie o chi desidera una casa a misura d'uomo in una comunità accogliente della Valle di Susa.Ampia zona giorno, cucina abitabile a vista, due camere da letto, bagno con doccia e ripostiglio. Ristrutturato di recente con impianto antifurto, caldaia nuova, inferiate, tende da sole e ventilazione automatica. No spese condominiali.",
+      "price": 125000,
+      "sqm": 90,
+      "shopify_status": "ACTIVE",
+      "product_url": "https://lasacraimmobiliare.it/products/appartamento-al-piano-terra-a-santantonino-di-di-susa",
+      "source_updated_at": "2026-11-18T09:15:20Z",
+      "features": {
+        "comune": "SANT'ANTONINO DI SUSA",
+        "indirizzo_immobile": "CORSO MONCENSIO INTERNO",
+        "terrazzo": "SI",
+        "ascensore": "NO",
+        "tipo_alimentazione": "METANO",
+        "tipo_impianto": "RADIATORI",
+        "anno_di_costruzione": "1970",
+        "ep_globale_rinnovabile": "159.99",
+        "ep_globale_non_rinnovabile": "105.87",
+        "classe_energetica": "E",
+        "numero_whatsapp": "3462568685",
+        "funzionario": "CHRISTIAN ",
+        "mq": "[\"gid://shopify/Metaobject/524424216903\"]"
+      },
+      "media_all": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage17ago2026_15_04_37.png?v=1787300938",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage17ago2026_15_02_54.png?v=1787300937",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage17ago2026_14_47_03.png?v=1787300937",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage17ago2026_14_50_09.png?v=1787300937",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage17ago2026_14_52_57.png?v=1787300938",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage17ago2026_14_58_27.png?v=1787300937",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage17ago2026_15_00_06.png?v=1787300937",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage17ago2026_15_05_58.png?v=1787300937",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage17ago2026_15_11_12.png?v=1787300938",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage17ago2026_15_13_27.png?v=1787300938",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-08-17at15.07.15.jpg?v=1787300936",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_21_ago_2026_11_10_09.png?v=1787303473"
+      ],
+      "media_original_candidates": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-08-17at15.07.15.jpg?v=1787300936"
+      ],
+      "media_ai_or_unverified": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage17ago2026_15_04_37.png?v=1787300938",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage17ago2026_15_02_54.png?v=1787300937",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage17ago2026_14_47_03.png?v=1787300937",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage17ago2026_14_50_09.png?v=1787300937",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage17ago2026_14_52_57.png?v=1787300938",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage17ago2026_14_58_27.png?v=1787300937",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage17ago2026_15_00_06.png?v=1787300937",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage17ago2026_15_05_58.png?v=1787300937",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage17ago2026_15_11_12.png?v=1787300938",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage17ago2026_15_13_27.png?v=1787300938",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_21_ago_2026_11_10_09.png?v=1787303473"
+      ],
+      "editorial": {
+        "city": "Sant'Antonino di Susa",
+        "kind": "Appartamento",
+        "hook": "Appartamento al piano terra con spazio esterno",
+        "second": "90 mq e quattro locali secondo i dati Shopify"
+      },
+      "review_flags": [
+        "VERIFICA DISPONIBILITA' REALE"
+      ],
+      "ready_for_auto_publish": false
+    },
+    {
+      "id": "10903112876359",
+      "ref": "LS-006",
+      "title": "APPARTAMENTO A GRUGLIASCO",
+      "city": "Grugliasco",
+      "kind": "Appartamento",
+      "description": "Elegante appartamento al secondo piano a Grugliasco con accesso diretto tramite ascensore. La proprietà comprende cucina abitabile, due camere da letto spaziose, bagno completo, ripostiglio e due balconi piastrellati. Cantina inclusa per lo stoccaggio. Recenti lavori di manutenzione: nuovo tetto con pannelli solari e rifinitura balconi. Ideale per chi cerca comfort e efficienza energetica in una posizione centrale.",
+      "price": 175000,
+      "sqm": 75,
+      "shopify_status": "ACTIVE",
+      "product_url": "https://lasacraimmobiliare.it/products/appartamento-a-grugliasco-1",
+      "source_updated_at": "2026-11-18T09:15:51Z",
+      "features": {
+        "comune": "GRUGLIASCO",
+        "indirizzo_immobile": "CORSO MARTING LUTHER KING",
+        "terrazzo": "BALCONI",
+        "ascensore": "SI",
+        "tipo_alimentazione": "METANO",
+        "tipo_impianto": "RADIATORI",
+        "classe_energetica": "E",
+        "numero_whatsapp": "3462568685",
+        "funzionario": "CHRISTIAN",
+        "mq": "[\"gid://shopify/Metaobject/496610902343\"]",
+        "anno_di_costruzione": "1975",
+        "ep_globale_rinnovabile": "169.54",
+        "ep_globale_non_rinnovabile": "107.99"
+      },
+      "media_all": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage10lug2026_18_38_34.png?v=1783927766",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage10lug2026_18_35_22.png?v=1783927765",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage10lug2026_18_27_13.png?v=1783927767",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage10lug2026_18_31_09.png?v=1783927766",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage10lug2026_18_36_55.png?v=1783927766",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage10lug2026_18_32_57.png?v=1783927766",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage10lug2026_18_29_34.png?v=1783927766",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage10lug2026_18_41_55.png?v=1783927767",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-10at17.35.46_2.jpg?v=1783927765",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-10at17.35.46_4.jpg?v=1783927765",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-10at17.35.47_1.jpg?v=1783927766",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-10at18.33.40.jpg?v=1783927764"
+      ],
+      "media_original_candidates": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-10at17.35.46_2.jpg?v=1783927765",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-10at17.35.46_4.jpg?v=1783927765",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-10at17.35.47_1.jpg?v=1783927766",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-10at18.33.40.jpg?v=1783927764"
+      ],
+      "media_ai_or_unverified": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage10lug2026_18_38_34.png?v=1783927766",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage10lug2026_18_35_22.png?v=1783927765",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage10lug2026_18_27_13.png?v=1783927767",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage10lug2026_18_31_09.png?v=1783927766",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage10lug2026_18_36_55.png?v=1783927766",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage10lug2026_18_32_57.png?v=1783927766",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage10lug2026_18_29_34.png?v=1783927766",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage10lug2026_18_41_55.png?v=1783927767"
+      ],
+      "editorial": {
+        "city": "Grugliasco",
+        "kind": "Appartamento",
+        "hook": "Secondo piano con ascensore e due balconi",
+        "second": "75 mq, due camere e cantina"
+      },
+      "review_flags": [
+        "VERIFICA DISPONIBILITA' REALE"
+      ],
+      "ready_for_auto_publish": false
+    },
+    {
+      "id": "10886810075463",
+      "ref": "LS-007",
+      "title": "CHALET AD AVIGLIANA",
+      "city": "Avigliana",
+      "kind": "Chalet",
+      "description": "Affascinante chalet ad Avigliana con cortile privato e terrazzino panoramico. Spazi luminosi con soggiorno e cucina a vista, ideale per famiglie e gruppi. Dispone di 4 posti letto e riscaldamento con stufa a pellet per il massimo comfort durante tutto l'anno. Perfetto per una vacanza tranquilla immerso nella natura.",
+      "price": 24000,
+      "sqm": null,
+      "shopify_status": "ACTIVE",
+      "product_url": "https://lasacraimmobiliare.it/products/chalet-ad-avigliana",
+      "source_updated_at": "2026-08-21T13:37:59Z",
+      "features": {
+        "comune": "AVIGLIANA",
+        "indirizzo_immobile": "STRADA ANTICA GIAVENO ",
+        "terrazzo": "SI",
+        "ascensore": "NO",
+        "tipo_alimentazione": "STUFA PELLET",
+        "anno_di_costruzione": "1990",
+        "numero_whatsapp": "3462568685",
+        "funzionario": "CHRISTIAN",
+        "mq": "[\"gid://shopify/Metaobject/488021557575\"]",
+        "google_product_category": "536"
+      },
+      "media_all": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_13.jpg?v=1782999775",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_1.jpg?v=1782999776",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_14.jpg?v=1782999775",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_11.jpg?v=1782999775",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_2_-Copia.jpg?v=1782999775",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_4_-Copia.jpg?v=1782999775",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_3_-Copia.jpg?v=1782999775",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_8_-Copia.jpg?v=1782999775",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_5_-Copia.jpg?v=1782999775",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_6.jpg?v=1782999775",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_7.jpg?v=1782999775",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_9_-Copia.jpg?v=1782999775",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_10_-Copia.jpg?v=1782999775",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_12.jpg?v=1782999775"
+      ],
+      "media_original_candidates": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_13.jpg?v=1782999775",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_1.jpg?v=1782999776",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_14.jpg?v=1782999775",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_11.jpg?v=1782999775",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_2_-Copia.jpg?v=1782999775",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_4_-Copia.jpg?v=1782999775",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_3_-Copia.jpg?v=1782999775",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_8_-Copia.jpg?v=1782999775",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_5_-Copia.jpg?v=1782999775",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_6.jpg?v=1782999775",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_7.jpg?v=1782999775",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_9_-Copia.jpg?v=1782999775",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_10_-Copia.jpg?v=1782999775",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-02at13.29.45_12.jpg?v=1782999775"
+      ],
+      "media_ai_or_unverified": [],
+      "editorial": {
+        "city": "Avigliana",
+        "kind": "Chalet",
+        "hook": "Chalet con cortile privato e terrazzino",
+        "second": "Soggiorno con cucina a vista e stufa a pellet",
+        "flag": "Precisare il tipo di cessione e l'uso consentito"
+      },
+      "review_flags": [
+        "VERIFICA DISPONIBILITA' REALE",
+        "Precisare il tipo di cessione e l'uso consentito"
+      ],
+      "ready_for_auto_publish": false
+    },
+    {
+      "id": "10808056250695",
+      "ref": "LS-008",
+      "title": "APPARTAMENTO A RIVOLI QUATTRO LOCALI",
+      "city": "Rivoli",
+      "kind": "Quadrilocale",
+      "description": "Ampio appartamento di 4 locali a Rivoli, situato a soli 200 metri da Corso Susa in posizione privilegiata. Ubicato al 3° piano con ascensore, l'immobile gode di una splendida vista sul Castello e beneficia di una recente ristrutturazione che ne garantisce ottime condizioni. La proprietà è libera su tre lati, assicurando luminosità naturale e ventilazione ottimale in tutti gli ambienti. Ideale per famiglie che cercano spazi generosi in una zona centrale e ben servita dai principali servizi e infrastrutture del territorio.",
+      "price": 185000,
+      "sqm": 100,
+      "shopify_status": "ACTIVE",
+      "product_url": "https://lasacraimmobiliare.it/products/appartamento-a-rivvoli-quattro-locali",
+      "source_updated_at": "2026-11-18T09:18:00Z",
+      "features": {
+        "comune": "rivoli",
+        "indirizzo_immobile": "via alpignano",
+        "terrazzo": "BALCONI",
+        "ascensore": "SI",
+        "tipo_alimentazione": "METANO",
+        "tipo_impianto": "RADIATORI",
+        "anno_di_costruzione": "1970",
+        "ep_globale_non_rinnovabile": "105.21",
+        "classe_energetica": "E",
+        "numero_whatsapp": "3462568685",
+        "funzionario": "CHRISTIAN",
+        "mq": "[\"gid://shopify/Metaobject/454149701959\"]",
+        "ep_globale_rinnovabile": "184.44"
+      },
+      "media_all": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage12mag2026_11_14_18.png?v=1779351729",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_21_mag_2026_10_02_38.png?v=1779351777",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/0001-715449820621494522.png?v=1778926005",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsApp_Image_2026-05-21_at_09.35.23_13.jpg?v=1779351767",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsApp_Image_2026-05-21_at_09.35.23_14.jpg?v=1779351767",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_21_mag_2026_09_37_37.png?v=1779351776",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_21_mag_2026_09_40_04.png?v=1779351777",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_21_mag_2026_09_41_38.png?v=1779351776",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_21_mag_2026_09_42_58.png?v=1779351777",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_21_mag_2026_09_44_33.png?v=1779351777",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_21_mag_2026_09_46_36.png?v=1779351777",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_21_mag_2026_09_50_27.png?v=1779351777",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_21_mag_2026_10_00_45.png?v=1779351777",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_21_mag_2026_10_04_18_1.png?v=1779351776",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_21_mag_2026_10_04_18.png?v=1779351777"
+      ],
+      "media_original_candidates": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsApp_Image_2026-05-21_at_09.35.23_13.jpg?v=1779351767",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsApp_Image_2026-05-21_at_09.35.23_14.jpg?v=1779351767"
+      ],
+      "media_ai_or_unverified": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage12mag2026_11_14_18.png?v=1779351729",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_21_mag_2026_10_02_38.png?v=1779351777",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/0001-715449820621494522.png?v=1778926005",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_21_mag_2026_09_37_37.png?v=1779351776",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_21_mag_2026_09_40_04.png?v=1779351777",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_21_mag_2026_09_41_38.png?v=1779351776",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_21_mag_2026_09_42_58.png?v=1779351777",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_21_mag_2026_09_44_33.png?v=1779351777",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_21_mag_2026_09_46_36.png?v=1779351777",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_21_mag_2026_09_50_27.png?v=1779351777",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_21_mag_2026_10_00_45.png?v=1779351777",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_21_mag_2026_10_04_18_1.png?v=1779351776",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_21_mag_2026_10_04_18.png?v=1779351777"
+      ],
+      "editorial": {
+        "city": "Rivoli",
+        "kind": "Quadrilocale",
+        "hook": "100 mq e vista sul Castello di Rivoli",
+        "second": "Terzo piano con ascensore, luminoso su tre lati"
+      },
+      "review_flags": [
+        "VERIFICA DISPONIBILITA' REALE"
+      ],
+      "ready_for_auto_publish": false
+    },
+    {
+      "id": "10770991481159",
+      "ref": "LS-009",
+      "title": "APPARTAMENTO A RUBIANA",
+      "city": "Rubiana",
+      "kind": "Monolocale",
+      "description": "Monolocale con disimpegno e bagno, in Via Roma a Rubiana, ideale per investimento. Spazi ben distribuiti con balcone che garantisce luminosità naturale e affacci piacevoli. Servizi completi e funzionali. Disponibilità immediata. Perfetto per chi cerca una soluzione compatta, efficiente e redditizia nel mercato locativo.",
+      "price": 19500,
+      "sqm": 30,
+      "shopify_status": "ACTIVE",
+      "product_url": "https://lasacraimmobiliare.it/products/appartamento-a-rubiana",
+      "source_updated_at": "2026-11-18T09:19:49Z",
+      "features": {
+        "terrazzo": "BALCONE",
+        "tipo_alimentazione": "METANO",
+        "tipo_impianto": "RADIATORI",
+        "anno_di_costruzione": "1975",
+        "ep_globale_rinnovabile": "180.9",
+        "classe_energetica": "G",
+        "numero_whatsapp": "3462568685",
+        "funzionario": "CHRISTIAN",
+        "mq": "[\"gid://shopify/Metaobject/417341374791\"]",
+        "ep_globale_non_rinnovabile": "114.21"
+      },
+      "media_all": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage28apr2026_18_02_46.png?v=1777393955",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_22_apr_2026_10_57_29.png?v=1777393997",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage28apr2026_18_07_57.png?v=1777393955",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage28apr2026_18_09_29.png?v=1777393955",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage28apr2026_18_11_23.png?v=1777393955",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-04-28at17.54.54_3.jpg?v=1777393953",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-04-28at18.14.33.jpg?v=1777393953",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsApp_Image_2026-04-28_at_18.14.33.jpg?v=1777967717",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_5_mag_2026_09_49_34.png?v=1777967721",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_5_mag_2026_09_51_18.png?v=1777967720"
+      ],
+      "media_original_candidates": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-04-28at17.54.54_3.jpg?v=1777393953",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-04-28at18.14.33.jpg?v=1777393953",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsApp_Image_2026-04-28_at_18.14.33.jpg?v=1777967717"
+      ],
+      "media_ai_or_unverified": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage28apr2026_18_02_46.png?v=1777393955",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_22_apr_2026_10_57_29.png?v=1777393997",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage28apr2026_18_07_57.png?v=1777393955",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage28apr2026_18_09_29.png?v=1777393955",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage28apr2026_18_11_23.png?v=1777393955",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_5_mag_2026_09_49_34.png?v=1777967721",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPT_Image_5_mag_2026_09_51_18.png?v=1777967720"
+      ],
+      "editorial": {
+        "city": "Rubiana",
+        "kind": "Monolocale",
+        "hook": "Monolocale con balcone in Via Roma",
+        "second": "30 mq con bagno e disimpegno"
+      },
+      "review_flags": [
+        "VERIFICA DISPONIBILITA' REALE"
+      ],
+      "ready_for_auto_publish": false
+    },
+    {
+      "id": "10671726395719",
+      "ref": "LS-010",
+      "title": "ALLOGGIO DI DUE LOCALI COLLEGNO",
+      "city": "Collegno",
+      "kind": "Bilocale",
+      "description": "https://youtube.com/shorts/DgnnYpAUb-o?feature=shared PREZZO RIBASSATO . ALLOGGIO LIBERO SUBITO.COLLEGNO - A 200 metri da C.so Francia (METRO) .In zona Terracorta, in contesto tranquillo e ben servito, proponiamo in vendita appartamento di due ampi locali, ideale per chi cerca spazi comodi, funzionalità e possibilità di investimento futuro. L’immobile è composto da ingresso, soggiorno con cucina a vista , camera matrimoniale di generose dimensioni, altro vano con accesso su balcone verandato,bagno, pratico ripostiglio/cabina armadio .L’appartamento si presenta in buone condizioni interne: – bagno, impianto elettrico e idraulico rivisti – serramenti nuovi – ambienti ben distribuiti e facilmente arredabili,Completa la proprietà una cantina al piano interrato.Soluzione adatta a: – giovani coppie – professionisti – investitori – chi cerca un immobile con potenziale di sviluppo Contattami per ricevere maggiori informazioni.",
+      "price": 100000,
+      "sqm": 55,
+      "shopify_status": "ACTIVE",
+      "product_url": "https://lasacraimmobiliare.it/products/alloggio-di-due-locali-collegno",
+      "source_updated_at": "2026-11-18T09:24:38Z",
+      "features": {
+        "terrazzo": "BALCONI",
+        "ascensore": "NO",
+        "tipo_alimentazione": "METANO",
+        "tipo_impianto": "RADIATORI",
+        "anno_di_costruzione": "1970",
+        "funzionario": "CHRISTIAN",
+        "ep_globale_rinnovabile": "195.65",
+        "classe_energetica": "E",
+        "numero_whatsapp": "3462568685",
+        "comune": "COLLEGNO TERRACORTA",
+        "indirizzo_immobile": "VIA AVIGLIANA 24",
+        "mq": "[\"gid://shopify/Metaobject/462726365511\"]",
+        "ep_globale_non_rinnovabile": "131.65"
+      },
+      "media_all": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Edificio_in_vendita_con_dettagli_verdi.png?v=1775654030",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Strada_soleggiata_con_vista_sulle_montagne.png?v=1775654030",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Panorama_di_un_paese_europeo_con_montagne.png?v=1775654030",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Cameradalettoluminosaemoderna_1.png?v=1775653898",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsApp_Image_2026-02-20_at_17.22.01_1.jpg?v=1775654030",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Soleggiatacasaconcortileegiardino_d802d82e-d4b6-4dfa-b864-a9aad7e0cc12.png?v=1775653898",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsApp_Image_2026-05-30_at_09.47.18.jpg?v=1780127407",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/MANSARDA_222b6fcb-3c6c-4a0c-b7ca-88bc27989dac.png?v=1780127737",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Balconesoleggiatoconvistaurbana.png?v=1775653898",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Cortilesoleggiatoetranquillo_f224c12e-a25f-4cdd-bd1d-c7c359c99915.png?v=1775653898",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Scalinatacondettaglielegantielucenaturale_b5553165-3c6a-4493-a3ad-979d93d5ea29.png?v=1775653898",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Vistaluminosaconfinestreinlegno.png?v=1775653898",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-02-18at11.49.49_4_2fc7bfc8-525a-4298-8531-e8ddea375f42.jpg?v=1775653898",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-02-18at11.49.49_5_641a121b-0e28-4d48-8ff6-10fb957b9ae8.jpg?v=1775653898",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-02-18at11.49.50_11.jpg?v=1775653898",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Bagnoluminosoconpiastrelleeleganti.png?v=1775653898",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Bagnoluminosoepulito.png?v=1775653898",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/baratteroviaavigliana_f2821a26-b74b-4874-ab48-e0b31e989390.png?v=1775653898"
+      ],
+      "media_original_candidates": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsApp_Image_2026-02-20_at_17.22.01_1.jpg?v=1775654030",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsApp_Image_2026-05-30_at_09.47.18.jpg?v=1780127407",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-02-18at11.49.49_4_2fc7bfc8-525a-4298-8531-e8ddea375f42.jpg?v=1775653898",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-02-18at11.49.49_5_641a121b-0e28-4d48-8ff6-10fb957b9ae8.jpg?v=1775653898",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-02-18at11.49.50_11.jpg?v=1775653898"
+      ],
+      "media_ai_or_unverified": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Edificio_in_vendita_con_dettagli_verdi.png?v=1775654030",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Strada_soleggiata_con_vista_sulle_montagne.png?v=1775654030",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Panorama_di_un_paese_europeo_con_montagne.png?v=1775654030",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Cameradalettoluminosaemoderna_1.png?v=1775653898",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Soleggiatacasaconcortileegiardino_d802d82e-d4b6-4dfa-b864-a9aad7e0cc12.png?v=1775653898",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/MANSARDA_222b6fcb-3c6c-4a0c-b7ca-88bc27989dac.png?v=1780127737",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Balconesoleggiatoconvistaurbana.png?v=1775653898",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Cortilesoleggiatoetranquillo_f224c12e-a25f-4cdd-bd1d-c7c359c99915.png?v=1775653898",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Scalinatacondettaglielegantielucenaturale_b5553165-3c6a-4493-a3ad-979d93d5ea29.png?v=1775653898",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Vistaluminosaconfinestreinlegno.png?v=1775653898",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Bagnoluminosoconpiastrelleeleganti.png?v=1775653898",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Bagnoluminosoepulito.png?v=1775653898",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/baratteroviaavigliana_f2821a26-b74b-4874-ab48-e0b31e989390.png?v=1775653898"
+      ],
+      "editorial": {
+        "city": "Collegno",
+        "kind": "Bilocale",
+        "hook": "Alloggio in zona Terracorta vicino a Corso Francia",
+        "second": "55 mq con due locali e cantina da verificare"
+      },
+      "review_flags": [
+        "VERIFICA DISPONIBILITA' REALE"
+      ],
+      "ready_for_auto_publish": false
+    },
+    {
+      "id": "10705715855687",
+      "ref": "LS-011",
+      "title": "SANT'AMBROGIO DUE LOCALI IN CENTRO PAESE",
+      "city": "Sant'Ambrogio di Torino",
+      "kind": "Bilocale",
+      "description": "Due locali in centro paese ideali per coppie Proponiamo in vendita due locali situati nel centro paese, in posizione strategica e comoda ai principali servizi. La soluzione è ideale per coppie o per chi cerca un immobile pratico, ben posizionato e facilmente gestibile. Gli spazi interni sono versatili e possono essere configurati secondo diverse esigenze abitative, offrendo una buona flessibilità di utilizzo. La posizione centrale garantisce visibilità, comodità e passaggio pedonale, rendendo l’immobile interessante anche per chi desidera una soluzione con buon potenziale nel tempo. Punti di forza Due locali Centro paese Ideale per coppie Posizione strategica Buona visibilità Passaggio pedonale Spazi versatili Ambienti facilmente configurabili CTA WhatsApp Per ricevere maggiori informazioni o fissare una visita, contatta Immobiliare La Sacra: 👉 CONTATTAMI PER VISIONARE L IMMOBILE 📞 346 256 8685📧 immobiliarelasacra@gmail.com",
+      "price": 69000,
+      "sqm": 50,
+      "shopify_status": "ACTIVE",
+      "product_url": "https://lasacraimmobiliare.it/products/due-locali-in-centro-paese-con-posizione-strategica",
+      "source_updated_at": "2026-11-20T09:07:21Z",
+      "features": {
+        "terrazzo": "balcone",
+        "ascensore": "no",
+        "tipo_alimentazione": "metano",
+        "tipo_impianto": "radiatori",
+        "anno_di_costruzione": "2012",
+        "ep_globale_rinnovabile": "80.65",
+        "classe_energetica": "b",
+        "funzionario": "immobiliare la sacra",
+        "mq": "[\"gid://shopify/Metaobject/353847574855\"]",
+        "ep_globale_non_rinnovabile": "70.65"
+      },
+      "media_all": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Spazioluminosoemodernoconcucina_1.png?v=1773849617",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Edificioconinsegna_VENIDTA_incitta.png?v=1773849617",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Portaapertasullalucedelsole.png?v=1773849617",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Spazioluminosoemodernoconcucina.png?v=1773849436",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Spaziomodernoeluminosoconarredominimalista.png?v=1773849436",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Ufficiominimalistaconlucenaturale_1.png?v=1773849436",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Ufficiomodernoilluminatodalsole.png?v=1773849436",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-03-18at15.45.27_1.jpg?v=1773849435",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-03-18at15.45.27_2.jpg?v=1773849435",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-03-18at16.53.17.jpg?v=1773849434"
+      ],
+      "media_original_candidates": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-03-18at15.45.27_1.jpg?v=1773849435",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-03-18at15.45.27_2.jpg?v=1773849435",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-03-18at16.53.17.jpg?v=1773849434"
+      ],
+      "media_ai_or_unverified": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Spazioluminosoemodernoconcucina_1.png?v=1773849617",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Edificioconinsegna_VENIDTA_incitta.png?v=1773849617",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Portaapertasullalucedelsole.png?v=1773849617",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Spazioluminosoemodernoconcucina.png?v=1773849436",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Spaziomodernoeluminosoconarredominimalista.png?v=1773849436",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Ufficiominimalistaconlucenaturale_1.png?v=1773849436",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/Ufficiomodernoilluminatodalsole.png?v=1773849436"
+      ],
+      "editorial": {
+        "city": "Sant'Ambrogio di Torino",
+        "kind": "Bilocale",
+        "hook": "Due locali in centro paese",
+        "second": "50 mq, balcone e servizi a portata di mano"
+      },
+      "review_flags": [
+        "VERIFICA DISPONIBILITA' REALE"
+      ],
+      "ready_for_auto_publish": false
+    },
+    {
+      "id": "11573197111623",
+      "ref": "LS-012",
+      "title": "CORSO FRANCIA TORINO",
+      "city": "Torino",
+      "kind": "Appartamento",
+      "description": "CORSO FRANCIA VIA GUIDO REY ALLOGGIO AL TERZO PIANO DI INGRESSO , CUCINA ABITABILE, DUE CAMERE DA LETTO, BAGNO, CANTINA",
+      "price": 163000,
+      "sqm": null,
+      "shopify_status": "ACTIVE",
+      "product_url": "https://lasacraimmobiliare.it/products/corso-francia-torino",
+      "source_updated_at": "2026-11-20T09:14:40Z",
+      "features": {
+        "comune": "TORINO",
+        "indirizzo_immobile": "CORSO FRANCIA",
+        "terrazzo": "NO",
+        "ascensore": "SI",
+        "tipo_alimentazione": "METANO",
+        "tipo_impianto": "RADIATORI",
+        "anno_di_costruzione": "1970",
+        "ep_globale_rinnovabile": "189.36",
+        "ep_globale_non_rinnovabile": "110.36",
+        "classe_energetica": "E",
+        "numero_whatsapp": "3462568685",
+        "funzionario": "CHRISTIAN"
+      },
+      "media_all": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage6ago2026_15_10_58_e7c9ae8f-16d9-46c7-a114-49ea3e1e0131.png?v=1795165810",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage6ago2026_14_55_29_607cb8af-451f-495c-bf67-7ea4106248de.png?v=1795165810",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage6ago2026_14_57_06_ff2972ab-2dc0-49da-acc3-4d754f25a6a1.png?v=1795165809",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage6ago2026_15_01_43_66bae402-b315-42f9-b743-864f897b175f.png?v=1795165810",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage6ago2026_15_03_16_54f8baab-d76b-421a-99ca-001073e98493.png?v=1795165810",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage6ago2026_15_05_36_81b2f442-df68-43f6-9e45-9f129f433d1c.png?v=1795165810",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage6ago2026_15_07_13_619e41d5-dfd6-44a9-961c-6f941c223df7.png?v=1795165810",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-17at18.22.25_4.jpg?v=1795165808",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-08-06at14.38.06_1.jpg?v=1795165808",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-08-06at14.38.07_15_4a02afbd-5938-4329-b1e0-c0c02882ebe8.jpg?v=1795165809"
+      ],
+      "media_original_candidates": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-07-17at18.22.25_4.jpg?v=1795165808",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-08-06at14.38.06_1.jpg?v=1795165808",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/WhatsAppImage2026-08-06at14.38.07_15_4a02afbd-5938-4329-b1e0-c0c02882ebe8.jpg?v=1795165809"
+      ],
+      "media_ai_or_unverified": [
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage6ago2026_15_10_58_e7c9ae8f-16d9-46c7-a114-49ea3e1e0131.png?v=1795165810",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage6ago2026_14_55_29_607cb8af-451f-495c-bf67-7ea4106248de.png?v=1795165810",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage6ago2026_14_57_06_ff2972ab-2dc0-49da-acc3-4d754f25a6a1.png?v=1795165809",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage6ago2026_15_01_43_66bae402-b315-42f9-b743-864f897b175f.png?v=1795165810",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage6ago2026_15_03_16_54f8baab-d76b-421a-99ca-001073e98493.png?v=1795165810",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage6ago2026_15_05_36_81b2f442-df68-43f6-9e45-9f129f433d1c.png?v=1795165810",
+        "https://cdn.shopify.com/s/files/1/0940/8662/7655/files/ChatGPTImage6ago2026_15_07_13_619e41d5-dfd6-44a9-961c-6f941c223df7.png?v=1795165810"
+      ],
+      "editorial": {
+        "city": "Torino",
+        "kind": "Appartamento",
+        "hook": "A Torino, in Corso Francia, con cucina abitabile",
+        "second": "Due camere, bagno e cantina, al terzo piano"
+      },
+      "review_flags": [
+        "VERIFICA DISPONIBILITA' REALE"
+      ],
+      "ready_for_auto_publish": false
+    }
+  ]
+}
