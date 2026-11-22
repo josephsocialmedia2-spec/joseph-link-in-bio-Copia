@@ -1,0 +1,26 @@
+{
+  "name": "Zero to Diamond · Collaudo completo",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "forwardPorts": [
+    8765
+  ],
+  "portsAttributes": {
+    "8765": {
+      "label": "Zero to Diamond · STAGING (privato)",
+      "onAutoForward": "openBrowser",
+      "visibility": "private"
+    }
+  },
+  "postCreateCommand": "python3 -m unittest discover -s tools/staging -p 'test_*.py' -v",
+  "postStartCommand": "bash -lc 'nohup python3 tools/staging/server.py --host 0.0.0.0 --port 8765 > /tmp/ztd-staging.log 2>&1 < /dev/null &' ",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python"
+      },
+      "extensions": [
+        "ms-python.python"
+      ]
+    }
+  }
+}
