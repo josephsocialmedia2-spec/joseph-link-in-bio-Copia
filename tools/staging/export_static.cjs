@@ -26,6 +26,25 @@ function walk(src,out,relative){
 }
 fs.rmSync(dest,{recursive:true,force:true});
 for(const dir of dirs)walk(path.join(root,dir),path.join(dest,prefix,dir),dir);
+// Explicitly audited *public* display assets that generic filters would omit.
+// Do not add state/ledger/approval drafts, contact records, or private config.
+const publicExtras=[
+  'case247-design.css',
+  'gestione/acquisizione-farming/contatti-foglio.css',
+  'gestione/acquisizione-farming/contatti-foglio.js',
+  'gestione/acquisizione-farming/contatti-normalizza.js',
+  'gestione/acquisizione-farming/omi-avigliana-2026-1.json',
+  'gestione/rivista/edizioni/index.json',
+  'gestione/tutte-le-pagine/pagine.json'
+];
+for(const rel of publicExtras){
+  const source=path.join(root,rel);
+  if(!fs.existsSync(source)||!fs.statSync(source).isFile()||
+     fs.statSync(source).size>8*1024*1024)throw Error('Missing safe preview asset: '+rel);
+  const target=path.join(dest,prefix,rel);
+  fs.mkdirSync(path.dirname(target),{recursive:true});
+  fs.copyFileSync(source,target);
+}
 const labDir=path.join(dest,'__staging__');fs.mkdirSync(labDir,{recursive:true});
 let portal=fs.readFileSync(path.join(root,'tools/staging/index.html'),'utf8');
 portal=portal.replace('Le API esterne sono bloccate; soltanto la API SQLite sintetica locale accetta modifiche a contatti inventati. Non inserire mai dati personali reali.',
