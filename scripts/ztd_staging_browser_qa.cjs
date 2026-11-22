@@ -41,7 +41,7 @@ const server=spawn('python3',['tools/staging/server.py','--host','127.0.0.1','--
    }
    console.log('PASS: '+results.length+' project modules open on an isolated staging origin');
    await page.goto(BASE+'/__staging__/',{waitUntil:'domcontentloaded'});
-   assert.equal(await page.locator('article a').count(),12);
+   assert.equal(await page.locator('article a').count(),13);
    const opening=await page.locator('article a').first().getAttribute('href');
    assert.equal(opening,ORIGIN+'gestione/');
    await page.locator('article a').first().click();
@@ -68,6 +68,55 @@ const server=spawn('python3',['tools/staging/server.py','--host','127.0.0.1','--
      assert.equal(new URL(page.url()).origin,BASE,'External contact action must not navigate out of staging');
      console.log('PASS: external WhatsApp contact link cannot leave the sandbox');
    }
+
+
+   // End-to-end synthetic request → SQLite → consent gates → followup → handoff → KPI.
+   await page.goto(BASE+'/__staging__/funnel.html',{waitUntil:'domcontentloaded'});
+   await page.locator('#feedback').getByText(/CRM SQLite sintetico pronto/).waitFor();
+   const reset=await page.evaluate(async()=>{
+     const r=await fetch('/__staging__/api/reset',{
+       method:'POST',headers:{'Content-Type':'application/json','X-Staging-Lab':'synthetic-only'},
+       body:JSON.stringify({confirm:'RESET_SYNTHETIC_ONLY'})
+     });return r.status
+   });
+   assert.equal(reset,200);
+   await page.locator('#reload').click();
+   await page.locator('#source').selectOption('volantino-qr');
+   await page.locator('#scenario').selectOption('venditore');
+   await page.locator('#create').click();
+   await page.locator('#feedback').getByText(/Richiesta TEST/).waitFor();
+   assert.equal(await page.locator('#leads .lead').count(),1);
+   await page.locator('button[data-action="qualify"]').click();
+   await page.locator('#selected').getByText(/Qualificato/).waitFor();
+   await page.locator('button[data-action="followup"]').click();
+   await page.locator('#feedback').getByText(/consenso assente/).waitFor();
+   assert.equal(await page.locator('#feedback').getAttribute('data-level'),'error');
+   await page.locator('#selectedMarketing').check();
+   await page.locator('#updatePermissions').click();
+   await page.locator('#feedback').getByText(/Azione permissions/).waitFor();
+   await page.locator('button[data-action="followup"]').click();
+   await page.locator('#feedback').getByText(/Azione followup/).waitFor();
+   await page.locator('button[data-action="handoff"]').click();
+   await page.locator('#feedback').getByText(/autorizzazione assente/).waitFor();
+   await page.locator('#selectedTransfer').check();
+   await page.locator('#updatePermissions').click();
+   await page.locator('#feedback').getByText(/Azione permissions/).waitFor();
+   await page.locator('button[data-action="handoff"]').click();
+   await page.locator('#feedback').getByText(/Azione handoff/).waitFor();
+   await page.locator('button[data-action="close"]').click();
+   await page.locator('#feedback').getByText(/Azione close/).waitFor();
+   const dashboard=await page.evaluate(async()=>await (await fetch('/__staging__/api/state')).json());
+   assert.equal(dashboard.kpi.requests,1);
+   assert.equal(dashboard.kpi.followups_simulated,1);
+   assert.equal(dashboard.kpi.handoffs_simulated,1);
+   assert.equal(dashboard.kpi.closed_simulated,1);
+   assert.equal(dashboard.kpi.blocked_by_policy,2);
+   assert.equal(dashboard.external_deliveries,0);
+   assert.equal(dashboard.leads[0].status,'CHIUSO');
+   await page.reload({waitUntil:'domcontentloaded'});
+   await page.locator('#feedback').getByText(/CRM SQLite sintetico pronto/).waitFor();
+   assert.equal(await page.locator('#leads .lead').count(),1,'SQLite data must survive reload');
+   console.log('PASS: synthetic end-to-end funnel persisted; consent gates, handoff and KPI verified; zero deliveries');
 
    console.log('STAGING MODULE REPORT '+JSON.stringify(results));
  }finally{
