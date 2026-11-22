@@ -1,0 +1,69 @@
+name: Zero to Diamond · Full STAGING QA
+on:
+  pull_request:
+    paths:
+      - 'tools/staging/**'
+      - '.devcontainer/**'
+      - 'docker-compose.staging.yml'
+      - 'scripts/ztd_staging_browser_qa.cjs'
+      - 'scripts/ztd_staging_preview_qa.cjs'
+      - 'vercel.json'
+      - '.github/workflows/ztd-full-staging-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  full-site:
+    name: Isolated full-system navigation and security tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax and isolated server tests
+        run: |
+          python3 -m py_compile tools/staging/server.py tools/staging/test_staging.py
+          python3 -m unittest discover -s tools/staging -p 'test_*.py' -v
+          node --check scripts/ztd_staging_browser_qa.cjs
+          node --check scripts/ztd_staging_preview_qa.cjs
+          node --check tools/staging/export_static.cjs
+          node --check tools/staging/read-only-guard.js
+      - name: Build Vercel static preview and verify isolation
+        run: |
+          node tools/staging/export_static.cjs
+          python3 - <<'PY'
+          from pathlib import Path
+          from json import loads
+          root=Path('.staging-preview')
+          assert (root/'__staging__/index.html').is_file()
+          assert (root/'__staging__/read-only-guard.js').is_file()
+          assert (root/'joseph-link-in-bio-Copia/gestione/index.html').is_file()
+          assert (root/'joseph-link-in-bio-Copia/catalogo-premium/index.html').is_file()
+          assert not (root/'.github').exists()
+          assert not (root/'__staging__/api/state').exists()
+          config=loads(Path('vercel.json').read_text(encoding='utf8'))
+          assert config['outputDirectory']=='.staging-preview'
+          assert 'connect-src' in config['headers'][0]['headers'][-1]['value']
+          print('PASS: filtered staging export, no backend routes or secret files')
+          PY
+      - name: Install browser automation
+        run: |
+          npm install --no-save playwright@1.57.0
+          google-chrome --version
+      - name: Browser smoke of all major modules (no production writes)
+        run: node scripts/ztd_staging_browser_qa.cjs
+      - name: Browser smoke of Vercel filtered static preview
+        run: node scripts/ztd_staging_preview_qa.cjs
+      - name: Record staging test protocol
+        if: always()
+        run: |
+          echo 'Preview is isolated: no production APIs, no messages or writes.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Portal path: /__staging__/' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Use Codespaces on the staging branch with forwarded private port 8765.' >> "$GITHUB_STEP_SUMMARY"
