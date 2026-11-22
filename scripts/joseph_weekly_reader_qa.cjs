@@ -27,7 +27,7 @@ const fixture={
     const errors=[];
     page.on('pageerror',error=>errors.push(error.message));
     await page.goto(ROOT+PATH,{waitUntil:'load'});
-    await page.locator('#counter').getByText('Non ancora approvata').waitFor();
+    await page.getByText('Non ancora approvata',{exact:true}).waitFor();
     assert.equal(await page.locator('#next').isDisabled(),true);
     assert.equal(await page.locator('#prev').isDisabled(),true);
     assert.equal(await page.locator('.downloads a:visible').count(),0,'Unapproved PDFs must remain hidden');
@@ -40,16 +40,16 @@ const fixture={
     await page.route('**/gestione/rivista/edizioni/auto/latest.json*',route=>
       route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(fixture)}));
     await page.goto(ROOT+PATH,{waitUntil:'load'});
-    await page.locator('#counter').getByText('Apertura 1 / 5').waitFor();
+    await page.getByText('Apertura 1 / 5',{exact:true}).waitFor();
     assert.equal(await page.locator('.downloads a:visible').count(),3);
     assert.match(await page.locator('#pdf').getAttribute('href'),/Real-Estate-Weekly-2026-11-22\.pdf$/);
     assert.match(await page.locator('#spreads').getAttribute('href'),/Real-Estate-Weekly-Doppie-Pagine-2026-11-22\.pdf$/);
     assert.match(await page.locator('#letter').getAttribute('href'),/Seller-Letter-2026-11-22\.pdf$/);
     await page.locator('#next').click();
-    await page.locator('#counter').getByText('Apertura 2 / 5').waitFor();
+    await page.getByText('Apertura 2 / 5',{exact:true}).waitFor();
     assert.equal(await page.locator('#book img').count(),2,'Second opening must display two pages');
     await page.locator('#prev').click();
-    await page.locator('#counter').getByText('Apertura 1 / 5').waitFor();
+    await page.getByText('Apertura 1 / 5',{exact:true}).waitFor();
     console.log('PASS: approved fixture exposes the same issue PDFs, letter and usable mobile page controls');
 
     const bad={...fixture,qr_target:'https://example.com/not-our-reader/'};
@@ -57,7 +57,7 @@ const fixture={
     await page.route('**/gestione/rivista/edizioni/auto/latest.json*',route=>
       route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(bad)}));
     await page.reload({waitUntil:'load'});
-    await page.locator('#counter').getByText('Non ancora approvata').waitFor();
+    await page.getByText('Non ancora approvata',{exact:true}).waitFor();
     assert.equal(await page.locator('.downloads a:visible').count(),0);
     console.log('PASS: manifest QR mismatch fails closed');
 
