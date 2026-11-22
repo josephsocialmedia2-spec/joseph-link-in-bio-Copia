@@ -81,6 +81,9 @@ class SyntheticCRM:
         return payload[key]
 
     def create(self, data):
+        # Never accept names, phone numbers, addresses or external contact records.
+        if set(data) != {"source", "scenario", "marketing_optin", "transfer_optin"}:
+            raise LabError("synthetic_fields_only", "Sono consentite soltanto opzioni predefinite, non dati personali")
         source, scenario = data.get("source"), data.get("scenario")
         if source not in SOURCES or scenario not in SCENARIOS:
             raise LabError("invalid_input", "Seleziona una fonte e uno scenario sintetico consentiti")
@@ -116,6 +119,8 @@ class SyntheticCRM:
             lead = self._load(db, lead_id)
             old = lead["status"]
             if operation == "permissions":
+                if set(data) != {"marketing_optin", "transfer_optin"}:
+                    raise LabError("synthetic_fields_only", "Non inserire dati personali nei permessi di prova")
                 if old in ("NON_CONTATTARE", "CHIUSO"):
                     raise LabError("locked", "Il contatto è chiuso o non contattabile", status=409)
                 marketing = self.check_bool(data, "marketing_optin")
@@ -124,6 +129,8 @@ class SyntheticCRM:
                            (int(marketing), int(transfer), now(), lead_id))
                 self.event(db, lead_id, "permissions", detail=f"marketing={int(marketing)},transfer={int(transfer)}")
             else:
+                if data:
+                    raise LabError("synthetic_fields_only", "Le azioni sono predefinite; testo libero non consentito")
                 transitions = {
                     "qualify": (("NUOVO",), "QUALIFICATO"),
                     "followup": (("QUALIFICATO", "FOLLOW_UP"), "FOLLOW_UP"),
