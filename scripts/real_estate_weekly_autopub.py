@@ -23,6 +23,7 @@ from weasyprint import HTML
 ROOT = Path(__file__).resolve().parents[1]
 DEST = ROOT / "gestione/rivista/edizioni/auto"
 BASE = "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/rivista/edizioni/auto"
+READER_URL = "https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/rivista/sfoglia/"
 NAVY, BLUE, GOLD = "#081C34", "#287FBB", "#C5A15A"
 OMI = [
     ("C1", "Abitazioni civili · normale", 1000, 1500),
@@ -250,7 +251,8 @@ def write_documents(today: dt.date, news: list[dict], source_log: list[dict], se
     ISSUE = today.strftime("%d/%m/%Y")
     DEST.mkdir(parents=True,exist_ok=True)
     issue=today.isoformat()
-    pub_url=f"{BASE}/Real-Estate-Weekly-{issue}.pdf"
+    # Approved print QR stays valid across editions; the unapproved seed keeps its dated PDF.
+    pub_url=READER_URL if approved else f"{BASE}/Real-Estate-Weekly-{issue}.pdf"
     global _AI_PARAGRAPHS
     _AI_PARAGRAPHS, ai_status = ([], 'testi approvati dal responsabile editoriale') if approved else maybe_ai_editorial(news)
     qr_img=DEST/f"qr-rivista-{issue}.png"
