@@ -172,6 +172,7 @@ class SyntheticCRM:
                 "SELECT COUNT(*) FROM events WHERE action=? AND outcome='simulated'", (action,)
             ).fetchone()[0] for action in ("request", "followup", "appointment", "handoff", "close")}
             blocked = db.execute("SELECT COUNT(*) FROM events WHERE outcome='blocked'").fetchone()[0]
+            marketing_optins = db.execute("SELECT COUNT(*) FROM leads WHERE marketing_optin=1").fetchone()[0]
         return {"mode": "SYNTHETIC_ONLY", "simulated": True, "external_deliveries": 0,
                 "database": "SQLite isolato (nessuna sincronizzazione)",
                 "leads": leads, "events": events,
@@ -183,7 +184,7 @@ class SyntheticCRM:
                         "closed_simulated": event_counts["close"],
                         "blocked_by_policy": blocked,
                         "non_contactable": counts["NON_CONTATTARE"],
-                        "marketing_optins": sum(int(x["marketing_optin"]) for x in leads)}}
+                        "marketing_optins": marketing_optins}}
 
     def reset(self):
         with self.connect() as db:
