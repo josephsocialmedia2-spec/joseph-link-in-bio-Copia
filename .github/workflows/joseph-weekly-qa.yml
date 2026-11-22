@@ -6,6 +6,8 @@ on:
       - 'gestione/acquisizione-farming/index.html'
       - 'scripts/joseph_weekly_*.py'
       - 'scripts/joseph_weekly_*.cjs'
+      - 'scripts/real_estate_weekly_autopub.py'
+      - 'gestione/lettere-stampa/index.html'
       - '.github/workflows/joseph-weekly-*.yml'
   push:
     branches: [main]
@@ -68,6 +70,8 @@ jobs:
           print('PASS: relevance filter rejects lifestyle/ads and keeps real estate/local works')
           PY
           node --check scripts/joseph_weekly_render.cjs
+          node --check scripts/joseph_weekly_reader_qa.cjs
+          python3 -m py_compile scripts/real_estate_weekly_autopub.py
       - name: Verifica approvazione e gate editoriale senza falsi positivi
         run: |
           python3 - <<'PY'
@@ -108,6 +112,8 @@ jobs:
           else:
               raise RuntimeError("Local magazine server not ready")
           PY
+      - name: QA browser sfogliatore, PDF, lettera e redirect (senza pubblicazione)
+        run: node scripts/joseph_weekly_reader_qa.cjs
       - name: Render test edition (not publishable)
         run: node scripts/joseph_weekly_render.cjs test
       - name: Verifica 8 pagine PDF A4

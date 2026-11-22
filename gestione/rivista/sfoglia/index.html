@@ -30,6 +30,7 @@ button,.btn{display:inline-block;background:var(--navy);color:white;text-decorat
 .state{padding:20px;text-align:center;line-height:1.6;color:#3d5369}
 .endbar{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-top:15px;color:#415f78;font-size:13px;flex-wrap:wrap}
 .notice{font-size:12px;color:#687d8c;line-height:1.5;margin:23px 0}
+.downloads a[hidden]{display:none}
 @media(max-width:700px){.head{padding:12px 16px}.head nav{font-size:12px}.book.two{display:block;max-width:480px}.book.two .sheet{width:100%;max-width:none}.book.two .sheet:first-child{border:0;border-bottom:1px solid #a8baca}.reader{padding:10px}.controls{justify-content:space-between;width:100%}.controls button{flex:1}}
 @media(prefers-reduced-motion:reduce){.book.turn-next,.book.turn-prev{animation:none}}
 </style>
@@ -55,6 +56,9 @@ button,.btn{display:inline-block;background:var(--navy);color:white;text-decorat
 'use strict';
 const base='../edizioni/auto/';
 const $=id=>document.getElementById(id);
+const downloadButtons=[$('pdf'),$('spreads'),$('letter')];
+// A demo manifest must never expose an unapproved PDF as a new approved issue.
+for(const link of downloadButtons){link.hidden=true;link.removeAttribute('href')}
 let images=[],index=0;
 const spreads=[[0],[1,2],[3,4],[5,6],[7]];
 const prev=$('prev'),next=$('next'),book=$('book');
@@ -84,14 +88,22 @@ let touchX=null;
 book.addEventListener('touchstart',e=>{touchX=e.changedTouches[0].clientX},{passive:true});
 book.addEventListener('touchend',e=>{if(touchX===null)return;const dx=e.changedTouches[0].clientX-touchX;touchX=null;if(Math.abs(dx)>65)move(dx<0?1:-1)},{passive:true});
 fetch(base+'latest.json?v='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Archivio non disponibile');return r.json()}).then(m=>{
-  if(m.status!=='approved'||!Array.isArray(m.previews)||m.previews.length!==8){
+  const expectedReader='https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/rivista/sfoglia/';
+  const date=String(m.issue_date||'');
+  const safePDF=name=>typeof name==='string' && /^[A-Za-z0-9][A-Za-z0-9._-]*\.pdf$/.test(name);
+  const files=[m.magazine,m.double_pages,m.seller_letter];
+  const validPreviews=Array.isArray(m.previews)&&m.previews.length===8&&
+    m.previews.every((p,i)=>p===('previews/'+date+'/pagina-'+String(i+1).padStart(2,'0')+'.jpg'));
+  if(m.status!=='approved'||!/^\d{4}-\d{2}-\d{2}$/.test(date)||!m.approved_issue||
+     !files.every(safePDF)||!validPreviews||m.qr_target!==expectedReader){
     throw Error('La nuova edizione non è ancora stata approvata e pubblicata');
   }
   images=m.previews.map(p=>new URL(base+p,location.href).href);
-  $('issueDescription').textContent='Edizione approvata '+m.issue_date+' · Numero '+(m.approved_issue||'')+' · Sfoglia le otto pagine e scarica i documenti pronti per la stampa.';
-  $('pdf').href=base+'rivista-latest.pdf';
-  $('spreads').href=base+'doppie-pagine-latest.pdf';
-  $('letter').href=base+'seller-letter-latest.pdf';
+  $('issueDescription').textContent='Edizione approvata '+date+' · Numero '+m.approved_issue+' · Sfoglia le otto pagine e scarica i documenti pronti per la stampa.';
+  $('pdf').href=base+m.magazine;
+  $('spreads').href=base+m.double_pages;
+  $('letter').href=base+m.seller_letter;
+  for(const link of downloadButtons)link.hidden=false;
   render();
 }).catch(e=>{
   book.className='book';
@@ -99,6 +111,7 @@ fetch(base+'latest.json?v='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)thr
   const p=document.createElement('p');p.className='state';p.textContent=e.message+'. La copia precedente resta disponibile in Lettere & Stampa.';
   const a=document.createElement('a');a.href='../../lettere-stampa/';a.className='btn secondary';a.textContent='Apri la rivista precedente';p.append(' ',a);book.append(p);
   $('counter').textContent='Non ancora approvata';
+  $('pageLabel').textContent='Edizione aggiornata non pubblicabile · consulta l’archivio precedente';
 });
 })();
 </script></body></html>

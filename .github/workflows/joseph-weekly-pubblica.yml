@@ -67,13 +67,14 @@ jobs:
           manifest=json.loads((auto/'latest.json').read_text(encoding='utf-8'))
           assert manifest.get('status')=='approved', 'Unapproved edition cannot be released'
           assert len(manifest['previews'])==8
+          assert len(set(manifest['previews']))==8, 'Duplicate page previews'
           paths=[(manifest['magazine'],8),(manifest['seller_letter'],2),(manifest['double_pages'],4)]
           for name,count in paths:
               pdf=PdfReader(str(auto/name))
               assert len(pdf.pages)==count, f'{name}: {len(pdf.pages)} != {count}'
               assert (auto/name).stat().st_size>7000
           assert all((auto/p).stat().st_size>5000 for p in manifest['previews'])
-          assert manifest['qr_target'].endswith('/'+manifest['magazine'])
+          assert manifest['qr_target']=='https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/rivista/sfoglia/', 'Printed QR must open the approved flipbook'
           shutil.copy2(auto/'rivista-latest.pdf',home/'latest.pdf')
           shutil.copy2(auto/'rivista-latest.pdf',legacy/'Real_Estate_Weekly_Joseph_Malafronte_EDITORIALE_A4.pdf')
           shutil.copy2(auto/'doppie-pagine-latest.pdf',legacy/'Real_Estate_Weekly_DOPPIE_PAGINE.pdf')
