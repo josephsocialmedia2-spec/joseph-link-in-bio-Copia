@@ -192,6 +192,13 @@ class StagingIntegrationTests(unittest.TestCase):
                                                       "transfer_optin": True})[0], 409)
         self.assertEqual(api("reset", {"confirm": "RESET_SYNTHETIC_ONLY"})[0], 200)
 
+    def test_private_checkout_files_are_unreachable(self):
+        for forbidden in ("/.git/config", "/.devcontainer/devcontainer.json",
+                          "/.github/workflows/ztd-full-staging-qa.yml"):
+            with self.subTest(forbidden=forbidden):
+                code, _, _ = request(PREFIX + forbidden)
+                self.assertEqual(code, 404)
+
     def test_lab_api_rejects_cross_origin_and_untrusted_actions(self):
         self.assertEqual(api("requests", {
             "source": "volantino-qr", "scenario": "venditore",
