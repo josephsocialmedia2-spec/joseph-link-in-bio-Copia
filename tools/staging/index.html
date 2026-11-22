@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zero to Diamond · Laboratorio completo</title>
+<style>
+:root{font-family:system-ui,Arial,sans-serif;color:#13304a;background:#eef3f8}*{box-sizing:border-box}
+body{margin:0}.shell{max-width:1150px;margin:auto;padding:28px 20px 55px}
+header{background:#071c34;color:white;padding:30px;border-left:6px solid #c5a15a;margin-bottom:23px}
+h1{font-size:clamp(30px,4vw,48px);margin:0 0 12px}h2{font-size:19px}p{line-height:1.55}header p{color:#d1e5f5}
+small{color:#526b82}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+article{background:white;border:1px solid #ccd8e3;padding:21px;min-height:180px;display:flex;flex-direction:column}
+article p{font-size:14px;margin-top:0;flex:1}article a{background:#133f68;color:white;padding:11px 14px;text-decoration:none;font-weight:700;text-align:center}
+article a:focus-visible{outline:3px solid orange}
+section{margin:26px 0}h3{margin-bottom:9px}.warn{padding:18px;background:#fff6e5;border-left:5px solid #d18d31}
+table{border-collapse:collapse;width:100%;background:#fff}td,th{border:1px solid #d2dbe5;text-align:left;padding:10px;font-size:14px}th{background:#dfe9f3}
+</style></head><body><div class="shell">
+<header><small style="color:#f2c57a">STAGING · BRANCH DI COLLAUDO · NON PRODUZIONE</small>
+<h1>Zero to Diamond — Laboratorio completo</h1>
+<p>Questo ambiente serve a provare navigazione, componenti, moduli, riviste, cataloghi e dashboard del progetto reale in isolamento. Le scritture server e le chiamate API esterne sono bloccate: non inviare dati personali reali.</p>
+</header>
+<div class="warn"><b>Importante:</b> le pagine riportano il codice del repository, non un CRM di prova con backend sincronizzato. Alcune funzioni esterne mostreranno intenzionalmente un errore o uno stato non disponibile. I test automatici identificano quali sono utilizzabili e quali richiedono un backend staging separato.</div>
+<section><h2>Accesso ai moduli del progetto</h2><div class="grid">
+<article><h3>01 · Dashboard generale</h3><p>Regia CASE247, agenda, acquisizione, attività e collegamenti a tutti i moduli.</p><a href="/joseph-link-in-bio-Copia/gestione/">Apri gestionale</a></article>
+<article><h3>02 · Farming territoriale</h3><p>Avigliana, microzone, dati OMI, registro, lettere, richiami e tracker di 90 giorni.</p><a href="/joseph-link-in-bio-Copia/gestione/acquisizione-farming/">Apri acquisizione</a></article>
+<article><h3>03 · CRM Farming</h3><p>Controlla registri, risultati, esportazione e persistenza locale con soli dati sintetici.</p><a href="/joseph-link-in-bio-Copia/gestione/acquisizione-farming/crm/">Apri CRM</a></article>
+<article><h3>04 · Lettere & Stampa</h3><p>Verifica la rivista storica, i documenti stampabili e i collegamenti del PDF.</p><a href="/joseph-link-in-bio-Copia/gestione/lettere-stampa/">Apri lettere</a></article>
+<article><h3>05 · Rivista sfogliabile</h3><p>Collaudo del gate editoriale, del manifest, delle pagine e dei download approvati.</p><a href="/joseph-link-in-bio-Copia/gestione/rivista/sfoglia/">Apri sfogliatore</a></article>
+<article><h3>06 · Centro editoriale</h3><p>Revisione delle fonti, impaginazione e approvazione locale simulata; nessuna pubblicazione.</p><a href="/joseph-link-in-bio-Copia/gestione/rivista/">Apri redazione</a></article>
+<article><h3>07 · Catalogo premium</h3><p>Catalogo immobiliare sfogliabile, download, filtri e richiesta informativa manuale.</p><a href="/joseph-link-in-bio-Copia/catalogo-premium/">Apri catalogo</a></article>
+<article><h3>08 · Volantini Premium</h3><p>Composizione, QR, stampa PDF e previsualizzazione delle campagne cartacee.</p><a href="/joseph-link-in-bio-Copia/gestione/volantini-premium/">Apri volantini</a></article>
+<article><h3>09 · Volantino digitale</h3><p>Guida e modulo: il collegamento ai servizi reali è intenzionalmente bloccato.</p><a href="/joseph-link-in-bio-Copia/gestione/volantini-premium/volantino-digitale/">Apri volantino</a></article>
+<article><h3>10 · Newsletter</h3><p>Landing newsletter e disiscrizione; invii e gestione abbonati reali disabilitati.</p><a href="/joseph-link-in-bio-Copia/newsletter/">Apri newsletter</a></article>
+<article><h3>11 · Tutte le pagine</h3><p>Inventario delle landing, stato pubblicazione e collegamenti interni.</p><a href="/joseph-link-in-bio-Copia/gestione/tutte-le-pagine/">Apri inventario</a></article>
+<article><h3>12 · Dashboard territoriale</h3><p>Controllo pagine dei comuni, routing social e stato delle campagne.</p><a href="/joseph-link-in-bio-Copia/gestione/regia-territoriale/">Apri regia</a></article>
+</div></section>
+<section><h2>Protocollo di collaudo completo</h2>
+<table><thead><tr><th>Scenario</th><th>Prova richiesta</th><th>Perimetro</th></tr></thead><tbody>
+<tr><td>A · Acquisizione</td><td>Volantino → QR → landing → modulo</td><td>Browser e dati sintetici, backend non reale</td></tr>
+<tr><td>B · Editoriale</td><td>Dashboard → Lettere → sfogliatore → PDF → lettera</td><td>File e navigazione; gate di approvazione</td></tr>
+<tr><td>C · Newsletter</td><td>Landing → preferenze → disiscrizione</td><td>Solo UI; niente invii reali</td></tr>
+<tr><td>D · Agente abilitato</td><td>Richiesta → qualificazione → handoff</td><td>Prova simulata; nessun dato trasmesso</td></tr>
+<tr><td>E · Operatività</td><td>Agenda → Farming → CRM → KPI</td><td>Dati locali sintetici; verifica persistenza</td></tr>
+</tbody></table></section>
+<p><small>Ambiente tecnico indipendente da main e dalla pubblicazione GitHub Pages. Versione lab 2026-11-22.</small></p>
+</div></body></html>
