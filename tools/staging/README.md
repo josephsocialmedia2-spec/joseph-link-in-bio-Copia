@@ -29,7 +29,7 @@ docker compose -f docker-compose.staging.yml up
 - Niente credenziali, dati di clienti o dati sensibili; usare soltanto **dati inventati**.
 - I registri `localStorage` restano nel browser del collaudatore, **non costituiscono CRM multiutente**.
 - Le integrazioni reali (Supabase, Meta, email, publisher, Excel VBA, GitHub Actions) non sono esercitate in modalità reale: vanno testate con servizi di staging/credenziali dedicate prima del rilascio.
-- I PDF e gli asset presenti nel branch sono versioni di repository. Il gate editoriale continua a bloccare edizioni non approvate.
+- I PDF e gli asset presenti nel branch sono versioni di repository. Il gate editoriale continua a bloccare edizioni non approvate. **Attenzione: i QR già incorporati nei PDF storici possono puntare alla produzione: non scansionarli con il telefono.** Verificarne soltanto la destinazione come testo e usare l'URL corrispondente nello staging per la navigazione di prova.
 - La preview GitHub Codespaces rimane privata, soggetta alla configurazione del proprietario. Non renderla pubblica.
 - Evitare anche di cliccare manualmente link di produzione fuori dalla sandbox.
 
