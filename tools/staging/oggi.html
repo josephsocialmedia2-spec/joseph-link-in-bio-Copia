@@ -46,13 +46,13 @@ p{font-size:13px;line-height:1.6}
 <section class="panel" id="magazine">
  <span class="kicker">01 · LA RIVISTA DIGITALE</span><h2>Apri il fascicolo, controlla le pagine.</h2>
  <div class="flags"><span class="flag">Real Estate Weekly · 21/11</span><span class="flag warning">PDF in bozza · non approvato</span></div>
- <p>Il file PDF esiste nel repository. La revisione è una normale attività di lavoro: puoi vedere il documento, controllarlo e aprire il registro Drive. Non devi pubblicarlo ai lettori prima dell’approvazione.</p>
+ <p>La bozza <b>Real Estate Weekly</b> a 8 pagine A4 è adesso caricata come PDF autonomo nella tua cartella Drive. In questa pagina puoi anche visualizzare il PDF automatico distinto, prodotto nel repository. Entrambi restano documenti di lavoro non approvati alla distribuzione.</p>
  <div class="actions"><button id="open-magazine" type="button">1 · Apri anteprima PDF</button>
- <a id="open-drive" href="https://docs.google.com/document/d/1XM91YrixsCf-d2X9EeOQcpi04gbQNPTg2U4dld76fNM/edit" target="_blank" rel="noopener noreferrer">2 · Apri registro su Drive</a></div>
+ <a id="open-drive" href="https://docs.google.com/document/d/1XM91YrixsCf-d2X9EeOQcpi04gbQNPTg2U4dld76fNM/edit" target="_blank" rel="noopener noreferrer">2 · Apri registro su Drive</a><a id="open-pdf-drive" href="https://drive.google.com/file/d/1EWRsZWAd_L5PYfB2E1L3tw-tk7FLleYE/view" target="_blank" rel="noopener noreferrer">Apri PDF BOZZA (8 pagine) su Drive</a></div>
  <div id="mag-preview"><div class="warning-box">ANTEPRIMA RISERVATA · Bozza non approvata. Il documento non è presentato come fascicolo pubblico.</div>
  <iframe id="mag-frame" title="Anteprima della rivista PDF da revisionare" src="/joseph-link-in-bio-Copia/gestione/rivista/edizioni/auto/Real-Estate-Weekly-2026-11-21.pdf#toolbar=1"></iframe>
  <p class="linkrow"><a href="/joseph-link-in-bio-Copia/gestione/rivista/edizioni/auto/Real-Estate-Weekly-2026-11-21.pdf" target="_blank" rel="noopener">Apri il PDF in una nuova scheda del laboratorio</a></p></div>
- <div class="status" id="magazine-status">Primo passo: apri la rivista. Su Drive trovi il registro e il collegamento al PDF; il PDF stesso non è ancora stato caricato come file autonomo.</div>
+ <div class="status" id="magazine-status">Il PDF BOZZA a 8 pagine è verificato e caricato su Google Drive. La preview incorporata visualizza invece il PDF automatico del repository. Nessuna versione è approvata per la pubblicazione.</div>
  </section>
 <section class="panel" id="letter">
  <span class="kicker">02 · LA LETTERA DA IMBUCARE</span><h2>Lettera C del 23 novembre · A4</h2>
@@ -137,7 +137,7 @@ $('open-magazine').addEventListener('click',()=>{
 });
 $('open-drive').addEventListener('click',()=>{
  $('magazine').dataset.driveOpened='yes';set('drive-open');
- $('magazine-status').textContent='Registro Drive aperto. Si tratta di un documento con link al PDF, non di un PDF caricato autonomamente su Drive.';
+ $('magazine-status').textContent='Registro Drive aperto. Contiene i link sia al PDF di 8 pagine caricato su Drive sia all'elaborato automatico del repository.';
 });
 $('open-letter').addEventListener('click',()=>{
  $('letter').dataset.opened='yes';set('letter-open');
