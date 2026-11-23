@@ -11,15 +11,27 @@ export function cloudReady(){
     "GOOGLE_OAUTH_CLIENT_ID","GOOGLE_OAUTH_CLIENT_SECRET",
     "GOOGLE_OAUTH_REFRESH_TOKEN","GOOGLE_DRIVE_FOLDER_ID",
     "GOOGLE_CALENDAR_ID","GITHUB_REPOSITORY","GITHUB_DRAFT_REF",
-    "APP_BASE_URL","CRON_SECRET"];
+    "APP_BASE_URL","CRON_SECRET","ZTD_EXPECTED_SUPABASE_PROJECT_ID"];
   return {ready:required.every(n=>!!process.env[n]?.trim()),missing:required.filter(n=>!process.env[n]?.trim())};
+}
+export function assertPersonalProject(){
+ const expected=env("ZTD_EXPECTED_SUPABASE_PROJECT_ID");
+ if(expected!=="nqnmlsmeiynxbdojeyjt" || new URL(env("NEXT_PUBLIC_SUPABASE_URL")).hostname!==expected+".supabase.co")
+   throw new Error("Supabase project mismatch: refuse access to other projects");
+}
+export function cloudPublicationEnabled(){
+ cloudEnabled();
+ if(process.env.ZTD_PUBLICATION_ENABLED!=="true")
+   throw new Error("Publication explicitly disabled");
 }
 export function cloudEnabled(){
   if(process.env.ZTD_AUTOMATION_ENABLED!=="true")throw new Error("Automation disabled until cloud integrations are validated");
   const c=cloudReady();
   if(!c.ready)throw new Error("Cloud integrations are not configured");
+  assertPersonalProject();
 }
 export function db(){
+  assertPersonalProject();
   return createClient(env("NEXT_PUBLIC_SUPABASE_URL"),env("SUPABASE_SECRET_KEY"),{
     auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}
   });
