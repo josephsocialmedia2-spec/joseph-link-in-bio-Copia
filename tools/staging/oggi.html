@@ -57,8 +57,8 @@ p{font-size:13px;line-height:1.6}
 <section class="panel" id="letter">
  <span class="kicker">02 · LA LETTERA DA IMBUCARE</span><h2>Lettera C del 23 novembre · A4</h2>
  <div class="flags"><span class="flag">Non nominativa</span><span class="flag">QR verso rivista già disponibile</span></div>
- <p>La lettera di oggi è pronta in un Google Doc modificabile e stampabile con QR. Il collegamento NON porta al nuovo fascicolo ancora in revisione, ma alla rivista già pubblicata.</p>
- <div class="actions"><a id="open-letter" href="https://docs.google.com/document/d/1F-1EdmjncujdXXt99Nyp_yX4J2Qs3p_jL-Ur6gxy-Rw/edit" target="_blank" rel="noopener noreferrer">3 · Apri lettera da stampare</a>
+ <p>La lettera di oggi è pronta come PDF A4 stampabile su Drive (e come Google Doc modificabile) con QR. Il collegamento NON porta al nuovo fascicolo ancora in revisione, ma alla rivista già pubblicata.</p>
+ <div class="actions"><a id="open-letter" href="https://drive.google.com/file/d/1nhoc1qXVxTPUDvMDtA4P8UCSG0UHCoo0/view" target="_blank" rel="noopener noreferrer">3 · Apri PDF lettera A4 da stampare</a><a href="https://docs.google.com/document/d/1F-1EdmjncujdXXt99Nyp_yX4J2Qs3p_jL-Ur6gxy-Rw/edit" target="_blank" rel="noopener noreferrer">Modifica la lettera in Google Docs</a>
  <button id="confirm-print" type="button">4 · Conferma di aver stampato</button></div>
  <div class="warning-box">Prima di imbucare: verifica leggibilità, corretto QR, regolamenti locali, divieti di pubblicità sulle cassette e scelta delle zone. Il sistema può registrare la tua conferma, ma non può vedere la stampante né effettuare la distribuzione fisica.</div>
  <div class="status" id="letter-status">Lettera ancora da aprire e stampare.</div>
@@ -141,7 +141,7 @@ $('open-drive').addEventListener('click',()=>{
 });
 $('open-letter').addEventListener('click',()=>{
  $('letter').dataset.opened='yes';set('letter-open');
- $('letter-status').textContent='Lettera su Drive aperta. Usa File → Stampa e verifica il QR prima di imbucare.';
+ $('letter-status').textContent='PDF A4 su Drive aperto. Usa Stampa, controlla il QR sulla carta e verifica i divieti di pubblicità prima di imbucare.';
 });
 $('confirm-print').addEventListener('click',()=>{
  if(!get('letter-open')){$('letter-status').textContent='Prima apri davvero la lettera, poi conferma la stampa.';return}
