@@ -100,7 +100,10 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
   await page.locator('#flow').selectOption('routine');
   for(let i=0;i<8;i++){
    await work.locator('#slot-'+i).click();
-   if(i<7)await page.locator('#steptitle').getByText(/.+/).waitFor();
+   if(i<7){
+     await page.waitForFunction(next=>document.getElementById('counter').textContent.startsWith(next+' /'),i+2);
+     await work.locator('#slot-'+(i+1)+'[data-done="yes"]').count().then(n=>assert.equal(n,0));
+   }
   }
   await page.locator('#mirrorlabel').getByText(/PROCEDURA COMPLETATA/).waitFor();
   await page.locator('#flow').selectOption('newsletter');
