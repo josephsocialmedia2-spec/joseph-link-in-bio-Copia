@@ -20,6 +20,28 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
   const work=page.frameLocator('#workframe');
   const mirror=page.frameLocator('#mirrorframe');
   await page.locator('#mode.live').waitFor();
+  assert.equal(await page.locator('#flow').inputValue(),'oggi');
+  await work.locator('#open-magazine').waitFor();
+  await mirror.locator('#open-magazine[data-ztd-live-target]').waitFor();
+  await work.locator('#open-magazine').click();
+  await page.locator('#steptitle').getByText(/registro di revisione/).waitFor();
+  await work.locator('#mag-preview.show').waitFor();
+  for(const [target,expected] of [
+    ['#open-drive',/lettera cartacea/],
+    ['#open-letter',/Conferma la stampa/],
+  ]){
+    // Synthetic event exercises the same click listener without navigating to the user's Drive.
+    await work.locator(target).evaluate(el=>el.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true})));
+    await page.locator('#steptitle').getByText(expected).waitFor();
+  }
+  await work.locator('#confirm-print').click();
+  await page.locator('#steptitle').getByText(/dashboard di programmazione/).waitFor();
+  await work.locator('#open-agenda').click();
+  await page.locator('#mirrorlabel').getByText(/PROCEDURA COMPLETATA/).waitFor();
+  assert.match(await work.locator('#ops-summary').innerText(),/Programma aperto/);
+  assert.match(await work.locator('#magazine-status').innerText(),/Registro Drive/);
+  console.log('PASS: OGGI guided real actions magazine preview → Drive registry → letter → print confirmation → work scheduler');
+  await page.locator('#flow').selectOption('materiali');
   await work.locator('#rew-open-flipbook').waitFor();
   await mirror.locator('#rew-open-flipbook[data-ztd-live-target]').waitFor();
   assert.equal(await page.locator('#next').isVisible(),false,'Manual Next must be hidden');
