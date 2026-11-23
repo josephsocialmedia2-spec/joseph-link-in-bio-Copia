@@ -47,7 +47,8 @@ SCRIPT = """
     ))return true;
     return url.hostname==='drive.google.com'&&(
       url.pathname.startsWith('/drive/folders/1oHla667gbs3cCIPx4_JITkrd-gRQ-oyK')||
-      url.pathname==='/file/d/1EWRsZWAd_L5PYfB2E1L3tw-tk7FLleYE/view');
+      url.pathname==='/file/d/1EWRsZWAd_L5PYfB2E1L3tw-tk7FLleYE/view'||
+      url.pathname==='/file/d/1nhoc1qXVxTPUDvMDtA4P8UCSG0UHCoo0/view');
   }
   const alertBlocked=()=>{toast.textContent='Collegamento esterno bloccato nel laboratorio. Non inviare messaggi reali.';toast.style.display='block'};
   function attach(){document.body.prepend(notice);document.body.append(toast)}
