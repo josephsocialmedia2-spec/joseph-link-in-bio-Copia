@@ -55,6 +55,42 @@ revoke all on sequence public.ztd_audit_events_id_seq from anon,authenticated;
 insert into storage.buckets(id,name,public,file_size_limit,allowed_mime_types)
 values('ztd-documents','ztd-documents',false,15728640,array['application/pdf'])
 on conflict (id) do nothing;
+-- Atomic audit triggers: a publication/physical completion cannot persist without its audit row.
+-- SECURITY INVOKER, never SECURITY DEFINER. All schema names fully qualified.
+create or replace function public.ztd_log_publication() returns trigger
+language plpgsql security invoker set search_path = ''
+as $body$
+begin
+ if new.status = 'PUBLISHED' and old.status is distinct from new.status then
+  insert into public.ztd_audit_events(day,action,actor_id,details)
+  values(new.day,'APPROVED_AND_PUBLISHED',new.published_by,
+   jsonb_build_object('source_sha256',new.source_sha256));
+ end if;
+ return new;
+end
+$body$;
+revoke all on function public.ztd_log_publication() from public,anon,authenticated;
+drop trigger if exists ztd_run_publish_audit on public.ztd_daily_runs;
+create trigger ztd_run_publish_audit after update of status on public.ztd_daily_runs
+for each row execute function public.ztd_log_publication();
+
+create or replace function public.ztd_log_task_completion() returns trigger
+language plpgsql security invoker set search_path = ''
+as $body$
+begin
+ if new.status = 'DONE' and old.status is distinct from new.status then
+  insert into public.ztd_audit_events(day,action,actor_id,details)
+  values(new.day,'TASK_DONE',new.completed_by,
+   jsonb_build_object('task_id',new.id,'title',new.title));
+ end if;
+ return new;
+end
+$body$;
+revoke all on function public.ztd_log_task_completion() from public,anon,authenticated;
+drop trigger if exists ztd_task_done_audit on public.ztd_daily_tasks;
+create trigger ztd_task_done_audit after update of status on public.ztd_daily_tasks
+for each row execute function public.ztd_log_task_completion();
+
 -- Private storage bucket. No grants for browser clients.
 -- No client-side grants/policies: secret-key server only. Supabase Auth checks
 -- and approved operator allowlists are enforced before service-role calls.
