@@ -10,9 +10,11 @@ create table if not exists public.ztd_daily_runs (
   magazine_drive_id text,
   magazine_drive_url text,
   magazine_name text,
+  magazine_storage_path text,
   letter_drive_id text,
   letter_drive_url text,
   letter_name text,
+  letter_storage_path text,
   public_path text,
   error_code text,
   created_at timestamptz not null default now(),
@@ -50,5 +52,9 @@ alter table public.ztd_daily_tasks enable row level security;
 alter table public.ztd_audit_events enable row level security;
 revoke all on public.ztd_daily_runs,public.ztd_daily_tasks,public.ztd_audit_events from anon,authenticated;
 revoke all on sequence public.ztd_audit_events_id_seq from anon,authenticated;
+insert into storage.buckets(id,name,public,file_size_limit,allowed_mime_types)
+values('ztd-documents','ztd-documents',false,15728640,array['application/pdf'])
+on conflict (id) do nothing;
+-- Private storage bucket. No grants for browser clients.
 -- No client-side grants/policies: secret-key server only. Supabase Auth checks
 -- and approved operator allowlists are enforced before service-role calls.
