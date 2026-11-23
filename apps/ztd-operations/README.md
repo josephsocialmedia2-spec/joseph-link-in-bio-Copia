@@ -1,5 +1,14 @@
 # Zero to Diamond · Cloud Operations (Next.js / Supabase / Google Drive)
 
+## Destinazione confermata: Supabase personale (23/11/2026)
+- Progetto: `nqnmlsmeiynxbdojeyjt` (`eu-central-1`), URL `https://nqnmlsmeiynxbdojeyjt.supabase.co`.
+- Migrazione `ztd_daily_operations_private_schema_20261123` **applicata e verificata**: tre tabelle `ztd_`, due trigger di audit, bucket privato `ztd-documents`, RLS attiva, nessun grant anon/authenticated. Nessun record inserito.
+- Vercel Next.js separato: `prj_jFmUe5HnTmHjkniYJxZLGD9Q0oZ0` (`zero-to-diamond-operations`), **nessun deployment e nessun Git collegato**.
+- Variabili NON segrete collegate in Vercel, inclusa chiave pubblica Supabase, URL, bucket e `ZTD_AUTOMATION_ENABLED=false`.
+- Guard: `ZTD_EXPECTED_SUPABASE_PROJECT_ID` impedisce di utilizzare per errore un altro progetto e `ZTD_PUBLICATION_ENABLED=false` blocca espressamente l'endpoint pubblico e l'approvazione.
+- **Blocco residuo reale**: `SUPABASE_SECRET_KEY`, credenziali Google OAuth e refresh token non disponibili al runtime Vercel. Non riutilizzare OAuth del plugin ChatGPT come segreto dell'app.
+- Cron NON configurato né attivato; non eseguite transazioni di produzione; non pubblicate riviste.
+
 ## Confine: non è attivato in produzione
 
 Questa directory implementa il **nuovo sistema reale** in un **branch di preparazione**, nato da PR #187.
@@ -31,8 +40,7 @@ il collaudo del nuovo progetto: il cutover richiede un'operazione successiva esp
 
 ### Database
 
-File di schema: `database/schema.sql` — **NON applicato**, fino alla scelta esplicita di uno dei
-due progetti Supabase attivi; tabelle `ztd_daily_runs`, `ztd_daily_tasks`, `ztd_audit_events`.
+File di schema: `database/schema.sql` — **applicato al solo progetto personale nqnmlsmeiynxbdojeyjt**; tabelle `ztd_daily_runs`, `ztd_daily_tasks`, `ztd_audit_events`.
 RLS attiva, grant anon/authenticated revocati, accesso lato server tramite secret key.
 Non migrare il vecchio SQLite perché contiene esclusivamente record TEST sintetici.
 
