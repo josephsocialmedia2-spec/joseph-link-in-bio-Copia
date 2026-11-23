@@ -7,6 +7,7 @@
 (()=>{'use strict';
 const HOME='/joseph-link-in-bio-Copia/';
 const PATH={
+ oggi:'/__staging__/oggi.html',
  farming:HOME+'gestione/acquisizione-farming/#lettere',
  letters:HOME+'gestione/lettere-stampa/',
  reader:HOME+'gestione/rivista/sfoglia/',
@@ -22,6 +23,23 @@ const PATH={
 const $=id=>document.getElementById(id);
 const stage=(module,target,event,proof,title,instruction,result)=>({module,target,event,proof,title,instruction,result});
 const FLOWS={
+ oggi:{title:'Oggi · Magazine, lettera e lavoro',steps:[
+ stage('oggi','#open-magazine','click','today-magazine','Apri la rivista digitale di lavorazione',
+  'Sul gestionale operativo clicca «1 · Apri anteprima PDF». La schermata a destra è la stessa, con il tasto evidenziato. La rivista del 21 novembre è una BOZZA per revisione privata, non una nuova edizione pubblicata.',
+  'Deve apparire il PDF nel riquadro anteprima senza alcun rilascio editoriale.'),
+ stage('oggi','#open-drive','click','today-drive','Apri il registro di revisione su Google Drive',
+  'Clicca «2 · Apri registro su Drive». Il registro privato contiene il collegamento al PDF originale GitHub. Non confonderlo con il PDF già caricato come file autonomo su Drive: il trasferimento del binario è ancora da effettuare.',
+  'Si apre la scheda Drive di controllo e il gestionale registra l’apertura del link.'),
+ stage('oggi','#open-letter','click','today-letter','Apri la lettera cartacea di stamane',
+  'Clicca «3 · Apri lettera da stampare». Il documento Google è la Lettera C del 23 novembre: A4, non nominativa, QR verso la rivista già disponibile. Usa File → Stampa.',
+  'Si apre il documento stampabile su Drive. Non sono partiti invii né stampe automatiche.'),
+ stage('oggi','#confirm-print','click','today-print','Conferma la stampa fisica',
+  'Solo dopo avere stampato e controllato il QR sulla carta, clicca «4 · Conferma di aver stampato». Il programma non può sapere se la stampante ha davvero funzionato: questa è la tua dichiarazione.',
+  'Il gestionale registra la dichiarazione di stampa, senza attestare distribuzione avvenuta.'),
+ stage('oggi','#open-agenda','click','today-agenda','Apri la dashboard di programmazione',
+  'Clicca «5 · Apri programma operativo». Seleziona «La mia giornata» o «Protocollo operatori 08–20» e spunta soltanto le attività effettivamente svolte. La scuola dalle 17:00 resta in agenda.',
+  'Viene aperto il programma e le attività si possono spuntare e scaricare in CSV.')
+ ]},
  materiali:{title:'Lettere, rivista e QR',steps:[
   stage('farming','#rew-open-flipbook','click','navigation','Apri la rivista dal Farming',
    'Nella pagina OPERATIVA cerca il tasto «Sfoglia la rivista». La copia a destra indica con un cerchio il pulsante esatto. Cliccalo A SINISTRA: vedrai aprirsi il lettore originale.',
@@ -119,7 +137,7 @@ S.push(stage('funnel','button[data-action="close"]','click','closed','Chiudi il 
  'Premi «Chiudi processo». Lo stato deve diventare CHIUSO e i KPI devono aggiornarsi.',
  'Il database deve mostrare CHIUSO, senza comunicazioni inviate.'));
 const W=$('workframe'),M=$('mirrorframe');
-let flow='materiali',index=0,selectedLeadId=null,beforeCount=0,processToken=0,frameModule=null,
+let flow='oggi',index=0,selectedLeadId=null,beforeCount=0,processToken=0,frameModule=null,
   pdfSuccess=false,gateSuccess=false,working=false,dbAvailable=false,lastSnapshot=null,stageTimer=null,closed=false;
 let stageNow=()=>FLOWS[flow].steps[index];
 let stageUrl=st=>PATH[st.module]||PATH.farming;
@@ -158,6 +176,20 @@ function syncMirrorState(){
  const a=currentDocument(),b=M.contentDocument;
  if(!a||!b)return;
  const module=stageNow().module;
+ if(module==='oggi'){
+  for(const id of ['magazine','letter','scheduler']){
+   const from=a.getElementById(id),to=b.getElementById(id);
+   if(!from||!to)continue;
+   for(const attribute of ['opened','driveOpened','printConfirmed','scheduleOpened'])
+     to.dataset[attribute]=from.dataset[attribute]||'';
+  }
+  const fromPreview=a.getElementById('mag-preview'),toPreview=b.getElementById('mag-preview');
+  if(fromPreview&&toPreview)toPreview.classList.toggle('show',fromPreview.classList.contains('show'));
+  for(const id of ['magazine-status','letter-status','ops-summary']){
+    const from=a.getElementById(id),to=b.getElementById(id);
+    if(from&&to)to.textContent=from.textContent;
+  }
+ }
  if(module==='models'){
   for(const id of ['doc-title','doc-copy','doc-note','result']){
    const from=a.getElementById(id),to=b.getElementById(id);
@@ -241,6 +273,16 @@ function chooseLeadInFrame(){
 }
 async function verify(st){
  const doc=currentDocument();
+ if(st.proof.startsWith('today-')){
+   const statuses={
+    'today-magazine':doc?.getElementById('magazine')?.dataset.opened,
+    'today-drive':doc?.getElementById('magazine')?.dataset.driveOpened,
+    'today-letter':doc?.getElementById('letter')?.dataset.opened,
+    'today-print':doc?.getElementById('letter')?.dataset.printConfirmed,
+    'today-agenda':doc?.getElementById('scheduler')?.dataset.scheduleOpened
+   };
+   return statuses[st.proof]==='yes';
+ }
  if(st.proof==='navigation'){
   try{return new URL(currentUrl()).pathname.endsWith('/gestione/lettere-stampa/')}catch(_){return false}
  }
@@ -426,6 +468,6 @@ document.querySelectorAll('[data-view]').forEach(btn=>btn.addEventListener('clic
 }));
 $('module').disabled=true;
 $('prev').disabled=true;$('next').disabled=true;
-startFlow('materiali');
+startFlow('oggi');
 snapshot();
 })();
