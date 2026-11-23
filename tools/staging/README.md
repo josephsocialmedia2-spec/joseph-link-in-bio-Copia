@@ -2,22 +2,33 @@
 
 Questo laboratorio apre il **codice del repository completo** senza pubblicarlo su GitHub Pages, modificare main o inviare messaggi reali. È separato dalla produzione e usa una barra di avviso su tutte le pagine.
 
-## Guida operativa affiancata — nuovo branch 23/11/2026
-Questa implementazione è nel branch **`feat/ztd-two-pane-guided-operations-20261123`**, creato dal branch staging, e non modifica `main`.
+## Simulatore con SCHERMATE IDENTICHE e clic reale — 23/11/2026
 
-- Apri `/__staging__/guided.html`: **colonna sinistra** = schermata reale del gestionale servita localmente in modalità STAGING, **colonna destra** = procedura passo passo, controlli e prova di completamento.
-- Da smartphone, usa i due tab per passare da *Gestionale* a *Guida*. Su desktop usa *Scambia i pannelli* per invertire il loro ordine.
-- Scegli uno dei 5 flussi: materiali e QR, inbound/CRM, handoff agente, routine giornaliera, newsletter e opposizioni.
-- Per i flussi CRM, usa il modulo **Funnel e CRM sintetico** e premi **Verifica prova nel CRM**. La guida interroga l'API `/__staging__/api/state`, controlla lo stato del contatto TEST e gli eventi registrati in SQLite; le sole spunte non sbloccano i passaggi automatici.
-- Il passaggio a `TRASFERITO` è intercettato e bloccato nell'iframe finché non sono superati i 7 controlli del flusso Handoff e verificato il permesso TEST. Questa misura vale per il simulatore affiancato e **non è un controllo sul CRM produttivo**.
-- L'app non importa dati personali, non invia comunicazioni esterne e non trasferisce contatti a partner reali.
-- Nella versione Vercel statica il gestionale è **di sola lettura** e l'API SQLite non è disponibile: la guida mostra i passaggi, ma mantiene **bloccati i gate CRM automatici**. Per completare tutto il funnel usare Codespaces privato (porta 8765).
-- Gli script mostrati nella guida sono **schede sintetiche didattiche**, non sostituiscono la lettura dei dieci script completi del Manuale Italia V2.
-- Le spunte manuali costituiscono supporto alla formazione, non prova di conformità GDPR o autorizzazione a inviare newsletter, chiamare o pubblicare riviste.
-- Per verificare nel browser: `node scripts/ztd_two_pane_qa.cjs` con Python e Playwright disponibili.
+Il branch `feat/ztd-two-pane-guided-operations-20261123` contiene una revisione radicale della prima guida a checklist. L'URL rimane `/__staging__/guided.html`.
 
-### Avvio in Codespaces sul branch dedicato
-Apri `https://github.com/codespaces/new?hide_repo_select=true&ref=feat%2Fztd-two-pane-guided-operations-20261123&repo=1431333923`, crea il Codespace, mantieni la porta **8765 privata**, quindi visita `/__staging__/guided.html`.
+**La pagina di sinistra** carica una vera schermata del gestionale presente nel repository, resa da `tools/staging/server.py` su origine STAGING; l'operatore può cliccare pulsanti, sfogliare, compilare esclusivamente il CRM sintetico ed osservare gli effetti della propria azione.
+
+**La pagina di destra** carica una **seconda copia della STESSA schermata**. Un anello dorato e l'etichetta **«CLICCA QUI»** identificano l'elemento HTML esatto, trovato da un selettore DOM verificabile. Sotto la copia trovi una spiegazione di cosa fare, cosa aspettarti e il risultato. La copia di destra è **read-only (pointer-events:none)**, non si possono inviare dati da lì. Dopo il clic a sinistra il software attende e verifica l'esito: navigazione a pagina corretta, visualizzazione del modello, cambio di stato registrato nel database SQLite, evento bloccato, o completamento effettivo dei sette controlli. **Non c'è più il tasto «Avanti» sbloccato con una spunta sulla guida**. Se il comando non è presente o l'esito manca, il passo rimane BLOCCATO senza simulare successi.
+
+### Percorsi attivi
+1. **Lettere/Rivista:** nella pagina originale Farming clicca `#rew-open-flipbook` (apre lettore originale), poi `#letter` (verifica realmente il PDF). Per i modelli A/B/C, **non presenti nel gestionale produttivo**, viene aperta la pagina **didattica** `/__staging__/letter-models.html`: tre pulsanti reali, anteprime basate sul Manuale Italia V2, controllo destinazione QR e verifica del gate editoriale senza alcuna pubblicazione.
+2. **Inbound/CRM:** il vero simulatore SQLite `/__staging__/funnel.html` reagisce a creazione nuova richiesta TEST, qualifica, tentativo di follow-up negato, modifica permesso TEST e follow-up simulato. Ogni step legge il vero stato del database TEST.
+3. **Handoff:** creazione e qualifica TEST, blocco iniziale del trasferimento, poi pagina `/__staging__/workflow-training.html?mode=handoff` con **sette controlli da selezionare uno alla volta**, convalida, ritorno al CRM TEST, permesso sintetico, handoff e chiusura. Nessun agente reale.
+4. **Routine:** otto pulsanti di simulazione nella pagina `workflow-training.html?mode=routine`, da eseguire in sequenza, osservando i cambi di stato.
+5. **Newsletter e opposizioni:** due rotazioni editoriali distinte, prova di blocco invii, creazione record TEST, evento `NON_CONTATTARE` realmente salvato nel database sintetico.
+
+I due iframe caricano sempre **la medesima pagina e lo stesso URL del modulo**. Per le pagine interattive la guida sincronizza a destra i risultati visivi non persistiti e i controlli sintetici, ma non può garantire fedeltà per ogni componente di terzi o stato interno dell'intero gestionale originale. Se un comando originale cambia identificativo o non è visibile, l'avanzamento viene bloccato: richiede aggiornamento del selettore e nuovo test.
+
+### Limiti e protezioni
+- **Mai usare dati reali.** Solo identità sintetiche generate dal server e indirizzi `@example.test`; nessuna email, WhatsApp, telefonata o trasferimento esterno.
+- Nessuna mediazione, stima professionale o negoziazione da parte degli addetti marketing.
+- La Lettera B è individuale su richiesta, A/C sono non nominative. I tre modelli A/B/C sono un **modulo formativo nuovo**, non un set di PDF già pubblicati nel gestionale.
+- Su Vercel è pubblicabile **solo l'anteprima statica**, protetta da Vercel SSO: le due schermate e i modelli sono visibili, ma il CRM SQLite non è disponibile e **gli step CRM non avanzano** senza un evento nel database.
+- In Codespaces sul branch, apri la porta **8765 Private**, poi `/__staging__/guided.html`. Non rendere pubblico il server Python.
+- Test E2E: `node scripts/ztd_two_pane_qa.cjs` con Chrome e Playwright. Il portale staging include l'accesso alla guida.
+
+### Apri il branch in Codespaces
+`https://github.com/codespaces/new?hide_repo_select=true&ref=feat%2Fztd-two-pane-guided-operations-20261123&repo=1431333923`
 
 ## Avvio dal browser, senza installare programmi
 1. In GitHub apri il branch `test/ztd-full-staging-lab-20261122`.
