@@ -37,6 +37,7 @@ jobs:
           node --check tools/staging/export_static.cjs
           node --check tools/staging/read-only-guard.js
           node --check tools/staging/guided.js
+          node --check tools/staging/guided-live.js
           node --check scripts/ztd_two_pane_qa.cjs
       - name: Build Vercel static preview and verify isolation
         run: |
@@ -49,6 +50,9 @@ jobs:
           assert (root/'__staging__/read-only-guard.js').is_file()
           assert (root/'__staging__/guided.html').is_file()
           assert (root/'__staging__/guided.js').is_file()
+          assert (root/'__staging__/guided-live.js').is_file()
+          assert (root/'__staging__/letter-models.html').is_file()
+          assert (root/'__staging__/workflow-training.html').is_file()
           assert (root/'joseph-link-in-bio-Copia/gestione/index.html').is_file()
           assert (root/'joseph-link-in-bio-Copia/catalogo-premium/index.html').is_file()
           assert not (root/'.github').exists()
