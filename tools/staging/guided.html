@@ -131,6 +131,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{ou
 <div class="nav">
  <label for="flow">PROCEDURA
  <select id="flow">
+  <option value="oggi">0 · Oggi: rivista, lettera e agenda</option>
   <option value="materiali">1 · Materiali, lettere e QR</option>
   <option value="inbound">2 · Inbound, CRM e consensi</option>
   <option value="handoff">3 · Handoff agente abilitato</option>
@@ -160,7 +161,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{ou
    <button type="button" id="open-module" class="btn muted">Apri modulo</button>
    <button type="button" id="focus-element" class="btn light">Mostra il tasto da cliccare</button>
   </div>
-  <iframe id="workframe" title="Gestionale Zero to Diamond: pagina operativa in modalità test" sandbox="allow-scripts allow-same-origin allow-forms allow-downloads" referrerpolicy="no-referrer"></iframe>
+  <iframe id="workframe" title="Gestionale Zero to Diamond: pagina operativa in modalità test" sandbox="allow-scripts allow-same-origin allow-forms allow-downloads allow-popups allow-popups-to-escape-sandbox" referrerpolicy="no-referrer"></iframe>
   <div class="foot"><span id="frame-url">Pagina non caricata</span><a href="/__staging__/funnel.html" id="open-new-tab" target="_blank" rel="noopener noreferrer">Apri modulo separatamente</a></div>
  </section>
  <aside class="guide" aria-label="Pagina istruzioni operative">
