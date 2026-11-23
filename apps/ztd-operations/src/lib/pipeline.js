@@ -2,6 +2,8 @@ import "server-only";
 import {db,cloudEnabled,romeDay,safeDay} from "./cloud";
 import {verifyDriveFolder,dayEvents,putPdf} from "./google";
 import {currentDraft,letterPdf,publicMagazineUrl} from "./documents";
+import {savePdf} from "./storage";
+import {createHash} from "node:crypto";
 export async function audit(day,action,actor_id=null,details={}){
  const {error}=await db().from("ztd_audit_events").insert({day,action,actor_id,details});
  if(error)throw new Error("Audit event not persisted: "+error.message);
@@ -63,18 +65,21 @@ export async function dailyAutomation(day=romeDay(),actor_id=null){
  const letterName="ZTD-Lettera-C-"+day+"-"+stamp+".pdf";
  try{
   const magazine=await putPdf(magazineName,draft.pdf);
+  const magazineStoragePath=await savePdf("magazine",day,draft.pdf);
   const publicPath="/api/publications/"+day;
   const letter=await letterPdf({day,qrUrl:publicMagazineUrl(day),issue:draft.issue});
+  const letterName=letterNameBase+createHash("sha256").update(letter).digest("hex").slice(0,16)+".pdf";
   const print=await putPdf(letterName,letter);
+  const letterStoragePath=await savePdf("letters",day,letter);
   const {error:taskErr}=await client.from("ztd_daily_tasks")
     .upsert(makeTasks(events).map(t=>({...t,day})),{onConflict:"day,ordinal"});
   if(taskErr)throw taskErr;
   const {error}=await client.from("ztd_daily_runs").update({
    status:"READY",magazine_drive_id:magazine.id,
    magazine_drive_url:magazine.webViewLink||"https://drive.google.com/file/d/"+magazine.id+"/view",
-   magazine_name:magazineName,letter_drive_id:print.id,
+   magazine_name:magazineName,magazine_storage_path:magazineStoragePath,letter_drive_id:print.id,
    letter_drive_url:print.webViewLink||"https://drive.google.com/file/d/"+print.id+"/view",
-   letter_name:letterName,public_path:publicPath,error_code:null,
+   letter_name:letterName,letter_storage_path:letterStoragePath,public_path:publicPath,error_code:null,
    updated_at:new Date().toISOString(),ready_at:new Date().toISOString()
   }).eq("day",day).eq("status","PREPARING");
   if(error)throw error;
