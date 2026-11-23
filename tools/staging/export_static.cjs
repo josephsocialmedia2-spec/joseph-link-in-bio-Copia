@@ -64,7 +64,7 @@ fs.copyFileSync(path.join(root,'tools/staging/read-only-guard.js'),path.join(lab
  fs.writeFileSync(path.join(labDir,'guided.html'),guided);
  fs.copyFileSync(path.join(root,'tools/staging/guided.js'),path.join(labDir,'guided.js'));
  fs.copyFileSync(path.join(root,'tools/staging/guided-live.js'),path.join(labDir,'guided-live.js'));
- for(const page of ['letter-models.html','workflow-training.html']){
+ for(const page of ['letter-models.html','workflow-training.html','oggi.html']){
   let html=fs.readFileSync(path.join(root,'tools/staging',page),'utf8');
   html=html.replace(/<\/head>/i,'<script src="/__staging__/read-only-guard.js" defer></script></head>');
   fs.writeFileSync(path.join(labDir,page),html);
