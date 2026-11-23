@@ -52,6 +52,8 @@ alter table public.ztd_daily_tasks enable row level security;
 alter table public.ztd_audit_events enable row level security;
 revoke all on public.ztd_daily_runs,public.ztd_daily_tasks,public.ztd_audit_events from anon,authenticated;
 revoke all on sequence public.ztd_audit_events_id_seq from anon,authenticated;
+grant select,insert,update,delete on public.ztd_daily_runs,public.ztd_daily_tasks,public.ztd_audit_events to service_role;
+grant usage,select on sequence public.ztd_audit_events_id_seq to service_role;
 insert into storage.buckets(id,name,public,file_size_limit,allowed_mime_types)
 values('ztd-documents','ztd-documents',false,15728640,array['application/pdf'])
 on conflict (id) do nothing;
@@ -70,6 +72,7 @@ begin
 end
 $body$;
 revoke all on function public.ztd_log_publication() from public,anon,authenticated;
+grant execute on function public.ztd_log_publication() to service_role;
 drop trigger if exists ztd_run_publish_audit on public.ztd_daily_runs;
 create trigger ztd_run_publish_audit after update of status on public.ztd_daily_runs
 for each row execute function public.ztd_log_publication();
@@ -87,6 +90,7 @@ begin
 end
 $body$;
 revoke all on function public.ztd_log_task_completion() from public,anon,authenticated;
+grant execute on function public.ztd_log_task_completion() to service_role;
 drop trigger if exists ztd_task_done_audit on public.ztd_daily_tasks;
 create trigger ztd_task_done_audit after update of status on public.ztd_daily_tasks
 for each row execute function public.ztd_log_task_completion();
