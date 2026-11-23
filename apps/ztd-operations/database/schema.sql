@@ -1,4 +1,4 @@
--- Zero to Diamond cloud schema. DA APPLICARE SOLTANTO DOPO SCELTA DEL PROGETTO SUPABASE.
+-- Zero to Diamond cloud schema. APPLICATO SOLO a Supabase personale nqnmlsmeiynxbdojeyjt, 23/11/2026.
 -- Isolato dalle tabelle f1_ / case247_ / rmp_. Nessuna policy pubblica.
 create extension if not exists pgcrypto;
 create table if not exists public.ztd_daily_runs (
