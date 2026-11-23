@@ -61,6 +61,7 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
     assert.equal(await page.locator('.operate').count(),1);
     assert.equal(await page.locator('.guide').count(),1);
     await page.locator('#mode').getByText(/ANTEPRIMA STATICA/).waitFor();
+    await page.locator('[data-view="guide"]').click();
     await page.locator('#flow').selectOption('inbound');
     for(const checkbox of await page.locator('#controls input[type=checkbox]').all()){
       await checkbox.check();
