@@ -44,6 +44,45 @@ File di schema: `database/schema.sql` — **applicato al solo progetto personale
 RLS attiva, grant anon/authenticated revocati, accesso lato server tramite secret key.
 Non migrare il vecchio SQLite perché contiene esclusivamente record TEST sintetici.
 
+### Autorizzazione Google senza incollare refresh token
+
+La tabella `public.ztd_google_auth` è **già creata e verificata** sul progetto Supabase
+personale. Le credenziali OAuth sono cifrate con AES-256-GCM utilizzando il segreto
+`GOOGLE_TOKEN_ENCRYPTION_KEY` di Vercel, separato dal database. L'integrazione è
+read-only finché non viene completato un consenso Google valido.
+
+1. Configurare `SUPABASE_SECRET_KEY` nel progetto Vercel `zero-to-diamond-operations`
+   come variabile **encrypted**, solo server, mai `NEXT_PUBLIC_`.
+2. Nel proprio Google Cloud Console abilitare **Drive API** e **Calendar API**; creare
+   un OAuth 2.0 Client ID **Web application**, configurare la schermata consenso e
+   aggiungere il proprietario del Drive fra i test user se l'app è in testing.
+3. Impostare URI di reindirizzamento autorizzato **esatto**:
+   `https://zero-to-diamond-operations.vercel.app/api/google/callback`.
+4. Configurare in Vercel come encrypted `GOOGLE_OAUTH_CLIENT_ID` e
+   `GOOGLE_OAUTH_CLIENT_SECRET`. **Non serve più copiare manualmente un refresh token**.
+5. Supabase Auth → URL Configuration: aggiungere come redirect consentito
+   `https://zero-to-diamond-operations.vercel.app/auth/callback`.
+6. Dopo un deployment protetto e solo dopo la verifica dell'account amministratore,
+   aprire l'app e usare il pulsante **Connetti Google Drive e Calendar**. L'utente
+   autorizza Google nel browser una sola volta. Il callback confronta `state` e
+   sessione operatore, verifica l'accesso in scrittura alla cartella nota e
+   l'accesso a Calendar, poi salva il refresh token **cifrato** nel DB.
+7. `/api/integrations/status` verifica con chiamate **di sola lettura** la connessione
+   al DB, la cartella Drive e il calendario; non crea PDF, tasks, invii o campagne.
+
+**Scopes**: la cartella già esistente in My Drive è stata creata fuori dall'app.
+Per accedervi senza Google Picker, è necessario lo scope Google
+`https://www.googleapis.com/auth/drive` (restricted). Può richiedere la verifica
+OAuth per app distribuite pubblicamente. L'alternativa meno ampia
+`drive.file` richiede scelta esplicita del file/cartella tramite Picker e
+un flusso diverso. Lo scope Calendar è `calendar.readonly`.
+
+**Sicurezza**: il refresh token non compare nel browser, negli eventi di audit
+né negli output diagnostici. I flag `ZTD_AUTOMATION_ENABLED=false` e
+`ZTD_PUBLICATION_ENABLED=false` restano inattivi anche dopo il consenso.
+`GOOGLE_TOKEN_ENCRYPTION_KEY`, `CRON_SECRET` e `APP_BASE_URL` sono già impostati
+nelle env protette, ma nessun cron o deployment è ancora configurato.
+
 ### Configurazione Google Drive — IMPORTANTISSIMO
 
 La cartella `1oHla667gbs3cCIPx4_JITkrd-gRQ-oyK` appartiene a **My Drive personale**.
