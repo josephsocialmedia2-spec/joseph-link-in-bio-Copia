@@ -1,0 +1,37 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ZTD · Formazione operativa</title>
+<style>:root{font-family:system-ui,Arial;color:#143b58;background:#eef3f7}*{box-sizing:border-box}body{margin:0}
+header{background:#0c2a43;color:white;padding:15px;border-bottom:4px solid #c7a062}main{padding:20px;max-width:980px;margin:auto}
+h1{font:normal 29px Georgia,serif;margin:3px 0}p{line-height:1.5}button{cursor:pointer;background:#0d4b78;color:white;border:0;padding:12px 16px;font-weight:750;margin:5px;min-height:44px}
+button:disabled{cursor:not-allowed;opacity:.35}button.done{background:#16764d}
+.note{background:#fff5df;padding:12px;border-left:4px solid #c39543;font-size:13px}
+.board{background:white;border:1px solid #d0dce5;padding:15px;margin-top:15px}.board h2{margin:0 0 13px}
+.row{display:flex;align-items:center;gap:11px;padding:11px 8px;border-bottom:1px solid #dce7ef;line-height:1.5;font-size:14px}
+.row label{flex:1;cursor:pointer}.row input{width:19px;height:19px;accent-color:#157342}
+#feedback{margin-top:15px;background:#e5f2e9;padding:14px;font-size:13px;border-left:4px solid #267c4b;min-height:50px}
+#feedback.bad{background:#fff0ee;border-color:#b7333e}
+</style></head><body><header><small>LABORATORIO · NESSUN CONTATTO REALE</small><h1 id="title">Procedure di verifica</h1></header>
+<main><p class="note" id="intro">L'operatore deve eseguire i gesti su questa pagina. Il pannello guida mostra gli stessi controlli e il pulsante da utilizzare, senza poterli azionare.</p><div class="board" id="board"></div><div id="feedback" role="status">Pronto.</div></main>
+<script>(()=>{'use strict';
+const mode=new URLSearchParams(location.search).get('mode')||'handoff',board=document.getElementById('board'),feedback=document.getElementById('feedback');
+const report=(s,err=false)=>{feedback.textContent=s;feedback.className=err?'bad':''};
+if(mode==='handoff'){
+ document.getElementById('title').textContent='Verifica dei sette gate prima dell’agente TEST';
+ document.getElementById('intro').textContent='Prima dell’handoff sintetico, verifica tutti i requisiti. Non costituiscono autorizzazione al trasferimento di dati reali.';
+ const labels=['Richiesta documentata e specifica','Agente abilitato identificato','Informativa, finalità e base giuridica verificate','Solo i dati strettamente necessari','Registro Handoff_Audit previsto','Nessuna mediazione svolta dal marketing','Nessun marketing autonomo del partner senza presupposto distinto'];
+ labels.forEach((t,i)=>{const div=document.createElement('div');div.className='row';const input=document.createElement('input');input.type='checkbox';input.id='gate-'+(i+1);const label=document.createElement('label');label.htmlFor=input.id;label.textContent=(i+1)+'. '+t;div.append(input,label);board.append(div)});
+ const b=document.createElement('button');b.id='gate-submit';b.textContent='Convalida i sette controlli TEST';board.append(b);
+ b.addEventListener('click',()=>{const ok=labels.every((_,i)=>document.getElementById('gate-'+(i+1)).checked);
+ document.getElementById('board').dataset.gatesPassed=ok?'yes':'no';report(ok?'Sette controlli della simulazione completati. Ora puoi provare il tasto Handoff nel CRM TEST.':'Manca almeno uno dei sette controlli: HANDOFF BLOCCATO.',!ok)});
+}else if(mode==='routine'){
+ document.getElementById('title').textContent='Routine · 08:00–20:00';
+ const hours=['08:00–09:00 · Dashboard/KPI','09:00–10:30 · Contenuti','10:30–12:00 · Landing, QR, QA','12:00–14:00 · Pausa','14:00–16:30 · Inbound','16:30–18:00 · Collaborazioni','18:00–19:00 · Handoff','19:00–20:00 · Report finale'];
+ hours.forEach((t,i)=>{const row=document.createElement('div');row.className='row';const b=document.createElement('button');b.id='slot-'+i;b.textContent='Registra step '+(i+1);b.addEventListener('click',()=>{b.classList.add('done');b.dataset.done='yes';b.textContent='Fatto · '+(i+1);report('Blocco '+t+' contrassegnato nel laboratorio. Non è una prova di attività reale.');});const label=document.createElement('span');label.textContent=t;row.append(b,label);board.append(row)});
+}else if(mode==='newsletter'){
+ document.getElementById('title').textContent='Piano editoriale e invii bloccati';
+ const h=document.createElement('h2');h.textContent='Scegli il binario';board.append(h);
+ for(const [key,label] of [['A','ZTD · Mercato / Ristorante / Deal / Notizie'],['B','Italia · Mercato / Opportunità / Consigli / Analisi']]){
+ const b=document.createElement('button');b.id='track-'+key;b.textContent='Apri binario '+key;b.addEventListener('click',()=>{board.dataset.track=key;report(label+'. Scelta locale, nessuna newsletter inviata.')});board.append(b)}
+ const p=document.createElement('p');p.textContent='Il laboratorio vieta l’invio di email, WhatsApp, SMS e chiamate commerciali. La presenza nel CRM non è un’autorizzazione.';board.append(p);
+ const b=document.createElement('button');b.id='verify-channel';b.textContent='Esegui test BLOCCO invii';b.addEventListener('click',()=>{board.dataset.sending='blocked';report('GATE CONFERMATO: nessun invio promozionale reale disponibile.',false)});board.append(b);
+}else{board.textContent='Procedura non prevista.'}
+})();</script></body></html>
