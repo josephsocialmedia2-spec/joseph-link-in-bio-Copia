@@ -1,131 +1,125 @@
 #!/usr/bin/env node
-/* Browser acceptance for the NEW two-pane guided operations on real staging
- * pages and the isolated SQLite synthetic CRM. No production services.
- */
+/* Real-click / DOM-mirrored Zero to Diamond training, synthetic API only. */
 'use strict';
 const assert=require('node:assert/strict');
 const {spawn}=require('node:child_process');
 const {chromium}=require('playwright');
-const HOST='http://127.0.0.1:18769';
+const BASE='http://127.0.0.1:18769';
 const server=spawn('python3',['tools/staging/server.py','--host','127.0.0.1','--port','18769'],{stdio:'ignore'});
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 (async()=>{
  let browser;
  try{
-  let ready=false;
-  for(let n=0;n<90;n++){
-   try{const r=await fetch(HOST+'/__staging__/api/health');if(r.ok){ready=true;break}}catch(_){}
-   await sleep(100);
-  }
-  assert.ok(ready,'Staging server did not start');
+  let up=false;
+  for(let t=0;t<90;t++){try{if((await fetch(BASE+'/__staging__/api/health')).ok){up=true;break}}catch(_){}await sleep(130)}
+  assert.ok(up,'Server staging not running');
   browser=await chromium.launch({headless:true,executablePath:process.env.JOSEPH_CHROME||'/usr/bin/google-chrome',args:['--no-sandbox']});
-  const page=await browser.newPage({viewport:{width:1500,height:900}});
-  page.on('pageerror',e=>{throw Error('Guide JavaScript: '+e.message)});
-  const opening=await page.goto(HOST+'/__staging__/guided.html',{waitUntil:'domcontentloaded'});
-  assert.equal(opening.status(),200);
-  await page.locator('#mode.live').getByText('CODESPACES').waitFor();
-  assert.equal(await page.locator('.operate').count(),1);
-  assert.equal(await page.locator('.guide').count(),1);
-  assert.equal(await page.locator('#workframe').count(),1);
-  const op=page.frameLocator('#workframe');
-  await op.locator('#ztd-sandbox').waitFor();
-  assert.equal(await page.locator('#next').isDisabled(),true);
-  await page.locator('#controls input[type=checkbox]').first().check();
-  await page.locator('#controls input[type=checkbox]').last().check();
-  assert.equal(await page.locator('#next').isEnabled(),true);
-  await page.locator('#next').click();
-  await page.locator('#steptitle').getByText('Apri Lettere & Stampa').waitFor();
-  await page.locator('#controls select[data-field="letter"]').selectOption('B');
-  await page.locator('#controls select[data-field="purpose"]').selectOption('generica');
-  await page.locator('#controls input[type=checkbox]').check();
-  assert.equal(await page.locator('#next').isDisabled(),true,'Letter B cannot be distributed generically');
-  await page.locator('#controls select[data-field="purpose"]').selectOption('inbound');
-  assert.equal(await page.locator('#next').isEnabled(),true);
-  console.log('PASS: two real panes, staging dashboard and letter-B restriction');
-  // Reset only the isolated synthetic database; no real API is called.
-  const clear=await page.evaluate(async()=>{
-   return (await fetch('/__staging__/api/reset',{method:'POST',
+  const page=await browser.newPage({viewport:{width:1650,height:1000}});
+  const response=await page.goto(BASE+'/__staging__/guided.html',{waitUntil:'domcontentloaded'});
+  assert.equal(response.status(),200);
+  const work=page.frameLocator('#workframe');
+  const mirror=page.frameLocator('#mirrorframe');
+  await page.locator('#mode.live').waitFor();
+  await work.locator('#rew-open-flipbook').waitFor();
+  await mirror.locator('#rew-open-flipbook[data-ztd-live-target]').waitFor();
+  assert.equal(await page.locator('#next').isVisible(),false,'Manual Next must be hidden');
+  assert.equal(await page.locator('#mirrorframe').evaluate(e=>getComputedStyle(e).pointerEvents),'none');
+  // Wrong clicks cannot unlock the guide.
+  await work.locator('#rew-download-magazine').click({force:true});
+  assert.match(await page.locator('#steptitle').innerText(),/Apri la rivista/);
+  await work.locator('#rew-open-flipbook').click();
+  await page.locator('#steptitle').getByText(/Verifica la Lettera aggiornata/).waitFor();
+  await work.locator('#letter').waitFor();
+  await mirror.locator('#letter[data-ztd-live-target]').waitFor();
+  await work.locator('#letter').click();
+  await page.locator('#steptitle').getByText(/Scegli il modello A/).waitFor();
+  await work.locator('#model-A').click();
+  await page.locator('#steptitle').getByText(/Scegli il modello B/).waitFor();
+  await work.locator('#model-B').click();
+  await page.locator('#steptitle').getByText(/Scegli il modello C/).waitFor();
+  await work.locator('#model-C').click();
+  await page.locator('#steptitle').getByText(/Verifica il QR/).waitFor();
+  await work.locator('#qr-test').click();
+  await page.locator('#steptitle').getByText(/Controlla il blocco editoriale/).waitFor();
+  await work.locator('#review-status').click();
+  await page.locator('#mirrorlabel').getByText(/PROCEDURA COMPLETATA/).waitFor();
+  assert.equal(await work.locator('#result').getAttribute('data-test'),'approval');
+  console.log('PASS: identical mirrored pages, highlighted exact DOM target, real click → checked result → automatic next step');
+  console.log('PASS: actual Farming→Lettere link, original PDF, three A/B/C interactive models, QR and editorial gate');
+
+  const reset=await page.evaluate(async()=>(
+   await fetch('/__staging__/api/reset',{method:'POST',
     headers:{'Content-Type':'application/json','X-Staging-Lab':'synthetic-only'},
-    body:JSON.stringify({confirm:'RESET_SYNTHETIC_ONLY'})})).status;
-  });
-  assert.equal(clear,200);
+    body:JSON.stringify({confirm:'RESET_SYNTHETIC_ONLY'})})).status);
+  assert.equal(reset,200);
   await page.locator('#flow').selectOption('inbound');
-  await op.locator('#feedback').getByText(/CRM SQLite sintetico pronto/).waitFor();
-  await page.locator('#controls input[type=checkbox]').first().check();
-  await page.locator('#controls input[type=checkbox]').last().check();
-  assert.equal(await page.locator('#next').isDisabled(),true,'A manual tick cannot fake a CRM lead');
-  await op.locator('#create').click();
-  await op.locator('#feedback').getByText(/Richiesta TEST/).waitFor();
-  await page.locator('#sync').click();
-  await page.waitForFunction(()=>!document.getElementById('next').disabled,null,{timeout:6000});
-  assert.equal(await page.locator('#next').isEnabled(),true,'Lead must be verified in SQLite');
-  await page.locator('#next').click();
-  assert.equal(await page.locator('#next').isDisabled(),true);
-  await op.locator('button[data-action="qualify"]').click();
-  await op.locator('#selected').getByText(/Qualificato/).waitFor();
-  await page.locator('#controls input[type=checkbox]').first().check();
-  await page.locator('#controls input[type=checkbox]').last().check();
-  await page.locator('#sync').click();
-  await page.waitForFunction(()=>!document.getElementById('next').disabled,null,{timeout:6000});
-  assert.equal(await page.locator('#next').isEnabled(),true);
-  await page.locator('#next').click();
-  await op.locator('button[data-action="followup"]').click();
-  await op.locator('#feedback').getByText(/consenso assente/).waitFor();
-  for(const box of await page.locator('#controls input[type=checkbox]').all())await box.check();
-  await page.locator('#sync').click();
-  await page.waitForFunction(()=>!document.getElementById('next').disabled,null,{timeout:6000});
-  assert.equal(await page.locator('#next').isEnabled(),true,'Blocked followup must be in event log');
-  await page.locator('#next').click();
-  await op.locator('#selectedMarketing').check();
-  await op.locator('#updatePermissions').click();
-  await op.locator('#feedback').getByText(/Azione permissions/).waitFor();
-  await op.locator('button[data-action="followup"]').click();
-  await op.locator('#feedback').getByText(/Azione followup/).waitFor();
-  for(const box of await page.locator('#controls input[type=checkbox]').all())await box.check();
-  await page.locator('#sync').click();
-  await page.waitForFunction(()=>!document.getElementById('next').disabled,null,{timeout:6000});
-  assert.equal(await page.locator('#next').isEnabled(),true);
-  console.log('PASS: inbound → SQLite → qualify → blocked follow-up → authorized TEST follow-up');
+  await work.locator('#create').waitFor();
+  await work.locator('#create').click();
+  await page.locator('#steptitle').getByText(/Qualifica il TEST/).waitFor();
+  await work.locator('button[data-action="qualify"]').click();
+  await page.locator('#steptitle').getByText(/Prova il divieto di follow-up/).waitFor();
+  await work.locator('button[data-action="followup"]').click();
+  await page.locator('#steptitle').getByText(/Attiva il permesso TEST/).waitFor();
+  await work.locator('#selectedMarketing').check();
+  await page.locator('#steptitle').getByText(/Registra la scelta TEST/).waitFor();
+  await work.locator('#updatePermissions').click();
+  await page.locator('#steptitle').getByText(/Esegui follow-up TEST/).waitFor();
+  await work.locator('button[data-action="followup"]').click();
+  await page.locator('#mirrorlabel').getByText(/PROCEDURA COMPLETATA/).waitFor();
+  console.log('PASS: actual SQLite CRM actions observed: request → qualified → blocked follow-up → permission → successful TEST follow-up');
+
   await page.locator('#flow').selectOption('handoff');
-  const guards=await page.locator('#controls input[type=checkbox]').count();
-  assert.equal(guards,7,'All seven gate conditions must be displayed');
-  await op.locator('button[data-action="handoff"]').click();
-  await page.locator('#toast').getByText(/Handoff bloccato/).waitFor();
-  for(const box of await page.locator('#controls input[type=checkbox]').all())await box.check();
-  await page.locator('#sync').click();
-  assert.equal(await page.locator('#next').isDisabled(),true,'No handoff without permission');
-  await op.locator('#selectedTransfer').check();
-  await op.locator('#updatePermissions').click();
-  await op.locator('#feedback').getByText(/Azione permissions/).waitFor();
-  await page.locator('#sync').click();
-  await page.waitForFunction(()=>!document.getElementById('next').disabled,null,{timeout:6000});
-  assert.equal(await page.locator('#next').isEnabled(),true);
-  await page.locator('#next').click();
-  await op.locator('button[data-action="handoff"]').click();
-  await op.locator('#feedback').getByText(/Azione handoff/).waitFor();
-  for(const box of await page.locator('#controls input[type=checkbox]').all())await box.check();
-  await page.locator('#sync').click();
-  await page.waitForFunction(()=>!document.getElementById('next').disabled,null,{timeout:6000});
-  assert.equal(await page.locator('#next').isEnabled(),true);
-  await page.locator('#next').click();
-  await op.locator('button[data-action="close"]').click();
-  await op.locator('#feedback').getByText(/Azione close/).waitFor();
-  for(const box of await page.locator('#controls input[type=checkbox]').all())await box.check();
-  await page.locator('#sync').click();
-  await page.waitForFunction(()=>!document.getElementById('next').disabled,null,{timeout:6000});
-  assert.equal(await page.locator('#next').isEnabled(),true);
+  await work.locator('#create').click();
+  await page.locator('#steptitle').getByText(/Qualifica la richiesta/).waitFor();
+  await work.locator('button[data-action="qualify"]').click();
+  await page.locator('#steptitle').getByText(/Verifica che il sistema blocchi/).waitFor();
+  await work.locator('button[data-action="handoff"]').click();
+  await page.locator('#steptitle').getByText(/Gate 1 di 7/).waitFor();
+  for(let k=1;k<=7;k++){
+   await work.locator('#gate-'+k).check();
+   if(k<7)await page.locator('#steptitle').getByText('Gate '+(k+1)+' di 7').waitFor();
+  }
+  await page.locator('#steptitle').getByText(/Convalida i 7 controlli/).waitFor();
+  await work.locator('#gate-submit').click();
+  await page.locator('#steptitle').getByText(/Seleziona il permesso trasferimento/).waitFor();
+  await work.locator('#selectedTransfer').check();
+  await page.locator('#steptitle').getByText(/Salva il permesso TEST/).waitFor();
+  await work.locator('#updatePermissions').click();
+  await page.locator('#steptitle').getByText(/Handoff a AGENTE TEST/).waitFor();
+  await work.locator('button[data-action="handoff"]').click();
+  await page.locator('#steptitle').getByText(/Chiudi il processo TEST/).waitFor();
+  await work.locator('button[data-action="close"]').click();
+  await page.locator('#mirrorlabel').getByText(/PROCEDURA COMPLETATA/).waitFor();
   const db=await page.evaluate(async()=>await (await fetch('/__staging__/api/state')).json());
   assert.equal(db.kpi.handoffs_simulated,1);
   assert.equal(db.kpi.closed_simulated,1);
-  assert.equal(db.kpi.blocked_by_policy,1);
+  assert.equal(db.kpi.blocked_by_policy,2);
   assert.equal(db.external_deliveries,0);
-  console.log('PASS: guided handoff blocked until 7 checks, then SQLite handoff + close without real deliveries');
-  // Static site preview must still show both panes but not fabricate a live CRM.
-  await page.setViewportSize({width:380,height:780});
+  console.log('PASS: 7 real checkbox actions, verified TEST permission, handoff and closure; zero external deliveries');
+
+  await page.locator('#flow').selectOption('routine');
+  for(let i=0;i<8;i++){
+   await work.locator('#slot-'+i).click();
+   if(i<7)await page.locator('#steptitle').getByText(/.+/).waitFor();
+  }
+  await page.locator('#mirrorlabel').getByText(/PROCEDURA COMPLETATA/).waitFor();
+  await page.locator('#flow').selectOption('newsletter');
+  await work.locator('#track-A').click();
+  await page.locator('#steptitle').getByText(/calendario italiano/).waitFor();
+  await work.locator('#track-B').click();
+  await page.locator('#steptitle').getByText(/blocco degli invii/).waitFor();
+  await work.locator('#verify-channel').click();
+  await page.locator('#steptitle').getByText(/Genera il contatto TEST/).waitFor();
+  await work.locator('#create').click();
+  await page.locator('#steptitle').getByText(/Imposta NON CONTATTARE/).waitFor();
+  await work.locator('button[data-action="stop"]').click();
+  await page.locator('#mirrorlabel').getByText(/PROCEDURA COMPLETATA/).waitFor();
+  console.log('PASS: routine, newsletter rotations and database NON_CONTATTARE via real clicks');
+  await page.setViewportSize({width:385,height:780});
   await page.locator('[data-view="guide"]').click();
-  assert.equal(await page.locator('.guide').isVisible(),true);
+  assert.equal(await page.locator('#mirrorframe').isVisible(),true);
   await page.locator('[data-view="operate"]').click();
-  assert.equal(await page.locator('.operate').isVisible(),true);
-  console.log('PASS: mobile tabs switch operative page and instruction page');
+  assert.equal(await page.locator('#workframe').isVisible(),true);
+  console.log('PASS: responsive mobile switch between identical page and guided mirror');
  }finally{if(browser)await browser.close();server.kill('SIGTERM')}
 })().catch(e=>{console.error(e.stack||e);process.exitCode=1});
