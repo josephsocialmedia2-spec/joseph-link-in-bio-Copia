@@ -1,6 +1,7 @@
 import "server-only";
 import {google} from "googleapis";
 import {Readable} from "node:stream";
+import {createHash} from "node:crypto";
 import {env} from "./cloud";
 export function auth(){
  const client=new google.auth.OAuth2(env("GOOGLE_OAUTH_CLIENT_ID"),env("GOOGLE_OAUTH_CLIENT_SECRET"));
@@ -30,7 +31,12 @@ export async function getFileByName(name){
 export async function putPdf(name,buffer){
  safeName(name);
  const existing=await getFileByName(name);
- if(existing)return existing; // immutable deterministic filename; generation is idempotent
+ if(existing){
+  const actual=existing.md5Checksum;
+  const expected=createHash("md5").update(buffer).digest("hex");
+  if(!actual||actual!==expected)throw new Error("Drive file collision or corrupted existing PDF; refusing to reuse");
+  return existing;
+ } // immutable deterministic filename; generation is idempotent
  const {data}=await drive().files.create({
   requestBody:{name,mimeType:"application/pdf",parents:[env("GOOGLE_DRIVE_FOLDER_ID")]},
   media:{mimeType:"application/pdf",body:Readable.from(buffer)},
