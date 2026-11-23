@@ -25,6 +25,12 @@ jobs:
           node-version: '22'
       - name: Install pinned code dependencies without scripts
         run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Save dependency lockfile for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: ztd-package-lock
+          path: apps/ztd-operations/package-lock.json
+          if-no-files-found: error
       - name: Syntax checks
         run: npm run check
       - name: Unit tests
