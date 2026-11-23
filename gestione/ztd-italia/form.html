@@ -2,7 +2,7 @@
 <section id="ztd-richiesta" aria-labelledby="ztd-title" style="max-width:680px;padding:20px;background:white;color:#102b49;font:16px/1.5 system-ui">
   <h2 id="ztd-title">Richiesta informativa volontaria</h2>
   <p>La guida è gratuita e accessibile senza fornire dati. Questo modulo serve soltanto per ricevere una risposta alla domanda che invii.</p>
-  <form id="ztd-form" method="POST" action="[URL_WEB_APP_GOOGLE_APPS_SCRIPT]" target="_blank">
+  <form id="ztd-form" method="POST" action="https://script.google.com/macros/s/AKfycbyl_lra8MX8Ug2SmnDiLpqwb5dPvKWekkQwxz-MGpJU2PgmVN_BT95vEVAn4RtcTcEL/exec" target="_blank">
     <label>Nome (facoltativo)<input name="nome" maxlength="90"></label>
     <label>Email per la risposta *<input name="email" type="email" autocomplete="email" maxlength="160" required></label>
     <label>Comune<input name="comune" value="Avigliana" maxlength="80"></label>
@@ -33,7 +33,7 @@ form.elements.ztd_zona.value=allowedZones.includes(qs.get('ztd_zona'))?qs.get('z
 const partner=document.getElementById('ztd-partner'), partnerInfo=document.getElementById('ztd-partner-info'), id=document.getElementById('ztd-partner-identified');
 partner.addEventListener('change',()=>{partnerInfo.hidden=!partner.checked;id.value='no';if(partner.checked)document.getElementById('ztd-config').textContent='Il percorso agente è bloccato finché il professionista non è identificato e validato.'});
 const configured=form.action.startsWith('https://script.google.com/macros/s/') && /^https:\/\//.test(privacy.href) && !privacy.href.includes('%5BURL_') && !privacy.href.includes('[URL_');
-send.disabled=!configured;document.getElementById('ztd-config').textContent=configured?'Invio su Google Apps Script: il server genera ID e timestamp. Nessuna iscrizione automatica.':'Modulo bloccato: configura endpoint e informativa pubblicata.';
+send.disabled=!configured;document.getElementById('ztd-config').textContent=configured?'Endpoint configurato. Usa solo dati sintetici per collaudo finché la privacy non è approvata. Il server genera ID e timestamp; nessun invio newsletter automatico.':'Modulo bloccato: configura endpoint e informativa pubblicata.';
 form.addEventListener('submit',e=>{if(!configured){e.preventDefault();return;}if(partner.checked&&id.value!=='yes'){e.preventDefault();alert('Richiesta agente non disponibile finché il partner non è identificato e il relativo percorso privacy non è attivo. Deseleziona la casella per inviare la sola domanda.')}});
 })();
 </script>
