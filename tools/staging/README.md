@@ -2,6 +2,23 @@
 
 Questo laboratorio apre il **codice del repository completo** senza pubblicarlo su GitHub Pages, modificare main o inviare messaggi reali. È separato dalla produzione e usa una barra di avviso su tutte le pagine.
 
+## Guida operativa affiancata — nuovo branch 23/11/2026
+Questa implementazione è nel branch **`feat/ztd-two-pane-guided-operations-20261123`**, creato dal branch staging, e non modifica `main`.
+
+- Apri `/__staging__/guided.html`: **colonna sinistra** = schermata reale del gestionale servita localmente in modalità STAGING, **colonna destra** = procedura passo passo, controlli e prova di completamento.
+- Da smartphone, usa i due tab per passare da *Gestionale* a *Guida*. Su desktop usa *Scambia i pannelli* per invertire il loro ordine.
+- Scegli uno dei 5 flussi: materiali e QR, inbound/CRM, handoff agente, routine giornaliera, newsletter e opposizioni.
+- Per i flussi CRM, usa il modulo **Funnel e CRM sintetico** e premi **Verifica prova nel CRM**. La guida interroga l'API `/__staging__/api/state`, controlla lo stato del contatto TEST e gli eventi registrati in SQLite; le sole spunte non sbloccano i passaggi automatici.
+- Il passaggio a `TRASFERITO` è intercettato e bloccato nell'iframe finché non sono superati i 7 controlli del flusso Handoff e verificato il permesso TEST. Questa misura vale per il simulatore affiancato e **non è un controllo sul CRM produttivo**.
+- L'app non importa dati personali, non invia comunicazioni esterne e non trasferisce contatti a partner reali.
+- Nella versione Vercel statica il gestionale è **di sola lettura** e l'API SQLite non è disponibile: la guida mostra i passaggi, ma mantiene **bloccati i gate CRM automatici**. Per completare tutto il funnel usare Codespaces privato (porta 8765).
+- Gli script mostrati nella guida sono **schede sintetiche didattiche**, non sostituiscono la lettura dei dieci script completi del Manuale Italia V2.
+- Le spunte manuali costituiscono supporto alla formazione, non prova di conformità GDPR o autorizzazione a inviare newsletter, chiamare o pubblicare riviste.
+- Per verificare nel browser: `node scripts/ztd_two_pane_qa.cjs` con Python e Playwright disponibili.
+
+### Avvio in Codespaces sul branch dedicato
+Apri `https://github.com/codespaces/new?hide_repo_select=true&ref=feat%2Fztd-two-pane-guided-operations-20261123&repo=1431333923`, crea il Codespace, mantieni la porta **8765 privata**, quindi visita `/__staging__/guided.html`.
+
 ## Avvio dal browser, senza installare programmi
 1. In GitHub apri il branch `test/ztd-full-staging-lab-20261122`.
 2. Seleziona **Code → Codespaces → Create codespace on this branch**.
