@@ -3,20 +3,21 @@ import {google} from "googleapis";
 import {Readable} from "node:stream";
 import {createHash} from "node:crypto";
 import {env} from "./cloud";
-export function auth(){
+import {loadGoogleRefreshToken} from "./google-token";
+export async function auth(){
  const client=new google.auth.OAuth2(env("GOOGLE_OAUTH_CLIENT_ID"),env("GOOGLE_OAUTH_CLIENT_SECRET"));
- client.setCredentials({refresh_token:env("GOOGLE_OAUTH_REFRESH_TOKEN")});
+ client.setCredentials({refresh_token:await loadGoogleRefreshToken()});
  return client;
 }
-export function drive(){return google.drive({version:"v3",auth:auth()})}
-export function calendar(){return google.calendar({version:"v3",auth:auth()})}
+export async function drive(){return google.drive({version:"v3",auth:await auth()})}
+export async function calendar(){return google.calendar({version:"v3",auth:await auth()})}
 function safeName(name){
  if(!/^[a-zA-Z0-9_.-]{1,150}\.pdf$/.test(name))throw new Error("Invalid PDF filename");
  return name;
 }
 export async function verifyDriveFolder(){
  const id=env("GOOGLE_DRIVE_FOLDER_ID");
- const {data}=await drive().files.get({fileId:id,fields:"id,mimeType,name,capabilities/canAddChildren",supportsAllDrives:true});
+ const {data}=await (await drive()).files.get({fileId:id,fields:"id,mimeType,name,capabilities/canAddChildren",supportsAllDrives:true});
  if(data?.mimeType!=="application/vnd.google-apps.folder"||!data.capabilities?.canAddChildren)throw new Error("Drive folder is not writable");
  return id;
 }
@@ -24,7 +25,7 @@ export async function getFileByName(name){
  safeName(name);
  const folder=env("GOOGLE_DRIVE_FOLDER_ID");
  const q="'"+folder.replaceAll("'","\\'")+"' in parents and name = '"+name.replaceAll("'","\\'")+"' and trashed = false";
- const {data}=await drive().files.list({q,fields:"nextPageToken,files(id,name,mimeType,webViewLink,md5Checksum,size)",pageSize:20,supportsAllDrives:true,includeItemsFromAllDrives:true});
+ const {data}=await (await drive()).files.list({q,fields:"nextPageToken,files(id,name,mimeType,webViewLink,md5Checksum,size)",pageSize:20,supportsAllDrives:true,includeItemsFromAllDrives:true});
  if((data.files||[]).length>1)throw new Error("More than one Drive file with same generated filename");
  return data.files?.[0]||null;
 }
@@ -37,7 +38,7 @@ export async function putPdf(name,buffer){
   if(!actual||actual!==expected)throw new Error("Drive file collision or corrupted existing PDF; refusing to reuse");
   return existing;
  } // immutable deterministic filename; generation is idempotent
- const {data}=await drive().files.create({
+ const {data}=await (await drive()).files.create({
   requestBody:{name,mimeType:"application/pdf",parents:[env("GOOGLE_DRIVE_FOLDER_ID")]},
   media:{mimeType:"application/pdf",body:Readable.from(buffer)},
   fields:"id,name,mimeType,webViewLink,md5Checksum,size",supportsAllDrives:true
@@ -47,7 +48,7 @@ export async function putPdf(name,buffer){
 }
 export async function readPdf(fileId){
  if(!/^[A-Za-z0-9_-]{10,128}$/.test(fileId))throw new Error("Invalid Drive ID");
- const r=await drive().files.get({fileId,alt:"media",supportsAllDrives:true},{responseType:"arraybuffer"});
+ const r=await (await drive()).files.get({fileId,alt:"media",supportsAllDrives:true},{responseType:"arraybuffer"});
  const bytes=Buffer.from(r.data);
  if(bytes.length>15*1024*1024||bytes.subarray(0,5).toString()!=="%PDF-")throw new Error("Drive file is not an allowed PDF");
  return bytes;
@@ -59,7 +60,7 @@ export async function dayEvents(day){
  // Calendar accepts dateTime + timezone; offset resolved by querying local day ±1d.
  const from=new Date(start.getTime()-24*3600000).toISOString();
  const to=new Date(start.getTime()+48*3600000).toISOString();
- const {data}=await calendar().events.list({
+ const {data}=await (await calendar()).events.list({
   calendarId:calId,timeMin:from,timeMax:to,maxResults:200,singleEvents:true,orderBy:"startTime"
  });
  if(!Array.isArray(data.items))throw new Error("Calendar access not verified");
