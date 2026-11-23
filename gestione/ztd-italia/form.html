@@ -1,0 +1,40 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,follow"><title>Richiesta informativa · ZTD Italia</title><style>body{background:#eef4f7;color:#102b49;font:16px system-ui;margin:0}.top{background:#102b49;color:#fff;padding:28px 16px}.top>div,main{max-width:750px;margin:auto}main{padding:20px 14px}a{color:#096899}.tag{padding:10px 14px;background:#fff2ce;border-left:4px solid #ad8a49}</style></head><body><header class="top"><div><strong>JOSEPH MALAFRONTE · ZTD ITALIA</strong><h1>Richiesta informativa</h1></div></header><main><p class="tag">Invio inattivo finché il servizio Google non viene configurato e l'informativa non è validata.</p><!-- SOSTITUIRE entrambi i segnaposti con URL REALI prima di attivare il form. -->
+<section id="ztd-richiesta" aria-labelledby="ztd-title" style="max-width:680px;padding:20px;background:white;color:#102b49;font:16px/1.5 system-ui">
+  <h2 id="ztd-title">Richiesta informativa volontaria</h2>
+  <p>La guida è gratuita e accessibile senza fornire dati. Questo modulo serve soltanto per ricevere una risposta alla domanda che invii.</p>
+  <form id="ztd-form" method="POST" action="[URL_WEB_APP_GOOGLE_APPS_SCRIPT]" target="_blank">
+    <label>Nome (facoltativo)<input name="nome" maxlength="90"></label>
+    <label>Email per la risposta *<input name="email" type="email" autocomplete="email" maxlength="160" required></label>
+    <label>Comune<input name="comune" value="Avigliana" maxlength="80"></label>
+    <label>Argomento *<select name="argomento" required><option value="Informazioni OMI">Informazioni OMI</option><option value="Guida preparazione">Guida preparazione</option><option value="Servizi marketing">Servizi marketing</option></select></label>
+    <label>Domanda *<textarea name="messaggio" maxlength="1500" required></textarea></label>
+    <div style="position:absolute;left:-9999px" aria-hidden="true"><label>Non compilare<input name="website" tabindex="-1" autocomplete="off"></label></div>
+    <p>Leggi l'<a id="ztd-privacy" href="https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia/gestione/ztd-italia/privacy.html" target="_blank" rel="noopener">informativa privacy</a>, che identifica il titolare, le finalità, i destinatari, i tempi di conservazione e i diritti.</p>
+    <label><input type="checkbox" name="privacy_ack" value="yes" required> 1. Ho preso visione dell'informativa per la gestione della richiesta (obbligatorio).</label>
+    <label><input type="checkbox" name="newsletter_optin" value="yes"> 2. Desidero ricevere la newsletter settimanale via email; posso revocare l'iscrizione in qualsiasi momento (facoltativo).</label>
+    <label><input type="checkbox" name="partner_requested" value="yes" id="ztd-partner" disabled> 3. (Non disponibile finché non è identificato il partner) Chiedo esplicitamente di essere ricontattato dal partner abilitato identificato qui sotto (facoltativo, percorso distinto).</label>
+    <p id="ztd-partner-info" hidden>Partner proposto: <strong>[RAGIONE SOCIALE AGENTE ABILITATO - DA VALIDARE]</strong>. Il passaggio non è automatico: verrà valutato e comunicato nel rispetto dell'informativa pertinente.</p>
+    <input type="hidden" name="partner_identified" id="ztd-partner-identified" value="no">
+    <input type="hidden" name="privacy_version" value="ZTD-IT-PRIVACY-2026-11-v1">
+    <input type="hidden" name="utm_source"><input type="hidden" name="utm_medium"><input type="hidden" name="utm_campaign"><input type="hidden" name="utm_content"><input type="hidden" name="utm_term"><input type="hidden" name="ztd_asset"><input type="hidden" name="ztd_zona">
+    <button id="ztd-send" type="submit" disabled>Invia la richiesta</button>
+    <p id="ztd-config" role="status">Modulo non ancora attivo: configurare l'endpoint, l'informativa e il partner, se si vuole offrire tale percorso.</p>
+  </form>
+</section>
+<style>#ztd-form label{display:block;margin:12px 0}#ztd-form input:not([type=checkbox]),#ztd-form textarea,#ztd-form select{display:block;width:100%;padding:10px;border:1px solid #789}#ztd-form button{padding:12px 18px;background:#0b6593;color:white;border:0;cursor:pointer}#ztd-form button:disabled{opacity:.5;cursor:not-allowed}</style>
+<script>
+(()=>{'use strict';
+const form=document.getElementById('ztd-form'), privacy=document.getElementById('ztd-privacy'), send=document.getElementById('ztd-send');
+const qs=new URLSearchParams(location.search), allowedZones=['AVI-01','AVI-02','AVI-03'], allowedAssets=['c02_mercato','c03_guida','c04_rivista'];
+const clean=(s,max=100)=>String(s||'').replace(/[^a-zA-Z0-9_\-]/g,'').slice(0,max);
+for(const key of ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'])form.elements[key].value=clean(qs.get(key));
+form.elements.ztd_asset.value=allowedAssets.includes(qs.get('ztd_asset'))?qs.get('ztd_asset'):'non_attribuito';
+form.elements.ztd_zona.value=allowedZones.includes(qs.get('ztd_zona'))?qs.get('ztd_zona'):'non_attribuita';
+const partner=document.getElementById('ztd-partner'), partnerInfo=document.getElementById('ztd-partner-info'), id=document.getElementById('ztd-partner-identified');
+partner.addEventListener('change',()=>{partnerInfo.hidden=!partner.checked;id.value='no';if(partner.checked)document.getElementById('ztd-config').textContent='Il percorso agente è bloccato finché il professionista non è identificato e validato.'});
+const configured=form.action.startsWith('https://script.google.com/macros/s/') && /^https:\/\//.test(privacy.href) && !privacy.href.includes('%5BURL_') && !privacy.href.includes('[URL_');
+send.disabled=!configured;document.getElementById('ztd-config').textContent=configured?'Invio su Google Apps Script: il server genera ID e timestamp. Nessuna iscrizione automatica.':'Modulo bloccato: configura endpoint e informativa pubblicata.';
+form.addEventListener('submit',e=>{if(!configured){e.preventDefault();return;}if(partner.checked&&id.value!=='yes'){e.preventDefault();alert('Richiesta agente non disponibile finché il partner non è identificato e il relativo percorso privacy non è attivo. Deseleziona la casella per inviare la sola domanda.')}});
+})();
+</script>
+<p><a href="./privacy.html">Informativa privacy</a> · <a href="./">Torna alle guide</a></p></main></body></html>
