@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>Zero to Diamond · Due pannelli · Gestionale + Guida</title>
+<style>
+:root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--navy:#102a42;--navy2:#183954;--blue:#1d5f91;--gold:#c7a05b;--bg:#f2f5f8;--ink:#152d40;--line:#d6e0e8;--muted:#5b7080;--danger:#a12733;--ok:#16734a}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink)}
+body{display:flex;flex-direction:column;height:100dvh;min-height:620px}
+button,select,input,textarea{font:inherit}button{cursor:pointer}
+button:disabled{opacity:.42;cursor:not-allowed}
+button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid #f6b949;outline-offset:2px}
+.top{background:var(--navy);color:white;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 18px;border-bottom:4px solid var(--gold)}
+.brand{display:flex;gap:11px;align-items:center}.brandmark{height:43px;width:43px;border:1px solid #c7a05b;border-radius:3px;display:grid;place-items:center;font:700 18px Georgia,serif;color:#e3c68e}
+.brand h1{font-size:17px;line-height:1.1;margin:0 0 5px}.brand p{color:#b8cddd;font-size:11px;letter-spacing:.075em;margin:0;text-transform:uppercase}
+.header-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.top a,.top button{color:white;text-decoration:none;border:1px solid #57758d;background:#204761;padding:10px 13px;font-size:13px;border-radius:4px}
+.top a:hover,.top button:hover{background:#316084}
+.nav{background:white;border-bottom:1px solid var(--line);padding:10px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.nav label{font-weight:750;font-size:12px;color:#35526a;display:flex;align-items:center;gap:8px}
+.nav select{border:1px solid #b9cad7;padding:10px;background:white;color:#122b40;border-radius:4px;max-width:350px;min-width:220px}
+.nav .status{margin-left:auto;font-size:12px;font-weight:700;padding:8px 10px;border-radius:4px;background:#f9efdc;color:#724c15}
+.nav .status.live{background:#e5f2eb;color:#16583d}
+.workspace{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(370px,1fr);flex:1;min-height:0}
+.workspace.reversed{grid-template-columns:minmax(370px,1fr) minmax(0,1.35fr)}
+.workspace.reversed .guide{order:-1}
+.operate,.guide{display:flex;flex-direction:column;min-width:0;min-height:0}
+.operate{background:#e4eaf0;border-right:2px solid #cedbe5}
+.panehead{padding:12px 17px;display:flex;align-items:center;gap:12px;background:#f7f9fb;border-bottom:1px solid var(--line)}
+.panehead h2{font-size:16px;margin:0}.panehead small{font-size:11px;color:var(--muted)}
+.eyebrow{display:inline-block;color:#567083;font-size:10px;font-weight:850;letter-spacing:.095em;text-transform:uppercase}
+.toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:9px;padding:9px 14px;background:#fff;border-bottom:1px solid var(--line)}
+.toolbar select{max-width:270px;padding:8px 10px;border:1px solid #adc4d5;background:#fff;border-radius:4px}
+.btn{border:0;padding:10px 15px;border-radius:4px;background:var(--blue);color:#fff;font-weight:750;font-size:13px;min-height:40px}
+.btn.muted{background:#e5edf4;color:#163f60;border:1px solid #b9d0e0}
+.btn.danger{background:#ad3040}
+.btn.light{background:#ffffff;color:#285478;border:1px solid #aabed0}
+#workframe{display:block;width:100%;height:100%;border:0;flex:1;min-height:220px;background:white}
+.foot{padding:9px 14px;border-top:1px solid #cbd9e3;background:#f7f9fb;font-size:11px;color:#516b80;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.foot a{color:#1b5882;text-decoration:underline}
+.guide{background:white;box-shadow:-4px 0 16px #102c4110}
+.guidehead{background:#f8fafc;padding:16px 19px;border-bottom:1px solid var(--line)}
+.guidehead h2{margin:6px 0 5px;font:500 27px/1.18 Georgia,"Times New Roman",serif;color:#153852}
+.guidehead p{margin:0;color:#52697b;font-size:13px;line-height:1.5}
+.progressbar{width:100%;height:5px;margin-top:13px;background:#dde8ef;border-radius:9px;overflow:hidden}
+.progressbar span{display:block;height:100%;background:var(--gold);width:0;transition:width .2s}
+.guidebody{padding:18px 21px;overflow:auto;flex:1}
+.guidebody h3{font-size:18px;margin:0 0 10px}
+.explain{font-size:14px;line-height:1.6;color:#233f53;white-space:pre-line}
+.hint{background:#edf4f8;border-left:4px solid var(--blue);margin:14px 0;padding:13px 14px;font-size:13px;line-height:1.6}
+.warning{background:#fff3f1;border-left:4px solid #bc3443;color:#72232b;margin:14px 0;padding:12px 14px;font-size:12px;line-height:1.6}
+.proof{background:#f7f9fc;border:1px solid #dce5ed;padding:15px;margin:17px 0}
+.proof h4{margin:0 0 10px;font-size:14px}
+.field{display:block;margin:9px 0;padding:9px 10px;border:1px solid #dbe5ec;background:white;border-radius:4px;line-height:1.4;font-size:13px}
+.field.check{display:flex;align-items:flex-start;gap:10px;cursor:pointer}
+.field.check input{margin-top:3px;width:17px;height:17px;accent-color:#136393}
+.field span.mini{display:block;color:#667b89;font-size:11px}
+.field select,.field input[type=text]{display:block;margin-top:8px;width:100%;padding:9px;border:1px solid #aabdcf;background:white;color:#203d54}
+.badge{display:inline-flex;align-items:center;gap:5px;background:#edf3f8;border:1px solid #cddbe6;color:#345c78;font-weight:750;font-size:11px;padding:5px 8px;border-radius:4px}
+.badge.ok{background:#e4f3eb;color:#17613e;border-color:#aad7bd}.badge.bad{background:#fde7e8;color:#8b2028;border-color:#edbbbd}
+.actions{display:flex;flex-wrap:wrap;gap:9px;align-items:center}
+#gate-message{margin-top:10px;display:block;min-height:20px;font-size:12px;color:#8b2b35}
+#gate-message.ok{color:var(--ok)}
+.guidefoot{padding:13px 18px;background:#fafcfe;border-top:1px solid var(--line)}
+.stepnav{display:flex;align-items:center;justify-content:space-between;gap:9px}.stepnav #counter{font-weight:800;font-size:12px;color:#486174}
+#toast{font-size:12px;color:#9a2430;margin-top:8px;min-height:16px}
+#labLead{min-width:145px;max-width:215px}.leadbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.scriptbox{background:#fff8e8;border:1px solid #f0d9aa;padding:12px;margin:12px 0;font-size:12px;line-height:1.6}
+.scriptbox label{display:block;font-weight:800;margin-bottom:8px}
+.scriptbox select{max-width:100%;width:100%;padding:8px;background:white;border:1px solid #cbb277}
+.scriptbox p{white-space:pre-line;margin:9px 0 0;color:#654b24}
+.hide{display:none!important}
+.mobiletabs{display:none}
+@media(max-width:1050px){.workspace{grid-template-columns:minmax(0,1fr) minmax(330px,.8fr)}.workspace.reversed{grid-template-columns:minmax(330px,.8fr) minmax(0,1fr)}.top{flex-wrap:wrap}.nav .status{margin-left:0}}
+@media(max-width:740px){
+ body{min-height:0;height:100dvh}.top{padding:10px}.brand h1{font-size:15px}
+ .nav{padding:8px}.nav select{min-width:170px;width:100%}
+ .workspace,.workspace.reversed{display:flex;flex-direction:column}
+ .operate,.guide{width:100%;height:100%}.operate{border-right:0}
+ .workspace .guide,.workspace.reversed .guide{order:0}
+ .workspace[data-mobile=guide] .operate{display:none}
+ .workspace[data-mobile=operate] .guide{display:none}
+ .mobiletabs{display:flex;gap:5px;background:#edf2f6;padding:6px}
+ .mobiletabs button{flex:1;padding:9px;border:1px solid #adc3d4;background:#fff;font-weight:750}
+ .mobiletabs button.active{background:#143d5f;color:white}
+ .panehead{padding:8px 12px}.guidebody{padding:14px}.guidehead{padding:12px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<script src="/__staging__/guided.js" defer></script>
+</head>
+<body>
+<header class="top">
+ <div class="brand"><div class="brandmark" aria-hidden="true">ZD</div><div><h1>ZERO TO DIAMOND · LABORATORIO AFFIANCATO</h1><p>Gestionale di prova + istruzioni guidate · Italia V2</p></div></div>
+ <div class="header-actions"><button type="button" id="flip">Scambia i pannelli</button><a href="/__staging__/">Indice laboratorio</a></div>
+</header>
+<div class="nav">
+ <label for="flow">PROCEDURA
+ <select id="flow">
+  <option value="materiali">1 · Materiali, lettere e QR</option>
+  <option value="inbound">2 · Inbound, CRM e consensi</option>
+  <option value="handoff">3 · Handoff agente abilitato</option>
+  <option value="routine">4 · Routine 08:00–20:00</option>
+  <option value="newsletter">5 · Newsletter e opposizioni</option>
+ </select></label>
+ <span class="status" id="mode">Verifica ambiente...</span>
+ <button class="btn muted" id="reset" type="button">Ricomincia procedura</button>
+</div>
+<div class="mobiletabs" aria-label="Vista mobile"><button type="button" data-view="operate" class="active">Gestionale</button><button type="button" data-view="guide">Guida</button></div>
+<main class="workspace" id="workspace" data-mobile="operate">
+ <section class="operate" aria-label="Pagina operativa del gestionale">
+  <div class="panehead"><div><span class="eyebrow">PAGINA 1 · OPERATIVA</span><h2 id="moduletitle">Gestionale in ambiente test</h2></div></div>
+  <div class="toolbar">
+   <label for="module" class="eyebrow">Schermata</label>
+   <select id="module" aria-label="Scegli modulo operativo">
+     <option value="dashboard">Dashboard</option>
+     <option value="farming">Farming</option>
+     <option value="crm">CRM reale in sola lettura</option>
+     <option value="funnel">CRM sintetico interattivo</option>
+     <option value="letters">Lettere e stampa</option>
+     <option value="reader">Rivista sfogliabile</option>
+     <option value="catalog">Catalogo premium</option>
+     <option value="flyer">Volantini premium</option>
+     <option value="newsletter">Newsletter</option>
+   </select>
+   <button type="button" id="open-module" class="btn muted">Apri modulo</button>
+   <button type="button" id="focus-element" class="btn light">Evidenzia comando</button>
+  </div>
+  <iframe id="workframe" title="Gestionale Zero to Diamond: pagina operativa in modalità test" sandbox="allow-scripts allow-same-origin allow-forms allow-downloads" referrerpolicy="no-referrer"></iframe>
+  <div class="foot"><span id="frame-url">Pagina non caricata</span><a href="/__staging__/funnel.html" id="open-new-tab" target="_blank" rel="noopener noreferrer">Apri modulo separatamente</a></div>
+ </section>
+ <aside class="guide" aria-label="Pagina istruzioni operative">
+  <div class="guidehead"><span class="eyebrow">PAGINA 2 · GUIDA PASSO PASSO</span><h2 id="flowtitle">Avvio procedura</h2><p id="flowsubtitle">Seguire gli step e verificare i gate.</p><div class="progressbar"><span id="progress"></span></div></div>
+  <div class="guidebody">
+    <span id="step-label" class="badge">Step 1</span>
+    <h3 id="steptitle" style="margin-top:12px">Preparazione</h3>
+    <div class="explain" id="instructions"></div>
+    <div id="hint" class="hint"></div>
+    <div id="warning" class="warning" role="note"></div>
+    <div class="scriptbox" id="script-box"><label for="script-select">Script di conversazione · Italia V2</label><select id="script-select"></select><p id="script-body"></p></div>
+    <div class="proof"><h4>Prova di completamento e controlli obbligatori</h4>
+      <div id="controls"></div>
+      <div class="leadbar" id="leadbar"><label for="labLead">Contatto TEST</label><select id="labLead"></select><button class="btn light" id="sync" type="button">Verifica prova nel CRM</button></div>
+      <div id="auto-proof" class="hint">Verifiche automatiche in attesa.</div>
+      <span id="gate-message" role="status" aria-live="polite"></span>
+    </div>
+  </div>
+  <div class="guidefoot">
+    <div class="stepnav"><button type="button" id="prev" class="btn muted">← Precedente</button><span id="counter">1 / 1</span><button type="button" id="next" class="btn">Successivo →</button></div>
+    <div class="actions" style="margin-top:10px"><button type="button" id="copy-report" class="btn light">Copia verbale TEST</button><span class="eyebrow">Mai dati personali reali</span></div>
+    <div id="toast" role="status"></div>
+  </div>
+ </aside>
+</main>
+</body>
+</html>
