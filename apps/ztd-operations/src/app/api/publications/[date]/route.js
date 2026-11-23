@@ -4,6 +4,7 @@ export const runtime="nodejs";
 export const dynamic="force-dynamic";
 export async function GET(_request,{params}){
  try{
+  if(process.env.ZTD_PUBLICATION_ENABLED!=="true")return new Response("Pubblicazione non attiva",{status:404,headers:{"Cache-Control":"no-store"}});
   const {date}=await params;
   safeDay(date);
   const {data,error}=await db().from("ztd_daily_runs")
