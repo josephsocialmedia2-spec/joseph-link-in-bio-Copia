@@ -39,6 +39,15 @@ SCRIPT = """
   notice.id='ztd-sandbox';
   notice.innerHTML='AMBIENTE DI COLLAUDO · ZERO TO DIAMOND <small>Dati sintetici · Servizi esterni e invii reali bloccati · <a href="/__staging__/">Indice test</a> · <a href="/__staging__/funnel.html">Funnel simulato</a></small>';
   const toast=document.createElement('div');toast.id='ztd-sandbox-feedback';toast.setAttribute('role','status');
+  function allowedDrive(url){
+    if(!location.pathname.startsWith('/__staging__/')||url.protocol!=='https:')return false;
+    if(url.hostname==='docs.google.com'&&(
+      url.pathname.startsWith('/document/d/1XM91YrixsCf-d2X9EeOQcpi04gbQNPTg2U4dld76fNM/')||
+      url.pathname.startsWith('/document/d/1F-1EdmjncujdXXt99Nyp_yX4J2Qs3p_jL-Ur6gxy-Rw/')
+    ))return true;
+    return url.hostname==='drive.google.com'&&
+      url.pathname.startsWith('/drive/folders/1oHla667gbs3cCIPx4_JITkrd-gRQ-oyK');
+  }
   const alertBlocked=()=>{toast.textContent='Collegamento esterno bloccato nel laboratorio. Non inviare messaggi reali.';toast.style.display='block'};
   function attach(){document.body.prepend(notice);document.body.append(toast)}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',attach,{once:true});else attach();
@@ -46,7 +55,7 @@ SCRIPT = """
     const link=event.target.closest?.('a[href]');
     if(!link)return;
     try{const dest=new URL(link.href,location.href);
-      if((dest.protocol==='https:'||dest.protocol==='http:')&&dest.origin!==location.origin ||
+      if(!allowedDrive(dest)&&((dest.protocol==='https:'||dest.protocol==='http:')&&dest.origin!==location.origin) ||
         ['mailto:','tel:','sms:','whatsapp:'].includes(dest.protocol)){
           event.preventDefault();event.stopImmediatePropagation();alertBlocked();
       }
@@ -61,7 +70,7 @@ SCRIPT = """
     }
   },true);
   const nativeOpen=window.open.bind(window);
-  window.open=(url,target,features)=>{try{if(new URL(url,location.href).origin!==location.origin){
+  window.open=(url,target,features)=>{try{const dest=new URL(url,location.href);if(dest.origin!==location.origin&&!allowedDrive(dest)){
      alertBlocked();return null
   }}catch(_){alertBlocked();return null}
   return nativeOpen(url,target,features)};
