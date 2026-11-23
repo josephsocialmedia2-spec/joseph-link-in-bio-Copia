@@ -21,8 +21,10 @@
       const match=/^\/document\/d\/([^/]+)(?:\/|$)/.exec(url.pathname);
       return !!match&&docs.has(match[1]);
    }
-   return url.hostname==='drive.google.com'
-     && /^\/drive\/folders\/1oHla667gbs3cCIPx4_JITkrd-gRQ-oyK\/?$/.test(url.pathname);
+   return url.hostname==='drive.google.com' && (
+     /^\/drive\/folders\/1oHla667gbs3cCIPx4_JITkrd-gRQ-oyK\/?$/.test(url.pathname) ||
+     /^\/file\/d\/1EWRsZWAd_L5PYfB2E1L3tw-tk7FLleYE\/view\/?$/.test(url.pathname)
+   );
  };
  const stop=()=>{message.textContent='Operazione esterna o invio bloccato. Questa è un’anteprima senza backend.';message.style.display='block'};
  function mount(){document.body.prepend(banner);document.body.append(message)}
