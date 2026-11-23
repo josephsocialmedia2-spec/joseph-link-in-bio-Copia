@@ -1,13 +1,12 @@
 import {redirect} from "next/navigation";
 import {sessionClient} from "../lib/auth";
-import {cloudReady} from "../lib/cloud";
+
 import Dashboard from "./dashboard-client";
 export const dynamic="force-dynamic";
 export default async function Home(){
- const config=cloudReady();
- if(!config.ready)return <main className="login"><h1>Cloud non configurato</h1>
-  <p>Questa applicazione non usa dati fittizi: l'accesso rimane bloccato finché non vengono collegati Supabase, Google Drive e Google Calendar.</p>
-  <p>Le variabili mancanti sono riportate nel file <code>.env.example</code>. Configurale nei segreti Vercel.</p></main>;
+ if(!process.env.NEXT_PUBLIC_SUPABASE_URL||!process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY)
+  return <main className="login"><h1>Supabase Auth non configurato</h1>
+   <p>Configurare le credenziali pubbliche Supabase prima di accedere.</p></main>;
  const client=await sessionClient();
  const {data:{user}}=await client.auth.getUser();
  if(!user?.id||!user.email)redirect("/login");
