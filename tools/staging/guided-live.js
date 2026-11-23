@@ -154,6 +154,49 @@ function showHighlight(doc,selector,mirror){
  doc.body.append(label);
  return true;
 }
+function syncMirrorState(){
+ const a=currentDocument(),b=M.contentDocument;
+ if(!a||!b)return;
+ const module=stageNow().module;
+ if(module==='models'){
+  for(const id of ['doc-title','doc-copy','doc-note','result']){
+   const from=a.getElementById(id),to=b.getElementById(id);
+   if(from&&to){to.textContent=from.textContent;if(id==='result'){to.dataset.error=from.dataset.error||'';to.dataset.test=from.dataset.test||''}}
+  }
+  const aDoc=a.getElementById('document'),bDoc=b.getElementById('document');
+  if(aDoc&&bDoc)bDoc.dataset.currentModel=aDoc.dataset.currentModel||'';
+  for(const x of a.querySelectorAll('[data-model]')){
+   const to=b.getElementById(x.id);if(to)to.setAttribute('aria-pressed',x.getAttribute('aria-pressed')||'false');
+  }
+ }
+ if(['handoff','routine','newsletter'].includes(module)){
+  for(const x of a.querySelectorAll('input[type="checkbox"][id]')){
+   const to=b.getElementById(x.id);if(to)to.checked=x.checked;
+  }
+  for(const x of a.querySelectorAll('button[id]')){
+   const to=b.getElementById(x.id);if(!to)continue;
+   to.textContent=x.textContent;
+   to.dataset.done=x.dataset.done||'';
+   to.classList.toggle('done',x.classList.contains('done'));
+  }
+  const aBoard=a.getElementById('board'),bBoard=b.getElementById('board');
+  if(aBoard&&bBoard){
+   bBoard.dataset.gatesPassed=aBoard.dataset.gatesPassed||'';
+   bBoard.dataset.track=aBoard.dataset.track||'';
+   bBoard.dataset.sending=aBoard.dataset.sending||'';
+  }
+  const aFeedback=a.getElementById('feedback'),bFeedback=b.getElementById('feedback');
+  if(aFeedback&&bFeedback)bFeedback.textContent=aFeedback.textContent;
+ }
+ if(module==='funnel'){
+  for(const id of ['source','scenario','marketing','transfer','selectedMarketing','selectedTransfer']){
+   const from=a.getElementById(id),to=b.getElementById(id);
+   if(!from||!to)continue;
+   if(from.type==='checkbox')to.checked=from.checked;
+   else to.value=from.value;
+  }
+ }
+}
 function focus(){
  const st=stageNow(),doc=currentDocument(),mirror=M.contentDocument;
  const ok=showHighlight(doc,st.target,false);
@@ -273,6 +316,7 @@ async function progress(){
  }
  working=false;
  if(token!==processToken)return;
+ if(success)syncMirrorState();
  if(!success){notice('Operazione non confermata. Il passaggio resta BLOCCATO: ripeti il clic corretto.',false);focus();return}
  notice('OPERAZIONE VERIFICATA: '+st.result,true);
  status('Confermato: '+st.title);
@@ -344,6 +388,17 @@ function onMirrorLoad(){
  M.style.pointerEvents='none';
  try{doc.documentElement.style.setProperty('user-select','none')}catch(_){}
  showHighlight(doc,stageNow().target,true);
+ if(stageNow().module==='funnel'){
+  doc.getElementById('reload')?.click(); // GET-only refresh: no synthetic write.
+  if(selectedLeadId){
+   setTimeout(()=>{
+    const button=doc.querySelector('button[data-lead-id="'+selectedLeadId+'"]');
+    if(button)button.click();
+    syncMirrorState();focus();
+   },520);
+  }
+ }
+ setTimeout(syncMirrorState,320);
  $('mirrorstatus').textContent='Copia visuale sincronizzata';
 }
 function startFlow(key){
