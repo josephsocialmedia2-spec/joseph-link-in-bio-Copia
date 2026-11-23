@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>ZTD · Lettere A B C · Laboratorio operativo</title>
+<style>
+:root{font-family:system-ui,Arial,sans-serif;color:#153650;background:#edf3f7}*{box-sizing:border-box}
+body{margin:0}.top{background:#0b2841;color:white;border-bottom:4px solid #c59f5e;padding:16px}
+main{max-width:1120px;margin:auto;padding:18px}.top h1{margin:5px 0;font:normal 28px Georgia,serif}.top p{margin:0;color:#cbddeb;font-size:12px}
+.note{background:#fff5df;border-left:5px solid #bb8432;padding:12px;line-height:1.5;margin-bottom:16px;font-size:13px}
+.cards{display:flex;gap:12px;flex-wrap:wrap}.option{flex:1;min-width:155px;background:white;border:1px solid #cddce5;padding:14px}
+.option h2{margin:0 0 5px;font-size:17px}.option p{font-size:12px;min-height:35px}
+button{padding:12px 13px;cursor:pointer;background:#0a4a75;color:white;border:0;font:700 13px system-ui;min-height:44px}
+button:focus-visible{outline:3px solid #f9c95e}.option button{width:100%}.option button[aria-pressed=true]{background:#197044}
+.paper{background:white;margin:16px 0;border:1px solid #d5dee6;padding:18px;box-shadow:0 5px 18px #14304810}
+.paper h2{margin-top:0;font:normal 25px Georgia,serif}
+.paper p{white-space:pre-line;line-height:1.65;font-size:14px}.paper small{color:#627587}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:16px}.actions button{background:#17476c}
+#result{background:#e9f3ea;border-left:4px solid #287650;padding:11px;min-height:42px;font-size:13px;line-height:1.45}
+#result[data-error=yes]{background:#fceced;border-color:#b62e3a}
+.pill{display:inline-block;font:700 11px system-ui;letter-spacing:.06em;color:#664717;background:#f9e9c8;padding:4px 7px}
+@media(max-width:670px){.option{min-width:100%}}
+</style></head>
+<body><header class="top"><span class="pill">SOLO FORMAZIONE · DATI INVENTATI</span><h1>Modelli lettere A / B / C</h1>
+<p>Simulatore operativo tratto dal Manuale Italia V2 · Questi tre modelli NON sono ancora tre pulsanti del gestionale pubblicato.</p></header>
+<main><div class="note"><b>Prima scegli il modello con un vero clic.</b> La pagina cambia mostrando la lettera. Il controllo a destra della guida speculare evidenzia il medesimo pulsante. Nessuna stampa, spedizione o trasmissione è attivata.</div>
+<section class="cards">
+ <article class="option"><h2>A · Guida territoriale</h2><p>Non nominativa, per la distribuzione generica consentita.</p><button id="model-A" type="button" data-model="A" aria-pressed="false">Seleziona Lettera A</button></article>
+ <article class="option"><h2>B · Risposta a richiesta</h2><p>Individuale e nominativa: non usarla in distribuzione generica.</p><button id="model-B" type="button" data-model="B" aria-pressed="false">Seleziona Lettera B</button></article>
+ <article class="option"><h2>C · Invito alla rivista</h2><p>Non nominativa, con QR verso la rivista approvata.</p><button id="model-C" type="button" data-model="C" aria-pressed="false">Seleziona Lettera C</button></article>
+</section>
+<section class="paper" id="document"><h2 id="doc-title">Anteprima della lettera</h2><p id="doc-copy">Clicca su un modello: comparirà il testo della versione didattica.</p><small id="doc-note">Nessun destinatario reale.</small></section>
+<div class="actions">
+ <button id="qr-test" type="button">Verifica destinazione QR del laboratorio</button>
+ <button id="review-status" type="button">Verifica approvazione rivista</button>
+</div>
+<div id="result" role="status" aria-live="polite">Pronto per la formazione.</div></main>
+<script>
+(()=>{'use strict';
+const texts={
+ A:{title:'Lettera A — informativa territoriale (NON nominativa)',
+ body:'Gentile residente,\nabbiamo realizzato una breve guida gratuita dedicata alle informazioni immobiliari e alle caratteristiche di Avigliana. La guida spiega come consultare i dati ufficiali OMI, come leggere le schede di un immobile e quali domande porre ai professionisti del settore.\n\nPuò consultarla liberamente attraverso il codice QR riportato qui sotto oppure visitando [URL]. Non è necessario lasciare dati personali per leggere la guida. Se desidera porre una domanda, trova un modulo facoltativo con informativa privacy.\n\nJoseph — consulenza marketing e promozione immobiliare. Collaborazione con agenti abilitati per le attività di competenza.',
+ note:'A4 · Distribuzione non nominativa · Verificare regolamenti locali e avvisi NO PUBBLICITÀ.'},
+ B:{title:'Lettera B — risposta individuale a richiesta ricevuta',
+ body:'Gentile [NOME],\nin riferimento alla sua richiesta del [DATA] relativa a [ARGOMENTO], le invio il collegamento al materiale informativo che ha richiesto: [URL].\n\nSe desidera approfondire un aspetto della comunicazione immobiliare, può rispondere a questo messaggio. L’eventuale iscrizione alla newsletter è separata dalla risposta alla sua richiesta e può essere scelta liberamente nella pagina dedicata. Per valutazioni, visite, proposte e intermediazione occorre rivolgersi a professionisti abilitati.\n\nCordiali saluti, Joseph — consulenza marketing immobiliare.',
+ note:'Solo a fronte di richiesta documentata. Mai distribuirla genericamente. [NOME] è un segnaposto didattico.'},
+ C:{title:'Lettera C — invito informativo non nominativo',
+ body:'Gentile residente,\nabbiamo pubblicato una nuova edizione della rivista digitale dedicata alla conoscenza del territorio di Avigliana e della Valle di Susa. La consultazione è gratuita: può aprire la rivista attraverso il codice QR oppure digitando [URL BREVE].\n\nAll’interno trova notizie locali, riferimenti a dati pubblici e, quando disponibili, immobili promossi da professionisti regolarmente abilitati. Se desidera ricevere le future edizioni può scegliere liberamente di iscriversi dalla pagina, con informativa e possibilità di disiscrizione.\n\nJoseph — servizi di comunicazione e marketing immobiliare; attività di mediazione svolte da professionisti abilitati. [RECAPITI DEL MITTENTE].',
+ note:'Non nominativa · Non pubblicare URL/QR di edizione priva di approvazione.'}
+};
+const result=(message,error=false)=>{const n=document.getElementById('result');n.textContent=message;n.dataset.error=error?'yes':'no'};
+document.querySelectorAll('[data-model]').forEach(button=>button.addEventListener('click',()=>{
+ const key=button.dataset.model,model=texts[key];
+ document.querySelectorAll('[data-model]').forEach(x=>x.setAttribute('aria-pressed',String(x===button)));
+ document.getElementById('doc-title').textContent=model.title;
+ document.getElementById('doc-copy').textContent=model.body;
+ document.getElementById('doc-note').textContent=model.note;
+ document.getElementById('document').dataset.currentModel=key;
+ result('Modello '+key+' aperto per consultazione TEST. Nessun PDF reale è stato stampato o spedito.');
+}));
+document.getElementById('qr-test').addEventListener('click',()=>{
+ const url=new URL('/joseph-link-in-bio-Copia/gestione/rivista/sfoglia/',location.origin);
+ document.getElementById('result').dataset.test='qr';
+ result('Il QR della simulazione deve puntare a '+url.pathname+'. Un QR già stampato in PDF storico potrebbe puntare alla produzione: non scansionarlo.');
+});
+document.getElementById('review-status').addEventListener('click',async()=>{
+ const button=document.getElementById('review-status');button.disabled=true;
+ try{
+  const response=await fetch('/joseph-link-in-bio-Copia/gestione/rivista/data/approved.json',{cache:'no-store'});
+  if(!response.ok)throw Error('Manifest non disponibile');
+  const approved=await response.json();
+  const ok=approved&&approved.approved===true;
+  document.getElementById('result').dataset.test='approval';
+  result(ok?'Il manifest dichiara approved=true. Verificare anche la coerenza degli asset.':'Nessuna approvazione editoriale positiva confermata: NON pubblicare l’edizione corrente.',!ok);
+ }catch(error){document.getElementById('result').dataset.test='approval';result('Approvazione non verificabile: BLOCCO editoriale.',true)}
+ finally{button.disabled=false}
+});
+})();
+</script></body></html>
