@@ -16,7 +16,8 @@ il collaudo del nuovo progetto: il cutover richiede un'operazione successiva esp
 3. Verifica la cartella Google Drive e l'accesso calendario. Carica un PDF privato dal nome
    deterministico `ZTD-Magazine-{day}-{hash}.pdf`; riusa il file se già esiste. Non crea duplicati
    al doppio clic, grazie al lock di stato della tabella `ztd_daily_runs`.
-4. Genera un QR verso `APP_BASE_URL/api/publications/{day}`, non il link privato Drive
+4. Salva entrambi i PDF anche in **Supabase Storage privato** (bucket `ztd-documents`)
+   e genera un QR verso `APP_BASE_URL/api/publications/{day}`, non il link privato Drive
    che altrimenti sarebbe inaccessibile al lettore. Genera la lettera A4 PDF e la carica in Drive.
 5. Scrive le righe di agenda + gli eventi reali Google Calendar nel Postgres Supabase.
    Solo il server autenticato usa `SUPABASE_SECRET_KEY`. I client non leggono direttamente
