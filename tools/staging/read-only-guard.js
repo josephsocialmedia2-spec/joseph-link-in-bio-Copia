@@ -23,7 +23,8 @@
    }
    return url.hostname==='drive.google.com' && (
      /^\/drive\/folders\/1oHla667gbs3cCIPx4_JITkrd-gRQ-oyK\/?$/.test(url.pathname) ||
-     /^\/file\/d\/1EWRsZWAd_L5PYfB2E1L3tw-tk7FLleYE\/view\/?$/.test(url.pathname)
+     /^\/file\/d\/1EWRsZWAd_L5PYfB2E1L3tw-tk7FLleYE\/view\/?$/.test(url.pathname) ||
+     /^\/file\/d\/1nhoc1qXVxTPUDvMDtA4P8UCSG0UHCoo0\/view\/?$/.test(url.pathname)
    );
  };
  const stop=()=>{message.textContent='Operazione esterna o invio bloccato. Questa è un’anteprima senza backend.';message.style.display='block'};
