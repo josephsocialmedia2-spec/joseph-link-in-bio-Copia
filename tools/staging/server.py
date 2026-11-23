@@ -45,8 +45,9 @@ SCRIPT = """
       url.pathname.startsWith('/document/d/1XM91YrixsCf-d2X9EeOQcpi04gbQNPTg2U4dld76fNM/')||
       url.pathname.startsWith('/document/d/1F-1EdmjncujdXXt99Nyp_yX4J2Qs3p_jL-Ur6gxy-Rw/')
     ))return true;
-    return url.hostname==='drive.google.com'&&
-      url.pathname.startsWith('/drive/folders/1oHla667gbs3cCIPx4_JITkrd-gRQ-oyK');
+    return url.hostname==='drive.google.com'&&(
+      url.pathname.startsWith('/drive/folders/1oHla667gbs3cCIPx4_JITkrd-gRQ-oyK')||
+      url.pathname==='/file/d/1EWRsZWAd_L5PYfB2E1L3tw-tk7FLleYE/view');
   }
   const alertBlocked=()=>{toast.textContent='Collegamento esterno bloccato nel laboratorio. Non inviare messaggi reali.';toast.style.display='block'};
   function attach(){document.body.prepend(notice);document.body.append(toast)}
