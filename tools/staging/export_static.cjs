@@ -56,6 +56,14 @@ portal=portal.replace('Le API esterne sono bloccate; soltanto la API SQLite sint
 portal=portal.replace(/<\/head>/i,'<script src="/__staging__/read-only-guard.js" defer></script></head>');
 fs.writeFileSync(path.join(labDir,'index.html'),portal);
 fs.copyFileSync(path.join(root,'tools/staging/read-only-guard.js'),path.join(labDir,'read-only-guard.js'));
+ // Keep the new split-screen interface entirely inside the isolated Vercel preview.
+ // Only HTML/CSS/JS here; the SQLite API stays strictly local to Codespaces.
+ let guided=fs.readFileSync(path.join(root,'tools/staging/guided.html'),'utf8');
+ guided=guided.replace(/<\/head>/i,
+  '<script src="/__staging__/read-only-guard.js" defer></script></head>');
+ fs.writeFileSync(path.join(labDir,'guided.html'),guided);
+ fs.copyFileSync(path.join(root,'tools/staging/guided.js'),path.join(labDir,'guided.js'));
+
 const codespaces='https://github.com/codespaces/new?hide_repo_select=true&ref=test%2Fztd-full-staging-lab-20261122&repo=1431333923';
 const message='<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Funnel TEST — Codespaces</title><script src="/__staging__/read-only-guard.js" defer></script><style>body{background:#eff4f8;color:#0a2945;font:16px/1.6 Arial,sans-serif;max-width:750px;margin:45px auto;padding:20px}section{background:white;padding:30px;border-top:5px solid #bd9c54}a{color:#0a4a79}</style></head><body><section><h1>Funnel CRM sintetico — laboratorio completo</h1><p>Questa anteprima Vercel è <strong>statica e di sola lettura</strong>. Il database SQLite e i test del percorso richiesta → CRM → agente → KPI non vengono eseguiti su Vercel.</p><p>Per utilizzare il funnel operativo con dati TEST e persistenza locale, apri il <a href="'+codespaces+'">Codespace privato del progetto</a>, avvia la porta 8765 e visita <code>/__staging__/funnel.html</code>.</p><p><a href="/__staging__/">Torna all’indice dei moduli</a></p></section></body></html>';
 fs.writeFileSync(path.join(labDir,'funnel.html'),message);
