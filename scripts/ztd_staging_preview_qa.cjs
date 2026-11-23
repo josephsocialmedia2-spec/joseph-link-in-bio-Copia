@@ -56,20 +56,23 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
     await page.goto(base+'/__staging__/funnel.html',{waitUntil:'domcontentloaded'});
     assert.match(await page.locator('body').innerText(),/Codespace privato/);
     assert.equal(await page.locator('form').count(),0,'Static preview should not offer a writable CRM form');
+
     await page.goto(base+'/__staging__/guided.html',{waitUntil:'domcontentloaded'});
     assert.equal(await page.locator('#ztd-sandbox').count(),1);
-    assert.equal(await page.locator('.operate').count(),1);
-    assert.equal(await page.locator('.guide').count(),1);
+    assert.equal(await page.locator('#workframe').count(),1);
+    assert.equal(await page.locator('#mirrorframe').count(),1);
     await page.locator('#mode').getByText(/ANTEPRIMA STATICA/).waitFor();
     await page.locator('[data-view="guide"]').click();
+    assert.equal(await page.locator('#mirrorframe').isVisible(),true);
     await page.locator('#flow').selectOption('inbound');
-    for(const checkbox of await page.locator('#controls input[type=checkbox]').all()){
-      await checkbox.check();
-    }
-    assert.equal(await page.locator('#next').isDisabled(),true,
-      'Static guide must not certify SQLite operations without a database');
-    assert.equal(await page.locator('#workframe').count(),1);
-    console.log('PASS: public two-pane UI works, but synthetic CRM gates remain blocked in static preview');
+    await page.locator('#steptitle').getByText(/Crea richiesta sintetica/).waitFor();
+    assert.equal(await page.locator('#counter').innerText().then(s=>s.startsWith('1 /')),true);
+    assert.equal(await page.locator('#next').isVisible(),false);
+    assert.equal((await page.request.get(base+'/__staging__/api/state')).status(),404);
+    await page.waitForTimeout(450);
+    assert.equal(await page.locator('#counter').innerText().then(s=>s.startsWith('1 /')),true,
+       'Static app must not claim that SQLite actions were performed');
+    console.log('PASS: true mirrored-page preview, automatic step gate stays locked without SQLite');
     // The static export must keep audited public assets required by key modules.
     const assets=[
       'case247-design.css',
