@@ -18,3 +18,6 @@ a{color:#1a608c}.login{max-width:560px;margin:70px auto;background:white;border:
 .state{padding:11px;margin:12px 0;background:#e8f2f8;border-left:4px solid #337e9f}
 @media(max-width:950px){.cards{grid-template-columns:1fr}iframe{height:350px}}
 @media print{header,.actions,.note,button{display:none!important}main{padding:0}.card{break-inside:avoid}}
+
+a.button{display:inline-block;background:#124c76;color:#fff;text-decoration:none;padding:10px 14px;border-radius:5px;font-weight:700}
+.state strong{font-weight:800}
