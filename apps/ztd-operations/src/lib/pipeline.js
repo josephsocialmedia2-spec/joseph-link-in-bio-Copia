@@ -103,7 +103,7 @@ export async function approve(day,actorId,{assetsReviewed}){
   .not("letter_drive_id","is",null).select("*").maybeSingle();
  if(error)throw error;
  if(!data)throw new Error("Edition is not READY or already published");
- await audit(day,"APPROVED_AND_PUBLISHED",actorId,{sourceSha256:data.source_sha256});
+ // Atomic Postgres trigger writes the approval audit row with this status update.
  return data;
 }
 export async function completeTask(taskId,userId){
@@ -122,6 +122,6 @@ export async function completeTask(taskId,userId){
   .eq("id",taskId).eq("status","PENDING").select("*").maybeSingle();
  if(error)throw error;
  if(!data)throw new Error("Task has been changed concurrently");
- await audit(task.day,"TASK_DONE",userId,{taskId,title:task.title});
+ // Atomic Postgres trigger writes the physical task completion event.
  return data;
 }
