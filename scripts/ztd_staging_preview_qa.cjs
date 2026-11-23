@@ -56,6 +56,43 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
     await page.goto(base+'/__staging__/funnel.html',{waitUntil:'domcontentloaded'});
     assert.match(await page.locator('body').innerText(),/Codespace privato/);
     assert.equal(await page.locator('form').count(),0,'Static preview should not offer a writable CRM form');
+
+    const day=await page.goto(base+'/__staging__/oggi.html',{waitUntil:'domcontentloaded'});
+    assert.equal(day.status(),200);
+    assert.equal(await page.locator('#ztd-sandbox').count(),1);
+    assert.match(await page.locator('#magazine').innerText(),/Real Estate Weekly/);
+    assert.match(await page.locator('#letter').innerText(),/Lettera C/);
+    const driveLink=await page.locator('#open-drive').getAttribute('href');
+    assert.match(driveLink,/docs\.google\.com\/document\/d\/1XM91Y/);
+    assert.match(await page.locator('#open-letter').getAttribute('href'),/drive\.google\.com\/file\/d\/1nhoc1qXVxTPUDvMDtA4P8UCSG0UHCoo0\/view/);
+    assert.match(await page.locator('#open-pdf-drive').getAttribute('href'),/drive\.google\.com\/file\/d\/1EWRsZWAd_L5PYfB2E1L3tw-tk7FLleYE\/view/);
+    assert.equal(await page.locator('#mag-frame').getAttribute('src'),'/joseph-link-in-bio-Copia/gestione/rivista/edizioni/auto/Real-Estate-Weekly-2026-11-21.pdf#toolbar=1');
+    await page.locator('#confirm-print').click();
+    assert.notEqual(await page.locator('#letter').getAttribute('data-print-confirmed'),'yes',
+      'Print must not be claimed before opening the letter');
+    await page.locator('#open-magazine').click();
+    assert.equal(await page.locator('#mag-preview').isVisible(),true);
+    await page.locator('#mode-team').click();
+    assert.equal(await page.locator('.slot').count(),8);
+    await page.locator('#mode-owner').click();
+    assert.equal(await page.locator('.slot').count(),12);
+    console.log('PASS: day dashboard shows real PDF review, Drive docs, ready-to-print letter and both schedules');
+    await page.goto(base+'/__staging__/guided.html',{waitUntil:'domcontentloaded'});
+    assert.equal(await page.locator('#ztd-sandbox').count(),1);
+    assert.equal(await page.locator('#workframe').count(),1);
+    assert.equal(await page.locator('#mirrorframe').count(),1);
+    await page.locator('#mode').getByText(/ANTEPRIMA STATICA/).waitFor();
+    await page.locator('[data-view="guide"]').click();
+    assert.equal(await page.locator('#mirrorframe').isVisible(),true);
+    await page.locator('#flow').selectOption('inbound');
+    await page.locator('#steptitle').getByText(/Crea richiesta sintetica/).waitFor();
+    assert.equal(await page.locator('#counter').innerText().then(s=>s.startsWith('1 /')),true);
+    assert.equal(await page.locator('#next').isVisible(),false);
+    assert.equal((await page.request.get(base+'/__staging__/api/state')).status(),404);
+    await page.waitForTimeout(450);
+    assert.equal(await page.locator('#counter').innerText().then(s=>s.startsWith('1 /')),true,
+       'Static app must not claim that SQLite actions were performed');
+    console.log('PASS: true mirrored-page preview, automatic step gate stays locked without SQLite');
     // The static export must keep audited public assets required by key modules.
     const assets=[
       'case247-design.css',

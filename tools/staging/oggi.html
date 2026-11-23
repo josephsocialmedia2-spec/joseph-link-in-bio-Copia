@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="it">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>Zero to Diamond · Regia operativa del giorno</title>
+<style>
+:root{font-family:system-ui,"Segoe UI",Arial,sans-serif;color:#12324b;background:#f0f4f7}
+*{box-sizing:border-box}body{margin:0}
+a{color:#145c87}button,a.button{cursor:pointer;background:#103d60;color:white;border:0;border-radius:4px;padding:11px 14px;font:bold 13px system-ui;display:inline-block;text-decoration:none}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #eab454}
+header{background:#102a41;color:white;padding:18px 22px;border-bottom:4px solid #bd9652}
+header h1{margin:4px 0;font:normal 27px Georgia,serif}header p{font-size:12px;color:#b9cddd;margin:5px 0}
+main{padding:17px;max-width:1170px;margin:0 auto}
+.columns{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.panel{background:white;border:1px solid #cfdce6;border-radius:4px;padding:16px;margin:0 0 13px}
+.panel h2{margin:0 0 8px;font:normal 22px Georgia,serif}
+.panel h3{font-size:14px;margin:6px 0}
+p{font-size:13px;line-height:1.6}
+.kicker{font:bold 10px system-ui;letter-spacing:.09em;color:#9e762c;text-transform:uppercase}
+.flags{display:flex;flex-wrap:wrap;gap:7px;margin:6px 0 13px}.flag{font:bold 11px system-ui;padding:6px 8px;background:#e8f0f5;color:#285571;border-radius:3px}.flag.warning{background:#fff2dd;color:#85530f}
+.actions{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:12px}.actions a{background:#e4edf5;color:#124b74;border:1px solid #b9ccdb}
+#mag-preview{display:none;margin-top:12px;border-top:1px solid #dce5eb;padding-top:11px}
+#mag-preview.show{display:block}
+#mag-frame{width:100%;height:410px;border:1px solid #bfccd6;background:#fff}
+.status{margin-top:10px;font-size:12px;line-height:1.5;padding:10px;background:#ebf4f8;border-left:3px solid #3b7da1}
+.warning-box{margin-top:8px;padding:9px 11px;font-size:12px;line-height:1.5;background:#fff3e2;border-left:4px solid #ba8b3e}
+.timeline{margin-top:12px;border-top:1px solid #d6e1e8}
+.slot{display:flex;align-items:start;gap:9px;border-bottom:1px solid #e1e9ef;padding:11px 2px}
+.slot strong{width:95px;flex:none;font-size:12px;color:#185a88;font-variant-numeric:tabular-nums}
+.slot label{flex:1;font-size:13px;line-height:1.45;cursor:pointer}.slot input{accent-color:#1b6b54;width:17px;height:17px;margin:1px}
+.slot .done{color:#5c766a;text-decoration:line-through}
+.mode{display:flex;gap:7px;margin-top:10px}.mode button{background:#e6eef4;color:#163d5b}.mode button[aria-pressed=true]{background:#103d60;color:#fff}
+#ops-summary{padding:11px;margin-top:12px;background:#f0f6f8;border-left:4px solid #238064;font-size:13px}
+.linkrow{font-size:12px;color:#607585;word-break:break-word}
+#feedback{padding:11px;margin-top:10px;font-size:12px;background:#e9f4ea;border-left:4px solid #317d4a}
+@media(max-width:850px){.columns{grid-template-columns:1fr}main{padding:10px}#mag-frame{height:330px}}
+@media print{header,.actions,.mode,button,#feedback,.flags,.warning-box{display:none!important}.columns{display:block}.panel{break-inside:avoid;border:0}}
+</style></head>
+<body>
+<header><span class="kicker" style="color:#d6b875">ZERO TO DIAMOND · REGIA OPERATIVA</span>
+<h1>Oggi: rivista, lettera e lavoro programmato.</h1>
+<p>23 novembre 2026 · Avigliana e Valle di Susa · postazione di collaudo senza invii verso clienti</p></header>
+<main>
+<div class="columns">
+<div>
+<section class="panel" id="magazine">
+ <span class="kicker">01 · LA RIVISTA DIGITALE</span><h2>Apri il fascicolo, controlla le pagine.</h2>
+ <div class="flags"><span class="flag">Real Estate Weekly · 21/11</span><span class="flag warning">PDF in bozza · non approvato</span></div>
+ <p>La bozza <b>Real Estate Weekly</b> a 8 pagine A4 è adesso caricata come PDF autonomo nella tua cartella Drive. In questa pagina puoi anche visualizzare il PDF automatico distinto, prodotto nel repository. Entrambi restano documenti di lavoro non approvati alla distribuzione.</p>
+ <div class="actions"><button id="open-magazine" type="button">1 · Apri anteprima PDF</button>
+ <a id="open-drive" href="https://docs.google.com/document/d/1XM91YrixsCf-d2X9EeOQcpi04gbQNPTg2U4dld76fNM/edit" target="_blank" rel="noopener noreferrer">2 · Apri registro su Drive</a><a id="open-pdf-drive" href="https://drive.google.com/file/d/1EWRsZWAd_L5PYfB2E1L3tw-tk7FLleYE/view" target="_blank" rel="noopener noreferrer">Apri PDF BOZZA (8 pagine) su Drive</a></div>
+ <div id="mag-preview"><div class="warning-box">ANTEPRIMA RISERVATA · Bozza non approvata. Il documento non è presentato come fascicolo pubblico.</div>
+ <iframe id="mag-frame" title="Anteprima della rivista PDF da revisionare" src="/joseph-link-in-bio-Copia/gestione/rivista/edizioni/auto/Real-Estate-Weekly-2026-11-21.pdf#toolbar=1"></iframe>
+ <p class="linkrow"><a href="/joseph-link-in-bio-Copia/gestione/rivista/edizioni/auto/Real-Estate-Weekly-2026-11-21.pdf" target="_blank" rel="noopener">Apri il PDF in una nuova scheda del laboratorio</a></p></div>
+ <div class="status" id="magazine-status">Il PDF BOZZA a 8 pagine è verificato e caricato su Google Drive. La preview incorporata visualizza invece il PDF automatico del repository. Nessuna versione è approvata per la pubblicazione.</div>
+ </section>
+<section class="panel" id="letter">
+ <span class="kicker">02 · LA LETTERA DA IMBUCARE</span><h2>Lettera C del 23 novembre · A4</h2>
+ <div class="flags"><span class="flag">Non nominativa</span><span class="flag">QR verso rivista già disponibile</span></div>
+ <p>La lettera di oggi è pronta come PDF A4 stampabile su Drive (e come Google Doc modificabile) con QR. Il collegamento NON porta al nuovo fascicolo ancora in revisione, ma alla rivista già pubblicata.</p>
+ <div class="actions"><a id="open-letter" href="https://drive.google.com/file/d/1nhoc1qXVxTPUDvMDtA4P8UCSG0UHCoo0/view" target="_blank" rel="noopener noreferrer">3 · Apri PDF lettera A4 da stampare</a><a href="https://docs.google.com/document/d/1F-1EdmjncujdXXt99Nyp_yX4J2Qs3p_jL-Ur6gxy-Rw/edit" target="_blank" rel="noopener noreferrer">Modifica la lettera in Google Docs</a>
+ <button id="confirm-print" type="button">4 · Conferma di aver stampato</button></div>
+ <div class="warning-box">Prima di imbucare: verifica leggibilità, corretto QR, regolamenti locali, divieti di pubblicità sulle cassette e scelta delle zone. Il sistema può registrare la tua conferma, ma non può vedere la stampante né effettuare la distribuzione fisica.</div>
+ <div class="status" id="letter-status">Lettera ancora da aprire e stampare.</div>
+ </section>
+</div>
+<div>
+<section class="panel" id="scheduler">
+ <span class="kicker">03 · DASHBOARD DI PROGRAMMAZIONE</span><h2>Programma i blocchi di oggi.</h2>
+ <div class="mode"><button id="mode-owner" type="button" aria-pressed="true">La mia giornata</button><button id="mode-team" type="button" aria-pressed="false">Protocollo operatori 08–20</button></div>
+ <div class="timeline" id="agenda"></div>
+ <div id="ops-summary">Seleziona una modalità e completa i blocchi. Le spunte si salvano soltanto in questo browser.</div>
+ <div class="actions"><button id="open-agenda" type="button">5 · Apri programma operativo</button>
+ <button id="export-agenda" type="button">Esporta programma CSV</button></div>
+ <div class="warning-box">Oggi dalle 17:00 alle 21:25 risultano lezioni scolastiche. L'impegno abituale con Andrea dalle 18:00 alle 19:30 va organizzato in anticipo. I turni del lavoro dipendente non risultano verificati qui.</div>
+</section>
+<section class="panel">
+ <span class="kicker">04 · POSTAZIONE GUIDATA</span><h2>Apri il gestionale con i tasti evidenziati.</h2>
+ <p>Per imparare a lavorare: due copie identiche della schermata. A sinistra clicchi il pulsante vero, a destra vedi quello illuminato e il risultato atteso.</p>
+ <div class="actions"><a href="/__staging__/guided.html" class="button" id="open-coach">Apri guida operativa speculare</a><a href="/__staging__/funnel.html">CRM sintetico</a></div>
+ <div id="feedback" role="status">Postazione di lavoro pronta. Nessun invio reale è stato effettuato.</div>
+</section>
+</div>
+</div>
+</main>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id), KEY='ztd.today.2026-11-23.',state={};
+const get=k=>localStorage.getItem(KEY+k)==='yes';
+const set=(k)=>{localStorage.setItem(KEY+k,'yes');state[k]=true};
+const days={
+ owner:[
+ ['07:30','Famiglia: organizza Andrea e controlla turno di lavoro'],
+ ['08:00','Controlla dashboard, scadenze e comunicazioni urgenti'],
+ ['09:00','Apri il PDF della rivista e annota correzioni sul registro Drive'],
+ ['09:30','Apri la Lettera C, stampa e verifica il QR'],
+ ['10:00','Prepara il lotto territoriale non nominativo; distribuisci solo dove consentito'],
+ ['11:00','Aggiorna programma e richieste inbound consentite'],
+ ['12:00–14:00','Pausa pranzo, niente lavoro tecnico'],
+ ['14:00','Lavoro retribuito e consegne prioritarie, compatibilmente col turno'],
+ ['15:30','Chiudi lavori, prepara materiale per scuola'],
+ ['16:15','Partenza verso la scuola: adattare al tragitto effettivo'],
+ ['17:00–19:30','SCUOLA · Topografia (aula 109)'],
+ ['19:40–21:25','SCUOLA · Progettazione (aula 109)'],
+ ],
+ team:[
+ ['08:00–09:00','Dashboard, KPI, richieste, opposizioni e criticità'],
+ ['09:00–10:30','Contenuti e fonti territoriali da approvare'],
+ ['10:30–12:00','Controlli landing, QR, rivista e PDF; nessuna pubblicazione non approvata'],
+ ['12:00–14:00','Pausa'],
+ ['14:00–16:30','Risposta a richieste inbound e follow-up consentiti'],
+ ['16:30–18:00','Collaborazioni e referral spontanei'],
+ ['18:00–19:00','Handoff amministrativo a professionisti abilitati, dopo verifica'],
+ ['19:00–20:00','Report KPI, anomalie e tre priorità di domani']
+ ]};
+let mode='owner';
+function render(){
+ $('mode-owner').setAttribute('aria-pressed',String(mode==='owner'));
+ $('mode-team').setAttribute('aria-pressed',String(mode==='team'));
+ $('agenda').replaceChildren();
+ let n=0;for(const [i,slot] of days[mode].entries()){
+  const key=mode+'.'+i,row=document.createElement('div'),check=document.createElement('input'),
+   time=document.createElement('strong'),label=document.createElement('label');
+  row.className='slot';check.type='checkbox';check.id='schedule-'+mode+'-'+i;
+  check.checked=get(key);time.textContent=slot[0];label.htmlFor=check.id;label.textContent=slot[1];
+  if(check.checked){label.className='done';n++}
+  check.addEventListener('change',()=>{
+    localStorage.setItem(KEY+key,check.checked?'yes':'no');render();
+  });
+  row.append(time,label,check);$('agenda').append(row);
+ }
+ $('ops-summary').textContent=n+' di '+days[mode].length+' blocchi completati / confermati in questo browser. Non sono eventi del CRM.';
+}
+$('open-magazine').addEventListener('click',()=>{
+ $('mag-preview').classList.add('show');$('magazine').dataset.opened='yes';set('magazine-open');
+ $('magazine-status').textContent='Anteprima PDF aperta. Correggere il fascicolo e raccogliere approvazione: NON distribuire l’edizione del 21/11 finché non approvata.';
+});
+$('open-drive').addEventListener('click',()=>{
+ $('magazine').dataset.driveOpened='yes';set('drive-open');
+ $('magazine-status').textContent='Registro Drive aperto. Contiene i link sia al PDF di 8 pagine caricato su Drive sia all’elaborato automatico del repository.';
+});
+$('open-letter').addEventListener('click',()=>{
+ $('letter').dataset.opened='yes';set('letter-open');
+ $('letter-status').textContent='PDF A4 su Drive aperto. Usa Stampa, controlla il QR sulla carta e verifica i divieti di pubblicità prima di imbucare.';
+});
+$('confirm-print').addEventListener('click',()=>{
+ if(!get('letter-open')){$('letter-status').textContent='Prima apri davvero la lettera, poi conferma la stampa.';return}
+ $('letter').dataset.printConfirmed='yes';set('print-confirmed');
+ $('letter-status').textContent='Stampa dichiarata completata. Il controllo è manuale: verificare copia fisica e QR prima della distribuzione.';
+});
+$('open-agenda').addEventListener('click',()=>{
+ $('scheduler').dataset.scheduleOpened='yes';set('schedule-open');
+ $('ops-summary').textContent='Programma aperto. Scegli i blocchi e spunta solo quelli effettivamente svolti.';
+ $('scheduler').scrollIntoView({block:'nearest',behavior:'smooth'});
+});
+$('mode-owner').addEventListener('click',()=>{mode='owner';render()});
+$('mode-team').addEventListener('click',()=>{mode='team';render()});
+$('export-agenda').addEventListener('click',()=>{
+ const lines=['Orario;Attività;Completato',...days[mode].map((x,i)=>x.map(s=>'"'+s.replaceAll('"','""')+'"').join(';')+';'+(get(mode+'.'+i)?'SI':'NO'))];
+ const blob=new Blob(['\uFEFF'+lines.join('\r\n')],{type:'text/csv;charset=utf-8'});
+ const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='ZTD_Programma_23-11-2026_'+mode+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+});
+if(get('magazine-open')){$('mag-preview').classList.add('show');$('magazine').dataset.opened='yes'}
+if(get('drive-open'))$('magazine').dataset.driveOpened='yes';
+if(get('letter-open'))$('letter').dataset.opened='yes';
+if(get('print-confirmed'))$('letter').dataset.printConfirmed='yes';
+if(get('schedule-open'))$('scheduler').dataset.scheduleOpened='yes';
+render();
+})();
+</script></body></html>
