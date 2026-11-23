@@ -1,7 +1,7 @@
-import {operator,jsonError} from "../../../lib/auth";
-import {cloudReady,db,romeDay} from "../../../lib/cloud";
-import {googleConnection} from "../../../lib/google-token";
-import {verifyDriveFolder,dayEvents} from "../../../lib/google";
+import {operator,jsonError} from "../../../../lib/auth";
+import {cloudReady,db,romeDay} from "../../../../lib/cloud";
+import {googleConnection} from "../../../../lib/google-token";
+import {verifyDriveFolder,dayEvents} from "../../../../lib/google";
 export const runtime="nodejs";
 export const dynamic="force-dynamic";
 export async function GET(){
