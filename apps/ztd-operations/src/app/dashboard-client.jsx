@@ -89,7 +89,7 @@ export default function Dashboard({operatorEmail,canApprove}){
    <article className="card"><span className="pill">02 · Lettera giornaliera</span><h2>PDF A4 con QR</h2>
     {run?.letter_drive_id?<><iframe ref={letterRef} title="Lettera PDF A4 generata" src={"/api/documents/"+day+"/letter"}></iframe>
      <p><a href={run.letter_drive_url} target="_blank" rel="noopener noreferrer">Documento privato su Drive</a></p>
-     <div className="actions"><button disabled={!!busy} onClick={print}>Stampa ora</button>
+     <div className="actions"><button disabled={!!busy||run?.status!=="PUBLISHED"||!integrations?.publicationEnabled} onClick={print}>Stampa ora</button>
       <button disabled={!delivered||delivered.status==="DONE"||run.status!=="PUBLISHED"||!!busy}
        onClick={()=>{if(window.confirm("Confermi di aver IMBUCATO fisicamente la lettera, dopo avere verificato il QR e le cassette autorizzate?"))
         action("deliver",()=>call("/api/tasks/"+delivered.id,"PATCH",{}))}}>Segna come imbucata</button></div>
