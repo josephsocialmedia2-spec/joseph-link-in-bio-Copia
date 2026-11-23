@@ -15,9 +15,10 @@ async function call(url,method="GET",body){
 }
 export default function Dashboard({operatorEmail,canApprove}){
  const [data,setData]=useState(null),[busy,setBusy]=useState(""),[error,setError]=useState("");
+ const [integrations,setIntegrations]=useState(null);
  const [reviewed,setReviewed]=useState(false),letterRef=useRef(null);
  const reload=useCallback(async()=>{try{const x=await call("/api/day");setData(x);setError("")}catch(e){setError(e.message)}},[]);
- useEffect(()=>{reload()},[reload]);
+ useEffect(()=>{reload();call("/api/integrations/status").then(setIntegrations).catch(()=>setIntegrations(null))},[reload]);
  const day=data?.run?.day||new Intl.DateTimeFormat("en-CA",{timeZone:"Europe/Rome",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());
  async function action(kind,fn){
   setBusy(kind);setError("");
@@ -47,7 +48,23 @@ export default function Dashboard({operatorEmail,canApprove}){
  return <><header><h1>Zero to Diamond · Regia operativa</h1>
   <p>{day} · Operatore: {operatorEmail} · Database persistente, Google Drive e PDF gestiti dal server</p></header>
  <main>
-  <div className="actions"><button disabled={!!busy} onClick={()=>action("generate",()=>call("/api/daily-automation","POST",{}))}>
+  <div className="state" role="status">
+   <strong>Connessioni reali: </strong>
+   PostgreSQL {integrations?.connected?.database?"OK":"NON PRONTO"} ·
+   Google Drive {integrations?.connected?.drive?"OK":"NON CONNESSO"} ·
+   Calendar {integrations?.connected?.calendar?"OK":"NON CONNESSO"}.
+   {integrations&&!integrations.automationEnabled&&<strong> Automazione disattivata.</strong>}
+   {integrations&&!integrations.publicationEnabled&&<strong> Pubblicazione disattivata.</strong>}
+   {integrations?.oauthSetupReady&&!integrations?.connected?.googleAccount&&<p>
+    <a href="/api/google/connect" className="button">Connetti Google Drive e Calendar</a>
+    <small> Autorizzazione Google una tantum, senza copiare refresh token.</small>
+   </p>}
+   {integrations?.missing?.length>0&&<p><small>Configurazioni ancora da completare in Vercel:
+    {integrations.missing.join(", ")}.</small></p>}
+  </div>
+  <div className="actions"><button disabled={!!busy||!integrations?.automationEnabled||
+   !integrations?.connected?.database||!integrations?.connected?.drive||!integrations?.connected?.calendar}
+   onClick={()=>action("generate",()=>call("/api/daily-automation","POST",{}))}>
    {busy==="generate"?"Generazione…":"Genera flusso giornaliero"}</button>
    <button className="secondary" disabled={!!busy} onClick={reload}>Aggiorna dati</button>
    <span className={"pill"+(run?.status==="PUBLISHED"?"":" warning")}>Edizione: {run?.status||"NON GENERATA"}</span>
