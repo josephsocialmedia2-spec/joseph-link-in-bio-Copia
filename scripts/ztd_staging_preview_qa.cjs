@@ -64,7 +64,8 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
     assert.match(await page.locator('#letter').innerText(),/Lettera C/);
     const driveLink=await page.locator('#open-drive').getAttribute('href');
     assert.match(driveLink,/docs\.google\.com\/document\/d\/1XM91Y/);
-    assert.match(await page.locator('#open-letter').getAttribute('href'),/docs\.google\.com\/document\/d\/1F-1E/);
+    assert.match(await page.locator('#open-letter').getAttribute('href'),/drive\.google\.com\/file\/d\/1nhoc1qXVxTPUDvMDtA4P8UCSG0UHCoo0\/view/);
+    assert.match(await page.locator('#open-pdf-drive').getAttribute('href'),/drive\.google\.com\/file\/d\/1EWRsZWAd_L5PYfB2E1L3tw-tk7FLleYE\/view/);
     assert.equal(await page.locator('#mag-frame').getAttribute('src'),'/joseph-link-in-bio-Copia/gestione/rivista/edizioni/auto/Real-Estate-Weekly-2026-11-21.pdf#toolbar=1');
     await page.locator('#confirm-print').click();
     assert.notEqual(await page.locator('#letter').getAttribute('data-print-confirmed'),'yes',
