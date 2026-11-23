@@ -57,6 +57,25 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
     assert.match(await page.locator('body').innerText(),/Codespace privato/);
     assert.equal(await page.locator('form').count(),0,'Static preview should not offer a writable CRM form');
 
+    const day=await page.goto(base+'/__staging__/oggi.html',{waitUntil:'domcontentloaded'});
+    assert.equal(day.status(),200);
+    assert.equal(await page.locator('#ztd-sandbox').count(),1);
+    assert.match(await page.locator('#magazine').innerText(),/Real Estate Weekly/);
+    assert.match(await page.locator('#letter').innerText(),/Lettera C/);
+    const driveLink=await page.locator('#open-drive').getAttribute('href');
+    assert.match(driveLink,/docs\.google\.com\/document\/d\/1XM91Y/);
+    assert.match(await page.locator('#open-letter').getAttribute('href'),/docs\.google\.com\/document\/d\/1F-1E/);
+    assert.equal(await page.locator('#mag-frame').getAttribute('src'),'/joseph-link-in-bio-Copia/gestione/rivista/edizioni/auto/Real-Estate-Weekly-2026-11-21.pdf#toolbar=1');
+    await page.locator('#confirm-print').click();
+    assert.notEqual(await page.locator('#letter').getAttribute('data-print-confirmed'),'yes',
+      'Print must not be claimed before opening the letter');
+    await page.locator('#open-magazine').click();
+    assert.equal(await page.locator('#mag-preview').isVisible(),true);
+    await page.locator('#mode-team').click();
+    assert.equal(await page.locator('.slot').count(),8);
+    await page.locator('#mode-owner').click();
+    assert.equal(await page.locator('.slot').count(),12);
+    console.log('PASS: day dashboard shows real PDF review, Drive docs, ready-to-print letter and both schedules');
     await page.goto(base+'/__staging__/guided.html',{waitUntil:'domcontentloaded'});
     assert.equal(await page.locator('#ztd-sandbox').count(),1);
     assert.equal(await page.locator('#workframe').count(),1);
