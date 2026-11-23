@@ -52,6 +52,7 @@ jobs:
           assert (root/'__staging__/guided.js').is_file()
           assert (root/'__staging__/guided-live.js').is_file()
           assert (root/'__staging__/letter-models.html').is_file()
+          assert (root/'__staging__/oggi.html').is_file()
           assert (root/'__staging__/workflow-training.html').is_file()
           assert (root/'joseph-link-in-bio-Copia/gestione/index.html').is_file()
           assert (root/'joseph-link-in-bio-Copia/catalogo-premium/index.html').is_file()
