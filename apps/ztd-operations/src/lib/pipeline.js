@@ -1,5 +1,5 @@
 import "server-only";
-import {db,cloudEnabled,romeDay,safeDay} from "./cloud";
+import {db,cloudEnabled,cloudPublicationEnabled,romeDay,safeDay} from "./cloud";
 import {verifyDriveFolder,dayEvents,putPdf} from "./google";
 import {currentDraft,letterPdf,publicMagazineUrl} from "./documents";
 import {savePdf} from "./storage";
@@ -94,7 +94,7 @@ export async function dailyAutomation(day=romeDay(),actor_id=null){
  }
 }
 export async function approve(day,actorId,{assetsReviewed}){
- cloudEnabled();safeDay(day);
+ cloudPublicationEnabled();safeDay(day);
  if(assetsReviewed!==true)throw new Error("Editorial review and images must be confirmed");
  const client=db();
  const {data,error}=await client.from("ztd_daily_runs")
