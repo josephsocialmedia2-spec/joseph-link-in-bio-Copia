@@ -27,7 +27,11 @@ p{font-size:13px;line-height:1.6}
 .timeline{margin-top:12px;border-top:1px solid #d6e1e8}
 .slot{display:flex;align-items:start;gap:9px;border-bottom:1px solid #e1e9ef;padding:11px 2px}
 .slot strong{width:95px;flex:none;font-size:12px;color:#185a88;font-variant-numeric:tabular-nums}
-.slot label{flex:1;font-size:13px;line-height:1.45;cursor:pointer}.slot input{accent-color:#1b6b54;width:17px;height:17px;margin:1px}
+.slot .task-title{flex:1;font-size:13px;line-height:1.45}
+.slot a.task-title{color:#105981;text-decoration:underline;text-underline-offset:3px;font-weight:700}
+.slot a.task-title:hover{color:#986c22}
+.slot .task-static{color:#344f61}
+.slot input{accent-color:#1b6b54;width:17px;height:17px;margin:1px;cursor:pointer;flex:none}
 .slot .done{color:#5c766a;text-decoration:line-through}
 .mode{display:flex;gap:7px;margin-top:10px}.mode button{background:#e6eef4;color:#163d5b}.mode button[aria-pressed=true]{background:#103d60;color:#fff}
 #ops-summary{padding:11px;margin-top:12px;background:#f0f6f8;border-left:4px solid #238064;font-size:13px}
@@ -69,8 +73,8 @@ p{font-size:13px;line-height:1.6}
  <span class="kicker">03 · DASHBOARD DI PROGRAMMAZIONE</span><h2>Programma i blocchi di oggi.</h2>
  <div class="mode"><button id="mode-owner" type="button" aria-pressed="true">La mia giornata</button><button id="mode-team" type="button" aria-pressed="false">Protocollo operatori 08–20</button></div>
  <div class="timeline" id="agenda"></div>
- <div id="ops-summary">Seleziona una modalità e completa i blocchi. Le spunte si salvano soltanto in questo browser.</div>
- <div class="actions"><button id="open-agenda" type="button">5 · Apri programma operativo</button>
+ <div id="ops-summary">Clicca il titolo per aprire il modulo di lavoro. Usa il quadratino solo dopo aver svolto l’attività. Le spunte rimangono in questo browser.</div>
+ <div class="actions"><a id="open-agenda" class="button" href="/__staging__/guided.html">5 · Apri programma operativo guidato</a>
  <button id="export-agenda" type="button">Esporta programma CSV</button></div>
  <div class="warning-box">Oggi dalle 17:00 alle 21:25 risultano lezioni scolastiche. L'impegno abituale con Andrea dalle 18:00 alle 19:30 va organizzato in anticipo. I turni del lavoro dipendente non risultano verificati qui.</div>
 </section>
@@ -88,6 +92,19 @@ p{font-size:13px;line-height:1.6}
 const $=id=>document.getElementById(id), KEY='ztd.today.2026-11-23.',state={};
 const get=k=>localStorage.getItem(KEY+k)==='yes';
 const set=(k)=>{localStorage.setItem(KEY+k,'yes');state[k]=true};
+const moduleRoot='/joseph-link-in-bio-Copia/';
+const DESTINATIONS={
+ owner:{1:moduleRoot+'gestione/',
+ 2:'https://docs.google.com/document/d/1XM91YrixsCf-d2X9EeOQcpi04gbQNPTg2U4dld76fNM/edit',
+ 3:moduleRoot+'gestione/lettere-stampa/',
+ 4:moduleRoot+'gestione/acquisizione-farming/',
+ 5:moduleRoot+'gestione/acquisizione-farming/crm/',
+ 7:moduleRoot+'gestione/',8:moduleRoot+'gestione/'},
+ team:{0:moduleRoot+'gestione/',1:moduleRoot+'gestione/rivista/',
+ 2:moduleRoot+'gestione/lettere-stampa/',4:moduleRoot+'gestione/acquisizione-farming/crm/',
+ 5:moduleRoot+'gestione/acquisizione-farming/',6:moduleRoot+'gestione/acquisizione-farming/crm/',
+ 7:moduleRoot+'gestione/'}
+};
 const days={
  owner:[
  ['07:30','Famiglia: organizza Andrea e controlla turno di lavoro'],
@@ -120,14 +137,16 @@ function render(){
  $('agenda').replaceChildren();
  let n=0;for(const [i,slot] of days[mode].entries()){
   const key=mode+'.'+i,row=document.createElement('div'),check=document.createElement('input'),
-   time=document.createElement('strong'),label=document.createElement('label');
+   time=document.createElement('strong'),destination=DESTINATIONS[mode][i],title=document.createElement(destination?'a':'span');
   row.className='slot';check.type='checkbox';check.id='schedule-'+mode+'-'+i;
-  check.checked=get(key);time.textContent=slot[0];label.htmlFor=check.id;label.textContent=slot[1];
-  if(check.checked){label.className='done';n++}
-  check.addEventListener('change',()=>{
-    localStorage.setItem(KEY+key,check.checked?'yes':'no');render();
-  });
-  row.append(time,label,check);$('agenda').append(row);
+  check.setAttribute('aria-label','Segna come svolta: '+slot[1]);
+  check.checked=get(key);time.textContent=slot[0];
+  title.className='task-title '+(destination?'':'task-static');
+  title.textContent=slot[1]+(destination?' ↗':'');
+  if(destination){title.href=destination;title.target='_blank';title.rel='noopener noreferrer';title.title='Apri la pagina per svolgere questa attività'}
+  if(check.checked){title.classList.add('done');n++}
+  check.addEventListener('change',()=>{localStorage.setItem(KEY+key,check.checked?'yes':'no');render();});
+  row.append(time,title,check);$('agenda').append(row);
  }
  $('ops-summary').textContent=n+' di '+days[mode].length+' blocchi completati / confermati in questo browser. Non sono eventi del CRM.';
 }
