@@ -2795,19 +2795,19 @@ let generation = 0;
 let utterance = null;
 let pendingTimer = null;
 
+const VOICE_KEY="geo-ocme-voice-v2";
+let voicePreference="";
+try{voicePreference=localStorage.getItem(VOICE_KEY)||""}catch{}
+function italianVoiceScore(v){const n=v.name||"";return (/google/i.test(n)?1000:0)+(/natural|neural|premium|enhanced|wavenet/i.test(n)?100:0)+(/^it[-_]it$/i.test(v.lang)?20:0)+(v.localService?5:0)}
+function italianVoices(){return voices.filter(v=>/^it(?:[-_]|$)/i.test(v.lang||"")).sort((a,b)=>italianVoiceScore(b)-italianVoiceScore(a))}
+function setItalianVoice(uri){voicePreference=uri||"";try{localStorage.setItem(VOICE_KEY,voicePreference)}catch{}loadVoices()}
 function loadVoices() {
-
-    if (!supported) return;
-
-    voices = synth.getVoices();
-
-    selectedVoice =
-        voices.find(v => v.lang.toLowerCase() === "it-it" && v.localService) ||
-        voices.find(v => v.lang.toLowerCase().startsWith("it") && v.localService) ||
-        voices.find(v => v.lang.toLowerCase().startsWith("it")) ||
-        null;
-    const picker = $("voicePicker");
-    if(picker){const previous=picker.value;picker.replaceChildren(new Option("Automatica",""));voices.filter(v=>v.lang.toLowerCase().startsWith("it")).sort((a,b)=>Number(/natural|neural/i.test(b.name))-Number(/natural|neural/i.test(a.name))).forEach(v=>picker.add(new Option(v.name,v.voiceURI)));picker.value=previous;if(previous) selectedVoice=voices.find(v=>v.voiceURI===previous)||selectedVoice;else selectedVoice=voices.find(v=>v.lang.toLowerCase().startsWith("it")&&/natural|neural/i.test(v.name))||selectedVoice;}
+    if(!supported)return;
+    voices=synth.getVoices();
+    const list=italianVoices();
+    selectedVoice=list.find(v=>v.voiceURI===voicePreference)||list[0]||null;
+    const picker=$("voicePicker");
+    if(picker){picker.replaceChildren(new Option("Google italiana (preferita)",""));list.forEach(v=>picker.add(new Option(v.name,v.voiceURI)));picker.value=list.some(v=>v.voiceURI===voicePreference)?voicePreference:""}
 }
 
 if (supported) {
@@ -2892,7 +2892,7 @@ function highlightBlock(index) {
 
     if (nav) nav.classList.add("current");
 
-    item.card.scrollIntoView({
+    if(!document.body.classList.contains("ocv-on"))item.card.scrollIntoView({
         behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
             ? "auto"
             : "smooth",
@@ -2970,7 +2970,7 @@ function speakCurrentChunk(token) {
     }
 
     const sentence = chunks[currentChunk];
-    document.querySelectorAll('.reading-paragraph').forEach(e=>e.classList.remove('reading-paragraph'));const target=chunkTargets[currentChunk];if(target){target.classList.add('reading-paragraph');target.scrollIntoView({block:'nearest',behavior:'smooth'})}
+    document.querySelectorAll('.reading-paragraph').forEach(e=>e.classList.remove('reading-paragraph'));const target=chunkTargets[currentChunk];if(target){target.classList.add('reading-paragraph');if(!document.body.classList.contains('ocv-on'))target.scrollIntoView({block:'nearest',behavior:'smooth'})}
 
     $("captionPanel").textContent = sentence;
 
@@ -3285,7 +3285,7 @@ buildBoard();
 const map=$('conceptMap');map.classList.add('radial');const center=element('div','radial-hub');center.append(document.querySelector('.earth'));center.append(element('strong','','GEOPEDOLOGIA'));map.prepend(center);const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('class','radial-lines');svg.setAttribute('viewBox','0 0 1000 650');svg.setAttribute('preserveAspectRatio','none');map.prepend(svg);const nodes=[...map.querySelectorAll('.map-node')];nodes.forEach((node,i)=>{const a=-Math.PI/2+i*Math.PI*2/nodes.length,x=50+40*Math.cos(a),y=50+42*Math.sin(a);node.style.left=x+'%';node.style.top=y+'%';const line=document.createElementNS(svg.namespaceURI,'line');for(const [k,v] of Object.entries({x1:500,y1:325,x2:x*10,y2:y*6.5,stroke:modules[i].color,'stroke-width':2.5}))line.setAttribute(k,v);svg.append(line);node.setAttribute('aria-expanded','false');node.addEventListener('click',e=>{e.stopImmediatePropagation();nodes.forEach(n=>n.setAttribute('aria-expanded','false'));node.setAttribute('aria-expanded','true');const area=$('branchOutline');area.replaceChildren();const panel=element('div','outline-branch');panel.append(element('h3','',modules[i].title+' — sottoargomenti'));modules[i].blocks.forEach((b,j)=>{const btn=element('button','btn',b.title);btn.onclick=()=>document.getElementById('block-'+modules[i].id+'-'+(j+1)).scrollIntoView({block:'start'});panel.append(btn)});area.append(panel);area.scrollIntoView({block:'nearest'})},true)});
 $('sourceCount').textContent=sourceList.length;
 $('rockJump').onclick=()=>{const m=modules.find(m=>m.title==='Rocce e minerali');if(m)$('module-'+m.id).scrollIntoView({block:'start'})};
-$('voicePicker').onchange=()=>{selectedVoice=voices.find(v=>v.voiceURI===$('voicePicker').value)||voices.find(v=>v.lang.toLowerCase().startsWith('it')&&/natural|neural/i.test(v.name))||voices.find(v=>v.lang.toLowerCase().startsWith('it'))||null};
+$('voicePicker').onchange=()=>setItalianVoice($('voicePicker').value);
 $('accessToggle').onclick=()=>{const p=$('accessPanel');p.hidden=!p.hidden;$('accessToggle').setAttribute('aria-expanded',String(!p.hidden));updateToolbarHeight()};
 const ruler=element('div','ruler-line');document.body.append(ruler);$('rulerToggle').onchange=()=>ruler.style.display=$('rulerToggle').checked?'block':'none';document.addEventListener('pointermove',e=>ruler.style.top=(e.clientY-19)+'px');$('printBtn').onclick=()=>window.print();
 function applyAccess(){document.documentElement.style.setProperty('--study-font',$('fontPicker').value);document.documentElement.style.setProperty('--study-size',$('fontSize').value+'px');document.documentElement.style.setProperty('--study-lh',$('lineHeight').value);document.body.classList.remove('light','cream','contrast');if($('themePicker').value!=='dark')document.body.classList.add($('themePicker').value);updateToolbarHeight()}
@@ -3355,7 +3355,7 @@ const shell=E("section",undefined,"m4-shell");shell.id="mnemonic-v4";shell.appen
 const status=E("p",warning||"Archivio locale pronto.","m4-status");status.setAttribute("role","status");const msg=t=>status.textContent=t;
 function save(){try{C.validate(state);localStorage.setItem(key,JSON.stringify(state));msg("Salvato nel browser.")}catch(e){msg("Salvataggio fallito: "+e.message)}}
 const loci=()=>state.palaces.flatMap(p=>p.rooms.flatMap(r=>r.loci.map(l=>({p,r,l})))),loc=e=>loci().find(x=>x.l.entry===e),choices=()=>[...entries.map(e=>[e.id,e.title]),...state.vocab.map(v=>[v.id,v.word+" — "+v.meaning])],textFor=e=>by.get(e)?.block.theory.join(" ")||state.vocab.find(v=>v.id===e)?.meaning||"";
-function say(t,lang="it-IT"){if(!("speechSynthesis" in window))return msg("Voce non supportata");if(playing)stopLesson(false);speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=lang;u.rate=Number($("speed").value)||1;const voice=speechSynthesis.getVoices().find(v=>v.lang.toLowerCase().startsWith(lang.slice(0,2).toLowerCase()));if(voice)u.voice=voice;u.onerror=e=>msg("Audio: "+e.error);speechSynthesis.speak(u)}
+function say(t,lang="it-IT"){if(!("speechSynthesis" in window))return msg("Voce non supportata");if(playing)stopLesson(false);speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=lang;u.rate=Number($("speed").value)||1;loadVoices();const voice=/^it(?:[-_]|$)/i.test(lang)?selectedVoice:speechSynthesis.getVoices().filter(v=>v.lang.toLowerCase().startsWith(lang.slice(0,2).toLowerCase())).sort((a,b)=>Number(/google/i.test(b.name))-Number(/google/i.test(a.name)))[0];if(voice)u.voice=voice;u.onerror=e=>msg("Audio: "+e.error);speechSynthesis.speak(u)}
 function image(src,alt){if(typeof src!=="string"||!/^data:image\/(png|jpeg|gif|webp);base64,[A-Za-z0-9+/=]+$/.test(src))return null;const n=E("img");n.src=src;n.alt=alt;n.className="m4-image";return n}
 function upload(fn){const n=I("","file");n.accept="image/png,image/jpeg,image/webp,image/gif";n.onchange=()=>{const f=n.files[0];if(!f)return;if(f.size>1500000)return msg("Massimo 1,5 MB per immagine");const rd=new FileReader();rd.onload=()=>{if(image(rd.result,""))fn(rd.result);else msg("Formato non valido")};rd.readAsDataURL(f)};return n}
 const tabs=E("nav",undefined,"m4-tabs"),body=E("div"),labels={palace:"Palazzo · O",pav:"P.A.V. · M",major:"Major · M",pao:"PAO · M",language:"Lingue · M",photo:"Fotografia · C",review:"Ripasso · E",data:"Archivio"};for(const [k,t] of Object.entries(labels))tabs.append(B(t,()=>{tab=k;render()}));shell.append(tabs,status,body);document.querySelector(".hero").after(shell);$("toolbar").querySelector(".v3-controls")?.append(B("Master Mnemonic 4.0",()=>{document.body.classList.remove("v3-focus");shell.scrollIntoView({block:"start"})}));
@@ -3395,7 +3395,7 @@ return {id,encode,decode,reverse,pao,scene,months,schedule,room,validate,seed};
 })());
 </script>
 
-<script src="../../engine/visual-first.js?v=5.1"></script>
+<script src="../../engine/visual-first.js?v=5.2"></script>
 <script id="ocv-adapter">
 ;(function(labels){
 if(!window.OCMEVisual)return;
@@ -3419,6 +3419,10 @@ const defs=[
 ];chem.children=defs.map(([key,title,audio,color,scene])=>({id:"block-A-1-"+key,title,label:title,audio,art:()=>{const box=document.createElement("div");box.innerHTML="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 260' role='img' aria-label='"+title+"'><rect width='320' height='260' fill='white'/><g stroke='#21143a' stroke-width='5' stroke-linejoin='round'><path d='M38 235L56 159 116 143 151 186 136 237Z' fill='"+color+"'/><circle cx='84' cy='184' r='7' fill='white'/><circle cx='114' cy='184' r='7' fill='white'/><circle cx='86' cy='185' r='3' fill='#21143a'/><circle cx='116' cy='185' r='3' fill='#21143a'/><path d='M84 205Q99 218 114 205' fill='none'/>"+scene+"</g></svg>";return box.firstElementChild}}))
 }
 const api={
+getVoice(){loadVoices();return selectedVoice},
+getVoices(){return italianVoices()},
+voicePreference(){return voicePreference},
+setVoice(uri){setItalianVoice(uri)},
 play(b,single){const i=idMap.get(b.id);if(Number.isInteger(i))startLesson(i,!!single)},
 pause(){if(playing)togglePause()},
 stop(){if(playing)stopLesson(false)},
@@ -3426,7 +3430,7 @@ isPlaying(){return playing},
 rate(){return Number($("speed").value)||1},
 setRate(v){$("speed").value=String(v);$("speed").dispatchEvent(new Event("change",{bubbles:true}))},
 caption(){return $("captionPanel").textContent||""},
-status(){const t=$("status").textContent||"";if(playing)return paused?"In pausa":"Ascolto · "+(currentIndex+1)+" / "+flatBlocks.length;if(/errore|non supportat|non disponibil|arrestat|completat/i.test(t))return t;return""},
+status(){const t=$("status").textContent||"";if(playing)return (paused?"In pausa · ":"Ascolto · ")+flatBlocks[currentIndex].title+" · "+(selectedVoice?.name||"Voce automatica");if(/errore|non supportat|non disponibil|arrestat|completat/i.test(t))return t;return""},
 observe(fn){const mo=new MutationObserver(fn);for(const id of ["captionPanel","status","counter"])mo.observe($(id),{childList:true,subtree:true,characterData:true});return mo},
 openArchive(kind,cur){document.body.classList.remove("v3-focus","v3-mode-O","v3-mode-C","v3-mode-M","v3-mode-E");if($("v3mode")){$("v3mode").value="all";$("v3mode").dispatchEvent(new Event("change",{bubbles:true}))}updateToolbarHeight();const node=kind==="tools"?$("mnemonic-v4"):kind==="sources"?$("sources"):document.getElementById(cur.block.id);requestAnimationFrame(()=>node?.scrollIntoView({block:"start",behavior:"auto"}))}
 };
