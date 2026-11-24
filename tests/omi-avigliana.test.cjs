@@ -50,7 +50,7 @@ test("web module preserves user-saved manual OMI rows, sources, and prints",()=>
  const html=get('gestione/acquisizione-farming/index.html');
  const script=get('gestione/acquisizione-farming/omi-avigliana.js');
  new vm.Script(script,{filename:'omi-avigliana.js'});
- assert.match(html,/src="\.\/omi-avigliana\.js\?v=20261120-omi1"/);
+ assert.match(html,/src="\.\/omi-avigliana\.js\?v=20261124-streets2"/);
  assert.match(script,/fetch\(DATA_PATH/);
  assert.match(script,/cache:'no-store'/);
  assert.match(script,/db\.omi/);

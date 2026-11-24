@@ -108,7 +108,7 @@ test('Lettere & Stampa mostra il magazine sfogliabile e la lettera PDF aggiornat
 });
 
 test('OMI 2026/1 sources are linked in the integrated Farming tab',()=>{
- assert.match(page,/src="\.\/omi-avigliana\.js\?v=20261120-omi1"/);
+ assert.match(page,/src="\.\/omi-avigliana\.js\?v=20261124-streets2"/);
  assert.match(home,/src="\.\/acquisizione-farming\/\?omi=20261120-1&rev=20261123-letter-c-a5-pub1&embed=hide-header"/);
  assert.match(get('gestione/acquisizione-farming/omi-avigliana.js'),/omi-avigliana-2026-1\.json/);
 });
