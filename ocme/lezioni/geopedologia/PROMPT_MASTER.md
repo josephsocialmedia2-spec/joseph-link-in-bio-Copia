@@ -43,3 +43,6 @@ Temi bianco, crema, scuro, alto contrasto; caratteri leggibili, dimensione, inte
 ## Tecnologia, collaudo, pubblicazione
 HTML5 autonomo con CSS, JS, SVG e immagini incorporate; no CDN, font remoti o segnaposto. Archivio PDF incorporato quando tecnicamente possibile e autorizzato. Chrome/Edge Windows. Verifica fonti, contenuto, associazioni, numeri, navigazione, audio, sincronizzazione, progressi, leggibilità, errori JS; dichiara limiti e funzioni non testate.
 Per ogni aggiornamento salva il lavoro nel repository josephsocialmedia2-spec/joseph-link-in-bio-Copia, percorso ocme/lezioni/geopedologia/ per questa materia. Mantieni le altre aree inalterate. Pubblica su GitHub Pages, verifica il link e consegnalo. Non chiedere conferme intermedie se i dati sono sufficienti. Il percorso non richiede download manuale.
+
+## Aggiornamento Visual First 5.0
+Applicare la specifica permanente [VISUAL_FIRST.md](../../VISUAL_FIRST.md) e il motore condiviso `../../engine/visual-first.js`. Priorità all'immagine e alla mappa progressiva: 12 rami, 57 schede, quattro fasi OCME, testo minimo, palette acida e transizioni alternate. La teoria completa e gli strumenti devono restare accessibili dal pannello secondario. Non sostituire i dati personali o i diagrammi scientifici. In caso di conflitto con il precedente stile visivo, prevale Visual First 5.0.
