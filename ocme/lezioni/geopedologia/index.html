@@ -3395,7 +3395,7 @@ return {id,encode,decode,reverse,pao,scene,months,schedule,room,validate,seed};
 })());
 </script>
 
-<script src="../../engine/visual-first.js?v=5.0"></script>
+<script src="../../engine/visual-first.js?v=5.1"></script>
 <script id="ocv-adapter">
 ;(function(labels){
 if(!window.OCMEVisual)return;
@@ -3408,6 +3408,16 @@ const moduleNode=document.getElementById("module-"+m.id), group=flatBlocks.filte
 return{id:m.id,title:m.title,label:labels[m.id]?.[0]||m.title,art:()=>clone(moduleNode?.querySelector(".pav-v3 svg")||group[0]?.card.querySelector(".m4-pav-figure svg,.m4-pav-figure img")),blocks:group.map((e,i)=>({id:e.id,title:e.title,label:labels[m.id]?.[1]?.[i]||e.title,art:()=>clone(e.card.querySelector(".m4-pav-figure svg,.m4-pav-figure img")),diagram:e.card.querySelector(".visual svg")?()=>clone(e.card.querySelector(".visual svg")):null,flow:(e.block.flow||[]).map(t=>String(t).trim()).filter(Boolean),locus:()=>e.card.querySelector(".m4-card p")?.textContent||m.room,source:e.block.source}))}
 })};
 if(data.modules.some(m=>!m.art()||m.blocks.some(b=>!b.art()))||!data.rootArt())throw Error("Vignette non disponibili");
+// Sotto-rami della scheda: concetti presenti negli appunti già integrati.
+const chem=data.modules.find(m=>m.id==="A")?.blocks.find(b=>b.id==="block-A-1");
+if(chem){
+const defs=[
+["dissoluzione","Dissoluzione","Una goccia gigantesca scioglie una roccia carbonatica. Negli appunti, anidride carbonica proveniente anche da radici e microrganismi favorisce questo processo.","#1bcbed","<path d='M220 56Q180 114 220 138Q262 114 220 56Z' fill='#26e4ff'/><path d='M197 158L215 168 230 150 249 169' stroke='#26e4ff' stroke-width='10' fill='none'/><circle cx='195' cy='210' r='10' fill='#26e4ff'/><circle cx='255' cy='208' r='7' fill='#26e4ff'/>"],
+["ossidazione","Ossidazione","L'ossigeno modifica i minerali contenenti ferro. Gli appunti ricordano prodotti come l'ematite e la possibile formazione di terre rosse.","#ff742e","<path d='M88 184L146 157 173 205 147 236 99 224Z' fill='#f45028'/><circle cx='229' cy='93' r='35' fill='#c8ff00'/><path d='M225 135Q204 156 167 167' stroke='#ff742e' stroke-width='15' fill='none'/><circle cx='217' cy='88' r='5' fill='#21143a'/><circle cx='241' cy='88' r='5' fill='#21143a'/>"],
+["idrolisi","Idrolisi","L'acqua partecipa a reazioni chimiche che alterano i minerali. L'idrolisi è uno dei quattro processi di alterazione chimica elencati negli appunti.","#bd66ff","<path d='M205 40Q150 111 205 142Q260 111 205 40Z' fill='#bd66ff'/><path d='M165 159L195 181 182 202 152 181Z M229 159L260 181 248 202 218 181Z' fill='#c8ff00'/><path d='M207 144V185' stroke='#bd66ff' stroke-width='12'/>"],
+["idratazione","Idratazione","L'idratazione è una delle alterazioni chimiche citate negli appunti. Consiste nell'incorporazione di acqua nella struttura o nella composizione del materiale.","#5cf0a0","<path d='M206 48Q167 102 206 125Q245 102 206 48Z' fill='#33f4ff'/><path d='M161 138L261 138 282 214 140 214Z' fill='#70f2a0'/><circle cx='176' cy='169' r='11' fill='#33f4ff'/><circle cx='227' cy='178' r='14' fill='#33f4ff'/><circle cx='257' cy='199' r='8' fill='#33f4ff'/>"]
+];chem.children=defs.map(([key,title,audio,color,scene])=>({id:"block-A-1-"+key,title,label:title,audio,art:()=>{const box=document.createElement("div");box.innerHTML="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 260' role='img' aria-label='"+title+"'><rect width='320' height='260' fill='white'/><g stroke='#21143a' stroke-width='5' stroke-linejoin='round'><path d='M38 235L56 159 116 143 151 186 136 237Z' fill='"+color+"'/><circle cx='84' cy='184' r='7' fill='white'/><circle cx='114' cy='184' r='7' fill='white'/><circle cx='86' cy='185' r='3' fill='#21143a'/><circle cx='116' cy='185' r='3' fill='#21143a'/><path d='M84 205Q99 218 114 205' fill='none'/>"+scene+"</g></svg>";return box.firstElementChild}}))
+}
 const api={
 play(b,single){const i=idMap.get(b.id);if(Number.isInteger(i))startLesson(i,!!single)},
 pause(){if(playing)togglePause()},
