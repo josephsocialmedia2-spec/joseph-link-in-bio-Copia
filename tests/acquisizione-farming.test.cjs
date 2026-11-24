@@ -16,7 +16,7 @@ test('Acquisizione senza titolo e quattro sottoschede, ma Farming sempre visibil
  assert.doesNotMatch(home,/Standard Venditore &amp; Segreti|Networking &amp; WhatsApp|Strategia Video \(8 Titoli\)/);
  assert.match(home,/id="sv-tab-4" class="sv-panel sv-farming-panel"/);
  assert.doesNotMatch(home,/id="sv-tab-4"[^>]+hidden/);
- assert.match(home,/id="sv-farming-frame"[^>]*src="\.\/acquisizione-farming\/\?omi=20261120-1&rev=20261121-letters-weekly1&embed=hide-header"/);
+ assert.match(home,/id="sv-farming-frame"[^>]*src="\.\/acquisizione-farming\/\?omi=20261120-1&rev=20261124-strade-omi-c1-c2-d1&embed=hide-header"/);
  assert.match(home,/sv-acquisizione\.js\?v=20261121-no-quattro-tab1/);
  assert.match(home,/control-center\.js\?v=20261120-farming1/);
  const js=get('gestione/sv-acquisizione.js');
@@ -89,7 +89,7 @@ test('Lettere & Stampa mostra il magazine sfogliabile e la lettera PDF aggiornat
  const section=page.split('<section class="panel" id="lettere">')[1].split('<section class="panel" id="omi">')[0];
  for(const id of ['rew-flipbook','rew-letter-preview','rew-open-flipbook','rew-download-magazine','rew-download-spreads','rew-download-letter'])assert.match(section,new RegExp('id="'+id+'"'));
  assert.match(section,/src="\.\.\/lettere-stampa\/"/);
- assert.match(section,/Lettera_Joseph_Malafronte_AGGIORNATA_A4\.pdf/);
+ assert.match(section,/lettera-c-23-11-aggiornata\.html/);
  assert.doesNotMatch(section,/Immobiliare La Sacra|letterType|letterZone|letterPreview|Centro stampa · lettere A4\/A5/);
  assert.doesNotMatch(page,/function previewLetter\(|function printLetter\(|function makeLetterQr\(/);
  const viewer=get('gestione/lettere-stampa/index.html');
@@ -109,7 +109,7 @@ test('Lettere & Stampa mostra il magazine sfogliabile e la lettera PDF aggiornat
 
 test('OMI 2026/1 sources are linked in the integrated Farming tab',()=>{
  assert.match(page,/src="\.\/omi-avigliana\.js\?v=20261120-omi1"/);
- assert.match(home,/src="\.\/acquisizione-farming\/\?omi=20261120-1&rev=20261121-letters-weekly1&embed=hide-header"/);
+ assert.match(home,/src="\.\/acquisizione-farming\/\?omi=20261120-1&rev=20261124-strade-omi-c1-c2-d1&embed=hide-header"/);
  assert.match(get('gestione/acquisizione-farming/omi-avigliana.js'),/omi-avigliana-2026-1\.json/);
 });
 
