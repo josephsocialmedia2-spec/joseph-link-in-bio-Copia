@@ -5,6 +5,8 @@
 'use strict';
 const host=document.getElementById('zones');if(!host)return;
 const KEY='case247-farming-strade-omi-2026-1-v1';
+if(host.previousElementSibling?.tagName==='H2')host.previousElementSibling.textContent='Vie del presidio quotidiano · Zone OMI C1 / C2 / D1';
+if(host.nextElementSibling?.matches('p'))host.nextElementSibling.textContent='Vie tratte dal CSV OMI ZONE 2026/1 e confrontate con KML A518. Ogni civico e tratto va verificato prima della consegna. Le zone OMI non coincidono con i quadranti A/B/C/D del farming.';
 const STREET=[
  {zone:'C1',street:'Via Suppo',note:'Controllare il nome stradale sulla targa: Via Suppo / Giovanni Suppo / Via dei Suppo sono diciture distinte.'},
  {zone:'C1',street:'Via Reano',note:'Verificare i civici compresi nel perimetro C1.'},
