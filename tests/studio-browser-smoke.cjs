@@ -211,6 +211,16 @@ async function main(){
  assert.equal(await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow,d=w.document;return !JSON.parse(w.localStorage.getItem('case247-farming-strade-omi-2026-1-v1')||'{}')?.days?.[d.querySelector('#omi-work-date').value]?.['C1|Via Suppo']})()"),true);
  await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow,d=w.document;d.querySelector('#omi-road-civici').value='Tratto QA';d.querySelector('#omi-road-verified').checked=true;d.querySelector('#omi-road-noadv').checked=true;d.querySelector('#omi-road-save').click();return true})()");
  assert.equal(await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow,d=w.document;return JSON.parse(w.localStorage.getItem('case247-farming-strade-omi-2026-1-v1')).days[d.querySelector('#omi-work-date').value]['C1|Via Suppo'].delivered})()"),5);
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#omi-work-week').textContent.includes('Lunedì C1')"),true);
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#omi-work-week').textContent.includes('Giovedì D1')"),true);
+ await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow,d=w.document;d.querySelector('#omi-work-zone').value='C1';d.querySelector('#omi-work-zone').dispatchEvent(new Event('change'));d.querySelector('#omi-work-letter').click();return true})()");
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#letterZone').value.includes('Via Suppo')"),true);
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#lettere').classList.contains('on')"),true);
+ await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow,d=w.document;w.goto('oggi');d.querySelector('#omi-work-quotes').click();return true})()");
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#omi').classList.contains('on')"),true);
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#omi-zone').value"),'C1');
+ await evalJS("document.querySelector('#sv-farming-frame').contentWindow.goto('oggi');true");
+
 
  assert.equal(await evalJS("Boolean(document.querySelector('#sv-farming-frame').contentDocument.querySelector('#oggi #farming-onedrive-excel'))"),true);
  assert.equal(await evalJS("(()=>{const a=document.querySelector('#sv-farming-frame').contentDocument.querySelector('#farming-onedrive-excel');return a.href.startsWith('https://1drv.ms/x/c/')&&a.target==='_blank'})()"),true);
