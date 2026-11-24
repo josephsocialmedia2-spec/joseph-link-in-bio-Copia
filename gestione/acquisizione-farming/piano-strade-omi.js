@@ -69,7 +69,7 @@ function weeklyReview(){
 }
 function render(){
  const zone=inputZone.value,rr=records(),selection=STREET.filter(x=>zone==='all'||x.zone===zone);weeklyReview();
- host.querySelector('#omi-work-description').textContent=(zone==='all'?'Tutte le zone · 6 vie':zone+' · '+DESCRIPTIONS[zone])+' · '+selection.filter(x=>rr[x.zone+'|'+x.street]?.verified&&rr[x.zone+'|'+x.street]?.noAdvertisingChecked).length+'/'+selection.length+' vie verificate (sopralluogo e divieti) · '+selection.reduce((sum,x)=>sum+Number(rr[x.zone+'|'+x.street]?.delivered||0),0)+' lettere consegnate';
+ host.querySelector('#omi-work-description').textContent=(zone==='all'?'Tutte le zone · 6 vie':zone+' · '+DESCRIPTIONS[zone])+' · '+selection.filter(x=>rr[x.zone+'|'+x.street]?.verified&&rr[x.zone+'|'+x.street]?.noAdvertisingChecked&&String(rr[x.zone+'|'+x.street]?.civici||'').trim()).length+'/'+selection.length+' vie verificate (sopralluogo e divieti) · '+selection.reduce((sum,x)=>sum+Number(rr[x.zone+'|'+x.street]?.delivered||0),0)+' lettere consegnate';
  list.innerHTML=selection.map(x=>{
   const id=x.zone+'|'+x.street,r=rr[id];const done=r?.verified;const safe=done&&r.noAdvertisingChecked;
   return '<div class="omi-work-row"><strong>'+esc(x.zone)+' · '+esc(x.street)+'</strong><p>'+esc(x.note)+'</p><p data-omi-status="'+(done?'done':'pending')+'">'+(safe?'Sopralluogo e divieti verificati; civici: '+esc(r.civici||'nessuno')+'; lettere consegnate: '+Number(r.delivered||0):done?'Sopralluogo registrato, verifica divieti ancora mancante':'Da verificare sul posto')+'</p><button class="btn secondary" type="button" data-omi-road="'+esc(id)+'">Apri scheda via</button></div>';
