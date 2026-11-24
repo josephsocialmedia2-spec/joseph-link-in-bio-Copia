@@ -216,3 +216,5 @@ async function load(){
 }
 load();
 })();
+// Daily street operations are isolated from quote/CRM data and update the existing #zones panel.
+(function(){if(!document.getElementById('zones')||document.querySelector('script[data-omi-streets]'))return;const s=document.createElement('script');s.src='./piano-strade-omi.js?v=20261124-strade1';s.dataset.omiStreets='1';document.body.appendChild(s)})();

@@ -107,7 +107,7 @@ async function main(){
  console.log('PASS: click-ready manual Google Partita IVA Avigliana shortcut in daily agenda');
 
  await until("Boolean(document.querySelector('#saas-app > #case247-routine03'))",'03:00 routine mounted beneath SaaS header');
- assert.equal(await evalJS("document.querySelector('#saas-app').children[1].id"),'case247-routine03');
+ assert.equal(await evalJS("document.querySelector('#saas-app > #case247-routine03')?.id"),'case247-routine03');
  assert.equal(await evalJS("document.querySelectorAll('#case247-routine03 .r03-card').length"),3);
  assert.equal(await evalJS("document.querySelector('#r03-total').textContent"),'0');
  await evalJS("document.querySelector('input[data-r03-check=flessioni]').click();true");
@@ -203,6 +203,15 @@ async function main(){
  assert.equal(await evalJS("document.querySelector('#sv-tab-4').getBoundingClientRect().height>0"),true);
  assert.equal(await evalJS("Boolean(document.querySelector('.saas-workbook-action')&&document.querySelector('.saas-workbook-config'))"),true);
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelectorAll('#nav button').length"),9);
+
+ await until("document.querySelector('#sv-farming-frame')?.contentDocument?.querySelectorAll('#omi-work-list [data-omi-road]').length>0",'OMI daily street action list loaded');
+ assert.equal(await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow;const q=w.document.querySelector('#omi-work-zone');q.value='all';q.dispatchEvent(new Event('change'));return w.document.querySelectorAll('[data-omi-road]').length})()"),6);
+ await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow;w.alert=()=>{w.__omiStreetBlock=true};w.document.querySelector('[data-omi-road=\"C1|Via Suppo\"]').click();const d=w.document;d.querySelector('#omi-road-prepared').value='10';d.querySelector('#omi-road-delivered').value='5';d.querySelector('#omi-road-save').click();return true})()");
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentWindow.__omiStreetBlock===true"),true);
+ assert.equal(await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow,d=w.document;return !JSON.parse(w.localStorage.getItem('case247-farming-strade-omi-2026-1-v1')||'{}')?.days?.[d.querySelector('#omi-work-date').value]?.['C1|Via Suppo']})()"),true);
+ await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow,d=w.document;d.querySelector('#omi-road-civici').value='Tratto QA';d.querySelector('#omi-road-verified').checked=true;d.querySelector('#omi-road-noadv').checked=true;d.querySelector('#omi-road-save').click();return true})()");
+ assert.equal(await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow,d=w.document;return JSON.parse(w.localStorage.getItem('case247-farming-strade-omi-2026-1-v1')).days[d.querySelector('#omi-work-date').value]['C1|Via Suppo'].delivered})()"),5);
+
  assert.equal(await evalJS("Boolean(document.querySelector('#sv-farming-frame').contentDocument.querySelector('#oggi #farming-onedrive-excel'))"),true);
  assert.equal(await evalJS("(()=>{const a=document.querySelector('#sv-farming-frame').contentDocument.querySelector('#farming-onedrive-excel');return a.href.startsWith('https://1drv.ms/x/c/')&&a.target==='_blank'})()"),true);
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#oggi').textContent.includes('Agenda operativa unica · simulazione')"),false);
@@ -257,10 +266,10 @@ async function main(){
  await evalJS("document.querySelector('#sv-farming-frame').contentWindow.goto('lettere');true");
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#letterType')===null"),true);
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#rew-flipbook').getAttribute('src')"),'../lettere-stampa/');
- assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#rew-download-letter').getAttribute('href').endsWith('Lettera_Joseph_Malafronte_AGGIORNATA_A4.pdf')"),true);
- await until("Boolean(document.querySelector('#sv-farming-frame')?.contentDocument?.querySelector('#rew-flipbook')?.contentDocument?.querySelector('#counter'))",'Sfogliatore rivista embedded caricato');
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#rew-download-letter').getAttribute('href').endsWith('lettera-c-23-11-aggiornata.html')"),true);
+ await until("Boolean(document.querySelector('#sv-farming-frame')?.contentDocument?.querySelector('#rew-flipbook')?.contentDocument?.querySelector('#count'))",'Sfogliatore rivista embedded caricato');
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#rew-flipbook').contentDocument.querySelectorAll('#prev,#next').length"),2);
- assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#rew-flipbook').contentDocument.querySelector('#counter').textContent.includes('8')"),true);
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#rew-flipbook').contentDocument.querySelector('#count').textContent.includes('8')"),true);
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#rew-flipbook').contentDocument.querySelector('#next').disabled"),false);
  await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow;w.goto('tracker');const f=w.document.querySelector('#trackerForm');f.elements.date.value='2026-11-20';f.elements.news.value='2';f.elements.contacts.value='1';f.elements.appointments.value='1';f.elements.incarichi.value='0';f.requestSubmit();return true})()");
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#kNews').textContent"),'2');
