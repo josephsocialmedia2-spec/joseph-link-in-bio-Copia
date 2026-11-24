@@ -1,0 +1,3308 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>G.E.E. — Aula Immersiva di Geopedologia</title>
+
+<style>
+:root {
+    --bg: #0c1220;
+    --panel: #162235;
+    --panel-light: #1d2d43;
+    --text: #f0f5ff;
+    --muted: #b7c6da;
+    --border: #34475e;
+    --green: #4ade80;
+    --blue: #60a5fa;
+    --gold: #fbbf24;
+    --purple: #c084fc;
+    --red: #fb7185;
+    --cyan: #22d3ee;
+    --toolbar-height: 140px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--toolbar-height);
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.75;
+}
+
+button, select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:focus-visible,
+select:focus-visible,
+a:focus-visible {
+    outline: 3px solid var(--cyan);
+    outline-offset: 4px;
+}
+
+button:disabled {
+    cursor: default;
+    opacity: .45;
+}
+
+.toolbar {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 1000;
+    padding: 14px 24px;
+    background: rgba(12, 18, 32, .97);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 8px 30px #0005;
+}
+
+.toolbar-inner {
+    max-width: 1500px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.brand {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.brand small {
+    display: block;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.btn {
+    border: 1px solid var(--border);
+    background: var(--panel-light);
+    color: var(--text);
+    padding: 9px 15px;
+    border-radius: 8px;
+    font-weight: 650;
+}
+
+.btn:hover {
+    border-color: var(--blue);
+}
+
+.btn-play {
+    background: #15803d;
+    border-color: #22c55e;
+    color: white;
+}
+
+.btn-stop {
+    background: #842739;
+    border-color: #be4058;
+}
+
+select {
+    background: var(--panel);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 9px;
+}
+
+.progress-track {
+    max-width: 1500px;
+    height: 6px;
+    margin: 13px auto 0;
+    border-radius: 5px;
+    overflow: hidden;
+    background: #28364b;
+}
+
+#progressBar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--blue), var(--green));
+    transition: width .4s;
+}
+
+.status-line {
+    display: flex;
+    max-width: 1500px;
+    margin: 5px auto 0;
+    justify-content: space-between;
+    gap: 12px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+main {
+    max-width: 1500px;
+    margin: auto;
+    padding: calc(var(--toolbar-height) + 30px) 25px 60px;
+}
+
+.hero {
+    padding: 32px;
+    text-align: center;
+    border: 1px solid var(--border);
+    background: radial-gradient(ellipse at top, #263c57, var(--panel) 70%);
+    border-radius: 20px;
+}
+
+.eyebrow {
+    color: var(--cyan);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+h1 {
+    font-size: clamp(32px, 5vw, 56px);
+    line-height: 1.15;
+    margin: 12px 0;
+}
+
+h2 {
+    line-height: 1.3;
+}
+
+.hero p {
+    color: var(--muted);
+    max-width: 780px;
+    margin: 12px auto;
+}
+
+.earth {
+    display: block;
+    width: 200px;
+    max-width: 70%;
+    margin: 22px auto;
+}
+
+.hero-stats {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 25px 0;
+}
+
+.hero-stats strong {
+    display: block;
+    font-size: 26px;
+    color: var(--gold);
+}
+
+.hero-stats span {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.map {
+    margin-top: 25px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.map-node {
+    background: var(--panel);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: left;
+    transition: transform .15s, background .15s;
+}
+
+.map-node:hover {
+    transform: translateY(-3px);
+    background: var(--panel-light);
+}
+
+.map-node .symbol {
+    display: block;
+    font-size: 30px;
+}
+
+.map-node strong {
+    display: block;
+    font-size: 16px;
+    color: var(--accent);
+}
+
+.map-node small {
+    color: var(--muted);
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 255px minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+    margin-top: 35px;
+}
+
+.sidebar {
+    position: sticky;
+    top: calc(var(--toolbar-height) + 14px);
+    max-height: calc(100vh - var(--toolbar-height) - 40px);
+    overflow: auto;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 15px;
+}
+
+.sidebar h3 {
+    font-size: 13px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 12px;
+}
+
+.nav-link {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    color: var(--muted);
+    border: 0;
+    border-left: 3px solid var(--accent);
+    border-radius: 3px;
+    padding: 9px 10px;
+    margin-bottom: 5px;
+    font-size: 13px;
+}
+
+.nav-link:hover,
+.nav-link.current {
+    background: var(--panel-light);
+    color: white;
+}
+
+.module {
+    margin-bottom: 38px;
+    scroll-margin-top: 20px;
+}
+
+.module-heading {
+    border-bottom: 2px solid var(--accent);
+    padding: 10px 0 15px;
+    margin-bottom: 20px;
+}
+
+.module-heading h2 {
+    color: var(--accent);
+    margin: 0;
+    font-size: 28px;
+}
+
+.module-heading p {
+    margin: 4px 0 0;
+    color: var(--muted);
+}
+
+.lesson-card {
+    position: relative;
+    margin-bottom: 22px;
+    padding: 25px;
+    background: var(--panel);
+    border: 2px solid var(--border);
+    border-left: 5px solid var(--accent);
+    border-radius: 15px;
+    transition: border-color .3s, box-shadow .3s, background .3s;
+    scroll-margin-top: 20px;
+}
+
+.lesson-card.active {
+    border-color: var(--green);
+    box-shadow: 0 0 28px #4ade8038;
+    background: #19332d;
+}
+
+.lesson-card.completed {
+    border-right: 4px solid #24945b;
+}
+
+.card-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.card-heading h3 {
+    margin: 0;
+    color: var(--accent);
+    font-size: 23px;
+    line-height: 1.3;
+}
+
+.card-label {
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.speaking-indicator {
+    display: none;
+    color: var(--green);
+    font-weight: 700;
+    font-size: 12px;
+    animation: pulse 1.5s infinite;
+}
+
+.active .speaking-indicator {
+    display: block;
+}
+
+@keyframes pulse {
+    50% { opacity: .45; }
+}
+
+.flow {
+    display: flex;
+    align-items: stretch;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 20px 0;
+}
+
+.flow-item {
+    flex: 1 1 120px;
+    border: 1px solid var(--accent);
+    background: #ffffff06;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.flow-arrow {
+    display: flex;
+    align-items: center;
+    color: var(--accent);
+    font-size: 22px;
+}
+
+.theory {
+    margin: 18px 0;
+}
+
+.theory p {
+    margin: 10px 0;
+}
+
+.theory p strong {
+    color: var(--cyan);
+}
+
+.mnemonic {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin: 22px 0;
+}
+
+.memory-box {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 15px 17px;
+    background: #0e192a;
+}
+
+.memory-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .5px;
+    padding: 4px 9px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+}
+
+.loci-badge {
+    color: #e9d5ff;
+    background: #5b287b;
+}
+
+.number-badge {
+    color: #fef3c7;
+    background: #79520b;
+}
+
+.rhyme-badge {
+    color: #bbf7d0;
+    background: #155b3b;
+}
+
+.memory-box p {
+    margin: 3px 0;
+}
+
+.memory-box .scene {
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+.number-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.number-chip {
+    border: 1px solid #80662b;
+    border-radius: 7px;
+    background: #362d19;
+    color: #fde6a6;
+    padding: 7px 10px;
+    font-size: 13px;
+}
+
+.number-chip strong {
+    color: #fbbf24;
+}
+
+.formula {
+    padding: 16px;
+    border: 1px solid #486c92;
+    border-radius: 10px;
+    background: #101c2b;
+    margin: 16px 0;
+    color: #bfdbfe;
+    font-size: 21px;
+    font-family: Georgia, serif;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+.table-wrap {
+    overflow-x: auto;
+    margin: 16px 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+th, td {
+    border-bottom: 1px solid var(--border);
+    padding: 11px;
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    color: var(--cyan);
+    background: #102033;
+}
+
+tr:nth-child(even) td {
+    background: #ffffff03;
+}
+
+details {
+    margin-top: 15px;
+    padding: 12px 15px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--blue);
+}
+
+.script {
+    color: var(--muted);
+    line-height: 1.9;
+    margin-top: 13px;
+}
+
+.source {
+    color: var(--muted);
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+    margin-top: 18px;
+    padding-top: 12px;
+}
+
+.card-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+}
+
+.note {
+    background: #352d1c;
+    border-left: 4px solid var(--gold);
+    padding: 14px;
+    border-radius: 7px;
+    font-size: 13px;
+    color: #f9e2ac;
+    margin: 14px 0;
+}
+
+.visual {
+    max-width: 720px;
+    margin: 20px auto;
+}
+
+.visual svg {
+    width: 100%;
+    display: block;
+    border-radius: 10px;
+    background: #101c2c;
+}
+
+.visual text {
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.legend {
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+}
+
+.footer {
+    margin-top: 35px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 25px;
+}
+
+.alphabet {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 9px;
+    margin-top: 15px;
+}
+
+.digit {
+    background: var(--panel-light);
+    border-radius: 10px;
+    padding: 12px 5px;
+    text-align: center;
+}
+
+.digit strong {
+    display: block;
+    color: var(--gold);
+    font-size: 26px;
+}
+
+.digit span {
+    display: block;
+    font-size: 12px;
+}
+
+.digit .digit-icon {
+    font-size: 25px;
+}
+
+#captionPanel {
+    display: none;
+    max-width: 1500px;
+    margin: 10px auto 0;
+    padding: 10px 15px;
+    background: #1b293b;
+    color: #e6f2ff;
+    border-radius: 7px;
+    font-size: 14px;
+    max-height: 90px;
+    overflow: auto;
+}
+
+body.show-captions #captionPanel {
+    display: block;
+}
+
+body.light {
+    --bg: #f1f5f9;
+    --panel: #ffffff;
+    --panel-light: #e7eef7;
+    --text: #152238;
+    --muted: #4d6075;
+    --border: #c3d0df;
+    --blue: #155bb5;
+    --cyan: #036c8b;
+    --green: #15803d;
+    --gold: #9a6700;
+}
+
+body.light .toolbar {
+    background: #f8fafcf5;
+}
+
+body.light .hero {
+    background: white;
+}
+
+body.light .lesson-card.active {
+    background: #e9f8ee;
+}
+
+body.light .memory-box,
+body.light .formula {
+    background: #edf2f8;
+    color: #173c66;
+}
+
+body.light .number-chip {
+    background: #fff4d8;
+    color: #624300;
+}
+
+body.light .number-chip strong {
+    color: #7c5300;
+}
+
+body.light th {
+    background: #dce8f5;
+}
+
+body.light .nav-link.current {
+    color: #142a41;
+}
+
+@media (max-width: 900px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        position: static;
+        max-height: none;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 5px;
+    }
+
+    .sidebar h3 {
+        grid-column: 1 / -1;
+    }
+
+    .map {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    main {
+        padding-left: 13px;
+        padding-right: 13px;
+    }
+
+    .toolbar {
+        padding: 10px 12px;
+    }
+
+    .lesson-card {
+        padding: 18px;
+    }
+}
+
+@media (max-width: 500px) {
+    .controls .btn {
+        font-size: 12px;
+        padding: 7px 8px;
+    }
+
+    .brand {
+        font-size: 15px;
+    }
+
+    .hero {
+        padding: 18px;
+    }
+
+    .alphabet {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    .sidebar {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .status-line {
+        font-size: 10px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+@media print {
+    .toolbar, .sidebar, .card-actions, .map {
+        display: none !important;
+    }
+
+    body {
+        background: white;
+        color: black;
+    }
+
+    main {
+        padding: 0;
+    }
+
+    .layout {
+        display: block;
+    }
+
+    .lesson-card {
+        break-inside: avoid;
+        background: white;
+        color: black;
+    }
+}
+
+body{font-family:var(--study-font,"Segoe UI",Arial,sans-serif);font-size:var(--study-size,17px);line-height:var(--study-lh,1.75)}.access-panel:not([hidden]){display:flex;flex-wrap:wrap;gap:12px;align-items:center;max-width:1500px;margin:8px auto}.access-panel label,.controls label{font-size:13px;color:var(--muted)}.access-panel input[type=range]{width:100px}.access-panel select{max-width:210px}body.cream{--bg:#f5ecd9;--panel:#fff9ec;--panel-light:#e8ddc8;--text:#2d2922;--muted:#554c3c;--border:#877760;--blue:#185d97;--cyan:#125a72;--green:#226b39;--gold:#805400}body.contrast{--bg:#000;--panel:#080808;--panel-light:#181818;--text:#fff;--muted:#fff;--border:#fff;--blue:#8ddaff;--cyan:#85ffff;--green:#aaff85;--gold:#ffe680}body.cream .toolbar,body.contrast .toolbar{background:var(--bg)}body.cream .hero,body.contrast .hero{background:var(--panel)}body.cream .memory-box,body.cream .formula,body.contrast .memory-box,body.contrast .formula{background:var(--panel-light);color:var(--text)}body.cream .lesson-card.active,body.contrast .lesson-card.active{background:var(--panel-light)}body.cream th,body.contrast th{background:var(--panel-light)}.ruler-line{display:none;position:fixed;left:0;right:0;height:38px;background:#fbbf2420;border-block:2px solid #d69b23;pointer-events:none;z-index:2000}.map-node:focus-visible{outline:3px solid var(--cyan)}.map-node[aria-expanded=true]{background:var(--panel-light);outline:2px solid var(--accent)}.map-node strong{color:var(--text)}.module-heading h2,.card-heading h3{color:var(--text)}.reading-paragraph{background:#fbbf2433;outline:2px solid #e3a827;outline-offset:3px;border-radius:4px}.radial-hub{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:170px;text-align:center;z-index:2}.radial-hub .earth{width:150px;margin:0 auto}.radial-lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.map.radial{display:block;position:relative;min-height:650px;max-width:1160px;margin:25px auto}.radial .map-node{position:absolute;transform:translate(-50%,-50%);width:clamp(115px,16%,185px);min-height:70px;padding:8px;z-index:2;text-align:center;line-height:1.25}.radial .map-node:hover{transform:translate(-50%,-50%);filter:brightness(1.1)}.radial .map-node .symbol{font-size:22px}.radial .map-node strong{font-size:clamp(11px,1.1vw,15px)}.radial .map-node small{font-size:11px}.outline-branch{padding:12px;margin:12px 0;text-align:left;border:1px solid var(--border);border-radius:12px;background:var(--panel)}.outline-branch button{margin:4px}.phase-step{border-left:3px solid var(--blue);padding-left:12px;margin:12px 0}.theory p{scroll-margin-top:20px}body.cream .note{background:#faedc7;color:#493718}.lesson-card details{color:var(--text)}@media(max-width:900px){.map.radial{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));min-height:0;gap:8px}.radial .map-node{position:static;transform:none;width:auto;min-height:0}.radial .map-node:hover{transform:none}.radial-hub{position:static;transform:none;width:auto;grid-column:1/-1}.radial-lines{display:none}}@media print{.map.radial,.ruler-line,#branchOutline{display:none!important}.lesson-card{break-inside:auto}.theory,.memory-box{color:black!important;background:white!important}}
+</style>
+</head>
+
+<body>
+
+<header class="toolbar" id="toolbar">
+
+    <div class="toolbar-inner">
+
+        <div class="brand">
+            G.E.E. — AULA IMMERSIVA
+            <small>Geopedologia · Comprensione e memoria visiva</small>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-play" id="playBtn">
+                ▶ Avvia Lezione
+            </button>
+
+            <button class="btn" id="pauseBtn" disabled>
+                ⏸ Pausa
+            </button>
+
+            <button class="btn btn-stop" id="stopBtn" disabled>
+                ⏹ Stop
+            </button>
+
+            <button class="btn" id="prevBtn" aria-label="Blocco precedente">
+                ◀
+            </button>
+
+            <button class="btn" id="nextBtn" aria-label="Blocco successivo">
+                ▶
+            </button>
+
+            <select id="speed" aria-label="Velocità della lezione">
+                <option value="0.6">0.6x</option><option value="0.8">0.8x</option>
+                <option value="1" selected>1x</option>
+                <option value="1.2">1.2x</option><option value="1.4">1.4x</option>
+            </select>
+
+            <button class="btn" id="captionBtn" aria-pressed="false">
+                Sottotitoli
+            </button>
+
+            <button class="btn" id="themeBtn">Tema chiaro/scuro</button><label>Voce <select id="voicePicker" aria-label="Voce italiana"><option value="">Automatica</option></select></label><button class="btn" id="accessToggle" aria-expanded="false">Accessibilità</button><button class="btn" id="rockJump">Vai alle rocce</button>
+        </div>
+
+    </div>
+
+    <div id="accessPanel" hidden class="access-panel"><label>Font <select id="fontPicker"><option value="Segoe UI, Arial, sans-serif">Segoe UI</option><option value="Verdana, Arial, sans-serif">Verdana</option><option value="OpenDyslexic, Verdana, sans-serif">OpenDyslexic (se installato)</option></select></label><label>Testo <input id="fontSize" type="range" min="15" max="26" value="17"></label><label>Interlinea <input id="lineHeight" type="range" min="1.3" max="2.4" step=".1" value="1.75"></label><label>Tema <select id="themePicker"><option value="dark">Scuro</option><option value="light">Chiaro</option><option value="cream">Crema</option><option value="contrast">Alto contrasto</option></select></label><label><input id="rulerToggle" type="checkbox"> Righello</label><button class="btn" id="printBtn">Stampa</button></div><div class="progress-track">
+        <div id="progressBar"></div>
+    </div>
+
+    <div class="status-line">
+        <span id="status" role="status">Lezione pronta</span>
+        <span id="counter">0 / 0</span>
+    </div>
+
+    <div id="captionPanel"></div>
+
+</header>
+
+<main>
+
+    <section class="hero">
+
+        <div class="eyebrow">
+            Palazzo della memoria · Metodo OCME
+        </div>
+
+        <h1>Geopedologia</h1>
+
+        <p>
+            Un unico percorso mentale per comprendere la Terra,
+            riconoscere le rocce, spiegare i fenomeni geologici
+            e collegarli alla sicurezza delle costruzioni.
+        </p>
+
+        <svg class="earth" viewBox="0 0 240 240"
+             role="img" aria-label="Terra in sezione">
+            <defs>
+                <radialGradient id="ocean">
+                    <stop offset="0%" stop-color="#60c5ef"/>
+                    <stop offset="100%" stop-color="#174b96"/>
+                </radialGradient>
+            </defs>
+
+            <circle cx="120" cy="120" r="110"
+                    fill="url(#ocean)" stroke="#93c5fd" stroke-width="2"/>
+
+            <path d="M25 82L48 43 75 30 98 54 78 88
+                     95 112 65 140 35 119Z"
+                  fill="#69ad65"/>
+
+            <path d="M54 149L90 139 111 172
+                     82 213 55 181Z"
+                  fill="#69ad65"/>
+
+            <path d="M120 10A110 110 0 0 1 120 230Z"
+                  fill="#896047"/>
+
+            <path d="M120 22A98 98 0 0 1 120 218Z"
+                  fill="#bb5a32"/>
+
+            <path d="M120 52A68 68 0 0 1 120 188Z"
+                  fill="#f59e0b"/>
+
+            <path d="M120 83A37 37 0 0 1 120 157Z"
+                  fill="#fff0a0"/>
+        </svg>
+
+        <div class="hero-stats">
+            <div><strong id="sourceCount">17</strong><span>Documenti di riferimento</span></div>
+            <div><strong>12</strong><span>Macroargomenti</span></div>
+            <div><strong>12</strong><span>Stanze mnemoniche</span></div>
+            <div><strong id="totalBlocks">0</strong><span>Blocchi di lezione</span></div>
+        </div>
+
+        <h2>O — Mappa mentale generale</h2><p>Seleziona un ramo per espandere gli argomenti; ordine alfabetico dalle ore 12 in senso orario.</p><div id="conceptMap" class="map"></div><div id="branchOutline" aria-live="polite"></div>
+
+        <div class="note">
+            La lavagna conserva i nove moduli del file fornito e integra cartografia, meteorologia e suolo dai PDF del corso. È una rielaborazione didattica, non una
+            riproduzione integrale delle dispense. Le tabelle specialistiche e alcuni dati accessori restano da consultare nelle fonti originali. Non è una trascrizione integrale né conferma della data della verifica.
+            Le stanze e le associazioni sono proposte mnemoniche personalizzabili.
+        </div>
+
+    </section>
+
+    <div class="layout">
+        <aside class="sidebar" id="sidebar">
+            <h3>Indice della lavagna</h3>
+        </aside>
+
+        <div id="lessonContainer"></div>
+    </div>
+
+    <section class="footer">
+
+        <h2>Schedario permanente della conversione fonetica</h2>
+
+        <p>
+            Le vocali non rappresentano cifre. Le immagini richiamano i suoni
+            consonantici. Virgole, unità di misura, segni matematici e posizioni
+            dei pedici devono essere conservati separatamente.
+        </p>
+
+        <div class="alphabet" id="phoneticAlphabet"></div>
+
+        <h2>Documenti didattici utilizzati</h2>
+        <div id="sources"></div>
+
+        <h2>E — Esposizione (solo dopo lo studio)</h2><p>Argomenti indicati dal professore nel documento del 13 ottobre 2026; non costituiscono conferma della verifica odierna. Nessun quiz automatico.</p><ol><li>Rocce ignee</li><li>Rocce sedimentarie</li><li>Rocce metamorfiche</li><li>Tettonica a placche</li><li>Idrometeore: pioggia, neve e grandine</li><li>Radiazione solare effetto serra</li><li>Vulcanismo e rischio vulcanico</li><li>Sismologia fenomeno e rischio sismico</li><li>Orogenesi le fasi</li><li>Il mare</li><li>L’azione del vento</li><li>Materiali Lapidei (esempi e utilizzi)</li><li>Agenti esogeni termici e azione del ghiaccio</li><li>Meteorologia e cambiamento climatico</li><li>Tipi di faglie</li><li>Agenti esogeni chimici, carsismo</li><li>Magnetismo terrestre</li><li>Temperatura atmosfera, latitudine, altitudine, inversione termica</li><li>Ciclo dell’acqua</li><li>I fiumi</li></ol><p>Esponi in ordine: definizione, meccanismo, classificazione, esempio, applicazione. Attiva questa fase soltanto dopo organizzazione, comprensione e memorizzazione.</p><h2>Utilizzo della lezione</h2>
+
+        <p>
+            Avvia la lettura, osserva la card illuminata e visualizza la scena
+            descritta dal docente. Ogni blocco può essere ascoltato
+            autonomamente. Non sono presenti quiz o interrogazioni.
+        </p>
+
+        <p>
+            La pagina non utilizza servizi web o librerie esterne.
+            La lettura dipende dalla disponibilità della sintesi vocale
+            del browser e delle voci italiane del sistema operativo.
+            Per l'ascolto completamente offline è necessaria una voce locale.
+        </p>
+
+    </section>
+
+</main>
+
+<script>
+"use strict";
+
+/* =========================================================
+   REPERTORIO FONETICO
+   ========================================================= */
+
+const phonetic = [
+    { sound: "S/Z", word: "Osso", icon: "🦴" },
+    { sound: "T/D", word: "Tè", icon: "🍵" },
+    { sound: "N", word: "Noè", icon: "⛵" },
+    { sound: "M", word: "Amo", icon: "🪝" },
+    { sound: "R", word: "Re", icon: "👑" },
+    { sound: "L", word: "Ali", icon: "🪽" },
+    { sound: "C/G dolce", word: "Ciao, mano che saluta", icon: "👋" },
+    { sound: "C/G dura, K/Q", word: "Oca", icon: "🪿" },
+    { sound: "F/V", word: "UFO", icon: "🛸" },
+    { sound: "P/B", word: "Boa", icon: "🐍" }
+];
+
+const wordPairs = {
+    "00": "sasso",
+    "01": "seta",
+    "02": "seno",
+    "05": "sale",
+    "08": "sofà",
+    "09": "seppia",
+    "10": "tazza",
+    "11": "dado",
+    "12": "tana",
+    "13": "dama",
+    "14": "toro",
+    "15": "tela",
+    "16": "doccia",
+    "17": "tacco",
+    "18": "tuffo",
+    "19": "topo",
+    "20": "naso",
+    "21": "nodo",
+    "22": "nonno",
+    "23": "nano".replace("nano", "nome"),
+    "24": "nero",
+    "25": "anello",
+    "26": "noce",
+    "27": "nuca",
+    "30": "mazza",
+    "31": "moto",
+    "32": "mina",
+    "33": "mummia",
+    "35": "mela",
+    "40": "rosa",
+    "41": "rete",
+    "42": "rana",
+    "43": "ramo",
+    "45": "rullo",
+    "49": "arpa",
+    "50": "lazzo",
+    "52": "luna",
+    "56": "luce",
+    "60": "gesso",
+    "63": "cima",
+    "64": "cera",
+    "65": "gelo",
+    "69": "ceppo",
+    "70": "casa",
+    "75": "collo",
+    "79": "coppa",
+    "80": "vaso",
+    "90": "bacio".replace("bacio", "peso"),
+    "92": "pane",
+    "95": "palla"
+};
+
+function encodeDigits(value) {
+    return String(value).split("").map(char => {
+        if (/\d/.test(char)) {
+            return phonetic[Number(char)].word;
+        }
+        if (char === "," || char === ".") return "virgola o separatore";
+        if (char === "-") return "trattino";
+        return char;
+    }).join(" → ");
+}
+
+function encodeNumber(value) {
+
+    const normalized = String(value);
+
+    if (!/^\d+$/.test(normalized)) {
+        return encodeDigits(normalized);
+    }
+
+    const groups = normalized.match(/.{1,2}/g) || [];
+
+    return groups.map(group => {
+        if (wordPairs[group]) return wordPairs[group];
+        if (group.length === 1) return phonetic[Number(group)].word;
+        return group.split("").map(d => phonetic[Number(d)].word).join(" + ");
+    }).join(" → ");
+}
+
+/* =========================================================
+   DIAGRAMMI SVG INTEGRATI
+   Nessuna immagine richiede collegamenti Internet.
+   ========================================================= */
+
+const visuals = {
+
+    valleys: `
+        <svg viewBox="0 0 640 220" role="img"
+             aria-label="Differenza fra valle glaciale e fluviale">
+            <path d="M20 40L70 140Q160 210 250 140L300 40"
+                  fill="#7192a9" stroke="#b7d5e5" stroke-width="3"/>
+            <path d="M340 40L480 190L620 40"
+                  fill="#9b805b" stroke="#e2c69d" stroke-width="3"/>
+            <text x="160" y="28" fill="#fff" font-size="20"
+                  text-anchor="middle">VALLE A U</text>
+            <text x="480" y="28" fill="#fff" font-size="20"
+                  text-anchor="middle">VALLE A V</text>
+            <text x="160" y="210" fill="#93c5fd" font-size="16"
+                  text-anchor="middle">Ghiacciaio</text>
+            <text x="480" y="210" fill="#93c5fd" font-size="16"
+                  text-anchor="middle">Fiume</text>
+        </svg>`,
+
+    volcano: `
+        <svg viewBox="0 0 640 340" role="img"
+             aria-label="Sezione di un apparato vulcanico">
+            <path d="M20 245L290 40L325 60L350 40L620 245Z"
+                  fill="#9d8269" stroke="#c5b197" stroke-width="3"/>
+            <ellipse cx="320" cy="280" rx="100" ry="35"
+                     fill="#dc572c" stroke="#fb923c"/>
+            <path d="M305 280V58H333V280Z" fill="#f97316"/>
+            <path d="M302 58Q250 85 240 125"
+                  stroke="#fb923c" stroke-width="16" fill="none"/>
+            <g fill="#fff" font-size="17">
+                <text x="360" y="55">Cratere</text>
+                <text x="350" y="157">Camino</text>
+                <text x="90" y="155">Edificio</text>
+                <text x="320" y="286" text-anchor="middle">
+                    Camera magmatica
+                </text>
+            </g>
+        </svg>`,
+
+    rockCycle: `
+        <svg viewBox="0 0 640 350" role="img"
+             aria-label="Ciclo litogenetico semplificato">
+            <defs>
+                <marker id="rockarrow" viewBox="0 0 10 10"
+                        refX="9" refY="5" markerWidth="6"
+                        markerHeight="6" orient="auto">
+                    <path d="M0 0L10 5L0 10Z" fill="#cbd5e1"/>
+                </marker>
+            </defs>
+            <g fill="#243850" stroke="#8ca5c0" stroke-width="2">
+                <rect x="235" y="12" width="170" height="40" rx="8"/>
+                <rect x="450" y="108" width="170" height="40" rx="8"/>
+                <rect x="435" y="275" width="185" height="40" rx="8"/>
+                <rect x="20" y="275" width="185" height="40" rx="8"/>
+                <rect x="20" y="108" width="170" height="40" rx="8"/>
+            </g>
+            <g fill="#fff" font-size="16" text-anchor="middle">
+                <text x="320" y="37">MAGMA</text>
+                <text x="535" y="134">IGNEE</text>
+                <text x="527" y="301">SEDIMENTI</text>
+                <text x="112" y="301">SEDIMENTARIE</text>
+                <text x="105" y="134">METAMORFICHE</text>
+            </g>
+            <g stroke="#cbd5e1" stroke-width="2.5" fill="none"
+               marker-end="url(#rockarrow)">
+                <path d="M405 32Q535 40 535 105"/>
+                <path d="M535 150V270"/>
+                <path d="M430 295H210"/>
+                <path d="M105 270V152"/>
+                <path d="M105 105Q105 30 230 32"/>
+                <path d="M450 150Q320 215 190 150"/>
+            </g>
+            <g fill="#b7c6da" font-size="13" text-anchor="middle">
+                <text x="495" y="68">Raffreddamento</text>
+                <text x="575" y="194">Erosione</text>
+                <text x="575" y="212">Trasporto</text>
+                <text x="575" y="230">Deposito</text>
+                <text x="320" y="285">Diagenesi</text>
+                <text x="60" y="205">Pressione</text>
+                <text x="60" y="222">Calore</text>
+                <text x="150" y="65">Fusione</text>
+                <text x="320" y="177">Metamorfismo</text>
+            </g>
+        </svg>`,
+
+    igneous: `
+        <svg viewBox="0 0 640 280" role="img"
+             aria-label="Raffreddamento intrusivo ed effusivo">
+            <path d="M0 100H160L300 20L440 100H640V280H0Z"
+                  fill="#9f8768"/>
+            <ellipse cx="300" cy="230" rx="75" ry="35"
+                     fill="#ea580c"/>
+            <path d="M290 220V38H315V220Z" fill="#fb923c"/>
+            <path d="M310 38Q380 95 490 100"
+                  stroke="#ef6b35" stroke-width="12" fill="none"/>
+            <ellipse cx="120" cy="195" rx="60" ry="36"
+                     fill="#d7d0c4"/>
+            <g fill="#697687">
+                <rect x="83" y="177" width="18" height="18"/>
+                <rect x="130" y="200" width="22" height="16"/>
+                <rect x="112" y="166" width="12" height="12"/>
+            </g>
+            <g fill="#fff" font-size="17">
+                <text x="30" y="28">INTRUSIVE</text>
+                <text x="30" y="52">Cristalli grandi</text>
+                <text x="440" y="28">EFFUSIVE</text>
+                <text x="440" y="52">Cristalli piccoli</text>
+                <text x="120" y="201" text-anchor="middle"
+                      fill="#17263b">Granito</text>
+            </g>
+        </svg>`,
+
+    sediment: `
+        <svg viewBox="0 0 640 230" role="img"
+             aria-label="Erosione, trasporto, deposito e diagenesi">
+            <path d="M10 145L105 35L205 145Z" fill="#9d8c73"/>
+            <path d="M115 85Q220 155 335 165"
+                  stroke="#38bdf8" stroke-width="15" fill="none"/>
+            <rect x="330" y="155" width="295" height="70"
+                  fill="#c6a067"/>
+            <path d="M330 178H625M330 200H625"
+                  stroke="#7d6243" stroke-width="3"/>
+            <rect x="470" y="58" width="100" height="18" rx="3"
+                  fill="#94a3b8"/>
+            <rect x="509" y="18" width="22" height="40"
+                  fill="#94a3b8"/>
+            <path d="M520 80V140L510 126M520 140L530 126"
+                  stroke="#fb7185" stroke-width="4" fill="none"/>
+            <g fill="#fff" font-size="15">
+                <text x="20" y="20">EROSIONE</text>
+                <text x="180" y="115">TRASPORTO</text>
+                <text x="337" y="148">DEPOSITO</text>
+                <text x="520" y="14" text-anchor="middle">DIAGENESI</text>
+            </g>
+        </svg>`,
+
+    seismic: `
+        <svg viewBox="0 0 640 300" role="img"
+             aria-label="Ipocentro, epicentro e onde sismiche">
+            <rect x="0" y="65" width="640" height="235"
+                  fill="#ae8c6b" opacity=".45"/>
+            <path d="M0 65H640" stroke="#71a673" stroke-width="5"/>
+            <path d="M170 300L450 65"
+                  stroke="#f87171" stroke-width="4"/>
+            <g fill="none" stroke="#fbbf24" stroke-width="2">
+                <circle cx="305" cy="185" r="35"/>
+                <circle cx="305" cy="185" r="70"/>
+                <circle cx="305" cy="185" r="105"/>
+            </g>
+            <path d="M305 185V65" stroke="#fff"
+                  stroke-width="2" stroke-dasharray="6 5"/>
+            <circle cx="305" cy="185" r="8" fill="#f87171"/>
+            <circle cx="305" cy="65" r="8" fill="#f87171"/>
+            <g fill="#fff" font-size="19">
+                <text x="330" y="55">EPICENTRO</text>
+                <text x="330" y="185">IPOCENTRO</text>
+            </g>
+        </svg>`,
+
+    plates: `
+        <svg viewBox="0 0 640 430" role="img"
+             aria-label="Tre tipi di margini delle placche">
+            <g fill="#fff" font-size="18" font-weight="bold">
+                <text x="320" y="25" text-anchor="middle">
+                    DIVERGENTI
+                </text>
+                <text x="320" y="165" text-anchor="middle">
+                    CONVERGENTI
+                </text>
+                <text x="320" y="305" text-anchor="middle">
+                    CONSERVATIVI
+                </text>
+            </g>
+            <g fill="#a88c6c">
+                <rect x="40" y="65" width="250" height="40"/>
+                <rect x="350" y="65" width="250" height="40"/>
+                <path d="M310 205L390 180L450 205H600V245H310Z"/>
+                <rect x="120" y="345" width="190" height="65"/>
+                <rect x="330" y="330" width="190" height="65"/>
+            </g>
+            <path d="M320 125V55"
+                  stroke="#f97316" stroke-width="18"/>
+            <path d="M40 205H285L450 265L435 282L275 245H40Z"
+                  fill="#668fa8"/>
+            <g stroke="#93c5fd" stroke-width="4" fill="none">
+                <path d="M260 50H110L125 40M110 50L125 60"/>
+                <path d="M380 50H530L515 40M530 50L515 60"/>
+                <path d="M80 190H240L225 180M240 190L225 200"/>
+                <path d="M560 190H440L455 180M440 190L455 200"/>
+                <path d="M210 395V345L200 360M210 345L220 360"/>
+                <path d="M425 340V390L415 375M425 390L435 375"/>
+            </g>
+        </svg>`
+};
+
+/* =========================================================
+   CONTENUTI DEL CORSO
+   Le spiegazioni sono rielaborazioni degli appunti.
+   I testi audio sono separati dai simboli grafici.
+   ========================================================= */
+
+const modules = [
+
+{
+    id: "A",
+    title: "Agenti esogeni",
+    room: "Giardino",
+    icon: "🌊",
+    color: "#4ade80",
+    overview: "L'energia esterna modella il paesaggio.",
+    blocks: [
+
+        {
+            title: "Forze esogene e alterazione chimica",
+            flow: ["ENERGIA SOLARE", "ALTERAZIONE", "EROSIONE", "PAESAGGIO"],
+            theory: [
+                "Le forze esogene modificano il rilievo terrestre attraverso processi alimentati principalmente dall'energia solare. Si distinguono dalle forze endogene, legate all'energia interna della Terra.",
+                "L'alterazione chimica comprende dissoluzione, ossidazione, idrolisi e idratazione. L'acqua e le sostanze disciolte modificano la composizione dei minerali.",
+                "La respirazione delle radici e l'attività microbica possono arricchire l'acqua di anidride carbonica, favorendo la dissoluzione delle rocce carbonatiche.",
+                "L'ossigeno rappresenta circa il 21% dell'atmosfera. L'ossidazione interessa i minerali contenenti ferro e altri elementi. Tra i prodotti citati negli appunti compaiono ematite e bauxite.",
+                "Le terre rosse possono derivare dai residui insolubili ricchi di ferro e alluminio prodotti dall'alterazione dei calcari."
+            ],
+            locus: "Cancello del giardino. Un Sole gigantesco aziona quattro bottiglie che sciolgono, ossidano, idratano e trasformano chimicamente una roccia.",
+            hook: "DOII: Dissoluzione, Ossidazione, Idrolisi, Idratazione.",
+            formula: "Ematite: Fe₂O₃",
+            formulaMemory: "Ferro come un martello, ossigeno come un palloncino, Noè per il pedice due e un amo per il pedice tre.",
+            audio: "Entriamo nel giardino. Guarda il Sole. È il motore di molti processi che modificano la superficie terrestre. Una roccia può essere trasformata chimicamente dall'acqua, dall'ossigeno e dalle sostanze disciolte. Immagina quattro bottiglie che attaccano la roccia. Rappresentano dissoluzione, ossidazione, idrolisi e idratazione. Le radici e i microrganismi possono favorire l'alterazione dei calcari. L'ossidazione dei minerali contenenti ferro può contribuire alla formazione di prodotti rossastri. Ricorda il Sole e le quattro bottiglie.",
+            source: "Presentazione standard di PowerPoint.pdf — Gli agenti esogeni, pagina 3."
+        },
+
+        {
+            title: "Crioclastismo e termoclastismo",
+            flow: ["ACQUA NELLA FRATTURA", "GELO", "ESPANSIONE", "FRAMMENTAZIONE"],
+            theory: [
+                "Il crioclastismo è la frammentazione meccanica delle rocce favorita dai cicli di congelamento e disgelo dell'acqua presente nelle fratture.",
+                "Congelando, l'acqua aumenta il proprio volume di circa il 9%. I frammenti prodotti possono presentare spigoli acuti.",
+                "Il termoclastismo è collegato ai cicli di riscaldamento e raffreddamento, che producono dilatazioni e contrazioni dei materiali e favoriscono la disgregazione.",
+                "I frammenti possono essere successivamente erosi, trasportati e accumulati."
+            ],
+            locus: "Rubinetto del giardino. Una boa si gonfia nella frattura di una pietra. Subito dopo un termometro gigante riscalda e raffredda un altro masso.",
+            hook: "CRIO significa freddo. TERMO richiama il calore. CLASTO significa frammento.",
+            rhyme: "Il gelo spacca, il calore dilata, la roccia col tempo viene frammentata.",
+            audio: "Guarda il rubinetto del giardino. L'acqua entra nella frattura della roccia. Quando congela, aumenta di volume di circa il nove per cento. Visualizza una boa gigantesca, perché boa rappresenta il numero nove. La boa si gonfia e allarga la frattura. Questo è il crioclastismo. Il termoclastismo è invece legato alle dilatazioni e alle contrazioni causate dalle variazioni termiche. Ricorda la boa e il termometro.",
+            source: "Gli agenti esogeni, pagina 4."
+        },
+
+        {
+            title: "Azione del vento",
+            flow: ["DEFLAZIONE", "CORRASIONE", "DEPOSITO EOLICO"],
+            theory: [
+                "La deflazione consiste nell'asportazione e nel trasporto di particelle da parte del vento.",
+                "La corrasione è l'azione abrasiva esercitata dai granuli trasportati contro le superfici rocciose.",
+                "Quando il vento perde velocità, deposita il materiale, formando accumuli e dune, spesso caratterizzati da stratificazione incrociata.",
+                "Le dune presentano generalmente un profilo asimmetrico, con versante sopravento meno ripido e versante sottovento più ripido.",
+                "Gli appunti distinguono erg, deserti sabbiosi; hamada, deserti rocciosi; serir, deserti prevalentemente ciottolosi."
+            ],
+            locus: "Cancello laterale. Un aspirapolvere aspira la sabbia, una smerigliatrice scolpisce le rocce e un camion scarica dune.",
+            hook: "DCD: Deflazione, Corrasione, Deposito. Erg, hamada, serir: sabbia, roccia, ciottoli.",
+            audio: "Ora guarda il vento. Tiene in mano un aspirapolvere e una carta vetrata. L'aspirapolvere rappresenta la deflazione, cioè l'asportazione delle particelle. La carta vetrata rappresenta la corrasione, l'abrasione causata dai granuli trasportati. Quando il vento rallenta, deposita il materiale. Nascono così le dune. Ricorda inoltre le tre tipologie di deserto. Erg, sabbioso. Hamada, roccioso. Serir, ciottoloso.",
+            source: "Gli agenti esogeni, pagine 5–6."
+        },
+
+        {
+            title: "Azione del mare e modellamento costiero",
+            flow: ["ONDE E CORRENTI", "ABRASIONE", "TRASPORTO", "DEPOSITO"],
+            theory: [
+                "L'abrasione marina è l'azione erosiva delle onde e dei sedimenti che trasportano.",
+                "L'aloclastismo è la frammentazione favorita dalla crescita dei cristalli salini nelle porosità e nelle fratture.",
+                "Nelle coste alte prevalgono frequentemente i fenomeni erosivi. Le falesie sono pareti costiere ripide.",
+                "Nelle coste basse si possono formare spiagge, piane di marea, lagune, cordoni litoranei e tomboli.",
+                "Un tombolo è un accumulo sedimentario che può collegare un'isola alla terraferma.",
+                "Gli appunti trattano inoltre fiordi, coste a rias e rettificazione delle linee costiere.",
+                "Il delta si forma quando i sedimenti fluviali si accumulano presso la foce. L'estuario presenta una foce generalmente allargata, influenzata dalle maree e dalla dinamica marina."
+            ],
+            locus: "Piscina del giardino. Onde armate di martelli scolpiscono una falesia, mentre cristalli di sale si gonfiano nelle crepe.",
+            hook: "ABRASIONE, martello. ALOCLASTISMO, sale. TOMBOLO, ponte di sabbia.",
+            audio: "Avviciniamoci alla piscina. Immagina onde gigantesche che lanciano sabbia e ciottoli contro una parete rocciosa. Questo è il meccanismo dell'abrasione marina. Ora osserva i cristalli di sale crescere nelle fratture. È l'aloclastismo. Le coste alte possono essere interessate dall'erosione, mentre lungo le coste basse possono accumularsi sedimenti. Un tombolo è come un ponte di sabbia. Alla foce dei fiumi distinguiamo il delta, legato all'accumulo di sedimenti, e l'estuario, generalmente allargato e influenzato dalle maree.",
+            source: "Gli agenti esogeni, pagine 7–9."
+        },
+
+        {
+            title: "Ghiacciai, ablazione ed esarazione",
+            visual: "valleys",
+            flow: ["ACCUMULO", "MOVIMENTO", "ESARAZIONE", "ABLAZIONE"],
+            theory: [
+                "Un ghiacciaio si forma dove l'accumulo e la trasformazione della neve consentono la persistenza di una massa di ghiaccio.",
+                "L'ablazione è l'insieme dei processi che determinano la perdita di massa del ghiacciaio, come fusione, sublimazione e distacco di ghiaccio.",
+                "L'esarazione è l'erosione esercitata dal ghiacciaio in movimento sulle rocce sottostanti e laterali.",
+                "Le valli glaciali presentano tipicamente una sezione a U, mentre quelle fluviali assumono frequentemente una sezione a V.",
+                "Circhi glaciali, laghi di fusione, rocce montonate e morene sono forme associate alla dinamica glaciale.",
+                "Le morene possono essere laterali, mediane, frontali e di fondo. Il riscaldamento climatico può determinare arretramento delle fronti glaciali."
+            ],
+            locus: "Una montagna di ghiaccio entra nel giardino e scava una lettera U gigantesca. Una lima raschia le rocce.",
+            hook: "ESARAZIONE: raschiare. ABLAZIONE: perdere massa. U glaciale, V fluviale.",
+            audio: "Saliamo idealmente in montagna. Il ghiacciaio sembra immobile, ma si muove lentamente. Immaginalo come una gigantesca lima che raschia le rocce. Questo processo si chiama esarazione. Il ghiacciaio può scavare una valle a forma di U. Il fiume può invece incidere una valle a forma di V. L'ablazione è la perdita di massa del ghiacciaio. I detriti accumulati e trasportati dal ghiaccio formano depositi morenici.",
+            source: "Gli agenti esogeni, pagine 10–11 e 15."
+        },
+
+        {
+            title: "Dinamica fluviale e curva di Hjulström",
+            flow: ["MONTANA: EROSIONE", "PEDEMONTANA: TRASPORTO", "TERMINALE: DEPOSITO"],
+            theory: [
+                "Il corso d'acqua modifica continuamente il proprio alveo attraverso erosione, trasporto e deposito.",
+                "Nella sezione montana prevale generalmente l'erosione. Nella sezione pedemontana assumono importanza il trasporto e l'equilibrio tra erosione e deposito. Nella sezione terminale prevalgono spesso gli accumuli sedimentari.",
+                "Si distinguono erosione di fondo ed erosione di sponda. I meandri possono evolvere attraverso erosione laterale e deposito.",
+                "Le forme di trasporto comprendono trascinamento, rotolamento, saltazione, sospensione, flottazione e soluzione.",
+                "La curva di Hjulström mette in relazione velocità del flusso e diametro delle particelle, distinguendo erosione, trasporto e sedimentazione.",
+                "Gli appunti richiamano inoltre laghi alluvionali, glaciali, carsici, vulcanici e di sbarramento."
+            ],
+            locus: "Vialetto inclinato. Un fiume scava in alto, carica i frammenti su camion e li scarica in pianura.",
+            hook: "ETD: Erosione, Trasporto, Deposito. Trascina, rotola, salta, sospende, galleggia e scioglie.",
+            rhyme: "In montagna scava, a metà trasporta, in pianura il deposito porta.",
+            audio: "Seguiamo il fiume dalla montagna fino alla pianura. In alto osserviamo l'erosione. Nella parte intermedia osserviamo soprattutto il trasporto. Nella parte terminale i materiali possono depositarsi. Immagina i granuli che vengono trascinati, rotolano, saltano o restano sospesi. Alcune sostanze vengono trasportate in soluzione. La curva di Hjulström collega la velocità della corrente con la dimensione delle particelle. Ci aiuta a comprendere quando il materiale può essere eroso, trasportato oppure depositato.",
+            source: "Gli agenti esogeni, pagine 12–15."
+        }
+    ]
+},
+
+{
+    id: "B",
+    title: "Carsismo",
+    room: "Cantina",
+    icon: "💧",
+    color: "#22d3ee",
+    overview: "L'acqua dissolve e rideposita le rocce carbonatiche.",
+    blocks: [
+
+        {
+            title: "Origine e reazione chimica del carsismo",
+            flow: ["ROCCIA SOLUBILE", "ACQUA + CO₂", "DISSOLUZIONE", "CAVITÀ"],
+            theory: [
+                "Il carsismo è la dissoluzione chimica delle rocce solubili, soprattutto calcari e dolomie, a opera delle acque ricche di anidride carbonica.",
+                "Il nome deriva dal Carso, regione tra Trieste e Slovenia.",
+                "Le condizioni favorevoli comprendono roccia carbonatica e fratturata, acqua ricca di anidride carbonica e tempo.",
+                "Il carbonato di calcio può trasformarsi in bicarbonato solubile. Quando si libera anidride carbonica, il carbonato può nuovamente precipitare.",
+                "Il fenomeno interessa soprattutto rocce sedimentarie carbonatiche, ma anche marmi di origine metamorfica."
+            ],
+            formula: "CaCO₃ + H₂O + CO₂ ⇌ Ca(HCO₃)₂",
+            formulaMemory: "Calcio come un calciatore, carbonio come carbone, ossigeno come palloncino, idrogeno come una sorgente d'acqua. Il numero tre è un amo e il due è Noè. Due frecce contrapposte ricordano la reversibilità.",
+            locus: "Scala della cantina. Un calciatore di pietra viene progressivamente dissolto da gocce d'acqua gigantesche.",
+            hook: "RAT: Roccia, Acqua, Tempo.",
+            audio: "Scendiamo in cantina. Il pavimento è di calcare. Enormi gocce d'acqua arricchita di anidride carbonica penetrano nelle fratture. Il carbonato di calcio reagisce con acqua e anidride carbonica formando bicarbonato di calcio solubile. La reazione può avvenire anche in senso inverso. Visualizza un calciatore fatto di pietra che si dissolve e poi si ricostruisce. Ricorda la parola RAT. Roccia, acqua, tempo.",
+            source: "Il carsismo.pdf, pagine 1–2."
+        },
+
+        {
+            title: "Forme epigee, ipogee e conseguenze territoriali",
+            flow: ["SUPERFICIE", "INFILTRAZIONE", "GROTTE", "SORGENTI"],
+            theory: [
+                "Le forme epigee comprendono campi solcati o karren, doline, uvale, polje e inghiottitoi.",
+                "Le doline sono depressioni chiuse, mentre gli inghiottitoi permettono all'acqua superficiale di entrare nel sottosuolo.",
+                "Le forme ipogee comprendono grotte, pozzi, foibe e sistemi di circolazione idrica sotterranea.",
+                "Le stalattiti crescono dal soffitto. Le stalagmiti crescono dal pavimento. La loro unione può formare colonne.",
+                "Il carsismo può determinare suoli sottili, scarsa circolazione idrica superficiale, falde vulnerabili all'inquinamento e possibili sprofondamenti."
+            ],
+            locus: "Soffitto e pavimento della cantina. Una stalattite scende come un lampadario, mentre una stalagmite sale come un pilastro.",
+            hook: "EPI: sopra. IPO: sotto. Stalattite dal tetto, stalagmite dal terreno.",
+            rhyme: "Dal soffitto scende la stalattite, dal pavimento cresce la stalagmite.",
+            audio: "Guarda prima il pavimento esterno. Le doline, i campi solcati e gli inghiottitoi appartengono alle forme superficiali. Ora entriamo nella grotta. Dal soffitto scendono le stalattiti. Dal pavimento salgono le stalagmiti. Quando si incontrano possono formare colonne. Il territorio carsico richiede attenzione perché l'acqua può infiltrarsi rapidamente, trasportando anche sostanze inquinanti. Le cavità possono inoltre influire sulla stabilità del terreno.",
+            source: "Il carsismo.pdf, pagina 3; Gli agenti esogeni, pagina 15."
+        }
+    ]
+},
+
+{
+    id: "C",
+    title: "Fattori endogeni",
+    room: "Locale caldaia",
+    icon: "🌋",
+    color: "#fb923c",
+    overview: "L'energia interna genera montagne, vulcani e deformazioni.",
+    blocks: [
+
+        {
+            title: "Faglie e pieghe",
+            flow: ["TENSIONI TETTONICHE", "DEFORMAZIONE", "PIEGA O FAGLIA"],
+            theory: [
+                "Una faglia è una frattura lungo la quale si verifica uno spostamento relativo dei blocchi rocciosi.",
+                "Le faglie dirette sono generalmente associate a distensione; le inverse a compressione; le trascorrenti a movimenti prevalentemente orizzontali.",
+                "Il sistema Horst-Graben comprende blocchi relativamente sollevati e ribassati, tipici di configurazioni distensive.",
+                "Una piega è una deformazione continua degli strati senza una necessaria frattura.",
+                "Nelle strutture non rovesciate, le anticlinali presentano generalmente gli strati più antichi nel nucleo, mentre le sinclinali presentano quelli più recenti."
+            ],
+            locus: "Due mattoni della caldaia scorrono lungo una crepa. Un tappeto roccioso si piega formando archi e conche.",
+            hook: "FAGLIA: frattura con movimento. PIEGA: deformazione continua.",
+            audio: "Entriamo nel locale caldaia. Osserva due mattoni che scorrono lungo una frattura. Questa è una faglia. Se la crosta si distende possiamo avere faglie dirette. Se viene compressa possiamo avere faglie inverse. Lo scorrimento laterale caratterizza le faglie trascorrenti. Ora comprimo un tappeto. Si deforma senza rompersi. Questo richiama una piega. Un'anticlinale e una sinclinale descrivono differenti configurazioni degli strati.",
+            source: "endogeni.pdf — I fattori endogeni, pagine 11–12."
+        },
+
+        {
+            title: "Orogenesi e ciclo orogenetico",
+            flow: ["DEPOSITO", "COMPRESSIONE", "SOLLEVAMENTO", "CORDIGLIERA", "EROSIONE"],
+            theory: [
+                "L'orogenesi comprende i processi di formazione e sollevamento delle catene montuose, associati a deformazioni tettoniche.",
+                "Gli appunti distinguono orogeni e cratoni, cioè regioni interessate da processi orogenetici e settori continentali relativamente stabili.",
+                "La dispensa presenta il modello storico del ciclo geosinclinale: deposito, geosinclinale, stadio orogenetico e cordigliera, seguiti dall'evoluzione erosiva verso il penepiano.",
+                "Il flysch comprende successioni sedimentarie frequentemente associate a bacini interessati dall'evoluzione delle catene montuose.",
+                "Il caso dell'orogenesi alpina viene collegato alla convergenza tra Africa ed Europa e alla sedimentazione dei materiali nella pianura padana.",
+                "Il documento riporta circa 300 milioni di anni per il ciclo orogenetico illustrato. Tale durata va considerata un riferimento dello schema didattico, non una regola universale."
+            ],
+            locus: "Sopra la caldaia due mani comprimono un tappeto fino a farne emergere una montagna.",
+            hook: "ORO significa montagna; GENESI significa formazione.",
+            audio: "Guarda le due mani che comprimono il tappeto. Gli strati si deformano, si piegano e possono sollevarsi. Questa scena rappresenta l'orogenesi. Gli appunti descrivono un modello che parte dal deposito dei sedimenti, passa attraverso una fase di compressione e arriva al sollevamento della catena montuosa. L'erosione modifica poi il rilievo. Collega questa scena alle Alpi e alla formazione dei depositi della pianura padana.",
+            source: "I fattori endogeni, pagine 3–4."
+        },
+
+        {
+            title: "Struttura del vulcano e proprietà dei magmi",
+            visual: "volcano",
+            flow: ["CAMERA MAGMATICA", "CAMINO", "CRATERE", "PRODOTTI ERUTTIVI"],
+            theory: [
+                "Il vulcanismo comprende i fenomeni di risalita e fuoriuscita di magma, gas e materiali solidi.",
+                "L'apparato vulcanico può comprendere camera magmatica, camino, cratere apicale, crateri laterali ed edificio vulcanico.",
+                "L'accumulo dei prodotti eruttati costruisce l'edificio. Una caldera è una depressione generalmente associata al collasso di una parte dell'apparato.",
+                "Gli appunti distinguono vulcani attivi, quiescenti ed estinti. La valutazione dello stato di attività non dipende da una soglia temporale unica.",
+                "I magmi più ricchi di silice sono generalmente più viscosi; quelli basaltici sono spesso più fluidi. La temperatura, la composizione e i gas influenzano il comportamento eruttivo.",
+                "Tra le forme delle intrusioni magmatiche citate compaiono filoni e laccoliti."
+            ],
+            locus: "La caldaia esplode come un vulcano in miniatura. Un serbatoio rosso comunica con un tubo e con un'apertura superiore.",
+            hook: "CCC: Camera, Camino, Cratere.",
+            audio: "Guarda la sezione del vulcano. In profondità troviamo la camera magmatica. Il camino è il condotto che permette al magma di risalire. Il cratere è l'apertura dell'apparato. Immagina ora due liquidi, olio e miele. Il primo scorre facilmente, il secondo è più viscoso. La composizione, la temperatura e i gas influenzano le caratteristiche del magma e delle eruzioni. Memorizza la sequenza camera, camino, cratere.",
+            source: "I fattori endogeni, pagine 5–6 e 14."
+        },
+
+        {
+            title: "Lave, eruzioni ed edifici vulcanici",
+            flow: ["COMPOSIZIONE", "VISCOSITÀ", "ERUZIONE", "EDIFICIO VULCANICO"],
+            theory: [
+                "Le tipologie di lava illustrate sono a corde, clinker, a blocchi, molto viscosa o solida, a nido d'ape e a cuscino.",
+                "Le pillow lavas, o lave a cuscino, sono tipiche della solidificazione di lave in ambiente subacqueo.",
+                "Le eruzioni hawaiane sono generalmente effusive e associate a lave fluide; possono costruire vulcani a scudo.",
+                "Le eruzioni islandesi sono spesso legate a fratture lineari. Le stromboliane producono esplosioni intermittenti. Le peleane e pliniane comprendono fenomeni esplosivi.",
+                "Gli stratovulcani sono costruiti dall'accumulo di prodotti lavici e piroclastici.",
+                "La dispensa riporta come esempi Mauna Loa, Laki, Etna, Mont Pelée, Vesuvio e Krakatoa."
+            ],
+            locus: "Sei vasche accanto alla caldaia contengono corde incandescenti, clinker, blocchi, miele denso, celle esagonali e cuscini di lava.",
+            hook: "Corda, clinker, blocco, solida, nido, cuscino.",
+            audio: "Immagina sei vasche di lava. La prima contiene corde, la seconda frammenti ruvidi, la terza blocchi, la quarta materiale molto viscoso, la quinta celle esagonali e l'ultima cuscini formati sott'acqua. Sono le tipologie illustrate negli appunti. Le eruzioni effusive possono costruire ampi vulcani a scudo. Le eruzioni lungo fratture possono formare apparati lineari. Le eruzioni esplosive producono anche frammenti vulcanici. L'accumulo alternato di lave e piroclasti contribuisce alla costruzione degli stratovulcani.",
+            source: "I fattori endogeni, pagine 7–9."
+        },
+
+        {
+            title: "Piroclasti e vulcanismo secondario",
+            flow: ["CENERI", "LAPILLI", "BOMBE", "DEPOSITI PIROCLASTICI"],
+            theory: [
+                "I piroclasti sono frammenti prodotti dall'attività vulcanica esplosiva.",
+                "Le ceneri hanno dimensioni inferiori a 2 mm. I lapilli sono compresi tra 2 e 64 mm. Bombe e blocchi superano 64 mm; si distinguono anche per lo stato dei materiali al momento dell'espulsione.",
+                "Le pomici presentano numerose cavità. La pozzolana è utilizzabile nella preparazione di leganti idraulici.",
+                "Il vulcanismo secondario comprende fumarole, mofete, putizze, solfatare, soffioni, geyser, sorgenti termali e fanghi ribollenti.",
+                "Alcune manifestazioni geotermiche sono sfruttate per la produzione energetica.",
+                "Gli esempi storici delle dispense comprendono il Vesuvio del 79 d.C., Krakatoa nel 1883 e Mont Pelée nel 1902."
+            ],
+            locus: "Noè raccoglie lapilli mentre gigantesche candele di cera delimitano le dimensioni dei frammenti. Intorno alla caldaia soffiano getti di vapore.",
+            hook: "CLB: Ceneri, Lapilli, Bombe. Vapore, gas, acqua calda: vulcanismo secondario.",
+            audio: "Ora il vulcano espelle materiali solidi. Ricorda Noè, il numero due, e la cera, il numero sessantaquattro. Le ceneri sono inferiori a due millimetri. I lapilli si collocano tra due e sessantaquattro millimetri. I frammenti più grossi comprendono bombe e blocchi. Accanto al vulcano compaiono fumarole, geyser, sorgenti termali e altri fenomeni secondari. Il calore interno continua a manifestarsi anche quando non è in corso una grande eruzione.",
+            source: "I fattori endogeni, pagine 9–10 e 14."
+        },
+
+        {
+            title: "Maremoti e tsunami",
+            flow: ["PERTURBAZIONE", "SPOSTAMENTO DELL'ACQUA", "PROPAGAZIONE", "INONDAZIONE"],
+            theory: [
+                "Uno tsunami può essere generato dallo spostamento improvviso di una massa d'acqua, per esempio a seguito di terremoti sottomarini, frane o eruzioni.",
+                "In oceano aperto la velocità può raggiungere diverse centinaia di chilometri orari; gli appunti citano valori fino a circa 700–800 km/h.",
+                "Avvicinandosi alla costa, la velocità e le caratteristiche delle onde cambiano in relazione alla profondità del fondale.",
+                "Il ritiro improvviso del mare, detto drawdown, può precedere l'arrivo di alcune onde, ma non si manifesta necessariamente in tutti gli tsunami."
+            ],
+            locus: "Una vasca enorme viene sollevata improvvisamente dal basso e tutta l'acqua si mette in movimento.",
+            hook: "Spostamento, propagazione, costa, inondazione.",
+            audio: "Guarda la grande vasca. Il fondo si solleva all'improvviso e mette in movimento l'acqua sovrastante. Questa scena rappresenta il principio di generazione di uno tsunami. Le onde si propagano anche a velocità molto elevate. Avvicinandosi alla costa cambiano caratteristiche e possono provocare inondazioni. Un improvviso ritiro del mare può essere un segnale naturale di pericolo, ma non precede necessariamente tutte le onde.",
+            source: "I fattori endogeni, pagina 13."
+        }
+    ]
+},
+
+{
+    id: "D",
+    title: "Materiali lapidei",
+    room: "Garage",
+    icon: "🧱",
+    color: "#e4b67d",
+    overview: "Origine, riconoscimento e impieghi edilizi.",
+    blocks: [
+
+        {
+            title: "Riconoscimento dei nove materiali lapidei",
+            flow: ["ORIGINE GEOLOGICA", "ASPETTO", "PROPRIETÀ", "IMPIEGO"],
+            table: {
+                headers: ["Materiale", "Origine e riconoscimento", "Impieghi e attenzione"],
+                rows: [
+                    ["Ardesia", "Metamorfica. Grana finissima, clivaggio in lastre.", "Coperture e rivestimenti; osservare i piani di separazione."],
+                    ["Basalto", "Magmatica effusiva. Scura, a grana fine, talvolta con cavità.", "Pavimentazioni e aggregati."],
+                    ["Ghiaia", "Aggregato naturale. Elementi prevalentemente arrotondati.", "Calcestruzzi e drenaggi."],
+                    ["Granito", "Magmatica intrusiva. Cristalli visibili e intrecciati.", "Gradini, pavimenti e rivestimenti; attenzione alle denominazioni commerciali."],
+                    ["Marmo", "Metamorfica da calcare o dolomia. Struttura cristallina.", "Rivestimenti e sculture; il marmo calcitico è sensibile agli acidi."],
+                    ["Pietra forte", "Arenaria sedimentaria, generalmente bruno-giallastra.", "Murature e facciate storiche."],
+                    ["Pietra serena", "Arenaria sedimentaria grigia.", "Pavimenti ed elementi architettonici; verificare porosità e alterazione."],
+                    ["Pietrisco", "Aggregato prodotto per frantumazione. Spigoli vivi.", "Calcestruzzi e sottofondi; contano granulometria e provenienza."],
+                    ["Tufo vulcanico", "Roccia piroclastica, spesso porosa.", "Blocchi da costruzione; assorbimento e resistenza variabili."]
+                ]
+            },
+            theory: [
+                "Le caratteristiche visive aiutano a riconoscere i materiali, ma non sostituiscono le prove necessarie per determinarne le proprietà tecniche.",
+                "Il pietrisco e la ghiaia sono aggregati, non singole famiglie petrografiche."
+            ],
+            locus: "Garage trasformato in cantiere. L'ardesia costruisce il tetto; il basalto la strada; il granito la scala; il marmo una statua. La ghiaia rotola, il pietrisco graffia e il tufo si comporta come una spugna.",
+            hook: "Origine, aspetto, proprietà, impiego: OAPI.",
+            rhyme: "Ardesia sul tetto, granito sul gradino, basalto sulla strada, marmo sopra il camino. Ghiaia arrotondata, pietrisco spigoloso, il tufo del vulcano è spesso assai poroso.",
+            audio: "Entriamo nel garage. Osserva l'ardesia, che si separa in lastre e può essere utilizzata nelle coperture. Il basalto è una roccia magmatica effusiva generalmente scura e a grana fine. Il granito è intrusivo e presenta cristalli riconoscibili. Il marmo è metamorfico e può essere utilizzato nei rivestimenti e nelle sculture. La pietra forte e la pietra serena sono arenarie. La ghiaia presenta elementi prevalentemente arrotondati, mentre il pietrisco presenta spigoli vivi. Il tufo vulcanico è spesso poroso. Per ogni materiale collega sempre origine, aspetto, proprietà e impiego.",
+            source: "Materiali lapidei.pdf, pagine 1–3."
+        }
+    ]
+},
+
+{
+    id: "E",
+    title: "Normativa sismica",
+    room: "Studio",
+    icon: "📚",
+    color: "#93b4db",
+    overview: "Progettazione, sicurezza e conoscenza delle costruzioni.",
+    blocks: [
+
+        {
+            title: "NTC, classi d'uso e vita di riferimento",
+            flow: ["NORMATIVA", "CLASSE D'USO", "VITA DI RIFERIMENTO", "AZIONE DI PROGETTO"],
+            theory: [
+                "Il documento tratta il Decreto ministeriale del 17 gennaio 2018, NTC 2018, e la Circolare applicativa n. 7 del 2019.",
+                "Le NTC aggiornano il precedente quadro delle NTC 2008.",
+                "Il capitolo 3 riguarda le azioni sulle costruzioni; il 4 materiali e tipologie costruttive; il 7 progettazione sismica; l'8 costruzioni esistenti; il 12 riferimenti tecnici ed Eurocodici.",
+                "La vita nominale VN descrive il periodo di mantenimento dei livelli prestazionali previsti, con la necessaria manutenzione.",
+                "La vita di riferimento VR dipende dalla vita nominale e dal coefficiente d'uso CU. È collegata al tempo di ritorno delle azioni sismiche considerate."
+            ],
+            table: {
+                headers: ["Classe", "Destinazione generale"],
+                rows: [
+                    ["I", "Presenza occasionale di persone, edifici agricoli."],
+                    ["II", "Affollamenti normali."],
+                    ["III", "Affollamenti significativi o attività rilevanti per il rischio."],
+                    ["IV", "Funzioni pubbliche o strategiche importanti."]
+                ]
+            },
+            formula: "VR = VN × CU",
+            formulaMemory: "Un calendario della vita nominale viene moltiplicato, mediante due bastoni incrociati, per una targhetta della classe d'uso.",
+            locus: "Scrivania. Un naso gigantesco si tuffa nel libro delle norme. Un topo si arrampica sulla Circolare.",
+            hook: "2018: naso più tuffo. 2019: naso più topo.",
+            audio: "Entriamo nello studio. Sulla scrivania troviamo il libro delle Norme tecniche per le costruzioni. Il naso rappresenta venti e il tuffo diciotto. Insieme richiamano il duemiladiciotto. Il naso e il topo richiamano il duemiladiciannove, anno della Circolare. Le costruzioni vengono distinte in classi d'uso secondo affollamento, destinazione e importanza delle funzioni. La vita di riferimento dipende dalla vita nominale e dal coefficiente d'uso e concorre alla definizione dell'azione sismica di progetto.",
+            source: "la-normativa-sismica.pdf, pagine 1–2.",
+            note: "Quadro normativo della dispensa scolastica. Non costituisce una verifica della normativa vigente né una prescrizione progettuale."
+        },
+
+        {
+            title: "Adeguamento, miglioramento e intervento locale",
+            flow: ["VALUTAZIONE", "SCELTA DELL'INTERVENTO", "VERIFICHE"],
+            theory: [
+                "L'adeguamento mira a raggiungere i livelli di sicurezza richiesti dalla norma nei casi previsti.",
+                "Il miglioramento incrementa la sicurezza strutturale senza raggiungere necessariamente tutti i livelli richiesti per l'adeguamento.",
+                "L'intervento locale riguarda parti o elementi specifici senza modificare significativamente il comportamento globale.",
+                "Il parametro zeta E confronta l'azione sismica massima sopportabile dalla struttura con quella di riferimento richiesta.",
+                "La dispensa richiama valori di zeta E pari a 1,0 e 0,80 in differenti casi di adeguamento, e requisiti di miglioramento pari a 0,6 o incrementi di 0,1 per specifiche categorie.",
+                "Sopraelevazioni, ampliamenti, variazioni d'uso e trasformazioni strutturali possono richiedere verifiche e interventi secondo le condizioni previste dalla normativa."
+            ],
+            formula: "ζE = azione sopportabile / azione sismica di riferimento",
+            formulaMemory: "Una bilancia confronta ciò che la struttura sopporta con ciò che le viene richiesto.",
+            locus: "Un muratore amico rinforza prima l'intera casa, poi migliora una struttura e infine ripara un singolo elemento.",
+            hook: "AMI: Adeguamento, Miglioramento, Intervento locale.",
+            audio: "Guarda il muratore nello studio. L'adeguamento punta ai livelli di sicurezza richiesti dalla norma. Il miglioramento aumenta la sicurezza senza raggiungere necessariamente tutti quei livelli. L'intervento locale riguarda singole parti, senza modificare significativamente il comportamento generale della costruzione. Ricorda la parola AMI. Il parametro zeta E esprime un confronto tra capacità della struttura e azione sismica di riferimento. I requisiti numerici dipendono dallo specifico caso normativo.",
+            source: "La normativa sismica, pagina 2."
+        },
+
+        {
+            title: "Caratterizzazione meccanica delle murature",
+            flow: ["RILIEVO", "MATERIALI", "PROVE", "MODELLO STRUTTURALE"],
+            theory: [
+                "La valutazione degli edifici esistenti considera geometria, dettagli costruttivi, materiali, terreni, carichi permanenti, degrado ed eventuali trasformazioni.",
+                "La tabella C8.5.I della dispensa riporta parametri meccanici di diverse murature.",
+                "I parametri comprendono resistenza a compressione, resistenze a taglio, modulo elastico normale, modulo elastico tangenziale e peso specifico.",
+                "Le tipologie comprendono pietrame disordinato, conci sbozzati, pietre a spacco, pietra tenera irregolare e regolare, blocchi squadrati, mattoni pieni e mattoni semipieni.",
+                "La tabella C8.5.II riguarda coefficienti correttivi legati a malta, listature, collegamenti trasversali e consolidamenti."
+            ],
+            table: {
+                headers: ["Parametro", "Significato", "Immagine mentale"],
+                rows: [
+                    ["f", "Resistenza a compressione", "Pressa"],
+                    ["τ₀", "Resistenza a taglio", "Forbice"],
+                    ["fv₀", "Parametro di resistenza a taglio", "Lama"],
+                    ["E", "Modulo elastico normale", "Molla verticale"],
+                    ["G", "Modulo elastico tangenziale", "Molla laterale"],
+                    ["w", "Peso specifico", "Bilancia"]
+                ]
+            },
+            locus: "Banco da laboratorio. Una pressa schiaccia mattoni, una forbice li sottopone a taglio e due molle rappresentano la deformabilità.",
+            hook: "Compressione, taglio, elasticità, peso.",
+            audio: "Prima di intervenire dobbiamo conoscere l'edificio. Sul banco da laboratorio osserva una pressa, una forbice, due molle e una bilancia. La pressa rappresenta la compressione. La forbice il taglio. Le molle i moduli elastici. La bilancia il peso specifico. La qualità della malta, i collegamenti tra gli elementi e la tessitura della muratura possono influenzarne il comportamento. Le tabelle originali forniscono valori di riferimento che non sostituiscono la caratterizzazione del caso reale.",
+            source: "La normativa sismica, pagine 2–4."
+        },
+
+        {
+            title: "Livelli di conoscenza, confidenza e consolidamento",
+            flow: ["INDAGINI LIMITATE", "INDAGINI ESTESE", "INDAGINI ESAUSTIVE"],
+            theory: [
+                "Le indagini limitate possono comprendere osservazioni visive e rimozioni localizzate dell'intonaco.",
+                "Le indagini estese possono includere endoscopie e tecniche penetrometriche, sclerometriche, termografiche e radar.",
+                "Le indagini esaustive prevedono approfondimenti e prove dirette sui materiali, secondo il tipo di struttura e gli obiettivi dell'analisi.",
+                "I livelli di conoscenza LC1, LC2 e LC3 sono associati nella dispensa ai fattori di confidenza 1,35; 1,20; 1,00.",
+                "Le tecniche di consolidamento trattate includono iniezioni di miscele leganti, intonaco armato, ristilatura armata, diatoni, catene, tiranti, rinforzi FRP, acciaio e calcestruzzo armato.",
+                "L'analisi strutturale confronta lo stato di fatto e quello di progetto. Il livello di conoscenza necessario dipende dalla costruzione e dall'intervento."
+            ],
+            formula: "Rd = R / FC",
+            formulaMemory: "Una resistenza viene divisa per il fattore di confidenza. Tre lenti rendono progressivamente più chiara la conoscenza.",
+            locus: "Tre lenti di ingrandimento. La prima contiene tè e mela, la seconda tè e naso, la terza tè e sasso.",
+            hook: "LC1, LC2, LC3. Maggiore conoscenza, minore fattore di confidenza.",
+            audio: "Osserva le tre lenti. La prima rappresenta una conoscenza limitata, la seconda una conoscenza più approfondita, la terza il livello di conoscenza più elevato. I fattori riportati sono uno virgola trentacinque, uno virgola venti e uno virgola zero zero. Immagina tè e mela, tè e naso, tè e sasso. Mantieni la virgola nella posizione corretta. La resistenza di riferimento viene ridotta mediante il fattore di confidenza secondo il modello della dispensa. Per migliorare il comportamento strutturale possono essere utilizzati consolidamenti, collegamenti e rinforzi progettati in funzione dell'edificio.",
+            source: "La normativa sismica, pagine 4–5."
+        }
+    ]
+},
+
+{
+    id: "F",
+    title: "Rischio sismico e vulcanico",
+    room: "Corridoio",
+    icon: "⚠️",
+    color: "#fb7185",
+    overview: "Pericolosità, esposizione, vulnerabilità e prevenzione.",
+    blocks: [
+
+        {
+            title: "I tre fattori del rischio",
+            flow: ["PERICOLOSITÀ", "ESPOSIZIONE", "VULNERABILITÀ", "RISCHIO"],
+            theory: [
+                "La pericolosità descrive la possibilità che fenomeni di determinate caratteristiche si verifichino in una zona e in un intervallo temporale.",
+                "L'esposizione considera persone, edifici, beni economici, artistici, culturali, funzioni e infrastrutture esposte.",
+                "La vulnerabilità descrive la propensione degli elementi esposti a subire danni.",
+                "Il rischio deriva dalla combinazione dei fattori. La riduzione dell'esposizione o della vulnerabilità può contribuire alla mitigazione.",
+                "Il materiale propone modelli differenti: una relazione generale tra fattori, un prodotto di punteggi nell'esercizio vulcanico e una somma di classi nell'analisi territoriale toscana."
+            ],
+            formula: "R = f(P, E, V)",
+            formulaMemory: "Un terremoto, una folla e una casa fragile entrano insieme in una macchina che calcola il rischio.",
+            locus: "Corridoio. Tre giganti rappresentano il fenomeno pericoloso, la città esposta e l'edificio fragile.",
+            hook: "PEV: Pericolosità, Esposizione, Vulnerabilità.",
+            audio: "Nel corridoio incontriamo tre personaggi. Il primo è il fenomeno pericoloso. Il secondo rappresenta tutto ciò che può essere coinvolto. Il terzo rappresenta la fragilità. Pericolosità, esposizione e vulnerabilità. Il rischio nasce dalla combinazione di questi fattori. Un fenomeno intenso in un'area disabitata può produrre conseguenze molto differenti dallo stesso fenomeno in una città densamente abitata e vulnerabile.",
+            source: "Metodo e consegna.pdf, pagina 1; Bacci e Di Marco, 2019, pagina 6."
+        },
+
+        {
+            title: "Esercitazione sul rischio vulcanico",
+            flow: ["PUNTEGGIO P", "PUNTEGGIO E", "PUNTEGGIO V", "PRODOTTO"],
+            theory: [
+                "L'esercitazione attribuisce a ciascun fattore un punteggio da 1 a 4.",
+                "La pericolosità viene classificata considerando ricadute di cenere, lapilli, lahar e colate piroclastiche.",
+                "L'esposizione considera popolazione, infrastrutture, servizi e attività economiche.",
+                "La vulnerabilità considera caratteristiche edilizie, piani di emergenza, preparazione della popolazione e vie di fuga."
+            ],
+            formula: "R = P × E × V",
+            formulaMemory: "Due bastoni incrociati separano ciascuno dei tre personaggi. I bastoni rappresentano la moltiplicazione.",
+            table: {
+                headers: ["Punteggio R", "Classe"],
+                rows: [
+                    ["1–8", "Verde"],
+                    ["9–18", "Giallo"],
+                    ["19–32", "Arancione"],
+                    ["33–64", "Rosso"]
+                ]
+            },
+            extraTable: {
+                headers: ["Zona simulata", "Elementi da considerare"],
+                rows: [
+                    ["Valle Nera", "Colate piroclastiche, circa 1.400 abitanti, centro storico, edifici datati e una sola strada."],
+                    ["Portoselva", "Cenere e lapilli, 65.000 abitanti, infrastrutture importanti e coperture vulnerabili."],
+                    ["Torrente Lisco", "Possibili lahar, circa 500 abitanti, argini rinforzati, allarme ed esercitazioni."],
+                    ["Castelvario", "Ricaduta rara di cenere, circa 3.000 lavoratori, impianti produttivi ed edifici recenti."]
+                ]
+            },
+            locus: "Un semaforo a quattro colori riceve il prodotto dei tre fattori.",
+            hook: "Moltiplica i punteggi, poi assegna il colore.",
+            audio: "Visualizza un semaforo a quattro colori. In questa esercitazione attribuiamo ai tre fattori un punteggio compreso tra uno e quattro. Moltiplichiamo pericolosità, esposizione e vulnerabilità. Il risultato determina il livello previsto dalla griglia. Verde da uno a otto, giallo da nove a diciotto, arancione da diciannove a trentadue, rosso da trentatré a sessantaquattro. Le quattro zone simulate presentano differenti condizioni di pericolosità, esposizione e fragilità. Mantieni distinte queste tre valutazioni.",
+            source: "Metodo e consegna.pdf, pagine 1–3."
+        },
+
+        {
+            title: "Modello territoriale toscano: metodo e livelli",
+            flow: ["VALORI", "INDICI", "CLASSI", "INDICE DI RISCHIO", "CARTOGRAFIA"],
+            theory: [
+                "Il convegno della Regione Toscana del 23 settembre 2019 presenta un modello semplificato per la valutazione del rischio sismico e la pianificazione urbanistica.",
+                "Il lavoro di prevenzione viene ricostruito attraverso le tappe del 2009, 2014, 2016 e 2019.",
+                "Il livello 0 riguarda l'analisi regionale riferita ai comuni. Il livello 1 utilizza sezioni di censimento a scala comunale. Il livello 2 approfondisce aree urbane e dati specifici.",
+                "I valori numerici dei fattori vengono elaborati per ottenere indici e classi.",
+                "Le classi di ciascun fattore sono comprese tra 1 e 4. Il modello somma le classi di pericolosità, esposizione e vulnerabilità.",
+                "Gli approfondimenti comprendono microzonazione sismica, analisi della condizione limite per l'emergenza, dati demografici, infrastrutture e beni culturali."
+            ],
+            formula: "IR = P + E + V",
+            formulaMemory: "Tre fogli trasparenti colorati si sommano sulla pianta della città. Una croce rappresenta l'addizione.",
+            table: {
+                headers: ["Indice IR", "Classe"],
+                rows: [
+                    ["3–5", "Bassa"],
+                    ["6–7", "Medio-bassa"],
+                    ["8–9", "Medio-alta"],
+                    ["10–12", "Alta"]
+                ]
+            },
+            locus: "Sul pavimento del corridoio sovrapponi tre mappe di una città.",
+            hook: "Nel modello vulcanico si moltiplica. Nel modello toscano si sommano le classi.",
+            audio: "Ora osserva tre mappe trasparenti sovrapposte. Il modello territoriale toscano non moltiplica i punteggi come l'esercizio vulcanico. Somma le classi dei tre fattori per ottenere un indice. L'analisi può svilupparsi a scala regionale, comunale e urbana. Aumentando il livello di dettaglio diventano importanti le condizioni locali, le caratteristiche effettive degli edifici e la qualità dei dati disponibili.",
+            source: "Bacci e Di Marco, Valutazioni di rischio sismico, 2019, pagine 3–13 e 26–43."
+        },
+
+        {
+            title: "Pericolosità, esposizione e vulnerabilità nel modello toscano",
+            flow: ["DATI TERRITORIALI", "P", "E", "V", "CLASSIFICAZIONE"],
+            theory: [
+                "La pericolosità di base del modello usa l'accelerazione orizzontale massima attesa su suolo rigido e pianeggiante, con tempo di ritorno di 475 anni.",
+                "Le soglie adottate nel modello sono 0,125; 0,150 e 0,200 per distinguere le quattro classi di pericolosità.",
+                "L'esposizione utilizza un indice di densità che combina popolazione ed edifici con pesi rispettivamente pari a 2/3 e 1/3, rapportati alla superficie.",
+                "Le soglie di densità riportate sono 10, 24 e 56. Le aree produttive possono ricevere un modificatore di esposizione pari a +2.",
+                "La vulnerabilità utilizza l'epoca di costruzione e considera modificatori come tipologia strutturale, altezza, densità urbana, aree produttive e storia della classificazione sismica.",
+                "Le soglie dell'indice di epoca sono 50, 70 e 90. I coefficienti delle fasce di costruzione sono 100, 65, 35 e 10."
+            ],
+            formula: "Vdens = [(2/3 × Pop) + (1/3 × Edif)] / Area",
+            formulaMemory: "Noè e un amo rappresentano due terzi della popolazione. Un tè e un amo rappresentano un terzo degli edifici. Tutto viene diviso per la superficie.",
+            extraFormula: "Vepoca = Σ(Nedif × Ke) / Nedif totale",
+            table: {
+                headers: ["Epoca di costruzione", "Coefficiente Ke della dispensa"],
+                rows: [
+                    ["Precedente al 1945", "100"],
+                    ["1946–1970", "65"],
+                    ["1971–1990", "35"],
+                    ["Successiva al 1990", "10"]
+                ]
+            },
+            locus: "Una bilancia pesa abitanti ed edifici. Un calendario gigantesco attribuisce un peso all'età delle costruzioni.",
+            hook: "Pericolosità: accelerazione. Esposizione: densità. Vulnerabilità: epoca e modificatori.",
+            audio: "Nel modello toscano la pericolosità parte dall'accelerazione attesa. Per l'esposizione immagina una bilancia che attribuisce due terzi del peso alla popolazione e un terzo agli edifici, rapportando il risultato alla superficie. La vulnerabilità parte invece dall'epoca di costruzione e viene modificata in relazione ad altre caratteristiche. Non basta conoscere l'età di un edificio per determinarne la sicurezza. Si tratta di una valutazione semplificata a scala territoriale.",
+            source: "Bacci e Di Marco, 2019, pagine 14–28."
+        },
+
+        {
+            title: "Mappe di rischio, Mugello e prevenzione",
+            flow: ["RACCOLTA DATI", "VALIDAZIONE", "MAPPE", "PRIORITÀ", "PREVENZIONE"],
+            theory: [
+                "Il modello utilizza dati censuari per ottenere cartografie territoriali confrontabili.",
+                "Nel caso del Mugello sono presentate mappe separate di pericolosità, esposizione e vulnerabilità e una mappa sintetica del rischio.",
+                "La sovrapposizione degli studi di microzonazione sismica consente un approfondimento indicato nella presentazione come livello 2*.",
+                "Un livello urbano più completo richiede dati maggiormente dettagliati anche sull'esposizione e sulla vulnerabilità.",
+                "Tra i limiti figurano disomogeneità dei dati, dimensioni differenti delle sezioni censuarie e necessità di verifiche sul campo.",
+                "Le azioni di prevenzione comprendono aggiornamento del quadro conoscitivo, prescrizioni urbanistiche, incentivi, indagini, priorità degli interventi e informazione alla popolazione."
+            ],
+            locus: "In fondo al corridoio un architetto colora la pianta della città e indica gli edifici che richiedono approfondimenti.",
+            hook: "Conoscere, valutare, pianificare, prevenire.",
+            audio: "Guarda l'architetto che sovrappone le mappe del Mugello. Le informazioni vengono trasformate in una cartografia utile alla pianificazione. La microzonazione sismica approfondisce gli effetti locali. Tuttavia i dati territoriali devono essere verificati e integrati. La finalità della valutazione non è prevedere esattamente un terremoto, ma orientare la prevenzione e individuare le priorità.",
+            source: "Bacci e Di Marco, 2019, pagine 29–43."
+        }
+    ]
+},
+
+{
+    id: "G",
+    title: "Rocce e minerali",
+    room: "Cucina",
+    icon: "🪨",
+    color: "#fbbf24",
+    overview: "Composizione, classificazione e trasformazione delle rocce.",
+    blocks: [
+
+        {
+            title: "Petrologia, petrografia e litologia",
+            flow: ["MINERALI", "ROCCE", "ORIGINE", "COMPOSIZIONE", "DESCRIZIONE"],
+            theory: [
+                "Le rocce sono aggregati di uno o più minerali, eventualmente associati a sostanze non cristalline.",
+                "A differenza dei singoli minerali, le rocce non sono generalmente rappresentabili attraverso una formula chimica unica.",
+                "La petrologia studia origine, evoluzione, distribuzione, composizione, struttura, tessitura e classificazione delle rocce.",
+                "La petrografia analizza e descrive le caratteristiche mineralogiche e chimico-fisiche delle rocce, anche attraverso indagini di laboratorio.",
+                "La litologia riguarda la descrizione e le caratteristiche delle rocce osservabili a scala macroscopica."
+            ],
+            locus: "Tavolo della cucina. Tre professori esaminano una roccia: uno ne studia la nascita, uno la analizza, uno la descrive.",
+            hook: "Petrologia: origine. Petrografia: analisi. Litologia: descrizione.",
+            audio: "Siamo nella cucina, la stanza delle rocce. Sul tavolo ci sono tre scienziati. Il primo studia la nascita e l'evoluzione della roccia. È il petrologo. Il secondo analizza la composizione e la struttura. È il petrografo. Il terzo descrive le caratteristiche macroscopiche. Richiama la litologia. Ricorda inoltre che una roccia è un insieme di minerali ed eventualmente altre sostanze, non necessariamente una sostanza con formula chimica unica.",
+            source: "roccie.pdf — Le rocce, pagina 3."
+        },
+
+        {
+            title: "Minerali e reticolo cristallino",
+            flow: ["ELEMENTI CHIMICI", "CELLA ELEMENTARE", "RETICOLO", "CRISTALLO"],
+            theory: [
+                "I minerali sono sostanze naturali, generalmente solide, caratterizzate da una composizione chimica definita entro determinati limiti e da una struttura generalmente cristallina.",
+                "La dispensa discute elementi nativi, gemme, ghiaccio e mercurio nativo.",
+                "Il reticolo cristallino è generato dalla ripetizione ordinata di una cella elementare nello spazio.",
+                "Gli appunti riportano 14 tipi di reticolo, 32 classi cristallografiche e 7 sistemi cristallini.",
+                "Il polimorfismo comprende sostanze con uguale composizione chimica e strutture cristalline differenti, come grafite e diamante.",
+                "La diversa organizzazione atomica determina proprietà fisiche differenti."
+            ],
+            formula: "Salgemma: NaCl",
+            formulaMemory: "Un marinaio con il sale da cucina costruisce un reticolo cubico.",
+            locus: "Dispensa del sale. I cubetti di sale diventano un palazzo di mattoncini geometrici. Una matita di grafite entra in una macchina e ne esce un diamante.",
+            hook: "Reticolo: ripetizione ordinata. Polimorfismo: stessa composizione, struttura diversa.",
+            audio: "Apriamo la dispensa del sale. Immagina di diventare piccolissimo e di entrare dentro un cristallo. Trovi una struttura geometrica ordinata che si ripete nello spazio. È il reticolo cristallino. Ora osserva una matita di grafite e un diamante. Entrambi sono costituiti da carbonio, ma i loro atomi sono organizzati diversamente. Questo spiega perché possano avere caratteristiche molto differenti. Il reticolo collega la struttura microscopica alle proprietà osservabili.",
+            note: "La dispensa menziona anche ossidiana, opale e ambra nella discussione sulle sostanze non cristalline. Questi esempi richiedono distinzione tra minerali, mineraloidi e materiali organici; non vanno memorizzati indiscriminatamente come minerali cristallini.",
+            source: "Le rocce, pagine 5–6."
+        },
+
+        {
+            title: "Proprietà fisiche e chimiche dei minerali",
+            flow: ["OSSERVAZIONE", "PROVE FISICHE", "COMPOSIZIONE CHIMICA", "RICONOSCIMENTO"],
+            theory: [
+                "Le proprietà fisiche permettono di riconoscere e distinguere i minerali. Il colore da solo non è sempre un criterio affidabile.",
+                "La lucentezza descrive il modo in cui una superficie riflette la luce.",
+                "La durezza indica la resistenza alla scalfittura e viene confrontata mediante la scala di Mohs.",
+                "La sfaldatura consiste nella separazione lungo piani preferenziali. La frattura descrive differenti modalità di rottura.",
+                "Densità, peso specifico, conducibilità, birifrangenza, fluorescenza, magnetismo, tenacità e altre proprietà contribuiscono alla caratterizzazione.",
+                "Gli appunti distinguono minerali silicatici e non silicatici. Tra questi ultimi approfondiscono solfati, solfuri ed elementi nativi.",
+                "Il gesso è un esempio di solfato; la galena è un solfuro di piombo. Oro, argento, rame e grafite sono esempi di elementi nativi."
+            ],
+            table: {
+                headers: ["Proprietà", "Immagine gancio"],
+                rows: [
+                    ["Colore", "Barattolo di vernice"],
+                    ["Lucentezza", "Specchio"],
+                    ["Durezza", "Punta che graffia"],
+                    ["Sfaldatura", "Libro che si separa in pagine"],
+                    ["Frattura", "Martello"],
+                    ["Densità e peso specifico", "Bilancia e recipiente"],
+                    ["Birifrangenza", "Due immagini sovrapposte"],
+                    ["Conducibilità", "Cavo elettrico"]
+                ]
+            },
+            formula: "Galena: PbS · Solfato: SO₄²⁻",
+            formulaMemory: "Piombo come un peso, zolfo come una nuvola gialla, ossigeno come palloncino, re per quattro e Noè per due.",
+            locus: "Cassetto della cucina. Specchio, martello, bilancia, cavo elettrico e punta metallica esaminano un minerale.",
+            hook: "SSE: Solfati, Solfuri, Elementi nativi.",
+            audio: "Apriamo il cassetto degli strumenti. Lo specchio richiama la lucentezza. La punta che graffia richiama la durezza e la scala di Mohs. Il libro che si separa in pagine rappresenta la sfaldatura. Il martello richiama la frattura. La bilancia rappresenta densità e peso specifico. Ricorda che il colore non basta sempre per identificare un minerale. La classificazione chimica distingue inoltre i silicati da altri gruppi, fra cui solfati, solfuri ed elementi nativi.",
+            source: "Le rocce, pagine 7–8."
+        },
+
+        {
+            title: "Rocce ignee: intrusive ed effusive",
+            visual: "igneous",
+            flow: ["MAGMA", "RAFFREDDAMENTO", "CRISTALLIZZAZIONE", "ROCCIA IGNEA"],
+            theory: [
+                "Le rocce ignee, chiamate anche magmatiche, derivano dalla solidificazione del magma.",
+                "Le intrusive o plutoniche solidificano generalmente lentamente in profondità, consentendo la crescita di cristalli ben sviluppati.",
+                "Le effusive o vulcaniche si formano quando il materiale magmatico solidifica in superficie o in condizioni di raffreddamento relativamente rapido.",
+                "La tessitura può essere olocristallina, porfirica, vetrosa o caratterizzata da cavità.",
+                "Il granito è un esempio di intrusiva; il basalto è un esempio di effusiva.",
+                "La dispensa riporta per le rocce ignee una quota di circa il 65% della crosta terrestre."
+            ],
+            locus: "Fornello. Una pentola di magma si divide in due. Nel frigorifero cresce una massa di grandi cristalli; sulla superficie la lava diventa rapidamente una pietra scura.",
+            hook: "IGNIS significa fuoco. Intrusive dentro. Effusive fuori.",
+            rhyme: "In profondità lentamente, il cristallo cresce abbondantemente. In superficie rapidamente, il cristallo cresce scarsamente.",
+            audio: "Ora guarda il fornello. Il magma si raffredda e solidifica. Nascono le rocce ignee. Quando la solidificazione avviene lentamente in profondità, i cristalli hanno generalmente più tempo per svilupparsi. È il caso del granito. Quando il raffreddamento è rapido, come può avvenire in superficie, i cristalli possono essere molto piccoli o assenti. È il caso del basalto. La parola ignee deriva dal latino ignis, fuoco. Immagina il vulcano sul fornello e ricorda la distinzione tra dentro e fuori.",
+            source: "Le rocce, pagine 4, 9 e 15."
+        },
+
+        {
+            title: "Classificazione chimica delle rocce ignee",
+            flow: ["CONTENUTO DI SILICE", "FELSICHE", "INTERMEDIE", "MAFICHE", "ULTRAMAFICHE"],
+            theory: [
+                "La composizione delle rocce ignee è collegata a quella del magma di origine.",
+                "Gli appunti distinguono rocce acide o felsiche, ricche di silice; rocce intermedie; rocce basiche o mafiche; rocce ultrabasiche o ultramafiche.",
+                "La mappa riassuntiva utilizza come riferimenti le soglie del 52% e del 65% di silice per la classificazione semplificata.",
+                "La peridotite è una roccia ultramafica, frequentemente ricca di olivina."
+            ],
+            table: {
+                headers: ["Gruppo", "Intrusiva", "Effusiva"],
+                rows: [
+                    ["Felsico", "Granito", "Riolite"],
+                    ["Intermedio", "Diorite", "Andesite"],
+                    ["Mafico", "Gabbro", "Basalto"],
+                    ["Ultramafico", "Peridotite", "—"]
+                ]
+            },
+            locus: "Quattro contenitori di magma hanno quantità differenti di silice. I cristalli cambiano colore e composizione.",
+            hook: "Granito-riolite; diorite-andesite; gabbro-basalto.",
+            audio: "Accanto al fornello osserva quattro contenitori. Contengono magmi di composizione differente. Le rocce felsiche sono generalmente ricche di silice. Le mafiche sono relativamente più povere di silice e ricche di minerali contenenti ferro e magnesio. Le ultramafiche comprendono la peridotite. Collega le coppie granito e riolite, diorite e andesite, gabbro e basalto. Ricorda che la composizione e le condizioni di raffreddamento sono criteri distinti di classificazione.",
+            source: "Le rocce, pagine 9 e 15.",
+            note: "Nella mappa originale sono presenti refusi nella denominazione dell'andesite e nella notazione delle soglie di silice. Qui la classificazione è resa in forma didattica semplificata."
+        },
+
+        {
+            title: "Rocce sedimentarie e diagenesi",
+            visual: "sediment",
+            flow: ["EROSIONE", "TRASPORTO", "DEPOSITO", "DIAGENESI"],
+            theory: [
+                "Le rocce sedimentarie derivano da sedimenti, precipitati chimici o materiali prodotti dall'attività biologica.",
+                "Nel processo clastico le rocce preesistenti vengono degradate, erose e trasportate. I frammenti si accumulano nei bacini di sedimentazione.",
+                "La diagenesi comprende le trasformazioni fisiche e chimiche successive alla deposizione, tra cui compattazione e cementazione, che possono condurre alla litificazione.",
+                "La granulometria, il mezzo di trasporto e l'ambiente deposizionale influenzano le caratteristiche dei sedimenti.",
+                "Gli ambienti illustrati comprendono ambienti continentali, marini e di transizione.",
+                "La dispensa riporta circa il 5% della crosta costituito da sedimentarie e una diffusione pari a circa il 75% delle terre emerse."
+            ],
+            locus: "Lavello della cucina. Una montagna viene grattugiata, il rubinetto trasporta i frammenti, il lavello li raccoglie e una pressa li compatta.",
+            hook: "ETDD: Erosione, Trasporto, Deposito, Diagenesi.",
+            rhyme: "La montagna si consuma, il fiume i frammenti raduna. Il deposito si compatta e una nuova roccia è fatta.",
+            audio: "Osserva il lavello. Una montagna viene grattugiata. I frammenti vengono trascinati dall'acqua e si accumulano. Con il tempo la compattazione e la cementazione possono trasformare i sedimenti in una roccia. Questo processo appartiene alla diagenesi. Memorizza le quattro parole, erosione, trasporto, deposito, diagenesi. E, T, D, D. Le rocce sedimentarie sono molto importanti per comprendere la storia degli ambienti deposizionali.",
+            source: "Le rocce, pagine 10 e 16."
+        },
+
+        {
+            title: "Rocce clastiche, chimiche e organogene",
+            flow: ["SEDIMENTARIE", "CLASTICHE", "CHIMICHE", "ORGANOGENE"],
+            theory: [
+                "Le clastiche derivano dalla litificazione di frammenti di rocce preesistenti.",
+                "Le ruditi o conglomerati contengono frammenti grossolani, generalmente superiori a 2 mm. Le brecce hanno clasti angolosi; le puddinghe hanno clasti arrotondati.",
+                "Le areniti sono rocce costituite da granuli sabbiosi cementati. Le siltiti contengono particelle fini; le lutiti o argilliti particelle finissime.",
+                "Le sedimentarie chimiche derivano dalla precipitazione di sostanze disciolte, anche attraverso processi evaporitici o carsici.",
+                "Le organogene derivano dall'attività o dall'accumulo di resti di organismi. Gli appunti distinguono componenti carbonatiche, silicee e fosfatiche.",
+                "Gli esempi includono lumachella, selce e stromatoliti. La mappa riassuntiva richiama anche carboni fossili e idrocarburi."
+            ],
+            table: {
+                headers: ["Famiglia", "Gancio visivo"],
+                rows: [
+                    ["Ruditi", "Sacco di sassi grossi"],
+                    ["Areniti", "Sabbia cementata"],
+                    ["Siltiti", "Polvere fine"],
+                    ["Lutiti", "Argilla finissima"],
+                    ["Chimiche", "Cristalli che precipitano dall'acqua"],
+                    ["Organogene", "Conchiglie e coralli"]
+                ]
+            },
+            locus: "Quattro setacci sul piano della cucina separano frammenti grossi, sabbia, limo e particelle argillose. Una vasca produce cristalli e un'altra si riempie di conchiglie.",
+            hook: "CCO: Clastiche, Chimiche, Organogene. RASL: Ruditi, Areniti, Siltiti, Lutiti.",
+            audio: "Davanti a noi abbiamo tre gruppi di rocce sedimentarie. Le clastiche derivano da frammenti. Le chimiche si formano per precipitazione di sostanze disciolte. Le organogene sono collegate all'attività e ai resti degli organismi. Ricorda CCO. Ora osserva quattro setacci, dal materiale più grosso al più fine. Ruditi, areniti, siltiti e lutiti. Ricorda RASL. Una breccia contiene frammenti angolosi. Una puddinga contiene frammenti arrotondati.",
+            source: "Le rocce, pagine 11–12 e 16.",
+            note: "Le soglie granulometriche decimali delle areniti e siltiti riportate nella dispensa presentano possibili incongruenze. Non sono assunte qui come valori certi da memorizzare."
+        },
+
+        {
+            title: "Rocce metamorfiche e agenti metamorfici",
+            flow: ["ROCCIA PREESISTENTE", "PRESSIONE E TEMPERATURA", "RICRISTALLIZZAZIONE", "ROCCIA METAMORFICA"],
+            theory: [
+                "Le rocce metamorfiche derivano dalla trasformazione allo stato solido di rocce preesistenti.",
+                "Gli agenti metamorfici comprendono pressione, temperatura e fluidi, che possono favorire reazioni mineralogiche e ricristallizzazione.",
+                "La foliazione è una disposizione planare di elementi strutturali o minerali.",
+                "La scistosità è una struttura che può favorire la separazione della roccia lungo piani preferenziali.",
+                "Il clivaggio e l'orientazione dei minerali possono essere legati alle condizioni di deformazione.",
+                "Gli appunti distinguono pressione litostatica, pressione orientata, grado metamorfico e minerali indice.",
+                "La dispensa attribuisce alle metamorfiche circa il 27% del volume della crosta."
+            ],
+            locus: "Una pressa rovente schiaccia una pietra e ne riorganizza i cristalli senza trasformarla completamente in liquido.",
+            hook: "PTS: Pressione, Temperatura, Stato solido.",
+            rhyme: "Pressione e temperatura cambiano la struttura; senza fusione avviene la trasformazione.",
+            audio: "Guarda la pressa rovente. Inseriamo una roccia preesistente. Pressione, temperatura e fluidi possono modificarne i minerali e la struttura. Non stiamo formando una roccia attraverso la solidificazione di un magma. Il processo metamorfico avviene allo stato solido. Ricorda PTS. Pressione, temperatura, stato solido. L'orientazione dei minerali può produrre foliazione, scistosità e piani preferenziali di separazione.",
+            source: "Le rocce, pagine 13 e 17."
+        },
+
+        {
+            title: "Tipi di metamorfismo ed esempi",
+            flow: ["CONTATTO", "REGIONALE", "ALTRI PROCESSI METAMORFICI"],
+            theory: [
+                "Il metamorfismo di contatto è legato principalmente all'effetto termico di un corpo magmatico sulle rocce circostanti.",
+                "Il metamorfismo regionale interessa grandi volumi rocciosi ed è frequentemente associato a processi tettonici e orogenetici.",
+                "Il metamorfismo può essere di basso, medio o alto grado.",
+                "La mappa degli appunti richiama anche metamorfismo dinamico, cataclastico, di seppellimento e metasomatico.",
+                "Il metamorfismo dinamico è associato a deformazioni concentrate. Il cataclastico comprende intensa frammentazione. Il seppellimento è legato all'aumento di pressione e temperatura in profondità. Il metasomatismo comprende modificazioni chimiche favorite dallo scambio di materia attraverso fluidi.",
+                "Gli esempi trattati includono marmo, ardesia, filladi, micascisti e rocce serpentinitiche."
+            ],
+            locus: "Un fornello riscalda il calcare a contatto con una pentola di magma. Dall'altro lato due pareti comprimono un intero pacco di rocce.",
+            hook: "Contatto: calore vicino al magma. Regionale: grandi volumi, pressione e temperatura.",
+            audio: "Distinguiamo due situazioni principali. Una massa magmatica riscalda le rocce circostanti. Questa scena rappresenta il metamorfismo di contatto. Ora due enormi pareti comprimono e deformano una vasta regione. È il gancio del metamorfismo regionale. Gli appunti comprendono anche processi dinamici, cataclastici, di seppellimento e metasomatici. Collega il marmo alla ricristallizzazione di rocce carbonatiche e l'ardesia alla sua struttura facilmente separabile in lastre.",
+            source: "Le rocce, pagine 13–14 e 17. Spiegazioni dei tipi secondari integrate a fini didattici."
+        },
+
+        {
+            title: "Ciclo litogenetico",
+            visual: "rockCycle",
+            flow: ["MAGMA", "IGNEE", "SEDIMENTI", "SEDIMENTARIE", "METAMORFICHE", "MAGMA"],
+            theory: [
+                "Il ciclo litogenetico descrive l'insieme dei processi attraverso cui le rocce si formano e si trasformano.",
+                "Raffreddamento e solidificazione del magma possono produrre rocce ignee.",
+                "Alterazione, erosione, trasporto e sedimentazione possono produrre sedimenti a partire da rocce di qualsiasi origine.",
+                "La diagenesi può trasformare i sedimenti in rocce sedimentarie.",
+                "L'aumento di pressione e temperatura può produrre rocce metamorfiche.",
+                "La fusione delle rocce può generare nuovo magma.",
+                "Il ciclo è una rete di trasformazioni: non tutte le rocce devono attraversare le medesime fasi nello stesso ordine."
+            ],
+            locus: "Una lavatrice gigantesca trasforma continuamente magma, rocce e sedimenti.",
+            hook: "Raffreddamento, erosione, diagenesi, metamorfismo, fusione.",
+            audio: "Al centro della cucina trovi una lavatrice gigantesca. Rappresenta il ciclo litogenetico. Il magma si raffredda e può diventare roccia ignea. Qualunque roccia esposta può essere alterata ed erosa. I frammenti possono essere trasportati e depositati. La diagenesi può formare rocce sedimentarie. Pressione e temperatura possono generare rocce metamorfiche. La fusione può produrre nuovo magma. Non immaginare un percorso obbligatorio. Il ciclo rappresenta diverse possibilità di trasformazione, secondo le condizioni geologiche.",
+            source: "Le rocce, pagina 4; tettonicam.pdf, pagina 16."
+        }
+    ]
+},
+
+{
+    id: "H",
+    title: "Sismologia e dromocrone",
+    room: "Soggiorno",
+    icon: "📈",
+    color: "#c084fc",
+    overview: "Origine, propagazione, misura e localizzazione dei terremoti.",
+    blocks: [
+
+        {
+            title: "Terremoti e teoria del rimbalzo elastico",
+            visual: "seismic",
+            flow: ["ACCUMULO DI TENSIONE", "ROTTURA O SCORRIMENTO", "ENERGIA", "ONDE SISMICHE"],
+            theory: [
+                "La sismologia studia origine, propagazione ed effetti dei terremoti e delle onde sismiche.",
+                "Secondo la teoria del rimbalzo elastico, le rocce possono accumulare deformazione elastica fino alla rottura o allo scorrimento lungo una faglia.",
+                "L'ipocentro è il punto in profondità in cui ha origine la rottura. L'epicentro è la sua proiezione verticale sulla superficie.",
+                "Gli appunti distinguono terremoti superficiali fino a 70 km, intermedi tra 70 e 300 km, profondi oltre 300 km.",
+                "La distribuzione dei terremoti è collegata alla dinamica delle placche e delle faglie.",
+                "La dispensa richiama la sismicità italiana, la necessità di prevenzione e gli esempi storici dello Shaanxi nel 1556 e di Valdivia nel 1960."
+            ],
+            locus: "Pavimento del soggiorno. Due molle gigantesche accumulano energia e la liberano improvvisamente.",
+            hook: "IPO: sotto. EPI: sopra. Rimbalzo elastico: accumulo e liberazione.",
+            audio: "Entriamo nel soggiorno. Osserva due blocchi che accumulano deformazione elastica. Quando avviene lo scorrimento lungo la faglia, l'energia viene liberata sotto forma di onde sismiche. L'ipocentro è il punto di origine in profondità. L'epicentro è la sua proiezione sulla superficie. Visualizza un filo verticale che collega i due punti. Gli appunti distinguono inoltre terremoti superficiali, intermedi e profondi in funzione della profondità ipocentrale.",
+            source: "02sismologiam.pdf — Sismologia, pagine 3–5."
+        },
+
+        {
+            title: "Onde P, S, Love e Rayleigh",
+            flow: ["ONDE DI VOLUME", "P E S", "ONDE SUPERFICIALI", "LOVE E RAYLEIGH"],
+            theory: [
+                "Le onde P sono primarie, longitudinali e generalmente più veloci. Producono compressioni e dilatazioni nella direzione di propagazione. Possono attraversare solidi e fluidi.",
+                "La dispensa indica per le onde P velocità esemplificative tra 4 e 8 km/s.",
+                "Le onde S sono secondarie, trasversali o di taglio. Le particelle oscillano perpendicolarmente alla propagazione. Non si propagano nei liquidi come onde di taglio.",
+                "Le onde Love producono movimento orizzontale trasversale.",
+                "Le onde Rayleigh producono un movimento ellittico delle particelle.",
+                "Le onde superficiali possono contribuire in modo rilevante ai danni osservati."
+            ],
+            locus: "Una fisarmonica attraversa il soggiorno. Una corda oscilla trasversalmente. Il pavimento scorre lateralmente e il divano rotola come una barca.",
+            hook: "P fisarmonica. S corda. Love scorrimento. Rayleigh rollio.",
+            audio: "Guarda la fisarmonica che si comprime e si allunga nella direzione di movimento. Rappresenta le onde primarie. Ora osserva una corda che oscilla trasversalmente. Rappresenta le onde secondarie. Le onde primarie possono attraversare anche i fluidi, mentre le onde di taglio secondarie non attraversano i liquidi. Il pavimento che scorre lateralmente rappresenta le onde Love. Il divano che oscilla con un movimento ellittico rappresenta le onde Rayleigh.",
+            source: "Sismologia, pagine 5–7."
+        },
+
+        {
+            title: "Sismogrammi, dromocrone e triangolazione",
+            flow: ["ARRIVO P", "ARRIVO S", "DIFFERENZA DEI TEMPI", "DISTANZA", "EPICENTRO"],
+            theory: [
+                "Il sismografo registra il movimento del terreno producendo un sismogramma.",
+                "Le dromocrone rappresentano i tempi di propagazione delle onde in relazione alla distanza.",
+                "La differenza tra il tempo di arrivo delle onde S e quello delle onde P permette di stimare la distanza dalla sorgente.",
+                "L'esercizio utilizza velocità assunte pari a 6,0 km/s per le P e circa 3,43 km/s per le S.",
+                "Nel modello didattico la distanza è approssimativamente pari a 8 volte la differenza dei tempi espressa in secondi.",
+                "Tre stazioni consentono di individuare l'area epicentrale attraverso l'intersezione delle circonferenze di raggio pari alle distanze stimate."
+            ],
+            formula: "Δt = tS − tP",
+            extraFormula: "d = Δt / (1/vS − 1/vP) ≈ 8 × Δt",
+            formulaMemory: "Un cronometro delle onde S perde il tempo delle P. Un UFO, simbolo di otto, trasforma i secondi nella distanza approssimata del modello.",
+            table: {
+                headers: ["Stazione", "P (s)", "S (s)", "Δt (s)", "Distanza (km)"],
+                rows: [
+                    ["Torino", "8,3", "14,4", "6,2", "49,5"],
+                    ["Cuneo", "4,9", "8,6", "3,7", "29,5"],
+                    ["Asti", "10,5", "18,4", "7,9", "63,1"]
+                ]
+            },
+            locus: "Televisione del soggiorno. Tre orologi mandano segnali a un UFO che disegna tre circonferenze.",
+            hook: "S meno P. Moltiplica per otto nel modello. Intersezione delle tre circonferenze.",
+            audio: "Osserva il sismogramma. Le onde primarie arrivano prima delle secondarie. Misuriamo la differenza tra i tempi di arrivo. Le dromocrone mettono in relazione tempo e distanza. Nell'esercitazione la distanza approssimata si ottiene moltiplicando la differenza per otto. Visualizza il nostro UFO, che rappresenta otto. Tracciando le circonferenze riferite a Torino, Cuneo e Asti, la soluzione del documento colloca l'evento simulato vicino a Saluzzo e Savigliano.",
+            note: "I valori della tabella riproducono la soluzione della dispensa; alcuni tempi sono arrotondati. La regola del fattore otto è un'approssimazione del modello utilizzato, non una formula universale.",
+            source: "Sismologia, pagine 7–8; Esercizio_dromocrone_Piemonte.pdf, pagine 1–3."
+        },
+
+        {
+            title: "Magnitudo, Mercalli, Richter e magnitudo momento",
+            flow: ["TERREMOTO", "MAGNITUDO ALLA SORGENTE", "INTENSITÀ LOCALE"],
+            theory: [
+                "La magnitudo descrive la dimensione del terremoto alla sorgente attraverso misure strumentali.",
+                "L'intensità macrosismica descrive gli effetti osservati su persone, edifici e ambiente.",
+                "La dispensa richiama Giuseppe Mercalli e l'anno 1902. La scala MCS presenta 12 gradi di intensità.",
+                "Charles Richter propose nel 1935 una scala di magnitudo locale di tipo logaritmico.",
+                "Un incremento di una unità di magnitudo locale corrisponde a un aumento di 10 volte dell'ampiezza strumentale nelle condizioni di definizione della scala.",
+                "L'aumento dell'energia associato a una unità di magnitudo è dell'ordine di 30 volte secondo l'approssimazione della dispensa.",
+                "Gli appunti richiamano la magnitudo momento e Kanamori nel 1979, sottolineando i limiti della magnitudo locale per terremoti molto grandi."
+            ],
+            locus: "Tre quadri appesi al muro. Una casa danneggiata rappresenta Mercalli; un sismogramma rappresenta Richter; una faglia gigantesca rappresenta la magnitudo momento.",
+            hook: "1902: topo e seno. 1935: topo e mela. 1979: topo e coppa.",
+            rhyme: "Richter misura la dimensione, Mercalli osserva gli effetti e la distruzione.",
+            audio: "Adesso osserva due strumenti concettuali differenti. La magnitudo descrive la dimensione del terremoto alla sorgente. L'intensità descrive invece gli effetti osservati in una località. Mercalli richiama l'osservazione degli effetti. Richter richiama una misura strumentale logaritmica. Un aumento di una unità corrisponde a un'ampiezza dieci volte maggiore nelle condizioni della scala. La magnitudo momento consente una caratterizzazione dei terremoti anche molto grandi. Non confondere la dimensione della sorgente con gli effetti locali.",
+            source: "Sismologia, pagine 9–10."
+        },
+
+        {
+            title: "PGA, accelerogramma e rischio sismico",
+            flow: ["SCUOTIMENTO", "ACCELEROGRAMMA", "PGA", "PERICOLOSITÀ", "PREVENZIONE"],
+            theory: [
+                "PGA significa Peak Ground Acceleration, accelerazione massima del terreno durante un terremoto.",
+                "Può essere espressa in unità di accelerazione oppure come frazione dell'accelerazione di gravità.",
+                "L'accelerografo produce un accelerogramma dal quale si può individuare il valore massimo dell'accelerazione.",
+                "Per uno stesso terremoto la magnitudo della sorgente non cambia da una località all'altra, mentre PGA e intensità possono variare.",
+                "La dispensa richiama il riferimento di 475 anni di tempo di ritorno e un periodo di osservazione di 50 anni. Il tempo di ritorno è un concetto probabilistico, non una periodicità fissa.",
+                "Sono trattati anche classificazione sismica, distretti sismici, Rete Accelerometrica Nazionale, prevenzione e progettazione.",
+                "Il radon e altri fenomeni vengono discussi nella sezione sui possibili precursori. Non rappresentano un metodo affidabile per prevedere data, luogo e magnitudo di un terremoto."
+            ],
+            table: {
+                headers: ["Scuola", "Probabilità scenario", "Danno medio relativo", "Valore edificio", "Indicatore di rischio"],
+                rows: [
+                    ["A", "20%", "10%", "2.000.000 €", "40.000 €"],
+                    ["B", "10%", "60%", "3.000.000 €", "180.000 €"],
+                    ["C", "5%", "80%", "1.000.000 €", "40.000 €"]
+                ]
+            },
+            formula: "Indicatore economico = P × V × E",
+            formulaMemory: "Una casa sulla bilancia viene moltiplicata per la probabilità dello scenario e per la quota di danno.",
+            locus: "Un accelerometro è incollato al pavimento. Tre scuole oscillano in maniera diversa sulla stessa lavagna.",
+            hook: "Magnitudo: sorgente. Mercalli: effetti. PGA: accelerazione locale.",
+            audio: "Guarda l'accelerometro sul pavimento. Misura come varia l'accelerazione durante lo scuotimento. La PGA è il valore massimo dell'accelerazione del terreno. Per uno stesso terremoto la magnitudo caratterizza la sorgente, mentre la PGA può essere differente in città diverse. Gli appunti mostrano inoltre un esempio economico con tre scuole, nel quale probabilità, vulnerabilità ed esposizione determinano differenti indicatori di rischio. La finalità è comprendere l'importanza della prevenzione.",
+            source: "Sismologia, pagine 11–17."
+        }
+    ]
+},
+
+{
+    id: "I",
+    title: "Tettonica",
+    room: "Camera",
+    icon: "🌍",
+    color: "#60a5fa",
+    overview: "Struttura interna, placche e dinamica terrestre.",
+    blocks: [
+
+        {
+            title: "Scienze della Terra e geologia applicata",
+            flow: ["GEOLOGIA", "DISCIPLINE SPECIALISTICHE", "APPLICAZIONI TERRITORIALI"],
+            theory: [
+                "La geologia studia origine, evoluzione, struttura, composizione e processi della Terra.",
+                "Tra le discipline collegate compaiono petrologia, petrografia, mineralogia, pedologia, geomorfologia, vulcanologia e sismologia.",
+                "La paleontologia studia i fossili; la stratigrafia le successioni e i rapporti temporali delle unità geologiche; la geocronologia l'evoluzione temporale della Terra.",
+                "La geodesia studia forma e dimensioni terrestri. La geofisica studia le proprietà e i processi fisici del pianeta.",
+                "L'idrogeologia riguarda le acque e i loro rapporti con i terreni e le rocce.",
+                "Le applicazioni comprendono cartografia, telerilevamento, fotogrammetria digitale e carte tematiche."
+            ],
+            locus: "Libreria della camera. Ogni libro diventa uno specialista con strumenti differenti per osservare la Terra.",
+            hook: "Una Terra, molte discipline, un unico sistema.",
+            audio: "Entriamo nella camera. La libreria rappresenta le scienze della Terra. Ogni libro custodisce una disciplina. La mineralogia studia i minerali. La petrologia studia le rocce. La pedologia studia i suoli. La geomorfologia studia le forme del rilievo e la loro evoluzione. La sismologia studia i terremoti. L'idrogeologia studia i rapporti tra le acque e i materiali geologici. Queste discipline si collegano nelle applicazioni territoriali.",
+            source: "tettonicam.pdf — Tettonica, pagine 3–4."
+        },
+
+        {
+            title: "Litosfera e struttura interna della Terra",
+            flow: ["CROSTA", "MANTELLO", "NUCLEO ESTERNO", "NUCLEO INTERNO"],
+            theory: [
+                "La Terra presenta una struttura concentrica. I modelli chimici e meccanici distinguono gli involucri secondo criteri differenti.",
+                "La litosfera comprende la crosta e la porzione superiore rigida del mantello.",
+                "L'astenosfera è una regione del mantello superiore dal comportamento relativamente duttile.",
+                "La discontinuità di Mohorovičić, o Moho, separa crosta e mantello.",
+                "La dispensa mostra inoltre la discontinuità di Gutenberg, intorno a 2.900 km, e quella di Lehmann, intorno a 5.100 km.",
+                "Il nucleo esterno è liquido e il nucleo interno è solido. Il nucleo contiene principalmente ferro e nichel.",
+                "Il raggio terrestre è approssimativamente 6.370 km.",
+                "La struttura interna viene studiata attraverso onde sismiche, campi gravitazionali e magnetici, rocce e meteoriti."
+            ],
+            table: {
+                headers: ["Modello dinamico della figura", "Intervalli schematici"],
+                rows: [
+                    ["Litosfera", "0–100 km"],
+                    ["Astenosfera", "100–200 km"],
+                    ["Mesosfera", "200–2.900 km"],
+                    ["Nucleo esterno", "2.900–5.100 km"],
+                    ["Nucleo interno", "5.100–6.371 km"]
+                ]
+            },
+            locus: "Il letto diventa una Terra tagliata a metà. Scavando verso il centro si attraversano gli involucri concentrici.",
+            hook: "Crosta, mantello, nucleo. 6370: cima e casa.",
+            audio: "Guarda il letto trasformato in un pianeta in sezione. La struttura comprende crosta, mantello e nucleo. La litosfera è l'involucro rigido esterno. L'astenosfera presenta un comportamento relativamente duttile. Il nucleo esterno è liquido e quello interno è solido. Immagina una casa costruita sulla cima della Terra. Cima rappresenta sessantatré, casa settanta. Otteniamo il raggio terrestre approssimativo, seimilatrecentosettanta chilometri. Le onde sismiche ci aiutano a ricostruire la struttura interna.",
+            note: "Le profondità del modello grafico sono schematiche e non rappresentano confini invariabili in ogni regione terrestre. Le sigle storiche sial, sima, fema e nife compaiono nella figura originale.",
+            source: "Tettonica, pagine 5–7."
+        },
+
+        {
+            title: "Magnetismo terrestre e geodinamo",
+            flow: ["NUCLEO ESTERNO", "MATERIALI CONDUTTORI IN MOVIMENTO", "CAMPO MAGNETICO", "MAGNETOSFERA"],
+            theory: [
+                "Il modello della geodinamo collega il campo magnetico ai movimenti del materiale elettricamente conduttore del nucleo esterno.",
+                "La magnetosfera contribuisce a proteggere il pianeta dalle particelle del vento solare.",
+                "Le aurore polari sono collegate all'interazione fra particelle cariche, campo magnetico e atmosfera.",
+                "I poli magnetici non coincidono stabilmente con quelli geografici e si spostano nel tempo.",
+                "La declinazione magnetica è l'angolo locale fra il nord geografico e la direzione indicata dal campo magnetico."
+            ],
+            locus: "Comodino. Un'enorme calamita ruota all'interno di una Terra trasparente e devia una pioggia di particelle solari.",
+            hook: "Dinamo, campo magnetico, magnetosfera.",
+            audio: "Sul comodino troviamo una grande calamita. Immagina materiale conduttore in movimento nel nucleo esterno. Il modello della geodinamo permette di comprendere l'origine del campo magnetico terrestre. La magnetosfera interagisce con il vento solare e contribuisce a proteggere il pianeta. I poli magnetici non coincidono necessariamente con quelli geografici. La declinazione magnetica riguarda la differenza di direzione osservata localmente.",
+            source: "Tettonica, pagina 8.",
+            note: "La figura originale associa un angolo fisso alla declinazione. Si distingue qui la declinazione locale dall'inclinazione dell'asse del dipolo magnetico."
+        },
+
+        {
+            title: "Deriva dei continenti e Wegener",
+            flow: ["PANGEA", "LAURASIA E GONDWANA", "FRAMMENTAZIONE", "CONTINENTI"],
+            theory: [
+                "Alfred Wegener propose nel 1912 la teoria della deriva dei continenti.",
+                "Il modello descrive la precedente unione delle masse continentali nella Pangea, circondata dalla Panthalassa.",
+                "Gli appunti richiamano Laurasia, Gondwana e l'oceano Tetide.",
+                "La frammentazione e la migrazione delle masse continentali costituiscono il collegamento storico con la moderna tettonica delle placche.",
+                "La teoria di Wegener e la moderna tettonica delle placche non coincidono completamente nei meccanismi esplicativi."
+            ],
+            locus: "Sul letto il continente Pangea diventa un puzzle gigantesco che un topo divide per costruire la propria tana.",
+            hook: "1912: topo e tana. Pangea, Laurasia, Gondwana.",
+            audio: "Guarda il puzzle sul letto. Inizialmente i pezzi sono uniti nella Pangea. Immagina un topo che divide i pezzi per costruire una tana. Topo rappresenta diciannove e tana dodici. Ricorda il millenovecentododici, anno associato alla proposta di Wegener. La Pangea si frammenta e i continenti cambiano posizione nel corso dei tempi geologici. La moderna tettonica delle placche permette di descrivere questi movimenti attraverso un quadro fisico più ampio.",
+            source: "Tettonica, pagina 12.",
+            note: "La dispensa contiene un dato cronologico sulla frammentazione della Pangea espresso in centinaia di migliaia di anni: è incongruente con la scala dei tempi geologici e non viene utilizzato come dato da memorizzare."
+        },
+
+        {
+            title: "Espansione oceanica e dorsali",
+            flow: ["RIFTING", "ESPANSIONE", "NUOVA CROSTA", "SUBDUZIONE"],
+            theory: [
+                "I fondali oceanici comprendono piane abissali, dorsali, fosse e strutture vulcaniche.",
+                "Le indagini utilizzano strumenti come gravimetri, magnetometri ed ecoscandagli, oltre alle conoscenze sismologiche e paleomagnetiche.",
+                "Alle dorsali oceaniche si forma nuova crosta attraverso la risalita e solidificazione di materiale magmatico.",
+                "L'evoluzione dei bacini oceanici comprende apertura, espansione ed eventuale chiusura.",
+                "La subduzione è il processo attraverso cui una placca litosferica scende sotto un'altra.",
+                "La distribuzione delle fosse e degli archi vulcanici è collegata alla dinamica delle placche. Gli appunti citano la cintura di fuoco del Pacifico e la Fossa delle Marianne, profonda circa 11 km.",
+                "Il piano di Wadati-Benioff è associato alla distribuzione dei terremoti nelle zone di subduzione."
+            ],
+            locus: "Due coperte si separano e fanno risalire lava. Un'altra coperta scivola sotto il materasso.",
+            hook: "Dorsale costruisce, subduzione consuma.",
+            audio: "Tira le due coperte in direzioni opposte. Dal centro risale materiale magmatico che può solidificare formando nuova crosta oceanica. Questa scena rappresenta la dorsale. Ora una coperta scivola sotto l'altra. È la subduzione. La dinamica delle placche collega la formazione di nuova litosfera oceanica alla sua evoluzione e al suo consumo nelle zone di subduzione.",
+            source: "Tettonica, pagine 9–11."
+        },
+
+        {
+            title: "Margini divergenti, convergenti e conservativi",
+            visual: "plates",
+            flow: ["DIVERGENTI", "CONVERGENTI", "CONSERVATIVI"],
+            theory: [
+                "I margini divergenti sono caratterizzati dall'allontanamento delle placche e possono essere associati alla formazione di nuova crosta oceanica.",
+                "Ai margini convergenti si verifica avvicinamento. La convergenza oceanica-continentale può generare subduzione, archi magmatici e deformazioni del margine continentale.",
+                "La convergenza oceanica-oceanica può produrre sistemi arco insulare-fossa.",
+                "La collisione continentale-continentale può contribuire alla formazione di grandi catene montuose.",
+                "Ai margini conservativi o trasformi le placche scorrono lateralmente, senza una sistematica produzione o distruzione di litosfera.",
+                "Gli esempi della dispensa comprendono Ande, Alpi, Himalaya e faglia di Sant'Andrea."
+            ],
+            locus: "Tre coppie di mattoncini. La prima si separa, la seconda collide, la terza scorre lateralmente.",
+            hook: "DCC: Divergenti, Convergenti, Conservativi.",
+            rhyme: "Divergente si allontana, convergente si avvicina, conservativo lateralmente cammina.",
+            audio: "Osserva tre coppie di mattoncini. La prima si allontana. Rappresenta un margine divergente. La seconda si avvicina. Rappresenta un margine convergente. In determinate condizioni una placca può sprofondare sotto un'altra, oppure due masse continentali possono collidere. La terza coppia scorre lateralmente. Rappresenta un margine conservativo. Ricorda DCC. Divergenti, convergenti, conservativi.",
+            source: "Tettonica, pagine 12–14."
+        },
+
+        {
+            title: "Modello convettivo e sintesi della geodinamica",
+            flow: ["CALORE INTERNO", "DINAMICA DEL MANTELLO", "MOVIMENTO PLACCHE", "FENOMENI GEOLOGICI"],
+            theory: [
+                "Il modello convettivo collega la dinamica termica interna della Terra ai movimenti del mantello.",
+                "Il materiale del mantello può deformarsi e muoversi nel corso dei tempi geologici pur essendo prevalentemente solido.",
+                "La convezione, la trazione delle placche in subduzione e altri processi contribuiscono alla dinamica delle placche.",
+                "Tettonica, orogenesi, vulcanismo e sismicità sono fenomeni collegati.",
+                "L'alterazione e l'erosione superficiale, insieme al ciclo litogenetico, completano il quadro della trasformazione continua della Terra.",
+                "La conoscenza geologica costituisce una base per riconoscere i materiali, valutare i rischi territoriali e comprendere le costruzioni."
+            ],
+            locus: "Una pentola gigantesca sotto il letto fa risalire materiale caldo e ridiscendere materiale più freddo.",
+            hook: "Energia interna, movimento, trasformazione.",
+            audio: "Guarda l'ultima immagine della nostra casa. Sotto il letto immaginiamo una pentola che rappresenta la dinamica termica terrestre. È un'analogia del modello convettivo. I materiali del mantello possono deformarsi e muoversi lentamente. La dinamica interna contribuisce al movimento delle placche, alla formazione delle montagne, al vulcanismo e alla sismicità. In superficie, acqua, vento e ghiaccio modificano le rocce. I sedimenti si accumulano e le rocce si trasformano. Noi utilizziamo questi materiali e costruiamo su un territorio dinamico. Comprendere la Terra significa quindi collegare geologia, materiali, territorio e prevenzione. Torna mentalmente all'immagine centrale e ripercorri le dodici stanze. Tutta la materia appartiene allo stesso sistema.",
+            source: "Tettonica, pagine 15–16; collegamenti con gli altri materiali del corso."
+        }
+    ]
+}
+
+];
+
+/* =========================================================
+   DOCUMENTI DI RIFERIMENTO
+   ========================================================= */
+
+modules.push(...[{"id": "", "title": "Cartografia e telerilevamento", "room": "Studio tecnico", "icon": "🗺️", "color": "#38bdf8", "overview": "Rappresentare e interpretare il territorio.", "blocks": [{"title": "Carta geografica, scala e proiezioni", "flow": ["TERRITORIO", "RIDUZIONE", "SIMBOLI"], "theory": ["La carta è una rappresentazione ridotta, approssimata e simbolica del territorio. La scala numerica esprime il rapporto tra distanza sulla carta e distanza reale; la scala grafica rappresenta tale rapporto con un segmento graduato.", "Una scala 1:2.000 è maggiore e più dettagliata di 1:1.000.000. Una proiezione conserva alcune proprietà a scapito di altre: Mercatore è conforme (angoli), Gall-Peters è equivalente (aree).", "Il reticolato UTM suddivide il globo in 60 fusi di 6° di longitudine. L’Italia ricade nei fusi 32, 33 e 34; la dispensa indica RDN2008 come riferimento ufficiale."], "locus": "Sul tavolo dello studio una Terra gigante entra in una carta pieghevole; un righello si allunga di migliaia di volte.", "hook": "Ridotta, approssimata, simbolica; scala; proiezione.", "audio": "Osserva questo processo: TERRITORIO. RIDUZIONE. SIMBOLI. Sul tavolo dello studio una Terra gigante entra in una carta pieghevole; un righello si allunga di migliaia di volte.", "source": "08 Cartografia e telerilevamento.pdf, pp. 2–6; 08 la-restituzione-cartografica.pdf.", "formula": "d reale = d carta × denominatore"}, {"title": "Rilievo, isoipse e pendenza", "flow": ["QUOTE", "CURVE DI LIVELLO", "DISLIVELLO", "PENDENZA"], "theory": ["I punti quotati danno quote puntuali; tratteggio, sfumo e tinte ipsometriche aiutano a riconoscere le forme del terreno. Le isoipse uniscono punti alla stessa quota; il DTM è una griglia di quote.", "L’equidistanza è il dislivello costante fra curve vicine. Isoipse ravvicinate indicano pendenza maggiore. La V delle isoipse punta verso monte nelle valli e verso valle nei crinali.", "Esempio della dispensa: carta 1:25.000, equidistanza 25 m, distanza cartografica 1 cm. La distanza reale è 250 m, la pendenza è 10%, pari a circa 5,7°."], "locus": "Un modellino di montagna viene affettato orizzontalmente come una torta; le fette formano le isoipse.", "hook": "Stessa quota; equidistanza; Δh/d.", "audio": "Osserva questo processo: QUOTE. CURVE DI LIVELLO. DISLIVELLO. PENDENZA. Un modellino di montagna viene affettato orizzontalmente come una torta; le fette formano le isoipse.", "source": "08 Cartografia e telerilevamento.pdf, pp. 7–9.", "formula": "p = Δh / d × 100"}, {"title": "Carte tematiche e Carta della Natura", "flow": ["BASE TOPOGRAFICA", "TEMA", "VALUTAZIONE"], "theory": ["Le carte tematiche rappresentano un fenomeno naturale, economico o sociale. Le qualitative indicano che cosa si trova e dove; le quantitative rappresentano quantità tramite classi, isoplete e simboli.", "Carta della Natura: livelli di analisi a 1:250.000 e 1:50.000; classificazione di unità di paesaggio e habitat, valutazione della qualità e della vulnerabilità.", "La cartografia tematica è utile per leggere suoli, vegetazione, uso del suolo e rischi territoriali."], "locus": "Sul muro dello studio sovrapponi fogli trasparenti: boschi, rocce, case, rischi.", "hook": "Base, tema, scala, valutazione.", "audio": "Osserva questo processo: BASE TOPOGRAFICA. TEMA. VALUTAZIONE. Sul muro dello studio sovrapponi fogli trasparenti: boschi, rocce, case, rischi.", "source": "08 Cartografia e telerilevamento.pdf, pp. 10–15; 08 la-restituzione-cartografica.pdf."}, {"title": "Telerilevamento, satelliti e GIS", "flow": ["SENSORE", "SEGNALE", "IMMAGINE", "ANALISI"], "theory": ["Il telerilevamento acquisisce informazioni a distanza tramite sensori su aerei, droni e satelliti. I sensori passivi registrano radiazione disponibile; quelli attivi emettono un segnale e ne misurano il ritorno.", "Le orbite geostazionarie consentono osservazioni ripetute della stessa area; le orbite polari permettono osservazioni di ampie porzioni della Terra.", "La vegetazione assorbe il rosso e riflette il vicino infrarosso. Il rapporto NDVI aiuta a distinguere condizioni della vegetazione. GIS e immagini permettono analisi del territorio e del consumo di suolo."], "locus": "Un satellite fotografa un bosco con due enormi occhiali, rosso e infrarosso.", "hook": "Sensore, orbita, riflettanza, GIS.", "audio": "Osserva questo processo: SENSORE. SEGNALE. IMMAGINE. ANALISI. Un satellite fotografa un bosco con due enormi occhiali, rosso e infrarosso.", "source": "08 Cartografia e telerilevamento.pdf, pp. 16–18; 08 la-restituzione-cartografica.pdf.", "formula": "NDVI = (NIR − R) / (NIR + R)"}]}, {"id": "", "title": "Meteorologia e climatologia", "room": "Terrazzo", "icon": "☁️", "color": "#fbbf24", "overview": "Atmosfera, tempo, clima e acqua.", "blocks": [{"title": "Tempo, clima ed elementi climatici", "flow": ["OSSERVAZIONE", "MISURE", "CLIMA"], "theory": ["La meteorologia studia il tempo atmosferico; la climatologia studia lo stato medio del tempo su periodi lunghi e in diverse aree. Gli elementi climatici comprendono radiazione, temperatura, pressione, umidità, precipitazioni e movimenti dell’aria.", "I fattori climatici comprendono latitudine, altitudine, inclinazione ed esposizione, masse d’acqua e vegetazione. Le regioni climatiche italiane presentano caratteristiche differenti."], "locus": "Sul terrazzo un calendario di molti anni inghiotte un bollettino di oggi.", "hook": "Tempo = oggi; clima = andamento di lungo periodo.", "audio": "Osserva questo processo: OSSERVAZIONE. MISURE. CLIMA. Sul terrazzo un calendario di molti anni inghiotte un bollettino di oggi.", "source": "06_climatologia-e-meteorologia.pdf, pp. 2–7, 17–20."}, {"title": "Radiazione solare, temperatura e inversione termica", "flow": ["SOLE", "RISCALDAMENTO", "SCAMBI TERMICI"], "theory": ["La radiazione solare è fondamentale per la produzione di biomassa. Parte viene riflessa, parte assorbita; i gas serra trattengono parte della radiazione infrarossa emessa dalla superficie terrestre.", "La temperatura dipende da latitudine, altitudine, esposizione e condizioni locali. Nell’inversione termica l’aria più fredda rimane in basso sotto aria relativamente più calda."], "locus": "Una serra gigante avvolge il Sole, mentre una coperta di aria calda sovrasta una valle fredda.", "hook": "Radiazione; effetto serra; inversione = freddo sotto.", "audio": "Osserva questo processo: SOLE. RISCALDAMENTO. SCAMBI TERMICI. Una serra gigante avvolge il Sole, mentre una coperta di aria calda sovrasta una valle fredda.", "source": "06_climatologia-e-meteorologia.pdf, pp. 8–9, 17–20; Nuvole e cambiamento climatico.pdf."}, {"title": "Pressione atmosferica, vento e umidità", "flow": ["DIFFERENZA DI PRESSIONE", "MOVIMENTO DELL’ARIA", "UMIDITÀ"], "theory": ["La pressione atmosferica è legata al peso dell’aria. Le differenze di pressione favoriscono i movimenti delle masse d’aria. L’umidità descrive il contenuto di vapore acqueo; l’umidità relativa esprime il rapporto percentuale rispetto alla saturazione alla stessa temperatura.", "Il raffreddamento dell’aria può favorire la condensazione quando si raggiunge la saturazione."], "locus": "Due palloni di diversa pressione spingono un ventilatore; una spugna d’aria si satura e gocciola.", "hook": "Pressione, vento, vapore, saturazione.", "audio": "Osserva questo processo: DIFFERENZA DI PRESSIONE. MOVIMENTO DELL’ARIA. UMIDITÀ. Due palloni di diversa pressione spingono un ventilatore; una spugna d’aria si satura e gocciola.", "source": "06_climatologia-e-meteorologia.pdf, pp. 10–13."}, {"title": "Ciclo idrologico, idrometeore e nubi", "flow": ["EVAPORAZIONE", "CONDENSAZIONE", "PRECIPITAZIONE", "DEFLUSSO"], "theory": ["Il ciclo idrologico collega evaporazione, condensazione, precipitazione, infiltrazione e deflusso. Le idrometeore comprendono pioggia, neve e grandine.", "Nubi basse: strati, stratocumuli, nembostrati. Nubi medie: altocumuli, altostrati. Nubi alte: cirri, cirrocumuli, cirrostrati. Cumuli e cumulonembi hanno sviluppo verticale.", "Il cumulonembo può produrre temporali, fulmini, grandine e raffiche. La dispensa sul clima collega le variazioni climatiche ai rischi territoriali, distinguendo forzanti naturali e antropiche."], "locus": "Una goccia sale in ascensore, diventa una nuvola e ricade su un fiume.", "hook": "Evapora, condensa, precipita, ritorna.", "audio": "Osserva questo processo: EVAPORAZIONE. CONDENSAZIONE. PRECIPITAZIONE. DEFLUSSO. Una goccia sale in ascensore, diventa una nuvola e ricade su un fiume.", "source": "06_climatologia-e-meteorologia.pdf, pp. 14–16; Nuvole e cambiamento climatico.pdf, pp. 2–12."}]}, {"id": "", "title": "Suolo", "room": "Orto", "icon": "🌱", "color": "#86efac", "overview": "Funzioni, perdita, consumo e conservazione del suolo.", "blocks": [{"title": "Pedogenesi e funzioni del suolo", "flow": ["SUBSTRATO", "PEDOGENESI", "SUOLO", "FUNZIONI"], "theory": ["Il suolo è lo strato superficiale della litosfera, prodotto per pedogenesi dal substrato roccioso. È una risorsa non rinnovabile alla scala umana e un’interfaccia fra sistemi terrestre, acquatico e atmosferico.", "La pedologia studia i suoli dal punto di vista evolutivo e agronomico. La dispensa identifica funzioni produttiva, ecologica, trofica, meccanica, idrosanitaria, igienica, climatica, paesaggistica, turistica, artistica e civile."], "locus": "Una zolla gigantesca sostiene piante, una casa e un serbatoio d’acqua.", "hook": "Pedogenesi; fertilità; biodiversità; regolazione.", "audio": "Osserva questo processo: SUBSTRATO. PEDOGENESI. SUOLO. FUNZIONI. Una zolla gigantesca sostiene piante, una casa e un serbatoio d’acqua.", "source": "09_il-valore-del-suolo.pdf, pp. 3–4."}, {"title": "Perdita e consumo di suolo", "flow": ["DEGRADO", "EROSIONE", "IMPERMEABILIZZAZIONE"], "theory": ["La perdita di suolo fertile è legata a erosione, deforestazione, agricoltura intensiva e abbandono di aree rurali. Il consumo è collegato alla cementificazione, impermeabilizzazione ed espansione urbana.", "La copertura forestale contribuisce alla regolazione idrologica e al contrasto del ruscellamento. La trasformazione del suolo compromette le funzioni dell’ecosistema."], "locus": "Una ruspa copre l’orto con cemento; la pioggia non riesce più a entrare.", "hook": "Perdita = degrado; consumo = trasformazione della copertura.", "audio": "Osserva questo processo: DEGRADO. EROSIONE. IMPERMEABILIZZAZIONE. Una ruspa copre l’orto con cemento; la pioggia non riesce più a entrare.", "source": "09_il-valore-del-suolo.pdf, pp. 5–7."}, {"title": "Agricoltura conservativa e sistemazioni idrauliche", "flow": ["COPERTURA", "MINIMA LAVORAZIONE", "REGIMAZIONE ACQUE"], "theory": ["L’agricoltura conservativa comprende pratiche volte a proteggere la superficie, mantenere la copertura, ridurre le lavorazioni e preservare struttura, porosità, capacità idrica e sostanza organica.", "Le sistemazioni idraulico-agrarie e forestali regolano le acque in eccesso o in difetto e riducono il ruscellamento. Nei versanti sono impiegati terrazzamenti, ciglionamenti, cavalcapoggio e lavorazioni in traverso. Il rittochino segue la massima pendenza e favorisce l’erosione.", "In montagna le opere di ingegneria naturalistica possono contrastare erosione, scoscendimenti e trasporto solido."], "locus": "Il terreno indossa una coperta verde; gradini di pietra rallentano un torrente.", "hook": "Copertura; minima lavorazione; traverso; terrazze.", "audio": "Osserva questo processo: COPERTURA. MINIMA LAVORAZIONE. REGIMAZIONE ACQUE. Il terreno indossa una coperta verde; gradini di pietra rallentano un torrente.", "source": "09_il-valore-del-suolo.pdf, pp. 8–12."}]}]);
+modules.sort((a,b)=>a.title.localeCompare(b.title,"it"));
+modules.forEach((m,i)=>m.id=String.fromCharCode(65+i));
+const sourceList = [
+    ["Le rocce", "03le-rocce.pdf", "18 pagine"],
+    ["Materiali lapidei", "Materiali lapidei.pdf", "3 pagine"],
+    ["Gli agenti esogeni", "07_agenti-esogeni.pdf", "16 pagine"],
+    ["I fattori endogeni", "04 I-fattori-endogeni.pdf", "15 pagine"],
+    ["Tettonica", "tettonicam.pdf", "17 pagine"],
+    ["Sismologia", "02sismologiam.pdf", "18 pagine"],
+    ["Il carsismo", "07_Il carsismo.pdf", "3 pagine"],
+    ["La normativa sismica", "la-normativa-sismica.pdf", "5 pagine"],
+    ["Esercizio dromocrone", "Esercizio_dromocrone_Piemonte.pdf", "3 pagine"],
+    ["Esercizio sul rischio vulcanico", "Metodo e consegna.pdf", "3 pagine"],
+    ["Valutazioni territoriali del rischio sismico", "rischio_sismico_convegno_2019set23_Bacci-DiMarco.pdf", "44 pagine"]
+];
+
+/* =========================================================
+   CREAZIONE DINAMICA DELLA LAVAGNA
+   ========================================================= */
+
+sourceList.push(...[["06_climatologia-e-meteorologia", "06_climatologia-e-meteorologia.pdf", "22 pagine"], ["Nuvole e cambiamento climatico", "Nuvole e cambiamento climatico.pdf", "12 pagine"], ["08 la-restituzione-cartografica", "08 la-restituzione-cartografica.pdf", "15 pagine"], ["08 Cartografia e telerilevamento", "08 Cartografia e telerilevamento.pdf", "18 pagine"], ["09_il-valore-del-suolo", "09_il-valore-del-suolo.pdf", "13 pagine"], ["202610Domande per 2S", "202610Domande per 2S.pdf", "1 pagine"]]);
+const flatBlocks = [];
+
+const $ = id => document.getElementById(id);
+
+function element(tag, className, content) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (content !== undefined) node.textContent = content;
+    return node;
+}
+
+function collectNumbers(block) {
+
+    let content = [
+        ...(block.theory || []),
+        block.formula || "",
+        block.extraFormula || ""
+    ];
+
+    [block.table, block.extraTable].forEach(table => {
+        if (table) {
+            table.rows.forEach(row => content.push(...row));
+        }
+    });
+
+    const text = content.join(" ")
+        .replace(/[₀₁₂₃₄₅₆₇₈₉]/g,
+            char => "₀₁₂₃₄₅₆₇₈₉".indexOf(char))
+        .replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]/g,
+            char => "⁰¹²³⁴⁵⁶⁷⁸⁹".indexOf(char));
+
+    const matches = text.match(/\d+(?:[.,]\d+)*/g) || [];
+
+    return [...new Set(matches)];
+}
+
+function makeTable(data) {
+
+    const wrap = element("div", "table-wrap");
+    const table = element("table");
+
+    const head = element("thead");
+    const heading = element("tr");
+
+    data.headers.forEach(h => heading.appendChild(element("th", "", h)));
+
+    head.appendChild(heading);
+    table.appendChild(head);
+
+    const body = element("tbody");
+
+    data.rows.forEach(row => {
+        const tr = element("tr");
+        row.forEach(cell => tr.appendChild(element("td", "", cell)));
+        body.appendChild(tr);
+    });
+
+    table.appendChild(body);
+    wrap.appendChild(table);
+
+    return wrap;
+}
+
+function memoryBox(type, label, text) {
+
+    const box = element("div", "memory-box");
+
+    box.appendChild(element("span", "memory-badge " + type, label));
+    box.appendChild(element("p", "scene", text));
+
+    return box;
+}
+
+function buildBoard() {
+
+    const map = $("conceptMap");
+    const sidebar = $("sidebar");
+    const container = $("lessonContainer");
+
+    modules.forEach(module => {
+
+        const mapNode = element("button", "map-node");
+        mapNode.style.setProperty("--accent", module.color);
+
+        mapNode.appendChild(element("span", "symbol", module.icon));
+        mapNode.appendChild(
+            element("strong", "", module.id + " — " + module.title)
+        );
+        mapNode.appendChild(element("small", "", module.room));
+
+        mapNode.addEventListener("click", () => {
+            document.getElementById("module-" + module.id)
+                .scrollIntoView({ block: "start", behavior: "smooth" });
+        });
+
+        map.appendChild(mapNode);
+
+        const nav = element("button", "nav-link",
+            module.id + " — " + module.title);
+
+        nav.id = "nav-" + module.id;
+        nav.style.setProperty("--accent", module.color);
+
+        nav.addEventListener("click", () => {
+            document.getElementById("module-" + module.id)
+                .scrollIntoView({ block: "start", behavior: "smooth" });
+        });
+
+        sidebar.appendChild(nav);
+
+        const section = element("section", "module");
+        section.id = "module-" + module.id;
+        section.style.setProperty("--accent", module.color);
+
+        const moduleHeading = element("div", "module-heading");
+
+        moduleHeading.appendChild(element("h2", "",
+            module.icon + " " + module.id + " — " + module.title));
+
+        moduleHeading.appendChild(element("p", "",
+            "Locus: " + module.room + " · " + module.overview));
+
+        section.appendChild(moduleHeading);
+
+        module.blocks.forEach((block, index) => {
+
+            const globalIndex = flatBlocks.length;
+            const cardId = "block-" + module.id + "-" + (index + 1);
+
+            const card = element("article", "lesson-card");
+            card.id = cardId;
+            card.dataset.module = module.id;
+            card.dataset.index = String(globalIndex);
+            card.style.setProperty("--accent", module.color);
+
+            const heading = element("div", "card-heading");
+
+            const titleArea = element("div");
+
+            titleArea.appendChild(element("div", "card-label",
+                "Blocco " + module.id + "." + (index + 1)));
+
+            titleArea.appendChild(element("h3", "", block.title));
+
+            heading.appendChild(titleArea);
+
+            heading.appendChild(
+                element("span", "speaking-indicator", "● LEZIONE IN CORSO")
+            );
+
+            card.appendChild(heading);
+
+            if (block.flow) {
+
+                const flow = element("div", "flow");
+
+                block.flow.forEach((item, i) => {
+
+                    flow.appendChild(element("div", "flow-item", item));
+
+                    if (i < block.flow.length - 1) {
+                        flow.appendChild(element("div", "flow-arrow", "➔"));
+                    }
+                });
+
+                card.appendChild(flow);
+            }
+
+            if (block.visual && visuals[block.visual]) {
+
+                const visual = element("div", "visual");
+
+                visual.innerHTML = visuals[block.visual];
+
+                card.appendChild(visual);
+            }
+
+            const theory = element("div", "theory");
+
+            theory.appendChild(element("div", "card-label", "Teoria del corso"));
+
+            (block.theory || []).forEach(paragraph => {
+                theory.appendChild(element("p", "", paragraph));
+            });
+
+            card.appendChild(theory);
+
+            if (block.formula) {
+                card.appendChild(element("div", "formula", block.formula));
+            }
+
+            if (block.extraFormula) {
+                card.appendChild(element("div", "formula", block.extraFormula));
+            }
+
+            if (block.table) {
+                card.appendChild(makeTable(block.table));
+            }
+
+            if (block.extraTable) {
+                card.appendChild(makeTable(block.extraTable));
+            }
+
+            const mnemonic = element("div", "mnemonic");
+
+            mnemonic.appendChild(
+                memoryBox(
+                    "loci-badge",
+                    "🏛 PALAZZO DELLA MEMORIA",
+                    block.locus
+                )
+            );
+
+            const numerical = element("div", "memory-box");
+
+            numerical.appendChild(
+                element("span", "memory-badge number-badge",
+                    "🔢 CONVERSIONE FONETICA E SIMBOLI")
+            );
+
+            if (block.formulaMemory) {
+
+                numerical.appendChild(
+                    element("p", "", block.formulaMemory)
+                );
+            }
+
+            const numbers = collectNumbers(block);
+
+            if (numbers.length) {
+
+                const numberGrid = element("div", "number-grid");
+
+                numbers.forEach(number => {
+
+                    const chip = element("div", "number-chip");
+
+                    chip.appendChild(element("strong", "", number + " → "));
+
+                    chip.appendChild(
+                        document.createTextNode(encodeNumber(number))
+                    );
+
+                    numberGrid.appendChild(chip);
+                });
+
+                numerical.appendChild(numberGrid);
+
+            } else if (!block.formulaMemory) {
+
+                numerical.appendChild(element("p", "",
+                    "Nessun dato numerico essenziale in questo blocco. Utilizza l'associazione visiva e le parole gancio."));
+            }
+
+            mnemonic.appendChild(numerical);
+
+            const rhyme = memoryBox(
+                "rhyme-badge",
+                "🎶 RIMA, ACRONIMO E PAROLA GANCIO",
+                block.hook
+            );
+
+            if (block.rhyme) {
+                rhyme.appendChild(element("p", "", block.rhyme));
+            }
+
+            mnemonic.appendChild(rhyme);
+
+            card.appendChild(mnemonic);
+            const steps=element("div","phase-step");steps.appendChild(element("strong","","M — Tecnica specifica: "+(block.flow && block.flow.length>2?"concatenazione + loci P.A.V.":"loci + associazione visiva P.A.V.")));steps.appendChild(element("p","","1. Individua le parole chiave. 2. Colloca la scena nel locus indicato e collegala ai passaggi. 3. Ripercorri la scena e richiama: "+block.hook));card.appendChild(steps);
+
+            if (block.note) {
+                card.appendChild(element("div", "note", block.note));
+            }
+
+            const details = element("details");
+
+            details.appendChild(element("summary", "",
+                "Leggi il monologo del professore"));
+
+            const spokenText = createAudioText(module, block);
+
+            details.appendChild(element("div", "script", spokenText));
+
+            card.appendChild(details);
+
+            card.appendChild(
+                element("div", "source", "Fonte didattica: " + block.source)
+            );
+
+            const actions = element("div", "card-actions");
+
+            const listen = element("button", "btn",
+                "▶ Ascolta questo blocco");
+
+            listen.addEventListener("click", () => startLesson(globalIndex, true));
+
+            const continueBtn = element("button", "btn",
+                "▶ Continua da qui");
+
+            continueBtn.addEventListener("click", () =>
+                startLesson(globalIndex, false)
+            );
+
+            actions.appendChild(listen);
+            actions.appendChild(continueBtn);
+
+            card.appendChild(actions);
+
+            section.appendChild(card);
+
+            flatBlocks.push({
+                id: cardId,
+                module: module.id,
+                moduleTitle: module.title,
+                title: block.title,
+                audio: spokenText,
+                block: block,
+                card: card
+            });
+        });
+
+        container.appendChild(section);
+    });
+
+    $("totalBlocks").textContent = flatBlocks.length;
+    $("counter").textContent = "0 / " + flatBlocks.length;
+
+    phonetic.forEach((item, i) => {
+
+        const digit = element("div", "digit");
+
+        digit.appendChild(element("strong", "", String(i)));
+        digit.appendChild(element("span", "digit-icon", item.icon));
+        digit.appendChild(element("span", "", item.word));
+        digit.appendChild(element("span", "", item.sound));
+
+        $("phoneticAlphabet").appendChild(digit);
+    });
+
+    $("sources").appendChild(
+        makeTable({
+            headers: ["Documento", "File originale", "Estensione"],
+            rows: sourceList
+        })
+    );
+}
+
+/* =========================================================
+   PREPARAZIONE DEL TESTO AUDIO
+   ========================================================= */
+
+function createAudioText(module, block) {
+
+    let text = [
+        block.audio,
+        "Ora osserva le spiegazioni sulla lavagna.",
+        ...(block.theory || []),
+        block.formulaMemory || "",
+        "Fissa questa scena mentale. " + block.locus,
+        "Conserva le parole gancio. " + block.hook,
+        block.rhyme || ""
+    ].join(" ");
+
+    return normalizeSpeech(text);
+}
+
+function normalizeSpeech(text) {
+
+    const replacements = [
+        [/CaCO₃/g, "carbonato di calcio"],
+        [/H₂O/g, "acqua"],
+        [/CO₂/g, "anidride carbonica"],
+        [/Fe₂O₃/g, "ossido di ferro"],
+        [/km\/h/g, "chilometri orari"],
+        [/km\/s/g, "chilometri al secondo"],
+        [/km\b/g, "chilometri"],
+        [/mm\b/g, "millimetri"],
+        [/d\.C\./g, "dopo Cristo"],
+        [/%/g, " per cento"],
+        [/€/g, " euro"],
+        [/×/g, " per "],
+        [/−/g, " meno "],
+        [/\+/g, " più "],
+        [/⇌/g, " reagisce reversibilmente formando "],
+        [/ζ/g, "zeta "],
+        [/Δ/g, "delta "],
+        [/≥/g, " maggiore o uguale a "],
+        [/≤/g, " minore o uguale a "],
+        [/→|➔|⬇|⬌/g, ". "],
+        [/[–—]/g, " "],
+        [/LC1/g, "elle ci uno"],
+        [/LC2/g, "elle ci due"],
+        [/LC3/g, "elle ci tre"],
+        [/NTC/g, "enne ti ci"],
+        [/PGA/g, "pi gi a"],
+        [/FRP/g, "effe erre pi"],
+        [/[\p{Extended_Pictographic}\uFE0F]/gu, ""]
+    ];
+
+    let spoken = String(text);
+
+    replacements.forEach(([pattern, value]) => {
+        spoken = spoken.replace(pattern, value);
+    });
+
+    return spoken.replace(/\s+/g, " ").trim();
+}
+
+/* =========================================================
+   LETTURA VOCALE ITALIANA
+   Supporto a pause, velocità, ripresa e sincronizzazione.
+   ========================================================= */
+
+const supported =
+    "speechSynthesis" in window &&
+    "SpeechSynthesisUtterance" in window;
+
+const synth = supported ? window.speechSynthesis : null;
+
+let voices = [];
+let selectedVoice = null;
+let currentIndex = 0;
+let currentChunk = 0;
+let chunks = [];
+let chunkTargets=[];
+let playing = false;
+let paused = false;
+let singleBlock = false;
+let generation = 0;
+let utterance = null;
+let pendingTimer = null;
+
+function loadVoices() {
+
+    if (!supported) return;
+
+    voices = synth.getVoices();
+
+    selectedVoice =
+        voices.find(v => v.lang.toLowerCase() === "it-it" && v.localService) ||
+        voices.find(v => v.lang.toLowerCase().startsWith("it") && v.localService) ||
+        voices.find(v => v.lang.toLowerCase().startsWith("it")) ||
+        null;
+    const picker = $("voicePicker");
+    if(picker){const previous=picker.value;picker.replaceChildren(new Option("Automatica",""));voices.filter(v=>v.lang.toLowerCase().startsWith("it")).sort((a,b)=>Number(/natural|neural/i.test(b.name))-Number(/natural|neural/i.test(a.name))).forEach(v=>picker.add(new Option(v.name,v.voiceURI)));picker.value=previous;if(previous) selectedVoice=voices.find(v=>v.voiceURI===previous)||selectedVoice;else selectedVoice=voices.find(v=>v.lang.toLowerCase().startsWith("it")&&/natural|neural/i.test(v.name))||selectedVoice;}
+}
+
+if (supported) {
+    loadVoices();
+    synth.addEventListener("voiceschanged", loadVoices);
+}
+
+function splitSpeech(text, maxLength = 210) {
+
+    const words = text.split(/\s+/);
+    const result = [];
+
+    let current = "";
+
+    words.forEach(word => {
+
+        const proposed = current ? current + " " + word : word;
+
+        if (proposed.length > maxLength && current) {
+
+            result.push(current);
+            current = word;
+
+        } else {
+
+            current = proposed;
+        }
+
+        if (/[.!?]$/.test(word) && current.length > 90) {
+
+            result.push(current);
+            current = "";
+        }
+    });
+
+    if (current) result.push(current);
+
+    return result;
+}
+
+function setStatus(text) {
+    $("status").textContent = text;
+}
+
+function syncButtons() {
+
+    $("pauseBtn").disabled = !playing;
+    $("stopBtn").disabled = !playing;
+
+    $("pauseBtn").textContent =
+        paused ? "▶ Riprendi" : "⏸ Pausa";
+
+    $("playBtn").textContent =
+        playing && !paused
+        ? "▶ Lezione attiva"
+        : "▶ Avvia Lezione";
+}
+
+function clearPending() {
+
+    if (pendingTimer !== null) {
+        clearTimeout(pendingTimer);
+        pendingTimer = null;
+    }
+}
+
+function highlightBlock(index) {
+
+    flatBlocks.forEach(item => item.card.classList.remove("active"));
+
+    document.querySelectorAll(".nav-link").forEach(nav =>
+        nav.classList.remove("current")
+    );
+
+    const item = flatBlocks[index];
+
+    if (!item) return;
+
+    item.card.classList.add("active");
+
+    const nav = $("nav-" + item.module);
+
+    if (nav) nav.classList.add("current");
+
+    item.card.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            ? "auto"
+            : "smooth",
+        block: "center"
+    });
+
+    $("counter").textContent =
+        (index + 1) + " / " + flatBlocks.length;
+
+    setStatus(item.moduleTitle + " — " + item.title);
+}
+
+function updateProgress() {
+
+    const fraction = chunks.length
+        ? Math.min(1, currentChunk / chunks.length)
+        : 0;
+
+    const progress =
+        ((currentIndex + fraction) / flatBlocks.length) * 100;
+
+    $("progressBar").style.width = progress + "%";
+}
+
+function prepareBlock(index) {
+
+    currentIndex = index;
+    currentChunk = 0;
+
+    const entry=flatBlocks[index], b=entry.block;chunks=[];chunkTargets=[];const paragraphs=[...entry.card.querySelectorAll('.theory p')];const mem=[...entry.card.querySelectorAll('.memory-box')];const segs=[[b.audio,entry.card.querySelector('.card-heading')],...(b.theory||[]).map((t,i)=>[t,paragraphs[i]]),[b.formulaMemory||"",mem[1]],["Fissa questa scena mentale. "+b.locus,mem[0]],["Conserva le parole gancio. "+b.hook+" "+(b.rhyme||""),mem[2]]];for(const [t,target] of segs){if(!t)continue;for(const c of splitSpeech(normalizeSpeech(t))){chunks.push(c);chunkTargets.push(target)}}
+
+    highlightBlock(index);
+    updateProgress();
+}
+
+function scheduleSpeak(token) {
+
+    clearPending();
+
+    pendingTimer = setTimeout(() => {
+
+        pendingTimer = null;
+
+        if (playing && !paused && token === generation) {
+            speakCurrentChunk(token);
+        }
+
+    }, 80);
+}
+
+function speakCurrentChunk(token) {
+
+    if (!supported || !playing || paused || token !== generation) {
+        return;
+    }
+
+    if (currentChunk >= chunks.length) {
+
+        flatBlocks[currentIndex].card.classList.add("completed");
+
+        updateProgress();
+
+        if (singleBlock || currentIndex >= flatBlocks.length - 1) {
+
+            finishLesson();
+
+            return;
+        }
+
+        prepareBlock(currentIndex + 1);
+
+        scheduleSpeak(token);
+
+        return;
+    }
+
+    const sentence = chunks[currentChunk];
+    document.querySelectorAll('.reading-paragraph').forEach(e=>e.classList.remove('reading-paragraph'));const target=chunkTargets[currentChunk];if(target){target.classList.add('reading-paragraph');target.scrollIntoView({block:'nearest',behavior:'smooth'})}
+
+    $("captionPanel").textContent = sentence;
+
+    utterance = new SpeechSynthesisUtterance(sentence);
+
+    utterance.lang = "it-IT";
+    utterance.rate = Number($("speed").value);
+    utterance.pitch = 1;
+    utterance.volume = 1;
+
+    if (selectedVoice) utterance.voice = selectedVoice;
+
+    utterance.onstart = () => {
+
+        if (generation !== token) return;
+
+        setStatus(
+            flatBlocks[currentIndex].moduleTitle +
+            " — " +
+            flatBlocks[currentIndex].title
+        );
+    };
+
+    utterance.onend = () => {
+
+        if (generation !== token || !playing) return;
+
+        currentChunk++;
+
+        updateProgress();
+
+        if (!paused) {
+            scheduleSpeak(token);
+        }
+    };
+
+    utterance.onerror = event => {
+
+        if (generation !== token || !playing) return;
+
+        if (event.error === "interrupted" || event.error === "canceled") {
+            return;
+        }
+
+        stopLesson(false);
+
+        setStatus(
+            "Sintesi vocale non disponibile: " +
+            event.error +
+            ". Verificare la voce italiana del browser."
+        );
+    };
+
+    try {
+
+        synth.speak(utterance);
+
+    } catch (error) {
+
+        stopLesson(false);
+
+        setStatus("Errore durante l'avvio della sintesi vocale.");
+    }
+}
+
+function startLesson(index = 0, onlyThisBlock = false) {
+
+    if (!supported) {
+
+        setStatus(
+            "Il browser non supporta la sintesi vocale. Aprire il file con Chrome o Edge."
+        );
+
+        return;
+    }
+
+    generation++;
+
+    clearPending();
+
+    synth.cancel();
+
+    if (synth.paused) synth.resume();
+
+    loadVoices();
+
+    playing = true;
+    paused = false;
+    singleBlock = onlyThisBlock;
+
+    prepareBlock(Math.max(0, Math.min(flatBlocks.length - 1, index)));
+
+    syncButtons();
+
+    speakCurrentChunk(generation);
+}
+
+function togglePause() {
+
+    if (!supported || !playing) return;
+
+    if (!paused) {
+
+        paused = true;
+
+        generation++;
+
+        clearPending();
+
+        /*
+         * Si conserva la posizione della frase.
+         * La ripresa ricomincia dalla frase interrotta,
+         * evitando i blocchi di speechSynthesis.pause()
+         * presenti in alcuni browser.
+         */
+
+        synth.cancel();
+
+        setStatus("Lezione in pausa");
+
+    } else {
+
+        paused = false;
+
+        generation++;
+
+        if (synth.paused) synth.resume();
+
+        scheduleSpeak(generation);
+    }
+
+    syncButtons();
+}
+
+function stopLesson(reset = true) {
+
+    generation++;
+
+    clearPending();
+
+    playing = false;
+    paused = false;
+
+    if (supported) {
+
+        synth.cancel();
+
+        if (synth.paused) synth.resume();
+    }
+
+    flatBlocks.forEach(item => item.card.classList.remove("active"));
+
+    $("captionPanel").textContent = "";
+
+    if (reset) {
+
+        currentIndex = 0;
+        currentChunk = 0;
+        chunks = [];
+
+        $("progressBar").style.width = "0%";
+
+        $("counter").textContent = "0 / " + flatBlocks.length;
+    }
+
+    setStatus("Lezione arrestata");
+
+    syncButtons();
+}
+
+function finishLesson() {
+
+    generation++;
+
+    clearPending();
+
+    playing = false;
+    paused = false;
+
+    flatBlocks[currentIndex].card.classList.remove("active");
+
+    if (!singleBlock) {
+
+        $("progressBar").style.width = "100%";
+
+        setStatus("Lezione completa");
+
+    } else {
+
+        setStatus("Blocco completato");
+    }
+
+    $("captionPanel").textContent = "";
+
+    syncButtons();
+}
+
+function changeBlock(direction) {
+
+    const target = Math.max(
+        0,
+        Math.min(flatBlocks.length - 1, currentIndex + direction)
+    );
+
+    if (playing) {
+
+        startLesson(target, singleBlock);
+
+    } else {
+
+        prepareBlock(target);
+    }
+}
+
+/* =========================================================
+   COMANDI INTERFACCIA
+   ========================================================= */
+
+$("playBtn").addEventListener("click", () => {
+
+    if (playing && paused) {
+        togglePause();
+        return;
+    }
+
+    if (!playing) startLesson(0, false);
+});
+
+$("pauseBtn").addEventListener("click", togglePause);
+
+$("stopBtn").addEventListener("click", () => stopLesson(true));
+
+$("prevBtn").addEventListener("click", () => changeBlock(-1));
+
+$("nextBtn").addEventListener("click", () => changeBlock(1));
+
+$("speed").addEventListener("change", () => {
+
+    if (!supported || !playing || paused) return;
+
+    generation++;
+
+    clearPending();
+
+    synth.cancel();
+
+    scheduleSpeak(generation);
+});
+
+$("captionBtn").addEventListener("click", () => {
+
+    const visible = document.body.classList.toggle("show-captions");
+
+    $("captionBtn").setAttribute("aria-pressed", String(visible));
+
+    updateToolbarHeight();
+});
+
+$("themeBtn").addEventListener("click", () => {
+
+    const light = document.body.classList.toggle("light");
+
+    $("themeBtn").textContent = light ? "Tema scuro" : "Tema chiaro";
+});
+
+function updateToolbarHeight() {
+
+    document.documentElement.style.setProperty(
+        "--toolbar-height",
+        $("toolbar").getBoundingClientRect().height + "px"
+    );
+}
+
+window.addEventListener("resize", updateToolbarHeight);
+
+if ("ResizeObserver" in window) {
+
+    new ResizeObserver(updateToolbarHeight).observe($("toolbar"));
+}
+
+window.addEventListener("beforeunload", () => {
+    if (supported) synth.cancel();
+});
+
+document.addEventListener("keydown", event => {
+
+    const tag = document.activeElement?.tagName;
+
+    if (["INPUT", "SELECT", "TEXTAREA", "BUTTON", "SUMMARY"].includes(tag)) {
+        return;
+    }
+
+    if (event.code === "Space" && playing) {
+
+        event.preventDefault();
+
+        togglePause();
+    }
+
+    if (event.code === "Escape" && playing) {
+
+        stopLesson(false);
+    }
+});
+
+/* =========================================================
+   INIZIALIZZAZIONE
+   ========================================================= */
+
+buildBoard();
+
+const map=$('conceptMap');map.classList.add('radial');const center=element('div','radial-hub');center.append(document.querySelector('.earth'));center.append(element('strong','','GEOPEDOLOGIA'));map.prepend(center);const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('class','radial-lines');svg.setAttribute('viewBox','0 0 1000 650');svg.setAttribute('preserveAspectRatio','none');map.prepend(svg);const nodes=[...map.querySelectorAll('.map-node')];nodes.forEach((node,i)=>{const a=-Math.PI/2+i*Math.PI*2/nodes.length,x=50+40*Math.cos(a),y=50+42*Math.sin(a);node.style.left=x+'%';node.style.top=y+'%';const line=document.createElementNS(svg.namespaceURI,'line');for(const [k,v] of Object.entries({x1:500,y1:325,x2:x*10,y2:y*6.5,stroke:modules[i].color,'stroke-width':2.5}))line.setAttribute(k,v);svg.append(line);node.setAttribute('aria-expanded','false');node.addEventListener('click',e=>{e.stopImmediatePropagation();nodes.forEach(n=>n.setAttribute('aria-expanded','false'));node.setAttribute('aria-expanded','true');const area=$('branchOutline');area.replaceChildren();const panel=element('div','outline-branch');panel.append(element('h3','',modules[i].title+' — sottoargomenti'));modules[i].blocks.forEach((b,j)=>{const btn=element('button','btn',b.title);btn.onclick=()=>document.getElementById('block-'+modules[i].id+'-'+(j+1)).scrollIntoView({block:'start'});panel.append(btn)});area.append(panel);area.scrollIntoView({block:'nearest'})},true)});
+$('sourceCount').textContent=sourceList.length;
+$('rockJump').onclick=()=>{const m=modules.find(m=>m.title==='Rocce e minerali');if(m)$('module-'+m.id).scrollIntoView({block:'start'})};
+$('voicePicker').onchange=()=>{selectedVoice=voices.find(v=>v.voiceURI===$('voicePicker').value)||voices.find(v=>v.lang.toLowerCase().startsWith('it')&&/natural|neural/i.test(v.name))||voices.find(v=>v.lang.toLowerCase().startsWith('it'))||null};
+$('accessToggle').onclick=()=>{const p=$('accessPanel');p.hidden=!p.hidden;$('accessToggle').setAttribute('aria-expanded',String(!p.hidden));updateToolbarHeight()};
+const ruler=element('div','ruler-line');document.body.append(ruler);$('rulerToggle').onchange=()=>ruler.style.display=$('rulerToggle').checked?'block':'none';document.addEventListener('pointermove',e=>ruler.style.top=(e.clientY-19)+'px');$('printBtn').onclick=()=>window.print();
+function applyAccess(){document.documentElement.style.setProperty('--study-font',$('fontPicker').value);document.documentElement.style.setProperty('--study-size',$('fontSize').value+'px');document.documentElement.style.setProperty('--study-lh',$('lineHeight').value);document.body.classList.remove('light','cream','contrast');if($('themePicker').value!=='dark')document.body.classList.add($('themePicker').value);updateToolbarHeight()}
+for(const id of ['fontPicker','fontSize','lineHeight','themePicker']){try{const saved=localStorage.getItem('geo-ocme-'+id);if(saved!==null)$(id).value=saved}catch{}$(id).addEventListener('input',()=>{try{localStorage.setItem('geo-ocme-'+id,$(id).value)}catch{}applyAccess()})}applyAccess();$('themeBtn').addEventListener('click',()=>{$('themePicker').value=document.body.classList.contains('light')?'light':'dark';applyAccess()});$('stopBtn').addEventListener('click',()=>document.querySelectorAll('.reading-paragraph').forEach(e=>e.classList.remove('reading-paragraph')));
+
+updateToolbarHeight();
+
+syncButtons();
+
+if (!supported) {
+
+    $("playBtn").disabled = true;
+
+    setStatus(
+        "Sintesi vocale non supportata. La lavagna rimane consultabile."
+    );
+}
+
+</script>
+
+</body>
+</html>
