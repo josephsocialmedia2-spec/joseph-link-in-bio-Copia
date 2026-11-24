@@ -266,10 +266,10 @@ async function main(){
  await evalJS("document.querySelector('#sv-farming-frame').contentWindow.goto('lettere');true");
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#letterType')===null"),true);
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#rew-flipbook').getAttribute('src')"),'../lettere-stampa/');
- assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#rew-download-letter').getAttribute('href').endsWith('Lettera_Joseph_Malafronte_AGGIORNATA_A4.pdf')"),true);
- await until("Boolean(document.querySelector('#sv-farming-frame')?.contentDocument?.querySelector('#rew-flipbook')?.contentDocument?.querySelector('#counter'))",'Sfogliatore rivista embedded caricato');
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#rew-download-letter').getAttribute('href').endsWith('lettera-c-23-11-aggiornata.html')"),true);
+ await until("Boolean(document.querySelector('#sv-farming-frame')?.contentDocument?.querySelector('#rew-flipbook')?.contentDocument?.querySelector('#count'))",'Sfogliatore rivista embedded caricato');
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#rew-flipbook').contentDocument.querySelectorAll('#prev,#next').length"),2);
- assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#rew-flipbook').contentDocument.querySelector('#counter').textContent.includes('8')"),true);
+ assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#rew-flipbook').contentDocument.querySelector('#count').textContent.includes('8')"),true);
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#rew-flipbook').contentDocument.querySelector('#next').disabled"),false);
  await evalJS("(()=>{const w=document.querySelector('#sv-farming-frame').contentWindow;w.goto('tracker');const f=w.document.querySelector('#trackerForm');f.elements.date.value='2026-11-20';f.elements.news.value='2';f.elements.contacts.value='1';f.elements.appointments.value='1';f.elements.incarichi.value='0';f.requestSubmit();return true})()");
  assert.equal(await evalJS("document.querySelector('#sv-farming-frame').contentDocument.querySelector('#kNews').textContent"),'2');
