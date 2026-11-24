@@ -33,14 +33,14 @@ document.head.append(css);
 host.innerHTML='<div class="omi-work-info"><strong>Zone OMI 2026/1 verificate: C1, C2, D1.</strong> Lunedì C1 · martedì C2 · mercoledì studi B2B · giovedì D1 · venerdì verifiche/follow-up. Le descrizioni OMI non identificano automaticamente i civici. S.S. 25, S.S. 24 e ferrovia Torino–Modane sono riferimenti di zona.</div><div class="omi-work-top"><label>Data del presidio<input id="omi-work-date" type="date"></label><label>Zona<select id="omi-work-zone"><option value="C1">C1 · Lago Grande</option><option value="C2">C2 · Corso Europa</option><option value="D1">D1 · Nord Dora</option><option value="all">Tutte</option></select></label><button class="btn secondary" type="button" id="omi-work-export">Esporta diario vie CSV</button></div><div id="omi-work-description" class="omi-work-info"></div><div id="omi-work-list"></div><div id="omi-work-editor" class="omi-work-card" hidden></div><p class="muted">Prima della distribuzione verifica i divieti “No pubblicità”, il tratto e i civici. Nessun invio automatico, nessun nominativo catastale e nessun falso acquirente.</p>';
 const rowLinks=document.createElement('div');
 rowLinks.className='omi-work-top';
-rowLinks.innerHTML='<button class="btn secondary" type="button" id="omi-work-letter">Prepara lettera della zona</button><button class="btn secondary" type="button" id="omi-work-quotes">Apri dati OMI</button><a class="btn secondary" href="./storico/" rel="noopener noreferrer" target="_blank">Diario operativo</a>';
+rowLinks.innerHTML='<button class="btn secondary" type="button" id="omi-work-letter">Apri Lettere & Stampa</button><button class="btn secondary" type="button" id="omi-work-quotes">Apri dati OMI</button><a class="btn secondary" href="./storico/" rel="noopener noreferrer" target="_blank">Diario operativo</a>';
 host.querySelector('#omi-work-list').before(rowLinks);
 rowLinks.querySelector('#omi-work-letter').addEventListener('click',()=>{
  const zone=host.querySelector('#omi-work-zone').value;
- const first=STREET.find(x=>x.zone===zone);
+ 
  if(typeof goto==='function')goto('lettere');
- const input=document.getElementById('letterZone');
- if(input){input.value=first?first.street+', Avigliana (TO) · tratto da verificare':'Avigliana (TO) · verificare zona e civici';if(typeof previewLetter==='function')previewLetter();}
+ const target=document.getElementById('rew-download-letter');
+ if(target)target.focus({preventScroll:true});
 });
 rowLinks.querySelector('#omi-work-quotes').addEventListener('click',()=>{
  const zone=host.querySelector('#omi-work-zone').value;
