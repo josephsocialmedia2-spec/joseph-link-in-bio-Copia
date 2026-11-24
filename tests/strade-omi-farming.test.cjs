@@ -25,7 +25,7 @@ test('presidio quotidiano: tutte le 6 vie contenute nelle tre descrizioni OMI or
 test('script valid, loaded after original Farming, keeps same dataset and other panes',()=>{
  new vm.Script(js,{filename:'piano-strade-omi.js'});
  assert.match(page,/id="zones"/);
- assert.match(page,/src="\.\/piano-strade-omi\.js\?v=20261124-strade1"/);
+ assert.match(read('gestione/acquisizione-farming/omi-avigliana.js'),/piano-strade-omi\.js\?v=20261124-strade1/);
  assert.match(page,/src="\.\/omi-avigliana\.js/);
  assert.match(page,/case247-lab-avigliana-v1/);
  assert.match(js,/case247-farming-strade-omi-2026-1-v1/);
