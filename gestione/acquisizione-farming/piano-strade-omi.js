@@ -47,13 +47,28 @@ rowLinks.querySelector('#omi-work-quotes').addEventListener('click',()=>{
  if(typeof goto==='function')goto('omi');
  if(zone!=='all'&&window.CASE247OMI?.selectZone)window.CASE247OMI.selectZone(zone);
 });
+host.querySelector('#omi-work-description').insertAdjacentHTML('afterend','<div id="omi-work-week" class="omi-work-info" aria-live="polite"></div>');
 const inputDate=host.querySelector('#omi-work-date'),inputZone=host.querySelector('#omi-work-zone'),list=host.querySelector('#omi-work-list'),editor=host.querySelector('#omi-work-editor');
 inputDate.value=today();
 const dayZone=()=>{const dow=new Date(inputDate.value+'T12:00:00Z').getUTCDay();return DOW[dow]||'all'};
 inputZone.value=dayZone();
 const records=()=>state.days[inputDate.value]||{};
+function weeklyReview(){
+ const d=new Date(inputDate.value+'T12:00:00Z');if(Number.isNaN(d.valueOf()))return;
+ const dow=d.getUTCDay();d.setUTCDate(d.getUTCDate()-(dow+6)%7);
+ const weekly=[{offset:0,day:'Lunedì',zone:'C1'},{offset:1,day:'Martedì',zone:'C2'},{offset:3,day:'Giovedì',zone:'D1'}];
+ const lines=weekly.map(item=>{
+  const date=new Date(d);date.setUTCDate(date.getUTCDate()+item.offset);
+  const rec=state.days[date.toISOString().slice(0,10)]||{};
+  const roads=STREET.filter(x=>x.zone===item.zone);
+  const done=roads.filter(x=>{const r=rec[x.zone+'|'+x.street];return r?.verified&&r?.noAdvertisingChecked&&String(r.civici||'').trim()}).length;
+  const delivered=roads.reduce((n,x)=>n+Number(rec[x.zone+'|'+x.street]?.delivered||0),0);
+  return item.day+' '+item.zone+': '+done+'/'+roads.length+' vie documentate, '+delivered+' lettere consegnate';
+ });
+ host.querySelector('#omi-work-week').textContent='SETTIMANA DAL '+d.toISOString().slice(0,10)+' · '+lines.join(' | ')+' · Mercoledì B2B; venerdì controllo e richiami.';
+}
 function render(){
- const zone=inputZone.value,rr=records(),selection=STREET.filter(x=>zone==='all'||x.zone===zone);
+ const zone=inputZone.value,rr=records(),selection=STREET.filter(x=>zone==='all'||x.zone===zone);weeklyReview();
  host.querySelector('#omi-work-description').textContent=(zone==='all'?'Tutte le zone · 6 vie':zone+' · '+DESCRIPTIONS[zone])+' · '+selection.filter(x=>rr[x.zone+'|'+x.street]?.verified&&rr[x.zone+'|'+x.street]?.noAdvertisingChecked).length+'/'+selection.length+' vie verificate (sopralluogo e divieti) · '+selection.reduce((sum,x)=>sum+Number(rr[x.zone+'|'+x.street]?.delivered||0),0)+' lettere consegnate';
  list.innerHTML=selection.map(x=>{
   const id=x.zone+'|'+x.street,r=rr[id];const done=r?.verified;const safe=done&&r.noAdvertisingChecked;
@@ -80,6 +95,7 @@ function open(id){
   const verified=editor.querySelector('#omi-road-verified').checked;
   const noAdv=editor.querySelector('#omi-road-noadv').checked;
   if(!Number.isInteger(prepared)||prepared<0||!Number.isInteger(delivered)||delivered<0||delivered>prepared){window.alert('Numeri non validi: le consegne non possono superare il materiale preparato.');return}
+  if(verified&&(!noAdv||!civici)){window.alert('Per confermare il sopralluogo servono civici/tratto e controllo dei divieti.');return}
   if(delivered>0&&(!verified||!noAdv||!civici)){window.alert('Per registrare consegne verifica sopralluogo, civici e divieti di pubblicità.');return}
   state.days[inputDate.value]??={};
   state.days[inputDate.value][id]={zone:selected.zone,street:selected.street,civici,prepared,delivered,verified,noAdvertisingChecked:noAdv,notes:editor.querySelector('#omi-road-notes').value.slice(0,500),updatedAt:new Date().toISOString()};
