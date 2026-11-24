@@ -16,7 +16,7 @@ test('Acquisizione senza titolo e quattro sottoschede, ma Farming sempre visibil
  assert.doesNotMatch(home,/Standard Venditore &amp; Segreti|Networking &amp; WhatsApp|Strategia Video \(8 Titoli\)/);
  assert.match(home,/id="sv-tab-4" class="sv-panel sv-farming-panel"/);
  assert.doesNotMatch(home,/id="sv-tab-4"[^>]+hidden/);
- assert.match(home,/id="sv-farming-frame"[^>]*src="\.\/acquisizione-farming\/\?omi=20261120-1&rev=20261123-letter-c-a5-pub1&embed=hide-header&strade=20261124-2"/);
+ assert.match(home,/id="sv-farming-frame"[^>]*src="\.\/acquisizione-farming\/\?omi=20261120-1&rev=20261123-letter-c-a5-pub1&embed=hide-header"/);
  assert.match(home,/sv-acquisizione\.js\?v=20261121-no-quattro-tab1/);
  assert.match(home,/control-center\.js\?v=20261120-farming1/);
  const js=get('gestione/sv-acquisizione.js');
