@@ -110,3 +110,14 @@ body:has(#saas-app)>.saas-legacy-hidden{display:none!important}
 #saas-app .saas-ztd-routine{position:sticky;left:0;z-index:8;align-self:center;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;min-height:34px;margin-right:9px;padding:7px 14px;border-radius:7px;background:#1d4ed8;color:white;text-decoration:none;font-size:12px;font-weight:750;white-space:nowrap;box-shadow:0 1px 2px #1e3a8a44}
 #saas-app .saas-ztd-routine:hover,#saas-app .saas-ztd-routine:focus-visible{background:#1e40af;color:#fff;outline:2px solid #8ab4ff;outline-offset:2px}
 @media(max-width:620px){#saas-app .saas-ztd-routine{font-size:11px;padding:6px 10px;min-height:32px;margin-right:6px}}
+
+/* Full-screen in-dashboard Zero to Diamond operational routine. */
+#saas-app .saas-ztd-dialog{border:0;border-radius:12px;padding:0;background:#f3f7fb;color:#142b42;width:min(1200px,calc(100vw - 28px));height:min(94dvh,940px);max-width:none;max-height:none;box-shadow:0 18px 75px #0005;overflow:hidden}
+#saas-app .saas-ztd-dialog::backdrop{background:rgba(5,18,33,.78)}
+#saas-app .saas-ztd-dialog[open]{display:flex;flex-direction:column}
+#saas-app .saas-ztd-dialog-bar{flex:0 0 auto;display:flex;align-items:center;gap:12px;justify-content:space-between;min-height:48px;padding:8px 13px;background:#112d46;color:#fff}
+#saas-app .saas-ztd-dialog-bar strong{font-size:13px;white-space:nowrap}
+#saas-app .saas-ztd-dialog-bar a{color:#eff7ff;text-decoration:underline;margin-left:auto}
+#saas-app .saas-ztd-dialog-bar button{border:1px solid #d8e4ef;background:#fff;border-radius:6px;padding:6px 12px;color:#15334d;font-weight:700}
+#saas-app .saas-ztd-frame{flex:1 1 auto;min-width:0;min-height:0;width:100%;border:0;background:#f3f7fb}
+@media(max-width:620px){#saas-app .saas-ztd-dialog{width:100vw;height:100dvh;border-radius:0;max-width:none;max-height:none;margin:0}#saas-app .saas-ztd-dialog-bar strong{font-size:11px}#saas-app .saas-ztd-dialog-bar a{font-size:10px}}
