@@ -2986,6 +2986,7 @@ function speakCurrentChunk(token) {
     utterance.onstart = () => {
 
         if (generation !== token) return;
+        window.ocmeGeopedologiaVisual?.onSpeech(flatBlocks[currentIndex].id,sentence,currentChunk);
 
         setStatus(
             flatBlocks[currentIndex].moduleTitle +
@@ -3395,7 +3396,7 @@ return {id,encode,decode,reverse,pao,scene,months,schedule,room,validate,seed};
 })());
 </script>
 
-<script src="../../engine/visual-first.js?v=6.2"></script>
+<script src="../../engine/visual-first.js?v=6.3"></script>
 <script id="ocv-adapter">
 ;(function(labels){
 if(!window.OCMEVisual)return;
@@ -3405,7 +3406,7 @@ const clone=(n)=>n?.cloneNode(true)||null;
 const idMap=new Map(flatBlocks.map((e,i)=>[e.id,i]));
 const data={id:"geopedologia",title:"Geopedologia",rootArt:()=>clone(document.querySelector("svg.earth")),modules:modules.map(m=>{
 const moduleNode=document.getElementById("module-"+m.id), group=flatBlocks.filter(e=>e.module===m.id);
-return{id:m.id,title:m.title,label:labels[m.id]?.[0]||m.title,art:()=>clone(moduleNode?.querySelector(".pav-v3 svg")||group[0]?.card.querySelector(".m4-pav-figure svg,.m4-pav-figure img")),blocks:group.map((e,i)=>({id:e.id,title:e.title,label:labels[m.id]?.[1]?.[i]||e.title,art:()=>clone(e.card.querySelector(".m4-pav-figure svg,.m4-pav-figure img")),diagram:e.card.querySelector(".visual svg")?()=>clone(e.card.querySelector(".visual svg")):null,flow:(e.block.flow||[]).map(t=>String(t).trim()).filter(Boolean),locus:()=>e.card.querySelector(".m4-card p")?.textContent||m.room,source:e.block.source,theory:e.block.theory||[],hook:e.block.hook||"",formula:e.block.formula||"",formulaMemory:e.block.formulaMemory||""}))}
+return{id:m.id,title:m.title,label:labels[m.id]?.[0]||m.title,art:()=>clone(moduleNode?.querySelector(".pav-v3 svg")||group[0]?.card.querySelector(".m4-pav-figure svg,.m4-pav-figure img")),blocks:group.map((e,i)=>({id:e.id,title:e.title,label:labels[m.id]?.[1]?.[i]||e.title,art:()=>clone(e.card.querySelector(".m4-pav-figure svg,.m4-pav-figure img")),diagram:e.card.querySelector(".visual svg")?()=>clone(e.card.querySelector(".visual svg")):null,flow:(e.block.flow||[]).map(t=>String(t).trim()).filter(Boolean),locus:()=>e.card.querySelector(".m4-card p")?.textContent||m.room,source:e.block.source,keywords:m.id==="A"&&i===0?["SOLE","ACQUA","OSSIGENO","MINERALI","ANIDRIDE CARBONICA","RADICI","MICRORGANISMI","FERRO","EMATITE","BAUXITE","TERRE ROSSE"]:[],theory:e.block.theory||[],hook:e.block.hook||"",formula:e.block.formula||"",formulaMemory:e.block.formulaMemory||""}))}
 })};
 if(data.modules.some(m=>!m.art()||m.blocks.some(b=>!b.art()))||!data.rootArt())throw Error("Vignette non disponibili");
 // Sotto-rami della scheda: concetti presenti negli appunti già integrati.
