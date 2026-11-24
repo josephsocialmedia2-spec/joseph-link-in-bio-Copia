@@ -22,6 +22,15 @@ function boot(){
  header.append(identity,googlePiva,date);
  const nav=document.createElement('nav');nav.className='saas-tabs';nav.setAttribute('aria-label','Sezioni della dashboard');
  const labels=[['agenda','Agenda'],['acquisizione','Acquisizione'],['pilastri','Pilastri vendite'],['motivazione','Il mio Perché'],['operativo','Strumenti'],['archivio','Archivio']];
+ const ztdRoutine=document.createElement('a');
+ ztdRoutine.className='saas-ztd-routine';
+ ztdRoutine.href='https://docs.google.com/spreadsheets/d/1TlcknaiRIy0C0DFeM0DWF34f6BuojnMmhxYtjJqLLS4/edit#gid=1137619035';
+ ztdRoutine.target='_blank';
+ ztdRoutine.rel='noopener noreferrer';
+ ztdRoutine.textContent='Apri Routine Mattutina · ZTD';
+ ztdRoutine.setAttribute('aria-label','Apri il resoconto mattutino Zero to Diamond nel Google Sheet privato');
+ ztdRoutine.title='Resoconto aggiornato: inbound, stampe e priorità. Non avvia invii automatici.';
+ nav.prepend(ztdRoutine);
  const tabs=new Map();
  const ORDER_KEY='case247-saas-tab-order-v1';
  const validKeys=labels.map(([key])=>key);
