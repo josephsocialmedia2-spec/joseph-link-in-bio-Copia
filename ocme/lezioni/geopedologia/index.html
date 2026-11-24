@@ -3395,7 +3395,7 @@ return {id,encode,decode,reverse,pao,scene,months,schedule,room,validate,seed};
 })());
 </script>
 
-<script src="../../engine/visual-first.js?v=5.2"></script>
+<script src="../../engine/visual-first.js?v=5.3"></script>
 <script id="ocv-adapter">
 ;(function(labels){
 if(!window.OCMEVisual)return;
@@ -3427,11 +3427,25 @@ play(b,single){const i=idMap.get(b.id);if(Number.isInteger(i))startLesson(i,!!si
 pause(){if(playing)togglePause()},
 stop(){if(playing)stopLesson(false)},
 isPlaying(){return playing},
+audioPosition(){return {parts:chunks.slice(),index:Math.min(currentChunk,chunks.length),title:chunks.length?(flatBlocks[currentIndex]?.title||"Lezione"):"",playing,paused}},
+seekAudio(index){
+    if(!supported||!chunks.length)return;
+    const hold=playing&&paused;
+    generation++;clearPending();synth.cancel();if(synth.paused)synth.resume();
+    loadVoices();
+    currentChunk=Math.max(0,Math.min(chunks.length-1,Math.floor(Number(index))||0));
+    playing=true;paused=hold;
+    highlightBlock(currentIndex);
+    $("captionPanel").textContent=chunks[currentChunk];
+    setStatus(hold?"Lezione in pausa":"Riproduzione dal punto selezionato");
+    updateProgress();syncButtons();
+    if(!hold)speakCurrentChunk(generation);
+},
 rate(){return Number($("speed").value)||1},
 setRate(v){$("speed").value=String(v);$("speed").dispatchEvent(new Event("change",{bubbles:true}))},
 caption(){return $("captionPanel").textContent||""},
 status(){const t=$("status").textContent||"";if(playing)return (paused?"In pausa · ":"Ascolto · ")+flatBlocks[currentIndex].title+" · "+(selectedVoice?.name||"Voce automatica");if(/errore|non supportat|non disponibil|arrestat|completat/i.test(t))return t;return""},
-observe(fn){const mo=new MutationObserver(fn);for(const id of ["captionPanel","status","counter"])mo.observe($(id),{childList:true,subtree:true,characterData:true});return mo},
+observe(fn){const mo=new MutationObserver(fn);for(const id of ["captionPanel","status","counter"])mo.observe($(id),{childList:true,subtree:true,characterData:true});mo.observe($("progressBar"),{attributes:true,attributeFilter:["style"]});mo.observe($("pauseBtn"),{attributes:true,attributeFilter:["disabled"]});mo.observe($("speed"),{attributes:true});$("speed").addEventListener("change",fn);return mo},
 openArchive(kind,cur){document.body.classList.remove("v3-focus","v3-mode-O","v3-mode-C","v3-mode-M","v3-mode-E");if($("v3mode")){$("v3mode").value="all";$("v3mode").dispatchEvent(new Event("change",{bubbles:true}))}updateToolbarHeight();const node=kind==="tools"?$("mnemonic-v4"):kind==="sources"?$("sources"):document.getElementById(cur.block.id);requestAnimationFrame(()=>node?.scrollIntoView({block:"start",behavior:"auto"}))}
 };
 view=window.OCMEVisual.mount(data,api);
