@@ -1,7 +1,134 @@
 <!doctype html>
-<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex,nofollow"><meta http-equiv="refresh" content="0;url=https://docs.google.com/spreadsheets/d/1TlcknaiRIy0C0DFeM0DWF34f6BuojnMmhxYtjJqLLS4/edit#gid=1137619035">
-<title>ZTD Italia · Apri Resoconto Mattutino</title><style>body{font-family:system-ui,Arial;background:#0d2335;color:#eef7ff;margin:0;min-height:100vh;display:grid;place-items:center}main{max-width:570px;padding:28px;background:#16364c;border:1px solid #305773;border-radius:14px}a{display:inline-block;background:#fff;color:#103149;border-radius:7px;padding:13px 18px;text-decoration:none;font-weight:bold}p{line-height:1.5;color:#c5d9e6}</style></head>
-<body><main><h1>Routine Mattutina · ZTD Italia</h1><p>Apertura del cruscotto privato Google Sheets, già configurato con conteggi inbound, calendario e stato NO-GO della distribuzione.</p>
-<p><a href="https://docs.google.com/spreadsheets/d/1TlcknaiRIy0C0DFeM0DWF34f6BuojnMmhxYtjJqLLS4/edit#gid=1137619035" rel="noopener">Apri Resoconto Mattutino</a></p>
-<p>La dashboard è privata: Google può richiedere l'accesso al tuo account. Questa pagina non espone contatti né esegue invii o telefonate. L'esecuzione automatica Apps Script resta separata e non è attiva.</p></main></body></html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Routine Mattutina · CASE247 / Zero to Diamond</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;--navy:#112d46;--ink:#1b3044;--muted:#536a80;--line:#d6e0ea;--light:#f3f7fb;--blue:#0c5b92;--amber:#915807;color:var(--ink);background:var(--light)}
+*{box-sizing:border-box}body{margin:0;background:var(--light);font:14px/1.55 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}a{color:#075b92}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible{outline:3px solid #f3bd49;outline-offset:3px}
+header{background:var(--navy);color:#fff;padding:20px max(16px,calc((100vw - 1080px)/2));display:flex;gap:14px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+header h1{font-size:clamp(20px,3.2vw,28px);margin:0;line-height:1.2}header small{display:block;color:#c4d7e7;margin-bottom:5px;letter-spacing:.04em}header .back{color:#fff;border:1px solid #9ab2c9;border-radius:6px;padding:7px 12px;text-decoration:none;white-space:nowrap}
+main{max-width:1100px;margin:0 auto;padding:16px 16px 34px}.meta{color:var(--muted);margin:0 0 14px}.layout{display:grid;grid-template-columns:minmax(0,1fr) 285px;gap:15px}
+.panel{background:white;border:1px solid var(--line);border-radius:12px;padding:18px;margin:0 0 13px}.panel h2{font-size:19px;margin:0 0 6px}.panel h3{font-size:16px;margin:0 0 9px}.muted{color:var(--muted)}.tag{font-size:12px;border:1px solid #d9b879;color:#774900;background:#fff7df;font-weight:800;border-radius:5px;padding:3px 7px;display:inline-block}.tag.ok{background:#e9f5f2;color:#136b4f;border-color:#b4ddd0}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin-bottom:14px}.stat{background:white;border:1px solid var(--line);border-radius:10px;padding:12px}.stat strong{display:block;font-size:17px;line-height:1.4}.stat span{color:var(--muted);font-size:12px}
+.hero{border-left:5px solid #bd8f36}.hero p{margin:7px 0}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:11px}.btn,.action{border:1px solid #afc5d6;border-radius:7px;padding:10px 12px;background:#fff;color:#174b6d;text-decoration:none;font-size:13px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;line-height:1.25}.btn.primary{background:var(--blue);color:#fff;border-color:var(--blue)}.btn[disabled]{opacity:.55;cursor:not-allowed}.progress{height:9px;border-radius:15px;background:#dfe8ef;overflow:hidden;margin-top:12px}.progress div{height:100%;background:#247f71;transition:width .25s}.step{border:1px solid var(--line);border-radius:9px;padding:13px;margin-bottom:10px}.step.current{border-color:#4683ba;background:#f4f9ff}.step.done{border-color:#9bcab9;background:#f3fbf7}.steptop{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.step h3{margin:0 0 5px}.step p{margin:0}.step .actions{margin-top:10px}.stepnum{display:inline-block;min-width:24px;font-size:12px;border-radius:50%;background:#e4edf6;color:#23567a;padding:3px 0;text-align:center;margin-right:6px}.note{border-left:3px solid #c99337;padding:8px 11px;background:#fff8e9;font-size:13px;margin:10px 0}.side .panel{padding:16px}.side p{margin:6px 0}.side ol{padding-left:18px;margin:9px 0}.side li{margin:8px 0}#daily-report{white-space:pre-wrap;font:12px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere;background:#f5f7f9;padding:12px;border:1px solid var(--line);border-radius:7px}#log{font-size:12px;color:#536a80;margin:12px 0 0}.sr-only{position:absolute;clip:rect(0,0,0,0);width:1px;height:1px;overflow:hidden}@media(max-width:780px){.layout{display:block}.grid{grid-template-columns:1fr}.panel{padding:14px}.stat strong{font-size:16px}header{padding:15px}.side{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.side .panel{margin:0}}@media(max-width:520px){.side{display:block}.step .actions{display:grid}.actions .btn,.actions .action{width:100%}}
+</style>
+</head>
+<body>
+<header><div><small>CASE247 · ZERO TO DIAMOND ITALIA V2</small><h1>Routine Mattutina Operativa</h1></div><a class="back" href="../">Torna alla dashboard</a></header>
+<main>
+<p class="meta" id="today">Caricamento data locale…</p>
+<div class="grid" aria-label="Quadro operativo">
+ <div class="stat"><span>CRM Inbound</span><strong>Controllo riservato</strong><span>Solo Google Sheets autenticato</span></div>
+ <div class="stat"><span>Comunicazione del giorno</span><strong id="asset-name">Da determinare</strong><span id="asset-window">Calendario 90 giorni</span></div>
+ <div class="stat"><span>Autorizzazione stampa</span><strong>NO-GO</strong><span>Nessuna distribuzione automatica</span></div>
+</div>
+<div class="layout">
+<div>
+<section class="panel hero" aria-label="Avvio giornaliero">
+ <span class="tag">ESECUZIONE GUIDATA · CONTROLLI ATTIVI</span>
+ <h2 style="margin-top:8px">Avvia il percorso di oggi</h2>
+ <p id="headline">Caricamento calendario…</p>
+ <p class="muted">Un solo pannello, cinque passaggi. Le verifiche vengono annotate su questo browser; i contatti privati restano esclusivamente nel foglio Google riservato.</p>
+ <div class="actions"><button class="btn primary" id="start" type="button">▶ Avvia routine guidata</button><button class="btn" id="show-report" type="button">Resoconto 10 righe</button></div>
+ <div class="progress"><div id="bar" style="width:0%"></div></div><p class="muted" id="progress-caption">0 / 5 controlli confermati</p>
+</section>
+<section class="panel" id="steps" aria-labelledby="steps-title"><h2 id="steps-title">Sequenza operativa</h2><p class="muted">Le conferme manuali indicano soltanto che hai svolto il controllo, non certificano consensi o invii.</p><div id="step-list"></div></section>
+<section class="panel"><h2>Resoconto mattutino</h2><p class="muted">I conteggi in tempo reale vengono consultati nel registro riservato. Il sito pubblico non legge né mostra dati personali.</p><div id="daily-report" role="status"></div><div class="actions"><button type="button" class="btn" id="copy-report">Copia resoconto</button><a class="btn" id="open-private" href="https://docs.google.com/spreadsheets/d/1TlcknaiRIy0C0DFeM0DWF34f6BuojnMmhxYtjJqLLS4/edit#gid=1137619035" target="_blank" rel="noopener noreferrer">Apri resoconto Google</a></div></section>
+</div>
+<aside class="side">
+ <section class="panel"><h3>Tre priorità di oggi</h3><ol id="priorities"></ol></section>
+ <section class="panel"><h3>Materiali e stampe</h3><span class="tag">NO-GO</span><p id="asset-note"></p><div class="actions"><a class="btn" id="asset-link" target="_blank" rel="noopener noreferrer" href="#">Apri anteprima</a><a class="btn" href="../lettere-stampa/" target="_blank" rel="noopener noreferrer">Lettere & Stampa</a></div></section>
+ <section class="panel"><h3>Regole del protocollo</h3><p>Nessun invio automatico, nessun contatto commerciale da elenco non validato. Non stampare materiale <strong>NO-GO</strong>. L'agente abilitato gestisce mediazione e trattative.</p></section>
+</aside>
+</div>
+<p id="log" aria-live="polite">Le verifiche sono registrate localmente nel tuo browser, non sincronizzate automaticamente con il CRM.</p>
+</main>
+<script>
+(()=>{"use strict";
+const ROOT='https://josephsocialmedia2-spec.github.io/joseph-link-in-bio-Copia';
+const SHEET='https://docs.google.com/spreadsheets/d/1TlcknaiRIy0C0DFeM0DWF34f6BuojnMmhxYtjJqLLS4/edit';
+const gid={inbound:'518038839',dashboard:'1137619035',assets:'1840705422',distribution:'1998324171'};
+const link=(key)=>SHEET+'#gid='+gid[key];
+const ztdLink=ROOT+'/gestione/ztd-italia/';
+const front=(name,href,note)=>({name,href,note});
+const items=[
+{id:'C01',since:'2026-11-23',until:'2026-11-29',...front('Lettera C',ROOT+'/gestione/lettere-stampa/lettera-c-23-11-aggiornata.html','Anteprima HTML di Lettera C, non PDF esecutivo validato.')},
+{id:'C02',since:'2026-11-30',until:'2026-12-13',...front('Scheda Mercato 02',ztdLink,'Il PDF esecutivo non è ancora pubblicato o approvato.')},
+{id:'C03',since:'2026-12-14',until:'2027-02-20',...front('Guida Casa 03',ztdLink,'Il PDF esecutivo non è ancora pubblicato o approvato.')}
+];
+function isoRome(){const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Rome',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const p=Object.fromEntries(parts.map(x=>[x.type,x.value]));return p.year+'-'+p.month+'-'+p.day}
+const today=isoRome();
+const readable=new Intl.DateTimeFormat('it-IT',{timeZone:'Europe/Rome',day:'numeric',month:'long',year:'numeric',weekday:'long'}).format(new Date());
+const asset=items.find(i=>today>=i.since&&today<=i.until)||null;
+const dateKey='case247.ztd.daily.v2.'+today;
+let done={};
+try{const raw=JSON.parse(localStorage.getItem(dateKey)||'{}');if(raw&&typeof raw==='object'&&!Array.isArray(raw))done=raw}catch(_){}
+const prefix=asset?asset.id+' · '+asset.name:'Nessun materiale previsto';
+const priority=[
+'Verificare richieste inbound e blocchi privacy nel CRM riservato.',
+asset?'Verificare '+asset.name+', QR, OMI e stato NO-GO.':'Controllare Piano90 e materiale editoriale appropriato.',
+'Preparare la distribuzione come BOZZA; nessuna stampa o consegna senza GO.'
+];
+document.getElementById('today').textContent=readable.charAt(0).toUpperCase()+readable.slice(1)+' · Europe/Rome · Piano90';
+document.getElementById('asset-name').textContent=prefix;
+document.getElementById('asset-window').textContent=asset?'Dal '+asset.since.split('-').reverse().join('/')+' al '+asset.until.split('-').reverse().join('/'):'Fuori finestra attività configurata';
+document.getElementById('headline').textContent='Oggi: '+prefix+'. Apri e controlla prima il registro Inbound, poi il documento da verificare, quindi la bozza di distribuzione.';
+document.getElementById('asset-note').textContent=asset?asset.note:'Nessuna comunicazione pianificata: consultare il calendario e non generare stampe non autorizzate.';
+const assetAnchor=document.getElementById('asset-link');
+assetAnchor.href=asset?asset.href:link('assets');
+assetAnchor.textContent=asset&&asset.id==='C01'?'Apri Lettera C (anteprima)':'Apri riferimento (non PDF)';
+document.getElementById('priorities').replaceChildren(...priority.map(t=>{const l=document.createElement('li');l.textContent=t;return l;}));
+const steps=[
+{title:'Verifica CRM Inbound e privacy',detail:'Controlla richieste NUOVO e DA QUALIFICARE. Escludi NON CONTATTARE, PAUSA, revoche e dati privi di base documentata. Il modulo non raccoglie numeri per chiamate promozionali.',href:link('inbound'),label:'Apri Inbound privato'},
+{title:'Lettera / scheda prevista oggi',detail:(asset?asset.name+': '+asset.note:'Nessuna stampa prevista.')+' Verifica data, fonti OMI, identità del mittente, QR, indirizzi e stato qualità. Se NO-GO, NON stampare.',href:asset?asset.href:link('assets'),label:asset?'Apri documento di verifica':'Apri calendario materiali'},
+{title:'Registra la bozza Distribuzione',detail:'Apri il foglio Distribuzione; controlla data, microzona e comunicazione. Mantieni la dicitura BOZZA - NON DISTRIBUITA, con gate NO-GO. Nessun automatismo dichiara consegne.',href:link('distribution'),label:'Apri registro Distribuzione'},
+{title:'Controlla funnel e collegamenti',detail:'Verifica landing, rivista, QR, consenso newsletter separato, modulo e link privacy. Nessun test end-to-end positivo è ancora attestato.',href:ztdLink,label:'Apri landing ZTD'},
+{title:'Leggi le tre priorità e chiudi il controllo',detail:'Controlla il resoconto riservato e annota gli esiti. Il check qui salva unicamente questa conferma nel browser.',href:link('dashboard'),label:'Apri KPI Google'}
+];
+let active=0;
+function persist(){try{localStorage.setItem(dateKey,JSON.stringify(done))}catch(_){}}
+function total(){return steps.filter((_,i)=>done[i]===true).length}
+function report(){
+const lines=[
+'ZTD · '+today+' · Europe/Rome',
+'Stato: NO-GO materiali; collaudo inbound non attestato',
+'Nuove richieste: consulta Google Sheets riservato',
+'Chiamate autorizzate: nessuna deducibile da questo form',
+'Comunicazione: '+prefix,
+'PDF stampa: NON APPROVATO / NO-GO',
+'Distribuzione: solo BOZZA; nessuna consegna confermata',
+'Priorità 1: inbound, privacy e opposizioni',
+'Priorità 2: QA documenti / QR / landing',
+'Priorità 3: bozza distribuzione e KPI'
+];return lines.join('\n')}
+function update(){
+const n=total();document.getElementById('bar').style.width=(n*20)+'%';
+document.getElementById('progress-caption').textContent=n+' / 5 controlli confermati solo in questo browser';
+document.getElementById('daily-report').textContent=report();
+const list=document.getElementById('step-list');list.replaceChildren();
+steps.forEach((s,i)=>{
+const wrap=document.createElement('section');wrap.className='step '+(done[i]?'done':i===active?'current':'');
+const top=document.createElement('div');top.className='steptop';
+const title=document.createElement('h3');const num=document.createElement('span');num.className='stepnum';num.textContent=String(i+1);title.append(num,document.createTextNode(s.title));
+const badge=document.createElement('span');badge.className='tag '+(done[i]?'ok':'');badge.textContent=done[i]?'CONTROLLATO':'DA VERIFICARE';top.append(title,badge);
+const p=document.createElement('p');p.className='muted';p.textContent=s.detail;
+const actions=document.createElement('div');actions.className='actions';
+const l=document.createElement('a');l.href=s.href;l.target='_blank';l.rel='noopener noreferrer';l.className='btn';l.textContent=s.label;
+const b=document.createElement('button');b.type='button';b.className=done[i]?'btn':'btn primary';b.textContent=done[i]?'Annulla conferma':'Conferma controllo eseguito';
+b.addEventListener('click',()=>{done[i]=!done[i];persist();if(done[i])active=Math.min(i+1,steps.length-1);else active=i;update();});
+actions.append(l,b);wrap.append(top,p,actions);list.append(wrap);
+});
+}
+document.getElementById('start').addEventListener('click',()=>{
+active=steps.findIndex((_,i)=>!done[i]);if(active<0)active=0;update();
+const list=document.getElementById('step-list');list.children[active]?.scrollIntoView({behavior:'smooth',block:'nearest'});
+});
+document.getElementById('show-report').addEventListener('click',()=>document.getElementById('daily-report').scrollIntoView({behavior:'smooth',block:'nearest'}));
+document.getElementById('copy-report').addEventListener('click',async e=>{
+const b=e.currentTarget;try{await navigator.clipboard.writeText(report());b.textContent='Copiato';}catch(_){const el=document.getElementById('daily-report');const r=document.createRange();r.selectNodeContents(el);window.getSelection().removeAllRanges();window.getSelection().addRange(r);b.textContent='Selezionato: premi Ctrl+C'}
+});
+update();
+})();
+</script>
+</body></html>
