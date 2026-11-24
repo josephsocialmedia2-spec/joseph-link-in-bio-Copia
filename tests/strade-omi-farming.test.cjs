@@ -25,7 +25,7 @@ test('presidio quotidiano: tutte le 6 vie contenute nelle tre descrizioni OMI or
 test('script valid, loaded after original Farming, keeps same dataset and other panes',()=>{
  new vm.Script(js,{filename:'piano-strade-omi.js'});
  assert.match(page,/id="zones"/);
- assert.match(read('gestione/acquisizione-farming/omi-avigliana.js'),/piano-strade-omi\.js\?v=20261124-strade1/);
+ assert.match(read('gestione/acquisizione-farming/omi-avigliana.js'),/piano-strade-omi\.js\?v=20261124-strade2/);
  assert.match(page,/src="\.\/omi-avigliana\.js/);
  assert.match(page,/case247-lab-avigliana-v1/);
  assert.match(js,/case247-farming-strade-omi-2026-1-v1/);
@@ -38,4 +38,16 @@ test('registrazione manuale e GDPR: nessun conteggio senza prova, nessun invio',
  assert.match(js,/window\.alert/);
  assert.match(js,/text\/csv/);
  assert.match(js,/timeZone:'Europe\/Rome'/);
+});
+
+test('daily working schedule C1 / C2 / D1 and real operational buttons are available',()=>{
+ for(const [day,zone] of [["1","C1"],["2","C2"],["4","D1"]])
+   assert.match(js,new RegExp(day+":'"+zone+"'"));
+ for(const x of ['Via Suppo Giovanni','Via dei Suppo','Via Villar Dora','Prepara lettera della zona','Apri dati OMI','Diario operativo','weeklyReview','omi-work-week','noAdvertisingChecked','case247-farming-strade-omi-2026-1-v1'])
+   assert.ok(js.includes(x),'Missing '+x);
+ assert.match(js,/verified&&\(!noAdv\|\|!civici\)/);
+ assert.match(page,/OMI C1 · Nord del Lago Grande/);
+ assert.match(page,/OMI C2 · S\.S\. 25 \/ Stazione/);
+ assert.match(page,/OMI D1 · Nord della Dora/);
+ assert.doesNotMatch(page,/Lunedì','A · Borgo Vecchio/);
 });
