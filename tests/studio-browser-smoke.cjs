@@ -107,7 +107,7 @@ async function main(){
  console.log('PASS: click-ready manual Google Partita IVA Avigliana shortcut in daily agenda');
 
  await until("Boolean(document.querySelector('#saas-app > #case247-routine03'))",'03:00 routine mounted beneath SaaS header');
- assert.equal(await evalJS("document.querySelector('#saas-app').children[1].id"),'case247-routine03');
+ assert.equal(await evalJS("document.querySelector('#saas-app > #case247-routine03')?.id"),'case247-routine03');
  assert.equal(await evalJS("document.querySelectorAll('#case247-routine03 .r03-card').length"),3);
  assert.equal(await evalJS("document.querySelector('#r03-total').textContent"),'0');
  await evalJS("document.querySelector('input[data-r03-check=flessioni]').click();true");
