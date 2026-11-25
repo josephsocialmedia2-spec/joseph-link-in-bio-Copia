@@ -194,7 +194,7 @@ get('day-form').onsubmit=event=>{
 };
 function slotCard(index) {
   const [time,title,task]=data.slots[index];
-  return `<div class="entry" data-slot="${index}"><h3>${esc(time)} · ${esc(title)}</h3><p>${esc(task)}</p><p class="muted">${esc(results[index])}</p><label><input type="checkbox" data-today="${index}"> Completato</label>${index===3?'<label><input type="checkbox" data-today="social"> Programmare i post su tutte le piattaforme social <strong class="gold">· OBBLIGATORIO OGNI GIORNO</strong></label>':''}</div>`;
+  return `<div class="entry" data-slot="${index}"><h3>${index===0?'<a href="../acquisizione-farming/crm/" target="_blank" rel="noopener">'+esc(time)+' · '+esc(title)+'</a>':esc(time)+' · '+esc(title)}</h3>${index===0?'<div class="row"><a class="button" href="../acquisizione-farming/crm/" target="_blank" rel="noopener">Apri CRM operativo</a><a class="button" href="../acquisizione-farming/excel/CASE247_Acquisizione_Installer.bas" download>Scarica installer Excel</a></div><p>Controlla nuove richieste e consensi nel CRM, aggiorna il registro Excel e poi spunta Completato.</p>':''}<p>${esc(task)}</p><p class="muted">${esc(results[index])}</p><label><input type="checkbox" data-today="${index}"> Completato</label>${index===3?'<label><input type="checkbox" data-today="social"> Programmare i post su tutte le piattaforme social <strong class="gold">· OBBLIGATORIO OGNI GIORNO</strong></label>':''}</div>`;
 }
 get('steps').innerHTML=method.map(([title,indexes],i)=>
   (i===3?slotCard(5):'')+`<section><h3>${i+1}. ${title}</h3>${indexes.map(slotCard).join('')}</section>`).join('');
