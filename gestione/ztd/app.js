@@ -192,9 +192,15 @@ get('day-form').onsubmit=event=>{
   updateDay(d=>Object.assign(d,entries(event.currentTarget)));
   renderReport();
 };
+const slotLinks=[[["Apri richieste e consensi","../case247-comunicazioni/"],["Apri CRM operativo","../acquisizione-farming/crm/"],["Scarica installer Excel","../acquisizione-farming/excel/CASE247_Acquisizione_Installer.bas","download"]],[["Apri registro notizie","#registro-notizie"],["Apri bozze email","#bozze-email"],["Apri rivista","../rivista/"],["Consulta quotazioni OMI","#quotazioni-omi"]],[["Crea post e script","#draft-form"],["Apri piano editoriale","../piano-editoriale/"]],[["Apri canali social","../canali-case247/"],["Apri piano editoriale","../piano-editoriale/"],["Apri quadro social","../quadro-social/"]],[["Verifica landing","../quadro-social/"],["Apri modulo pubblico da testare","../../campagne/case247/richieste-immobili/"],["Apri qualifica","#qualifica-domande"],["Allenamento obiezioni","#obiezioni-timer"]],[],[["Apri richieste e consensi","../case247-comunicazioni/"],["Apri CRM operativo","../acquisizione-farming/crm/"],["Regole telefonata","#regole-telefonata"]],[["Registra qualifica e consenso","#qualifica-domande"],["Apri richieste e consensi","../case247-comunicazioni/"],["Regola passaggio agenzia","#regola-9"]],[["Apri report","#report-stampa"],["Scrivi priorità per domani","#day-form"],["Backup e ripristino","#backup-ripristino"]]];
+function actionLink(item, label=item[0], cls='button'){
+  const href=item[1], local=href.startsWith('#');
+  return '<a class="'+cls+'" href="'+esc(href)+'"'+(item[2]==='download'?' download':local?'':' target="_blank" rel="noopener"')+'>'+esc(label)+'</a>';
+}
 function slotCard(index) {
-  const [time,title,task]=data.slots[index];
-  return `<div class="entry" data-slot="${index}"><h3>${index===0?'<a href="../acquisizione-farming/crm/" target="_blank" rel="noopener">'+esc(time)+' · '+esc(title)+'</a>':esc(time)+' · '+esc(title)}</h3>${index===0?'<div class="row"><a class="button" href="../acquisizione-farming/crm/" target="_blank" rel="noopener">Apri CRM operativo</a><a class="button" href="../acquisizione-farming/excel/CASE247_Acquisizione_Installer.bas" download>Scarica installer Excel</a></div><p>Controlla nuove richieste e consensi nel CRM, aggiorna il registro Excel e poi spunta Completato.</p>':''}<p>${esc(task)}</p><p class="muted">${esc(results[index])}</p><label><input type="checkbox" data-today="${index}"> Completato</label>${index===3?'<label><input type="checkbox" data-today="social"> Programmare i post su tutte le piattaforme social <strong class="gold">· OBBLIGATORIO OGNI GIORNO</strong></label>':''}</div>`;
+  const [time,title,task]=data.slots[index], links=slotLinks[index];
+  const heading=esc(time)+' · '+esc(title);
+  return `<div class="entry" data-slot="${index}" id="fascia-${index}"><h3>${links.length?actionLink(links[0],time+' · '+title,'slot-title'):heading}</h3><p>${esc(task)}</p>${links.length?'<div class="row">'+links.map(item=>actionLink(item)).join('')+'</div>':'<p class="gold">Pausa protetta: nessun contatto o invio.</p>'}<p class="muted">${esc(results[index])}</p><label><input type="checkbox" data-today="${index}"> Completato</label>${index===3?'<label><input type="checkbox" data-today="social"> Programmare i post su tutte le piattaforme social <strong class="gold">· OBBLIGATORIO OGNI GIORNO</strong></label>':''}</div>`;
 }
 get('steps').innerHTML=method.map(([title,indexes],i)=>
   (i===3?slotCard(5):'')+`<section><h3>${i+1}. ${title}</h3>${indexes.map(slotCard).join('')}</section>`).join('');
@@ -229,6 +235,9 @@ function tick(){
   get('now').textContent=m>=960?'Giornata conclusa. Consulta lo storico o il manuale.':m<480?'Alle 08:00 · Richieste e CRM Excel':data.slots[currentSlot][0]+' · '+data.slots[currentSlot][1]+' — '+data.slots[currentSlot][2];
   get('control').textContent=currentSlot>=0?results[currentSlot]:'—';
   get('social-now').hidden=m<630||m>=720;
+  const quick=get('now-actions');
+  const key=String(currentSlot);
+  if(quick.dataset.slot!==key){quick.dataset.slot=key;quick.innerHTML=currentSlot>=0&&slotLinks[currentSlot]?.length?slotLinks[currentSlot].map(item=>actionLink(item)).join(''):'';}
   for(const card of all('[data-slot].entry'))card.classList.toggle('active',+card.dataset.slot===currentSlot);
   updateChecklist();
 }
