@@ -14,7 +14,7 @@ FILES=[
  "supabase/functions/case247-public-requests/index.ts",
  "supabase/functions/case247-campaign-drafts/index.ts",
  "gestione/index.html",
- "gestione/case247-operazioni/index.html",
+ "gestione/ztd/index.html",
  "gestione/case247-conformita/index.html",
  "docs/case247-piano-rilascio-gdpr.md",
  "supabase/schema/case247-dispatch-gate-hardened.sql",
@@ -57,7 +57,7 @@ check("SERVER_NEVER_SENDS",not any(x in server for x in ("graph.facebook.com","a
 check("STAFF_DRAFT_ONLY",('campaign_status:"DRAFT"' in staff and "rights_to_promote_verified:false" in staff and "verify" not in staff.lower().split('rights_to_promote_verified:false')[-1][:15]))
 check("STAFF_AUTH_REQUIRED",('withSupabase({auth:"user"}' in staff and 'eq("organization_id",org)' in staff))
 check("ROOT_DASHBOARD_LINKS",('href="./case247-comunicazioni/"' in files[FILES[6]] and 'href="../campagne/case247/richieste-immobili/"' in files[FILES[6]]))
-check("REGIA_LINKED",('href="../case247-comunicazioni/"' in files[FILES[7]]))
+check("REGIA_LINKED",('href="../case247-conformita/"' in files[FILES[7]] and 'href="../case247-comunicazioni/"' in files[FILES[8]]))
 center=files[FILES[8]];release_doc=files[FILES[9]];sql_guard=files[FILES[10]]
 check("READ_ONLY_RELEASE_CENTER",('Centro verifiche GDPR' in center and 'method:"GET"' in center and 'credentials:"omit"' in center and 'STATO NON VERIFICABILE' in center))
 check("RELEASE_CENTER_LINKED",('href="../case247-conformita/"' in admin))
