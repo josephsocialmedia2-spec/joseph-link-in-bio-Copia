@@ -269,7 +269,7 @@ function renderSetup(){
   const completed=Object.values(state().setup).filter(Boolean).length;
   get('setup-progress').textContent=completed+' / 14 giorni spuntati';
   get('resume').disabled=completed===14;
-  get('setup').innerHTML=data.setup.map(([label,task,result],i)=>`<article class="entry"><h3>${esc(label)}</h3><p>${esc(task)}</p><p><strong>Risultato da ottenere</strong> · ${esc(result)}</p>${stageGroups[i].map(day=>`<label><input type="checkbox" data-setup="${day}" ${state().setup[day]?'checked':''}> Giorno ${day+1} completato</label>`).join('')}</article>`).join('');
+  get('setup').innerHTML=data.setup.map(([label,task,result],i)=>`<article class="entry"><h3>${esc(label)}</h3><p>${esc(task)}</p><p><strong>Risultato da ottenere</strong> · ${esc(result)}</p>${i===3?'<p class="gold">Collaudo database superato · test automatici GitHub superati. Raccolta pubblica disabilitata.</p><div class="row"><a class="button" href="./collaudo-giorno4/">Apri simulazione Giorno 4</a><a class="button" href="https://github.com/josephsocialmedia2-spec/joseph-link-in-bio-Copia/actions/runs/45606172629" target="_blank" rel="noopener">Esito test automatici</a></div>':''}${stageGroups[i].map(day=>`<label><input type="checkbox" data-setup="${day}" ${state().setup[day]?'checked':''}> Giorno ${day+1} completato</label>`).join('')}</article>`).join('');
 }
 get('setup').onchange=event=>{
   const box=event.target;
