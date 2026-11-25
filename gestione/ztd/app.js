@@ -444,11 +444,11 @@ const letterText={
   A:'Se desidera orientarsi sui prezzi delle abitazioni ad Avigliana, può consultare i nostri materiali informativi sul mercato locale.',
   B:'Le presentiamo il nostro lavoro di comunicazione immobiliare ad Avigliana e in Valle di Susa. Il catalogo digitale raccoglie informazioni e materiali di promozione.'
 };
-function letterHTML(type){
+function letterHTML(type, customText=letterText[type]){
   return `<!doctype html><html lang="it"><meta charset="utf-8"><title>CASE247 · Lettera ${type}</title>
   <style>@page{size:A4;margin:18mm}body{margin:16px;font:12pt/1.55 Arial,sans-serif;color:#19263b;background:white}h3{border-bottom:2px solid #d18c32;padding-bottom:7px}img{width:132px}a{overflow-wrap:anywhere}@media print{body{margin:0}}</style>
   <p><strong>SIMULAZIONE · Lettera ${type}</strong></p><h3>INFORMAZIONI IMMOBILIARI — AVIGLIANA</h3>
-  <p>Gentile residente,</p><p>${letterText[type]}</p>
+  <p>Gentile residente,</p><p>${esc(customText)}</p>
   <p>Il materiale è di carattere generale: non presuppone che il destinatario voglia vendere né che esistano acquirenti già interessati all'immobile.</p>
   <p>Il nostro ruolo è esclusivamente di comunicazione e marketing; le attività riservate alla mediazione competono agli agenti abilitati.</p>
   <img src="${letterQR.data}" alt="QR catalogo"><p><a href="${esc(letterQR.url)}">${esc(letterQR.url)}</a></p>
@@ -469,6 +469,8 @@ get('letter-controls').onclick=event=>{
 };
 get('letter-print').onclick=()=>get('letter-preview').querySelector('iframe')?.contentWindow.print();
 
+
+let morningType='A';const morningKey=t=>'case247-morning-letter-'+t;function morningRead(t){try{return localStorage.getItem(morningKey(t))??letterText[t]}catch(_){return letterText[t]}}function morningSelect(t){morningType=t;get('morning-text').value=morningRead(t);get('morning-preview').srcdoc=letterHTML(t,get('morning-text').value);get('morning-status').textContent='Lettera '+t+' · bozza A4, non approvata per distribuzione.';}get('morning-a').onclick=()=>morningSelect('A');get('morning-b').onclick=()=>morningSelect('B');get('morning-save').onclick=()=>{const v=get('morning-text').value;get('morning-preview').srcdoc=letterHTML(morningType,v);try{localStorage.setItem(morningKey(morningType),v);get('morning-status').textContent='Bozza salvata nel browser.'}catch(_){get('morning-status').textContent='Anteprima aggiornata; salvataggio locale non disponibile.'}};get('morning-print').onclick=()=>{const f=get('morning-preview');f.onload=()=>{f.onload=null;f.contentWindow.print()};f.srcdoc=letterHTML(morningType,get('morning-text').value)};morningSelect('A');
 get('training-instruction').textContent=data.daily[8][1];
 const objections=['Non voglio agenzie.','Vendo da solo.','Ho già un agente.','Non pago commissioni.','Ho già fissato il prezzo.','Adesso non ho tempo.','Mi richiami più avanti.','Prima mi mandi una brochure.','Non ho fretta.','Voglio prima conoscere i prezzi.'];
 let objection=0, trainingEnd=0;
