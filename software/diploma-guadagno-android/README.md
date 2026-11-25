@@ -1,0 +1,2 @@
+# Diploma & Guadagno Android
+Progetto Android nativo, 22 cadenze ricorrenti fino al 30/06/2027. Non invia dati a server. Gli orari sono statici, zona Europe/Rome. Richiede autorizzazione notifiche e sveglie precise, e attivazione esplicita. Le notifiche sonore possono essere ritardate da Android/Doze; per la sveglia mattutina e il treno utilizzare anche l'app Orologio. Le festività non sono escluse automaticamente. Compilazione: Android Studio con SDK 35, JDK 17 e Gradle 8.9, oppure GitHub Actions. APK debug non firmato con chiave di produzione.
