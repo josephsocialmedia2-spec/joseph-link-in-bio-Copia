@@ -125,8 +125,11 @@ function download(name,contents,type) {
 
 const tabs=all('[role=tab]');
 const tabIDs=tabs.map(button=>button.dataset.tab);
+const publicHashes={"daily":"daily","roads":"omi-presidio","startup":"primi-14-giorni","rules":"attivita-divieti","drafts":"notizie-qualifica","tools":"strumenti-report"};
+const internalHashes=Object.fromEntries(Object.entries(publicHashes).map(([k,v])=>[v,k]));
 function tab(id,focus=false) {
   if(!tabIDs.includes(id))id='daily';
+  for(const group of document.querySelectorAll('[data-submenu]'))group.hidden=group.dataset.submenu!==id;
   for(const button of tabs){
     const active=button.dataset.tab===id;
     button.setAttribute('aria-selected',String(active));
@@ -139,19 +142,26 @@ for(const [i,button] of tabs.entries()){
   button.id='tab-'+button.dataset.tab;
   button.setAttribute('aria-controls',button.dataset.tab);
   get(button.dataset.tab).setAttribute('aria-labelledby',button.id);
-  button.onclick=()=>{location.hash=button.dataset.tab;tab(button.dataset.tab);};
+  button.onclick=()=>{location.hash=publicHashes[button.dataset.tab];tab(button.dataset.tab);};
   button.onkeydown=event=>{
     const index={ArrowLeft:(i+tabs.length-1)%tabs.length,ArrowRight:(i+1)%tabs.length,ArrowUp:(i+tabs.length-1)%tabs.length,ArrowDown:(i+1)%tabs.length,Home:0,End:tabs.length-1}[event.key];
     if(index===undefined)return;
-    event.preventDefault();location.hash=tabIDs[index];tab(tabIDs[index],true);
+    event.preventDefault();location.hash=publicHashes[tabIDs[index]];tab(tabIDs[index],true);
   };
 }
 function followHash() {
   const hash=location.hash.slice(1);
-  if(hash==='obiezioni'){tab('drafts');get(hash).scrollIntoView({block:'center'});return;}
-  if(/^regola-(?:[1-9]|10)$/.test(hash)){
-    tab('rules');const target=get(hash);target.open=true;target.scrollIntoView({block:'center'});target.querySelector('summary').focus();
-  }else tab(hash);
+  const rule=hash==='regole-telefonata'?'regola-10':hash;
+  if(/^regola-(?:[1-9]|10)$/.test(rule)){
+    tab('rules');const target=get(rule);target.open=true;target.scrollIntoView({block:'center'});target.querySelector('summary').focus();return;
+  }
+  const aliases={'qualifica':'qualifica-domande','allenamento-obiezioni':'obiezioni-timer','obiezioni':'obiezioni-timer'};
+  const target=get(aliases[hash]||hash);
+  if(target&&!tabIDs.includes(hash)){
+    const panel=target.closest('[role="tabpanel"]');
+    if(panel){tab(panel.id);target.scrollIntoView({block:'start'});return;}
+  }
+  tab(internalHashes[hash]||hash);
 }
 window.addEventListener('hashchange',followHash);
 get('security').textContent=data.security;
